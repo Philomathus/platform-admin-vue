@@ -11,7 +11,7 @@ export function login(username, password, googleAuthCode, uuid) {
   }
   let encryptData = encrypt(JSON.stringify(data))
   return request({
-    url: '/login',
+    url: '/platform/login',
     method: 'post',
     data: encryptData
   })
@@ -20,7 +20,7 @@ export function login(username, password, googleAuthCode, uuid) {
 // 获取用户详细信息
 export function getInfo() {
   return request({
-    url: '/getInfo',
+    url: '/platform/getInfo',
     method: 'get'
   })
 }
@@ -28,15 +28,7 @@ export function getInfo() {
 // 退出方法
 export function logout() {
   return request({
-    url: '/logout',
+    url: '/platform/logout',
     method: 'post'
-  })
-}
-
-// 获取验证码
-export function getCodeImg() {
-  return request({
-    url: '/captchaImage',
-    method: 'get'
   })
 }

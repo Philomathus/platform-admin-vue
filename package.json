@@ -5,11 +5,11 @@
   "author": "77tv",
   "license": "MIT",
   "scripts": {
+    "serve:local": "npx vue-cli-service serve --mode local",
     "serve:dev": "npx vue-cli-service serve --mode dev",
-    "serve:stage": "npx vue-cli-service serve --mode staging",
     "serve:prod": "npx vue-cli-service serve --mode prod",
+    "build:local": "npx vue-cli-service build --mode local",
     "build:dev": "npx vue-cli-service build --mode dev",
-    "build:stage": "npx vue-cli-service build --mode staging",
     "build:prod": "npx vue-cli-service build --mode prod",
     "preview": "node build/index.js --preview --mode prod",
     "lint": "eslint --ext .js,.vue src"

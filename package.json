@@ -6,12 +6,12 @@
   "license": "MIT",
   "scripts": {
     "serve:dev": "npx vue-cli-service serve --mode dev",
-    "serve:stage": "npx vue-cli-service serve --mode prod",
-    "serve:prod": "npx vue-cli-service serve --mode staging",
+    "serve:stage": "npx vue-cli-service serve --mode staging",
+    "serve:prod": "npx vue-cli-service serve --mode prod",
     "build:dev": "npx vue-cli-service build --mode dev",
-    "build:stage": "npx vue-cli-service build --mode prod",
-    "build:prod": "npx vue-cli-service build --mode staging",
-    "preview": "node build/index.js --preview",
+    "build:stage": "npx vue-cli-service build --mode staging",
+    "build:prod": "npx vue-cli-service build --mode prod",
+    "preview": "node build/index.js --preview --mode prod",
     "lint": "eslint --ext .js,.vue src"
   },
   "husky": {

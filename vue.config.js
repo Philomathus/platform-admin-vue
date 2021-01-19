@@ -9,6 +9,7 @@ function resolve(dir) {
 const name = defaultSettings.title // 标题
 
 const port = process.env.port || process.env.npm_config_port || 80 // 端口
+console.log('发布环境'+process.env.NODE_ENV)
 
 // vue.config.js 配置说明
 //官方vue.config.js 参考文档 https://cli.vuejs.org/zh/config/#css-loaderoptions
@@ -32,7 +33,7 @@ module.exports = {
     proxy: {
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       [process.env.VUE_APP_BASE_API]: {
-        target: `http://47.254.238.161:42002`,
+        target: process.env.VUE_APP_API,
         changeOrigin: true,
         logLevel: "debug",
         pathRewrite: {

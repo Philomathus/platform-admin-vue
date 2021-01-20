@@ -1,9 +1,10 @@
 import request from '@/utils/request'
+import {url} from '@/utils/url'
 
 // 获取路由
 export const getRouters = () => {
   return request({
-    url: '/platform-web/getRouters',
+    url: url.platformWeb + '/getRouters',
     method: 'get'
   })
 }

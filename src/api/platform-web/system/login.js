@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import {url} from '@/utils/url'
 import { encrypt } from '@/utils/jsencrypt'
 
 // 登录方法
@@ -11,7 +12,7 @@ export function login(username, password, googleAuthCode, uuid) {
   }
   let encryptData = encrypt(JSON.stringify(data))
   return request({
-    url: '/platform-web/login',
+    url: url.platformWeb + '/login',
     method: 'post',
     data: encryptData
   })
@@ -20,7 +21,7 @@ export function login(username, password, googleAuthCode, uuid) {
 // 获取用户详细信息
 export function getInfo() {
   return request({
-    url: '/platform-web/getInfo',
+    url: url.platformWeb + '/getInfo',
     method: 'get'
   })
 }
@@ -28,7 +29,7 @@ export function getInfo() {
 // 退出方法
 export function logout() {
   return request({
-    url: '/platform-web/logout',
+    url: url.platformWeb + '/logout',
     method: 'post'
   })
 }

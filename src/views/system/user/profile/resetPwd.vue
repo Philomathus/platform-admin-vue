@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { updateUserPwd } from "@/api/system/user";
+import { updateUserPwd } from "@/api/platform-web/system/user";
 
 export default {
   data() {

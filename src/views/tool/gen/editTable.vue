@@ -125,9 +125,9 @@
   </el-card>
 </template>
 <script>
-import { getGenTable, updateGenTable } from "@/api/tool/gen";
-import { optionselect as getDictOptionselect } from "@/api/system/dict/type";
-import { listMenu as getMenuTreeselect } from "@/api/system/menu";
+import { getGenTable, updateGenTable } from "@/api/platform-web/tool/gen";
+import { optionselect as getDictOptionselect } from "@/api/platform-web/system/dict/type";
+import { listMenu as getMenuTreeselect } from "@/api/platform-web/system/menu";
 import basicInfoForm from "./basicInfoForm";
 import genInfoForm from "./genInfoForm";
 import Sortable from 'sortablejs'

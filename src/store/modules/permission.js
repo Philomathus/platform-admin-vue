@@ -1,5 +1,5 @@
 import { constantRoutes } from '@/router'
-import { getRouters } from '@/api/menu'
+import { getRouters } from '@/api/platform-web/system/router'
 import Layout from '@/layout/index'
 import ParentView from '@/components/ParentView';
 

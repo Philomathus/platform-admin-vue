@@ -14,8 +14,8 @@ import permission from './directive/permission'
 
 import './assets/icons' // icon
 import './permission' // permission control
-import { getDicts } from "@/api/system/dict/data";
-import { getConfigKey } from "@/api/system/config";
+import { getDicts } from "@/api/platform-web/system/dict/data";
+import { getConfigKey } from "@/api/platform-web/system/config";
 import { parseTime, resetForm, addDateRange, selectDictLabel, selectDictLabels, download, handleTree } from "@/utils/common";
 import Pagination from "@/components/Pagination";
 // 自定义表格工具扩展

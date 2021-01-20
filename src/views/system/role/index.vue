@@ -248,8 +248,8 @@
 </template>
 
 <script>
-import { listRole, getRole, delRole, addRole, updateRole, exportRole, dataScope, changeRoleStatus } from "@/api/system/role";
-import { treeselect as menuTreeselect, roleMenuTreeselect } from "@/api/system/menu";
+import { listRole, getRole, delRole, addRole, updateRole, exportRole, dataScope, changeRoleStatus } from "@/api/platform-web/system/role";
+import { treeselect as menuTreeselect, roleMenuTreeselect } from "@/api/platform-web/system/menu";
 
 export default {
   name: "Role",

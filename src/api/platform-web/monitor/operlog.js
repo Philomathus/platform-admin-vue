@@ -1,9 +1,10 @@
 import request from '@/utils/request'
+import {url} from '@/utils/url'
 
 // 查询操作日志列表
 export function list(query) {
   return request({
-    url: '/platform-web/monitor/operlog/list',
+    url: url.platformWeb + '/monitor/operlog/list',
     method: 'get',
     params: query
   })
@@ -12,7 +13,7 @@ export function list(query) {
 // 删除操作日志
 export function delOperlog(operId) {
   return request({
-    url: '/platform-web/monitor/operlog/' + operId,
+    url: url.platformWeb + '/monitor/operlog/' + operId,
     method: 'delete'
   })
 }
@@ -20,7 +21,7 @@ export function delOperlog(operId) {
 // 清空操作日志
 export function cleanOperlog() {
   return request({
-    url: '/platform-web/monitor/operlog/clean',
+    url: url.platformWeb + '/monitor/operlog/clean',
     method: 'delete'
   })
 }
@@ -28,7 +29,7 @@ export function cleanOperlog() {
 // 导出操作日志
 export function exportOperlog(query) {
   return request({
-    url: '/platform-web/monitor/operlog/export',
+    url: url.platformWeb + '/monitor/operlog/export',
     method: 'get',
     params: query
   })

@@ -188,7 +188,7 @@
 </template>
 
 <script>
-import { listType, getType, delType, addType, updateType, exportType, clearCache } from "@/api/system/dict/type";
+import { listType, getType, delType, addType, updateType, exportType, clearCache } from "@/api/platform-web/system/dict/type";
 
 export default {
   name: "Dict",

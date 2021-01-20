@@ -118,7 +118,7 @@
 </template>
 
 <script>
-import { list, delLogininfor, cleanLogininfor, exportLogininfor } from "@/api/monitor/logininfor";
+import { list, delLogininfor, cleanLogininfor, exportLogininfor } from "@/api/platform-web/monitor/logininfor";
 
 export default {
   name: "Logininfor",

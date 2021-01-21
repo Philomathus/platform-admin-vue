@@ -37,14 +37,22 @@ module.exports = {
     open: true,
     proxy: {
       // detail: https://cli.vuejs.org/config/#devserver-proxy
-      [process.env.VUE_APP_BASE_API]: {
+/*      [process.env.VUE_APP_BASE_API]: {
         target: process.env.VUE_APP_API,
         changeOrigin: true,
         logLevel: "debug",
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: ''
         }
-      }
+      },*/
+      '/*': {
+        target: process.env.VUE_APP_API,
+        changeOrigin: true,
+        disableHostCheck: true,
+        logLevel: "debug"/*,
+                pathRewrite: {
+                   /* '/login/': '/login/'*/
+      },
     },
     disableHostCheck: true
   },

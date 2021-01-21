@@ -10,7 +10,6 @@ const name = defaultSettings.title // 标题
 
 const port = process.env.port || process.env.npm_config_port || 80 // 端口
 console.log('发布环境'+process.env.NODE_ENV)
-
 var staticUrl = './';
 if (process.env.NODE_ENV === "production") {
   staticUrl = "/frbfgnjfd/"

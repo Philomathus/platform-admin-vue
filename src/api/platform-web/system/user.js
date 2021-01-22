@@ -137,4 +137,19 @@ export function getGoogleAuth(name) {
     method: 'get',
     params: data
   })
+
+}
+
+//绑定谷歌验证码
+export function bindGoogleAuth(googleAuthCode, googleAuthKey, googleAuthName) {
+  const data = {
+    googleAuthCode,
+    googleAuthKey,
+    googleAuthName
+  }
+  return request({
+    url: url.platformWeb + '/system/user/bindGoogleAuth',
+    method: 'post',
+    params: data
+  })
 }

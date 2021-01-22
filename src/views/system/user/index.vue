@@ -176,7 +176,10 @@
     <el-dialog
       title="绑定谷歌验证码"
       :visible.sync="dialogVisible"
-      width="20%">
+      width="25%"
+      append-to-body>
+      <img :src="pic"
+      width = "100%"/>
         <el-input
           v-model="queryParams.userName"
           placeholder="请输入谷歌验证码"
@@ -185,7 +188,7 @@
           style="width: 65%"
           @keyup.enter.native="getGoogleAuth"
         />
-    <el-button type="primary" @click="dialogVisible = false">绑定</el-button>
+    <el-button type="primary" @click="bind">绑定</el-button>
     </el-dialog>
 
 
@@ -313,6 +316,8 @@ export default {
     return {
       //谷歌验证码点击关闭
       dialogVisible: false,
+      //
+      pic: '',
       // 遮罩层
       loading: true,
       // 选中数组
@@ -424,12 +429,11 @@ export default {
     },
     //绑定谷歌验证码
     showOrder(row) {
-      this.reset()
       this.dialogVisible = true
       this.title = '绑定谷歌验证码'
       const name = row.userName
       getGoogleAuth(name).then(response =>{
-
+         this.pic =  "data:image/png;base64," + response.data.qrBarcodeBase
       })
     },
     // 用户状态修改
@@ -542,6 +546,12 @@ export default {
           }
         }
       })
+    },
+    /** 谷歌绑定按钮 */
+    bind(row) {
+       const googleAuthKey = row.secretKey
+       const googleAuthCode = row.secretKey
+       const googleAuthName = row.data.name
     },
     /** 删除按钮操作 */
     handleDelete(row) {

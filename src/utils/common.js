@@ -2,7 +2,7 @@
  * 通用js方法封装处理
  */
 
-const baseURL = process.env.VUE_APP_BASE_API
+import {url} from '@/utils/url'
 
 // 日期格式化
 export function parseTime(time, pattern) {
@@ -97,7 +97,7 @@ export function selectDictLabels(datas, value, separator) {
 
 // 通用下载方法
 export function download(fileName) {
-	window.location.href = baseURL + "/common/download?fileName=" + encodeURI(fileName) + "&delete=" + true;
+	window.location.href = url.platformWeb + "/common/download?fileName=" + encodeURI(fileName) + "&delete=" + true;
 }
 
 // 字符串格式化(%s )

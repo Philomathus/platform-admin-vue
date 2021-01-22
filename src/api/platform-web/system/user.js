@@ -126,3 +126,11 @@ export function importTemplate() {
     method: 'get'
   })
 }
+
+//获取谷歌验证码
+export function getGoogleAuth(name) {
+  return request({
+    url: url.platformWeb + '/system/user/getGoogleAuth/' + praseStrEmpty(name),
+    method: 'get',
+  })
+}

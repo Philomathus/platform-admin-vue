@@ -11,16 +11,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="手机号码" prop="phonenumber">
-        <el-input
-          v-model="queryParams.phonenumber"
-          placeholder="请输入手机号码"
-          clearable
-          size="small"
-          style="width: 240px"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item label="状态" prop="status">
         <el-select
           v-model="queryParams.status"
@@ -121,8 +111,7 @@
       <el-table-column label="用户编号" align="center" key="userId" prop="userId" v-if="columns[0].visible"/>
       <el-table-column label="用户名称" align="center" key="userName" prop="userName" v-if="columns[1].visible" :show-overflow-tooltip="true"/>
       <el-table-column label="用户昵称" align="center" key="nickName" prop="nickName" v-if="columns[2].visible" :show-overflow-tooltip="true"/>
-      <el-table-column label="手机号码" align="center" key="phonenumber" prop="phonenumber" v-if="columns[3].visible" width="120"/>
-      <el-table-column label="状态" align="center" key="status" v-if="columns[4].visible">
+      <el-table-column label="状态" align="center" key="status" v-if="columns[3].visible">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -131,6 +120,13 @@
             @change="handleStatusChange(scope.row)"
           ></el-switch>
         </template>
+      </el-table-column>
+      <el-table-column label="google验证码" align="center" key="googleAuthSecret" prop="googleAuthSecret"
+                       v-if="columns[4].visible">
+      <template slot-scope="scope">
+        <el-button type="text" @click="showOrder(scope.row)" v-if="scope.row.googleAuthSecret==null">未绑定</el-button>
+        <el type="text" size="small" v-else>已绑定</el>
+      </template>
       </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" v-if="columns[5].visible" width="160">
         <template slot-scope="scope">
@@ -176,6 +172,23 @@
       @pagination="getList"
     />
 
+    <!-- 未绑定谷歌验证码弹框 -->
+    <el-dialog
+      title="绑定谷歌验证码"
+      :visible.sync="dialogVisible"
+      width="20%">
+        <el-input
+          v-model="queryParams.userName"
+          placeholder="请输入谷歌验证码"
+          clearable
+          size="small"
+          style="width: 65%"
+          @keyup.enter.native="getGoogleAuth"
+        />
+    <el-button type="primary" @click="dialogVisible = false">绑定</el-button>
+    </el-dialog>
+
+
     <!-- 添加或修改参数配置对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
@@ -183,18 +196,6 @@
           <el-col :span="12">
             <el-form-item label="用户昵称" prop="nickName">
               <el-input v-model="form.nickName" placeholder="请输入用户昵称"/>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="手机号码" prop="phonenumber">
-              <el-input v-model="form.phonenumber" placeholder="请输入手机号码" maxlength="11"/>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="邮箱" prop="email">
-              <el-input v-model="form.email" placeholder="请输入邮箱" maxlength="50"/>
             </el-form-item>
           </el-col>
         </el-row>
@@ -300,7 +301,7 @@
 </template>
 
 <script>
-import { listUser, getUser, delUser, addUser, updateUser, exportUser, resetUserPwd, changeUserStatus, importTemplate } from '@/api/platform-web/system/user'
+import { listUser, getUser, delUser, addUser, updateUser, exportUser, resetUserPwd, changeUserStatus, importTemplate, getGoogleAuth } from '@/api/platform-web/system/user'
 import { getToken } from '@/utils/auth'
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
@@ -310,6 +311,8 @@ export default {
   components: { Treeselect },
   data() {
     return {
+      //谷歌验证码点击关闭
+      dialogVisible: false,
       // 遮罩层
       loading: true,
       // 选中数组
@@ -370,7 +373,6 @@ export default {
         pageNum: 1,
         pageSize: 15,
         userName: undefined,
-        phonenumber: undefined,
         status: undefined,
         deptId: undefined
       },
@@ -379,9 +381,9 @@ export default {
         { key: 0, label: `用户编号`, visible: true },
         { key: 1, label: `用户名称`, visible: true },
         { key: 2, label: `用户昵称`, visible: true },
-        { key: 3, label: `手机号码`, visible: true },
         { key: 4, label: `状态`, visible: true },
-        { key: 5, label: `创建时间`, visible: true }
+        { key: 5, label: `google验证码`, visible: true },
+        { key: 6, label: `创建时间`, visible: true }
       ],
       // 表单校验
       rules: {
@@ -393,20 +395,6 @@ export default {
         ],
         password: [
           { required: true, message: '用户密码不能为空', trigger: 'blur' }
-        ],
-        email: [
-          {
-            type: 'email',
-            message: '\'请输入正确的邮箱地址',
-            trigger: ['blur', 'change']
-          }
-        ],
-        phonenumber: [
-          {
-            pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
-            message: '请输入正确的手机号码',
-            trigger: 'blur'
-          }
         ]
       }
     }
@@ -433,6 +421,16 @@ export default {
           this.loading = false
         }
       )
+    },
+    //绑定谷歌验证码
+    showOrder(row) {
+      this.reset()
+      this.dialogVisible = true
+      this.title = '绑定谷歌验证码'
+      const name = row.userName
+      getGoogleAuth(name).then(response =>{
+
+      })
     },
     // 用户状态修改
     handleStatusChange(row) {
@@ -462,8 +460,6 @@ export default {
         userName: undefined,
         nickName: undefined,
         password: undefined,
-        phonenumber: undefined,
-        email: undefined,
         sex: undefined,
         status: '0',
         remark: undefined,

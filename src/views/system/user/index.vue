@@ -125,7 +125,7 @@
                        v-if="columns[4].visible">
       <template slot-scope="scope">
         <el-button type="text" @click="showOrder(scope.row)" v-if="scope.row.googleAuthSecret==null">未绑定</el-button>
-        <el type="text" size="small" v-else>已绑定</el>
+        <span type="text" size="small" v-else>已绑定</span>
       </template>
       </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" v-if="columns[5].visible" width="160">

@@ -129,8 +129,12 @@ export function importTemplate() {
 
 //获取谷歌验证码
 export function getGoogleAuth(name) {
+  const data = {
+    name
+  }
   return request({
-    url: url.platformWeb + '/system/user/getGoogleAuth/' + praseStrEmpty(name),
+    url: url.platformWeb + '/system/user/getGoogleAuth',
     method: 'get',
+    params: data
   })
 }

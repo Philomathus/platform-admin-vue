@@ -141,7 +141,7 @@ export function getGoogleAuth(name) {
 }
 
 //绑定谷歌验证码
-export function bindGoogleAuth(googleAuthCode, googleAuthKey, googleAuthName) {
+export function bindGoogleAuth(googleAuthName,googleAuthKey,googleAuthCode) {
   const data = {
     googleAuthCode,
     googleAuthKey,

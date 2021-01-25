@@ -21,20 +21,11 @@
         />
       </el-form-item>
 
-      <el-form-item label="状态" prop="status">
-        <el-select
-          v-model="queryParams.status"
-          placeholder="用户状态"
-          clearable
-          size="small"
-          style="width: 240px"
-        >
-          <el-option
-            v-for="dict in status"
-            :key="dict.dictValue"
-            :label="dict.dictLabel"
-            :value="dict.dictValue"
-          />
+      <el-form-item label="状态">
+        <el-select v-model="queryParams.status" placeholder="请选择状态">
+          <el-option label="未审核" value="0"></el-option>
+          <el-option label="审核通过" value="1"></el-option>
+          <el-option label="审核拒绝" value="2"></el-option>
         </el-select>
       </el-form-item>
 

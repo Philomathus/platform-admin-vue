@@ -11,6 +11,21 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="库名" prop="tableSchema">
+        <el-select
+          v-model="queryParams.tableSchema"
+          placeholder="库名"
+          clearable
+          size="small"
+          style="width: 140px"
+        >
+          <el-option
+            v-for="schema in tableSchemaOptions"
+            :label="schema"
+            :value="schema"
+          />
+        </el-select>
+      </el-form-item>
       <el-form-item label="表描述" prop="tableComment">
         <el-input
           v-model="queryParams.tableComment"
@@ -29,6 +44,7 @@
       <el-table @row-click="clickRow" ref="table" :data="dbTableList" @selection-change="handleSelectionChange" height="260px">
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column prop="tableName" label="表名称" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="tableSchema" label="库名" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="tableComment" label="表描述" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="createTime" label="创建时间"></el-table-column>
         <el-table-column prop="updateTime" label="更新时间"></el-table-column>
@@ -49,7 +65,8 @@
 </template>
 
 <script>
-import { listDbTable, importTable } from "@/api/platform-web/tool/gen";
+import { listDbTable, importTable } from '@/api/platform-web/tool/gen'
+
 export default {
   data() {
     return {
@@ -66,52 +83,54 @@ export default {
         pageNum: 1,
         pageSize: 15,
         tableName: undefined,
-        tableComment: undefined
-      }
-    };
+        tableComment: undefined,
+        tableSchema: undefined
+      },
+      tableSchemaOptions: ['7700_main', '7700_lottery', '7700_live']
+    }
   },
   methods: {
     // 显示弹框
     show() {
-      this.getList();
-      this.visible = true;
+      this.getList()
+      this.visible = true
     },
     clickRow(row) {
-      this.$refs.table.toggleRowSelection(row);
+      this.$refs.table.toggleRowSelection(row)
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.tables = selection.map(item => item.tableName);
+      this.tables = selection.map(item => item.tableName)
     },
     // 查询表数据
     getList() {
       listDbTable(this.queryParams).then(res => {
         if (res.code === 200) {
-          this.dbTableList = res.rows;
-          this.total = res.total;
+          this.dbTableList = res.rows
+          this.total = res.total
         }
-      });
+      })
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNum = 1;
-      this.getList();
+      this.queryParams.pageNum = 1
+      this.getList()
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.resetForm("queryForm");
-      this.handleQuery();
+      this.resetForm('queryForm')
+      this.handleQuery()
     },
     /** 导入按钮操作 */
     handleImportTable() {
-      importTable({ tables: this.tables.join(",") }).then(res => {
-        this.msgSuccess(res.msg);
+      importTable({ tables: this.tables.join(',') }).then(res => {
+        this.msgSuccess(res.msg)
         if (res.code === 200) {
-          this.visible = false;
-          this.$emit("ok");
+          this.visible = false
+          this.$emit('ok')
         }
-      });
+      })
     }
   }
-};
+}
 </script>

@@ -150,6 +150,6 @@ export function bindGoogleAuth(googleAuthName,googleAuthKey,googleAuthCode) {
   return request({
     url: url.platformWeb + '/system/user/bindGoogleAuth',
     method: 'post',
-    params: data
+    data: data
   })
 }

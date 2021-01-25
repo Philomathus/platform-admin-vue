@@ -8,9 +8,10 @@
       filterable
       default-first-option
       remote
-      placeholder="Search"
+      placeholder="菜单搜索"
       class="header-search-select"
       @change="change"
+      title="菜单搜索"
     >
       <el-option v-for="option in options" :key="option.item.path" :value="option.item" :label="option.item.title.join(' > ')" />
     </el-select>

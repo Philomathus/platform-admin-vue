@@ -1,0 +1,54 @@
+import request from '@/utils/request'
+import { url } from '@/utils/url'
+
+// 查询游戏类型列表
+export function listType(query) {
+  return request({
+    url: url.platformWeb + '/game/type/list',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询游戏类型详细
+export function getType(id) {
+  return request({
+    url: url.platformWeb + '/game/type/' + id,
+    method: 'get'
+  })
+}
+
+// 新增游戏类型
+export function addType(data) {
+  return request({
+    url: url.platformWeb + '/game/type',
+    method: 'post',
+    data: data
+  })
+}
+
+// 修改游戏类型
+export function updateType(data) {
+  return request({
+    url: url.platformWeb + '/game/type',
+    method: 'put',
+    data: data
+  })
+}
+
+// 删除游戏类型
+export function delType(id) {
+  return request({
+    url: url.platformWeb + '/game/type/' + id,
+    method: 'delete'
+  })
+}
+
+// 导出游戏类型
+export function exportType(query) {
+  return request({
+    url: url.platformWeb + '/game/type/export',
+    method: 'get',
+    params: query
+  })
+}

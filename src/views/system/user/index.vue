@@ -578,7 +578,6 @@ export default {
     },
     /** 谷歌验证码绑定按钮 */
     bind() {
-      alert("aa");
         bindGoogleAuth(this.userName,this.secretKey,this.googleAuthCode).then(response => {
           this.msgSuccess('绑定成功')
           this.open = false

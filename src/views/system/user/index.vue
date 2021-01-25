@@ -183,7 +183,7 @@
       <img :src="pic"
            width="100%"/>
         <el-input
-          v-model="form.userName"
+          v-model="userName"
           v-show="false"
         />
         <el-input
@@ -339,8 +339,9 @@ export default {
       dialogVisible: false,
       //谷歌二维码
       pic: '',
-      secretKey : "",
+      secretKey: "",
       googleAuthCode: "",
+      userName: "",
       // 遮罩层
       loading: true,
       // 选中数组
@@ -452,6 +453,7 @@ export default {
     },
     //绑定谷歌验证码
     showOrder(row) {
+      this.userName= row.userName
       this.dialogVisible = true
       this.title = '绑定谷歌验证码'
       const name = row.userName
@@ -576,7 +578,8 @@ export default {
     },
     /** 谷歌验证码绑定按钮 */
     bind() {
-        bindGoogleAuth(this.form.userName,this.secretKey,this.googleAuthCode).then(response => {
+      alert("aa");
+        bindGoogleAuth(this.userName,this.secretKey,this.googleAuthCode).then(response => {
           this.msgSuccess('绑定成功')
           this.open = false
         })

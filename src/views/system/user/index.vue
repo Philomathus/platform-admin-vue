@@ -580,7 +580,7 @@ export default {
     bind() {
         bindGoogleAuth(this.userName,this.secretKey,this.googleAuthCode).then(response => {
           this.msgSuccess('绑定成功')
-          this.open = false
+          this.open = true
         })
     },
     /** 删除按钮操作 */

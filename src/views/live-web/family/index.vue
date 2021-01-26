@@ -108,6 +108,24 @@
       <el-table-column label="积分" align="center" prop="score"/>
       <el-table-column label="家族等级" align="center" prop="liveLevel"/>
       <el-table-column label="家族推荐号" align="center" prop="familyRecom"/>
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            @click="handleUpdate(scope.row)"
+            v-hasPermi="['admin:liveFamily:edit']"
+          >修改</el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-delete"
+            @click="handleDelete(scope.row)"
+            v-hasPermi="['admin:liveFamily:remove']"
+          >删除</el-button>
+        </template>
+      </el-table-column>
     </el-table>
 
     <pagination

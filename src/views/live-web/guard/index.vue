@@ -64,7 +64,7 @@
 
     <el-table v-loading="loading" :data="liveGuardConfigList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="赠送天数" align="center" prop="id" />
+      <el-table-column label="id" align="center" prop="id" />
       <el-table-column label="规格" align="center" prop="specifications" />
       <el-table-column label="守护月数" align="center" prop="month" />
       <el-table-column label="价格" align="center" prop="price" />

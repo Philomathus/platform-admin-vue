@@ -112,7 +112,7 @@
         <el-form-item label="价格" prop="price">
           <el-input v-model="form.price" placeholder="请输入价格" />
         </el-form-item>
-        <el-form-item label="1银之守护2.星之守护" prop="type">
+        <el-form-item label="守护类型" prop="type">
           <el-select v-model="form.type" placeholder="请选择1银之守护2.星之守护">
             <el-option label="请选择字典生成" value="" />
           </el-select>

@@ -67,20 +67,20 @@
       <el-table-column label="道具名" align="center" prop="name" />
       <el-table-column label="积分" align="center" prop="score" />
       <el-table-column label="消费钻石" align="center" prop="diamonds" />
-      <el-table-column label="图标" align="center" prop="icon" />
+<!--      <el-table-column label="图标" align="center" prop="icon" />-->
       <el-table-column label="红包" align="center" prop="ticket" />
-      <el-table-column label="1:可以连续发送多个;用于小金额礼物" align="center" prop="isMuch" />
-      <el-table-column label="排序，从大到小;越大越靠前" align="center" prop="sort" />
-      <el-table-column label="1:红包" align="center" prop="isRedEnvelope" />
-      <el-table-column label="0:普通礼物 1:gif礼物 2:大型动画礼物" align="center" prop="isAnimated" />
-      <el-table-column label="0:禁用;1:启用;默认启用" align="center" prop="isEffect" />
-      <el-table-column label="大型道具类型" />
-      <el-table-column label="机器人红包" align="center" prop="robotDiamonds" />
-      <el-table-column label="PC端图标" align="center" prop="pcIcon" />
-      <el-table-column label="PC端动态图标" align="center" prop="pcGif" />
+      <el-table-column label="是否连续" align="center" prop="isMuch" />
+<!--      <el-table-column label="排序，从大到小;越大越靠前" align="center" prop="sort" />-->
+<!--      <el-table-column label="1:红包" align="center" prop="isRedEnvelope" />-->
+      <el-table-column label="展示动画" align="center" prop="isAnimated" />
+      <el-table-column label="状态" align="center" prop="isEffect" />
+<!--      <el-table-column label="大型道具类型" />-->
+<!--      <el-table-column label="机器人红包" align="center" prop="robotDiamonds" />-->
+<!--      <el-table-column label="PC端图标" align="center" prop="pcIcon" />-->
+<!--      <el-table-column label="PC端动态图标" align="center" prop="pcGif" />-->
       <el-table-column label="礼物风格" align="center" prop="gifGiftShowStyle" />
-      <el-table-column label="svga动画路径" align="center" prop="animatedUrl" />
-      <el-table-column label="0:礼物；1:打赏" align="center" prop="type" />
+<!--      <el-table-column label="svga动画路径" align="center" prop="animatedUrl" />-->
+      <el-table-column label="类型" align="center" prop="type" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button

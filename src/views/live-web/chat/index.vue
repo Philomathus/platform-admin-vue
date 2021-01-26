@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="规格" prop="specifications">
+      <el-form-item label="发送人" prop="userNickName">
         <el-input
-          v-model="queryParams.specifications"
-          placeholder="请输入规格"
+          v-model="queryParams.userNickName"
+          placeholder="请输入发送者昵称"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -24,7 +24,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['admin:liveGuardConfig:add']"
+          v-hasPermi="['admin:liveVideoChat:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -35,7 +35,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['admin:liveGuardConfig:edit']"
+          v-hasPermi="['admin:liveVideoChat:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -46,7 +46,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['admin:liveGuardConfig:remove']"
+          v-hasPermi="['admin:liveVideoChat:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -56,22 +56,23 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['admin:liveGuardConfig:export']"
+          v-hasPermi="['admin:liveVideoChat:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="liveGuardConfigList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="liveVideoChatList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="id" align="center" prop="id" />
-      <el-table-column label="规格" align="center" prop="specifications" />
-      <el-table-column label="守护月数" align="center" prop="month" />
-      <el-table-column label="价格" align="center" prop="price" />
-      <el-table-column label="守护类型" align="center" prop="type" />
-      <el-table-column label="礼物id" align="center" prop="propId" />
-      <el-table-column label="优惠价格" align="center" prop="discountPrice" />
-      <el-table-column label="赠送天数" align="center" prop="giveday" />
+      <el-table-column label="会员ID" align="center" prop="id" />
+      <el-table-column label="主播ID" align="center" prop="poscatId" />
+      <el-table-column label="消息所在聊天组" align="center" prop="group" />
+      <el-table-column label="发送者id" align="center" prop="userId" />
+      <el-table-column label="消息内容" align="center" prop="msg" />
+      <el-table-column label="消息类型" align="center" prop="type" />
+      <el-table-column label="主播昵称" align="center" prop="poscatNickName" />
+      <el-table-column label="发送者昵称" align="center" prop="userNickName" />
+      <el-table-column label="平台会员ID" align="center" prop="fromPlatform" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -79,14 +80,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['admin:liveGuardConfig:edit']"
+            v-hasPermi="['admin:liveVideoChat:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['admin:liveGuardConfig:remove']"
+            v-hasPermi="['admin:liveVideoChat:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -100,32 +101,34 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改对话框 -->
+    <!-- 添加或修改会员发言对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="规格" prop="specifications">
-          <el-input v-model="form.specifications" placeholder="请选择规格" />
+        <el-form-item label="主播ID" prop="poscatId">
+          <el-input v-model="form.poscatId" placeholder="请输入主播ID" />
         </el-form-item>
-        <el-form-item label="守护月数" prop="month">
-          <el-input v-model="form.month" placeholder="请输入守护月数" />
+        <el-form-item label="消息所在聊天组" prop="group">
+          <el-input v-model="form.group" placeholder="请输入消息所在聊天组" />
         </el-form-item>
-        <el-form-item label="价格" prop="price">
-          <el-input v-model="form.price" placeholder="请输入价格" />
+        <el-form-item label="发送者id" prop="userId">
+          <el-input v-model="form.userId" placeholder="请输入发送者id" />
         </el-form-item>
-        <el-form-item label="守护类型" prop="type">
-          <el-select v-model="form.type" placeholder="守护类型">
-            <el-option label="银之守护" value="1" />
-            <el-option label="星之守护" value="2" />
+        <el-form-item label="消息内容" prop="msg">
+          <el-input v-model="form.msg" type="textarea" placeholder="请输入内容" />
+        </el-form-item>
+        <el-form-item label="消息类型 0 普通消息 1 弹幕消息" prop="type">
+          <el-select v-model="form.type" placeholder="请选择消息类型 0 普通消息 1 弹幕消息">
+            <el-option label="请选择字典生成" value="" />
           </el-select>
         </el-form-item>
-        <el-form-item label="礼物id" prop="propId">
-          <el-input v-model="form.propId" placeholder="请输入礼物id" />
+        <el-form-item label="主播昵称" prop="poscatNickName">
+          <el-input v-model="form.poscatNickName" placeholder="请输入主播昵称" />
         </el-form-item>
-        <el-form-item label="优惠价格" prop="discountPrice">
-          <el-input v-model="form.discountPrice" placeholder="请输入优惠价格" />
+        <el-form-item label="发送者昵称" prop="userNickName">
+          <el-input v-model="form.userNickName" placeholder="请输入发送者昵称" />
         </el-form-item>
-        <el-form-item label="赠送天数" prop="giveday">
-          <el-input v-model="form.giveday" placeholder="请输入赠送天数" />
+        <el-form-item label="平台会员ID" prop="fromPlatform">
+          <el-input v-model="form.fromPlatform" placeholder="请输入平台会员ID" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -137,10 +140,10 @@
 </template>
 
 <script>
-import { listLiveGuardConfig, getLiveGuardConfig, delLiveGuardConfig, addLiveGuardConfig, updateLiveGuardConfig, exportLiveGuardConfig } from "@/api/live-web/guard/liveGuardConfig";
+import { listLiveVideoChat, getLiveVideoChat, delLiveVideoChat, addLiveVideoChat, updateLiveVideoChat, exportLiveVideoChat } from "@/api/live-web/chat/liveVideoChat";
 
 export default {
-  name: "LiveGuardConfig",
+  name: "LiveVideoChat",
   components: {
   },
   data() {
@@ -157,8 +160,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 表格数据
-      liveGuardConfigList: [],
+      // 会员发言表格数据
+      liveVideoChatList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -167,18 +170,22 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        specifications: null,
-        month: null,
-        price: null,
+        poscatId: null,
+        group: null,
+        userId: null,
+        msg: null,
         type: null,
-        propId: null,
-        discountPrice: null,
-        giveday: null
+        poscatNickName: null,
+        userNickName: null,
+        fromPlatform: null
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
+        poscatId: [
+          { required: true, message: "主播ID不能为空", trigger: "blur" }
+        ],
       }
     };
   },
@@ -186,11 +193,11 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询列表 */
+    /** 查询会员发言列表 */
     getList() {
       this.loading = true;
-      listLiveGuardConfig(this.queryParams).then(response => {
-        this.liveGuardConfigList = response.rows;
+      listLiveVideoChat(this.queryParams).then(response => {
+        this.liveVideoChatList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
@@ -204,13 +211,15 @@ export default {
     reset() {
       this.form = {
         id: null,
-        specifications: null,
-        month: null,
-        price: null,
+        poscatId: null,
+        group: null,
+        userId: null,
+        msg: null,
+        createTime: null,
         type: null,
-        propId: null,
-        discountPrice: null,
-        giveday: null
+        poscatNickName: null,
+        userNickName: null,
+        fromPlatform: null
       };
       this.resetForm("form");
     },
@@ -234,16 +243,16 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加";
+      this.title = "添加会员发言";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
       const id = row.id || this.ids
-      getLiveGuardConfig(id).then(response => {
+      getLiveVideoChat(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改";
+        this.title = "修改会员发言";
       });
     },
     /** 提交按钮 */
@@ -251,13 +260,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
-            updateLiveGuardConfig(this.form).then(response => {
+            updateLiveVideoChat(this.form).then(response => {
               this.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addLiveGuardConfig(this.form).then(response => {
+            addLiveVideoChat(this.form).then(response => {
               this.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -269,12 +278,12 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除编号为"' + ids + '"的数据项?', "警告", {
+      this.$confirm('是否确认删除会员发言编号为"' + ids + '"的数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         }).then(function() {
-          return delLiveGuardConfig(ids);
+          return delLiveVideoChat(ids);
         }).then(() => {
           this.getList();
           this.msgSuccess("删除成功");
@@ -283,12 +292,12 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有数据项?', "警告", {
+      this.$confirm('是否确认导出所有会员发言数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         }).then(function() {
-          return exportLiveGuardConfig(queryParams);
+          return exportLiveVideoChat(queryParams);
         }).then(response => {
           this.download(response.msg);
         })

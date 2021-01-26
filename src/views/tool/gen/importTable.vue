@@ -21,6 +21,7 @@
         >
           <el-option
             v-for="schema in tableSchemaOptions"
+            :key="schema"
             :label="schema"
             :value="schema"
           />

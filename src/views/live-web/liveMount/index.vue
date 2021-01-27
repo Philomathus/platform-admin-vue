@@ -76,6 +76,16 @@
       <el-table-column label="vip等级" align="center" prop="gvip" />
       <el-table-column label="坐骑名" align="center" prop="name" />
       <el-table-column label="状态" align="center" prop="status" />
+      <el-table-column label="状态" align="center" key="status" v-if="columns[0].visible">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.status"
+            active-value="1"
+            inactive-value="0"
+            @change="handleStatusChange(scope.row)"
+          ></el-switch>
+        </template>
+      </el-table-column>
 <!--      <el-table-column label="PC端图标" align="center" prop="iconUrl" />-->
 <!--      <el-table-column label="svga动画路径" align="center" prop="svgUrl" />-->
       <el-table-column label="价格" align="center" prop="price" />
@@ -112,24 +122,19 @@
     <!-- 添加或修改礼物列对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="ID" prop="id">
-          <el-input v-model="form.id" placeholder="请输入ID" />
-        </el-form-item>
-        <el-form-item label="免费领取VIP(-1只能买)" prop="gvip">
+        <el-form-item label="vip等级" prop="gvip">
           <el-input v-model="form.gvip" placeholder="请输入免费领取VIP(-1只能买)" />
         </el-form-item>
         <el-form-item label="坐骑名" prop="name">
           <el-input v-model="form.name" placeholder="请输入坐骑名" />
         </el-form-item>
-        <el-form-item label="0:禁用;1:启用;默认启用">
+        <el-form-item label="状态">
           <el-radio-group v-model="form.status">
-            <el-radio label="1">请选择字典生成</el-radio>
+            <el-radio label="0">未启用</el-radio>
+            <el-radio label="1">启用</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="PC端图标" prop="iconUrl">
-          <el-input v-model="form.iconUrl" placeholder="请输入PC端图标" />
-        </el-form-item>
-        <el-form-item label="svga动画路径" prop="svgUrl">
+        <el-form-item label="动画"  prop="svgUrl">
           <el-input v-model="form.svgUrl" placeholder="请输入svga动画路径" />
         </el-form-item>
         <el-form-item label="价格" prop="price">
@@ -190,6 +195,10 @@ export default {
         disPrice: null,
         vday: null
       },
+      // 列信息
+      columns: [
+        {key: 0, label: `状态`, visible: true}
+      ],
       // 表单参数
       form: {},
       // 表单校验
@@ -307,6 +316,10 @@ export default {
           this.getList();
           this.msgSuccess("删除成功");
         })
+    },
+    // 用户状态修改
+    handleStatusChange(row) {
+
     },
     /** 导出按钮操作 */
     handleExport() {

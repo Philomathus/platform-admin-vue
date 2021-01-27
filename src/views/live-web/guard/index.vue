@@ -68,7 +68,7 @@
       <el-table-column label="规格" align="center" prop="specifications" />
       <el-table-column label="守护月数" align="center" prop="month" />
       <el-table-column label="价格" align="center" prop="price" />
-      <el-table-column label="守护类型" align="center" prop="type" />
+      <el-table-column label="守护类型" align="center" prop="type" :formatter="typeFormat"/>
       <el-table-column label="礼物id" align="center" prop="propId" />
       <el-table-column label="优惠价格" align="center" prop="discountPrice" />
       <el-table-column label="赠送天数" align="center" prop="giveday" />
@@ -288,6 +288,13 @@ export default {
           this.getList();
           this.msgSuccess("删除成功");
         })
+    },
+    typeFormat(row, column) {
+      if (row.type == "1") {
+        return "银之守护";
+      }else{
+        return "星之守护";
+      }
     },
     /** 导出按钮操作 */
     handleExport() {

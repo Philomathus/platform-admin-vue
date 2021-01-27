@@ -67,8 +67,16 @@
       <el-table-column label="编号" align="center" prop="id" />
       <el-table-column label="插件名称" align="center" prop="name" />
       <el-table-column label="状态" align="center" prop="status" />
-      <el-table-column label="地址" align="center" prop="conUrl" />
-      <el-table-column label="图标地址" align="center" prop="iconUrl" />
+      <el-table-column label="地址" width="305px" align="center" prop="conUrl" />
+      <el-table-column label="图标" align="center" prop="iconUrl">
+        <template slot-scope="scope">
+          <el-image
+            style="width: 50px; height: 50px"
+            :src="scope.row.iconUrl"
+          >
+          </el-image>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button

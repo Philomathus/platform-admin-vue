@@ -125,13 +125,22 @@
     />
 
     <!-- 添加或修改分类对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="分类名称" prop="title">
           <el-input v-model="form.title" placeholder="请输入分类名称"/>
         </el-form-item>
-        <el-form-item label="状态" prop="isEffect">
-          <el-input v-model="form.isEffect" placeholder="请选择状态"/>
+        <el-form-item label="状态">
+          <el-radio-group v-model="form.isEffect">
+            <el-radio label="0">未启用</el-radio>
+            <el-radio label="1">启用</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="主播端显示">
+          <el-radio-group v-model="form.isHostShow">
+            <el-radio label="0">未启用</el-radio>
+            <el-radio label="1">启用</el-radio>
+          </el-radio-group>
         </el-form-item>
         <el-form-item label="排序" prop="sort">
           <el-input v-model="form.sort" placeholder="请输入排序"/>
@@ -142,12 +151,6 @@
         <el-form-item label="分类id" prop="classfy">
           <el-input v-model="form.classfy" placeholder="请输入分类id"/>
         </el-form-item>
-<!--        <el-form-item label="是否主播端显示" prop="isHostShow">-->
-<!--          <el-input v-model="form.isHostShow" placeholder="请输入是否主播端显示"/>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="查询主播列表分页逻辑" prop="sortDesc">-->
-<!--          <el-input v-model="form.sortDesc" placeholder="请输入查询主播列表分页逻辑"/>-->
-<!--        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>

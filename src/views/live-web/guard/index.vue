@@ -112,10 +112,14 @@
         <el-form-item label="价格" prop="price">
           <el-input v-model="form.price" placeholder="请输入价格" />
         </el-form-item>
-        <el-form-item label="守护类型" prop="type">
-          <el-select v-model="form.type" placeholder="守护类型">
-            <el-option label="银之守护" value="1" />
-            <el-option label="星之守护" value="2" />
+        <el-form-item label="守护类型">
+          <el-select v-model="form.type" placeholder="请选择">
+            <el-option
+              v-for="dict in guardOptions"
+              :key="dict.dictValue"
+              :label="dict.dictLabel"
+              :value="dict.dictValue"
+            ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="礼物id" prop="propId">
@@ -159,6 +163,7 @@ export default {
       total: 0,
       // 表格数据
       liveGuardConfigList: [],
+      guardOptions:[],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -184,6 +189,9 @@ export default {
   },
   created() {
     this.getList();
+    this.getDicts('guard_type').then(response => {
+      this.guardOptions = response.data
+    })
   },
   methods: {
     /** 查询列表 */

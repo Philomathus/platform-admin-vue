@@ -6,10 +6,10 @@
           <el-option v-for="(item,index) in typeList" :key="index" :label="item.label" :value="item.value"/>
         </el-select>
       </el-form-item>
-      <el-form-item label="会员ID/账号/手机号" label-width="150px" prop="memberCode">
+      <el-form-item label="会员ID/账号/手机号" label-width="150px" prop="code">
         <el-input
-          v-model="queryParams.memberCode"
-          placeholder="请输入会员编号"
+          v-model="queryParams.code"
+          placeholder="请输入会员ID/账号/手机号"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -46,6 +46,15 @@
         <el-input
           v-model="queryParams.loginIp"
           placeholder="请输入登录ip"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="银行卡号" prop="loginIp">
+        <el-input
+          v-model="queryParams.bankAccount"
+          placeholder="请输入银行卡号"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -394,7 +403,7 @@
         >修改
         </el-button>
       </el-col>
-      <el-col :span="1.5">
+<!--      <el-col :span="1.5">
         <el-button
           type="danger"
           plain
@@ -405,7 +414,7 @@
           v-hasPermi="['admin:memberInfo:remove']"
         >删除
         </el-button>
-      </el-col>
+      </el-col>-->
       <el-col :span="1.5">
         <el-button
           type="warning"
@@ -497,14 +506,14 @@
             v-hasPermi="['admin:memberInfo:edit']"
           >修改
           </el-button>
-          <el-button
+<!--          <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:memberInfo:remove']"
           >删除
-          </el-button>
+          </el-button>-->
           <el-button
             size="mini"
             type="text"
@@ -726,6 +735,8 @@
                 queryParams: {
                     pageNum: 1,
                     pageSize: 10,
+                    bankAccount: null,
+                    code: null, //会员Id,账号,手机号
                     memberCode: null,
                     cxAgent: null,
                     userName: null,
@@ -765,7 +776,9 @@
                     loginNum: null,
                     version: null,
                     withdrawalPass: null,
-                    deviceId: null
+                    deviceId: null,
+                    orderByColumn: 'reg_time',
+                    isAsc: 'desc',
                 },
                 // 表单参数
                 form: {},

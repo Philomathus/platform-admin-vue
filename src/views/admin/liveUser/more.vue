@@ -2,7 +2,7 @@
   <!-- 导入表 -->
   <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="visible" width="800px" top="5vh" append-to-body>
     <!--顶部按钮-->
-    <div class="page-tab">
+    <div class="page-tab" style="margin-bottom: 10px">
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(1,'聊天室记录')">
         <span>聊天室记录</span></button>
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(2,'账户日志')">
@@ -22,7 +22,7 @@
                           end-placeholder="结束日期"
                           range-separator="至" clearable></el-date-picker>
         </el-form-item>
-        <el-form-item label="礼物名称" prop="giftName">
+        <!--<el-form-item label="礼物名称" prop="giftName">
           <el-input
             v-model="queryParams.giftName"
             placeholder="请输入表描述"
@@ -30,7 +30,7 @@
             size="small"
             @keyup.enter.native="handleQuery"
           />
-        </el-form-item>
+        </el-form-item>-->
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
           <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -38,13 +38,15 @@
       </el-form>
       <el-table @row-click="clickRow" ref="table" :data="dbTableList" @selection-change="handleSelectionChange"
                 height="260px">
-        <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column prop="propId" label="礼物ID" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="propName" label="礼物名称" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="puserId" label="会员平台ID" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="totalDiamonds" label="钻石" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="createDate" label="创建时间" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="num" label="发送数量" :show-overflow-tooltip="true"></el-table-column>
+<!--        <el-table-column type="selection" width="55"></el-table-column>-->
+        <el-table-column prop="poscatId" label="主播ID" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="poscatNickName" label="主播昵称" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="fromPlatform" label="发送者" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="userNickName" label="发送者昵称" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="type" label="消息类型" :show-overflow-tooltip="true"
+                         :formatter="formatterMsg"></el-table-column>
+        <el-table-column prop="msg" label="消息内容" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="createTime" label="发送时间" :show-overflow-tooltip="true"></el-table-column>
       </el-table>
       <pagination
         v-show="total>0"
@@ -69,7 +71,7 @@
       </el-form>
       <el-table @row-click="clickRow" ref="table" :data="dbTableList" @selection-change="handleSelectionChange"
                 height="260px">
-        <el-table-column type="selection" width="55"></el-table-column>
+<!--        <el-table-column type="selection" width="55"></el-table-column>-->
         <el-table-column prop="id" label="编号" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="propName" label="主播ID" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="puserId" label="用户ID" :show-overflow-tooltip="true"></el-table-column>
@@ -116,7 +118,7 @@
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column prop="propId" label="礼物ID" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="propName" label="礼物名称" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="puserId" label="会员平台ID" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="pUserId" label="会员平台ID" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="totalDiamonds" label="钻石" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="createDate" label="创建时间" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="num" label="发送数量" :show-overflow-tooltip="true"></el-table-column>
@@ -145,14 +147,20 @@
     } from "@/api/platform-web/admin/liveUser";
 
     export default {
+        props: {
+            userId: {
+                required: false,
+                default: 0,
+            },
+        },
         data() {
             return {
                 //弹出框标题
                 title: '积分明细',
                 //页面编码
                 index: 1,
-                //用户id
-                userId: undefined,
+/*                //用户id
+                userId: undefined,*/
                 // 遮罩层
                 visible: false,
                 // 选中数组值
@@ -179,7 +187,7 @@
                     giftName: undefined,//礼物名称
                     accountType: undefined,//账户类型
                     pageNum: 1,
-                    pageSize: 15,
+                    pageSize: 10,
                     tableName: undefined,
                     tableComment: undefined
                 }
@@ -239,7 +247,7 @@
                         selectDate: undefined,//选择日期
                         giftName: undefined,//礼物名称
                         pageNum: 1,
-                        pageSize: 15,
+                        pageSize: 10,
                         tableName: undefined,
                         tableComment: undefined
                     }
@@ -275,14 +283,20 @@
                             type: 'success',
                             message: '你的家族ID是: ' + value
                         });
-                        if (index === 4) {
+                        if (this.index === 4) {
+                            debugger;
                             goFamiily({
                                 familyId: value,
-                                id: this.id
+                                id: this.userId
                             }).then((res) => {
-                                this.$notify.success(res.data)
+                                console.log('修改家族ID \n'+ JSON.stringify(res))
+                                if (res.code===200){
+                                    this.$notify.success(res.msg)
+                                }else {
+                                    this.$notify.error('修改家族ID失败')
+                                }
                             }).catch(() => {
-                                this.$notify.error('修改家族ID失败')
+                                this.$notify.error('网络异常')
                             });
                         }
                     }).catch(() => {
@@ -326,58 +340,63 @@
                      }
                  });*/
             },
-            //获取积分列表
+            //获取聊天记录列表
             chatPage() {
+                console.log(this.queryParams.selectDate)
                 var data = {
-                    poscatId: 507,
+                    poscatId: this.userId,
                     pageNum: this.queryParams.pageNum,
                     pageSize: this.queryParams.pageSize,
                     _: new Date().getTime(),
                     orderByColumn: 'create_time',
                     isAsc: 'desc',
-                    startTime: this.queryParams.selectDate===undefined ? undefined : this.queryParams.selectDate.startDate,
-                    endTime: this.queryParams.selectDate===undefined ? undefined : this.queryParams.selectDate.endDate,
+                    sendStartTime: this.queryParams.selectDate===undefined ? undefined : this.queryParams.selectDate[0] +' 00:00:00',
+                    sendEndTime: this.queryParams.selectDate===undefined ? undefined : this.queryParams.selectDate[1] +' 23:59:59',
                 }
 
                 chatPage(data).then((res) => {
+                    console.log('获取聊天记录列表 \n'+JSON.stringify(res))
                     if (res.code === 200) {
-                        this.dbTableList = res.records;
+                        this.dbTableList = res.rows;
                         this.total = res.total;
                     }
                 }).catch(() => {
-                    this.$notify.error('获取积分列表失败')
+                    this.$notify.error('获取聊天记录列表失败')
                 });
             },
             //接受礼物日志
             receiveProplist() {
                 var data = {
-                    toUserId: 507,
-                    page: this.queryParams.pageNum,
-                    limit: this.queryParams.pageSize,
+                    toUserId: this.userId,
+                    pageNum: this.queryParams.pageNum,
+                    pageSize: this.queryParams.pageSize,
                     _: new Date().getTime(),
-                    sortDes: 'createTime',
-                    startTime: this.queryParams.selectDate===undefined ? undefined : this.queryParams.selectDate.startDate,
-                    endTime: this.queryParams.selectDate===undefined ? undefined : this.queryParams.selectDate.endDate,
-                    propNameLike: this.queryParams.giftName,
+                    orderByColumn: 'create_time',
+                    isAsc: 'desc',
+                    sendStartTime: this.queryParams.selectDate===undefined ? undefined : this.queryParams.selectDate[0] +' 00:00:00',
+                    sendEndTime: this.queryParams.selectDate===undefined ? undefined : this.queryParams.selectDate[1] +' 23:59:59',
+                    propName: this.queryParams.giftName,
                 }
                 receiveProplist(data).then((res) => {
+                    console.log('接受礼物 \n'+JSON.stringify(res))
                     if (res.code === 200) {
-                        this.dbTableList = res.records;
+                        this.dbTableList = res.rows;
                         this.total = res.total;
                     }
                 }).catch(() => {
-                    this.$notify.error('获取积分列表失败')
+                    this.$notify.error('获取聊天记录列表失败')
                 });
             },
             //获取账户日志
             logPage(){
-                logPage({podcastId: 515,
-                    page: this.queryParams.pageNum,
-                    limit: this.queryParams.pageSize,
+                logPage({podcastId: this.userId,
+                    pageNum: this.queryParams.pageNum,
+                    pageSize: this.queryParams.pageSize,
                     type: this.queryParams.accountType,
                     _: new Date().getTime()}).then((res) => {
+                    console.log('账户日志 \n'+JSON.stringify(res))
                     if (res.code === 200) {
-                        this.dbTableList = res.records;
+                        this.dbTableList = res.rows;
                         this.total = res.total;
                     }
                 }).catch(() => {

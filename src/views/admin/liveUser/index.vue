@@ -29,8 +29,8 @@
         />
       </el-form-item>
       <el-form-item label="日期范围" prop="selectDate">
-        <el-date-picker type="daterange" v-model="queryParams.selectDate" format="yyyy-MM-dd"
-                        value-format="yyyy-MM-dd" :style="{width: '100%'}" start-placeholder="开始日期"
+        <el-date-picker type="daterange" v-model="selectDate" format="yyyy-MM-dd"
+                        value-format="yyyy-MM-dd" :style="{width: '60%'}" start-placeholder="开始日期"
                         end-placeholder="结束日期"
                         range-separator="至" clearable></el-date-picker>
       </el-form-item>
@@ -1250,7 +1250,7 @@
         >修改
         </el-button>
       </el-col>
-      <el-col :span="1.5">
+<!--      <el-col :span="1.5">
         <el-button
           type="danger"
           plain
@@ -1261,7 +1261,7 @@
           v-hasPermi="['admin:liveUser:remove']"
         >删除
         </el-button>
-      </el-col>
+      </el-col>-->
       <el-col :span="1.5">
         <el-button
           type="warning"
@@ -1289,7 +1289,11 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="家族ID" align="center" prop="familyId"/>
+      <el-table-column label="家族ID" align="center" prop="familyId">
+        <template v-slot="{row}">
+          <el-button @click="getFamiily(row)">{{row.familyId}}</el-button>
+        </template>
+      </el-table-column>
       <el-table-column label="已认证" align="center" prop="authenticationType"/>
       <el-table-column label="印票" align="center" prop="ticket"/>
       <el-table-column label="可用印票" align="center" prop="ticket"/>
@@ -1469,14 +1473,14 @@
         -->
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button
+<!--          <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:liveUser:edit']"
           >修改
-          </el-button>
+          </el-button>-->
           <el-button
             size="mini"
             type="text"
@@ -1507,15 +1511,35 @@
     <!-- 添加或修改//用户信息对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="用户昵称" prop="nickName">
+        <el-form-item label="主播昵称" prop="nickName">
           <el-input v-model="form.nickName" placeholder="请输入用户昵称"/>
         </el-form-item>
-        <el-form-item label="用户密码" prop="userPwd">
-          <el-input v-model="form.userPwd" placeholder="请输入用户密码"/>
+        <el-form-item label="手机号" prop="mobile">
+          <el-input v-model="form.mobile" placeholder="请输入手机号"/>
+        </el-form-item>
+        <el-form-item label="能否修改性别 1为可修改 0为不可修改" prop="isEditSex">
+          <el-select v-model="form.isEditSex" placeholder="请选择能否修改性别 1为可修改 0为不可修改">
+            <el-option label="请选择字典生成" value=""/>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="创建时间" prop="mobile">
+          <el-input v-model="form.mobile" placeholder="请输入手机号"/>
+        </el-form-item>
+        <el-form-item label="会员等级;live_user_level.level" prop="userLevel">
+          <el-input v-model="form.userLevel" placeholder="请输入用户等级;live_user_level.level"/>
         </el-form-item>
         <el-form-item label="个性签名" prop="signature">
           <el-input v-model="form.signature" type="textarea" placeholder="请输入内容"/>
         </el-form-item>
+
+
+
+
+
+        <el-form-item label="用户密码" prop="userPwd">
+          <el-input v-model="form.userPwd" placeholder="请输入用户密码"/>
+        </el-form-item>
+
         <el-form-item label="是否认证 0指未认证  1指待审核 2指认证 3指审核不通过" prop="isAuthentication">
           <el-input v-model="form.isAuthentication" placeholder="请输入是否认证 0指未认证  1指待审核 2指认证 3指审核不通过"/>
         </el-form-item>
@@ -1539,11 +1563,7 @@
         <el-form-item label="市" prop="city">
           <el-input v-model="form.city" placeholder="请输入市"/>
         </el-form-item>
-        <el-form-item label="能否修改性别 1为可修改 0为不可修改" prop="isEditSex">
-          <el-select v-model="form.isEditSex" placeholder="请选择能否修改性别 1为可修改 0为不可修改">
-            <el-option label="请选择字典生成" value=""/>
-          </el-select>
-        </el-form-item>
+
         <el-form-item label="性别 0:未知, 1-男，2-女" prop="sex">
           <el-select v-model="form.sex" placeholder="请选择性别 0:未知, 1-男，2-女">
             <el-option label="请选择字典生成" value=""/>
@@ -1591,12 +1611,8 @@
         <el-form-item label="验证" prop="verify">
           <el-input v-model="form.verify" placeholder="请输入验证"/>
         </el-form-item>
-        <el-form-item label="用户等级;live_user_level.level" prop="userLevel">
-          <el-input v-model="form.userLevel" placeholder="请输入用户等级;live_user_level.level"/>
-        </el-form-item>
-        <el-form-item label="手机号" prop="mobile">
-          <el-input v-model="form.mobile" placeholder="请输入手机号"/>
-        </el-form-item>
+
+
         <el-form-item label="用户类型 0指 普通用户 ，1指企业会员" prop="userType">
           <el-select v-model="form.userType" placeholder="请选择用户类型 0指 普通用户 ，1指企业会员">
             <el-option label="请选择字典生成" value=""/>
@@ -1988,7 +2004,7 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
-    <more ref="more" @liveUserMore="handleQuery"></more>
+    <more ref="more" :user-id="userId" @liveUserMore="handleQuery"></more>
   </div>
 </template>
 
@@ -2000,10 +2016,12 @@
         addLiveUser,
         updateLiveUser,
         exportLiveUser,
-        banDetail
+        banDetail,
+        getFamiily
     } from "@/api/platform-web/admin/liveUser";
     import ImageUpload from '@/components/ImageUpload';
     import more from "./more";
+
     export default {
         name: "LiveUser",
         components: {
@@ -2012,6 +2030,8 @@
         },
         data() {
             return {
+                //所选的用户id
+                userId: 0,
                 // 遮罩层
                 loading: true,
                 // 选中数组
@@ -2030,13 +2050,13 @@
                 title: "",
                 // 是否显示弹出层
                 open: false,
+                selectDate: null,
                 // 查询参数
                 queryParams: {
                     pageNum: 1,
                     pageSize: 10,
                     id: null,
                     nickName: null,
-                    selectDate: null,
                     userPwd: null,
                     signature: null,
                     isAuthentication: null,
@@ -2182,7 +2202,9 @@
                     totalTime: null,
                     pUserShenhe: null,
                     ticketCattyRatio: null,
-                    banRemark: null
+                    banRemark: null,
+                    orderByColumn: 'create_time',
+                    isAsc: 'desc',
                 },
                 // 表单参数
                 form: {},
@@ -2422,12 +2444,27 @@
         created() {
             this.getList();
         },
+        watch: {
+            selectDate: function (newVal, oldVal) {
+                if (newVal === null) {
+                    this.queryParams.sendStartTime = undefined
+                    this.queryParams.sendEndTime = undefined
+                } else {
+                    this.queryParams.sendStartTime = this.selectDate[0] + ' 00:00:00'
+                    this.queryParams.sendEndTime = this.selectDate[1] + ' 23:59:59'
+                }
+            },
+        },
         methods: {
             //修改禁播状态
             displayCheck(row, type) {
-                this.opens('主播禁播备注', row, type)
+                if (type===1){
+                    this.opens('主播禁播备注', row, type)
+                }
+                this.banDetail(row,type)
             },
             opens(hint, row, type) {
+                var that = this
                 this.$prompt(hint, '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
@@ -2438,15 +2475,7 @@
                         type: 'success',
                         message: '你的主播禁播备注是: ' + value
                     });
-                    banDetail({
-                        id: row.id,
-                        isBan: type
-                    }).then((res) => {
-                        this.$notify.success(res.data)
-                        row.isBan = type
-                    }).catch(() => {
-                        this.$notify.error('修改禁播状态失败')
-                    });
+                    that.banDetail(row,type,value)
                 }).catch(() => {
                     this.$message({
                         type: 'info',
@@ -2455,6 +2484,37 @@
                 });
 
 
+            },
+            banDetail(row,type,value){
+                banDetail({
+                    id: row.id,
+                    isBan: type,
+                    banRemark: value
+                }).then((res) => {
+                    this.$notify.success(res.msg)
+                    row.isBan = type
+                }).catch(() => {
+                    this.$notify.error('修改禁播状态失败')
+                });
+            },
+            //获取家族信息
+            getFamiily(row) {
+                getFamiily(row.familyId).then((res) => {
+                    console.log(res)
+                    var content = '信息为空'
+                    if (res.data) {
+                        // content = '家族名称: ' + res.data.name +'<br/>'+ '\n族长昵称: ' + res.data.nickName + '\n族长ID: ' + res.data.userId
+                        content = "家族名称："+res.data.name+"</br> 族长昵称："+res.data.nickName+"\n</br> 族长ID:"+res.data.userId
+                    }
+                    this.$alert(content, '家族信息', {
+                        dangerouslyUseHTMLString: true,
+                        confirmButtonText: '确定',
+                        callback: action => {
+                        }
+                    })
+                }).catch(() => {
+                    this.$notify.error('网络异常')
+                });
             },
             /*格式换禁播状态*/
             formatterIsBan(row, column) {
@@ -2478,6 +2538,8 @@
             },
             /** 更多按钮操作 */
             handleMore(row) {
+                console.log(row)
+                this.userId = row.id;
                 this.$refs.more.show();
             },
             // 取消按钮
@@ -2637,7 +2699,9 @@
                     totalTime: null,
                     pUserShenhe: null,
                     ticketCattyRatio: null,
-                    banRemark: null
+                    banRemark: null,
+                    orderByColumn: 'create_time',
+                    isAsc: 'desc',
                 };
                 this.resetForm("form");
             },

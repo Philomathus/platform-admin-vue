@@ -158,7 +158,7 @@
                 // 查询参数
                 queryParams: {
                     pageNum: 1,
-                    pageSize: 15,
+                    pageSize: 10,
                     tableName: undefined,
                     tableComment: undefined
                 }
@@ -366,6 +366,7 @@
                     id: this.userId,
                     page: this.queryParams.pageNum,
                     limit: this.queryParams.pageSize,
+                    orderBy: 'create_time desc',
                     _: new Date().getTime()
                 }).then((res) => {
                     if (res.code === 0) {

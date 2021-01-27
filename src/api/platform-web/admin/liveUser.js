@@ -55,6 +55,13 @@ export function banDetail(query) {
   })
 }
 
+// 获取家族信息
+export function getFamiily(query) {
+  return request({
+    url: url.platformWeb + '/admin/liveFamily/'+query,
+    method: 'get',
+  })
+}
 // 修改家族id
 export function goFamiily(query) {
   return request({

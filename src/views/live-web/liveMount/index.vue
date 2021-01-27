@@ -75,7 +75,6 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="vip等级" align="center" prop="gvip" />
       <el-table-column label="坐骑名" align="center" prop="name" />
-      <el-table-column label="状态" align="center" prop="status" />
       <el-table-column label="状态" align="center" key="status" v-if="columns[0].visible">
         <template slot-scope="scope">
           <el-switch

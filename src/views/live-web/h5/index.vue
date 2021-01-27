@@ -103,11 +103,6 @@
         <el-form-item label="插件名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入名称" />
         </el-form-item>
-        <el-form-item label="状态">
-          <el-radio-group v-model="form.status">
-            <el-radio label="1">请选择字典生成</el-radio>
-          </el-radio-group>
-        </el-form-item>
         <el-form-item label="内容地址" prop="conUrl">
           <el-input v-model="form.conUrl" placeholder="请输入内容地址" />
         </el-form-item>

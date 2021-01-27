@@ -250,6 +250,7 @@ export default {
       const id = row.id || this.ids
       getLiveGuardConfig(id).then(response => {
         this.form = response.data;
+        this.form.type=""+this.form.type
         this.open = true;
         this.title = "修改";
       });

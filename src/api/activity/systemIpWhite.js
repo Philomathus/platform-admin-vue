@@ -52,3 +52,16 @@ export function exportSystemIpWhite(query) {
     params: query
   })
 }
+
+// IP白名单状态修改
+export function changeStatus(ipId, ipStatus) {
+  const data = {
+    ipId,
+    ipStatus
+  }
+  return request({
+    url: url.platformWeb + '/admin/systemIpWhite/changeStatus',
+    method: 'put',
+    data: data
+  })
+}

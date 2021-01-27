@@ -451,7 +451,7 @@ export default {
         }
       )
     },
-    //绑定谷歌验证码
+    //获取谷歌验证码二维码
     showOrder(row) {
       this.userName= row.userName
       this.dialogVisible = true

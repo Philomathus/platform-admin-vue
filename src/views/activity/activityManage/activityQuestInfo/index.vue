@@ -126,7 +126,15 @@
 
     <el-table v-loading="loading" :data="activityQuestInfoList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="图标" align="center" prop="icon" />
+      <el-table-column label="图标" align="center" prop="icon">
+        <template slot-scope="scope">
+          <el-image
+            style="width:50px"
+            :src="scope.row.icon"
+          >
+          </el-image>
+        </template>
+      </el-table-column>
       <el-table-column label="标题" align="center" prop="title" />
       <el-table-column label="发布时间" align="center" prop="ctime" width="180">
         <template slot-scope="scope">
@@ -171,21 +179,13 @@
     />
 
     <!-- 添加或修改任务信息对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" :visible.sync="open" width="700px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="图标" prop="icon">
           <el-input v-model="form.icon" placeholder="请输入图标" />
         </el-form-item>
         <el-form-item label="标题" prop="title">
           <el-input v-model="form.title" placeholder="请输入标题" />
-        </el-form-item>
-        <el-form-item label="发布时间" prop="ctime">
-          <el-date-picker clearable size="small"
-            v-model="form.ctime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择发布时间">
-          </el-date-picker>
         </el-form-item>
         <el-form-item label="排序号" prop="indexs">
           <el-input v-model="form.indexs" placeholder="请输入排序号" />

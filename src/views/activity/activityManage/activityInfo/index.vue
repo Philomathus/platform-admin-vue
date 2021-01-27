@@ -12,10 +12,10 @@
       </el-form-item>
       <el-form-item label="发布时间" prop="ctime">
         <el-date-picker clearable size="small"
-          v-model="queryParams.ctime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="选择发布时间">
+                        v-model="queryParams.ctime"
+                        type="date"
+                        value-format="yyyy-MM-dd"
+                        placeholder="选择发布时间">
         </el-date-picker>
       </el-form-item>
       <el-form-item>
@@ -33,7 +33,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:activityInfo:add']"
-        >新增</el-button>
+        >新增
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -44,7 +45,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:activityInfo:edit']"
-        >修改</el-button>
+        >修改
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -55,7 +57,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:activityInfo:remove']"
-        >删除</el-button>
+        >删除
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -65,23 +68,32 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:activityInfo:export']"
-        >导出</el-button>
+        >导出
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="activityInfoList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="图标" align="center" prop="icon" />
-      <el-table-column label="标题" align="center" prop="title" />
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="图标" align="center" prop="icon">
+        <template slot-scope="scope">
+          <el-image
+            style="width:380px"
+            :src="scope.row.icon"
+          >
+          </el-image>
+        </template>
+      </el-table-column>
+      <el-table-column label="标题" align="center" prop="title"/>
       <el-table-column label="发布时间" align="center" prop="ctime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.ctime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-<!--      <el-table-column label="排序号" align="center" prop="indexs" />-->
-<!--      <el-table-column label="活动类型id" align="center" prop="typeId" />-->
-      <el-table-column label="活动详情" align="center" prop="content" />
+      <!--      <el-table-column label="排序号" align="center" prop="indexs" />-->
+      <!--      <el-table-column label="活动类型id" align="center" prop="typeId" />-->
+      <el-table-column label="活动详情" align="center" prop="content"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -90,14 +102,16 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:activityInfo:edit']"
-          >修改</el-button>
+          >修改
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:activityInfo:remove']"
-          >删除</el-button>
+          >删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -114,24 +128,16 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="图标" prop="icon">
-          <el-input v-model="form.icon" placeholder="请输入图标" />
+          <el-input v-model="form.icon" placeholder="请输入图标"/>
         </el-form-item>
         <el-form-item label="标题" prop="title">
-          <el-input v-model="form.title" placeholder="请输入标题" />
-        </el-form-item>
-        <el-form-item label="发布时间" prop="ctime">
-          <el-date-picker clearable size="small"
-            v-model="form.ctime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择发布时间">
-          </el-date-picker>
+          <el-input v-model="form.title" placeholder="请输入标题"/>
         </el-form-item>
         <el-form-item label="排序号" prop="indexs">
-          <el-input v-model="form.indexs" placeholder="请输入排序号" />
+          <el-input v-model="form.indexs" placeholder="请输入排序号"/>
         </el-form-item>
         <el-form-item label="活动类型id" prop="typeId">
-          <el-input v-model="form.typeId" placeholder="请输入活动类型id" />
+          <el-input v-model="form.typeId" placeholder="请输入活动类型id"/>
         </el-form-item>
         <el-form-item label="活动详情">
           <editor v-model="form.content" :min-height="192"/>
@@ -146,7 +152,14 @@
 </template>
 
 <script>
-import { listActivityInfo, getActivityInfo, delActivityInfo, addActivityInfo, updateActivityInfo, exportActivityInfo } from "@/api/activity/activityInfo";
+import {
+  listActivityInfo,
+  getActivityInfo,
+  delActivityInfo,
+  addActivityInfo,
+  updateActivityInfo,
+  exportActivityInfo
+} from "@/api/activity/activityInfo";
 
 export default {
   name: "ActivityInfo",
@@ -181,8 +194,7 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {
-      }
+      rules: {}
     };
   },
   created() {
@@ -228,7 +240,7 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
@@ -271,28 +283,28 @@ export default {
     handleDelete(row) {
       const ids = row.id || this.ids;
       this.$confirm('是否确认删除活动信息编号为"' + ids + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return delActivityInfo(ids);
-        }).then(() => {
-          this.getList();
-          this.msgSuccess("删除成功");
-        })
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function () {
+        return delActivityInfo(ids);
+      }).then(() => {
+        this.getList();
+        this.msgSuccess("删除成功");
+      })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
       this.$confirm('是否确认导出所有活动信息数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return exportActivityInfo(queryParams);
-        }).then(response => {
-          this.download(response.msg);
-        })
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function () {
+        return exportActivityInfo(queryParams);
+      }).then(response => {
+        this.download(response.msg);
+      })
     }
   }
 };

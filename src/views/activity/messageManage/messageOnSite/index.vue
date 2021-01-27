@@ -141,14 +141,6 @@
         <el-form-item label="接收者" prop="receiver">
           <el-input v-model="form.receiver" placeholder="请输入接收者" />
         </el-form-item>
-        <el-form-item label="发布时间" prop="pubdatetime">
-          <el-date-picker clearable size="small"
-            v-model="form.pubdatetime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择发布时间">
-          </el-date-picker>
-        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>

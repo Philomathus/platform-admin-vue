@@ -10,9 +10,14 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="IP白名单启用状态" prop="ipStatus">
+      <el-form-item label="启用状态" prop="ipStatus">
         <el-select v-model="queryParams.ipStatus" placeholder="请选择IP白名单启用状态" clearable size="small">
-          <el-option label="请选择字典生成" value="" />
+          <el-option
+            v-for="dict in ipStatusOptions"
+            :key="dict.dictValue"
+            :label="dict.dictLabel"
+            :value="dict.dictValue"
+          />
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -71,7 +76,16 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="主键" align="center" prop="ipId" />
       <el-table-column label="IP白名单" align="center" prop="ipAddress" />
-      <el-table-column label="IP白名单启用状态" align="center" prop="ipStatus" />
+      <el-table-column label="IP白名单启用状态" align="center" prop="ipStatus">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.ipStatus"
+            active-value="1"
+            inactive-value="0"
+            @change="handleStatusChange(scope.row)"
+          ></el-switch>
+        </template>
+      </el-table-column>
       <el-table-column label="添加管理员" align="center" prop="ipAdmin" />
       <el-table-column label="备注" align="center" prop="mark" />
       <el-table-column label="IP登录数量" align="center" prop="ipCount" />
@@ -109,19 +123,11 @@
         <el-form-item label="IP白名单" prop="ipAddress">
           <el-input v-model="form.ipAddress" placeholder="请输入IP白名单" />
         </el-form-item>
-        <el-form-item label="IP白名单启用状态">
-          <el-radio-group v-model="form.ipStatus">
-            <el-radio label="1">请选择字典生成</el-radio>
-          </el-radio-group>
-        </el-form-item>
         <el-form-item label="添加管理员" prop="ipAdmin">
           <el-input v-model="form.ipAdmin" placeholder="请输入添加管理员" />
         </el-form-item>
         <el-form-item label="备注" prop="mark">
           <el-input v-model="form.mark" placeholder="请输入备注" />
-        </el-form-item>
-        <el-form-item label="IP登录数量" prop="ipCount">
-          <el-input v-model="form.ipCount" placeholder="请输入IP登录数量" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -133,7 +139,7 @@
 </template>
 
 <script>
-import { listSystemIpWhite, getSystemIpWhite, delSystemIpWhite, addSystemIpWhite, updateSystemIpWhite, exportSystemIpWhite } from "@/api/activity/systemIpWhite";
+import { listSystemIpWhite, getSystemIpWhite, delSystemIpWhite, addSystemIpWhite, updateSystemIpWhite, exportSystemIpWhite,changeStatus } from "@/api/activity/systemIpWhite";
 
 export default {
   name: "SystemIpWhite",
@@ -169,6 +175,8 @@ export default {
         mark: null,
         ipCount: null
       },
+      // 状态数据字典
+      ipStatusOptions: [],
       // 表单参数
       form: {},
       // 表单校验
@@ -178,6 +186,9 @@ export default {
   },
   created() {
     this.getList();
+    this.getDicts('systemIpWhite').then(response => {
+      this.ipStatusOptions = response.data
+    })
   },
   methods: {
     /** 查询IP白名单列表 */
@@ -188,6 +199,21 @@ export default {
         this.total = response.total;
         this.loading = false;
       });
+    },
+    // IP白名单状态修改
+    handleStatusChange(row) {
+      let text = row.ipStatus === '1' ? '启用' : '停用'
+      this.$confirm('确认要"' + text + '""' + row.ipAddress + '"吗?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        return changeStatus(row.ipId, row.ipStatus)
+      }).then(() => {
+        this.msgSuccess(text + '成功')
+      }).catch(function () {
+        row.ipStatus = row.ipStatus === '0' ? '1' : '0'
+      })
     },
     // 取消按钮
     cancel() {
@@ -250,9 +276,13 @@ export default {
             });
           } else {
             addSystemIpWhite(this.form).then(response => {
-              this.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
+              if(response.data.code == 0){
+                this.msg(response.data.msg);
+              }else {
+                this.msgSuccess("新增成功");
+                this.open = false;
+                this.getList();
+              }
             });
           }
         }

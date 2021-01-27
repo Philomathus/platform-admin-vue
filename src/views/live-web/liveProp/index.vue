@@ -66,17 +66,17 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="id" align="center" prop="id" />
       <el-table-column label="名称" align="center" prop="name" />
-      <el-table-column label="消费钻石" align="center" prop="score" />
-      <el-table-column label="RMB/钻石" align="center" prop="diamonds" />
+      <el-table-column label="消费钻石" align="center" prop="diamonds" />
+      <el-table-column label="RMB/钻石" align="center" prop="ticket" />
       <el-table-column label="是否连送" align="center" prop="isMuch" :formatter="isMuchFormat"/>
-      <el-table-column label="类型" align="center" prop="type" />
+      <el-table-column label="类型" align="center" prop="type" :formatter="typeFormat"/>
       <el-table-column label="展示动画" align="center" prop="isAnimated" :formatter="animatedFormat"/>
       <el-table-column label="状态" align="center" key="isEffect" v-if="columns[0].visible">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.isEffect"
-            active-value="0"
-            inactive-value="1"
+            active-value="1"
+            inactive-value="0"
             @change="handleStatusChange(scope.row)"
           ></el-switch>
         </template>
@@ -118,11 +118,11 @@
         <el-form-item label="图标" prop="icon">
           <el-input v-model="form.icon" placeholder="请输入图标" />
         </el-form-item>
-        <el-form-item label="消费钻石" prop="score">
-          <el-input v-model="form.score" placeholder="请输入积分" />
+        <el-form-item label="消费钻石" prop="diamonds">
+          <el-input v-model="form.diamonds" placeholder="请输入" />
         </el-form-item>
-        <el-form-item label="主播获得热度:" prop="diamonds">
-          <el-input v-model="form.diamonds" placeholder="请输入消费钻石" />
+        <el-form-item label="主播获得热度:" prop="ticket">
+          <el-input v-model="form.ticket" placeholder="请输入" />
         </el-form-item>
         <el-form-item label="连续" prop="isMuch">
           <el-input v-model="form.isMuch" placeholder="请选择" />
@@ -167,6 +167,7 @@
 
 <script>
 import { listLiveProp, getLiveProp, delLiveProp, addLiveProp, updateLiveProp, exportLiveProp } from "@/api/live-web/liveProp/liveProp";
+import {changeUserStatus} from "@/api/platform-web/system/user";
 
 export default {
   name: "LiveProp",
@@ -340,6 +341,15 @@ export default {
         return "否";
       }
     },
+    typeFormat(row, column) {
+      if (row.type == "0") {
+        return "礼物";
+      }else if (row.type == "1") {
+        return "打赏";
+      }else{
+        return "守护";
+      }
+    },
     animatedFormat(row, column) {
       if (row.isAnimated == "0") {
         return "普通礼物";
@@ -348,6 +358,10 @@ export default {
       }else{
         return "大型动画礼物";
       }
+    },
+    // 用户状态修改
+    handleStatusChange(row) {
+
     },
     /** 导出按钮操作 */
     handleExport() {

@@ -64,23 +64,14 @@
 
     <el-table v-loading="loading" :data="livePropList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="道具名" align="center" prop="name" />
-      <el-table-column label="积分" align="center" prop="score" />
-      <el-table-column label="消费钻石" align="center" prop="diamonds" />
-<!--      <el-table-column label="图标" align="center" prop="icon" />-->
-      <el-table-column label="红包" align="center" prop="ticket" />
-      <el-table-column label="是否连续" align="center" prop="isMuch" />
-<!--      <el-table-column label="排序，从大到小;越大越靠前" align="center" prop="sort" />-->
-<!--      <el-table-column label="1:红包" align="center" prop="isRedEnvelope" />-->
+      <el-table-column label="id" align="center" prop="id" />
+      <el-table-column label="名称" align="center" prop="name" />
+      <el-table-column label="消费钻石" align="center" prop="score" />
+      <el-table-column label="RMB/钻石" align="center" prop="diamonds" />
+      <el-table-column label="是否连送" align="center" prop="isMuch" />
+      <el-table-column label="类型" align="center" prop="type" />
       <el-table-column label="展示动画" align="center" prop="isAnimated" />
       <el-table-column label="状态" align="center" prop="isEffect" />
-<!--      <el-table-column label="大型道具类型" />-->
-<!--      <el-table-column label="机器人红包" align="center" prop="robotDiamonds" />-->
-<!--      <el-table-column label="PC端图标" align="center" prop="pcIcon" />-->
-<!--      <el-table-column label="PC端动态图标" align="center" prop="pcGif" />-->
-      <el-table-column label="礼物风格" align="center" prop="gifGiftShowStyle" />
-<!--      <el-table-column label="svga动画路径" align="center" prop="animatedUrl" />-->
-      <el-table-column label="类型" align="center" prop="type" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -110,66 +101,52 @@
     />
 
     <!-- 添加或修改礼物列对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="ID" prop="id">
-          <el-input v-model="form.id" placeholder="请输入ID" />
-        </el-form-item>
-        <el-form-item label="道具名" prop="name">
+    <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
+        <el-form-item label="名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入道具名" />
-        </el-form-item>
-        <el-form-item label="积分" prop="score">
-          <el-input v-model="form.score" placeholder="请输入积分" />
-        </el-form-item>
-        <el-form-item label="消费钻石" prop="diamonds">
-          <el-input v-model="form.diamonds" placeholder="请输入消费钻石" />
         </el-form-item>
         <el-form-item label="图标" prop="icon">
           <el-input v-model="form.icon" placeholder="请输入图标" />
         </el-form-item>
-        <el-form-item label="红包" prop="ticket">
-          <el-input v-model="form.ticket" placeholder="机器人红包" />
+        <el-form-item label="消费钻石" prop="score">
+          <el-input v-model="form.score" placeholder="请输入积分" />
+        </el-form-item>
+        <el-form-item label="主播获得热度:" prop="diamonds">
+          <el-input v-model="form.diamonds" placeholder="请输入消费钻石" />
         </el-form-item>
         <el-form-item label="连续" prop="isMuch">
-          <el-input v-model="form.isMuch" placeholder="请输入1:可以连续发送多个;用于小金额礼物" />
+          <el-input v-model="form.isMuch" placeholder="请选择" />
         </el-form-item>
-        <el-form-item label="排序，从大到小;越大越靠前" prop="sort">
-          <el-input v-model="form.sort" placeholder="请输入排序，从大到小;越大越靠前" />
+
+        <el-form-item label="展示动画" prop="isAnimated">
+          <el-input v-model="form.isAnimated" placeholder="请选择" />
         </el-form-item>
-        <el-form-item label="1:红包" prop="isRedEnvelope">
-          <el-input v-model="form.isRedEnvelope" placeholder="请输入1:红包" />
-        </el-form-item>
-        <el-form-item label="0:普通礼物 1:gif礼物 2:大型动画礼物" prop="isAnimated">
-          <el-input v-model="form.isAnimated" placeholder="请输入0:普通礼物 1:gif礼物 2:大型动画礼物" />
-        </el-form-item>
-        <el-form-item label="0:禁用;1:启用;默认启用" prop="isEffect">
-          <el-input v-model="form.isEffect" placeholder="请输入0:禁用;1:启用;默认启用" />
-        </el-form-item>
+
         <el-form-item label="大型道具类型">
           <el-select v-model="form.animType" placeholder="请选择大型道具类型">
             <el-option label="请选择字典生成" value="" />
           </el-select>
         </el-form-item>
-        <el-form-item label="is_red_envelope=1时有效;分红包时,自动分配一些的机器人；剩下的给观众抢；观众可抢钻石=diamonds-ticket-robot_diamods; 如果当直播结束时,钻石未包抢光时,剩余钻石也自动分配给机器人" prop="robotDiamonds">
-          <el-input v-model="form.robotDiamonds" placeholder="请输入is_red_envelope=1时有效;分红包时,自动分配一些的机器人；剩下的给观众抢；观众可抢钻石=diamonds-ticket-robot_diamods; 如果当直播结束时,钻石未包抢光时,剩余钻石也自动分配给机器人" />
-        </el-form-item>
-        <el-form-item label="PC端图标" prop="pcIcon">
-          <el-input v-model="form.pcIcon" placeholder="请输入PC端图标" />
-        </el-form-item>
-        <el-form-item label="PC端动态图标" prop="pcGif">
-          <el-input v-model="form.pcGif" placeholder="请输入PC端动态图标" />
-        </el-form-item>
-        <el-form-item label="GIF礼物模式 0:按像素显示模式 1:全屏显示模式 2:至少两条边贴边模式" prop="gifGiftShowStyle">
-          <el-input v-model="form.gifGiftShowStyle" placeholder="请输入GIF礼物模式 0:按像素显示模式 1:全屏显示模式 2:至少两条边贴边模式" />
-        </el-form-item>
-        <el-form-item label="svga动画路径" prop="animatedUrl">
+
+        <el-form-item label="svga动画" prop="animatedUrl">
           <el-input v-model="form.animatedUrl" placeholder="请输入svga动画路径" />
         </el-form-item>
-        <el-form-item label="0:礼物；1:打赏" prop="type">
-          <el-select v-model="form.type" placeholder="请选择0:礼物；1:打赏">
+
+        <el-form-item label="排序" prop="sort">
+          <el-input v-model="form.sort" placeholder="请输入排序" />
+        </el-form-item>
+
+        <el-form-item label="类型" prop="type">
+          <el-select v-model="form.type" placeholder="请选择">
             <el-option label="请选择字典生成" value="" />
           </el-select>
         </el-form-item>
+
+        <el-form-item label="状态" prop="isEffect">
+          <el-input v-model="form.isEffect" placeholder="请选择" />
+        </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>

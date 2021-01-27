@@ -4,7 +4,7 @@ import {url} from '@/utils/url'
 // 查询【请填写功能名称】列表
 export function listReport(query) {
   return request({
-    url: url.platformWeb + '/admin/memberDirtyWords/list',
+    url: url.platformWeb + '/admin/liveLimitMsg/list',
     method: 'get',
     params: query
   })
@@ -16,7 +16,7 @@ export function editWord(textarea) {
     name: textarea,
   }
   return request({
-    url: url.platformWeb + '/admin/memberDirtyWords',
+    url: url.platformWeb + '/admin/liveLimitMsg',
     method: 'put',
     data: data
   })

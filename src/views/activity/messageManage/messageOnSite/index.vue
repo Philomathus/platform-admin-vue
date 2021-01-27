@@ -10,11 +10,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="接收者类型" prop="receiverType">
-        <el-select v-model="queryParams.receiverType" placeholder="请选择接收者类型" clearable size="small">
-          <el-option label="请选择字典生成" value="" />
-        </el-select>
-      </el-form-item>
       <el-form-item label="接收者" prop="receiver">
         <el-input
           v-model="queryParams.receiver"

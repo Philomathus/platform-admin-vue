@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="100px">
       <el-form-item label="标题" prop="title">
         <el-input
           v-model="queryParams.title"
@@ -17,42 +17,6 @@
           value-format="yyyy-MM-dd"
           placeholder="选择发布时间">
         </el-date-picker>
-      </el-form-item>
-      <el-form-item label="任务类型id" prop="typeId">
-        <el-input
-          v-model="queryParams.typeId"
-          placeholder="请输入任务类型id"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="目标任务量" prop="target">
-        <el-input
-          v-model="queryParams.target"
-          placeholder="请输入目标任务量"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="完成后增加的资金" prop="reward">
-        <el-input
-          v-model="queryParams.reward"
-          placeholder="请输入完成后增加的资金"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="所属游戏id" prop="gameId">
-        <el-input
-          v-model="queryParams.gameId"
-          placeholder="请输入所属游戏id"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
       </el-form-item>
       <el-form-item label="平台游戏类型" prop="kindId">
         <el-input
@@ -142,12 +106,10 @@
         </template>
       </el-table-column>
       <el-table-column label="排序号" align="center" prop="indexs" />
-      <el-table-column label="任务类型id" align="center" prop="typeId" />
       <el-table-column label="目标任务量" align="center" prop="target" />
       <el-table-column label="完成后增加的资金" align="center" prop="reward" />
       <el-table-column label="任务详情" align="center" prop="detail" />
       <el-table-column label="描述" align="center" prop="content" />
-      <el-table-column label="所属游戏id" align="center" prop="gameId" />
       <el-table-column label="平台游戏类型" align="center" prop="kindId" />
       <el-table-column label="平台类型" align="center" prop="platformId" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">

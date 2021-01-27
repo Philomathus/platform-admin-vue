@@ -79,7 +79,7 @@
       <el-table-column label="图标" align="center" prop="icon">
         <template slot-scope="scope">
           <el-image
-            style="width:380px"
+            style="width:300px"
             :src="scope.row.icon"
           >
           </el-image>
@@ -91,8 +91,7 @@
           <span>{{ parseTime(scope.row.ctime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <!--      <el-table-column label="排序号" align="center" prop="indexs" />-->
-      <!--      <el-table-column label="活动类型id" align="center" prop="typeId" />-->
+            <el-table-column label="排序号" align="center" prop="indexs" />
       <el-table-column label="活动详情" align="center" prop="content"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -125,8 +124,8 @@
     />
 
     <!-- 添加或修改活动信息对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-dialog :title="title" :visible.sync="open" width="700px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="90px">
         <el-form-item label="图标" prop="icon">
           <el-input v-model="form.icon" placeholder="请输入图标"/>
         </el-form-item>

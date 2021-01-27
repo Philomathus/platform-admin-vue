@@ -70,11 +70,29 @@
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="ID" align="center" prop="id"/>
       <el-table-column label="分类名称" align="center" prop="title"/>
-      <el-table-column label="状态" align="center" prop="isEffect"/>
+      <el-table-column label="状态" align="center" key="isEffect" v-if="columns[0].visible">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.isEffect"
+            active-value="1"
+            inactive-value="0"
+            @change="handleStatusChange(scope.row)"
+          ></el-switch>
+        </template>
+      </el-table-column>
       <el-table-column label="排序(客服端倒序)" align="center" prop="sort"/>
 <!--      <el-table-column label="分类图标" align="center" prop="img"/>-->
       <el-table-column label="分类代号" align="center" prop="classfy"/>
-      <el-table-column label="是否主播端显示" align="center" prop="isHostShow"/>
+      <el-table-column label="主播端显示" align="center" key="isHostShow" v-if="columns[0].visible">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.isHostShow"
+            active-value="1"
+            inactive-value="0"
+            @change="handleShowStatusChange(scope.row)"
+          ></el-switch>
+        </template>
+      </el-table-column>
 <!--      <el-table-column label="查询主播列表分页逻辑" align="center" prop="sortDesc"/>-->
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -148,6 +166,7 @@ import {
   updateLiveVideoClassified,
   exportLiveVideoClassified
 } from "@/api/live-web/liveVideoClassified/liveVideoClassified";
+import {updateH5Plugin} from "@/api/live-web/h5/h5Plugin";
 
 export default {
   name: "LiveVideoClassified",
@@ -184,6 +203,11 @@ export default {
         isHostShow: null,
         sortDesc: null
       },
+      // 列信息
+      columns: [
+        {key: 0, label: `状态`, visible: true},
+        {key: 1, label: `主播端显示`, visible: true}
+      ],
       // 表单参数
       form: {},
       // 表单校验
@@ -302,6 +326,41 @@ export default {
       }).then(() => {
         this.getList();
         this.msgSuccess("删除成功");
+      })
+    },
+    // 状态修改
+    handleStatusChange(row) {
+      let text = row.isEffect === '0' ? '停用' : '启用'
+      this.$confirm('确认要' + text + '"' + row.title + '"吗?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        var data={};
+        data.id=row.id;
+        data.isEffect=row.isEffect;
+        return updateLiveVideoClassified(data)
+      }).then(() => {
+        this.msgSuccess(text + '成功')
+      }).catch(function () {
+        row.isEffect = row.isEffect === '0' ? '1' : '0'
+      })
+    },
+    handleShowStatusChange(row) {
+      let text = row.isEffect === '0' ? '停用' : '启用'
+      this.$confirm('确认要' + text + '"' + row.title + '"吗?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        var data={};
+        data.id=row.id;
+        data.isHostShow=row.isHostShow;
+        return updateLiveVideoClassified(data)
+      }).then(() => {
+        this.msgSuccess(text + '成功')
+      }).catch(function () {
+        row.isHostShow = row.isHostShow === '0' ? '1' : '0'
       })
     },
     /** 导出按钮操作 */

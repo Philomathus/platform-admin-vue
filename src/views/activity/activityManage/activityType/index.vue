@@ -64,7 +64,6 @@
 
     <el-table v-loading="loading" :data="activityTypeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-<!--      <el-table-column label="系统编号" align="center" prop="id" />-->
       <el-table-column label="名称" align="center" prop="name" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -110,7 +109,7 @@
 </template>
 
 <script>
-import { listActivityType, getActivityType, delActivityType, addActivityType, updateActivityType, exportActivityType } from "@/api/platform-web/admin/activityType";
+import { listActivityType, getActivityType, delActivityType, addActivityType, updateActivityType, exportActivityType } from "@/api/activity/activityType";
 
 export default {
   name: "ActivityType",
@@ -140,7 +139,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        name: null,
+        name: null
       },
       // 表单参数
       form: {},

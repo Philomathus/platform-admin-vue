@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="级别(1 一级 2 二级)" prop="level">
+      <el-form-item label="级别" prop="level">
         <el-input
           v-model="queryParams.level"
           placeholder="请输入级别(1 一级 2 二级)"
@@ -82,7 +82,6 @@
 
     <el-table v-loading="loading" :data="configRecommendList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="系统编号" align="center" prop="id" />
       <el-table-column label="级别(1 一级 2 二级)" align="center" prop="level" />
       <el-table-column label="名称" align="center" prop="name" />
       <el-table-column label="比例" align="center" prop="bill" />
@@ -117,7 +116,7 @@
     <!-- 添加或修改推广设置对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="级别(1 一级 2 二级)" prop="level">
+        <el-form-item label="级别" prop="level">
           <el-input v-model="form.level" placeholder="请输入级别(1 一级 2 二级)" />
         </el-form-item>
         <el-form-item label="名称" prop="name">
@@ -136,7 +135,7 @@
 </template>
 
 <script>
-import { listConfigRecommend, getConfigRecommend, delConfigRecommend, addConfigRecommend, updateConfigRecommend, exportConfigRecommend } from "@/api/platform-web/admin/configRecommend";
+import { listConfigRecommend, getConfigRecommend, delConfigRecommend, addConfigRecommend, updateConfigRecommend, exportConfigRecommend } from "@/api/activity/configRecommend";
 
 export default {
   name: "ConfigRecommend",

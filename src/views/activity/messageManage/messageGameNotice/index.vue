@@ -81,7 +81,6 @@
 
     <el-table v-loading="loading" :data="messageGameNoticeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-<!--      <el-table-column label="主键" align="center" prop="id" />-->
       <el-table-column label="公告标题" align="center" prop="title" />
       <el-table-column label="设备端" align="center" prop="device" />
       <el-table-column label="动作" align="center" prop="action" />
@@ -149,7 +148,7 @@
 </template>
 
 <script>
-import { listMessageGameNotice, getMessageGameNotice, delMessageGameNotice, addMessageGameNotice, updateMessageGameNotice, exportMessageGameNotice } from "@/api/platform-web/admin/messageGameNotice";
+import { listMessageGameNotice, getMessageGameNotice, delMessageGameNotice, addMessageGameNotice, updateMessageGameNotice, exportMessageGameNotice } from "@/api/activity/messageGameNotice";
 import Editor from '@/components/Editor';
 
 export default {

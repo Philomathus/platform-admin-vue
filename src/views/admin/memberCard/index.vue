@@ -1,72 +1,69 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="标题" prop="title">
+      <el-form-item label="姓名" prop="realName">
         <el-input
-          v-model="queryParams.title"
-          placeholder="请输入标题"
+          v-model="queryParams.realName"
+          placeholder="请输入姓名"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="发布时间" prop="ctime">
-        <el-date-picker clearable size="small"
-          v-model="queryParams.ctime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="选择发布时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="任务类型id" prop="typeId">
+      <el-form-item label="银行名称" prop="bankName">
         <el-input
-          v-model="queryParams.typeId"
-          placeholder="请输入任务类型id"
+          v-model="queryParams.bankName"
+          placeholder="请输入银行名称"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="目标任务量" prop="target">
+      <el-form-item label="银行编码" prop="bankCode">
         <el-input
-          v-model="queryParams.target"
-          placeholder="请输入目标任务量"
+          v-model="queryParams.bankCode"
+          placeholder="请输入银行编码"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="完成后增加的资金" prop="reward">
+      <el-form-item label="银行账号" prop="bankAccount">
         <el-input
-          v-model="queryParams.reward"
-          placeholder="请输入完成后增加的资金"
+          v-model="queryParams.bankAccount"
+          placeholder="请输入银行账号"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="所属游戏id" prop="gameId">
+      <el-form-item label="银行地址" prop="bankAddress">
         <el-input
-          v-model="queryParams.gameId"
-          placeholder="请输入所属游戏id"
+          v-model="queryParams.bankAddress"
+          placeholder="请输入银行地址"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="平台游戏类型" prop="kindId">
+      <el-form-item label="会员编号" prop="memberId">
         <el-input
-          v-model="queryParams.kindId"
-          placeholder="请输入平台游戏类型"
+          v-model="queryParams.memberId"
+          placeholder="请输入会员编号"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="平台类型" prop="platformId">
+      <el-form-item label="卡片类型1=银行卡2=支付宝" prop="type">
+        <el-select v-model="queryParams.type" placeholder="请选择卡片类型1=银行卡2=支付宝" clearable size="small">
+          <el-option label="请选择字典生成" value="" />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="是否默认" prop="dv">
         <el-input
-          v-model="queryParams.platformId"
-          placeholder="请输入平台类型"
+          v-model="queryParams.dv"
+          placeholder="请输入是否默认"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -86,7 +83,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['admin:activityQuestInfo:add']"
+          v-hasPermi="['admin:memberCard:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -97,7 +94,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['admin:activityQuestInfo:edit']"
+          v-hasPermi="['admin:memberCard:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -108,7 +105,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['admin:activityQuestInfo:remove']"
+          v-hasPermi="['admin:memberCard:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -118,30 +115,23 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['admin:activityQuestInfo:export']"
+          v-hasPermi="['admin:memberCard:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="activityQuestInfoList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="memberCardList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="图标" align="center" prop="icon" />
-      <el-table-column label="标题" align="center" prop="title" />
-      <el-table-column label="发布时间" align="center" prop="ctime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.ctime, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="排序号" align="center" prop="indexs" />
-      <el-table-column label="任务类型id" align="center" prop="typeId" />
-      <el-table-column label="目标任务量" align="center" prop="target" />
-      <el-table-column label="完成后增加的资金" align="center" prop="reward" />
-      <el-table-column label="任务详情" align="center" prop="detail" />
-      <el-table-column label="描述" align="center" prop="content" />
-      <el-table-column label="所属游戏id" align="center" prop="gameId" />
-      <el-table-column label="平台游戏类型" align="center" prop="kindId" />
-      <el-table-column label="平台类型" align="center" prop="platformId" />
+      <el-table-column label="系统编号" align="center" prop="id" />
+      <el-table-column label="姓名" align="center" prop="realName" />
+      <el-table-column label="银行名称" align="center" prop="bankName" />
+      <el-table-column label="银行编码" align="center" prop="bankCode" />
+      <el-table-column label="银行账号" align="center" prop="bankAccount" />
+      <el-table-column label="银行地址" align="center" prop="bankAddress" />
+      <el-table-column label="会员编号" align="center" prop="memberId" />
+      <el-table-column label="卡片类型1=银行卡2=支付宝" align="center" prop="type" />
+      <el-table-column label="是否默认" align="center" prop="dv" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -149,14 +139,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['admin:activityQuestInfo:edit']"
+            v-hasPermi="['admin:memberCard:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['admin:activityQuestInfo:remove']"
+            v-hasPermi="['admin:memberCard:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -170,49 +160,34 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改任务信息对话框 -->
+    <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="图标" prop="icon">
-          <el-input v-model="form.icon" placeholder="请输入图标" />
+        <el-form-item label="姓名" prop="realName">
+          <el-input v-model="form.realName" placeholder="请输入姓名" />
         </el-form-item>
-        <el-form-item label="标题" prop="title">
-          <el-input v-model="form.title" placeholder="请输入标题" />
+        <el-form-item label="银行名称" prop="bankName">
+          <el-input v-model="form.bankName" placeholder="请输入银行名称" />
         </el-form-item>
-        <el-form-item label="发布时间" prop="ctime">
-          <el-date-picker clearable size="small"
-            v-model="form.ctime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择发布时间">
-          </el-date-picker>
+        <el-form-item label="银行编码" prop="bankCode">
+          <el-input v-model="form.bankCode" placeholder="请输入银行编码" />
         </el-form-item>
-        <el-form-item label="排序号" prop="indexs">
-          <el-input v-model="form.indexs" placeholder="请输入排序号" />
+        <el-form-item label="银行账号" prop="bankAccount">
+          <el-input v-model="form.bankAccount" placeholder="请输入银行账号" />
         </el-form-item>
-        <el-form-item label="任务类型id" prop="typeId">
-          <el-input v-model="form.typeId" placeholder="请输入任务类型id" />
+        <el-form-item label="银行地址" prop="bankAddress">
+          <el-input v-model="form.bankAddress" placeholder="请输入银行地址" />
         </el-form-item>
-        <el-form-item label="目标任务量" prop="target">
-          <el-input v-model="form.target" placeholder="请输入目标任务量" />
+        <el-form-item label="会员编号" prop="memberId">
+          <el-input v-model="form.memberId" placeholder="请输入会员编号" />
         </el-form-item>
-        <el-form-item label="完成后增加的资金" prop="reward">
-          <el-input v-model="form.reward" placeholder="请输入完成后增加的资金" />
+        <el-form-item label="卡片类型1=银行卡2=支付宝" prop="type">
+          <el-select v-model="form.type" placeholder="请选择卡片类型1=银行卡2=支付宝">
+            <el-option label="请选择字典生成" value="" />
+          </el-select>
         </el-form-item>
-        <el-form-item label="任务详情" prop="detail">
-          <el-input v-model="form.detail" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="描述">
-          <editor v-model="form.content" :min-height="192"/>
-        </el-form-item>
-        <el-form-item label="所属游戏id" prop="gameId">
-          <el-input v-model="form.gameId" placeholder="请输入所属游戏id" />
-        </el-form-item>
-        <el-form-item label="平台游戏类型" prop="kindId">
-          <el-input v-model="form.kindId" placeholder="请输入平台游戏类型" />
-        </el-form-item>
-        <el-form-item label="平台类型" prop="platformId">
-          <el-input v-model="form.platformId" placeholder="请输入平台类型" />
+        <el-form-item label="是否默认" prop="dv">
+          <el-input v-model="form.dv" placeholder="请输入是否默认" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -224,13 +199,11 @@
 </template>
 
 <script>
-import { listActivityQuestInfo, getActivityQuestInfo, delActivityQuestInfo, addActivityQuestInfo, updateActivityQuestInfo, exportActivityQuestInfo } from "@/api/activity/activityQuestInfo";
-import Editor from '@/components/Editor';
+import { listMemberCard, getMemberCard, delMemberCard, addMemberCard, updateMemberCard, exportMemberCard } from "@/api/platform-web/admin/memberCard";
 
 export default {
-  name: "ActivityQuestInfo",
+  name: "MemberCard",
   components: {
-    Editor,
   },
   data() {
     return {
@@ -246,8 +219,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 任务信息表格数据
-      activityQuestInfoList: [],
+      // 【请填写功能名称】表格数据
+      memberCardList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -256,18 +229,14 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        icon: null,
-        title: null,
-        ctime: null,
-        indexs: null,
-        typeId: null,
-        target: null,
-        reward: null,
-        detail: null,
-        content: null,
-        gameId: null,
-        kindId: null,
-        platformId: null
+        realName: null,
+        bankName: null,
+        bankCode: null,
+        bankAccount: null,
+        bankAddress: null,
+        memberId: null,
+        type: null,
+        dv: null
       },
       // 表单参数
       form: {},
@@ -280,11 +249,11 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询任务信息列表 */
+    /** 查询【请填写功能名称】列表 */
     getList() {
       this.loading = true;
-      listActivityQuestInfo(this.queryParams).then(response => {
-        this.activityQuestInfoList = response.rows;
+      listMemberCard(this.queryParams).then(response => {
+        this.memberCardList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
@@ -298,18 +267,15 @@ export default {
     reset() {
       this.form = {
         id: null,
-        icon: null,
-        title: null,
-        ctime: null,
-        indexs: null,
-        typeId: null,
-        target: null,
-        reward: null,
-        detail: null,
-        content: null,
-        gameId: null,
-        kindId: null,
-        platformId: null
+        realName: null,
+        bankName: null,
+        bankCode: null,
+        bankAccount: null,
+        bankAddress: null,
+        memberId: null,
+        createTime: null,
+        type: null,
+        dv: null
       };
       this.resetForm("form");
     },
@@ -333,16 +299,16 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加任务信息";
+      this.title = "添加【请填写功能名称】";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
       const id = row.id || this.ids
-      getActivityQuestInfo(id).then(response => {
+      getMemberCard(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改任务信息";
+        this.title = "修改【请填写功能名称】";
       });
     },
     /** 提交按钮 */
@@ -350,13 +316,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
-            updateActivityQuestInfo(this.form).then(response => {
+            updateMemberCard(this.form).then(response => {
               this.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addActivityQuestInfo(this.form).then(response => {
+            addMemberCard(this.form).then(response => {
               this.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -368,12 +334,12 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除任务信息编号为"' + ids + '"的数据项?', "警告", {
+      this.$confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         }).then(function() {
-          return delActivityQuestInfo(ids);
+          return delMemberCard(ids);
         }).then(() => {
           this.getList();
           this.msgSuccess("删除成功");
@@ -382,12 +348,12 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有任务信息数据项?', "警告", {
+      this.$confirm('是否确认导出所有【请填写功能名称】数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         }).then(function() {
-          return exportActivityQuestInfo(queryParams);
+          return exportMemberCard(queryParams);
         }).then(response => {
           this.download(response.msg);
         })

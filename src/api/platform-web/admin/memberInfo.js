@@ -21,7 +21,7 @@ export function gameBalance(query) {
 // 查询资金明细列表
 export function memberWithdrawLog(query) {
   return request({
-    url: url.platformWeb + '/member-withdraw-log/report',
+    url: url.platformWeb + '/admin/memberInfo/report',
     method: 'get',
     params: query
   })
@@ -29,7 +29,7 @@ export function memberWithdrawLog(query) {
 // 加分提交接口
 export function addScore(query) {
   return request({
-    url: url.platformWeb + '/member-info/addScore',
+    url: url.platformWeb + '/admin/memberInfo/addScore',
     method: 'post',
     params: query
   })
@@ -37,23 +37,30 @@ export function addScore(query) {
 // 重置密码接口
 export function resetPassword(query) {
   return request({
-    url: url.platformWeb + '/member-info/reset/'+query,
+    url: url.platformWeb + '/admin/memberInfo/reset/'+query,
     method: 'delete',
-    params: query
   })
 }
 // 查询银行卡列表接口
 export function cardList(query) {
   return request({
-    url: url.platformWeb + '/member-info/card-list/',
+    url: url.platformWeb + '/admin/memberInfo/card-list/',
     method: 'get',
+    params: query
+  })
+}
+// 修改用户状态
+export function changeStatus(query) {
+  return request({
+    url: url.platformWeb + '/admin/memberInfo/change-status/',
+    method: 'put',
     params: query
   })
 }
 // 重置保险箱
 export function resetSafe(query) {
   return request({
-    url: url.platformWeb + '/member-info/resetPassword',
+    url: url.platformWeb + '/admin/memberInfo/resetPassword',
     method: 'post',
     params: query
   })
@@ -61,7 +68,7 @@ export function resetSafe(query) {
 // 重置体现
 export function resetWithdrawal(query) {
   return request({
-    url: url.platformWeb + '/member-info/resettx',
+    url: url.platformWeb + '/admin/memberInfo/resettx',
     method: 'post',
     params: query
   })

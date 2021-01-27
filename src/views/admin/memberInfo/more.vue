@@ -1,52 +1,28 @@
 <template>
   <!-- 导入表 -->
-  <el-dialog :title="title" :visible.sync="visible" width="800px" top="5vh" append-to-body>
+  <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="visible" width="800px" top="5vh" append-to-body>
     <!--顶部按钮-->
-    <div class="page-tab">
+    <div class="page-tab" style="margin-bottom: 20px">
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(1,'积分明细')">
         <span>积分明细</span></button>
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(2,'资金明细')">
         <span>资金明细</span></button>
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(3,'加分')"><span>加分</span>
       </button>
-      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(4,'重置密码')">
-        <span>重置密码</span></button>
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(5,'银行卡')">
         <span>银行卡</span></button>
-      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(6,'重置保险箱')">
+      <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(4,'重置密码')">
+        <span>重置密码</span></button>
+      <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(6,'重置保险箱')">
         <span>重置保险箱</span></button>
-      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(7,'重置体现')">
+      <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(7,'重置提现')">
         <span>重置体现</span></button>
     </div>
     <!--积分明细-->
     <el-row v-if="index===1">
-      <el-form :model="queryParams" ref="queryForm" :inline="true">
-        <el-form-item label="表名称" prop="tableName">
-          <el-input
-            v-model="queryParams.tableName"
-            placeholder="请输入表名称"
-            clearable
-            size="small"
-            @keyup.enter.native="handleQuery"
-          />
-        </el-form-item>
-        <el-form-item label="表描述" prop="tableComment">
-          <el-input
-            v-model="queryParams.tableComment"
-            placeholder="请输入表描述"
-            clearable
-            size="small"
-            @keyup.enter.native="handleQuery"
-          />
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-          <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-        </el-form-item>
-      </el-form>
       <el-table @row-click="clickRow" ref="table" :data="dbTableList" @selection-change="handleSelectionChange"
                 height="260px">
-        <el-table-column type="selection" width="55"></el-table-column>
+<!--        <el-table-column type="selection" width="55"></el-table-column>-->
         <el-table-column prop="class_twoname" label="游戏名称" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="t_value" label="金额" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="createTime" label="操作">
@@ -65,7 +41,7 @@
     <el-row v-if="index===2">
       <el-table @row-click="clickRow" ref="table" :data="dbTableList" @selection-change="handleSelectionChange"
                 height="260px">
-        <el-table-column type="selection" width="55"></el-table-column>
+        <!--<el-table-column type="selection" width="55"></el-table-column>-->
         <el-table-column prop="class_twoname" label="项目名称" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="t_value" label="项目值" :show-overflow-tooltip="true"></el-table-column>
       </el-table>
@@ -80,7 +56,7 @@
 
     <!--加分-->
     <el-row v-if="index===3">
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form"  label-width="80px">
         <el-form-item label="加分金额" prop="score">
           <el-input v-model="form.score" placeholder="请输入金额"/>
         </el-form-item>
@@ -98,7 +74,7 @@
         <el-form-item label="打码倍数" prop="beatNum">
           <el-input v-model="form.beatNum" placeholder="请输入打码倍数，默认请填写1,如未打算打码可填写为0"/>
         </el-form-item>
-        <el-form-item label="google验证码" prop="googleAuthCode">
+        <el-form-item label="google验证码" prop="googleAuthCode" label-width="100px">
           <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>
         </el-form-item>
 
@@ -110,7 +86,7 @@
     <el-row v-if="index===5">
       <el-table @row-click="clickRow" ref="table" :data="dbTableList" @selection-change="handleSelectionChange"
                 height="260px">
-        <el-table-column type="selection" width="55"></el-table-column>
+<!--        <el-table-column type="selection" width="55"></el-table-column>-->
         <el-table-column prop="bank_name" label="银行名称" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="bank_account" label="银行卡号" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="bank_address" label="银行地址" :show-overflow-tooltip="true"></el-table-column>
@@ -126,43 +102,9 @@
       />
     </el-row>
 
-    <!--重置保险箱-->
-    <el-row v-if="index===6">
-      <el-table @row-click="clickRow" ref="table" :data="dbTableList" @selection-change="handleSelectionChange"
-                height="260px">
-        <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column prop="class_twoname" label="项目名称" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="t_value" label="项目值" :show-overflow-tooltip="true"></el-table-column>
-      </el-table>
-      <pagination
-        v-show="total>0"
-        :total="total"
-        :page.sync="queryParams.pageNum"
-        :limit.sync="queryParams.pageSize"
-        @pagination="getList"
-      />
-    </el-row>
-
-    <!--重置体现-->
-    <el-row v-if="index===7">
-      <el-table @row-click="clickRow" ref="table" :data="dbTableList" @selection-change="handleSelectionChange"
-                height="260px">
-        <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column prop="class_twoname" label="项目名称" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="t_value" label="项目值" :show-overflow-tooltip="true"></el-table-column>
-      </el-table>
-      <pagination
-        v-show="total>0"
-        :total="total"
-        :page.sync="queryParams.pageNum"
-        :limit.sync="queryParams.pageSize"
-        @pagination="getList"
-      />
-    </el-row>
-
 
     <div slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="handleImportTable">确 定</el-button>
+      <el-button type="primary" @click="handleImportTable" v-if="index===3">确 定</el-button>
       <el-button @click="visible = false">取 消</el-button>
     </div>
   </el-dialog>
@@ -181,14 +123,18 @@
     } from "@/api/platform-web/admin/memberInfo";
 
     export default {
+        props: {
+            userId: {
+                required: false,
+                default: 0,
+            },
+        },
         data() {
             return {
                 //弹出框标题
                 title: '积分明细',
                 //页面编码
                 index: 1,
-                //用户id
-                userId: undefined,
                 // 遮罩层
                 visible: false,
                 // 选中数组值
@@ -212,7 +158,7 @@
                 // 查询参数
                 queryParams: {
                     pageNum: 1,
-                    pageSize: 15,
+                    pageSize: 10,
                     tableName: undefined,
                     tableComment: undefined
                 }
@@ -232,6 +178,7 @@
             change(index, title) {
                 this.index = index
                 this.title = title
+                this.reset();
                 var hint = '';
                 //如果是重置密码,保险箱,体现
                 switch (index) {
@@ -251,6 +198,12 @@
                 //其他的就是获取列表
                 this.getList()
             },
+            reset(){
+                // 总条数
+                this.total= 0
+                // 表数据
+                this.dbTableList = []
+            },
             //打开提示框
             open(hint, type) {
                 console.log(type)
@@ -266,15 +219,23 @@
                         });
                         if (this.index === 4) {
                             resetPassword(this.userId).then((res) => {
-                                this.$notify.success(res.data)
+                                if(res.code === 0){
+                                    this.$notify.success('重置密码成功')
+                                }else {
+                                    this.$notify.error('重置密码失败')
+                                }
                             }).catch(() => {
-                                this.$notify.failure('重置密码失败')
+                                this.$notify.error('网络异常')
                             });
                         } else {
                             resetSafe({userId: this.userId}).then((res) => {
-                                this.$notify.success(res.data)
+                                if(res.code === 0){
+                                    this.$notify.success('重置保险箱成功')
+                                }else {
+                                    this.$notify.error('重置保险箱失败')
+                                }
                             }).catch(() => {
-                                this.$notify.failure('重置保险箱失败')
+                                this.$notify.error('网络异常')
                             });
                         }
                     }).catch(() => {
@@ -298,9 +259,13 @@
                             googleAuthCode: value,
                             id: this.userId
                         }).then((res) => {
-                            this.$notify.success(res.data)
+                            if(res.code === 0){
+                                this.$notify.success('重置提现成功')
+                            }else {
+                                this.$notify.error('重置提现失败')
+                            }
                         }).catch(() => {
-                            this.$notify.failure('重置体现失败')
+                            this.$notify.error('网络异常')
                         });
                     }).catch(() => {
                         this.$message({
@@ -331,9 +296,6 @@
                         break;
                     case 2:
                         this.memberWithdrawLog();
-                        break;
-                    case 3:
-                        this.addScore()
                         break;
                     case 5:
                         this.cardList()
@@ -371,9 +333,10 @@
                     limit: this.queryParams.pageSize,
                     _: new Date().getTime()
                 }).then((res) => {
-                    if (res.code === 200) {
+                    console.log(res)
+                    if (res.code === 0) {
                         this.dbTableList = res.data;
-                        this.total = res.total;
+                        this.total = res.count;
                     }
                 }).catch(() => {
                     this.$notify.warning('获取资金明细列表失败')
@@ -384,7 +347,7 @@
                 addScore({
                     beatNum: this.form.beatNum,
                     googleAuthCode: this.form.googleAuthCode,
-                    id: this.form.id,
+                    id: this.userId,
                     mk: this.form.mk,
                     moneydes: this.form.moneydes,
                     ordermk: this.form.ordermk,
@@ -400,17 +363,18 @@
             //银行卡列表接口
             cardList() {
                 cardList({
-                    id: userId,
+                    id: this.userId,
                     page: this.queryParams.pageNum,
                     limit: this.queryParams.pageSize,
+                    orderBy: 'create_time desc',
                     _: new Date().getTime()
                 }).then((res) => {
-                    if (json1.status === 200) {
+                    if (res.code === 0) {
                         this.dbTableList = res.data;
-                        this.total = res.total;
+                        this.total = res.count;
                     }
                 }).catch((error) => {
-                    this.$notify.warning('error')
+                    this.$notify.warning('获取银行卡列表失败')
                 });
             },
 
@@ -426,13 +390,14 @@
             },
             /** 导入按钮操作 */
             handleImportTable() {
-                importTable({tables: this.tables.join(",")}).then(res => {
+                /*importTable({tables: this.tables.join(",")}).then(res => {
                     this.msgSuccess(res.msg);
                     if (res.code === 200) {
                         this.visible = false;
                         this.$emit("ok");
                     }
-                });
+                });*/
+                this.addScore()
             }
         }
     };

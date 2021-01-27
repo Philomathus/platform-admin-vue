@@ -11,6 +11,7 @@ import App from './App'
 import store from './store'
 import router from './router'
 import permission from './directive/permission'
+import '@/utils/directives' // 弹窗拖拽
 
 import './assets/icons' // icon
 import './permission' // permission control

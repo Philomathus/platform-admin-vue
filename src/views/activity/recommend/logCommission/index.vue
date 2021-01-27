@@ -1,22 +1,23 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="公告标题" prop="title">
+      <el-form-item label="会员ID" prop="memberId">
         <el-input
-          v-model="queryParams.title"
-          placeholder="请输入公告标题"
+          v-model="queryParams.memberId"
+          placeholder="请输入会员ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="发布时间" prop="pubdatetime">
-        <el-date-picker clearable size="small"
-          v-model="queryParams.pubdatetime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="选择发布时间">
-        </el-date-picker>
+      <el-form-item label="佣金" prop="commission">
+        <el-input
+          v-model="queryParams.commission"
+          placeholder="请输入佣金"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -32,7 +33,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['admin:messageSystemNotice:add']"
+          v-hasPermi="['admin:logCommission:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -43,7 +44,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['admin:messageSystemNotice:edit']"
+          v-hasPermi="['admin:logCommission:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -54,7 +55,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['admin:messageSystemNotice:remove']"
+          v-hasPermi="['admin:logCommission:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -64,23 +65,16 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['admin:messageSystemNotice:export']"
+          v-hasPermi="['admin:logCommission:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="messageSystemNoticeList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="logCommissionList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="公告标题" align="center" prop="title" />
-      <el-table-column label="内容" align="center" prop="content" />
-      <el-table-column label="设备" align="center" prop="device" />
-      <el-table-column label="动作" align="center" prop="action" />
-      <el-table-column label="发布时间" align="center" prop="pubdatetime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.pubdatetime, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
+      <el-table-column label="会员ID" align="center" prop="memberId" />
+      <el-table-column label="佣金" align="center" prop="commission" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -88,14 +82,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['admin:messageSystemNotice:edit']"
+            v-hasPermi="['admin:logCommission:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['admin:messageSystemNotice:remove']"
+            v-hasPermi="['admin:logCommission:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -109,25 +103,14 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改系统公告对话框 -->
+    <!-- 添加或修改佣金领取日志对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="公告标题" prop="title">
-          <el-input v-model="form.title" placeholder="请输入公告标题" />
+        <el-form-item label="会员ID" prop="memberId">
+          <el-input v-model="form.memberId" placeholder="请输入会员ID" />
         </el-form-item>
-        <el-form-item label="内容">
-          <editor v-model="form.content" :min-height="192"/>
-        </el-form-item>
-        <el-form-item label="设备" prop="device">
-          <el-input v-model="form.device" placeholder="请输入设备" />
-        </el-form-item>
-        <el-form-item label="发布时间" prop="pubdatetime">
-          <el-date-picker clearable size="small"
-            v-model="form.pubdatetime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择发布时间">
-          </el-date-picker>
+        <el-form-item label="佣金" prop="commission">
+          <el-input v-model="form.commission" placeholder="请输入佣金" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -139,13 +122,11 @@
 </template>
 
 <script>
-import { listMessageSystemNotice, getMessageSystemNotice, delMessageSystemNotice, addMessageSystemNotice, updateMessageSystemNotice, exportMessageSystemNotice } from "@/api/activity/messageSystemNotice";
-import Editor from '@/components/Editor';
+import { listLogCommission, getLogCommission, delLogCommission, addLogCommission, updateLogCommission, exportLogCommission } from "@/api/activity/logCommission";
 
 export default {
-  name: "MessageSystemNotice",
+  name: "LogCommission",
   components: {
-    Editor,
   },
   data() {
     return {
@@ -161,8 +142,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 系统公告表格数据
-      messageSystemNoticeList: [],
+      // 佣金领取日志表格数据
+      logCommissionList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -171,28 +152,13 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        title: null,
-        pubdatetime: null
+        memberId: null,
+        commission: null,
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
-        title: [
-          { required: true, message: "公告标题不能为空", trigger: "blur" }
-        ],
-        content: [
-          { required: true, message: "内容不能为空", trigger: "blur" }
-        ],
-        device: [
-          { required: true, message: "设备不能为空", trigger: "blur" }
-        ],
-        action: [
-          { required: true, message: "动作不能为空", trigger: "blur" }
-        ],
-        pubdatetime: [
-          { required: true, message: "发布时间不能为空", trigger: "blur" }
-        ]
       }
     };
   },
@@ -200,11 +166,11 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询系统公告列表 */
+    /** 查询佣金领取日志列表 */
     getList() {
       this.loading = true;
-      listMessageSystemNotice(this.queryParams).then(response => {
-        this.messageSystemNoticeList = response.rows;
+      listLogCommission(this.queryParams).then(response => {
+        this.logCommissionList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
@@ -218,11 +184,9 @@ export default {
     reset() {
       this.form = {
         id: null,
-        title: null,
-        content: null,
-        device: null,
-        action: null,
-        pubdatetime: null
+        memberId: null,
+        commission: null,
+        createTime: null
       };
       this.resetForm("form");
     },
@@ -246,16 +210,16 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加系统公告";
+      this.title = "添加佣金领取日志";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
       const id = row.id || this.ids
-      getMessageSystemNotice(id).then(response => {
+      getLogCommission(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改系统公告";
+        this.title = "修改佣金领取日志";
       });
     },
     /** 提交按钮 */
@@ -263,13 +227,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
-            updateMessageSystemNotice(this.form).then(response => {
+            updateLogCommission(this.form).then(response => {
               this.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addMessageSystemNotice(this.form).then(response => {
+            addLogCommission(this.form).then(response => {
               this.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -281,12 +245,12 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除系统公告编号为"' + ids + '"的数据项?', "警告", {
+      this.$confirm('是否确认删除佣金领取日志编号为"' + ids + '"的数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         }).then(function() {
-          return delMessageSystemNotice(ids);
+          return delLogCommission(ids);
         }).then(() => {
           this.getList();
           this.msgSuccess("删除成功");
@@ -295,12 +259,12 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有系统公告数据项?', "警告", {
+      this.$confirm('是否确认导出所有佣金领取日志数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         }).then(function() {
-          return exportMessageSystemNotice(queryParams);
+          return exportLogCommission(queryParams);
         }).then(response => {
           this.download(response.msg);
         })

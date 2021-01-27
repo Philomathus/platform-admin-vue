@@ -86,7 +86,6 @@
 
     <el-table v-loading="loading" :data="messageOnSiteList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-<!--      <el-table-column label="主键" align="center" prop="id" />-->
       <el-table-column label="信息标题" align="center" prop="title" />
       <el-table-column label="内容" align="center" prop="content" />
       <el-table-column label="接收者类型" align="center" prop="receiverType" />
@@ -160,7 +159,7 @@
 </template>
 
 <script>
-import { listMessageOnSite, getMessageOnSite, delMessageOnSite, addMessageOnSite, updateMessageOnSite, exportMessageOnSite } from "@/api/platform-web/admin/messageOnSite";
+import { listMessageOnSite, getMessageOnSite, delMessageOnSite, addMessageOnSite, updateMessageOnSite, exportMessageOnSite } from "@/api/activity/messageOnSite";
 import Editor from '@/components/Editor';
 
 export default {

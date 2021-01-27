@@ -49,38 +49,38 @@
           v-hasPermi="['admin:liveProp:remove']"
         >删除</el-button>
       </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['admin:liveProp:export']"
-        >导出</el-button>
-      </el-col>
+<!--      <el-col :span="1.5">-->
+<!--        <el-button-->
+<!--          type="warning"-->
+<!--          plain-->
+<!--          icon="el-icon-download"-->
+<!--          size="mini"-->
+<!--          @click="handleExport"-->
+<!--          v-hasPermi="['admin:liveProp:export']"-->
+<!--        >导出</el-button>-->
+<!--      </el-col>-->
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="livePropList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="道具名" align="center" prop="name" />
-      <el-table-column label="积分" align="center" prop="score" />
+      <el-table-column label="id" align="center" prop="id" />
+      <el-table-column label="名称" align="center" prop="name" />
       <el-table-column label="消费钻石" align="center" prop="diamonds" />
-<!--      <el-table-column label="图标" align="center" prop="icon" />-->
-      <el-table-column label="红包" align="center" prop="ticket" />
-      <el-table-column label="是否连续" align="center" prop="isMuch" />
-<!--      <el-table-column label="排序，从大到小;越大越靠前" align="center" prop="sort" />-->
-<!--      <el-table-column label="1:红包" align="center" prop="isRedEnvelope" />-->
-      <el-table-column label="展示动画" align="center" prop="isAnimated" />
-      <el-table-column label="状态" align="center" prop="isEffect" />
-<!--      <el-table-column label="大型道具类型" />-->
-<!--      <el-table-column label="机器人红包" align="center" prop="robotDiamonds" />-->
-<!--      <el-table-column label="PC端图标" align="center" prop="pcIcon" />-->
-<!--      <el-table-column label="PC端动态图标" align="center" prop="pcGif" />-->
-      <el-table-column label="礼物风格" align="center" prop="gifGiftShowStyle" />
-<!--      <el-table-column label="svga动画路径" align="center" prop="animatedUrl" />-->
-      <el-table-column label="类型" align="center" prop="type" />
+      <el-table-column label="RMB/钻石" align="center" prop="ticket" />
+      <el-table-column label="是否连送" align="center" prop="isMuch" :formatter="isMuchFormat"/>
+      <el-table-column label="类型" align="center" prop="type" :formatter="typeFormat"/>
+      <el-table-column label="展示动画" align="center" prop="isAnimated" :formatter="animatedFormat"/>
+      <el-table-column label="状态" align="center" key="isEffect" v-if="columns[0].visible">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.isEffect"
+            active-value="1"
+            inactive-value="0"
+            @change="handleStatusChange(scope.row)"
+          ></el-switch>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -110,66 +110,52 @@
     />
 
     <!-- 添加或修改礼物列对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="ID" prop="id">
-          <el-input v-model="form.id" placeholder="请输入ID" />
-        </el-form-item>
-        <el-form-item label="道具名" prop="name">
+    <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
+        <el-form-item label="名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入道具名" />
-        </el-form-item>
-        <el-form-item label="积分" prop="score">
-          <el-input v-model="form.score" placeholder="请输入积分" />
-        </el-form-item>
-        <el-form-item label="消费钻石" prop="diamonds">
-          <el-input v-model="form.diamonds" placeholder="请输入消费钻石" />
         </el-form-item>
         <el-form-item label="图标" prop="icon">
           <el-input v-model="form.icon" placeholder="请输入图标" />
         </el-form-item>
-        <el-form-item label="红包" prop="ticket">
-          <el-input v-model="form.ticket" placeholder="机器人红包" />
+        <el-form-item label="消费钻石" prop="diamonds">
+          <el-input v-model="form.diamonds" placeholder="请输入" />
+        </el-form-item>
+        <el-form-item label="主播获得热度:" prop="ticket">
+          <el-input v-model="form.ticket" placeholder="请输入" />
         </el-form-item>
         <el-form-item label="连续" prop="isMuch">
-          <el-input v-model="form.isMuch" placeholder="请输入1:可以连续发送多个;用于小金额礼物" />
+          <el-input v-model="form.isMuch" placeholder="请选择" />
         </el-form-item>
-        <el-form-item label="排序，从大到小;越大越靠前" prop="sort">
-          <el-input v-model="form.sort" placeholder="请输入排序，从大到小;越大越靠前" />
+
+        <el-form-item label="展示动画" prop="isAnimated">
+          <el-input v-model="form.isAnimated" placeholder="请选择" />
         </el-form-item>
-        <el-form-item label="1:红包" prop="isRedEnvelope">
-          <el-input v-model="form.isRedEnvelope" placeholder="请输入1:红包" />
-        </el-form-item>
-        <el-form-item label="0:普通礼物 1:gif礼物 2:大型动画礼物" prop="isAnimated">
-          <el-input v-model="form.isAnimated" placeholder="请输入0:普通礼物 1:gif礼物 2:大型动画礼物" />
-        </el-form-item>
-        <el-form-item label="0:禁用;1:启用;默认启用" prop="isEffect">
-          <el-input v-model="form.isEffect" placeholder="请输入0:禁用;1:启用;默认启用" />
-        </el-form-item>
+
         <el-form-item label="大型道具类型">
           <el-select v-model="form.animType" placeholder="请选择大型道具类型">
             <el-option label="请选择字典生成" value="" />
           </el-select>
         </el-form-item>
-        <el-form-item label="is_red_envelope=1时有效;分红包时,自动分配一些的机器人；剩下的给观众抢；观众可抢钻石=diamonds-ticket-robot_diamods; 如果当直播结束时,钻石未包抢光时,剩余钻石也自动分配给机器人" prop="robotDiamonds">
-          <el-input v-model="form.robotDiamonds" placeholder="请输入is_red_envelope=1时有效;分红包时,自动分配一些的机器人；剩下的给观众抢；观众可抢钻石=diamonds-ticket-robot_diamods; 如果当直播结束时,钻石未包抢光时,剩余钻石也自动分配给机器人" />
-        </el-form-item>
-        <el-form-item label="PC端图标" prop="pcIcon">
-          <el-input v-model="form.pcIcon" placeholder="请输入PC端图标" />
-        </el-form-item>
-        <el-form-item label="PC端动态图标" prop="pcGif">
-          <el-input v-model="form.pcGif" placeholder="请输入PC端动态图标" />
-        </el-form-item>
-        <el-form-item label="GIF礼物模式 0:按像素显示模式 1:全屏显示模式 2:至少两条边贴边模式" prop="gifGiftShowStyle">
-          <el-input v-model="form.gifGiftShowStyle" placeholder="请输入GIF礼物模式 0:按像素显示模式 1:全屏显示模式 2:至少两条边贴边模式" />
-        </el-form-item>
-        <el-form-item label="svga动画路径" prop="animatedUrl">
+
+        <el-form-item label="svga动画" prop="animatedUrl">
           <el-input v-model="form.animatedUrl" placeholder="请输入svga动画路径" />
         </el-form-item>
-        <el-form-item label="0:礼物；1:打赏" prop="type">
-          <el-select v-model="form.type" placeholder="请选择0:礼物；1:打赏">
+
+        <el-form-item label="排序" prop="sort">
+          <el-input v-model="form.sort" placeholder="请输入排序" />
+        </el-form-item>
+
+        <el-form-item label="类型" prop="type">
+          <el-select v-model="form.type" placeholder="请选择">
             <el-option label="请选择字典生成" value="" />
           </el-select>
         </el-form-item>
+
+        <el-form-item label="状态" prop="isEffect">
+          <el-input v-model="form.isEffect" placeholder="请选择" />
+        </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -181,6 +167,7 @@
 
 <script>
 import { listLiveProp, getLiveProp, delLiveProp, addLiveProp, updateLiveProp, exportLiveProp } from "@/api/live-web/liveProp/liveProp";
+import {changeUserStatus} from "@/api/platform-web/system/user";
 
 export default {
   name: "LiveProp",
@@ -228,61 +215,14 @@ export default {
         animatedUrl: null,
         type: null
       },
+      // 列信息
+      columns: [
+        {key: 0, label: `状态`, visible: true}
+      ],
       // 表单参数
       form: {},
       // 表单校验
       rules: {
-        id: [
-          { required: true, message: "ID不能为空", trigger: "blur" }
-        ],
-        name: [
-          { required: true, message: "道具名不能为空", trigger: "blur" }
-        ],
-        score: [
-          { required: true, message: "积分不能为空", trigger: "blur" }
-        ],
-        diamonds: [
-          { required: true, message: "消费钻石不能为空", trigger: "blur" }
-        ],
-        icon: [
-          { required: true, message: "图标不能为空", trigger: "blur" }
-        ],
-        ticket: [
-          { required: true, message: "印票或钻石", trigger: "blur" }
-        ],
-        isMuch: [
-          { required: true, message: "1:可以连续发送多个;用于小金额礼物不能为空", trigger: "blur" }
-        ],
-        sort: [
-          { required: true, message: "排序，从大到小;越大越靠前不能为空", trigger: "blur" }
-        ],
-        isRedEnvelope: [
-          { required: true, message: "1:红包不能为空", trigger: "blur" }
-        ],
-        isAnimated: [
-          { required: true, message: "0:普通礼物 1:gif礼物 2:大型动画礼物不能为空", trigger: "blur" }
-        ],
-        isEffect: [
-          { required: true, message: "0:禁用;1:启用;默认启用不能为空", trigger: "blur" }
-        ],
-        animType: [
-          { required: true, message: "大型道具类型", trigger: "change" }
-        ],
-        robotDiamonds: [
-          { required: true, message: "is_red_envelope=1时有效;分红包时,自动分配一些的机器人；剩下的给观众抢；观众可抢钻石=diamonds-ticket-robot_diamods; 如果当直播结束时,钻石未包抢光时,剩余钻石也自动分配给机器人不能为空", trigger: "blur" }
-        ],
-        pcIcon: [
-          { required: true, message: "PC端图标不能为空", trigger: "blur" }
-        ],
-        pcGif: [
-          { required: true, message: "PC端动态图标不能为空", trigger: "blur" }
-        ],
-        gifGiftShowStyle: [
-          { required: true, message: "GIF礼物模式 0:按像素显示模式 1:全屏显示模式 2:至少两条边贴边模式不能为空", trigger: "blur" }
-        ],
-        type: [
-          { required: true, message: "0:礼物；1:打赏不能为空", trigger: "change" }
-        ]
       }
     };
   },
@@ -393,6 +333,49 @@ export default {
           this.getList();
           this.msgSuccess("删除成功");
         })
+    },
+    isMuchFormat(row, column) {
+      if (row.isMuch == "1") {
+        return "是";
+      }else{
+        return "否";
+      }
+    },
+    typeFormat(row, column) {
+      if (row.type == "0") {
+        return "礼物";
+      }else if (row.type == "1") {
+        return "打赏";
+      }else{
+        return "守护";
+      }
+    },
+    animatedFormat(row, column) {
+      if (row.isAnimated == "0") {
+        return "普通礼物";
+      }else if (row.isAnimated == "1") {
+        return "gif礼物";
+      }else{
+        return "大型动画礼物";
+      }
+    },
+    // 状态修改
+    handleStatusChange(row) {
+      let text = row.isEffect === '0' ? '停用' : '启用'
+      this.$confirm('确认要' + text + '"' + row.name + '"吗?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        var data={};
+        data.id=row.id;
+        data.isEffect=row.isEffect;
+        return updateLiveProp(data)
+      }).then(() => {
+        this.msgSuccess(text + '成功')
+      }).catch(function () {
+        row.isEffect = row.isEffect === '0' ? '1' : '0'
+      })
     },
     /** 导出按钮操作 */
     handleExport() {

@@ -52,17 +52,17 @@
         >删除
         </el-button>
       </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['admin:liveVideoClassified:export']"
-        >导出
-        </el-button>
-      </el-col>
+<!--      <el-col :span="1.5">-->
+<!--        <el-button-->
+<!--          type="warning"-->
+<!--          plain-->
+<!--          icon="el-icon-download"-->
+<!--          size="mini"-->
+<!--          @click="handleExport"-->
+<!--          v-hasPermi="['admin:liveVideoClassified:export']"-->
+<!--        >导出-->
+<!--        </el-button>-->
+<!--      </el-col>-->
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -70,11 +70,29 @@
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="ID" align="center" prop="id"/>
       <el-table-column label="分类名称" align="center" prop="title"/>
-      <el-table-column label="状态" align="center" prop="isEffect"/>
+      <el-table-column label="状态" align="center" key="isEffect" v-if="columns[0].visible">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.isEffect"
+            active-value="1"
+            inactive-value="0"
+            @change="handleStatusChange(scope.row)"
+          ></el-switch>
+        </template>
+      </el-table-column>
       <el-table-column label="排序(客服端倒序)" align="center" prop="sort"/>
 <!--      <el-table-column label="分类图标" align="center" prop="img"/>-->
       <el-table-column label="分类代号" align="center" prop="classfy"/>
-      <el-table-column label="是否主播端显示" align="center" prop="isHostShow"/>
+      <el-table-column label="主播端显示" align="center" key="isHostShow" v-if="columns[0].visible">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.isHostShow"
+            active-value="1"
+            inactive-value="0"
+            @change="handleShowStatusChange(scope.row)"
+          ></el-switch>
+        </template>
+      </el-table-column>
 <!--      <el-table-column label="查询主播列表分页逻辑" align="center" prop="sortDesc"/>-->
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -107,28 +125,31 @@
     />
 
     <!-- 添加或修改分类对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="分类名称" prop="title">
           <el-input v-model="form.title" placeholder="请输入分类名称"/>
         </el-form-item>
-        <el-form-item label="是否有效 1-有效 0-无效" prop="isEffect">
-          <el-input v-model="form.isEffect" placeholder="请输入是否有效 1-有效 0-无效"/>
+        <el-form-item label="状态">
+          <el-radio-group v-model="form.isEffect">
+            <el-radio label="0">未启用</el-radio>
+            <el-radio label="1">启用</el-radio>
+          </el-radio-group>
         </el-form-item>
-        <el-form-item label="从大到小排" prop="sort">
-          <el-input v-model="form.sort" placeholder="请输入从大到小排"/>
+        <el-form-item label="主播端显示">
+          <el-radio-group v-model="form.isHostShow">
+            <el-radio label="0">未启用</el-radio>
+            <el-radio label="1">启用</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="排序" prop="sort">
+          <el-input v-model="form.sort" placeholder="请输入排序"/>
         </el-form-item>
         <el-form-item label="分类图标" prop="img">
           <el-input v-model="form.img" placeholder="请输入分类图标"/>
         </el-form-item>
         <el-form-item label="分类id" prop="classfy">
           <el-input v-model="form.classfy" placeholder="请输入分类id"/>
-        </el-form-item>
-        <el-form-item label="是否主播端显示" prop="isHostShow">
-          <el-input v-model="form.isHostShow" placeholder="请输入是否主播端显示"/>
-        </el-form-item>
-        <el-form-item label="查询主播列表分页逻辑" prop="sortDesc">
-          <el-input v-model="form.sortDesc" placeholder="请输入查询主播列表分页逻辑"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -184,6 +205,11 @@ export default {
         isHostShow: null,
         sortDesc: null
       },
+      // 列信息
+      columns: [
+        {key: 0, label: `状态`, visible: true},
+        {key: 1, label: `主播端显示`, visible: true}
+      ],
       // 表单参数
       form: {},
       // 表单校验
@@ -302,6 +328,41 @@ export default {
       }).then(() => {
         this.getList();
         this.msgSuccess("删除成功");
+      })
+    },
+    // 状态修改
+    handleStatusChange(row) {
+      let text = row.isEffect === '0' ? '停用' : '启用'
+      this.$confirm('确认要' + text + '"' + row.title + '"吗?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        var data={};
+        data.id=row.id;
+        data.isEffect=row.isEffect;
+        return updateLiveVideoClassified(data)
+      }).then(() => {
+        this.msgSuccess(text + '成功')
+      }).catch(function () {
+        row.isEffect = row.isEffect === '0' ? '1' : '0'
+      })
+    },
+    handleShowStatusChange(row) {
+      let text = row.isEffect === '0' ? '停用' : '启用'
+      this.$confirm('确认要' + text + '"' + row.title + '"吗?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        var data={};
+        data.id=row.id;
+        data.isHostShow=row.isHostShow;
+        return updateLiveVideoClassified(data)
+      }).then(() => {
+        this.msgSuccess(text + '成功')
+      }).catch(function () {
+        row.isHostShow = row.isHostShow === '0' ? '1' : '0'
       })
     },
     /** 导出按钮操作 */

@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="名称" prop="name">
+      <el-form-item label="发送人" prop="userNickName">
         <el-input
-          v-model="queryParams.name"
-          placeholder="请输入名称"
+          v-model="queryParams.userNickName"
+          placeholder="请输入发送者昵称"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -24,7 +24,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['admin:h5Plugin:add']"
+          v-hasPermi="['admin:liveVideoChat:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -35,7 +35,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['admin:h5Plugin:edit']"
+          v-hasPermi="['admin:liveVideoChat:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -46,7 +46,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['admin:h5Plugin:remove']"
+          v-hasPermi="['admin:liveVideoChat:remove']"
         >删除</el-button>
       </el-col>
 <!--      <el-col :span="1.5">-->
@@ -56,37 +56,23 @@
 <!--          icon="el-icon-download"-->
 <!--          size="mini"-->
 <!--          @click="handleExport"-->
-<!--          v-hasPermi="['admin:h5Plugin:export']"-->
+<!--          v-hasPermi="['admin:liveVideoChat:export']"-->
 <!--        >导出</el-button>-->
 <!--      </el-col>-->
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="h5PluginList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="liveVideoChatList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="编号" align="center" prop="id" />
-      <el-table-column label="插件名称" align="center" prop="name" />
-      <el-table-column label="状态" align="center" prop="status" />
-      <el-table-column label="状态" align="center" key="status" v-if="columns[0].visible">
-        <template slot-scope="scope">
-          <el-switch
-            v-model="scope.row.status"
-            active-value="1"
-            inactive-value="0"
-            @change="handleStatusChange(scope.row)"
-          ></el-switch>
-        </template>
-      </el-table-column>
-      <el-table-column label="地址" width="305px" align="center" prop="conUrl" />
-      <el-table-column label="图标" align="center" prop="iconUrl">
-        <template slot-scope="scope">
-          <el-image
-            style="width: 50px; height: 50px"
-            :src="scope.row.iconUrl"
-          >
-          </el-image>
-        </template>
-      </el-table-column>
+      <el-table-column label="会员ID" align="center" prop="id" />
+      <el-table-column label="主播ID" align="center" prop="poscatId" />
+      <el-table-column label="消息所在聊天组" align="center" prop="group" />
+      <el-table-column label="发送者id" align="center" prop="userId" />
+      <el-table-column label="消息内容" align="center" prop="msg" />
+      <el-table-column label="消息类型" align="center" prop="type" />
+      <el-table-column label="主播昵称" align="center" prop="poscatNickName" />
+      <el-table-column label="发送者昵称" align="center" prop="userNickName" />
+      <el-table-column label="平台会员ID" align="center" prop="fromPlatform" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -94,14 +80,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['admin:h5Plugin:edit']"
+            v-hasPermi="['admin:liveVideoChat:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['admin:h5Plugin:remove']"
+            v-hasPermi="['admin:liveVideoChat:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -115,17 +101,34 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改【请填写功能名称】对话框 -->
+    <!-- 添加或修改会员发言对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="插件名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入名称" />
+        <el-form-item label="主播ID" prop="poscatId">
+          <el-input v-model="form.poscatId" placeholder="请输入主播ID" />
         </el-form-item>
-        <el-form-item label="内容地址" prop="conUrl">
-          <el-input v-model="form.conUrl" placeholder="请输入内容地址" />
+        <el-form-item label="消息所在聊天组" prop="group">
+          <el-input v-model="form.group" placeholder="请输入消息所在聊天组" />
         </el-form-item>
-        <el-form-item label="图标地址" prop="iconUrl">
-          <el-input v-model="form.iconUrl" placeholder="请输入图标地址" />
+        <el-form-item label="发送者id" prop="userId">
+          <el-input v-model="form.userId" placeholder="请输入发送者id" />
+        </el-form-item>
+        <el-form-item label="消息内容" prop="msg">
+          <el-input v-model="form.msg" type="textarea" placeholder="请输入内容" />
+        </el-form-item>
+        <el-form-item label="消息类型 0 普通消息 1 弹幕消息" prop="type">
+          <el-select v-model="form.type" placeholder="请选择消息类型 0 普通消息 1 弹幕消息">
+            <el-option label="请选择字典生成" value="" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="主播昵称" prop="poscatNickName">
+          <el-input v-model="form.poscatNickName" placeholder="请输入主播昵称" />
+        </el-form-item>
+        <el-form-item label="发送者昵称" prop="userNickName">
+          <el-input v-model="form.userNickName" placeholder="请输入发送者昵称" />
+        </el-form-item>
+        <el-form-item label="平台会员ID" prop="fromPlatform">
+          <el-input v-model="form.fromPlatform" placeholder="请输入平台会员ID" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -137,11 +140,10 @@
 </template>
 
 <script>
-import { listH5Plugin, getH5Plugin, delH5Plugin, addH5Plugin, updateH5Plugin, exportH5Plugin } from "@/api/live-web/h5/h5Plugin";
-import {updateLiveMount} from "@/api/live-web/liveMount/liveMount";
+import { listLiveVideoChat, getLiveVideoChat, delLiveVideoChat, addLiveVideoChat, updateLiveVideoChat, exportLiveVideoChat } from "@/api/live-web/chat/liveVideoChat";
 
 export default {
-  name: "H5Plugin",
+  name: "LiveVideoChat",
   components: {
   },
   data() {
@@ -158,8 +160,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 【请填写功能名称】表格数据
-      h5PluginList: [],
+      // 会员发言表格数据
+      liveVideoChatList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -168,21 +170,21 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        name: null,
-        status: null,
-        conUrl: null,
-        iconUrl: null
+        poscatId: null,
+        group: null,
+        userId: null,
+        msg: null,
+        type: null,
+        poscatNickName: null,
+        userNickName: null,
+        fromPlatform: null
       },
-      // 列信息
-      columns: [
-        {key: 0, label: `状态`, visible: true}
-      ],
       // 表单参数
       form: {},
       // 表单校验
       rules: {
-        name: [
-          { required: true, message: "名称不能为空", trigger: "blur" }
+        poscatId: [
+          { required: true, message: "主播ID不能为空", trigger: "blur" }
         ],
       }
     };
@@ -191,11 +193,11 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询【请填写功能名称】列表 */
+    /** 查询会员发言列表 */
     getList() {
       this.loading = true;
-      listH5Plugin(this.queryParams).then(response => {
-        this.h5PluginList = response.rows;
+      listLiveVideoChat(this.queryParams).then(response => {
+        this.liveVideoChatList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
@@ -209,10 +211,15 @@ export default {
     reset() {
       this.form = {
         id: null,
-        name: null,
-        status: 0,
-        conUrl: null,
-        iconUrl: null
+        poscatId: null,
+        group: null,
+        userId: null,
+        msg: null,
+        createTime: null,
+        type: null,
+        poscatNickName: null,
+        userNickName: null,
+        fromPlatform: null
       };
       this.resetForm("form");
     },
@@ -236,16 +243,16 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【请填写功能名称】";
+      this.title = "添加会员发言";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
       const id = row.id || this.ids
-      getH5Plugin(id).then(response => {
+      getLiveVideoChat(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = "修改会员发言";
       });
     },
     /** 提交按钮 */
@@ -253,13 +260,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
-            updateH5Plugin(this.form).then(response => {
+            updateLiveVideoChat(this.form).then(response => {
               this.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addH5Plugin(this.form).then(response => {
+            addLiveVideoChat(this.form).then(response => {
               this.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -271,44 +278,26 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项?', "警告", {
+      this.$confirm('是否确认删除会员发言编号为"' + ids + '"的数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         }).then(function() {
-          return delH5Plugin(ids);
+          return delLiveVideoChat(ids);
         }).then(() => {
           this.getList();
           this.msgSuccess("删除成功");
         })
     },
-    // 状态修改
-    handleStatusChange(row) {
-      let text = row.status === '0' ? '停用' : '启用'
-      this.$confirm('确认要' + text + '"' + row.name + '"吗?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(function () {
-        var data={};
-        data.id=row.id;
-        data.status=row.status;
-        return updateH5Plugin(data)
-      }).then(() => {
-        this.msgSuccess(text + '成功')
-      }).catch(function () {
-        row.status = row.status === '0' ? '1' : '0'
-      })
-    },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有【请填写功能名称】数据项?', "警告", {
+      this.$confirm('是否确认导出所有会员发言数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         }).then(function() {
-          return exportH5Plugin(queryParams);
+          return exportLiveVideoChat(queryParams);
         }).then(response => {
           this.download(response.msg);
         })

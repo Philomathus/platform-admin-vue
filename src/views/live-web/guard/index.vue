@@ -49,26 +49,26 @@
           v-hasPermi="['admin:liveGuardConfig:remove']"
         >删除</el-button>
       </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['admin:liveGuardConfig:export']"
-        >导出</el-button>
-      </el-col>
+<!--      <el-col :span="1.5">-->
+<!--        <el-button-->
+<!--          type="warning"-->
+<!--          plain-->
+<!--          icon="el-icon-download"-->
+<!--          size="mini"-->
+<!--          @click="handleExport"-->
+<!--          v-hasPermi="['admin:liveGuardConfig:export']"-->
+<!--        >导出</el-button>-->
+<!--      </el-col>-->
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="liveGuardConfigList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="赠送天数" align="center" prop="id" />
+      <el-table-column label="id" align="center" prop="id" />
       <el-table-column label="规格" align="center" prop="specifications" />
       <el-table-column label="守护月数" align="center" prop="month" />
       <el-table-column label="价格" align="center" prop="price" />
-      <el-table-column label="1银之守护2.星之守护" align="center" prop="type" />
+      <el-table-column label="守护类型" align="center" prop="type" :formatter="typeFormat"/>
       <el-table-column label="礼物id" align="center" prop="propId" />
       <el-table-column label="优惠价格" align="center" prop="discountPrice" />
       <el-table-column label="赠送天数" align="center" prop="giveday" />
@@ -100,11 +100,11 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改【请填写功能名称】对话框 -->
+    <!-- 添加或修改对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="规格(一个月，三个月，六个月，十二个月)" prop="specifications">
-          <el-input v-model="form.specifications" placeholder="请输入规格(一个月，三个月，六个月，十二个月)" />
+        <el-form-item label="规格" prop="specifications">
+          <el-input v-model="form.specifications" placeholder="请选择规格" />
         </el-form-item>
         <el-form-item label="守护月数" prop="month">
           <el-input v-model="form.month" placeholder="请输入守护月数" />
@@ -112,9 +112,14 @@
         <el-form-item label="价格" prop="price">
           <el-input v-model="form.price" placeholder="请输入价格" />
         </el-form-item>
-        <el-form-item label="守护类型" prop="type">
-          <el-select v-model="form.type" placeholder="请选择1银之守护2.星之守护">
-            <el-option label="请选择字典生成" value="" />
+        <el-form-item label="守护类型">
+          <el-select v-model="form.type" placeholder="请选择">
+            <el-option
+              v-for="dict in guardOptions"
+              :key="dict.dictValue"
+              :label="dict.dictLabel"
+              :value="dict.dictValue"
+            ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="礼物id" prop="propId">
@@ -156,8 +161,9 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 【请填写功能名称】表格数据
+      // 表格数据
       liveGuardConfigList: [],
+      guardOptions:[],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -183,9 +189,12 @@ export default {
   },
   created() {
     this.getList();
+    this.getDicts('guard_type').then(response => {
+      this.guardOptions = response.data
+    })
   },
   methods: {
-    /** 查询【请填写功能名称】列表 */
+    /** 查询列表 */
     getList() {
       this.loading = true;
       listLiveGuardConfig(this.queryParams).then(response => {
@@ -233,7 +242,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【请填写功能名称】";
+      this.title = "添加";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -241,8 +250,9 @@ export default {
       const id = row.id || this.ids
       getLiveGuardConfig(id).then(response => {
         this.form = response.data;
+        this.form.type=""+this.form.type
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = "修改";
       });
     },
     /** 提交按钮 */
@@ -268,7 +278,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项?', "警告", {
+      this.$confirm('是否确认删除编号为"' + ids + '"的数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
@@ -279,10 +289,17 @@ export default {
           this.msgSuccess("删除成功");
         })
     },
+    typeFormat(row, column) {
+      if (row.type == "1") {
+        return "银之守护";
+      }else{
+        return "星之守护";
+      }
+    },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有【请填写功能名称】数据项?', "警告", {
+      this.$confirm('是否确认导出所有数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"

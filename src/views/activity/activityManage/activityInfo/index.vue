@@ -1,15 +1,6 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-<!--      <el-form-item label="图标" prop="icon">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.icon"-->
-<!--          placeholder="请输入图标"-->
-<!--          clearable-->
-<!--          size="small"-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
       <el-form-item label="活动标题" prop="title">
         <el-input
           v-model="queryParams.title"
@@ -19,32 +10,14 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-<!--      <el-form-item label="发布时间" prop="ctime">-->
-<!--        <el-date-picker clearable size="small"-->
-<!--          v-model="queryParams.ctime"-->
-<!--          type="date"-->
-<!--          value-format="yyyy-MM-dd"-->
-<!--          placeholder="选择发布时间">-->
-<!--        </el-date-picker>-->
-<!--      </el-form-item>-->
-<!--      <el-form-item label="排序号" prop="indexs">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.indexs"-->
-<!--          placeholder="请输入排序号"-->
-<!--          clearable-->
-<!--          size="small"-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
-<!--      <el-form-item label="活动类型id" prop="typeId">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.typeId"-->
-<!--          placeholder="请输入活动类型id"-->
-<!--          clearable-->
-<!--          size="small"-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
+      <el-form-item label="发布时间" prop="ctime">
+        <el-date-picker clearable size="small"
+          v-model="queryParams.ctime"
+          type="date"
+          value-format="yyyy-MM-dd"
+          placeholder="选择发布时间">
+        </el-date-picker>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -99,7 +72,6 @@
 
     <el-table v-loading="loading" :data="activityInfoList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-<!--      <el-table-column label="系统编号" align="center" prop="id" />-->
       <el-table-column label="图标" align="center" prop="icon" />
       <el-table-column label="标题" align="center" prop="title" />
       <el-table-column label="发布时间" align="center" prop="ctime" width="180">
@@ -174,14 +146,11 @@
 </template>
 
 <script>
-import { listActivityInfo, getActivityInfo, delActivityInfo, addActivityInfo, updateActivityInfo, exportActivityInfo } from "@/api/platform-web/admin/activityInfo";
-import Editor from '@/components/Editor';
+import { listActivityInfo, getActivityInfo, delActivityInfo, addActivityInfo, updateActivityInfo, exportActivityInfo } from "@/api/activity/activityInfo";
 
 export default {
   name: "ActivityInfo",
-  components: {
-    Editor,
-  },
+  components: {},
   data() {
     return {
       // 遮罩层
@@ -206,12 +175,8 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        icon: null,
         title: null,
-        ctime: null,
-        indexs: null,
-        typeId: null,
-        content: null
+        ctime: null
       },
       // 表单参数
       form: {},
@@ -242,7 +207,6 @@ export default {
     reset() {
       this.form = {
         id: null,
-        icon: null,
         title: null,
         ctime: null,
         indexs: null,

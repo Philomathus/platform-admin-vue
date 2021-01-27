@@ -73,7 +73,6 @@
 
     <el-table v-loading="loading" :data="activityQuestTypeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-<!--      <el-table-column label="系统编号" align="center" prop="id" />-->
       <el-table-column label="名称" align="center" prop="name" />
       <el-table-column label="所属游戏id" align="center" prop="gameId" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -123,7 +122,7 @@
 </template>
 
 <script>
-import { listActivityQuestType, getActivityQuestType, delActivityQuestType, addActivityQuestType, updateActivityQuestType, exportActivityQuestType } from "@/api/platform-web/admin/activityQuestType";
+import { listActivityQuestType, getActivityQuestType, delActivityQuestType, addActivityQuestType, updateActivityQuestType, exportActivityQuestType } from "@/api/activity/activityQuestType";
 
 export default {
   name: "ActivityQuestType",

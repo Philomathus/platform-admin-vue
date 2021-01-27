@@ -1,15 +1,6 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-<!--      <el-form-item label="图标" prop="icon">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.icon"-->
-<!--          placeholder="请输入图标"-->
-<!--          clearable-->
-<!--          size="small"-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
       <el-form-item label="标题" prop="title">
         <el-input
           v-model="queryParams.title"
@@ -27,15 +18,6 @@
           placeholder="选择发布时间">
         </el-date-picker>
       </el-form-item>
-<!--      <el-form-item label="排序号" prop="indexs">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.indexs"-->
-<!--          placeholder="请输入排序号"-->
-<!--          clearable-->
-<!--          size="small"-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
       <el-form-item label="任务类型id" prop="typeId">
         <el-input
           v-model="queryParams.typeId"
@@ -144,7 +126,6 @@
 
     <el-table v-loading="loading" :data="activityQuestInfoList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-<!--      <el-table-column label="系统编号" align="center" prop="id" />-->
       <el-table-column label="图标" align="center" prop="icon" />
       <el-table-column label="标题" align="center" prop="title" />
       <el-table-column label="发布时间" align="center" prop="ctime" width="180">
@@ -153,12 +134,12 @@
         </template>
       </el-table-column>
       <el-table-column label="排序号" align="center" prop="indexs" />
-<!--      <el-table-column label="任务类型id" align="center" prop="typeId" />-->
+      <el-table-column label="任务类型id" align="center" prop="typeId" />
       <el-table-column label="目标任务量" align="center" prop="target" />
       <el-table-column label="完成后增加的资金" align="center" prop="reward" />
       <el-table-column label="任务详情" align="center" prop="detail" />
       <el-table-column label="描述" align="center" prop="content" />
-<!--      <el-table-column label="所属游戏id" align="center" prop="gameId" />-->
+      <el-table-column label="所属游戏id" align="center" prop="gameId" />
       <el-table-column label="平台游戏类型" align="center" prop="kindId" />
       <el-table-column label="平台类型" align="center" prop="platformId" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -189,7 +170,7 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改任务信息列表对话框 -->
+    <!-- 添加或修改任务信息对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="图标" prop="icon">
@@ -243,7 +224,7 @@
 </template>
 
 <script>
-import { listActivityQuestInfo, getActivityQuestInfo, delActivityQuestInfo, addActivityQuestInfo, updateActivityQuestInfo, exportActivityQuestInfo } from "@/api/platform-web/admin/activityQuestInfo";
+import { listActivityQuestInfo, getActivityQuestInfo, delActivityQuestInfo, addActivityQuestInfo, updateActivityQuestInfo, exportActivityQuestInfo } from "@/api/activity/activityQuestInfo";
 import Editor from '@/components/Editor';
 
 export default {
@@ -265,7 +246,7 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 任务信息列表表格数据
+      // 任务信息表格数据
       activityQuestInfoList: [],
       // 弹出层标题
       title: "",
@@ -299,7 +280,7 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询任务信息列表列表 */
+    /** 查询任务信息列表 */
     getList() {
       this.loading = true;
       listActivityQuestInfo(this.queryParams).then(response => {
@@ -352,7 +333,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加任务信息列表";
+      this.title = "添加任务信息";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -361,7 +342,7 @@ export default {
       getActivityQuestInfo(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改任务信息列表";
+        this.title = "修改任务信息";
       });
     },
     /** 提交按钮 */
@@ -387,7 +368,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除任务信息列表编号为"' + ids + '"的数据项?', "警告", {
+      this.$confirm('是否确认删除任务信息编号为"' + ids + '"的数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
@@ -401,7 +382,7 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有任务信息列表数据项?', "警告", {
+      this.$confirm('是否确认导出所有任务信息数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"

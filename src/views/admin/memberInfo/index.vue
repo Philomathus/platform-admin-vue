@@ -391,7 +391,7 @@
         >新增
         </el-button>
       </el-col>
-      <el-col :span="1.5">
+<!--      <el-col :span="1.5">
         <el-button
           type="success"
           plain
@@ -402,7 +402,7 @@
           v-hasPermi="['admin:memberInfo:edit']"
         >修改
         </el-button>
-      </el-col>
+      </el-col>-->
 <!--      <el-col :span="1.5">
         <el-button
           type="danger"
@@ -498,14 +498,14 @@
        <el-table-column label="设备ID" align="center" prop="deviceId" />-->
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button
+<!--          <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:memberInfo:edit']"
           >修改
-          </el-button>
+          </el-button>-->
 <!--          <el-button
             size="mini"
             type="text"

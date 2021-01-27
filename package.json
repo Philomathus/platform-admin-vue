@@ -50,6 +50,7 @@
     "highlight.js": "9.18.5",
     "js-beautify": "1.13.4",
     "js-cookie": "2.2.1",
+    "js-file-download": "^0.4.12",
     "jsencrypt": "3.0.0-rc.1",
     "lodash": "^4.17.20",
     "nprogress": "0.2.0",

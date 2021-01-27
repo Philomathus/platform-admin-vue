@@ -3,7 +3,8 @@
  */
 
 import {url} from '@/utils/url'
-
+import request from '@/utils/request'
+import fileDownload from 'js-file-download'
 // 日期格式化
 export function parseTime(time, pattern) {
 	if (arguments.length === 0 || !time) {
@@ -97,7 +98,11 @@ export function selectDictLabels(datas, value, separator) {
 
 // 通用下载方法
 export function download(fileName) {
-	window.location.href = url.platformWeb + "/common/download?fileName=" + encodeURI(fileName) + "&delete=" + true;
+  request.get(url.platformWeb + "/common/download?fileName=" + encodeURI(fileName) + "&delete=" + true,  {responseType: 'arraybuffer'}).then(res => {
+    var strings = encodeURI(fileName).split('_');
+    fileDownload(res, strings[strings.length-1])
+  })
+	// window.location.href = url.platformWeb + "/common/download?fileName=" + encodeURI(fileName) + "&delete=" + true;
 }
 
 // 字符串格式化(%s )

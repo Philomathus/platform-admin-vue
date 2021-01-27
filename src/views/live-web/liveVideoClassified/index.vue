@@ -169,7 +169,6 @@ import {
   updateLiveVideoClassified,
   exportLiveVideoClassified
 } from "@/api/live-web/liveVideoClassified/liveVideoClassified";
-import {updateH5Plugin} from "@/api/live-web/h5/h5Plugin";
 
 export default {
   name: "LiveVideoClassified",

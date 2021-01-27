@@ -112,11 +112,11 @@
         <el-form-item label="分类名称" prop="title">
           <el-input v-model="form.title" placeholder="请输入分类名称"/>
         </el-form-item>
-        <el-form-item label="是否有效 1-有效 0-无效" prop="isEffect">
-          <el-input v-model="form.isEffect" placeholder="请输入是否有效 1-有效 0-无效"/>
+        <el-form-item label="状态" prop="isEffect">
+          <el-input v-model="form.isEffect" placeholder="请选择状态"/>
         </el-form-item>
-        <el-form-item label="从大到小排" prop="sort">
-          <el-input v-model="form.sort" placeholder="请输入从大到小排"/>
+        <el-form-item label="排序" prop="sort">
+          <el-input v-model="form.sort" placeholder="请输入排序"/>
         </el-form-item>
         <el-form-item label="分类图标" prop="img">
           <el-input v-model="form.img" placeholder="请输入分类图标"/>
@@ -124,12 +124,12 @@
         <el-form-item label="分类id" prop="classfy">
           <el-input v-model="form.classfy" placeholder="请输入分类id"/>
         </el-form-item>
-        <el-form-item label="是否主播端显示" prop="isHostShow">
-          <el-input v-model="form.isHostShow" placeholder="请输入是否主播端显示"/>
-        </el-form-item>
-        <el-form-item label="查询主播列表分页逻辑" prop="sortDesc">
-          <el-input v-model="form.sortDesc" placeholder="请输入查询主播列表分页逻辑"/>
-        </el-form-item>
+<!--        <el-form-item label="是否主播端显示" prop="isHostShow">-->
+<!--          <el-input v-model="form.isHostShow" placeholder="请输入是否主播端显示"/>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="查询主播列表分页逻辑" prop="sortDesc">-->
+<!--          <el-input v-model="form.sortDesc" placeholder="请输入查询主播列表分页逻辑"/>-->
+<!--        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>

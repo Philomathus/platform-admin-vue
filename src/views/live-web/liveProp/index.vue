@@ -359,9 +359,23 @@ export default {
         return "大型动画礼物";
       }
     },
-    // 用户状态修改
+    // 状态修改
     handleStatusChange(row) {
-
+      let text = row.isEffect === '0' ? '停用' : '启用'
+      this.$confirm('确认要' + text + '"' + row.name + '"吗?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        var data={};
+        data.id=row.id;
+        data.isEffect=row.isEffect;
+        return updateLiveProp(data)
+      }).then(() => {
+        this.msgSuccess(text + '成功')
+      }).catch(function () {
+        row.isEffect = row.isEffect === '0' ? '1' : '0'
+      })
     },
     /** 导出按钮操作 */
     handleExport() {

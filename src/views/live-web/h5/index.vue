@@ -67,6 +67,16 @@
       <el-table-column label="编号" align="center" prop="id" />
       <el-table-column label="插件名称" align="center" prop="name" />
       <el-table-column label="状态" align="center" prop="status" />
+      <el-table-column label="状态" align="center" key="status" v-if="columns[0].visible">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.status"
+            active-value="1"
+            inactive-value="0"
+            @change="handleStatusChange(scope.row)"
+          ></el-switch>
+        </template>
+      </el-table-column>
       <el-table-column label="地址" width="305px" align="center" prop="conUrl" />
       <el-table-column label="图标" align="center" prop="iconUrl">
         <template slot-scope="scope">
@@ -128,6 +138,7 @@
 
 <script>
 import { listH5Plugin, getH5Plugin, delH5Plugin, addH5Plugin, updateH5Plugin, exportH5Plugin } from "@/api/live-web/h5/h5Plugin";
+import {updateLiveMount} from "@/api/live-web/liveMount/liveMount";
 
 export default {
   name: "H5Plugin",
@@ -162,6 +173,10 @@ export default {
         conUrl: null,
         iconUrl: null
       },
+      // 列信息
+      columns: [
+        {key: 0, label: `状态`, visible: true}
+      ],
       // 表单参数
       form: {},
       // 表单校验
@@ -266,6 +281,24 @@ export default {
           this.getList();
           this.msgSuccess("删除成功");
         })
+    },
+    // 状态修改
+    handleStatusChange(row) {
+      let text = row.status === '0' ? '停用' : '启用'
+      this.$confirm('确认要' + text + '"' + row.name + '"吗?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        var data={};
+        data.id=row.id;
+        data.status=row.status;
+        return updateH5Plugin(data)
+      }).then(() => {
+        this.msgSuccess(text + '成功')
+      }).catch(function () {
+        row.status = row.status === '0' ? '1' : '0'
+      })
     },
     /** 导出按钮操作 */
     handleExport() {

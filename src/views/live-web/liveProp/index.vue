@@ -68,10 +68,19 @@
       <el-table-column label="名称" align="center" prop="name" />
       <el-table-column label="消费钻石" align="center" prop="score" />
       <el-table-column label="RMB/钻石" align="center" prop="diamonds" />
-      <el-table-column label="是否连送" align="center" prop="isMuch" />
+      <el-table-column label="是否连送" align="center" prop="isMuch" :formatter="isMuchFormat"/>
       <el-table-column label="类型" align="center" prop="type" />
-      <el-table-column label="展示动画" align="center" prop="isAnimated" />
-      <el-table-column label="状态" align="center" prop="isEffect" />
+      <el-table-column label="展示动画" align="center" prop="isAnimated" :formatter="animatedFormat"/>
+      <el-table-column label="状态" align="center" key="isEffect" v-if="columns[0].visible">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.isEffect"
+            active-value="0"
+            inactive-value="1"
+            @change="handleStatusChange(scope.row)"
+          ></el-switch>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -205,61 +214,14 @@ export default {
         animatedUrl: null,
         type: null
       },
+      // 列信息
+      columns: [
+        {key: 0, label: `状态`, visible: true}
+      ],
       // 表单参数
       form: {},
       // 表单校验
       rules: {
-        id: [
-          { required: true, message: "ID不能为空", trigger: "blur" }
-        ],
-        name: [
-          { required: true, message: "道具名不能为空", trigger: "blur" }
-        ],
-        score: [
-          { required: true, message: "积分不能为空", trigger: "blur" }
-        ],
-        diamonds: [
-          { required: true, message: "消费钻石不能为空", trigger: "blur" }
-        ],
-        icon: [
-          { required: true, message: "图标不能为空", trigger: "blur" }
-        ],
-        ticket: [
-          { required: true, message: "印票或钻石", trigger: "blur" }
-        ],
-        isMuch: [
-          { required: true, message: "1:可以连续发送多个;用于小金额礼物不能为空", trigger: "blur" }
-        ],
-        sort: [
-          { required: true, message: "排序，从大到小;越大越靠前不能为空", trigger: "blur" }
-        ],
-        isRedEnvelope: [
-          { required: true, message: "1:红包不能为空", trigger: "blur" }
-        ],
-        isAnimated: [
-          { required: true, message: "0:普通礼物 1:gif礼物 2:大型动画礼物不能为空", trigger: "blur" }
-        ],
-        isEffect: [
-          { required: true, message: "0:禁用;1:启用;默认启用不能为空", trigger: "blur" }
-        ],
-        animType: [
-          { required: true, message: "大型道具类型", trigger: "change" }
-        ],
-        robotDiamonds: [
-          { required: true, message: "is_red_envelope=1时有效;分红包时,自动分配一些的机器人；剩下的给观众抢；观众可抢钻石=diamonds-ticket-robot_diamods; 如果当直播结束时,钻石未包抢光时,剩余钻石也自动分配给机器人不能为空", trigger: "blur" }
-        ],
-        pcIcon: [
-          { required: true, message: "PC端图标不能为空", trigger: "blur" }
-        ],
-        pcGif: [
-          { required: true, message: "PC端动态图标不能为空", trigger: "blur" }
-        ],
-        gifGiftShowStyle: [
-          { required: true, message: "GIF礼物模式 0:按像素显示模式 1:全屏显示模式 2:至少两条边贴边模式不能为空", trigger: "blur" }
-        ],
-        type: [
-          { required: true, message: "0:礼物；1:打赏不能为空", trigger: "change" }
-        ]
       }
     };
   },
@@ -370,6 +332,22 @@ export default {
           this.getList();
           this.msgSuccess("删除成功");
         })
+    },
+    isMuchFormat(row, column) {
+      if (row.isMuch == "1") {
+        return "是";
+      }else{
+        return "否";
+      }
+    },
+    animatedFormat(row, column) {
+      if (row.isAnimated == "0") {
+        return "普通礼物";
+      }else if (row.isAnimated == "1") {
+        return "gif礼物";
+      }else{
+        return "大型动画礼物";
+      }
     },
     /** 导出按钮操作 */
     handleExport() {

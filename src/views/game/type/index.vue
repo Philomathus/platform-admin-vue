@@ -64,12 +64,21 @@
 
     <el-table v-loading="loading" :data="typeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="系统编号" align="center" prop="id" />
       <el-table-column label="名称" align="center" prop="name" />
-      <el-table-column label="状态(1启用0停用)" align="center" prop="status" />
+      <el-table-column label="图标" align="center" prop="icon">
+        <template slot-scope="scope">
+          <a :href="scope.row.icon" target="_blank">
+            <el-image
+              style="width: 50px; height: 50px"
+              :src="scope.row.icon"
+            >
+            </el-image>
+          </a>
+        </template>
+      </el-table-column>
+      <el-table-column label="图标类型" align="center" prop="iconType" :formatter="iconTypeFormat" />
+      <el-table-column label="状态" align="center" prop="status" :formatter="statusFormat" />
       <el-table-column label="排序号" align="center" prop="indexs" />
-      <el-table-column label="图标" align="center" prop="icon" />
-      <el-table-column label="图标类型" align="center" prop="iconType" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -108,11 +117,16 @@
           <el-input v-model="form.indexs" placeholder="请输入排序号" />
         </el-form-item>
         <el-form-item label="图标">
-          <imageUpload v-model="form.icon" :path="gameType"/>
+          <imageUpload v-model="form.icon" path="gameType"/>
         </el-form-item>
         <el-form-item label="图标类型" prop="iconType">
           <el-select v-model="form.iconType" placeholder="请选择图标类型">
-            <el-option label="请选择字典生成" value="" />
+            <el-option
+              v-for="dict in iconTypeOptions"
+              :key="dict.dictValue"
+              :label="dict.dictLabel"
+              :value="parseInt(dict.dictValue)"
+            ></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -153,6 +167,10 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      // 状态字典
+      statusOptions: [],
+      // 图标类型字典
+      iconTypeOptions: [],
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -168,6 +186,12 @@ export default {
   },
   created() {
     this.getList();
+    this.getDicts("game_type_status").then(response => {
+      this.statusOptions = response.data;
+    });
+    this.getDicts("game_icon_type").then(response => {
+      this.iconTypeOptions = response.data;
+    });
   },
   methods: {
     /** 查询游戏类型列表 */
@@ -178,6 +202,14 @@ export default {
         this.total = response.total;
         this.loading = false;
       });
+    },
+    // 状态字典翻译
+    statusFormat(row, column) {
+      return this.selectDictLabel(this.statusOptions, row.status);
+    },
+    // 图标类型字典翻译
+    iconTypeFormat(row, column) {
+      return this.selectDictLabel(this.iconTypeOptions, row.iconType);
     },
     // 取消按钮
     cancel() {

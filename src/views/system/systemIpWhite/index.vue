@@ -13,11 +13,11 @@
       <el-form-item label="启用状态" prop="ipStatus">
         <el-select v-model="queryParams.ipStatus" placeholder="请选择IP白名单启用状态" clearable size="small">
           <el-option
-            v-for="dict in ipStatusOptions"
-            :key="dict.dictValue"
-            :label="dict.dictLabel"
-            :value="dict.dictValue"
-          />
+            v-for="item in ipStatus"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -147,6 +147,14 @@ export default {
   },
   data() {
     return {
+      //状态选择栏
+      ipStatus: [{
+        value: '1',
+        label: '启用'
+      }, {
+        value: '0',
+        label: '禁用'
+     }],
       // 遮罩层
       loading: true,
       // 选中数组
@@ -175,8 +183,6 @@ export default {
         mark: null,
         ipCount: null
       },
-      // 状态数据字典
-      ipStatusOptions: [],
       // 表单参数
       form: {},
       // 表单校验
@@ -186,9 +192,6 @@ export default {
   },
   created() {
     this.getList();
-    this.getDicts('systemIpWhite').then(response => {
-      this.ipStatusOptions = response.data
-    })
   },
   methods: {
     /** 查询IP白名单列表 */

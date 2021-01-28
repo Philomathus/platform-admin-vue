@@ -1,16 +1,17 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="全部平台" prop="platform_id">
-        <el-input
-          v-model="queryParams.platform_id"
-          placeholder="请输入用户名称"
-          clearable
-          size="small"
-          style="width: 240px"
-          @keyup.enter.native="handleQuery"
-        />
+      <el-form-item label="全部平台" prop="platformId">
+        <el-select v-model="queryParams.platformId" placeholder="请选择">
+          <el-option
+            v-for="dict in platformNameList"
+            :key="dict.id"
+            :label="dict.platformName"
+            :value="dict.id"
+          ></el-option>
+        </el-select>
       </el-form-item>
+
       <el-form-item label="名称" prop="name">
         <el-input
           v-model="queryParams.name"
@@ -23,7 +24,6 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
@@ -38,38 +38,7 @@
           v-hasPermi="['web:game-info:add']"
         >新增</el-button>
       </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['web:game-info:edit']"
-        >修改</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['web:game-info:remove']"
-        >删除</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['web:game-info:export']"
-        >导出</el-button>
-      </el-col>
+
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
     <el-table v-loading="loading" :data="report" @selection-change="handleSelectionChange">
@@ -145,32 +114,7 @@
       @pagination="getList"
     />
 
-    <!-- 未绑定谷歌验证码弹框 -->
-    <el-dialog
-      title="绑定谷歌验证码"
-      :visible.sync="dialogVisible"
-      width="15%"
-      @keyup.enter.native="getGoogleAuth">
-      <img :src="pic"
-           width="100%"/>
-      <el-input
-        v-model="userName"
-        v-show="false"
-      />
-      <el-input
-        v-model="secretKey"
-        v-show="false"
-      />
-      <el-input
-        placeholder="请输入谷歌验证码"
-        v-model="googleAuthCode"
-        size="small"
-        style="width: 70%"
-        @keyup.enter.native="bind"
-        @input="change($event)"
-      />
-      <el-button type="primary" @click="bind">绑定</el-button>
-    </el-dialog>
+
 
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
@@ -187,19 +131,26 @@
         <el-form-item label="新版图标" prop="editionIcon">
           <el-input v-model="form.editionIcon" placeholder="请输入新版图标" />
         </el-form-item>
-        <el-form-item label="0 =横屏 1=竖屏" prop="screen">
-          <el-input v-model="form.screen" placeholder="请输入0 =横屏 1=竖屏" />
+        <el-form-item label="横竖屏" prop="screen" :formatter="screen">
+          <el-select v-model="form.screen" placeholder="请选择">
+            <el-option
+              v-for="dict in screenList"
+              :key="dict.dictValue"
+              :label="dict.dictLabel"
+              :value="dict.dictValue"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="高宽比" prop="highWide">
           <el-input v-model="form.highWide" placeholder="请输入高宽比" />
         </el-form-item>
-        <el-form-item label="是否填充" prop="isRecommend">
+        <el-form-item label="是否填充" prop="isFull">
             <el-select v-model="form.isFull" placeholder="请选择">
             <el-option
               v-for="dict in isFullList"
-              :key="dict.id"
-              :label="dict.platformName"
-              :value="dict.id"
+              :key="dict.dictValue"
+              :label="dict.dictLabel"
+              :value="dict.dictValue"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -235,6 +186,9 @@ import {
   changeIsWh,
   getInfo,
   getGameInfo,
+  addGameInfoOne,
+  updateGameInfo,
+  delGameInfo,
 } from '@/api/platform-web/game/gameInfo'
 import {getToken} from '@/utils/auth'
 import Treeselect from '@riophae/vue-treeselect'
@@ -275,6 +229,9 @@ export default {
       // 类型数据字典
       isFull: [],
       report: [],
+      screen: [],
+      screenList: [],
+      isFullList: [],
       // 游戏名称
       platformNameList: [],
       // 表单参数
@@ -302,14 +259,21 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 15,
-        platform_id: undefined,
-        name: undefined
+        platformId: null,
+        platformName: null,
+        name: null
       },
 
     }
   },
   created() {
     this.getList()
+    this.getDicts('game_info_screen').then(response => {
+      this.screenList = response.data
+    })
+    this.getDicts('game_isFull').then(response => {
+      this.isFullList = response.data
+    })
      getGameInfo().then(response => {
         this.platformNameList = response.data;
       });
@@ -327,16 +291,24 @@ export default {
         }
       )
     },
-    // 是否填充
-    statusFormat(row, column) {
-    if (row.isFull==0){
-      return '填充'
+    // 横竖屏
+    screen(row, column) {
+    if (row.screen==0){
+      return '横屏'
     }
     if (row.isFull==1){
-      return '不填充'
+      return '竖屏'
     }
     },
-
+    // 是否填充
+    statusFormat(row, column) {
+      if (row.isFull==0){
+        return '不填充'
+      }
+      if (row.isFull==1){
+        return '填充'
+      }
+    },
     // 状态修改
     handleStatusChange(row) {
       let text = row.status ==="1" ? '启用' : '停用'
@@ -400,7 +372,6 @@ export default {
     handleQuery() {
       this.queryParams.page = 1
       this.getList()
-      this.sum();
     },
 
     handleUpdate(row) {
@@ -433,13 +404,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
-            updataGameinfo(this.form).then(response => {
+            updateGameInfo(this.form).then(response => {
               this.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addGameinfo(this.form).then(response => {
+            addGameInfoOne(this.form).then(response => {
               this.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -451,30 +422,18 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项?', "警告", {
+      this.$confirm('是否确认删除游戏名为"' + row.name + '"的数据项?', "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       }).then(function() {
-        return delGame-info(ids);
+        return delGameInfo(ids);
       }).then(() => {
         this.getList();
         this.msgSuccess("删除成功");
       })
     },
-    /** 导出按钮操作 */
-    handleExport() {
-      const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有【请填写功能名称】数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(function() {
-        return exportGame-info(queryParams);
-      }).then(response => {
-        this.download(response.msg);
-      })
-    }
+
   }
 }
 </script>

@@ -59,7 +59,24 @@ export function getGameInfo() {
   })
 }
 
+// 新增【请填写功能名称】
+export function  addGameInfoOne(data) {
+  return request({
+    url: url.platformWeb + '/web/game-info/add',
+    method: 'post',
+    data: data
+  })
+}
 
+
+
+// 删除【请填写功能名称】
+export function delGameInfo(id) {
+  return request({
+    url: url.platformWeb + '/web/game-info/' + id,
+    method: 'delete'
+  })
+}
 
 
 

@@ -66,7 +66,7 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="平台会员ID" align="center" prop="fromPlatform" />
       <el-table-column label="用户昵称" align="center" prop="userNickName" />
-      <el-table-column label="消息类型" align="center" prop="type" />
+      <el-table-column label="消息类型" align="center" prop="type" :formatter="msgFormat"/>
       <el-table-column label="消息内容" align="center" prop="msg" />
 <!--      <el-table-column label="会员ID" align="center" prop="id" />-->
       <el-table-column label="主播ID" align="center" prop="poscatId" />
@@ -290,6 +290,13 @@ export default {
           this.getList();
           this.msgSuccess("删除成功");
         })
+    },
+    msgFormat(row, column) {
+      if (row.msg == "1") {
+        return "弹幕消息";
+      }else{
+        return "普通消息";
+      }
     },
     /** 导出按钮操作 */
     handleExport() {

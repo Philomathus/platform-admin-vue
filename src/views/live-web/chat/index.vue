@@ -64,15 +64,17 @@
 
     <el-table v-loading="loading" :data="liveVideoChatList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="会员ID" align="center" prop="id" />
-      <el-table-column label="主播ID" align="center" prop="poscatId" />
-      <el-table-column label="消息所在聊天组" align="center" prop="group" />
-      <el-table-column label="发送者id" align="center" prop="userId" />
-      <el-table-column label="消息内容" align="center" prop="msg" />
-      <el-table-column label="消息类型" align="center" prop="type" />
-      <el-table-column label="主播昵称" align="center" prop="poscatNickName" />
-      <el-table-column label="发送者昵称" align="center" prop="userNickName" />
       <el-table-column label="平台会员ID" align="center" prop="fromPlatform" />
+      <el-table-column label="用户昵称" align="center" prop="userNickName" />
+      <el-table-column label="消息类型" align="center" prop="type" :formatter="msgFormat"/>
+      <el-table-column label="消息内容" align="center" prop="msg" />
+<!--      <el-table-column label="会员ID" align="center" prop="id" />-->
+      <el-table-column label="主播ID" align="center" prop="poscatId" />
+<!--      <el-table-column label="消息所在聊天组" align="center" prop="group" />-->
+<!--      <el-table-column label="发送者id" align="center" prop="userId" />-->
+
+      <el-table-column label="主播昵称" align="center" prop="poscatNickName" />
+      <el-table-column label="发送时间" align="center" prop="createTimes" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -288,6 +290,13 @@ export default {
           this.getList();
           this.msgSuccess("删除成功");
         })
+    },
+    msgFormat(row, column) {
+      if (row.msg == "1") {
+        return "弹幕消息";
+      }else{
+        return "普通消息";
+      }
     },
     /** 导出按钮操作 */
     handleExport() {

@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-dialog
+      v-dialogDrag
       v-bind="$attrs"
       width="500px"
       :close-on-click-modal="false"

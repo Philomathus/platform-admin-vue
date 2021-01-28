@@ -110,7 +110,7 @@
     />
 
     <!-- 添加或修改礼物列对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="800px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入道具名" />

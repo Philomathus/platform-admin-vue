@@ -2,23 +2,36 @@
   <div class="app-container">
     <template>
       <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-        <el-form-item label="参数名称" prop="envDes">
-          <el-input
-            v-model="envTitle"
-            placeholder="请输入参数标题"
-            clearable
-            size="small"
-            @keyup.enter.native="handleQuery"
-          />
+        <el-form-item label="参数名称" prop="envTitle">
+          <el-select v-model="titleCode.envTitle" @change="changeType" filterable placeholder="请选择参数名称">
+            <el-option
+              v-for="(item,index) in titleCodeList"
+              :key="index"
+              :label="item.envTitle"
+              :value="item">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="参数编码" prop="envCode">
+          <el-select v-model="titleCode.envCode" @change="changeType" filterable placeholder="请选择参数编码">
+            <el-option
+              v-for="(item,index) in titleCodeList"
+              :key="index"
+              :label="item.envCode"
+              :value="item"
+
+            >
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-         <!-- <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>-->
+          <!-- <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>-->
         </el-form-item>
       </el-form>
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane v-for="(item,index) in tabList" :label="item.dictLabel" :name="item.dictValue">
-          <el-form :model="queryParams" ref="queryForm"   v-show="showSearch" label-width="68px">
+          <el-form :model="queryParams" ref="queryForm" v-show="showSearch" label-width="68px">
             <el-form-item v-for=" item in configEnvironmentList" :label="item.envTitle" prop="envDes" label-width="10%">
               <el-input
                 :class="item.envStatus === 0  ? 'ban' : ''"
@@ -26,7 +39,7 @@
                 placeholder="请输入参数编码"
                 clearable
                 size="small"
-                style="width: 20%"
+                style="width: 10%"
                 @keyup.enter.native="handleQuery"
               />
               <el-input
@@ -35,17 +48,29 @@
                 placeholder="请输入参数值"
                 clearable
                 size="small"
-                style="width: 20%;margin-left: 10px"
+                style="width: 10%;margin-left: 10px"
                 @keyup.enter.native="handleQuery"
               />
-              <el-select :class="item.envStatus === 0  ? 'ban' : ''"  style="width: 20%;margin-left: 10px" v-model="item.envStatus" placeholder="请选择状态" clearable size="small">
-                <el-option v-for="(item,index) in statusList" :key="index" :label="item.dictLabel" :value="parseInt(item.dictValue)"/>
+              <el-input
+                :class="item.envStatus === 0  ? 'ban' : ''"
+                v-model="item.envSort"
+                placeholder="请输入序列号"
+                clearable
+                size="small"
+                style="width: 10%;margin-left: 10px"
+                @keyup.enter.native="handleQuery"
+              />
+              <el-select :class="item.envStatus === 0  ? 'ban' : ''" style="width: 5%;margin-left: 10px"
+                         v-model="item.envStatus" placeholder="请选择状态" clearable size="small">
+                <el-option v-for="(item,index) in statusList" :key="index" :label="item.dictLabel"
+                           :value="parseInt(item.dictValue)"/>
               </el-select>
               <span style="font-size: 10px;margin-left: 10px">{{item.envDes}}</span>
             </el-form-item>
-            <el-form-item style="float: right">
-              <el-button type="primary"  size="mini" v-show="configEnvironmentList.length>0" @click="handleConfirm">确定</el-button>
-<!--              <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>-->
+            <el-form-item style="float: right;margin-right: 20%">
+              <el-button type="primary" size="mini" v-show="configEnvironmentList.length>0" @click="handleConfirm">确定
+              </el-button>
+              <!--              <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>-->
             </el-form-item>
           </el-form>
 
@@ -75,8 +100,10 @@
             return {
                 //status集合
                 statusList: [],
-                //最上面的搜索
-                envTitle: null,
+                //最上面的提示
+                titleCodeList: [],
+                //最上面的搜索对象
+                titleCode: {envTitle: '', envCode: '',},
                 //tab的选中
                 activeName: '1',
                 //tab的集合
@@ -127,17 +154,25 @@
             };
         },
         created() {
-            // this.getList();
+            //获取提示列表
+            this.getList(1);
+            //获取对应页面的列表
             this.getDicts("config_environment_group").then(response => {
                 this.tabList = response.data;
                 //通过tabList的对应的类型的groupId来查询对应的类型
                 this.getList();
             });
+            //获取开关按钮提示
             this.getDicts("server_sms_status").then(response => {
                 this.statusList = response.data;
             });
         },
         methods: {
+            /*选中值之后调用的事件*/
+            changeType(item) {
+                this.titleCode.envCode = item.envCode;
+                this.titleCode.envTitle = item.envTitle;
+            },
             /*切换调用的方法*/
             handleClick(tab, event) {
                 this.activeName = tab.name
@@ -145,14 +180,23 @@
                 // console.log(tab, event);
             },
             /** 查询【请填写功能名称】列表 */
-            getList() {
+            getList(type) {
                 this.loading = true;
-                var dictValue = this.tabList[parseInt(this.activeName)-1].dictValue;
-                this.queryParams.envGroup = dictValue
+                var that = this;
+                if (!type) {
+                    var dictValue = this.tabList[parseInt(this.activeName) - 1].dictValue;
+                    this.queryParams.envGroup = dictValue
+                }
                 listConfigEnvironment(this.queryParams).then(response => {
-                    this.configEnvironmentList = response.rows.sort(function(a, b){return a.envSort - b.envSort});
-                    this.total = response.total;
-                    this.loading = false;
+                    this.configEnvironmentList = response.rows.sort(function (a, b) {
+                        return a.envSort - b.envSort
+                    });
+                    if (type) {
+                        that.titleCodeList = this.configEnvironmentList;
+                    } else {
+                        this.total = response.total;
+                        this.loading = false;
+                    }
                 });
             },
             // 取消按钮
@@ -178,22 +222,26 @@
             },
             /** 搜索按钮操作 */
             handleQuery() {
+                if (this.envTitle === '' && this.envCode === '') {
+                    this.$notify.warning('参数标题和参数编码不能同时为空')
+                    return
+                }
                 // this.queryParams.pageNum = 1;
-                getTitleIndex({title: this.envTitle}).then((res) => {
-                        if (res.code === 200) {
-                            console.log(res)
-                            if (res.data) {
-                                this.activeName = res.data+''
-                                this.getList();
-                            }else {
-                                this.$notify.warning('没有对应的功能')
-                            }
-                            // this.activeName = tab.index
-                            // this.getList();
+                getTitleIndex({title: this.titleCode.envTitle, code: this.titleCode.envCode}).then((res) => {
+                    if (res.code === 200) {
+                        console.log(res)
+                        if (res.data) {
+                            this.activeName = res.data + ''
+                            this.getList();
+                        } else {
+                            this.$notify.warning('没有对应的功能')
                         }
-                      }).catch(() => {
-                        this.$notify.error('网络异常')
-                      });
+                        // this.activeName = tab.index
+                        // this.getList();
+                    }
+                }).catch(() => {
+                    this.$notify.error('网络异常')
+                });
             },
             /** 重置按钮操作 */
             resetQuery() {
@@ -206,7 +254,7 @@
                 this.single = selection.length !== 1
                 this.multiple = !selection.length
             },
-            handleConfirm(){
+            handleConfirm() {
                 updateConfigEnvironmentList(this.configEnvironmentList).then(response => {
                     this.msgSuccess("修改成功");
                     this.open = false;
@@ -281,15 +329,15 @@
 </script>
 
 <style>
-/*  .ban{
-    background-color: #909399
-  }*/
-  .ban{
+  /*  .ban{
+      background-color: #909399
+    }*/
+  .ban {
     -webkit-text-fill-color: #ededed !important;
-/*    -webkit-box-shadow: 0 0 0px 1000px transparent  inset !important;
-    background-color:transparent;
-    background-image: none;
-    !* //背景色透明  生效时长  过渡效果  启用时延迟的时间 *!
-    transition: background-color 50000s ease-in-out 0s;*/
+    /*    -webkit-box-shadow: 0 0 0px 1000px transparent  inset !important;
+        background-color:transparent;
+        background-image: none;
+        !* //背景色透明  生效时长  过渡效果  启用时延迟的时间 *!
+        transition: background-color 50000s ease-in-out 0s;*/
   }
 </style>

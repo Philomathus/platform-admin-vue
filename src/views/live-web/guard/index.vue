@@ -101,7 +101,7 @@
     />
 
     <!-- 添加或修改对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="规格" prop="specifications">
           <el-input v-model="form.specifications" placeholder="请选择规格" />
@@ -122,8 +122,18 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="礼物id" prop="propId">
-          <el-input v-model="form.propId" placeholder="请输入礼物id" />
+<!--        <el-form-item label="礼物id" prop="propId">-->
+<!--          <el-input v-model="form.propId" placeholder="请输入礼物id" />-->
+<!--        </el-form-item>-->
+        <el-form-item label="关联礼物">
+          <el-select v-model="form.propId" placeholder="请选择">
+            <el-option
+              v-for="dict in propIdOptions"
+              :key="dict.id"
+              :label="dict.name"
+              :value="dict.id"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="优惠价格" prop="discountPrice">
           <el-input v-model="form.discountPrice" placeholder="请输入优惠价格" />
@@ -141,7 +151,7 @@
 </template>
 
 <script>
-import { listLiveGuardConfig, getLiveGuardConfig, delLiveGuardConfig, addLiveGuardConfig, updateLiveGuardConfig, exportLiveGuardConfig } from "@/api/live-web/guard/liveGuardConfig";
+import { getProp,listLiveGuardConfig, getLiveGuardConfig, delLiveGuardConfig, addLiveGuardConfig, updateLiveGuardConfig, exportLiveGuardConfig } from "@/api/live-web/guard/liveGuardConfig";
 
 export default {
   name: "LiveGuardConfig",
@@ -164,6 +174,7 @@ export default {
       // 表格数据
       liveGuardConfigList: [],
       guardOptions:[],
+      propIdOptions:[],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -192,6 +203,10 @@ export default {
     this.getDicts('guard_type').then(response => {
       this.guardOptions = response.data
     })
+    getProp().then(response => {
+      this.propIdOptions = response.rows
+    })
+
   },
   methods: {
     /** 查询列表 */

@@ -10,6 +10,14 @@ export function listLiveGuardConfig(query) {
   })
 }
 
+// 查询【请填写功能名称】列表
+export function getProp() {
+  return request({
+    url: url.platformWeb + '/admin/liveProp/getList',
+    method: 'get'
+  })
+}
+
 // 查询【请填写功能名称】详细
 export function getLiveGuardConfig(id) {
   return request({

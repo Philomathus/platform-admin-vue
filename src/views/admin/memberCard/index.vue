@@ -161,7 +161,7 @@
     />
 
     <!-- 添加或修改【请填写功能名称】对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="姓名" prop="realName">
           <el-input v-model="form.realName" placeholder="请输入姓名" />

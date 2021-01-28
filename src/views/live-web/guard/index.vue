@@ -122,10 +122,10 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="礼物id" prop="propId">
-          <el-input v-model="form.propId" placeholder="请输入礼物id" />
-        </el-form-item>
-        <el-form-item label="守护类型">
+<!--        <el-form-item label="礼物id" prop="propId">-->
+<!--          <el-input v-model="form.propId" placeholder="请输入礼物id" />-->
+<!--        </el-form-item>-->
+        <el-form-item label="关联礼物">
           <el-select v-model="form.propId" placeholder="请选择">
             <el-option
               v-for="dict in propIdOptions"
@@ -203,7 +203,6 @@ export default {
     this.getDicts('guard_type').then(response => {
       this.guardOptions = response.data
     })
-    debugger;
     getProp().then(response => {
       this.propIdOptions = response.rows
     })

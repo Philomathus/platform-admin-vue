@@ -284,7 +284,6 @@
                             message: '你的家族ID是: ' + value
                         });
                         if (this.index === 4) {
-                            debugger;
                             goFamiily({
                                 familyId: value,
                                 id: this.userId

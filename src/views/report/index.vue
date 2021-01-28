@@ -1,79 +1,41 @@
 <template>
   <div class="app-container">
     <template>
-      <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-        <el-form-item label="参数名称" prop="envTitle">
-          <el-select v-model="titleCode.envTitle" @change="changeType" filterable placeholder="请选择参数名称">
-            <el-option
-              v-for="(item,index) in titleCodeList"
-              :key="index"
-              :label="item.envTitle"
-              :value="item">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="参数编码" prop="envCode">
-          <el-select v-model="titleCode.envCode" @change="changeType" filterable placeholder="请选择参数编码">
-            <el-option
-              v-for="(item,index) in titleCodeList"
-              :key="index"
-              :label="item.envCode"
-              :value="item"
+<!--      <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">-->
+<!--        <el-form-item label="参数名称" prop="envTitle">-->
+<!--          <el-select v-model="titleCode.envTitle" @change="changeType" filterable placeholder="请选择参数名称">-->
+<!--            <el-option-->
+<!--              v-for="(item,index) in titleCodeList"-->
+<!--              :key="index"-->
+<!--              :label="item.envTitle"-->
+<!--              :value="item">-->
+<!--            </el-option>-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="参数编码" prop="envCode">-->
+<!--          <el-select v-model="titleCode.envCode" @change="changeType" filterable placeholder="请选择参数编码">-->
+<!--            <el-option-->
+<!--              v-for="(item,index) in titleCodeList"-->
+<!--              :key="index"-->
+<!--              :label="item.envCode"-->
+<!--              :value="item"-->
 
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-          <!-- <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>-->
-        </el-form-item>
-      </el-form>
-      <el-tabs v-model="activeName" @tab-click="handleClick">
+<!--            >-->
+<!--            </el-option>-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item>-->
+<!--          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>-->
+<!--          &lt;!&ndash; <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>&ndash;&gt;-->
+<!--        </el-form-item>-->
+<!--      </el-form>-->
+      <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane v-for="(item,index) in tabList" :label="item.dictLabel" :name="item.dictValue">
-          <el-form :model="queryParams" ref="queryForm" v-show="showSearch" label-width="68px">
-            <el-form-item v-for=" item in configEnvironmentList" :label="item.envTitle" prop="envDes" label-width="10%">
-              <el-input
-                :class="item.envStatus === 0  ? 'ban' : ''"
-                v-model="item.envCode"
-                placeholder="请输入参数编码"
-                clearable
-                size="small"
-                style="width: 10%"
-                @keyup.enter.native="handleQuery"
-              />
-              <el-input
-                :class="item.envStatus === 0  ? 'ban' : ''"
-                v-model="item.envValue"
-                placeholder="请输入参数值"
-                clearable
-                size="small"
-                style="width: 10%;margin-left: 10px"
-                @keyup.enter.native="handleQuery"
-              />
-              <el-input
-                :class="item.envStatus === 0  ? 'ban' : ''"
-                v-model="item.envSort"
-                placeholder="请输入序列号"
-                clearable
-                size="small"
-                style="width: 10%;margin-left: 10px"
-                @keyup.enter.native="handleQuery"
-              />
-              <el-select :class="item.envStatus === 0  ? 'ban' : ''" style="width: 6%;margin-left: 10px"
-                         v-model="item.envStatus" placeholder="请选择" clearable size="small">
-                <el-option v-for="(item,index) in statusList" :key="index" :label="item.dictLabel"
-                           :value="parseInt(item.dictValue)"/>
-              </el-select>
-              <span style="font-size: 10px;margin-left: 10px">{{item.envDes}}</span>
-            </el-form-item>
-            <el-form-item style="float: right;margin-right: 20%">
-              <el-button type="primary" size="mini" v-show="configEnvironmentList.length>0" @click="handleConfirm">确定
-              </el-button>
-              <!--              <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>-->
-            </el-form-item>
-          </el-form>
-
+          <comprehensive v-if="item.dictValue==='1'"></comprehensive>
+          <game-bet v-if="item.dictValue==='2'"></game-bet>
+          <recharge-statistics v-if="item.dictValue==='3'"></recharge-statistics>
+          <income-day v-if="item.dictValue==='4'"></income-day>
+          <agent-count v-if="item.dictValue==='5'"></agent-count>
         </el-tab-pane>
 
       </el-tabs>
@@ -92,22 +54,25 @@
         exportConfigEnvironment,
         getTitleIndex
     } from "@/api/platform-web/config/configEnvironment";
-
+    import agentCount from '@/views/report/agentCount/index.vue';
+    import comprehensive from '@/views/report/comprehensiveStatistics/index.vue';
+    import gameBet from '@/views/report/gameBet/index.vue';
+    import incomeDay from '@/views/report/incomeDay/index.vue';
+    import rechargeStatistics from '@/views/report/rechargeStatistics/index.vue';
     export default {
         name: "ConfigEnvironment",
-        components: {},
+        components: {agentCount: agentCount,
+            comprehensive: comprehensive,
+            gameBet: gameBet,
+            incomeDay: incomeDay,
+            rechargeStatistics: rechargeStatistics
+        },
         data() {
             return {
-                //status集合
-                statusList: [],
-                //最上面的提示
-                titleCodeList: [],
-                //最上面的搜索对象
-                titleCode: {envTitle: '', envCode: '',},
                 //tab的选中
                 activeName: '1',
-                //tab的集合
-                tabList: [],
+                //tab的集合   游戏投注报表 充值综合统计 平台推广统计
+                tabList: [{dictLabel: "平台综合统计",dictValue: "1"},{dictLabel: "游戏投注报表",dictValue: "2"},{dictLabel: "充值综合统计",dictValue: "3"},{dictLabel: "平台充值报表",dictValue: "4"},{dictLabel: "平台推广统计",dictValue: "5"},],
                 // 遮罩层
                 loading: true,
                 // 选中数组
@@ -154,7 +119,7 @@
             };
         },
         created() {
-            //获取提示列表
+   /*         //获取提示列表
             this.getList(1);
             //获取对应页面的列表
             this.getDicts("config_environment_group").then(response => {
@@ -165,7 +130,7 @@
             //获取开关按钮提示
             this.getDicts("server_sms_status").then(response => {
                 this.statusList = response.data;
-            });
+            });*/
         },
         methods: {
             /*选中值之后调用的事件*/
@@ -176,7 +141,7 @@
             /*切换调用的方法*/
             handleClick(tab, event) {
                 this.activeName = tab.name
-                this.getList();
+                // this.getList();
                 // console.log(tab, event);
             },
             /** 查询【请填写功能名称】列表 */

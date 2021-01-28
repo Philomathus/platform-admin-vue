@@ -68,40 +68,42 @@
 
     <el-table v-loading="loading" :data="liveVideoList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="id" align="center" prop="id"/>
+      <el-table-column label="主播id" align="center" prop="id"/>
       <el-table-column label="直播标题" align="center" prop="title"/>
-      <el-table-column label="项目id" align="center" prop="userId"/>
+      <el-table-column label="主播昵称" align="center" prop="hostName"/>
+<!--      <el-table-column label="项目id" align="center" prop="userId"/>-->
+      <el-table-column label="房间类型" align="center" prop="roomType"/>
       <el-table-column label="是否直播中" align="center" prop="liveIn"/>
       <el-table-column label="当前实时观看人数" align="center" prop="watchNumber"/>
-      <el-table-column label="当前虚拟观看人数" align="center" prop="virtualWatchNumber"/>
+<!--      <el-table-column label="当前虚拟观看人数" align="center" prop="virtualWatchNumber"/>-->
       <el-table-column label="获得票数" align="center" prop="voteNumber"/>
       <el-table-column label="主题id" align="center" prop="cateId"/>
-      <el-table-column label="省份" align="center" prop="province"/>
-      <el-table-column label="城市" align="center" prop="city"/>
+<!--      <el-table-column label="省份" align="center" prop="province"/>-->
+<!--      <el-table-column label="城市" align="center" prop="city"/>-->
       <el-table-column label="开始时间" align="center" prop="beginTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.beginTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="结束时间" align="center" prop="endTime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.endTime, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="结束日期" align="center" prop="endDate" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.endDate, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="群组ID" align="center" prop="groupId"/>
+<!--      <el-table-column label="结束时间" align="center" prop="endTime" width="180">-->
+<!--        <template slot-scope="scope">-->
+<!--          <span>{{ parseTime(scope.row.endTime, '{y}-{m}-{d}') }}</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--      <el-table-column label="结束日期" align="center" prop="endDate" width="180">-->
+<!--        <template slot-scope="scope">-->
+<!--          <span>{{ parseTime(scope.row.endDate, '{y}-{m}-{d}') }}</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--      <el-table-column label="群组ID" align="center" prop="groupId"/>-->
       <el-table-column label="最大观看人数" align="center" prop="maxWatchNumber"/>
-      <el-table-column label="房间类型群" align="center" prop="roomType"/>
-      <el-table-column label="视频地址" align="center" prop="videoVid"/>
-      <el-table-column label="心跳" align="center" prop="monitorTime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.monitorTime, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
+<!--      <el-table-column label="房间类型群" align="center" prop="roomType"/>-->
+<!--      <el-table-column label="视频地址" align="center" prop="videoVid"/>-->
+<!--      <el-table-column label="心跳" align="center" prop="monitorTime" width="180">-->
+<!--        <template slot-scope="scope">-->
+<!--          <span>{{ parseTime(scope.row.monitorTime, '{y}-{m}-{d}') }}</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -268,12 +270,6 @@
           <el-select v-model="form.videoType" placeholder="请选择0:腾讯云互动直播;1:腾讯云直播">
             <el-option label="请选择字典生成" value=""/>
           </el-select>
-        </el-form-item>
-        <el-form-item
-          label="sort_init + share_count * 分享权重 + like_count * 点赞权重 + fans_count * 关注权重 + sort * 排序权重 + ticket(本场收到的印票) * 印票权重"
-          prop="sortNum">
-          <el-input v-model="form.sortNum"
-                    placeholder="请输入sort_init + share_count * 分享权重 + like_count * 点赞权重 + fans_count * 关注权重 + sort * 排序权重 + ticket(本场收到的印票) * 印票权重"/>
         </el-form-item>
         <el-form-item label="0:APP端创建的直播;1:PC端创建的直播" prop="createType">
           <el-select v-model="form.createType" placeholder="请选择0:APP端创建的直播;1:PC端创建的直播">

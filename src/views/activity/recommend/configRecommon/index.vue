@@ -114,7 +114,7 @@
     />
 
     <!-- 添加或修改推广设置对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="级别" prop="level">
           <el-input v-model="form.level" placeholder="请输入级别(1 一级 2 二级)" />

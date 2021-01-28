@@ -119,7 +119,7 @@
     />
 
     <!-- 添加或修改礼物列对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="vip等级" prop="gvip">
           <el-input v-model="form.gvip" placeholder="请输入免费领取VIP(-1只能买)" />

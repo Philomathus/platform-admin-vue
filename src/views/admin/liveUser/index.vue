@@ -1520,7 +1520,7 @@
     />
 
     <!-- 添加或修改//用户信息对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="主播昵称" prop="nickName">
           <el-input v-model="form.nickName" placeholder="请输入用户昵称"/>

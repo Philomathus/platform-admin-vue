@@ -1,33 +1,34 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="域名分组" prop="dgroup">
-        <el-select v-model="queryParams.dgroup" placeholder="请选择域名分组" clearable size="small">
+      <el-form-item label="SMS名称" prop="name">
+        <el-input
+          v-model="queryParams.name"
+          placeholder="请输入SMS名称"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="服务商" prop="provider">
+        <el-select v-model="queryParams.provider" placeholder="请选择服务商" clearable size="small">
           <el-option
-            v-for="dict in dgroupOptions"
+            v-for="dict in providerOptions"
             :key="dict.dictValue"
             :label="dict.dictLabel"
             :value="dict.dictValue"
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="域名" prop="domain">
-        <el-input
-          v-model="queryParams.domain"
-          placeholder="请输入域名"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="动态编码" prop="dcode">
-        <el-input
-          v-model="queryParams.dcode"
-          placeholder="请输入动态编码"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+      <el-form-item label="状态" prop="isEffect">
+        <el-select v-model="queryParams.isEffect" placeholder="请选择状态" clearable size="small">
+          <el-option
+            v-for="dict in isEffectOptions"
+            :key="dict.dictValue"
+            :label="dict.dictLabel"
+            :value="dict.dictValue"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -43,7 +44,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['config:domain:add']"
+          v-hasPermi="['server:sms:add']"
         >新增
         </el-button>
       </el-col>
@@ -55,7 +56,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['config:domain:edit']"
+          v-hasPermi="['server:sms:edit']"
         >修改
         </el-button>
       </el-col>
@@ -67,38 +68,29 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['config:domain:remove']"
+          v-hasPermi="['server:sms:remove']"
         >删除
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="domainList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="smsList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="域名分组" align="center" prop="dgroup" :formatter="dgroupFormat"/>
-      <el-table-column label="域名" align="center" prop="domain"/>
-      <el-table-column align="center" prop="dcode" :formatter="dcodeFormat">
-        <template slot="header">
-          <span>动态编码</span>
-          <el-tooltip popper-class="tooltip" placement="top">
-            <i class="el-icon-question"></i>
-            <div slot="content" class="tooltip-content">
-              <div>1、测试内容测试内容测试内容，</div>
-            </div>
-          </el-tooltip>
-        </template>
-      </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark"/>
-      <el-table-column label="排序" align="center" prop="sort"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="SMS名称" align="center" prop="name"/>
+      <el-table-column label="服务商" align="center" prop="provider" :formatter="providerFormat"/>
+      <el-table-column label="地区" align="center" prop="region"/>
+      <el-table-column label="签名" align="center" prop="signature"/>
+      <el-table-column label="模板" align="center" prop="template"/>
+      <el-table-column label="状态" align="center" prop="isEffect" :formatter="isEffectFormat"/>
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['config:domain:edit']"
+            v-hasPermi="['server:sms:edit']"
           >修改
           </el-button>
           <el-button
@@ -106,7 +98,7 @@
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['config:domain:remove']"
+            v-hasPermi="['server:sms:remove']"
           >删除
           </el-button>
         </template>
@@ -121,30 +113,39 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改域名配置对话框 -->
+    <!-- 添加或修改SMS短信服务配置对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="域名分组" prop="dgroup">
-          <el-select v-model="form.dgroup" placeholder="请选择域名分组">
+        <el-form-item label="SMS名称" prop="name">
+          <el-input v-model="form.name" placeholder="请输入SMS名称"/>
+        </el-form-item>
+        <el-form-item label="服务商" prop="provider">
+          <el-select v-model="form.provider" placeholder="请选择服务商">
             <el-option
-              v-for="dict in dgroupOptions"
+              v-for="dict in providerOptions"
               :key="dict.dictValue"
               :label="dict.dictLabel"
               :value="parseInt(dict.dictValue)"
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="域名" prop="domain">
-          <el-input v-model="form.domain" placeholder="请输入域名"/>
+        <el-form-item label="appKey" prop="appKey">
+          <el-input v-model="form.appKey" placeholder="请输入appKey"/>
         </el-form-item>
-        <el-form-item label="动态编码" prop="dcode">
-          <el-input v-model="form.dcode" placeholder="请输入动态编码"/>
+        <el-form-item label="appAccess" prop="appAccess">
+          <el-input v-model="form.appAccess" placeholder="请输入appAccess"/>
         </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容"/>
+        <el-form-item label="地区" prop="region">
+          <el-input v-model="form.region" placeholder="请输入地区"/>
         </el-form-item>
-        <el-form-item label="排序" prop="sort">
-          <el-input type="number" v-model="form.sort" placeholder="请输入排序"/>
+        <el-form-item label="签名" prop="signature">
+          <el-input v-model="form.signature" placeholder="请输入签名"/>
+        </el-form-item>
+        <el-form-item label="模板" prop="template">
+          <el-input v-model="form.template" placeholder="请输入模板"/>
+        </el-form-item>
+        <el-form-item label="smsSdkAppid" prop="smsSdkAppid">
+          <el-input v-model="form.smsSdkAppid" placeholder="请输入smsSdkAppid"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -156,10 +157,10 @@
 </template>
 
 <script>
-import { listDomain, getDomain, delDomain, addDomain, updateDomain } from '@/api/platform-web/config/domain'
+import { listSms, getSms, delSms, addSms, updateSms } from '@/api/platform-web/server/sms'
 
 export default {
-  name: 'Domain',
+  name: 'Sms',
   components: {},
   data() {
     return {
@@ -175,72 +176,72 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 域名配置表格数据
-      domainList: [],
+      // SMS短信服务配置表格数据
+      smsList: [],
       // 弹出层标题
       title: '',
       // 是否显示弹出层
       open: false,
-      // 域名分组字典
-      dgroupOptions: [],
+      // 服务商字典
+      providerOptions: [],
+      // 状态字典
+      isEffectOptions: [],
       // 查询参数
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        domain: null,
-        dcode: null,
-        dgroup: null
+        name: null,
+        provider: null,
+        isEffect: null
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
-        domain: [
-          { required: true, message: '域名不能为空', trigger: 'blur' },
-          {
-            validator: function(rule, value, callback) {
-              if (/(http|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/.test(value) == false) {
-                callback(new Error('请输入正确的Url'))
-              } else {
-                callback()
-              }
-            }, trigger: 'blur'
-          }
+        name: [
+          { required: true, message: 'SMS名称不能为空', trigger: 'blur' }
         ],
-        dgroup: [
-          { required: true, message: '域名分组不能为空', trigger: 'change' }
+        provider: [
+          { required: true, message: '服务商不能为空', trigger: 'change' }
         ],
-        sort: [
-          { required: true, message: '排序不能为空', trigger: 'blur' }
+        appKey: [
+          { required: true, message: 'appKey不能为空', trigger: 'blur' }
+        ],
+        appAccess: [
+          { required: true, message: 'appAccess不能为空', trigger: 'blur' }
+        ],
+        isEffect: [
+          { required: true, message: '状态不能为空', trigger: 'blur' }
         ]
       }
     }
   },
   created() {
     this.getList()
-    this.getDicts('config_domain_group').then(response => {
-      this.dgroupOptions = response.data
+    this.getDicts('server_sms_provider').then(response => {
+      this.providerOptions = response.data
+    })
+    this.getDicts('server_sms_status').then(response => {
+      this.isEffectOptions = response.data
     })
   },
   methods: {
-    /** 查询域名配置列表 */
+    /** 查询SMS短信服务配置列表 */
     getList() {
       this.loading = true
-      listDomain(this.queryParams).then(response => {
-        this.domainList = response.rows
+      listSms(this.queryParams).then(response => {
+        this.smsList = response.rows
         this.total = response.total
         this.loading = false
       })
     },
-    // 域名分组字典翻译
-    dgroupFormat(row, column) {
-      return this.selectDictLabel(this.dgroupOptions, row.dgroup)
+    // 服务商字典翻译
+    providerFormat(row, column) {
+      return this.selectDictLabel(this.providerOptions, row.provider)
     },
-    dcodeFormat(row, column) {
-      if (row.dcode) {
-        return '\$\{' + row.dcode + '\}'
-      }
-      return null
+    // 状态字典翻译
+    isEffectFormat(row, column) {
+      return this.selectDictLabel(this.isEffectOptions, row.isEffect)
     },
     // 取消按钮
     cancel() {
@@ -251,15 +252,17 @@ export default {
     reset() {
       this.form = {
         id: null,
-        domain: null,
-        dcode: null,
-        dgroup: null,
-        remark: null,
-        sort: null,
-        createBy: null,
-        createTime: null,
-        updateBy: null,
-        updateTime: null
+        name: null,
+        provider: null,
+        appKey: null,
+        appAccess: null,
+        region: null,
+        signature: null,
+        template: null,
+        smsSdkAppid: null,
+        identify: null,
+        isEffect: 0,
+        endpoint: null
       }
       this.resetForm('form')
     },
@@ -283,16 +286,16 @@ export default {
     handleAdd() {
       this.reset()
       this.open = true
-      this.title = '添加域名配置'
+      this.title = '添加SMS短信服务配置'
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset()
       const id = row.id || this.ids
-      getDomain(id).then(response => {
+      getSms(id).then(response => {
         this.form = response.data
         this.open = true
-        this.title = '修改域名配置'
+        this.title = '修改SMS短信服务配置'
       })
     },
     /** 提交按钮 */
@@ -300,13 +303,13 @@ export default {
       this.$refs['form'].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
-            updateDomain(this.form).then(response => {
+            updateSms(this.form).then(response => {
               this.msgSuccess('修改成功')
               this.open = false
               this.getList()
             })
           } else {
-            addDomain(this.form).then(response => {
+            addSms(this.form).then(response => {
               this.msgSuccess('新增成功')
               this.open = false
               this.getList()
@@ -318,12 +321,12 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids
-      this.$confirm('是否确认删除域名配置编号为"' + ids + '"的数据项?', '警告', {
+      this.$confirm('是否确认删除SMS短信服务配置编号为"' + ids + '"的数据项?', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function() {
-        return delDomain(ids)
+        return delSms(ids)
       }).then(() => {
         this.getList()
         this.msgSuccess('删除成功')

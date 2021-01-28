@@ -1,6 +1,6 @@
 <template>
   <!-- 导入表 -->
-  <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="visible" width="800px" top="5vh" append-to-body>
+  <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="visible" width="800px" top="5vh" append-to-body>
     <!--顶部按钮-->
     <div class="page-tab" style="margin-bottom: 20px">
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(1,'积分明细')">

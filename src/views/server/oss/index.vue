@@ -1,19 +1,10 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="88px">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="名称" prop="name">
         <el-input
           v-model="queryParams.name"
           placeholder="请输入名称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="所属游戏id" prop="gameId">
-        <el-input
-          v-model="queryParams.gameId"
-          placeholder="请输入所属游戏id"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -33,7 +24,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['admin:activityQuestType:add']"
+          v-hasPermi="['server:oss:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -44,7 +35,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['admin:activityQuestType:edit']"
+          v-hasPermi="['server:oss:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -55,41 +46,35 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['admin:activityQuestType:remove']"
+          v-hasPermi="['server:oss:remove']"
         >删除</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['admin:activityQuestType:export']"
-        >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="activityQuestTypeList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="ossList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
+      <el-table-column label="名称" align="center" prop="id" />
       <el-table-column label="名称" align="center" prop="name" />
-      <el-table-column label="所属游戏id" align="center" prop="gameId" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="访问域名" align="center" prop="endpoint" />
+      <el-table-column label="文件存储" align="center" prop="bucket" />
+      <el-table-column label="加速域名" align="center" prop="vhost" />
+      <el-table-column label="状态" align="center" prop="isEffect" :formatter="isEffectFormat" />
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['admin:activityQuestType:edit']"
+            v-hasPermi="['server:oss:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['admin:activityQuestType:remove']"
+            v-hasPermi="['server:oss:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -103,14 +88,26 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改任务类型对话框 -->
+    <!-- 添加或修改oss文件存储服务配置对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入名称" />
         </el-form-item>
-        <el-form-item label="所属游戏id" prop="gameId">
-          <el-input v-model="form.gameId" placeholder="请输入所属游戏id" />
+        <el-form-item label="accessKey" prop="accessKey">
+          <el-input v-model="form.accessKey" placeholder="请输入accessKey" />
+        </el-form-item>
+        <el-form-item label="accessSecret" prop="accessSecret">
+          <el-input v-model="form.accessSecret" placeholder="请输入accessSecret" />
+        </el-form-item>
+        <el-form-item label="访问域名" prop="endpoint">
+          <el-input v-model="form.endpoint" placeholder="请输入访问域名" />
+        </el-form-item>
+        <el-form-item label="文件存储" prop="bucket">
+          <el-input v-model="form.bucket" placeholder="请输入文件存储" />
+        </el-form-item>
+        <el-form-item label="加速域名" prop="vhost">
+          <el-input v-model="form.vhost" placeholder="请输入加速域名" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -122,10 +119,10 @@
 </template>
 
 <script>
-import { listActivityQuestType, getActivityQuestType, delActivityQuestType, addActivityQuestType, updateActivityQuestType, exportActivityQuestType } from "@/api/activity/activityQuestType";
+import { listOss, getOss, delOss, addOss, updateOss } from "@/api/platform-web/server/oss";
 
 export default {
-  name: "ActivityQuestType",
+  name: "Oss",
   components: {
   },
   data() {
@@ -142,38 +139,67 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 任务类型表格数据
-      activityQuestTypeList: [],
+      // oss文件存储服务配置表格数据
+      ossList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
       open: false,
+      // 状态字典
+      isEffectOptions: [],
       // 查询参数
       queryParams: {
         pageNum: 1,
         pageSize: 10,
         name: null,
-        gameId: null
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
+        name: [
+          { required: true, message: "名称不能为空", trigger: "blur" }
+        ],
+        accessKey: [
+          { required: true, message: "accessKey不能为空", trigger: "blur" }
+        ],
+        accessSecret: [
+          { required: true, message: "accessSecret不能为空", trigger: "blur" }
+        ],
+        endpoint: [
+          { required: true, message: "访问域名不能为空", trigger: "blur" }
+        ],
+        bucket: [
+          { required: true, message: "文件存储不能为空", trigger: "blur" }
+        ],
+        vhost: [
+          { required: true, message: "加速域名不能为空", trigger: "blur" }
+        ],
+        isEffect: [
+          { required: true, message: "状态不能为空", trigger: "blur" }
+        ],
       }
     };
   },
   created() {
     this.getList();
+    this.getDicts("server_oss_status").then(response => {
+      this.isEffectOptions = response.data;
+    });
   },
   methods: {
-    /** 查询任务类型列表 */
+    /** 查询oss文件存储服务配置列表 */
     getList() {
       this.loading = true;
-      listActivityQuestType(this.queryParams).then(response => {
-        this.activityQuestTypeList = response.rows;
+      listOss(this.queryParams).then(response => {
+        this.ossList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
+    },
+    // 状态字典翻译
+    isEffectFormat(row, column) {
+      return this.selectDictLabel(this.isEffectOptions, row.isEffect);
     },
     // 取消按钮
     cancel() {
@@ -185,9 +211,16 @@ export default {
       this.form = {
         id: null,
         name: null,
+        accessKey: null,
+        accessSecret: null,
+        endpoint: null,
+        bucket: null,
+        vhost: null,
+        isEffect: 0,
         createBy: null,
         createTime: null,
-        gameId: null
+        updateBy: null,
+        updateTime: null
       };
       this.resetForm("form");
     },
@@ -211,16 +244,16 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加任务类型";
+      this.title = "添加oss文件存储服务配置";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
       const id = row.id || this.ids
-      getActivityQuestType(id).then(response => {
+      getOss(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改任务类型";
+        this.title = "修改oss文件存储服务配置";
       });
     },
     /** 提交按钮 */
@@ -228,13 +261,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
-            updateActivityQuestType(this.form).then(response => {
+            updateOss(this.form).then(response => {
               this.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addActivityQuestType(this.form).then(response => {
+            addOss(this.form).then(response => {
               this.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -246,30 +279,17 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除任务类型编号为"' + ids + '"的数据项?', "警告", {
+      this.$confirm('是否确认删除oss文件存储服务配置编号为"' + ids + '"的数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         }).then(function() {
-          return delActivityQuestType(ids);
+          return delOss(ids);
         }).then(() => {
           this.getList();
           this.msgSuccess("删除成功");
         })
     },
-    /** 导出按钮操作 */
-    handleExport() {
-      const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有任务类型数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return exportActivityQuestType(queryParams);
-        }).then(response => {
-          this.download(response.msg);
-        })
-    }
   }
 };
 </script>

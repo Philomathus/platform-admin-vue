@@ -1299,10 +1299,21 @@
       <el-table-column label="可用印票" align="center" prop="ticket"/>
       <el-table-column label="粉丝" align="center" prop="fansCount"/>
       <el-table-column label="等级" align="center" prop="userLevel"/>
-      <el-table-column label="禁播状态" align="center" prop="isBan" :formatter="formatterIsBan">
+      <el-table-column label="禁播状态" align="center" prop="isBanStr" :formatter="formatterIsBan">
         <template v-slot="{row}">
-          <el-button type="primary" size="mini" @click="displayCheck(row,1)" v-if="row.isBan===0">是</el-button>
-          <el-button type="info" size="mini" @click="displayCheck(row,0)" v-if="row.isBan===1">否</el-button>
+<!--          <el-button type="primary" size="mini" @click="displayCheck(row,1)" v-if="row.isBan===0">是</el-button>
+          <el-button type="info" size="mini" @click="displayCheck(row,0)" v-if="row.isBan===1">否</el-button>-->
+          <el-switch
+            on-text ="是"
+            off-text = "否"
+            active-value="0"
+            inactive-value="1"
+            on-color="#5B7BFA"
+            off-color="#dadde5"
+            v-model="row.isBanStr"
+            @change=displayCheck(row)
+          >
+          </el-switch>
         </template>
       </el-table-column>
       <el-table-column label="累计观看" align="center" prop="viewCount"/>
@@ -2457,11 +2468,12 @@
         },
         methods: {
             //修改禁播状态
-            displayCheck(row, type) {
-                if (type===1){
-                    this.opens('主播禁播备注', row, type)
+            displayCheck(row) {
+                if (parseInt(row.isBanStr)){
+                    this.opens('主播禁播备注', row, row.isBanStr)
+                }else {
+                    this.banDetail(row,row.isBanStr)
                 }
-                this.banDetail(row,type)
             },
             opens(hint, row, type) {
                 var that = this

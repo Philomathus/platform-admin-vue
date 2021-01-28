@@ -110,9 +110,11 @@
       <el-table-column type="selection" width="50" align="center"/>
       <el-table-column label="用户编号" align="center" key="userId" prop="userId" v-if="columns[0].visible"/>
       <el-table-column label="用户名称" align="center" key="userName" prop="userName" v-if="columns[1].visible"
-                       :show-overflow-tooltip="true"/>
+                       :show-overflow-tooltip="true"
+      />
       <el-table-column label="用户昵称" align="center" key="nickName" prop="nickName" v-if="columns[2].visible"
-                       :show-overflow-tooltip="true"/>
+                       :show-overflow-tooltip="true"
+      />
       <el-table-column label="状态" align="center" key="status" v-if="columns[3].visible">
         <template slot-scope="scope">
           <el-switch
@@ -124,10 +126,11 @@
         </template>
       </el-table-column>
       <el-table-column label="google验证码" align="center" key="googleAuthSecret" prop="googleAuthSecret"
-                       v-if="columns[4].visible">
+                       v-if="columns[4].visible"
+      >
         <template slot-scope="scope">
           <el-button type="text" @click="showOrder(scope.row)" v-if="scope.row.googleAuthSecret==null">未绑定</el-button>
-          <span type="text" size="small" v-else>已绑定</span>
+          <span type="text" v-else>已绑定</span>
         </template>
       </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" v-if="columns[5].visible" width="160">
@@ -178,28 +181,22 @@
     <el-dialog
       v-dialogDrag
       :close-on-click-modal="false"
-      :title="绑定谷歌验证码"
+      :title="googleAuthDialogTitle"
       :visible.sync="dialogVisible"
       width="15%"
-      @keyup.enter.native="getGoogleAuth">
-      <img :src="pic"
-           width="100%"/>
-        <el-input
-          v-model="userName"
-          v-show="false"
-        />
-        <el-input
-          v-model="secretKey"
-          v-show="false"
-        />
-        <el-input
-          placeholder="请输入谷歌验证码"
-          v-model="googleAuthCode"
-          size="small"
-          style="width: 70%"
-          @keyup.enter.native="bind"
-          @input="change($event)"
-        />
+      @keyup.enter.native="getGoogleAuth"
+    >
+      <img :src="pic" width="100%" alt="绑定谷歌验证码"/>
+      <el-input v-model="userName" v-show="false"/>
+      <el-input v-model="secretKey" v-show="false"/>
+      <el-input
+        placeholder="请输入谷歌验证码"
+        v-model="googleAuthCode"
+        size="small"
+        style="width: 70%"
+        @keyup.enter.native="bind"
+        @input="change($event)"
+      />
       <el-button type="primary" @click="bind">绑定</el-button>
     </el-dialog>
 
@@ -328,22 +325,23 @@ import {
   getGoogleAuth,
   bindGoogleAuth
 } from '@/api/platform-web/system/user'
-import {getToken} from '@/utils/auth'
+import { getToken } from '@/utils/auth'
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 
 export default {
   name: 'User',
-  components: {Treeselect},
+  components: { Treeselect },
   data() {
     return {
       //谷歌验证码点击关闭
       dialogVisible: false,
+      googleAuthDialogTitle: '绑定谷歌验证码',
       //谷歌二维码
       pic: '',
-      secretKey: "",
-      googleAuthCode: "",
-      userName: "",
+      secretKey: '',
+      googleAuthCode: '',
+      userName: '',
       // 遮罩层
       loading: true,
       // 选中数组
@@ -360,12 +358,8 @@ export default {
       userList: null,
       // 弹出层标题
       title: '',
-      // 部门树选项
-      deptOptions: undefined,
       // 是否显示弹出层
       open: false,
-      // 部门名称
-      deptName: undefined,
       // 默认密码
       initPassword: undefined,
       // 日期范围
@@ -374,8 +368,6 @@ export default {
       statusOptions: [],
       // 性别状态字典
       sexOptions: [],
-      // 岗位选项
-      postOptions: [],
       // 角色选项
       roleOptions: [],
       // 表单参数
@@ -395,7 +387,7 @@ export default {
         // 是否更新已经存在的用户数据
         updateSupport: 0,
         // 设置上传的请求头部
-        headers: {Authorization: 'Bearer ' + getToken()},
+        headers: { Authorization: 'Bearer ' + getToken() },
         // 上传的地址
         url: process.env.VUE_APP_BASE_API + '/system/user/importData'
       },
@@ -404,28 +396,27 @@ export default {
         pageNum: 1,
         pageSize: 15,
         userName: undefined,
-        status: undefined,
-        deptId: undefined
+        status: undefined
       },
       // 列信息
       columns: [
-        {key: 0, label: `用户编号`, visible: true},
-        {key: 1, label: `用户名称`, visible: true},
-        {key: 2, label: `用户昵称`, visible: true},
-        {key: 4, label: `状态`, visible: true},
-        {key: 5, label: `google验证码`, visible: true},
-        {key: 6, label: `创建时间`, visible: true}
+        { key: 0, label: `用户编号`, visible: true },
+        { key: 1, label: `用户名称`, visible: true },
+        { key: 2, label: `用户昵称`, visible: true },
+        { key: 4, label: `状态`, visible: true },
+        { key: 5, label: `google验证码`, visible: true },
+        { key: 6, label: `创建时间`, visible: true }
       ],
       // 表单校验
       rules: {
         userName: [
-          {required: true, message: '用户名称不能为空', trigger: 'blur'}
+          { required: true, message: '用户名称不能为空', trigger: 'blur' }
         ],
         nickName: [
-          {required: true, message: '用户昵称不能为空', trigger: 'blur'}
+          { required: true, message: '用户昵称不能为空', trigger: 'blur' }
         ],
         password: [
-          {required: true, message: '用户密码不能为空', trigger: 'blur'}
+          { required: true, message: '用户密码不能为空', trigger: 'blur' }
         ]
       }
     }
@@ -455,12 +446,11 @@ export default {
     },
     //获取谷歌验证码二维码
     showOrder(row) {
-      this.userName= row.userName
+      this.userName = row.userName
       this.dialogVisible = true
-      this.title = '绑定谷歌验证码'
       const name = row.userName
       getGoogleAuth(name).then(response => {
-        this.pic = "data:image/png;base64," + response.data.qrBarcodeBase
+        this.pic = 'data:image/png;base64,' + response.data.qrBarcodeBase
         this.secretKey = response.data.secretKey
       })
     },
@@ -471,11 +461,11 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function () {
+      }).then(function() {
         return changeUserStatus(row.userId, row.status)
       }).then(() => {
         this.msgSuccess(text + '成功')
-      }).catch(function () {
+      }).catch(function() {
         row.status = row.status === '0' ? '1' : '0'
       })
     },
@@ -488,14 +478,12 @@ export default {
     reset() {
       this.form = {
         userId: undefined,
-        deptId: undefined,
         userName: undefined,
         nickName: undefined,
         password: undefined,
         sex: undefined,
         status: '0',
         remark: undefined,
-        postIds: [],
         roleIds: []
       }
       this.resetForm('form')
@@ -521,7 +509,6 @@ export default {
     handleAdd() {
       this.reset()
       getUser().then(response => {
-        this.postOptions = response.posts
         this.roleOptions = response.roles
         this.open = true
         this.title = '添加用户'
@@ -534,9 +521,7 @@ export default {
       const userId = row.userId || this.ids
       getUser(userId).then(response => {
         this.form = response.data
-        this.postOptions = response.posts
         this.roleOptions = response.roles
-        this.form.postIds = response.postIds
         this.form.roleIds = response.roleIds
         this.open = true
         this.title = '修改用户'
@@ -548,7 +533,7 @@ export default {
       this.$prompt('请输入"' + row.userName + '"的新密码', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
-      }).then(({value}) => {
+      }).then(({ value }) => {
         resetUserPwd(row.userId, value).then(response => {
           this.msgSuccess('修改成功，新密码是：' + value)
         })
@@ -556,7 +541,7 @@ export default {
       })
     },
     /** 提交按钮 */
-    submitForm: function () {
+    submitForm: function() {
       this.$refs['form'].validate(valid => {
         if (valid) {
           if (this.form.userId != undefined) {
@@ -580,10 +565,10 @@ export default {
     },
     /** 谷歌验证码绑定按钮 */
     bind() {
-        bindGoogleAuth(this.userName,this.secretKey,this.googleAuthCode).then(response => {
-          this.msgSuccess('绑定成功')
-          this.open = true
-        })
+      bindGoogleAuth(this.userName, this.secretKey, this.googleAuthCode).then(response => {
+        this.msgSuccess('绑定成功')
+        this.open = true
+      })
     },
     /** 删除按钮操作 */
     handleDelete(row) {
@@ -592,7 +577,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function () {
+      }).then(function() {
         return delUser(userIds)
       }).then(() => {
         this.getList()
@@ -606,7 +591,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function () {
+      }).then(function() {
         return exportUser(queryParams)
       }).then(response => {
         this.download(response.msg)
@@ -632,7 +617,7 @@ export default {
       this.upload.open = false
       this.upload.isUploading = false
       this.$refs.upload.clearFiles()
-      this.$alert(response.msg, '导入结果', {dangerouslyUseHTMLString: true})
+      this.$alert(response.msg, '导入结果', { dangerouslyUseHTMLString: true })
       this.getList()
     },
     // 提交上传文件

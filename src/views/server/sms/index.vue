@@ -77,7 +77,7 @@
 
     <el-table v-loading="loading" :data="smsList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="SMS名称" align="center" prop="name"/>
+      <el-table-column label="名称" align="center" prop="name"/>
       <el-table-column label="服务商" align="center" prop="provider" :formatter="providerFormat"/>
       <el-table-column label="地区" align="center" prop="region"/>
       <el-table-column label="签名" align="center" prop="signature"/>
@@ -114,9 +114,9 @@
     />
 
     <!-- 添加或修改SMS短信服务配置对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="SMS名称" prop="name">
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
+        <el-form-item label="名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入SMS名称"/>
         </el-form-item>
         <el-form-item label="服务商" prop="provider">

@@ -1282,11 +1282,13 @@
       <el-table-column label="主播昵称" align="center" prop="nickName"/>
       <el-table-column label="头像" align="center" prop="headImage">
         <template slot-scope="scope">
+          <a :href="scope.row.headImage" target="_blank">
           <el-image
             style="width: 50px; height: 50px"
             :src="scope.row.headImage"
           >
           </el-image>
+          </a>
         </template>
       </el-table-column>
       <el-table-column label="家族ID" align="center" prop="familyId">

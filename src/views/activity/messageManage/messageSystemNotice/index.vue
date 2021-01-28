@@ -11,12 +11,16 @@
         />
       </el-form-item>
       <el-form-item label="发布时间" prop="pubdatetime">
-        <el-date-picker clearable size="small"
-          v-model="queryParams.pubdatetime"
-          type="date"
+        <el-date-picker
+          v-model="dateRange"
+          size="small"
+          style="width: 240px"
           value-format="yyyy-MM-dd"
-          placeholder="选择发布时间">
-        </el-date-picker>
+          type="daterange"
+          range-separator="-"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+        ></el-date-picker>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -147,6 +151,8 @@ export default {
       ids: [],
       // 非单个禁用
       single: true,
+      // 日期范围
+      dateRange: [],
       // 非多个禁用
       multiple: true,
       // 显示搜索条件
@@ -195,7 +201,7 @@ export default {
     /** 查询系统公告列表 */
     getList() {
       this.loading = true;
-      listMessageSystemNotice(this.queryParams).then(response => {
+      listMessageSystemNotice(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
         this.messageSystemNoticeList = response.rows;
         this.total = response.total;
         this.loading = false;
@@ -225,6 +231,7 @@ export default {
     },
     /** 重置按钮操作 */
     resetQuery() {
+      this.dateRange = []
       this.resetForm("queryForm");
       this.handleQuery();
     },

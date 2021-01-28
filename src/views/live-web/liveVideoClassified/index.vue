@@ -125,7 +125,7 @@
     />
 
     <!-- 添加或修改分类对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="600px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="分类名称" prop="title">
           <el-input v-model="form.title" placeholder="请输入分类名称"/>

@@ -13,7 +13,7 @@
     >
       <el-image v-if="!value" :src="value">
         <div slot="error" class="image-slot">
-          <i class="el-icon-plus" />
+          <i class="el-icon-plus"/>
         </div>
       </el-image>
       <div v-else class="image">
@@ -21,10 +21,10 @@
         <div class="mask">
           <div class="actions">
             <span title="预览" @click.stop="dialogVisible = true">
-              <i class="el-icon-zoom-in" />
+              <i class="el-icon-zoom-in"/>
             </span>
             <span title="移除" @click.stop="removeImage">
-              <i class="el-icon-delete" />
+              <i class="el-icon-delete"/>
             </span>
           </div>
         </div>
@@ -37,54 +37,59 @@
 </template>
 
 <script>
-import { getToken } from "@/utils/auth";
+import { getToken } from '@/utils/auth'
 
 export default {
   data() {
     return {
       dialogVisible: false,
-      uploadImgUrl: process.env.VUE_APP_BASE_API + "/common/upload", // 上传的图片服务器地址
+      uploadImgUrl: process.env.VUE_APP_BASE_API + '/upload/oss/' + this.path, // 上传的图片服务器地址
       headers: {
-        Authorization: "Bearer " + getToken(),
-      },
-    };
+        Authorization: 'Bearer ' + getToken()
+      }
+    }
   },
   props: {
     value: {
       type: String,
-      default: "",
+      default: ''
     },
+    path: {
+      type: String,
+      default: 'default'
+    }
   },
   methods: {
     removeImage() {
-      this.$emit("input", "");
+      this.$emit('input', '')
     },
     handleUploadSuccess(res) {
-      this.$emit("input", res.url);
-      this.loading.close();
+      this.$emit('input', res.url)
+      this.loading.close()
     },
     handleBeforeUpload() {
       this.loading = this.$loading({
         lock: true,
-        text: "上传中",
-        background: "rgba(0, 0, 0, 0.7)",
-      });
+        text: '上传中',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
     },
     handleUploadError() {
       this.$message({
-        type: "error",
-        message: "上传失败",
-      });
-      this.loading.close();
-    },
+        type: 'error',
+        message: '上传失败'
+      })
+      this.loading.close()
+    }
   },
-  watch: {},
-};
+  watch: {}
+}
 </script>
 
 <style scoped lang="scss">
 .image {
   position: relative;
+
   .mask {
     opacity: 0;
     position: absolute;
@@ -93,6 +98,7 @@ export default {
     background-color: rgba(0, 0, 0, 0.5);
     transition: all 0.3s;
   }
+
   &:hover .mask {
     opacity: 1;
   }

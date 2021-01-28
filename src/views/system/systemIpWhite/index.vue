@@ -118,7 +118,7 @@
     />
 
     <!-- 添加或修改IP白名单对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="IP白名单" prop="ipAddress">
           <el-input v-model="form.ipAddress" placeholder="请输入IP白名单" />

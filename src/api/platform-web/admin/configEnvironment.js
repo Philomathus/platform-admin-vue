@@ -36,6 +36,24 @@ export function updateConfigEnvironment(data) {
   })
 }
 
+// 批量修改【请填写功能名称】
+export function updateConfigEnvironmentList(data) {
+  return request({
+    url: url.platformWeb + '/admin/configEnvironment/editList',
+    method: 'post',
+    data: data
+  })
+}
+
+// 批量修改【请填写功能名称】
+export function getTitleIndex(data) {
+  return request({
+    url: url.platformWeb + '/admin/configEnvironment/getTitleIndex',
+    method: 'get',
+    params: data
+  })
+}
+
 // 删除【请填写功能名称】
 export function delConfigEnvironment(envCode) {
   return request({

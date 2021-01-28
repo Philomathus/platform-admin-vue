@@ -141,7 +141,7 @@
     />
 
     <!-- 添加或修改任务信息对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="700px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="图标" prop="icon">
           <el-input v-model="form.icon" placeholder="请输入图标" />

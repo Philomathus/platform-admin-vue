@@ -122,7 +122,7 @@
     />
 
     <!-- 添加或修改域名配置对话框 -->
-    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="域名分组" prop="dgroup">
           <el-select v-model="form.dgroup" placeholder="请选择域名分组">

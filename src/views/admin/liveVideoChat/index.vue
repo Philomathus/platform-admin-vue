@@ -152,7 +152,7 @@
     />
 
     <!-- 添加或修改会员发言对话框 -->
-    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="主播ID" prop="poscatId">
           <el-input v-model="form.poscatId" placeholder="请输入主播ID" />

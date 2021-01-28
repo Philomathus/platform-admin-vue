@@ -119,7 +119,7 @@
     />
 
     <!-- 添加或修改游戏公告对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="公告标题" prop="title">
           <el-input v-model="form.title" placeholder="请输入公告标题" />

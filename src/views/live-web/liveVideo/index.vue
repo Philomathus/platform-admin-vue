@@ -73,7 +73,7 @@
       <el-table-column label="主播昵称" align="center" prop="hostName"/>
 <!--      <el-table-column label="项目id" align="center" prop="userId"/>-->
       <el-table-column label="房间类型" align="center" prop="roomType"/>
-      <el-table-column label="是否直播中" align="center" prop="liveIn"/>
+<!--      <el-table-column label="是否直播中" align="center" prop="liveIn"/>-->
       <el-table-column label="当前实时观看人数" align="center" prop="watchNumber"/>
 <!--      <el-table-column label="当前虚拟观看人数" align="center" prop="virtualWatchNumber"/>-->
       <el-table-column label="获得票数" align="center" prop="voteNumber"/>

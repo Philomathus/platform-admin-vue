@@ -16,94 +16,21 @@
       </el-form-item>
     </el-form>
 
-    <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['admin:liveVideo:add']"
-        >新增
-        </el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['admin:liveVideo:edit']"
-        >修改
-        </el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['admin:liveVideo:remove']"
-        >删除
-        </el-button>
-      </el-col>
-<!--      <el-col :span="1.5">-->
-<!--        <el-button-->
-<!--          type="warning"-->
-<!--          plain-->
-<!--          icon="el-icon-download"-->
-<!--          size="mini"-->
-<!--          @click="handleExport"-->
-<!--          v-hasPermi="['admin:liveVideo:export']"-->
-<!--        >导出-->
-<!--        </el-button>-->
-<!--      </el-col>-->
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-    </el-row>
-
     <el-table v-loading="loading" :data="liveVideoList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="主播id" align="center" prop="id"/>
-      <el-table-column label="直播标题" align="center" prop="title"/>
       <el-table-column label="主播昵称" align="center" prop="hostName"/>
-<!--      <el-table-column label="项目id" align="center" prop="userId"/>-->
       <el-table-column label="房间类型" align="center" prop="roomType"/>
-<!--      <el-table-column label="是否直播中" align="center" prop="liveIn"/>-->
+      <el-table-column label="热度" align="center" prop="voteNumber"/>
+      <el-table-column label="推荐" align="center" prop="isRecommend"/>
+      <el-table-column label="固定位置" align="center" prop="sort"/>
       <el-table-column label="当前实时观看人数" align="center" prop="watchNumber"/>
-<!--      <el-table-column label="当前虚拟观看人数" align="center" prop="virtualWatchNumber"/>-->
-      <el-table-column label="获得票数" align="center" prop="voteNumber"/>
-      <el-table-column label="主题id" align="center" prop="cateId"/>
-<!--      <el-table-column label="省份" align="center" prop="province"/>-->
-<!--      <el-table-column label="城市" align="center" prop="city"/>-->
       <el-table-column label="开始时间" align="center" prop="beginTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.beginTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-<!--      <el-table-column label="结束时间" align="center" prop="endTime" width="180">-->
-<!--        <template slot-scope="scope">-->
-<!--          <span>{{ parseTime(scope.row.endTime, '{y}-{m}-{d}') }}</span>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
-<!--      <el-table-column label="结束日期" align="center" prop="endDate" width="180">-->
-<!--        <template slot-scope="scope">-->
-<!--          <span>{{ parseTime(scope.row.endDate, '{y}-{m}-{d}') }}</span>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
-<!--      <el-table-column label="群组ID" align="center" prop="groupId"/>-->
       <el-table-column label="最大观看人数" align="center" prop="maxWatchNumber"/>
-<!--      <el-table-column label="房间类型群" align="center" prop="roomType"/>-->
-<!--      <el-table-column label="视频地址" align="center" prop="videoVid"/>-->
-<!--      <el-table-column label="心跳" align="center" prop="monitorTime" width="180">-->
-<!--        <template slot-scope="scope">-->
-<!--          <span>{{ parseTime(scope.row.monitorTime, '{y}-{m}-{d}') }}</span>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -135,7 +62,8 @@
     />
 
     <!-- 添加或修改直播对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="直播标题" prop="title">
           <el-input v-model="form.title" placeholder="请输入直播标题"/>

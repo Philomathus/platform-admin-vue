@@ -11,12 +11,16 @@
         />
       </el-form-item>
       <el-form-item label="发布时间" prop="ctime">
-        <el-date-picker clearable size="small"
-                        v-model="queryParams.ctime"
-                        type="date"
-                        value-format="yyyy-MM-dd"
-                        placeholder="选择发布时间">
-        </el-date-picker>
+        <el-date-picker
+          v-model="dateRange"
+          size="small"
+          style="width: 240px"
+          value-format="yyyy-MM-dd"
+          type="daterange"
+          range-separator="-"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+        ></el-date-picker>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -91,7 +95,6 @@
           <span>{{ parseTime(scope.row.ctime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-            <el-table-column label="排序号" align="center" prop="indexs" />
       <el-table-column label="活动详情" align="center" prop="content"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -171,6 +174,8 @@ export default {
       ids: [],
       // 非单个禁用
       single: true,
+      // 日期范围
+      dateRange: [],
       // 非多个禁用
       multiple: true,
       // 显示搜索条件
@@ -203,7 +208,7 @@ export default {
     /** 查询活动信息列表 */
     getList() {
       this.loading = true;
-      listActivityInfo(this.queryParams).then(response => {
+      listActivityInfo(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
         this.activityInfoList = response.rows;
         this.total = response.total;
         this.loading = false;
@@ -233,6 +238,7 @@ export default {
     },
     /** 重置按钮操作 */
     resetQuery() {
+      this.dateRange = []
       this.resetForm("queryForm");
       this.handleQuery();
     },

@@ -11,12 +11,16 @@
         />
       </el-form-item>
       <el-form-item label="发布时间" prop="ctime">
-        <el-date-picker clearable size="small"
-          v-model="queryParams.ctime"
-          type="date"
+        <el-date-picker
+          v-model="dateRange"
+          size="small"
+          style="width: 240px"
           value-format="yyyy-MM-dd"
-          placeholder="选择发布时间">
-        </el-date-picker>
+          type="daterange"
+          range-separator="-"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+        ></el-date-picker>
       </el-form-item>
       <el-form-item label="平台游戏类型" prop="kindId">
         <el-input
@@ -200,6 +204,8 @@ export default {
       loading: true,
       // 选中数组
       ids: [],
+      // 日期范围
+      dateRange: [],
       // 非单个禁用
       single: true,
       // 非多个禁用
@@ -245,7 +251,7 @@ export default {
     /** 查询任务信息列表 */
     getList() {
       this.loading = true;
-      listActivityQuestInfo(this.queryParams).then(response => {
+      listActivityQuestInfo(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
         this.activityQuestInfoList = response.rows;
         this.total = response.total;
         this.loading = false;
@@ -282,6 +288,7 @@ export default {
     },
     /** 重置按钮操作 */
     resetQuery() {
+      this.dateRange = []
       this.resetForm("queryForm");
       this.handleQuery();
     },

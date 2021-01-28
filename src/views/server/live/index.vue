@@ -73,7 +73,7 @@
       <el-table-column label="拉流域名" align="center" prop="pullDomain"/>
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
-            <span  :style="{color: statusOptions[parseInt(scope.row.status)+1].color}">{{ statusOptions[parseInt(scope.row.status)+1].dictLabel }}</span>
+            <span  :style="{color: (status = statusOptions[parseInt(scope.row.status)+1]).color}">{{ status.dictLabel }}</span>
         </template>
       </el-table-column>
       <el-table-column label="在线主播" align="center" prop="countNum"/>

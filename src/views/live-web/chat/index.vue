@@ -17,48 +17,6 @@
     </el-form>
 
     <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['admin:liveVideoChat:add']"
-        >新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['admin:liveVideoChat:edit']"
-        >修改</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['admin:liveVideoChat:remove']"
-        >删除</el-button>
-      </el-col>
-<!--      <el-col :span="1.5">-->
-<!--        <el-button-->
-<!--          type="warning"-->
-<!--          plain-->
-<!--          icon="el-icon-download"-->
-<!--          size="mini"-->
-<!--          @click="handleExport"-->
-<!--          v-hasPermi="['admin:liveVideoChat:export']"-->
-<!--        >导出</el-button>-->
-<!--      </el-col>-->
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -75,6 +33,8 @@
 
       <el-table-column label="主播昵称" align="center" prop="poscatNickName" />
       <el-table-column label="发送时间" align="center" prop="createTimes" />
+      <el-table-column label="是否封停" align="center" prop="noSpeaking" :formatter="speakFormat"/>
+      <el-table-column label="是否禁言" align="center" prop="forbid" :formatter="forbidFormat"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -83,14 +43,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:liveVideoChat:edit']"
-          >修改</el-button>
+          >封停/解封</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['admin:liveVideoChat:remove']"
-          >删除</el-button>
+            @click="handleForbid(scope.row)"
+            v-hasPermi="['admin:liveVideoChat:edit']"
+          >禁言</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -103,38 +63,23 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改会员发言对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="主播ID" prop="poscatId">
-          <el-input v-model="form.poscatId" placeholder="请输入主播ID" />
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
+
+        <el-form-item label="平台会员ID" prop="fromPlatform" >
+          <el-input v-model="form.fromPlatform" placeholder="请输入平台会员ID" readonly disabled/>
         </el-form-item>
-        <el-form-item label="消息所在聊天组" prop="group">
-          <el-input v-model="form.group" placeholder="请输入消息所在聊天组" />
-        </el-form-item>
-        <el-form-item label="发送者id" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入发送者id" />
-        </el-form-item>
-        <el-form-item label="消息内容" prop="msg">
-          <el-input v-model="form.msg" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="消息类型 0 普通消息 1 弹幕消息" prop="type">
-          <el-select v-model="form.type" placeholder="请选择消息类型 0 普通消息 1 弹幕消息">
-            <el-option label="请选择字典生成" value="" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="主播昵称" prop="poscatNickName">
-          <el-input v-model="form.poscatNickName" placeholder="请输入主播昵称" />
-        </el-form-item>
+
         <el-form-item label="发送者昵称" prop="userNickName">
-          <el-input v-model="form.userNickName" placeholder="请输入发送者昵称" />
+          <el-input v-model="form.userNickName" placeholder="请输入发送者昵称" readonly disabled/>
         </el-form-item>
-        <el-form-item label="平台会员ID" prop="fromPlatform">
-          <el-input v-model="form.fromPlatform" placeholder="请输入平台会员ID" />
+
+        <el-form-item label="消息内容" prop="msg">
+          <el-input v-model="form.msg"  readonly disabled/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button type="primary" @click="suspendUser('',true,1)">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
@@ -142,7 +87,9 @@
 </template>
 
 <script>
-import { listLiveVideoChat, getLiveVideoChat, delLiveVideoChat, addLiveVideoChat, updateLiveVideoChat, exportLiveVideoChat } from "@/api/live-web/chat/liveVideoChat";
+import { Forbid,suspendUser,listLiveVideoChat, getLiveVideoChat, delLiveVideoChat, addLiveVideoChat, updateLiveVideoChat, exportLiveVideoChat } from "@/api/live-web/chat/liveVideoChat";
+import request from "@/utils/request";
+import {url} from "@/utils/url";
 
 export default {
   name: "LiveVideoChat",
@@ -249,13 +196,71 @@ export default {
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
-      this.reset();
-      const id = row.id || this.ids
-      getLiveVideoChat(id).then(response => {
-        this.form = response.data;
-        this.open = true;
-        this.title = "修改会员发言";
-      });
+      var that = this;
+      if(row.noSpeaking==false){
+      //  alert("封停")
+        this.reset();
+        const id = row.id || this.ids
+        getLiveVideoChat(id).then(response => {
+          this.form = response.data;
+          this.open = true;
+          this.title = "修改会员发言";
+        });
+      }else{
+        this.$confirm('确定要'+row.fromPlatform+'解封吗?', "警告", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(function() {
+          return that.suspendUser(row.fromPlatform,false,0);
+        }).then(() => {
+          that.msgSuccess("解封成功");
+        })
+      }
+    },
+    handleForbid(row) {
+      var that = this;
+      this.$confirm('确定要'+row.fromPlatform+'禁言吗?', "警告", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function() {
+        return that.Forbid(row.fromPlatform,row.poscatId);
+      }).then(() => {
+        that.msgSuccess("禁言成功");
+      })
+    },
+    Forbid(pUserId,videoId){
+      var data={};
+      data.pUserId=pUserId;
+      data.videoId=videoId;
+      request({
+        url: url.platformWeb + '/admin/liveVideoChat/forbidSendMsg',
+        method: 'post',
+        data: data
+      })
+      this.open = false;
+      this.getList();
+    },
+    suspendUser(pUserId,falg,num){
+      var data={};
+      if(num==1){
+        data.pUserId=this.form.fromPlatform;
+      }else{
+        data.pUserId=pUserId;
+      }
+      data.flag=falg;
+      data.num=num;
+      request({
+        url: url.platformWeb + '/admin/liveVideoChat/suspendUser',
+        method: 'post',
+        data: data
+      })
+      if(falg==1){
+        this.msgSuccess("封停成功");
+      }
+      this.open = false;
+      this.getList();
     },
     /** 提交按钮 */
     submitForm() {
@@ -296,6 +301,20 @@ export default {
         return "弹幕消息";
       }else{
         return "普通消息";
+      }
+    },
+    speakFormat(row, column) {
+      if (row.noSpeaking === true) {
+        return "已封停";
+      }else{
+        return "正常";
+      }
+    },
+    forbidFormat(row, column) {
+      if (row.forbid === true) {
+        return "禁言";
+      }else{
+        return "正常";
       }
     },
     /** 导出按钮操作 */

@@ -17,6 +17,13 @@ export function getPayAgentLog(id) {
     method: 'get'
   })
 }
+//代付列表
+export function agents() {
+  return request({
+    url: url.platformWeb + '/pay/payAgentPlatform/effect-pay-agents',
+    method: 'get'
+  })
+}
 
 // 新增【请填写功能名称】
 export function addPayAgentLog(data) {

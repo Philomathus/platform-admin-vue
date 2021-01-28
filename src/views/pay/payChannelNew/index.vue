@@ -11,9 +11,6 @@
         />
       </el-form-item>
       <el-form-item label="状态" prop="status">
-<!--        <el-select v-model="queryParams.status" placeholder="请选择状态(1启用0停用)" clearable size="small">
-          <el-option label="请选择字典生成" value="" />
-        </el-select>-->
         <el-select
           v-model="queryParams.status"
           placeholder="状态"
@@ -30,13 +27,6 @@
         </el-select>
       </el-form-item>
       <el-form-item label="支付平台" prop="payPlatformId">
-<!--        <el-input
-          v-model="queryParams.payPlatformId"
-          placeholder="请输入支付平台编号"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />-->
         <el-select
           filterable
           v-model="queryParams.payPlatformId"
@@ -54,13 +44,21 @@
         </el-select>
       </el-form-item>
       <el-form-item label="支付类型" prop="payTypeId">
-        <el-input
+        <el-select
+          filterable
           v-model="queryParams.payTypeId"
-          placeholder="请输入支付类型编号"
+          placeholder="支付类型"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          style="width: 240px"
+        >
+          <el-option
+            v-for="payTp in payTypes"
+            :key="payTp.id"
+            :label="payTp.name"
+            :value="payTp.id"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -116,7 +114,7 @@
 
     <el-table v-loading="loading" :data="payChannelNewList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键" align="center" prop="id" />
+      <el-table-column label="ID" align="center" prop="id" />
       <el-table-column label="通道名称" align="center" prop="name" />
       <el-table-column label="支付方式编码" align="center" prop="payMethod" />
       <el-table-column label="状态" align="center" prop="status" >
@@ -139,8 +137,8 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="支付平台编号" align="center" prop="payPlatformId" />
-      <el-table-column label="支付类型编号" align="center" prop="payTypeId" />
+      <el-table-column label="支付平台名称" align="center" prop="payPlatformName" />
+      <el-table-column label="支付类型名称" align="center" prop="payTypeName" />
       <el-table-column label="通道费率" align="center" prop="payRateStr" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -250,7 +248,7 @@
 </template>
 
 <script>
-import { listPayChannelNew, getPayChannelNew, delPayChannelNew, addPayChannelNew, updatePayChannelNew, exportPayChannelNew,handleStatusChange,callbackStatusChange,platforms} from "@/api/platform-web/pay/payChannelNew/payChannelNew";
+import { listPayChannelNew, getPayChannelNew, delPayChannelNew, addPayChannelNew, updatePayChannelNew, exportPayChannelNew,platforms,payTypes,changePayTypeStatus,callbackStatusChange} from "@/api/platform-web/pay/payChannelNew/payChannelNew";
 
 
 export default {
@@ -273,6 +271,8 @@ export default {
       statusOptions: [],
       //支付平台
       payPlatformOptions: [],
+      //支付类型
+      payTypes: [],
       // 总条数
       total: 0,
       // 【请填写功能名称】表格数据
@@ -338,10 +338,13 @@ export default {
     this.getDicts('pay_channel_status').then(response => {
       this.statusOptions = response.data
     })
-    //支付平台   platforms
+    //支付平台
     platforms().then(response => {
       this.payPlatformOptions = response.data
-      console.info(response.data)
+    })
+    //支付类型
+    payTypes().then(response => {
+      this.payTypes = response.data
     })
 
     this.getList();
@@ -380,7 +383,7 @@ export default {
         cancelButtonText: "取消",
         type: "warning"
       }).then(function() {
-        return changePayTypeStatus(row.id, row.isCanCallback);
+        return callbackStatusChange(row.id, row.isCanCallback);
       }).then(() => {
         this.msgSuccess(text + "成功");
       }).catch(function() {

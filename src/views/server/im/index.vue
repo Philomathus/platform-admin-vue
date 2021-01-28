@@ -1,6 +1,15 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+      <el-form-item label="名称" prop="name">
+        <el-input
+          v-model="queryParams.name"
+          placeholder="请输入名称"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -48,14 +57,14 @@
 
     <el-table v-loading="loading" :data="imList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="状态" align="center" prop="id"/>
+      <el-table-column label="名称" align="center" prop="id"/>
       <el-table-column label="名称" align="center" prop="name"/>
       <el-table-column label="appId" align="center" prop="appId"/>
       <el-table-column label="管理员账号" align="center" prop="identify"/>
       <el-table-column label="全员组" align="center" prop="fullGroup"/>
       <el-table-column label="在线组" align="center" prop="onlineGroup"/>
-      <el-table-column label="状态" align="center" prop="isEffect"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column label="状态" align="center" prop="isEffect" :formatter="isEffectFormat"/>
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -86,8 +95,8 @@
     />
 
     <!-- 添加或修改IM即时通讯服务配置对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入名称"/>
         </el-form-item>
@@ -97,19 +106,14 @@
         <el-form-item label="appKey" prop="appKey">
           <el-input v-model="form.appKey" placeholder="请输入appKey"/>
         </el-form-item>
-        <el-form-item label="管理员账号" prop="identify">
-          <el-input v-model="form.identify" placeholder="请输入管理员账号"/>
+        <el-form-item label="IM管理员账号" prop="identify">
+          <el-input v-model="form.identify" placeholder="请输入IM管理员账号"/>
         </el-form-item>
         <el-form-item label="全员组" prop="fullGroup">
           <el-input v-model="form.fullGroup" placeholder="请输入全员组"/>
         </el-form-item>
         <el-form-item label="在线组" prop="onlineGroup">
           <el-input v-model="form.onlineGroup" placeholder="请输入在线组"/>
-        </el-form-item>
-        <el-form-item label="状态">
-          <el-radio-group v-model="form.isEffect">
-            <el-radio label="1">请选择字典生成</el-radio>
-          </el-radio-group>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -146,10 +150,13 @@ export default {
       title: '',
       // 是否显示弹出层
       open: false,
+      // 状态字典
+      isEffectOptions: [],
       // 查询参数
       queryParams: {
         pageNum: 1,
-        pageSize: 10
+        pageSize: 10,
+        name: null
       },
       // 表单参数
       form: {},
@@ -165,7 +172,7 @@ export default {
           { required: true, message: 'appKey不能为空', trigger: 'blur' }
         ],
         identify: [
-          { required: true, message: '管理员账号不能为空', trigger: 'blur' }
+          { required: true, message: 'IM管理员账号不能为空', trigger: 'blur' }
         ],
         fullGroup: [
           { required: true, message: '全员组不能为空', trigger: 'blur' }
@@ -181,6 +188,9 @@ export default {
   },
   created() {
     this.getList()
+    this.getDicts('server_im_status').then(response => {
+      this.isEffectOptions = response.data
+    })
   },
   methods: {
     /** 查询IM即时通讯服务配置列表 */
@@ -191,6 +201,10 @@ export default {
         this.total = response.total
         this.loading = false
       })
+    },
+    // 状态字典翻译
+    isEffectFormat(row, column) {
+      return this.selectDictLabel(this.isEffectOptions, row.isEffect)
     },
     // 取消按钮
     cancel() {

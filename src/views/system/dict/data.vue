@@ -87,6 +87,11 @@
       <el-table-column label="字典编码" align="center" prop="dictCode" />
       <el-table-column label="字典标签" align="center" prop="dictLabel" />
       <el-table-column label="字典键值" align="center" prop="dictValue" />
+      <el-table-column label="展示颜色" align="center" prop="color">
+        <template slot-scope="scope">
+          <font :color="scope.row.color">模拟颜色展示</font>
+        </template>
+      </el-table-column>
       <el-table-column label="字典排序" align="center" prop="dictSort" />
       <el-table-column label="状态" align="center" prop="status" :formatter="statusFormat" />
       <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true" />
@@ -134,6 +139,9 @@
         </el-form-item>
         <el-form-item label="数据键值" prop="dictValue">
           <el-input v-model="form.dictValue" placeholder="请输入数据键值" />
+        </el-form-item>
+        <el-form-item label="展示颜色" prop="color">
+          <el-color-picker v-model="form.color" size="medium" />
         </el-form-item>
         <el-form-item label="显示排序" prop="dictSort">
           <el-input-number v-model="form.dictSort" controls-position="right" :min="0" />

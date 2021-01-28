@@ -67,12 +67,15 @@
 
     <el-table v-loading="loading" :data="liveList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="服务商" align="center" prop="id"/>
       <el-table-column label="名称" align="center" prop="name"/>
       <el-table-column label="服务商" align="center" prop="provider" :formatter="providerFormat"/>
       <el-table-column label="推流域名" align="center" prop="pushDomain"/>
       <el-table-column label="拉流域名" align="center" prop="pullDomain"/>
-      <el-table-column label="状态" align="center" prop="status" :formatter="statusFormat"/>
+      <el-table-column label="状态" align="center" prop="status">
+        <template slot-scope="scope" v-for="(obj,index) in statusOptions">
+          <span v-if="obj.dictValue == scope.row.status" :style="{color: obj.color}">{{ obj.dictLabel }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="在线主播" align="center" prop="countNum"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
@@ -105,13 +108,13 @@
     />
 
     <!-- 添加或修改直播流服务配置对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入名称"/>
         </el-form-item>
         <el-form-item label="服务商" prop="provider">
-          <el-select v-model="form.provider" placeholder="请选择服务商">
+          <el-select v-model="form.provider" placeholder="请选择服务商" @change="">
             <el-option
               v-for="dict in providerOptions"
               :key="dict.dictValue"

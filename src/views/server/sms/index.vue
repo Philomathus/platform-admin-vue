@@ -75,31 +75,36 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="smsList" @selection-change="handleSelectionChange">
+    <el-table stripe v-loading="loading" :data="smsList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="名称" align="center" prop="name"/>
       <el-table-column label="服务商" align="center" prop="provider" :formatter="providerFormat"/>
       <el-table-column label="地区" align="center" prop="region"/>
       <el-table-column label="签名" align="center" prop="signature"/>
       <el-table-column label="模板" align="center" prop="template"/>
-      <el-table-column label="状态" align="center" prop="isEffect" :formatter="isEffectFormat"/>
+      <el-table-column label="状态" align="center" prop="isEffect">
+        <template slot-scope="scope">
+          <span :style="{color: (status = isEffectOptions[parseInt(scope.row.isEffect)]).color}">{{ status.dictLabel }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['server:sms:edit']"
-          >修改
+            style="color: #5FB878"
+            v-if="scope.row.isEffect != 1"
+            @click="handleEffect(scope.row)"
+            v-hasPermi="['server:sms:effect']"
+          >激活
           </el-button>
           <el-button
             size="mini"
             type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['server:sms:remove']"
-          >删除
+            style="color: #FFB800"
+            @click="handleSmsTest(scope.row)"
+            v-hasPermi="['server:sms:smsTest']"
+          >测试
           </el-button>
         </template>
       </el-table-column>
@@ -135,16 +140,16 @@
         <el-form-item label="appAccess" prop="appAccess">
           <el-input v-model="form.appAccess" placeholder="请输入appAccess"/>
         </el-form-item>
-        <el-form-item label="地区" prop="region">
-          <el-input v-model="form.region" placeholder="请输入地区"/>
-        </el-form-item>
         <el-form-item label="签名" prop="signature">
           <el-input v-model="form.signature" placeholder="请输入签名"/>
         </el-form-item>
         <el-form-item label="模板" prop="template">
           <el-input v-model="form.template" placeholder="请输入模板"/>
         </el-form-item>
-        <el-form-item label="smsSdkAppid" prop="smsSdkAppid">
+        <el-form-item label="地区" prop="region" v-if="form.provider != 0">
+          <el-input v-model="form.region" placeholder="请输入地区"/>
+        </el-form-item>
+        <el-form-item label="smsSdkAppid" prop="smsSdkAppid" v-if="form.provider == 0">
           <el-input v-model="form.smsSdkAppid" placeholder="请输入smsSdkAppid"/>
         </el-form-item>
       </el-form>
@@ -157,7 +162,7 @@
 </template>
 
 <script>
-import { listSms, getSms, delSms, addSms, updateSms } from '@/api/platform-web/server/sms'
+import { listSms, getSms, delSms, addSms, updateSms, effectSms, smsTest } from '@/api/platform-web/server/sms'
 
 export default {
   name: 'Sms',
@@ -192,7 +197,9 @@ export default {
         pageSize: 10,
         name: null,
         provider: null,
-        isEffect: null
+        isEffect: null,
+        orderByColumn: 'is_effect',
+        isAsc: 'desc'
       },
       // 表单参数
       form: {},
@@ -210,8 +217,11 @@ export default {
         appAccess: [
           { required: true, message: 'appAccess不能为空', trigger: 'blur' }
         ],
-        isEffect: [
-          { required: true, message: '状态不能为空', trigger: 'blur' }
+        signature: [
+          { required: true, message: '签名不能为空', trigger: 'blur' }
+        ],
+        template: [
+          { required: true, message: '模板不能为空', trigger: 'blur' }
         ]
       }
     }
@@ -330,6 +340,37 @@ export default {
       }).then(() => {
         this.getList()
         this.msgSuccess('删除成功')
+      }).catch(() => {
+      })
+    },
+    handleEffect(row) {
+      this.$confirm('确定要激活SMS短信服务配置编号为"' + row.id + '"的状态吗?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return effectSms(row.id)
+      }).then(() => {
+        this.getList()
+        this.msgSuccess('修改状态成功')
+      }).catch(() => {
+      })
+    },
+    handleSmsTest(row) {
+      this.$prompt('请输入您的手机号', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      }).then(({ value }) => {
+        return smsTest(row.id, value).then((res) => {
+          if (res.code === 200) {
+            this.$notify.success(res.msg)
+          } else {
+            this.$notify.error(res.msg)
+          }
+        }).catch(() => {
+          this.$notify.error('网络异常')
+        })
+      }).catch(() => {
       })
     }
   }

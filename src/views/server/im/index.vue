@@ -55,7 +55,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="imList" @selection-change="handleSelectionChange">
+    <el-table stripe v-loading="loading" :data="imList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="ID" align="center" prop="id"/>
       <el-table-column label="名称" align="center" prop="name"/>
@@ -153,7 +153,9 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        name: null
+        name: null,
+        orderByColumn: 'is_effect',
+        isAsc: 'desc'
       },
       // 表单参数
       form: {},
@@ -287,6 +289,7 @@ export default {
       }).then(() => {
         this.getList()
         this.msgSuccess('删除成功')
+      }).catch(() => {
       })
     },
     handleEffect(row) {
@@ -299,6 +302,7 @@ export default {
       }).then(() => {
         this.getList()
         this.msgSuccess('激活成功')
+      }).catch(() => {
       })
     }
   }

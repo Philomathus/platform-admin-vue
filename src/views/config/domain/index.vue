@@ -189,7 +189,8 @@ export default {
         pageSize: 10,
         domain: null,
         dcode: null,
-        dgroup: null
+        dgroup: null,
+        orderByColumn: 'dgroup,sort',
       },
       // 表单参数
       form: {},

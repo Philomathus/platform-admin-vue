@@ -175,7 +175,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        name: null,
+        name: null
       },
       // 表单参数
       form: {},
@@ -293,7 +293,8 @@ export default {
       }).then(() => {
         this.getList();
         this.msgSuccess("删除成功");
-      })
+      }).catch(() => {
+      });
     },
     /** 导出按钮操作 */
     handleExport() {
@@ -306,7 +307,8 @@ export default {
         return exportType(queryParams);
       }).then(response => {
         this.download(response.msg);
-      })
+      }).catch(() => {
+      });
     }
   }
 };

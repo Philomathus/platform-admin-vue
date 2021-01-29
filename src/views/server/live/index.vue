@@ -65,7 +65,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="liveList" @selection-change="handleSelectionChange">
+    <el-table stripe v-loading="loading" :data="liveList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="名称" align="center" prop="name"/>
       <el-table-column label="服务商" align="center" prop="provider" :formatter="providerFormat"/>
@@ -136,7 +136,7 @@
           <el-input v-model="form.name" placeholder="请输入名称"/>
         </el-form-item>
         <el-form-item label="服务商" prop="provider">
-          <el-select v-model="form.provider" placeholder="请选择服务商" @change="">
+          <el-select v-model="form.provider" placeholder="请选择服务商">
             <el-option
               v-for="dict in providerOptions"
               :key="dict.dictValue"
@@ -145,10 +145,10 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="secretId" prop="secretId">
+        <el-form-item label="secretId" prop="secretId" v-if="form.provider != 1">
           <el-input v-model="form.secretId" placeholder="请输入secretId"/>
         </el-form-item>
-        <el-form-item label="Secretkey" prop="secretKey">
+        <el-form-item label="Secretkey" prop="secretKey" v-if="form.provider != 1">
           <el-input v-model="form.secretKey" placeholder="请输入Secretkey"/>
         </el-form-item>
         <el-form-item label="推流域名" prop="pushDomain">
@@ -157,19 +157,19 @@
         <el-form-item label="拉流域名" prop="pullDomain">
           <el-input v-model="form.pullDomain" placeholder="请输入拉流域名"/>
         </el-form-item>
-        <el-form-item label="推流防盗Key" prop="securityKey">
+        <el-form-item label="推流防盗Key" prop="securityKey" v-if="form.provider == 0">
           <el-input v-model="form.securityKey" placeholder="请输入推流防盗Key"/>
         </el-form-item>
-        <el-form-item label="licence下载地址" prop="licenceUrl">
+        <el-form-item label="licence下载地址" prop="licenceUrl" v-if="form.provider == 0">
           <el-input v-model="form.licenceUrl" placeholder="请输入licence下载地址"/>
         </el-form-item>
-        <el-form-item label="licence密钥" prop="licenceKey">
+        <el-form-item label="licence密钥" prop="licenceKey" v-if="form.provider == 0">
           <el-input v-model="form.licenceKey" placeholder="请输入licence密钥"/>
         </el-form-item>
-        <el-form-item label="拉流Key" prop="pullKey">
+        <el-form-item label="拉流Key" prop="pullKey" v-if="form.provider == 1">
           <el-input v-model="form.pullKey" placeholder="请输入拉流Key"/>
         </el-form-item>
-        <el-form-item label="推流Key" prop="pushKey">
+        <el-form-item label="推流Key" prop="pushKey" v-if="form.provider == 1">
           <el-input v-model="form.pushKey" placeholder="请输入推流Key"/>
         </el-form-item>
       </el-form>
@@ -216,10 +216,14 @@ export default {
         pageNum: 1,
         pageSize: 10,
         name: null,
-        provider: null
+        provider: null,
+        orderByColumn: 'status',
+        isAsc: 'desc'
       },
       // 表单参数
-      form: {},
+      form: {
+        provider: 0
+      },
       // 表单校验
       rules: {
         name: [
@@ -227,12 +231,6 @@ export default {
         ],
         provider: [
           { required: true, message: '服务商不能为空', trigger: 'change' }
-        ],
-        secretId: [
-          { required: true, message: 'secretId不能为空', trigger: 'blur' }
-        ],
-        secretKey: [
-          { required: true, message: 'Secretkey不能为空', trigger: 'blur' }
         ],
         pushDomain: [
           { required: true, message: '推流域名不能为空', trigger: 'blur' }
@@ -360,6 +358,7 @@ export default {
       }).then(() => {
         this.getList()
         this.msgSuccess('删除成功')
+      }).catch(() => {
       })
     },
     handleEffect(row, status) {
@@ -372,6 +371,7 @@ export default {
       }).then(() => {
         this.getList()
         this.msgSuccess('修改状态成功')
+      }).catch(() => {
       })
     }
   }

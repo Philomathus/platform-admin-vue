@@ -43,3 +43,11 @@ export function delOss(id) {
     method: 'delete'
   })
 }
+
+// 激活oss文件存储服务配置
+export function effectOss(id) {
+  return request({
+    url: url.platformWeb + '/server/oss/effect/' + id,
+    method: 'put'
+  })
+}

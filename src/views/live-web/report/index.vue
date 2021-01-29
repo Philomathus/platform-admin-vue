@@ -67,20 +67,19 @@
 
     <el-table v-loading="loading" :data="reportAnchorhotDayList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="id" align="center" prop="repId"/>
+<!--      <el-table-column label="id" align="center" prop="repId"/>-->
       <el-table-column label="主播ID" align="center" prop="anchorid"/>
       <el-table-column label="主播昵称" align="center" prop="nickname"/>
       <el-table-column label="每日热度" align="center" prop="dayTicket"/>
       <el-table-column label="热度排名" align="center" prop="sort"/>
       <el-table-column label="距离上一次差值" align="center" prop="dayTicketUpdiff"/>
       <el-table-column label="日榜" align="center" prop="repdate"/>
-      <el-table-column label="第几天" align="center" prop="num"/>
+      <el-table-column label="榜单" align="center" prop="num"/>
       <el-table-column label="更新日期" align="center" prop="reptime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.reptime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="主播头像" align="center" prop="headImage"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button

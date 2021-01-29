@@ -3,7 +3,7 @@
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="88px">
 
       <el-form-item label="主播排行榜">
-        <el-select v-model="queryParams.type" placeholder="请选择状态">
+        <el-select v-model="queryParams.type" placeholder="请选择榜类型">
           <el-option label="日榜" value="0"></el-option>
           <el-option label="周榜" value="1"></el-option>
           <el-option label="月榜" value="2"></el-option>

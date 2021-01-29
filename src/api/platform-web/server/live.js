@@ -43,3 +43,10 @@ export function delLive(id) {
     method: 'delete'
   })
 }
+
+export function effectLive(id, status) {
+  return request({
+    url: url.platformWeb + '/server/live/changeStatus/' + id + '/' + status,
+    method: 'put'
+  })
+}

@@ -57,30 +57,27 @@
 
     <el-table v-loading="loading" :data="imList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="名称" align="center" prop="id"/>
+      <el-table-column label="ID" align="center" prop="id"/>
       <el-table-column label="名称" align="center" prop="name"/>
       <el-table-column label="appId" align="center" prop="appId"/>
       <el-table-column label="管理员账号" align="center" prop="identify"/>
       <el-table-column label="全员组" align="center" prop="fullGroup"/>
       <el-table-column label="在线组" align="center" prop="onlineGroup"/>
-      <el-table-column label="状态" align="center" prop="isEffect" :formatter="isEffectFormat"/>
+      <el-table-column label="状态" align="center" prop="isEffect">
+        <template slot-scope="scope">
+          <span :style="{color: (status = isEffectOptions[parseInt(scope.row.isEffect)]).color}">{{ status.dictLabel }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['server:im:edit']"
-          >修改
-          </el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['server:im:remove']"
-          >删除
+            v-if="scope.row.isEffect != 1"
+            style="color: #5FB878"
+            @click="handleEffect(scope.row)"
+            v-hasPermi="['server:im:effect']"
+          >激活
           </el-button>
         </template>
       </el-table-column>
@@ -290,6 +287,18 @@ export default {
       }).then(() => {
         this.getList()
         this.msgSuccess('删除成功')
+      })
+    },
+    handleEffect(row) {
+      this.$confirm('确定要激活编号为"' + row.id + '"的IM即时通讯服务吗?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return effectIm(row.id)
+      }).then(() => {
+        this.getList()
+        this.msgSuccess('激活成功')
       })
     }
   }

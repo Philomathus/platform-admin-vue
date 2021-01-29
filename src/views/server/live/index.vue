@@ -73,7 +73,7 @@
       <el-table-column label="拉流域名" align="center" prop="pullDomain"/>
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
-            <span  :style="{color: (status = statusOptions[parseInt(scope.row.status)+1]).color}">{{ status.dictLabel }}</span>
+          <span :style="{color: (status = statusOptions[parseInt(scope.row.status)+1]).color}">{{ status.dictLabel }}</span>
         </template>
       </el-table-column>
       <el-table-column label="在线主播" align="center" prop="countNum"/>
@@ -82,18 +82,38 @@
           <el-button
             size="mini"
             type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['server:live:edit']"
-          >修改
+            v-if="scope.row.status != 1"
+            style="color: #5FB878"
+            @click="handleEffect(scope.row, 1)"
+            v-hasPermi="['server:live:effect']"
+          >绿色直播
           </el-button>
           <el-button
             size="mini"
             type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['server:live:remove']"
-          >删除
+            v-if="scope.row.status != 2"
+            style="color: #FFB800"
+            @click="handleEffect(scope.row, 2)"
+            v-hasPermi="['server:live:effect']"
+          >成人直播
+          </el-button>
+          <el-button
+            size="mini"
+            type="text"
+            v-if="scope.row.status != -1"
+            style="color: #FF5722"
+            @click="handleEffect(scope.row, -1)"
+            v-hasPermi="['server:live:effect']"
+          >已封停
+          </el-button>
+          <el-button
+            size="mini"
+            type="text"
+            v-if="scope.row.status != 0"
+            style="color: #C0C0C0"
+            @click="handleEffect(scope.row, 0)"
+            v-hasPermi="['server:live:effect']"
+          >未生效
           </el-button>
         </template>
       </el-table-column>
@@ -109,7 +129,8 @@
 
     <!-- 添加或修改直播流服务配置对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px"
-               append-to-body>
+               append-to-body
+    >
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入名称"/>
@@ -161,186 +182,198 @@
 </template>
 
 <script>
-    import {listLive, getLive, delLive, addLive, updateLive} from '@/api/platform-web/server/live'
+import { listLive, getLive, delLive, addLive, updateLive } from '@/api/platform-web/server/live'
 
-    export default {
-        name: 'Live',
-        components: {},
-        data() {
-            return {
-                // 遮罩层
-                loading: true,
-                // 选中数组
-                ids: [],
-                // 非单个禁用
-                single: true,
-                // 非多个禁用
-                multiple: true,
-                // 显示搜索条件
-                showSearch: true,
-                // 总条数
-                total: 0,
-                // 直播流服务配置表格数据
-                liveList: [],
-                // 弹出层标题
-                title: '',
-                // 是否显示弹出层
-                open: false,
-                // 服务商字典
-                providerOptions: [],
-                // 状态字典
-                statusOptions: [],
-                // 查询参数
-                queryParams: {
-                    pageNum: 1,
-                    pageSize: 10,
-                    name: null,
-                    provider: null
-                },
-                // 表单参数
-                form: {},
-                // 表单校验
-                rules: {
-                    name: [
-                        {required: true, message: '名称不能为空', trigger: 'blur'}
-                    ],
-                    provider: [
-                        {required: true, message: '服务商不能为空', trigger: 'change'}
-                    ],
-                    secretId: [
-                        {required: true, message: 'secretId不能为空', trigger: 'blur'}
-                    ],
-                    secretKey: [
-                        {required: true, message: 'Secretkey不能为空', trigger: 'blur'}
-                    ],
-                    pushDomain: [
-                        {required: true, message: '推流域名不能为空', trigger: 'blur'}
-                    ],
-                    pullDomain: [
-                        {required: true, message: '拉流域名不能为空', trigger: 'blur'}
-                    ]
-                }
-            }
-        },
-        created() {
-            this.getList()
-            this.getDicts('server_live_provider').then(response => {
-                this.providerOptions = response.data
-            })
-            this.getDicts('server_live_status').then(response => {
-                this.statusOptions = response.data
-            })
-        },
-        methods: {
-            /** 查询直播流服务配置列表 */
-            getList() {
-                this.loading = true
-                listLive(this.queryParams).then(response => {
-                    this.liveList = response.rows
-                    this.total = response.total
-                    this.loading = false
-                })
-            },
-            // 服务商字典翻译
-            providerFormat(row, column) {
-                return this.selectDictLabel(this.providerOptions, row.provider)
-            },
-            // 状态字典翻译
-            statusFormat(row, column) {
-                return this.selectDictLabel(this.statusOptions, row.status)
-            },
-            // 取消按钮
-            cancel() {
-                this.open = false
-                this.reset()
-            },
-            // 表单重置
-            reset() {
-                this.form = {
-                    id: null,
-                    name: null,
-                    provider: null,
-                    secretId: null,
-                    secretKey: null,
-                    pushDomain: null,
-                    pullDomain: null,
-                    isEffect: null,
-                    securityKey: null,
-                    licenceUrl: null,
-                    licenceKey: null,
-                    status: null,
-                    pullKey: null,
-                    pushKey: null,
-                    countNum: null
-                }
-                this.resetForm('form')
-            },
-            /** 搜索按钮操作 */
-            handleQuery() {
-                this.queryParams.pageNum = 1
-                this.getList()
-            },
-            /** 重置按钮操作 */
-            resetQuery() {
-                this.resetForm('queryForm')
-                this.handleQuery()
-            },
-            // 多选框选中数据
-            handleSelectionChange(selection) {
-                this.ids = selection.map(item => item.id)
-                this.single = selection.length !== 1
-                this.multiple = !selection.length
-            },
-            /** 新增按钮操作 */
-            handleAdd() {
-                this.reset()
-                this.open = true
-                this.title = '添加直播流服务配置'
-            },
-            /** 修改按钮操作 */
-            handleUpdate(row) {
-                this.reset()
-                const id = row.id || this.ids
-                getLive(id).then(response => {
-                    this.form = response.data
-                    this.open = true
-                    this.title = '修改直播流服务配置'
-                })
-            },
-            /** 提交按钮 */
-            submitForm() {
-                this.$refs['form'].validate(valid => {
-                    if (valid) {
-                        if (this.form.id != null) {
-                            updateLive(this.form).then(response => {
-                                this.msgSuccess('修改成功')
-                                this.open = false
-                                this.getList()
-                            })
-                        } else {
-                            addLive(this.form).then(response => {
-                                this.msgSuccess('新增成功')
-                                this.open = false
-                                this.getList()
-                            })
-                        }
-                    }
-                })
-            },
-            /** 删除按钮操作 */
-            handleDelete(row) {
-                const ids = row.id || this.ids
-                this.$confirm('是否确认删除直播流服务配置编号为"' + ids + '"的数据项?', '警告', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(function () {
-                    return delLive(ids)
-                }).then(() => {
-                    this.getList()
-                    this.msgSuccess('删除成功')
-                })
-            }
-        }
+export default {
+  name: 'Live',
+  components: {},
+  data() {
+    return {
+      // 遮罩层
+      loading: true,
+      // 选中数组
+      ids: [],
+      // 非单个禁用
+      single: true,
+      // 非多个禁用
+      multiple: true,
+      // 显示搜索条件
+      showSearch: true,
+      // 总条数
+      total: 0,
+      // 直播流服务配置表格数据
+      liveList: [],
+      // 弹出层标题
+      title: '',
+      // 是否显示弹出层
+      open: false,
+      // 服务商字典
+      providerOptions: [],
+      // 状态字典
+      statusOptions: [],
+      // 查询参数
+      queryParams: {
+        pageNum: 1,
+        pageSize: 10,
+        name: null,
+        provider: null
+      },
+      // 表单参数
+      form: {},
+      // 表单校验
+      rules: {
+        name: [
+          { required: true, message: '名称不能为空', trigger: 'blur' }
+        ],
+        provider: [
+          { required: true, message: '服务商不能为空', trigger: 'change' }
+        ],
+        secretId: [
+          { required: true, message: 'secretId不能为空', trigger: 'blur' }
+        ],
+        secretKey: [
+          { required: true, message: 'Secretkey不能为空', trigger: 'blur' }
+        ],
+        pushDomain: [
+          { required: true, message: '推流域名不能为空', trigger: 'blur' }
+        ],
+        pullDomain: [
+          { required: true, message: '拉流域名不能为空', trigger: 'blur' }
+        ]
+      }
     }
+  },
+  created() {
+    this.getList()
+    this.getDicts('server_live_provider').then(response => {
+      this.providerOptions = response.data
+    })
+    this.getDicts('server_live_status').then(response => {
+      this.statusOptions = response.data
+    })
+  },
+  methods: {
+    /** 查询直播流服务配置列表 */
+    getList() {
+      this.loading = true
+      listLive(this.queryParams).then(response => {
+        this.liveList = response.rows
+        this.total = response.total
+        this.loading = false
+      })
+    },
+    // 服务商字典翻译
+    providerFormat(row, column) {
+      return this.selectDictLabel(this.providerOptions, row.provider)
+    },
+    // 状态字典翻译
+    statusFormat(row, column) {
+      return this.selectDictLabel(this.statusOptions, row.status)
+    },
+    // 取消按钮
+    cancel() {
+      this.open = false
+      this.reset()
+    },
+    // 表单重置
+    reset() {
+      this.form = {
+        id: null,
+        name: null,
+        provider: null,
+        secretId: null,
+        secretKey: null,
+        pushDomain: null,
+        pullDomain: null,
+        isEffect: null,
+        securityKey: null,
+        licenceUrl: null,
+        licenceKey: null,
+        status: null,
+        pullKey: null,
+        pushKey: null,
+        countNum: null
+      }
+      this.resetForm('form')
+    },
+    /** 搜索按钮操作 */
+    handleQuery() {
+      this.queryParams.pageNum = 1
+      this.getList()
+    },
+    /** 重置按钮操作 */
+    resetQuery() {
+      this.resetForm('queryForm')
+      this.handleQuery()
+    },
+    // 多选框选中数据
+    handleSelectionChange(selection) {
+      this.ids = selection.map(item => item.id)
+      this.single = selection.length !== 1
+      this.multiple = !selection.length
+    },
+    /** 新增按钮操作 */
+    handleAdd() {
+      this.reset()
+      this.open = true
+      this.title = '添加直播流服务配置'
+    },
+    /** 修改按钮操作 */
+    handleUpdate(row) {
+      this.reset()
+      const id = row.id || this.ids
+      getLive(id).then(response => {
+        this.form = response.data
+        this.open = true
+        this.title = '修改直播流服务配置'
+      })
+    },
+    /** 提交按钮 */
+    submitForm() {
+      this.$refs['form'].validate(valid => {
+        if (valid) {
+          if (this.form.id != null) {
+            updateLive(this.form).then(response => {
+              this.msgSuccess('修改成功')
+              this.open = false
+              this.getList()
+            })
+          } else {
+            addLive(this.form).then(response => {
+              this.msgSuccess('新增成功')
+              this.open = false
+              this.getList()
+            })
+          }
+        }
+      })
+    },
+    /** 删除按钮操作 */
+    handleDelete(row) {
+      const ids = row.id || this.ids
+      this.$confirm('是否确认删除直播流服务配置编号为"' + ids + '"的数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return delLive(ids)
+      }).then(() => {
+        this.getList()
+        this.msgSuccess('删除成功')
+      })
+    },
+    handleEffect(row, status) {
+      this.$confirm('确定要修改直播流服务配置编号为"' + row.id + '"的状态吗?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return effectLive(row.id, status)
+      }).then(() => {
+        this.getList()
+        this.msgSuccess('修改状态成功')
+      })
+    }
+  }
+}
 </script>

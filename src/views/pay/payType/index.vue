@@ -62,7 +62,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="payTypeList" @selection-change="handleSelectionChange">
+    <el-table stripe v-loading="loading" :data="payTypeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
 <!--      <el-table-column label="编号" align="center" prop="id" />-->
       <el-table-column label="编号" align="center" prop="code" />
@@ -71,7 +71,7 @@
       <el-table-column label="图标" align="center" prop="iconUrl">
       <template slot-scope="scope">
         <el-image
-          style="width: 50px; height: 50px"
+          style="width: auto; height: 100%"
           :src="scope.row.iconUrl"
         >
         </el-image>

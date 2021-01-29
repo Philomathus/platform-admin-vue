@@ -146,33 +146,24 @@
 
     <!-- 添加或修改任务信息对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="图标" prop="icon">
-          <el-input v-model="form.icon" placeholder="请输入图标" />
-        </el-form-item>
+      <el-form ref="form" :model="form" :rules="rules" label-width="110px">
         <el-form-item label="标题" prop="title">
           <el-input v-model="form.title" placeholder="请输入标题" />
         </el-form-item>
         <el-form-item label="排序号" prop="indexs">
           <el-input v-model="form.indexs" placeholder="请输入排序号" />
         </el-form-item>
-        <el-form-item label="任务类型id" prop="typeId">
-          <el-input v-model="form.typeId" placeholder="请输入任务类型id" />
-        </el-form-item>
         <el-form-item label="目标任务量" prop="target">
           <el-input v-model="form.target" placeholder="请输入目标任务量" />
         </el-form-item>
-        <el-form-item label="完成后增加的资金" prop="reward">
-          <el-input v-model="form.reward" placeholder="请输入完成后增加的资金" />
+        <el-form-item label="图标" prop="icon">
+          <imageUpload v-model="form.icon" path="ActivityQuestInfo"/>
         </el-form-item>
         <el-form-item label="任务详情" prop="detail">
           <el-input v-model="form.detail" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="描述">
           <editor v-model="form.content" :min-height="192"/>
-        </el-form-item>
-        <el-form-item label="所属游戏id" prop="gameId">
-          <el-input v-model="form.gameId" placeholder="请输入所属游戏id" />
         </el-form-item>
         <el-form-item label="平台游戏类型" prop="kindId">
           <el-input v-model="form.kindId" placeholder="请输入平台游戏类型" />
@@ -192,11 +183,13 @@
 <script>
 import { listActivityQuestInfo, getActivityQuestInfo, delActivityQuestInfo, addActivityQuestInfo, updateActivityQuestInfo, exportActivityQuestInfo } from "@/api/activity/activityQuestInfo";
 import Editor from '@/components/Editor';
+import ImageUpload from "@/components/ImageUpload";
 
 export default {
   name: "ActivityQuestInfo",
   components: {
     Editor,
+    ImageUpload,
   },
   data() {
     return {

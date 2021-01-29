@@ -129,14 +129,14 @@
     <!-- 添加或修改活动信息对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="700px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="90px">
-        <el-form-item label="图标" prop="icon">
-          <el-input v-model="form.icon" placeholder="请输入图标"/>
-        </el-form-item>
         <el-form-item label="标题" prop="title">
           <el-input v-model="form.title" placeholder="请输入标题"/>
         </el-form-item>
         <el-form-item label="排序号" prop="indexs">
           <el-input v-model="form.indexs" placeholder="请输入排序号"/>
+        </el-form-item>
+        <el-form-item label="图标" prop="icon">
+          <imageUpload v-model="form.icon" path="ActivityInfo"/>
         </el-form-item>
         <el-form-item label="活动类型id" prop="typeId">
           <el-input v-model="form.typeId" placeholder="请输入活动类型id"/>
@@ -162,10 +162,15 @@ import {
   updateActivityInfo,
   exportActivityInfo
 } from "@/api/activity/activityInfo";
+import ImageUpload from "@/components/ImageUpload";
+import Editor from "@/components/Editor";
 
 export default {
   name: "ActivityInfo",
-  components: {},
+  components: {
+    ImageUpload,
+    Editor,
+  },
   data() {
     return {
       // 遮罩层

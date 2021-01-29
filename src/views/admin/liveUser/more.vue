@@ -332,12 +332,6 @@
                         this.receiveProplist()
                         break;
                 }
-                /* listDbTable(this.queryParams).then(res => {
-                     if (res.code === 200) {
-                         this.dbTableList = res.rows;
-                         this.total = res.total;
-                     }
-                 });*/
             },
             //获取聊天记录列表
             chatPage() {
@@ -347,8 +341,6 @@
                     pageNum: this.queryParams.pageNum,
                     pageSize: this.queryParams.pageSize,
                     _: new Date().getTime(),
-                    orderByColumn: 'create_time',
-                    isAsc: 'desc',
                     sendStartTime: this.queryParams.selectDate===undefined ? undefined : this.queryParams.selectDate[0] +' 00:00:00',
                     sendEndTime: this.queryParams.selectDate===undefined ? undefined : this.queryParams.selectDate[1] +' 23:59:59',
                 }

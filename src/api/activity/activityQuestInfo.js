@@ -61,3 +61,12 @@ export function activityQuestTypes() {
   })
 }
 
+
+//所属游戏
+export function gameInfoName() {
+  return request({
+    url: url.platformWeb + '/admin/activityQuestInfo/gameInfo',
+    method: 'get'
+  })
+}
+

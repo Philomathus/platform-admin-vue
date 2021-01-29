@@ -59,7 +59,7 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="pageNum" :limit.sync="pageSize" />
+    <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize" />
   </div>
 </template>
 
@@ -77,9 +77,11 @@ export default {
       // 表格数据
       list: [],
       pageNum: 1,
-      pageSize: 15,
+      pageSize: 10,
       // 查询参数
       queryParams: {
+        pageNum: 1,
+        pageSize: 10,
         ipaddr: undefined,
         userName: undefined
       }

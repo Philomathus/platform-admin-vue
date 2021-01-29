@@ -153,7 +153,7 @@ export default {
         dayTicketUpdiff: null,
         repdate: null,
         num: null,
-        reptime: null,
+        reptime: new Date(),
         headImage: null
       };
       this.resetForm("form");

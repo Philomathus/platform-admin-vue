@@ -42,7 +42,7 @@ export function changePayTypeStatus(id, status) {
     status
   }
   return request({
-    url: url.platformWeb + '/pay/payType/changeStatus',
+    url: url.platformWeb + '/pay/payChannelNew/changeStatus',
     method: 'put',
     data: data
   })
@@ -56,6 +56,22 @@ export function platforms() {
   })
 }
 
+//支付通道列表
+export function paychannels() {
+  return request({
+    url: url.platformWeb + '/pay/payChannelNew/effect-pay-Channels',
+    method: 'get'
+  })
+}
+
+//支付类型列表
+export function payTypes() {
+  return request({
+    url: url.platformWeb + '/pay/payChannelNew/effect-pay-type',
+    method: 'get'
+  })
+}
+
 
 // 回调修改
 export function callbackStatusChange(id, isCanCallback) {
@@ -64,7 +80,7 @@ export function callbackStatusChange(id, isCanCallback) {
     isCanCallback
   }
   return request({
-    url: url.platformWeb + '/pay/payType/changeStatus',
+    url: url.platformWeb + '/pay/payChannelNew/changeStatus',
     method: 'put',
     data: data
   })

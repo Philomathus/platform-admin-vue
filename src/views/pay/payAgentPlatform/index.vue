@@ -1,16 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="自定义编码" prop="code">
-        <el-input
-          v-model="queryParams.code"
-          placeholder="请输入自定义编码"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="代付平台名称" prop="name">
+      <el-form-item label="代付平台" prop="name">
         <el-input
           v-model="queryParams.name"
           placeholder="请输入代付平台名称"
@@ -19,54 +10,14 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="商户ID" prop="merId">
-        <el-input
-          v-model="queryParams.merId"
-          placeholder="请输入商户ID"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="代付下单地址" prop="payOrderAddr">
-        <el-input
-          v-model="queryParams.payOrderAddr"
-          placeholder="请输入代付下单地址"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="代付查询地址" prop="payOrderQueryAddr">
-        <el-input
-          v-model="queryParams.payOrderQueryAddr"
-          placeholder="请输入代付查询地址"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="头部key" prop="headerKey">
-        <el-input
-          v-model="queryParams.headerKey"
-          placeholder="请输入头部key"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="平台IP白名单" prop="platWhiteIpList">
-        <el-input
-          v-model="queryParams.platWhiteIpList"
-          placeholder="请输入平台IP白名单"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="状态 1启用 0禁用" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状态 1启用 0禁用" clearable size="small">
-          <el-option label="请选择字典生成" value="" />
+      <el-form-item label="状态" prop="status">
+        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small">
+          <el-option
+            v-for="dict in statusOptions"
+            :key="dict.dictValue"
+            :label="dict.dictLabel"
+            :value="dict.dictValue"
+          />
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -127,14 +78,18 @@
       <el-table-column label="自定义编码" align="center" prop="code" />
       <el-table-column label="代付平台名称" align="center" prop="name" />
       <el-table-column label="商户ID" align="center" prop="merId" />
-      <el-table-column label="代付下单地址" align="center" prop="payOrderAddr" />
-      <el-table-column label="代付查询地址" align="center" prop="payOrderQueryAddr" />
-      <el-table-column label="头部key" align="center" prop="headerKey" />
-      <el-table-column label="md5加密密钥" align="center" prop="signMd5" />
-      <el-table-column label="加密公钥" align="center" prop="signPublicKey" />
-      <el-table-column label="解密私钥" align="center" prop="signPrivateKey" />
-      <el-table-column label="平台IP白名单" align="center" prop="platWhiteIpList" />
-      <el-table-column label="状态 1启用 0禁用" align="center" prop="status" />
+      <el-table-column label="代付下单地址" :show-overflow-tooltip="true" align="center" prop="payOrderAddr" />
+      <el-table-column label="代付查询地址" :show-overflow-tooltip="true"  align="center" prop="payOrderQueryAddr" />
+      <el-table-column label="状态" align="center" prop="status" >
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.status"
+            active-value="1"
+            inactive-value="0"
+            @change="handleStatusChange(scope.row)"
+          ></el-switch>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -163,8 +118,8 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改【请填写功能名称】对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <!-- 添加或修改代付平台列表对话框 -->
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="自定义编码" prop="code">
           <el-input v-model="form.code" placeholder="请输入自定义编码" />
@@ -196,10 +151,15 @@
         <el-form-item label="平台IP白名单" prop="platWhiteIpList">
           <el-input v-model="form.platWhiteIpList" placeholder="请输入平台IP白名单" />
         </el-form-item>
-        <el-form-item label="状态 1启用 0禁用">
-          <el-radio-group v-model="form.status">
-            <el-radio label="1">请选择字典生成</el-radio>
-          </el-radio-group>
+        <el-form-item label="状态" prop="status">
+          <el-select v-model="form.status" placeholder="请选择状态">
+            <el-option
+              v-for="dict in statusOptions"
+              :key="dict.dictValue"
+              :label="dict.dictLabel"
+              :value="parseInt(dict.dictValue)"
+            ></el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -211,7 +171,8 @@
 </template>
 
 <script>
-import { listPayAgentPlatform, getPayAgentPlatform, delPayAgentPlatform, addPayAgentPlatform, updatePayAgentPlatform, exportPayAgentPlatform } from "@/api/platform-web/pay/payAgentPlatform/payAgentPlatform";
+import { listPayAgentPlatform, getPayAgentPlatform, delPayAgentPlatform, addPayAgentPlatform, updatePayAgentPlatform, exportPayAgentPlatform,changePayAgentStatus } from "@/api/platform-web/pay/payAgentPlatform/payAgentPlatform";
+
 
 export default {
   name: "PayAgentPlatform",
@@ -231,26 +192,19 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 【请填写功能名称】表格数据
+      // 代付平台列表表格数据
       payAgentPlatformList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
       open: false,
+      // 状态字典
+      statusOptions: [],
       // 查询参数
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        code: null,
         name: null,
-        merId: null,
-        payOrderAddr: null,
-        payOrderQueryAddr: null,
-        headerKey: null,
-        signMd5: null,
-        signPublicKey: null,
-        signPrivateKey: null,
-        platWhiteIpList: null,
         status: null
       },
       // 表单参数
@@ -274,9 +228,12 @@ export default {
   },
   created() {
     this.getList();
+    this.getDicts("game_type_status").then(response => {
+      this.statusOptions = response.data;
+    });
   },
   methods: {
-    /** 查询【请填写功能名称】列表 */
+    /** 查询代付平台列表列表 */
     getList() {
       this.loading = true;
       listPayAgentPlatform(this.queryParams).then(response => {
@@ -285,6 +242,22 @@ export default {
         this.loading = false;
       });
     },
+    //状态修改
+    handleStatusChange(row) {
+      let text = row.status === "1" ? "启用" : "停用";
+      this.$confirm('确认要"' + text + '""' + row.name + '"吗?', "警告", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function() {
+        return changePayAgentStatus(row.id, row.status);
+      }).then(() => {
+        this.msgSuccess(text + "成功");
+      }).catch(function() {
+        row.status = row.status === "0" ? "1" : "0";
+      });
+    },
+
     // 取消按钮
     cancel() {
       this.open = false;
@@ -304,7 +277,7 @@ export default {
         signPublicKey: null,
         signPrivateKey: null,
         platWhiteIpList: null,
-        status: 0
+        status: null
       };
       this.resetForm("form");
     },
@@ -328,7 +301,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【请填写功能名称】";
+      this.title = "添加代付平台列表";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -337,7 +310,7 @@ export default {
       getPayAgentPlatform(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = "修改代付平台列表";
       });
     },
     /** 提交按钮 */
@@ -363,29 +336,29 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return delPayAgentPlatform(ids);
-        }).then(() => {
-          this.getList();
-          this.msgSuccess("删除成功");
-        })
+      this.$confirm('是否确认删除代付平台列表编号为"' + ids + '"的数据项?', "警告", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function() {
+        return delPayAgentPlatform(ids);
+      }).then(() => {
+        this.getList();
+        this.msgSuccess("删除成功");
+      })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有【请填写功能名称】数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return exportPayAgentPlatform(queryParams);
-        }).then(response => {
-          this.download(response.msg);
-        })
+      this.$confirm('是否确认导出所有代付平台列表数据项?', "警告", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function() {
+        return exportPayAgentPlatform(queryParams);
+      }).then(response => {
+        this.download(response.msg);
+      })
     }
   }
 };

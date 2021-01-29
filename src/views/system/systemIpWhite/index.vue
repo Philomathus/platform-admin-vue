@@ -72,7 +72,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="systemIpWhiteList" @selection-change="handleSelectionChange">
+    <el-table stripe v-loading="loading" :data="systemIpWhiteList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="主键" align="center" prop="ipId" />
       <el-table-column label="IP白名单" align="center" prop="ipAddress" />

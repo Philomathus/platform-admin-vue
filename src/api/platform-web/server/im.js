@@ -43,3 +43,10 @@ export function delIm(id) {
     method: 'delete'
   })
 }
+
+export function effectIm(id) {
+  return request({
+    url: url.platformWeb + '/server/im/effect/' + id,
+    method: 'put'
+  })
+}

@@ -18,6 +18,17 @@ export function getConfigBank(id) {
   })
 }
 
+export function changeConfigBankStatus(id, status) {
+  const data = {
+    id,
+    status
+  }
+  return request({
+    url: url.platformWeb + '/pay/configBank/changeStatus',
+    method: 'put',
+    data: data
+  })
+}
 // 新增【请填写功能名称】
 export function addConfigBank(data) {
   return request({

@@ -18,6 +18,19 @@ export function getPayAgentRechargeBank(id) {
   })
 }
 
+// 状态修改
+export function changeStatus(id, status) {
+  const data = {
+    id,
+    status
+  }
+  return request({
+    url: url.platformWeb + '/pay/payAgentRechargeBank/changeStatus',
+    method: 'put',
+    data: data
+  })
+}
+
 // 新增【请填写功能名称】
 export function addPayAgentRechargeBank(data) {
   return request({

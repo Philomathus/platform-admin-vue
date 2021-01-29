@@ -18,6 +18,13 @@ export function getLogMoney(id) {
   })
 }
 
+export function configMoneydes() {
+  return request({
+    url: url.platformWeb + '/pay/configMoneydes/moneydes',
+    method: 'get'
+  })
+}
+
 // 新增【请填写功能名称】
 export function addLogMoney(data) {
   return request({

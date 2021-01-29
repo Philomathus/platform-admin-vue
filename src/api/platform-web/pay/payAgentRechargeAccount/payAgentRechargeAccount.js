@@ -35,7 +35,17 @@ export function updatePayAgentRechargeAccount(data) {
     data: data
   })
 }
-
+export function changeStatus(id, status) {
+  const data = {
+    id,
+    status
+  }
+  return request({
+    url: url.platformWeb + '/pay/payAgentRechargeAccount/changeStatus',
+    method: 'put',
+    data: data
+  })
+}
 // 删除【请填写功能名称】
 export function delPayAgentRechargeAccount(id) {
   return request({

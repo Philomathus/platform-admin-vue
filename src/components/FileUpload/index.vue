@@ -48,12 +48,12 @@ export default {
     // 大小限制(MB)
     fileSize: {
       type: Number,
-      default: 5,
+      default: 10,
     },
     // 文件类型, 例如['png', 'jpg', 'jpeg']
     fileType: {
       type: Array,
-      default: () => ["doc", "xls", "ppt", "txt", "pdf"],
+      default: () => ["doc", "xls", "ppt", "txt", "pdf", "svg"],
     },
     // 是否显示提示
     isShowTip: {
@@ -63,7 +63,7 @@ export default {
   },
   data() {
     return {
-      uploadFileUrl: process.env.VUE_APP_BASE_API + "/common/upload", // 上传的图片服务器地址
+      uploadFileUrl: process.env.VUE_APP_BASE_API + '/upload/oss/' + this.path, // 上传的图片服务器地址
       headers: {
         Authorization: "Bearer " + getToken(),
       },
@@ -135,7 +135,7 @@ export default {
     // 上传成功回调
     handleUploadSuccess(res, file) {
       this.$message.success("上传成功");
-      this.$emit("input", res.url);
+      this.$emit("input", res.data);
     },
     // 删除文件
     handleDelete(index) {

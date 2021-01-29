@@ -85,8 +85,15 @@
           ></el-switch>
         </template>
       </el-table-column>
-<!--      <el-table-column label="PC端图标" align="center" prop="iconUrl" />-->
-<!--      <el-table-column label="svga动画路径" align="center" prop="svgUrl" />-->
+      <el-table-column label="图标" align="center" prop="iconUrl">
+        <template slot-scope="scope">
+          <el-image
+            style="width: 50px; height: 50px"
+            :src="scope.row.iconUrl"
+          >
+          </el-image>
+        </template>
+      </el-table-column>
       <el-table-column label="价格" align="center" prop="price" />
       <el-table-column label="折扣价格" align="center" prop="disPrice" />
       <el-table-column label="有效天数" align="center" prop="vday" />
@@ -127,14 +134,17 @@
         <el-form-item label="坐骑名" prop="name">
           <el-input v-model="form.name" placeholder="请输入坐骑名" />
         </el-form-item>
+        <el-form-item label="图标" prop="iconUrl">
+          <imageUpload v-model="form.iconUrl" path="mount"/>
+        </el-form-item>
         <el-form-item label="状态">
           <el-radio-group v-model="form.status">
             <el-radio label="0">未启用</el-radio>
             <el-radio label="1">启用</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="动画"  prop="svgUrl">
-          <el-input v-model="form.svgUrl" placeholder="请输入svga动画路径" />
+        <el-form-item label="svga动画" prop="svgUrl">
+          <fileUpload v-model="form.svgUrl" path="mount"/>
         </el-form-item>
         <el-form-item label="价格" prop="price">
           <el-input v-model="form.price" placeholder="请输入价格" />
@@ -157,10 +167,15 @@
 <script>
 import { listLiveMount, getLiveMount, delLiveMount, addLiveMount, updateLiveMount, exportLiveMount } from "@/api/live-web/liveMount/liveMount";
 import {updateLiveProp} from "@/api/live-web/liveProp/liveProp";
-
+import ImageUpload from '@/components/ImageUpload';
+import FileUpload from '@/components/FileUpload';
+import Editor from "@/components/Editor";
 export default {
   name: "LiveMount",
   components: {
+    ImageUpload,
+    FileUpload,
+    Editor
   },
   data() {
     return {

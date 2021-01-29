@@ -130,9 +130,6 @@
             <el-radio label="0">否</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="展示动画" prop="isAnimated">
-          <el-input v-model="form.isAnimated" placeholder="请选择" />
-        </el-form-item>
         <el-form-item label="展示动画">
           <el-radio-group v-model="form.isAnimated">
             <el-radio label="0">普通礼物</el-radio>
@@ -144,11 +141,7 @@
           <el-input v-model="form.animType" placeholder="请输入大型道具类型" />
         </el-form-item>
         <el-form-item label="svga动画" prop="animatedUrl">
-          <imageUpload v-model="form.animatedUrl" path="give"/>
-        </el-form-item>
-
-        <el-form-item label="排序" prop="sort">
-          <el-input v-model="form.sort" placeholder="请输入排序" />
+          <fileUpload v-model="form.animatedUrl" path="give"/>
         </el-form-item>
 
         <el-form-item label="类型">
@@ -164,6 +157,9 @@
             <el-radio label="0">无效</el-radio>
           </el-radio-group>
         </el-form-item>
+        <el-form-item label="排序" prop="sort">
+          <el-input v-model="form.sort" placeholder="请输入排序" />
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -176,11 +172,13 @@
 <script>
 import { listLiveProp, getLiveProp, delLiveProp, addLiveProp, updateLiveProp, exportLiveProp } from "@/api/live-web/liveProp/liveProp";
 import ImageUpload from '@/components/ImageUpload';
+import FileUpload from '@/components/FileUpload';
 import Editor from "@/components/Editor";
 export default {
   name: "LiveProp",
   components: {
     ImageUpload,
+    FileUpload,
     Editor
   },
   data() {

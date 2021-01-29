@@ -1,6 +1,15 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="90px">
+      <el-form-item label="订单号" prop="orderNo">
+        <el-input
+          v-model="queryParams.orderNo"
+          placeholder="请输入订单号"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item label="代充人账号" prop="account">
         <el-input
           v-model="queryParams.account"
@@ -19,57 +28,25 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="汇款银行卡ID" prop="bankId">
-        <el-input
-          v-model="queryParams.bankId"
-          placeholder="请输入汇款银行卡ID"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="汇款金额" prop="rechargeMoney">
-        <el-input
-          v-model="queryParams.rechargeMoney"
-          placeholder="请输入汇款金额"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="实际到账金额" prop="subMoney">
-        <el-input
-          v-model="queryParams.subMoney"
-          placeholder="请输入实际到账金额"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="汇款姓名" prop="rechargeRealName">
-        <el-input
-          v-model="queryParams.rechargeRealName"
-          placeholder="请输入汇款姓名"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="状态(0已提交1锁定2已拒绝3已存入4存入失败)" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状态(0已提交1锁定2已拒绝3已存入4存入失败)" clearable size="small">
-          <el-option label="请选择字典生成" value="" />
+      <el-form-item label="状态" prop="status">
+        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small">
+          <el-option
+            v-for="dict in statusOptions"
+            :key="dict.dictValue"
+            :label="dict.dictLabel"
+            :value="dict.dictValue"
+          />
         </el-select>
       </el-form-item>
-      <el-form-item label="审核人" prop="opName">
-        <el-input
-          v-model="queryParams.opName"
-          placeholder="请输入审核人"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+      <el-form-item label="审核时间" prop="updateTime">
+        <el-date-picker clearable size="small"
+                        v-model="queryParams.updateTime"
+                        type="date"
+                        value-format="yyyy-MM-dd"
+                        placeholder="选择审核时间">
+        </el-date-picker>
       </el-form-item>
-      <el-form-item>
+      <el-form-item style="margin-left: 27px">
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
@@ -123,7 +100,7 @@
 
     <el-table v-loading="loading" :data="payAgentRechargeAccountLogList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="订单号主键" align="center" prop="orderNo" />
+      <el-table-column label="订单号" align="center" prop="orderNo" />
       <el-table-column label="代充人账号" align="center" prop="account" />
       <el-table-column label="代充人昵称" align="center" prop="nickName" />
       <el-table-column label="汇款银行卡ID" align="center" prop="bankId" />
@@ -131,8 +108,17 @@
       <el-table-column label="实际到账金额" align="center" prop="subMoney" />
       <el-table-column label="汇款姓名" align="center" prop="rechargeRealName" />
       <el-table-column label="汇款备注" align="center" prop="remark" />
-      <el-table-column label="状态(0已提交1锁定2已拒绝3已存入4存入失败)" align="center" prop="status" />
-      <el-table-column label="审核人" align="center" prop="opName" />
+      <el-table-column label="状态" align="center" prop="status" :formatter="statusFormat" />
+      <el-table-column label="提交时间" align="center" prop="createTime" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="审核时间" align="center" prop="updateTime" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d}') }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -161,8 +147,8 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改【请填写功能名称】对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <!-- 添加或修改代充人入款对话框 -->
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="代充人账号" prop="account">
           <el-input v-model="form.account" placeholder="请输入代充人账号" />
@@ -185,10 +171,15 @@
         <el-form-item label="汇款备注" prop="remark">
           <el-input v-model="form.remark" placeholder="请输入汇款备注" />
         </el-form-item>
-        <el-form-item label="状态(0已提交1锁定2已拒绝3已存入4存入失败)">
-          <el-radio-group v-model="form.status">
-            <el-radio label="1">请选择字典生成</el-radio>
-          </el-radio-group>
+        <el-form-item label="状态" prop="status">
+          <el-select v-model="form.status" placeholder="请选择状态">
+            <el-option
+              v-for="dict in statusOptions"
+              :key="dict.dictValue"
+              :label="dict.dictLabel"
+              :value="parseInt(dict.dictValue)"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="审核人" prop="opName">
           <el-input v-model="form.opName" placeholder="请输入审核人" />
@@ -223,24 +214,23 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 【请填写功能名称】表格数据
+      // 代充人入款表格数据
       payAgentRechargeAccountLogList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
       open: false,
+      // 状态字典
+      statusOptions: [],
       // 查询参数
       queryParams: {
         pageNum: 1,
         pageSize: 10,
+        orderNo: null,
         account: null,
         nickName: null,
-        bankId: null,
-        rechargeMoney: null,
-        subMoney: null,
-        rechargeRealName: null,
         status: null,
-        opName: null
+        updateTime: null,
       },
       // 表单参数
       form: {},
@@ -265,7 +255,7 @@ export default {
           { required: true, message: "汇款姓名不能为空", trigger: "blur" }
         ],
         status: [
-          { required: true, message: "状态(0已提交1锁定2已拒绝3已存入4存入失败)不能为空", trigger: "blur" }
+          { required: true, message: "状态不能为空", trigger: "change" }
         ],
         createTime: [
           { required: true, message: "提交时间不能为空", trigger: "blur" }
@@ -278,9 +268,12 @@ export default {
   },
   created() {
     this.getList();
+    this.getDicts("recharge_status").then(response => {
+      this.statusOptions = response.data;
+    });
   },
   methods: {
-    /** 查询【请填写功能名称】列表 */
+    /** 查询代充人入款列表 */
     getList() {
       this.loading = true;
       listPayAgentRechargeAccountLog(this.queryParams).then(response => {
@@ -288,6 +281,10 @@ export default {
         this.total = response.total;
         this.loading = false;
       });
+    },
+    // 状态字典翻译
+    statusFormat(row, column) {
+      return this.selectDictLabel(this.statusOptions, row.status);
     },
     // 取消按钮
     cancel() {
@@ -305,7 +302,7 @@ export default {
         subMoney: null,
         rechargeRealName: null,
         remark: null,
-        status: 0,
+        status: null,
         createTime: null,
         updateTime: null,
         opName: null
@@ -332,7 +329,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【请填写功能名称】";
+      this.title = "添加代充人入款";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -341,7 +338,7 @@ export default {
       getPayAgentRechargeAccountLog(orderNo).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = "修改代充人入款";
       });
     },
     /** 提交按钮 */
@@ -367,29 +364,29 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const orderNos = row.orderNo || this.ids;
-      this.$confirm('是否确认删除【请填写功能名称】编号为"' + orderNos + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return delPayAgentRechargeAccountLog(orderNos);
-        }).then(() => {
-          this.getList();
-          this.msgSuccess("删除成功");
-        })
+      this.$confirm('是否确认删除代充人入款编号为"' + orderNos + '"的数据项?', "警告", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function() {
+        return delPayAgentRechargeAccountLog(orderNos);
+      }).then(() => {
+        this.getList();
+        this.msgSuccess("删除成功");
+      })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有【请填写功能名称】数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return exportPayAgentRechargeAccountLog(queryParams);
-        }).then(response => {
-          this.download(response.msg);
-        })
+      this.$confirm('是否确认导出所有代充人入款数据项?', "警告", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function() {
+        return exportPayAgentRechargeAccountLog(queryParams);
+      }).then(response => {
+        this.download(response.msg);
+      })
     }
   }
 };

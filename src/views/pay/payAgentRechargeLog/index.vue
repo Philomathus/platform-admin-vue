@@ -1,6 +1,15 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+      <el-form-item label="订单号" prop="orderNo">
+        <el-input
+          v-model="queryParams.orderNo"
+          placeholder="请输入订单号主键"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item label="代充账号" prop="rechargeAcount">
         <el-input
           v-model="queryParams.rechargeAcount"
@@ -32,15 +41,6 @@
         <el-input
           v-model="queryParams.userName"
           placeholder="请输入会员账号"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="上分金额" prop="money">
-        <el-input
-          v-model="queryParams.money"
-          placeholder="请输入上分金额"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -100,30 +100,13 @@
 
     <el-table v-loading="loading" :data="payAgentRechargeLogList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="订单号主键" align="center" prop="orderNo" />
+      <el-table-column label="订单号" align="center" prop="orderNo" />
       <el-table-column label="代充账号" align="center" prop="rechargeAcount" />
       <el-table-column label="代充昵称" align="center" prop="rechargeNickName" />
       <el-table-column label="会员ID" align="center" prop="memberId" />
       <el-table-column label="会员账号" align="center" prop="userName" />
       <el-table-column label="上分金额" align="center" prop="money" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['pay:payAgentRechargeLog:edit']"
-          >修改</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['pay:payAgentRechargeLog:remove']"
-          >删除</el-button>
-        </template>
-      </el-table-column>
+      <el-table-column label="创建时间" align="center" prop="createTime" />
     </el-table>
 
     <pagination
@@ -134,24 +117,9 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改【请填写功能名称】对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <!-- 添加或修改代充信息日志对话框 -->
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="代充账号" prop="rechargeAcount">
-          <el-input v-model="form.rechargeAcount" placeholder="请输入代充账号" />
-        </el-form-item>
-        <el-form-item label="代充昵称" prop="rechargeNickName">
-          <el-input v-model="form.rechargeNickName" placeholder="请输入代充昵称" />
-        </el-form-item>
-        <el-form-item label="会员ID" prop="memberId">
-          <el-input v-model="form.memberId" placeholder="请输入会员ID" />
-        </el-form-item>
-        <el-form-item label="会员账号" prop="userName">
-          <el-input v-model="form.userName" placeholder="请输入会员账号" />
-        </el-form-item>
-        <el-form-item label="上分金额" prop="money">
-          <el-input v-model="form.money" placeholder="请输入上分金额" />
-        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -182,7 +150,7 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 【请填写功能名称】表格数据
+      // 代充信息日志表格数据
       payAgentRechargeLogList: [],
       // 弹出层标题
       title: "",
@@ -192,11 +160,11 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
+        orderNo: null,
         rechargeAcount: null,
         rechargeNickName: null,
         memberId: null,
         userName: null,
-        money: null,
       },
       // 表单参数
       form: {},
@@ -227,7 +195,7 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询【请填写功能名称】列表 */
+    /** 查询代充信息日志列表 */
     getList() {
       this.loading = true;
       listPayAgentRechargeLog(this.queryParams).then(response => {
@@ -274,7 +242,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【请填写功能名称】";
+      this.title = "添加代充信息日志";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -283,7 +251,7 @@ export default {
       getPayAgentRechargeLog(orderNo).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = "修改代充信息日志";
       });
     },
     /** 提交按钮 */
@@ -309,29 +277,29 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const orderNos = row.orderNo || this.ids;
-      this.$confirm('是否确认删除【请填写功能名称】编号为"' + orderNos + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return delPayAgentRechargeLog(orderNos);
-        }).then(() => {
-          this.getList();
-          this.msgSuccess("删除成功");
-        })
+      this.$confirm('是否确认删除代充信息日志编号为"' + orderNos + '"的数据项?', "警告", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function() {
+        return delPayAgentRechargeLog(orderNos);
+      }).then(() => {
+        this.getList();
+        this.msgSuccess("删除成功");
+      })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有【请填写功能名称】数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return exportPayAgentRechargeLog(queryParams);
-        }).then(response => {
-          this.download(response.msg);
-        })
+      this.$confirm('是否确认导出所有代充信息日志数据项?', "警告", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function() {
+        return exportPayAgentRechargeLog(queryParams);
+      }).then(response => {
+        this.download(response.msg);
+      })
     }
   }
 };

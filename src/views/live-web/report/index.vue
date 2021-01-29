@@ -1,7 +1,16 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="更新日期" prop="reptime">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="88px">
+
+      <el-form-item label="主播排行榜">
+        <el-select v-model="queryParams.type" placeholder="请选择状态">
+          <el-option label="日榜" value="0"></el-option>
+          <el-option label="周榜" value="1"></el-option>
+          <el-option label="月榜" value="2"></el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-form-item label="更新日期">
         <el-date-picker clearable size="small"
                         v-model="queryParams.reptime"
                         type="date"
@@ -9,6 +18,7 @@
                         placeholder="选择更新日期">
         </el-date-picker>
       </el-form-item>
+
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -158,9 +168,10 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
-        pageNum: 1,
-        pageSize: 10,
+        type:null,
         reptime: null,
+        pageNum: 1,
+        pageSize: 10
       },
       // 表单参数
       form: {},

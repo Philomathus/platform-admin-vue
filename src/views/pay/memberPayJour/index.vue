@@ -11,8 +11,20 @@
         />
       </el-form-item>
       <el-form-item label="支付平台" prop="platformId">
-        <el-select v-model="queryParams.platformId" placeholder="请选择支付平台编号" clearable size="small">
-          <el-option label="请选择字典生成" value="" />
+        <el-select
+          filterable
+          v-model="queryParams.platformId"
+          placeholder="支付平台"
+          clearable
+          size="small"
+          style="width: 240px"
+        >
+          <el-option
+            v-for="dict in payPlatformOptions"
+            :key="dict.id"
+            :label="dict.name"
+            :value="dict.id"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="订单号" prop="orderNo">
@@ -205,8 +217,8 @@
         <el-form-item label="商户下单时间" prop="payTime">
           <el-input v-model="form.payTime" placeholder="请输入商户下单时间" />
         </el-form-item>
-        <el-form-item label="状态(1 成功0失败 -1待确认)" prop="status">
-          <el-select v-model="form.status" placeholder="请选择状态(1 成功0失败 -1待确认)">
+        <el-form-item label="状态" prop="status">
+          <el-select v-model="form.status" placeholder="请选择状态">
             <el-option
               v-for="dict in statusOptions"
               :key="dict.dictValue"
@@ -256,6 +268,8 @@
 
 <script>
 import { listMemberPayJour, getMemberPayJour, delMemberPayJour, addMemberPayJour, updateMemberPayJour, exportMemberPayJour } from "@/api/platform-web/pay/memberPayJour/memberPayJour";
+import {platforms} from "@/api/platform-web/pay/payChannelNew/payChannelNew";
+
 
 export default {
   name: "MemberPayJour",
@@ -277,11 +291,13 @@ export default {
       total: 0,
       // 线上充值信息表格数据
       memberPayJourList: [],
+      //支付平台
+      payPlatformOptions: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
       open: false,
-      // 状态(1 成功0失败 -1待确认)字典
+      // 状态
       statusOptions: [],
       // 查询参数
       queryParams: {
@@ -305,7 +321,11 @@ export default {
   },
   created() {
     this.getList();
-    this.getDicts("sys_user_sex").then(response => {
+    //支付平台
+    platforms().then(response => {
+      this.payPlatformOptions = response.data
+    })
+    this.getDicts("pay_jour_status").then(response => {
       this.statusOptions = response.data;
     });
   },

@@ -78,8 +78,6 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="公告标题" align="center" prop="title" />
       <el-table-column label="内容" align="center" prop="content" />
-      <el-table-column label="设备" align="center" prop="device" />
-      <el-table-column label="动作" align="center" prop="action" />
       <el-table-column label="发布时间" align="center" prop="pubdatetime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.pubdatetime, '{y}-{m}-{d}') }}</span>

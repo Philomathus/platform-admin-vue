@@ -10,15 +10,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="接收者" prop="receiver">
-        <el-input
-          v-model="queryParams.receiver"
-          placeholder="请输入接收者"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item label="发布时间" prop="pubdatetime">
         <el-date-picker
           v-model="dateRange"
@@ -87,9 +78,6 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="信息标题" align="center" prop="title" />
       <el-table-column label="内容" align="center" prop="content" />
-      <el-table-column label="接收者类型" align="center" prop="receiverType" />
-      <el-table-column label="接收者" align="center" prop="receiver" />
-      <el-table-column label="动作" align="center" prop="action" />
       <el-table-column label="发布时间" align="center" prop="pubdatetime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.pubdatetime, '{y}-{m}-{d}') }}</span>

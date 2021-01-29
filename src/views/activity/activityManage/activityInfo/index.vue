@@ -80,6 +80,7 @@
 
     <el-table v-loading="loading" :data="activityInfoList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="标题" align="center" prop="title"/>
       <el-table-column label="图标" align="center" prop="icon">
         <template slot-scope="scope">
           <el-image
@@ -89,13 +90,12 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="标题" align="center" prop="title"/>
+      <el-table-column label="活动详情" align="center" prop="content"/>
       <el-table-column label="发布时间" align="center" prop="ctime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.ctime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="活动详情" align="center" prop="content"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -132,14 +132,25 @@
         <el-form-item label="标题" prop="title">
           <el-input v-model="form.title" placeholder="请输入标题"/>
         </el-form-item>
-        <el-form-item label="排序号" prop="indexs">
-          <el-input v-model="form.indexs" placeholder="请输入排序号"/>
-        </el-form-item>
         <el-form-item label="图标" prop="icon">
           <imageUpload v-model="form.icon" path="ActivityInfo"/>
         </el-form-item>
-        <el-form-item label="活动类型id" prop="typeId">
-          <el-input v-model="form.typeId" placeholder="请输入活动类型id"/>
+        <el-form-item label="活动类型" prop="typeId">
+          <el-select
+            filterable
+            v-model="form.typeId"
+            placeholder="请选择活动类型"
+            clearable
+            size="small"
+            style="width: 240px"
+          >
+            <el-option
+              v-for="dict in activityTypeOptions"
+              :key="dict.id"
+              :label="dict.name"
+              :value="dict.id"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item label="活动详情">
           <editor v-model="form.content" :min-height="192"/>
@@ -160,7 +171,8 @@ import {
   delActivityInfo,
   addActivityInfo,
   updateActivityInfo,
-  exportActivityInfo
+  exportActivityInfo,
+  activityTypes
 } from "@/api/activity/activityInfo";
 import ImageUpload from "@/components/ImageUpload";
 import Editor from "@/components/Editor";
@@ -181,6 +193,8 @@ export default {
       single: true,
       // 日期范围
       dateRange: [],
+      //活动类型
+      activityTypeOptions: [],
       // 非多个禁用
       multiple: true,
       // 显示搜索条件
@@ -208,6 +222,10 @@ export default {
   },
   created() {
     this.getList();
+    //活动类型
+    activityTypes().then(response => {
+      this.activityTypeOptions = response.data
+    })
   },
   methods: {
     /** 查询活动信息列表 */

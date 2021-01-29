@@ -66,6 +66,15 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="id" align="center" prop="id" />
       <el-table-column label="名称" align="center" prop="name" />
+      <el-table-column label="图标" align="center" prop="icon">
+        <template slot-scope="scope">
+          <el-image
+            style="width: 50px; height: 50px"
+            :src="scope.row.icon"
+          >
+          </el-image>
+        </template>
+      </el-table-column>
       <el-table-column label="消费钻石" align="center" prop="diamonds" />
       <el-table-column label="RMB/钻石" align="center" prop="ticket" />
       <el-table-column label="是否连送" align="center" prop="isMuch" :formatter="isMuchFormat"/>

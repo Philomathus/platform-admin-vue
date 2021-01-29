@@ -89,6 +89,15 @@
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="ID" align="center" prop="id"/>
 <!--      <el-table-column label="家族LOGO" align="center" prop="logo"/>-->
+      <el-table-column label="图标" align="center" prop="logo">
+        <template slot-scope="scope">
+          <el-image
+            style="width: 50px; height: 50px"
+            :src="scope.row.logo"
+          >
+          </el-image>
+        </template>
+      </el-table-column>
       <el-table-column label="家族名称" align="center" prop="name"/>
       <el-table-column label="公告" align="center" prop="notice"/>
       <el-table-column label="家族宣言" align="center" prop="manifesto"/>

@@ -91,8 +91,6 @@
       <el-table-column label="完成后增加的资金" align="center" prop="reward" />
       <el-table-column label="任务详情" align="center" prop="detail" />
       <el-table-column label="描述" align="center" prop="content" />
-      <el-table-column label="平台游戏类型" align="center" prop="kindId" />
-      <el-table-column label="平台类型" align="center" prop="platformId" />
       <el-table-column label="发布时间" align="center" prop="ctime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.ctime, '{y}-{m}-{d}') }}</span>
@@ -152,6 +150,23 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item label="所属游戏" prop="gameId">
+          <el-select
+            filterable
+            v-model="form.gameId"
+            placeholder="请选择所属游戏"
+            clearable
+            size="small"
+            style="width: 240px"
+          >
+            <el-option
+              v-for="dict in gameInfoOptions"
+              :key="dict.id"
+              :label="dict.name"
+              :value="dict.id"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item label="目标任务量" prop="target">
           <el-input v-model="form.target" placeholder="请输入目标任务量" />
         </el-form-item>
@@ -164,12 +179,6 @@
         <el-form-item label="描述">
           <editor v-model="form.content" :min-height="192"/>
         </el-form-item>
-        <el-form-item label="平台游戏类型" prop="kindId">
-          <el-input v-model="form.kindId" placeholder="请输入平台游戏类型" />
-        </el-form-item>
-        <el-form-item label="平台类型" prop="platformId">
-          <el-input v-model="form.platformId" placeholder="请输入平台类型" />
-        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -180,7 +189,7 @@
 </template>
 
 <script>
-import { listActivityQuestInfo, getActivityQuestInfo, delActivityQuestInfo, addActivityQuestInfo, updateActivityQuestInfo, exportActivityQuestInfo, activityQuestTypes } from "@/api/activity/activityQuestInfo";
+import { listActivityQuestInfo, getActivityQuestInfo, delActivityQuestInfo, addActivityQuestInfo, updateActivityQuestInfo, exportActivityQuestInfo, activityQuestTypes, gameInfoName } from "@/api/activity/activityQuestInfo";
 import Editor from '@/components/Editor';
 import ImageUpload from "@/components/ImageUpload";
 import {activityTypes} from "@/api/activity/activityInfo";
@@ -201,6 +210,8 @@ export default {
       dateRange: [],
       //任务类型
       activityQuestTypeOptions: [],
+      //任务类型
+      gameInfoOptions: [],
       // 非单个禁用
       single: true,
       // 非多个禁用
@@ -244,6 +255,10 @@ export default {
     //任务类型
     activityQuestTypes().then(response => {
       this.activityQuestTypeOptions = response.data
+    })
+    //任务类型
+    gameInfoName().then(response => {
+      this.gameInfoOptions = response.data
     })
   },
   methods: {

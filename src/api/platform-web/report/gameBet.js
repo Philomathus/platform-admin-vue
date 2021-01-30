@@ -8,9 +8,13 @@ export function list(query) {
     method: 'get',
     params: query
   })
-
-
-
 }
-
+// 查询【请填写功能名称】列表
+export function count(query) {
+  return request({
+    url: url.platformWeb + '/admin/report-plam-games/count',
+    method: 'get',
+    params: query
+  })
+}
 

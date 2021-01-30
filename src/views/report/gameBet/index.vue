@@ -23,9 +23,9 @@
     </el-form>
 
     <el-button type="text">总投注金额</el-button>
-    <el-button type="text" disabled>455</el-button>
+    <el-button type="text" >data.countBetMoney</el-button>
     <el-button type="text">总投注人数</el-button>
-    <el-button type="text" disabled>455</el-button>
+    <el-button type="text" disabled>data.countBetPeople</el-button>
     <el-table v-loading="loading"
               :data="list.slice((pageNum-1)*pageSize,pageNum*pageSize)"
               style="width: 100%;">
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import {list} from "@/api/platform-web/report/gameBet";
+import {list,count} from "@/api/platform-web/report/gameBet";
 
 
 export default {
@@ -60,8 +60,11 @@ export default {
       loading: true,
       // 总条数
       total: 0,
+      // countBetMoney:null,
+      // countBetPeople:null,
       // 表格数据
       list: [],
+      data:[],
       pageNum: 1,
       pageSize: 20,
       // 查询参数
@@ -73,9 +76,10 @@ export default {
   },
   created() {
     this.getList();
+    this.count();
   },
   methods: {
-    /** 查询登录日志列表 */
+
     getList() {
       this.loading = true;
       list(this.queryParams).then(response => {
@@ -84,11 +88,23 @@ export default {
         this.loading = false;
       });
     },
-
+    count() {
+      this.loading = true;
+       count(this.queryParams).then(response => {
+         debugger;
+        this.data= response.data;
+        // const  countBetMoney=data.countBetMoney;
+        // const countBetPeople = data.countBetPeople;
+        // this.countBetMoney=countBetMoney;
+        // this.countBetPeople=countBetPeople;
+        this.loading = false;
+      });
+    },
     /** 搜索按钮操作 */
     handleQuery() {
       this.pageNum = 1;
       this.getList();
+      this.count();
     },
     /** 重置按钮操作 */
     resetQuery() {

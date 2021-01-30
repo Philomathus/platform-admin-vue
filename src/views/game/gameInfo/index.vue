@@ -126,10 +126,10 @@
           <el-input v-model="form.indexs" placeholder="请输入排序号" />
         </el-form-item>
         <el-form-item label="图标" prop="icon">
-          <el-input v-model="form.icon" placeholder="请输入图标" />
+          <imageUpload v-model="form.icon" path="gameInfo"/>
         </el-form-item>
         <el-form-item label="新版图标" prop="editionIcon">
-          <el-input v-model="form.editionIcon" placeholder="请输入新版图标" />
+          <imageUpload v-model="form.editionIcon" path="gameInfo"/>
         </el-form-item>
         <el-form-item label="横竖屏" prop="screen" :formatter="screen">
           <el-select v-model="form.screen" placeholder="请选择">
@@ -190,13 +190,13 @@ import {
   updateGameInfo,
   delGameInfo,
 } from '@/api/platform-web/game/gameInfo'
+import ImageUpload from '@/components/ImageUpload'
 import {getToken} from '@/utils/auth'
-import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 
 export default {
   name: 'User',
-  components: {Treeselect},
+  components: {ImageUpload,},
   data() {
     return {
       //谷歌验证码点击关闭

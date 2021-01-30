@@ -8,9 +8,14 @@ export function listReport(query) {
     method: 'get',
     params: query
   })
-
-
-
 }
 
 
+// 查询【请填写功能名称】列表
+export function count(query) {
+  return request({
+    url: url.platformWeb + '/admin/reportIncomeDay/count',
+    method: 'get',
+    params: query
+  })
+}

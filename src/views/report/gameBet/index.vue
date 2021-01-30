@@ -22,10 +22,10 @@
       </el-form-item>
     </el-form>
 
-    <el-button type="text">总投注金额</el-button>
-    <el-button type="text" >data.countBetMoney</el-button>
-    <el-button type="text">总投注人数</el-button>
-    <el-button type="text" disabled>data.countBetPeople</el-button>
+
+
+    <el-button type="primary">总投注金额: {{this.data.countBetMoney}}</el-button>
+    <el-button type="success">总投注人数: {{this.data.countBetPeople}}</el-button>
     <el-table v-loading="loading"
               :data="list.slice((pageNum-1)*pageSize,pageNum*pageSize)"
               style="width: 100%;">
@@ -64,7 +64,7 @@ export default {
       // countBetPeople:null,
       // 表格数据
       list: [],
-      data:[],
+      data: {},
       pageNum: 1,
       pageSize: 20,
       // 查询参数
@@ -91,12 +91,7 @@ export default {
     count() {
       this.loading = true;
        count(this.queryParams).then(response => {
-         debugger;
         this.data= response.data;
-        // const  countBetMoney=data.countBetMoney;
-        // const countBetPeople = data.countBetPeople;
-        // this.countBetMoney=countBetMoney;
-        // this.countBetPeople=countBetPeople;
         this.loading = false;
       });
     },

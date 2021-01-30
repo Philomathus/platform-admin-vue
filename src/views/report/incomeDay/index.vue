@@ -10,8 +10,10 @@
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
       </el-form-item>
     </el-form>
-    <el-button type="text">总成功金额</el-button>
-    <el-button type="text" disabled>455</el-button>
+<!--    <el-button type="text">总成功金额</el-button>-->
+<!--    <el-button type="text" disabled>455</el-button>-->
+
+    <el-button type="primary">总成功金额: {{this.data.countSuccessMoney}}</el-button>
     <el-table v-loading="loading" :data="report">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="收款金额" align="center" prop="money"/>
@@ -34,8 +36,9 @@
 
 <script>
 
-import {listReport} from "@/api/platform-web/report/incomeDay";
+import {listReport,count} from "@/api/platform-web/report/incomeDay";
 import FileUpload from '@/components/FileUpload';
+
 
 export default {
   name: "memberGame",
@@ -60,6 +63,7 @@ export default {
       report: [],
       // 日期范围
       dateRange: [],
+      data: {},
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -78,6 +82,7 @@ export default {
   },
   created() {
     this.getList();
+    this.count();
   },
   methods: {
     /** 查询平台资金报，记录平台每日收入及支出总额，预估当前会员的积分余额列表 */
@@ -86,6 +91,13 @@ export default {
       listReport(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
         this.report = response.rows;
         this.total = response.total;
+        this.loading = false;
+      });
+    },
+    count() {
+      this.loading = true;
+      count(this.queryParams).then(response => {
+        this.data= response.data;
         this.loading = false;
       });
     },
@@ -98,6 +110,7 @@ export default {
     handleQuery() {
       this.queryParams.pageNum = 1;
       this.getList();
+      this.count();
     },
 
 

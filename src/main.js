@@ -23,6 +23,7 @@ import Pagination from "@/components/Pagination";
 import RightToolbar from "@/components/RightToolbar"
 // 引入 vue-ele-form
 import EleForm from 'vue-ele-form'
+import * as numberUtil from "@/utils/number.js"
 
 // 全局方法挂载
 Vue.prototype.getDicts = getDicts
@@ -34,6 +35,7 @@ Vue.prototype.selectDictLabel = selectDictLabel
 Vue.prototype.selectDictLabels = selectDictLabels
 Vue.prototype.download = download
 Vue.prototype.handleTree = handleTree
+Vue.prototype.numberUtil = numberUtil
 
 Vue.prototype.msgSuccess = function (msg) {
   this.$message({ showClose: true, message: msg, type: "success" });

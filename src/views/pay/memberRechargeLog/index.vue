@@ -1,6 +1,9 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="82px">
+    <el-button type="success">交易笔数 {{this.totalData.total}}</el-button>
+    <el-button type="warning">总成功金额 {{this.totalData.successMoney || 0}}</el-button>
+    <el-button type="info">成功率 {{numberUtil.toPercent(this.totalData.successRate) }}</el-button>
+    <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 10px" v-show="showSearch" label-width="82px">
       <el-form-item label="会员ID" prop="memberId">
         <el-input
           v-model="queryParams.memberId"
@@ -29,13 +32,19 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="修改时间" prop="updateTime">
+<!--      <el-form-item label="修改时间" prop="updateTime">
         <el-date-picker clearable size="small"
                         v-model="queryParams.updateTime"
                         type="date"
                         value-format="yyyy-MM-dd"
                         placeholder="选择修改时间">
         </el-date-picker>
+      </el-form-item>-->
+      <el-form-item label="修改时间范围" prop="selectDate" label-width="100px">
+        <el-date-picker type="daterange" v-model="queryParams.selectDate" format="yyyy-MM-dd"
+                        value-format="yyyy-MM-dd" :style="{width: '60%'}" start-placeholder="开始日期"
+                        end-placeholder="结束日期"
+                        range-separator="至" clearable></el-date-picker>
       </el-form-item>
       <el-form-item label="存款人姓名" prop="rechargeUserName">
         <el-input
@@ -226,7 +235,7 @@
 </template>
 
 <script>
-import { listMemberRechargeLog, getMemberRechargeLog, delMemberRechargeLog, addMemberRechargeLog, updateMemberRechargeLog, exportMemberRechargeLog } from "@/api/platform-web/pay/memberRechargeLog/memberRechargeLog";
+import { listMemberRechargeLog, listCount, getMemberRechargeLog, delMemberRechargeLog, addMemberRechargeLog, updateMemberRechargeLog, exportMemberRechargeLog } from "@/api/platform-web/pay/memberRechargeLog/memberRechargeLog";
 
 export default {
   name: "MemberRechargeLog",
@@ -234,6 +243,7 @@ export default {
   },
   data() {
     return {
+      totalData: {},
       // 遮罩层
       loading: true,
       // 选中数组
@@ -258,6 +268,7 @@ export default {
       firstStatusOptions: [],
       // 查询参数
       queryParams: {
+        selectDate: null,
         pageNum: 1,
         pageSize: 10,
         memberId: null,
@@ -276,6 +287,7 @@ export default {
   },
   created() {
     this.getList();
+    this.listCount();
     this.getDicts("recharge_log_status").then(response => {
       this.statusOptions = response.data;
     });
@@ -284,6 +296,11 @@ export default {
     });
   },
   methods: {
+    listCount(){
+      listCount(this.queryParams).then((res) => {
+              this.totalData = res;
+            })
+    },
     /** 查询公司入款信息列表 */
     getList() {
       this.loading = true;
@@ -334,6 +351,7 @@ export default {
     handleQuery() {
       this.queryParams.pageNum = 1;
       this.getList();
+      this.listCount();
     },
     /** 重置按钮操作 */
     resetQuery() {

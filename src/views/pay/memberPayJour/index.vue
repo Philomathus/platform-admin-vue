@@ -1,6 +1,10 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="82px">
+    <el-button type="primary">交易笔数 {{this.totalData.total}}</el-button>
+    <el-button type="success">总成功金额 {{this.totalData.totalMoney}}</el-button>
+    <el-button type="warning">补单金额 {{this.totalData.replenishmentTotalMoney || 0}}</el-button>
+    <el-button type="info">成功率 {{numberUtil.toPercent(this.totalData.failRate) }}</el-button>
+    <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 10px" v-show="showSearch" label-width="82px">
       <el-form-item label="会员编号" prop="memberId">
         <el-input
           v-model="queryParams.memberId"
@@ -65,13 +69,19 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="回调时间" prop="updateTime">
+<!--      <el-form-item label="回调时间" prop="updateTime">
         <el-date-picker clearable size="small"
                         v-model="queryParams.updateTime"
                         type="date"
                         value-format="yyyy-MM-dd"
                         placeholder="选择回调时间">
         </el-date-picker>
+      </el-form-item>-->
+      <el-form-item label="回调日期范围" prop="selectDate" label-width="100px">
+        <el-date-picker type="daterange" v-model="queryParams.selectDate" format="yyyy-MM-dd"
+                        value-format="yyyy-MM-dd" :style="{width: '60%'}" start-placeholder="开始日期"
+                        end-placeholder="结束日期"
+                        range-separator="至" clearable></el-date-picker>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -80,7 +90,7 @@
     </el-form>
 
     <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
+<!--      <el-col :span="1.5">
         <el-button
           type="primary"
           plain
@@ -111,8 +121,8 @@
           @click="handleDelete"
           v-hasPermi="['pay:memberPayJour:remove']"
         >删除</el-button>
-      </el-col>
-      <el-col :span="1.5">
+      </el-col>-->
+<!--      <el-col :span="1.5">
         <el-button
           type="warning"
           plain
@@ -121,34 +131,30 @@
           @click="handleExport"
           v-hasPermi="['pay:memberPayJour:export']"
         >导出</el-button>
-      </el-col>
+      </el-col>-->
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="memberPayJourList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="会员ID" align="center" prop="memberId" />
-      <el-table-column label="会员账号" align="center" prop="userName" />
-      <el-table-column label="订单号" align="center" prop="orderNo" />
-      <el-table-column label="支付平台" align="center" prop="platformName" />
-      <el-table-column label="支付通道" align="center" prop="channelName" />
-      <el-table-column label="费率" align="center" prop="payRateStr" />
-      <el-table-column label="成功率" align="center" prop="currentSuccessRateStr" />
-      <el-table-column label="上游订单号" align="center" prop="tradeSn" />
+      <el-table-column label="会员ID" align="center" prop="member_id" />
+      <el-table-column label="会员账号" align="center" prop="user_name" />
+      <el-table-column label="订单号" align="center" prop="order_no" />
+      <el-table-column label="支付平台" align="center" prop="platform_name" />
+      <el-table-column label="支付通道" align="center" prop="channel_name" />
+      <el-table-column label="费率" align="center" prop="pay_rate_str" />
+      <el-table-column label="成功率" align="center" prop="current_success_rate_str" />
+      <el-table-column label="上游订单号" align="center" prop="trade_sn" />
       <el-table-column label="请求金额" align="center" prop="money" />
-      <el-table-column label="实际到账金额" align="center" prop="subMoney" />
-      <el-table-column label="支付接口的支付地址" align="center" prop="paymentCode" />
-      <el-table-column label="支付成功时间" align="center" prop="paymentTime" />
-      <el-table-column label="订单时间" align="center" prop="payTime" />
-      <el-table-column label="状态" align="center" prop="status" :formatter="statusFormat" />
+      <el-table-column label="实际金额" align="center" prop="sub_money" />
+<!--      <el-table-column label="支付接口的支付地址" show-overflow-tooltip align="center" prop="payment_code" />-->
+<!--      <el-table-column label="支付成功时间" align="center" prop="payment_time" />-->
+      <el-table-column label="订单时间" align="center" prop="pay_time" width="180" />
+      <el-table-column label="更新时间" align="center" prop="update_time" width="180"/>
+      <el-table-column label="订单状态" align="center" prop="status" :formatter="statusFormat" />
       <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="补单操作员" align="center" prop="manWork" />
-      <el-table-column label="更新时间" align="center" prop="updateTime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="是否首次1是0否" align="center" prop="first" />
+      <!--      <el-table-column label="补单操作员" align="center" prop="manWork" />-->
+<!--      <el-table-column label="是否首次1是0否" align="center" prop="first" />-->
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -157,14 +163,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['pay:memberPayJour:edit']"
-          >修改</el-button>
-          <el-button
+          >人工补单</el-button>
+<!--          <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['pay:memberPayJour:remove']"
-          >删除</el-button>
+          >删除</el-button>-->
         </template>
       </el-table-column>
     </el-table>
@@ -179,11 +185,11 @@
 
     <!-- 添加或修改线上充值信息对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px" >
         <el-form-item label="会员编号" prop="memberId">
-          <el-input v-model="form.memberId" placeholder="请输入会员编号" />
+          <el-input v-model="form.memberId" placeholder="请输入会员编号"  readonly/>
         </el-form-item>
-        <el-form-item label="支付平台编号" prop="platformId">
+<!--        <el-form-item label="支付平台编号" prop="platformId">
           <el-select v-model="form.platformId" placeholder="请选择支付平台编号">
             <el-option label="请选择字典生成" value="" />
           </el-select>
@@ -201,14 +207,17 @@
         </el-form-item>
         <el-form-item label="上游订单号" prop="tradeSn">
           <el-input v-model="form.tradeSn" placeholder="请输入上游订单号" />
-        </el-form-item>
+        </el-form-item>-->
         <el-form-item label="请求金额" prop="money">
-          <el-input v-model="form.money" placeholder="请输入请求金额" />
+          <el-input v-model="form.money" placeholder="请输入请求金额" readonly/>
         </el-form-item>
         <el-form-item label="实际到账金额" prop="subMoney">
           <el-input v-model="form.subMoney" placeholder="请输入实际到账金额" />
         </el-form-item>
-        <el-form-item label="支付接口的支付地址" prop="paymentCode">
+        <el-form-item label="谷歌验证码" prop="googleCode">
+          <el-input v-model="form.googleCode" placeholder="请输入谷歌验证码" />
+        </el-form-item>
+<!--        <el-form-item label="支付接口的支付地址" prop="paymentCode">
           <el-input v-model="form.paymentCode" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="支付成功时间(上游回调时间)" prop="paymentTime">
@@ -256,7 +265,7 @@
         </el-form-item>
         <el-form-item label="是否首次1是0否" prop="first">
           <el-input v-model="form.first" placeholder="请输入是否首次1是0否" />
-        </el-form-item>
+        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -267,9 +276,8 @@
 </template>
 
 <script>
-import { listMemberPayJour, getMemberPayJour, delMemberPayJour, addMemberPayJour, updateMemberPayJour, exportMemberPayJour } from "@/api/platform-web/pay/memberPayJour/memberPayJour";
+import { listMemberPayJour, getMemberPayJour, delMemberPayJour, addMemberPayJour, updateMemberPayJour, exportMemberPayJour, listCount } from "@/api/platform-web/pay/memberPayJour/memberPayJour";
 import {platforms} from "@/api/platform-web/pay/payChannelNew/payChannelNew";
-
 
 export default {
   name: "MemberPayJour",
@@ -277,6 +285,8 @@ export default {
   },
   data() {
     return {
+      //统计总的数据
+      totalData: {},
       // 遮罩层
       loading: true,
       // 选中数组
@@ -301,6 +311,7 @@ export default {
       statusOptions: [],
       // 查询参数
       queryParams: {
+        selectDate: null,//回调日期
         pageNum: 1,
         pageSize: 10,
         memberId: null,
@@ -321,6 +332,7 @@ export default {
   },
   created() {
     this.getList();
+    this.listCount();
     //支付平台
     platforms().then(response => {
       this.payPlatformOptions = response.data
@@ -330,6 +342,12 @@ export default {
     });
   },
   methods: {
+    //
+    listCount(){
+      listCount(this.queryParams).then((res) => {
+        this.totalData=res
+      })
+    },
     /** 查询线上充值信息列表 */
     getList() {
       this.loading = true;
@@ -338,6 +356,7 @@ export default {
         this.total = response.total;
         this.loading = false;
       });
+
     },
     // 状态(1 成功0失败 -1待确认)字典翻译
     statusFormat(row, column) {
@@ -383,6 +402,7 @@ export default {
     handleQuery() {
       this.queryParams.pageNum = 1;
       this.getList();
+      this.listCount();
     },
     /** 重置按钮操作 */
     resetQuery() {
@@ -408,7 +428,7 @@ export default {
       getMemberPayJour(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改线上充值信息";
+        this.title = "人工补单";
       });
     },
     /** 提交按钮 */

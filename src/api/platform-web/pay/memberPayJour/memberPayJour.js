@@ -10,6 +10,15 @@ export function listMemberPayJour(query) {
   })
 }
 
+// 查询【请填写功能名称】列表
+export function listCount(query) {
+  return request({
+    url: url.platformWeb + '/pay/memberPayJour/listCount',
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询【请填写功能名称】详细
 export function getMemberPayJour(id) {
   return request({

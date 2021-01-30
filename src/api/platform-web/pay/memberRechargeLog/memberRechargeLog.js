@@ -10,6 +10,15 @@ export function listMemberRechargeLog(query) {
   })
 }
 
+// 查询【请填写功能名称】列表
+export function listCount(query) {
+  return request({
+    url: url.platformWeb + '/pay/memberRechargeLog/listCount',
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询【请填写功能名称】详细
 export function getMemberRechargeLog(id) {
   return request({

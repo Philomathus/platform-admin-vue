@@ -19,51 +19,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="当前余额额度" prop="balanceAmount">
-        <el-input
-          v-model="queryParams.balanceAmount"
-          placeholder="请输入当前余额额度"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="代充次数" prop="rechargeNum">
-        <el-input
-          v-model="queryParams.rechargeNum"
-          placeholder="请输入代充次数"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="QQ号" prop="qqAccount">
-        <el-input
-          v-model="queryParams.qqAccount"
-          placeholder="请输入QQ号"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="微信号或微信注册手机号" prop="wechatAccount">
-        <el-input
-          v-model="queryParams.wechatAccount"
-          placeholder="请输入微信号或微信注册手机号"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="支付宝账号或支付宝注册手机号" prop="alipayAccount">
-        <el-input
-          v-model="queryParams.alipayAccount"
-          placeholder="请输入支付宝账号或支付宝注册手机号"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item label="手机号" prop="mobile">
         <el-input
           v-model="queryParams.mobile"
@@ -72,52 +27,6 @@
           size="small"
           @keyup.enter.native="handleQuery"
         />
-      </el-form-item>
-      <el-form-item label="开店时间" prop="businessBeginTime">
-        <el-date-picker clearable size="small"
-          v-model="queryParams.businessBeginTime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="选择开店时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="关店时间" prop="businessEndTime">
-        <el-date-picker clearable size="small"
-          v-model="queryParams.businessEndTime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="选择关店时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="充值优惠比例" prop="rechargeDiscountRate">
-        <el-input
-          v-model="queryParams.rechargeDiscountRate"
-          placeholder="请输入充值优惠比例"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="状态 1正常 0拉黑" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状态 1正常 0拉黑" clearable size="small">
-          <el-option label="请选择字典生成" value="" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="上次登录时间" prop="beforeLoginTime">
-        <el-date-picker clearable size="small"
-          v-model="queryParams.beforeLoginTime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="选择上次登录时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="本次登录时间" prop="loginTime">
-        <el-date-picker clearable size="small"
-          v-model="queryParams.loginTime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="选择本次登录时间">
-        </el-date-picker>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -173,14 +82,13 @@
 
     <el-table v-loading="loading" :data="payAgentRechargeAccountList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键" align="center" prop="id" />
       <el-table-column label="代充账号" align="center" prop="account" />
       <el-table-column label="代充昵称" align="center" prop="nickName" />
       <el-table-column label="当前余额额度" align="center" prop="balanceAmount" />
       <el-table-column label="代充次数" align="center" prop="rechargeNum" />
       <el-table-column label="QQ号" align="center" prop="qqAccount" />
-      <el-table-column label="微信号或微信注册手机号" align="center" prop="wechatAccount" />
-      <el-table-column label="支付宝账号或支付宝注册手机号" align="center" prop="alipayAccount" />
+      <el-table-column label="微信号" align="center" prop="wechatAccount" />
+      <el-table-column label="支付宝账号" align="center" prop="alipayAccount" />
       <el-table-column label="手机号" align="center" prop="mobile" />
       <el-table-column label="开店时间" align="center" prop="businessBeginTime" width="180">
         <template slot-scope="scope">
@@ -193,7 +101,21 @@
         </template>
       </el-table-column>
       <el-table-column label="充值优惠比例" align="center" prop="rechargeDiscountRate" />
-      <el-table-column label="状态 1正常 0拉黑" align="center" prop="status" />
+      <el-table-column label="状态" align="center" prop="status"  >
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.status"
+            active-value="1"
+            inactive-value="0"
+            @change="handleStatusChange(scope.row)"
+          ></el-switch>
+        </template>
+      </el-table-column>
+      <el-table-column label="注册时间" align="center" prop="createTime" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="上次登录时间" align="center" prop="beforeLoginTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.beforeLoginTime, '{y}-{m}-{d}') }}</span>
@@ -232,8 +154,8 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改【请填写功能名称】对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <!-- 添加或修改代充人管理对话框 -->
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="代充账号" prop="account">
           <el-input v-model="form.account" placeholder="请输入代充账号" />
@@ -261,43 +183,32 @@
         </el-form-item>
         <el-form-item label="开店时间" prop="businessBeginTime">
           <el-date-picker clearable size="small"
-            v-model="form.businessBeginTime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择开店时间">
+                          v-model="form.businessBeginTime"
+                          type="date"
+                          value-format="yyyy-MM-dd"
+                          placeholder="选择开店时间">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="关店时间" prop="businessEndTime">
           <el-date-picker clearable size="small"
-            v-model="form.businessEndTime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择关店时间">
+                          v-model="form.businessEndTime"
+                          type="date"
+                          value-format="yyyy-MM-dd"
+                          placeholder="选择关店时间">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="充值优惠比例" prop="rechargeDiscountRate">
           <el-input v-model="form.rechargeDiscountRate" placeholder="请输入充值优惠比例" />
         </el-form-item>
-        <el-form-item label="状态 1正常 0拉黑">
-          <el-radio-group v-model="form.status">
-            <el-radio label="1">请选择字典生成</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="上次登录时间" prop="beforeLoginTime">
-          <el-date-picker clearable size="small"
-            v-model="form.beforeLoginTime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择上次登录时间">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="本次登录时间" prop="loginTime">
-          <el-date-picker clearable size="small"
-            v-model="form.loginTime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择本次登录时间">
-          </el-date-picker>
+        <el-form-item label="状态" prop="status">
+          <el-select v-model="form.status" placeholder="请选择状态">
+            <el-option
+              v-for="dict in statusOptions"
+              :key="dict.dictValue"
+              :label="dict.dictLabel"
+              :value="parseInt(dict.dictValue)"
+            ></el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -309,7 +220,8 @@
 </template>
 
 <script>
-import { listPayAgentRechargeAccount, getPayAgentRechargeAccount, delPayAgentRechargeAccount, addPayAgentRechargeAccount, updatePayAgentRechargeAccount, exportPayAgentRechargeAccount } from "@/api/platform-web/pay/payAgentRechargeAccount/payAgentRechargeAccount";
+import { listPayAgentRechargeAccount, getPayAgentRechargeAccount, delPayAgentRechargeAccount, addPayAgentRechargeAccount, updatePayAgentRechargeAccount, exportPayAgentRechargeAccount ,changeStatus} from "@/api/platform-web/pay/payAgentRechargeAccount/payAgentRechargeAccount";
+
 
 export default {
   name: "PayAgentRechargeAccount",
@@ -329,30 +241,21 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 【请填写功能名称】表格数据
+      // 代充人管理表格数据
       payAgentRechargeAccountList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
       open: false,
+      // 状态字典
+      statusOptions: [],
       // 查询参数
       queryParams: {
         pageNum: 1,
         pageSize: 10,
         account: null,
         nickName: null,
-        balanceAmount: null,
-        rechargeNum: null,
-        qqAccount: null,
-        wechatAccount: null,
-        alipayAccount: null,
         mobile: null,
-        businessBeginTime: null,
-        businessEndTime: null,
-        rechargeDiscountRate: null,
-        status: null,
-        beforeLoginTime: null,
-        loginTime: null
       },
       // 表单参数
       form: {},
@@ -374,7 +277,7 @@ export default {
           { required: true, message: "充值优惠比例不能为空", trigger: "blur" }
         ],
         status: [
-          { required: true, message: "状态 1正常 0拉黑不能为空", trigger: "blur" }
+          { required: true, message: "状态不能为空", trigger: "change" }
         ],
         createTime: [
           { required: true, message: "注册时间不能为空", trigger: "blur" }
@@ -384,9 +287,12 @@ export default {
   },
   created() {
     this.getList();
+    this.getDicts("sys_common_status").then(response => {
+      this.statusOptions = response.data;
+    });
   },
   methods: {
-    /** 查询【请填写功能名称】列表 */
+    /** 查询代充人管理列表 */
     getList() {
       this.loading = true;
       listPayAgentRechargeAccount(this.queryParams).then(response => {
@@ -395,6 +301,22 @@ export default {
         this.loading = false;
       });
     },
+    //状态修改
+    handleStatusChange(row) {
+      let text = row.status === "1" ? "启用" : "停用";
+      this.$confirm('确认要"' + text + '""' + row.account + '"吗?', "警告", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function() {
+        return changeStatus(row.id, row.status);
+      }).then(() => {
+        this.msgSuccess(text + "成功");
+      }).catch(function() {
+        row.status = row.status === "0" ? "1" : "0";
+      });
+    },
+
     // 取消按钮
     cancel() {
       this.open = false;
@@ -415,7 +337,7 @@ export default {
         businessBeginTime: null,
         businessEndTime: null,
         rechargeDiscountRate: null,
-        status: 0,
+        status: null,
         createTime: null,
         beforeLoginTime: null,
         loginTime: null
@@ -442,7 +364,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【请填写功能名称】";
+      this.title = "添加代充人管理";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -451,7 +373,7 @@ export default {
       getPayAgentRechargeAccount(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = "修改代充人管理";
       });
     },
     /** 提交按钮 */
@@ -477,29 +399,29 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return delPayAgentRechargeAccount(ids);
-        }).then(() => {
-          this.getList();
-          this.msgSuccess("删除成功");
-        })
+      this.$confirm('是否确认删除代充人管理编号为"' + ids + '"的数据项?', "警告", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function() {
+        return delPayAgentRechargeAccount(ids);
+      }).then(() => {
+        this.getList();
+        this.msgSuccess("删除成功");
+      })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有【请填写功能名称】数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return exportPayAgentRechargeAccount(queryParams);
-        }).then(response => {
-          this.download(response.msg);
-        })
+      this.$confirm('是否确认导出所有代充人管理数据项?', "警告", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function() {
+        return exportPayAgentRechargeAccount(queryParams);
+      }).then(response => {
+        this.download(response.msg);
+      })
     }
   }
 };

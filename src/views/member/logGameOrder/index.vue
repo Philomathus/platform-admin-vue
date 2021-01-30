@@ -254,6 +254,8 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
+        orderByColumn: 'e_time',
+        isAsc: 'desc',
         type: null,
         memberId: null,
         userName: null,
@@ -263,8 +265,6 @@ export default {
         bTime: null,
         eTime: null,
         selectDate: null,
-        orderByColumn: 'e_time',
-        isAsc: 'desc',
       },
       // 表单参数
       form: {},

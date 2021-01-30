@@ -43,3 +43,19 @@ export function delSms(id) {
     method: 'delete'
   })
 }
+
+// 激活SMS短信服务配置
+export function effectSms(id) {
+  return request({
+    url: url.platformWeb + '/server/sms/effect/' + id,
+    method: 'put'
+  })
+}
+
+// 测试SMS短信服务配置
+export function smsTest(id, mobile) {
+  return request({
+    url: url.platformWeb + '/server/sms/smsTest/' + id + '/' + mobile,
+    method: 'put'
+  })
+}

@@ -89,6 +89,15 @@
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="ID" align="center" prop="id"/>
 <!--      <el-table-column label="家族LOGO" align="center" prop="logo"/>-->
+      <el-table-column label="图标" align="center" prop="logo">
+        <template slot-scope="scope">
+          <el-image
+            style="width: 50px; height: 50px"
+            :src="scope.row.logo"
+          >
+          </el-image>
+        </template>
+      </el-table-column>
       <el-table-column label="家族名称" align="center" prop="name"/>
       <el-table-column label="公告" align="center" prop="notice"/>
       <el-table-column label="家族宣言" align="center" prop="manifesto"/>
@@ -108,24 +117,6 @@
       <el-table-column label="积分" align="center" prop="score"/>
       <el-table-column label="家族等级" align="center" prop="liveLevel"/>
       <el-table-column label="家族推荐号" align="center" prop="familyRecom"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['admin:liveFamily:edit']"
-          >修改</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['admin:liveFamily:remove']"
-          >删除</el-button>
-        </template>
-      </el-table-column>
     </el-table>
 
     <pagination

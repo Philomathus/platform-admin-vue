@@ -100,7 +100,7 @@
         </template>
       </el-table-column>
       <!--      <el-table-column label="是否线上(1是0否)" align="center" prop="isOnline" />-->
-      <el-table-column label="支付类型" align="center" prop="type" />
+      <el-table-column label="支付类型" align="center" prop="type" :formatter="successFormat" />
       <el-table-column label="创建人" align="center" prop="creator" />
       <el-table-column label="修改人" align="center" prop="updator" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -201,6 +201,8 @@ export default {
       total: 0,
       // 【请填写功能名称】表格数据
       payTypeList: [],
+      //支付类型
+      paytypeOptions: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -244,6 +246,10 @@ export default {
   },
   created() {
     this.getList();
+    this.getDicts("pay_type").then(response => {
+      this.paytypeOptions = response.data;
+      console.info(response.data)
+    });
   },
   methods: {
     /** 查询【请填写功能名称】列表 */
@@ -284,6 +290,10 @@ export default {
       }).catch(function() {
         row.isRecommend = row.isRecommend === "0" ? "1" : "0";
       });
+    },
+    // 支付类型
+    successFormat(row, column) {
+      return this.selectDictLabel(this.paytypeOptions, row.type);
     },
     // 取消按钮
     cancel() {

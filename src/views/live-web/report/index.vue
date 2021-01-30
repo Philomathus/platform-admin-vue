@@ -4,7 +4,7 @@
 
       <el-form-item label="主播排行榜">
         <el-select v-model="queryParams.type" placeholder="请选择榜类型">
-          <el-option label="日榜" value="0"></el-option>
+          <el-option label="日榜" value="0" ></el-option>
           <el-option label="周榜" value="1"></el-option>
           <el-option label="月榜" value="2"></el-option>
         </el-select>
@@ -113,8 +113,8 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
-        type:null,
-        reptime: null,
+        type: "0",
+        reptime: new Date(),
         pageNum: 1,
         pageSize: 10
       },
@@ -153,7 +153,7 @@ export default {
         dayTicketUpdiff: null,
         repdate: null,
         num: null,
-        reptime: null,
+        reptime: new Date(),
         headImage: null
       };
       this.resetForm("form");

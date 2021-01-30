@@ -52,3 +52,12 @@ export function exportActivityInfo(query) {
     params: query
   })
 }
+
+//活动类型
+export function activityTypes() {
+  return request({
+    url: url.platformWeb + '/admin/activityInfo/activityType',
+    method: 'get'
+  })
+}
+

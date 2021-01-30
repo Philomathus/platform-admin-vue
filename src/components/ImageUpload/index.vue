@@ -38,12 +38,16 @@
 
 <script>
 import { getToken } from '@/utils/auth'
+import { url } from '@/utils/url'
 
 export default {
   data() {
     return {
       dialogVisible: false,
-      uploadImgUrl: process.env.VUE_APP_BASE_API + '/upload/oss/' + this.path, // 上传的图片服务器地址
+      uploadImgUrl: this.path === 'test'
+        ? (url.platformWeb + '/server/oss/ossTest/' + this.path + '/' + this.modeId) // 测试url
+        : (url.platformWeb + '/upload/oss/' + this.path) // 正常url
+      , // 上传的图片服务器地址
       headers: {
         Authorization: 'Bearer ' + getToken()
       }
@@ -57,6 +61,10 @@ export default {
     path: {
       type: String,
       default: 'default'
+    },
+    modeId: {
+      type: String,
+      default: ''
     }
   },
   methods: {

@@ -22,24 +22,6 @@
           end-placeholder="结束日期"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item label="平台游戏类型" prop="kindId">
-        <el-input
-          v-model="queryParams.kindId"
-          placeholder="请输入平台游戏类型"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="平台类型" prop="platformId">
-        <el-input
-          v-model="queryParams.platformId"
-          placeholder="请输入平台类型"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -94,6 +76,7 @@
 
     <el-table v-loading="loading" :data="activityQuestInfoList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
+      <el-table-column label="标题" align="center" prop="title" />
       <el-table-column label="图标" align="center" prop="icon">
         <template slot-scope="scope">
           <el-image
@@ -103,19 +86,16 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="标题" align="center" prop="title" />
-      <el-table-column label="发布时间" align="center" prop="ctime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.ctime, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
       <el-table-column label="排序号" align="center" prop="indexs" />
       <el-table-column label="目标任务量" align="center" prop="target" />
       <el-table-column label="完成后增加的资金" align="center" prop="reward" />
       <el-table-column label="任务详情" align="center" prop="detail" />
       <el-table-column label="描述" align="center" prop="content" />
-      <el-table-column label="平台游戏类型" align="center" prop="kindId" />
-      <el-table-column label="平台类型" align="center" prop="platformId" />
+      <el-table-column label="发布时间" align="center" prop="ctime" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.ctime, '{y}-{m}-{d}') }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -153,6 +133,40 @@
         <el-form-item label="排序号" prop="indexs">
           <el-input v-model="form.indexs" placeholder="请输入排序号" />
         </el-form-item>
+        <el-form-item label="任务类型" prop="typeId">
+          <el-select
+            filterable
+            v-model="form.typeId"
+            placeholder="请选择任务类型"
+            clearable
+            size="small"
+            style="width: 240px"
+          >
+            <el-option
+              v-for="dict in activityQuestTypeOptions"
+              :key="dict.id"
+              :label="dict.name"
+              :value="dict.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="所属游戏" prop="gameId">
+          <el-select
+            filterable
+            v-model="form.gameId"
+            placeholder="请选择所属游戏"
+            clearable
+            size="small"
+            style="width: 240px"
+          >
+            <el-option
+              v-for="dict in gameInfoOptions"
+              :key="dict.id"
+              :label="dict.name"
+              :value="dict.id"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item label="目标任务量" prop="target">
           <el-input v-model="form.target" placeholder="请输入目标任务量" />
         </el-form-item>
@@ -165,12 +179,6 @@
         <el-form-item label="描述">
           <editor v-model="form.content" :min-height="192"/>
         </el-form-item>
-        <el-form-item label="平台游戏类型" prop="kindId">
-          <el-input v-model="form.kindId" placeholder="请输入平台游戏类型" />
-        </el-form-item>
-        <el-form-item label="平台类型" prop="platformId">
-          <el-input v-model="form.platformId" placeholder="请输入平台类型" />
-        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -181,9 +189,10 @@
 </template>
 
 <script>
-import { listActivityQuestInfo, getActivityQuestInfo, delActivityQuestInfo, addActivityQuestInfo, updateActivityQuestInfo, exportActivityQuestInfo } from "@/api/activity/activityQuestInfo";
+import { listActivityQuestInfo, getActivityQuestInfo, delActivityQuestInfo, addActivityQuestInfo, updateActivityQuestInfo, exportActivityQuestInfo, activityQuestTypes, gameInfoName } from "@/api/activity/activityQuestInfo";
 import Editor from '@/components/Editor';
 import ImageUpload from "@/components/ImageUpload";
+import {activityTypes} from "@/api/activity/activityInfo";
 
 export default {
   name: "ActivityQuestInfo",
@@ -199,6 +208,10 @@ export default {
       ids: [],
       // 日期范围
       dateRange: [],
+      //任务类型
+      activityQuestTypeOptions: [],
+      //任务类型
+      gameInfoOptions: [],
       // 非单个禁用
       single: true,
       // 非多个禁用
@@ -239,6 +252,14 @@ export default {
   },
   created() {
     this.getList();
+    //任务类型
+    activityQuestTypes().then(response => {
+      this.activityQuestTypeOptions = response.data
+    })
+    //任务类型
+    gameInfoName().then(response => {
+      this.gameInfoOptions = response.data
+    })
   },
   methods: {
     /** 查询任务信息列表 */

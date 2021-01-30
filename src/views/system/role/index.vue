@@ -237,7 +237,7 @@ export default {
       // 查询参数
       queryParams: {
         pageNum: 1,
-        pageSize: 15,
+        pageSize: 20,
         roleName: undefined,
         roleKey: undefined,
         status: undefined

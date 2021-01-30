@@ -66,6 +66,15 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="id" align="center" prop="id" />
       <el-table-column label="名称" align="center" prop="name" />
+      <el-table-column label="图标" align="center" prop="icon">
+        <template slot-scope="scope">
+          <el-image
+            style="width: 50px; height: 50px"
+            :src="scope.row.icon"
+          >
+          </el-image>
+        </template>
+      </el-table-column>
       <el-table-column label="消费钻石" align="center" prop="diamonds" />
       <el-table-column label="RMB/钻石" align="center" prop="ticket" />
       <el-table-column label="是否连送" align="center" prop="isMuch" :formatter="isMuchFormat"/>
@@ -116,7 +125,7 @@
           <el-input v-model="form.name" placeholder="请输入道具名" />
         </el-form-item>
         <el-form-item label="图标" prop="icon">
-          <el-input v-model="form.icon" placeholder="请输入图标" />
+          <imageUpload v-model="form.icon" path="give"/>
         </el-form-item>
         <el-form-item label="消费钻石" prop="diamonds">
           <el-input v-model="form.diamonds" placeholder="请输入" />
@@ -124,38 +133,42 @@
         <el-form-item label="主播获得热度:" prop="ticket">
           <el-input v-model="form.ticket" placeholder="请输入" />
         </el-form-item>
-        <el-form-item label="连续" prop="isMuch">
-          <el-input v-model="form.isMuch" placeholder="请选择" />
+        <el-form-item label="连续">
+          <el-radio-group v-model="form.isMuch">
+            <el-radio label="1">是</el-radio>
+            <el-radio label="0">否</el-radio>
+          </el-radio-group>
         </el-form-item>
-
-        <el-form-item label="展示动画" prop="isAnimated">
-          <el-input v-model="form.isAnimated" placeholder="请选择" />
+        <el-form-item label="展示动画">
+          <el-radio-group v-model="form.isAnimated">
+            <el-radio label="0">普通礼物</el-radio>
+            <el-radio label="1">gif礼物</el-radio>
+            <el-radio label="2">大型动画礼物</el-radio>
+          </el-radio-group>
         </el-form-item>
-
         <el-form-item label="大型道具类型">
-          <el-select v-model="form.animType" placeholder="请选择大型道具类型">
-            <el-option label="请选择字典生成" value="" />
-          </el-select>
+          <el-input v-model="form.animType" placeholder="请输入大型道具类型" />
         </el-form-item>
-
         <el-form-item label="svga动画" prop="animatedUrl">
-          <el-input v-model="form.animatedUrl" placeholder="请输入svga动画路径" />
+          <fileUpload v-model="form.animatedUrl" path="give"/>
         </el-form-item>
 
+        <el-form-item label="类型">
+          <el-radio-group v-model="form.type">
+            <el-radio label="0">礼物</el-radio>
+            <el-radio label="1">打赏</el-radio>
+            <el-radio label="2">守护</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="状态">
+          <el-radio-group v-model="form.isEffect">
+            <el-radio label="1">有效</el-radio>
+            <el-radio label="0">无效</el-radio>
+          </el-radio-group>
+        </el-form-item>
         <el-form-item label="排序" prop="sort">
           <el-input v-model="form.sort" placeholder="请输入排序" />
         </el-form-item>
-
-        <el-form-item label="类型" prop="type">
-          <el-select v-model="form.type" placeholder="请选择">
-            <el-option label="请选择字典生成" value="" />
-          </el-select>
-        </el-form-item>
-
-        <el-form-item label="状态" prop="isEffect">
-          <el-input v-model="form.isEffect" placeholder="请选择" />
-        </el-form-item>
-
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -167,11 +180,15 @@
 
 <script>
 import { listLiveProp, getLiveProp, delLiveProp, addLiveProp, updateLiveProp, exportLiveProp } from "@/api/live-web/liveProp/liveProp";
-import {changeUserStatus} from "@/api/platform-web/system/user";
-
+import ImageUpload from '@/components/ImageUpload';
+import FileUpload from '@/components/FileUpload';
+import Editor from "@/components/Editor";
 export default {
   name: "LiveProp",
   components: {
+    ImageUpload,
+    FileUpload,
+    Editor
   },
   data() {
     return {

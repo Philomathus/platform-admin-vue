@@ -52,3 +52,21 @@ export function exportActivityQuestInfo(query) {
     params: query
   })
 }
+
+//活动类型
+export function activityQuestTypes() {
+  return request({
+    url: url.platformWeb + '/admin/activityQuestInfo/activityQuestType',
+    method: 'get'
+  })
+}
+
+
+//所属游戏
+export function gameInfoName() {
+  return request({
+    url: url.platformWeb + '/admin/activityQuestInfo/gameInfo',
+    method: 'get'
+  })
+}
+

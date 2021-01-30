@@ -52,3 +52,14 @@ export function exportType(query) {
     params: query
   })
 }
+export function changeStatus(id,status ) {
+  const data = {
+    id,
+    status
+  }
+  return request({
+    url: url.platformWeb + '/game/type/changeStatus',
+    method: 'put',
+    data: data
+  })
+}

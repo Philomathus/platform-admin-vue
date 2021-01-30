@@ -77,7 +77,16 @@
         </template>
       </el-table-column>
       <el-table-column label="图标类型" align="center" prop="iconType" :formatter="iconTypeFormat" />
-      <el-table-column label="状态" align="center" prop="status" :formatter="statusFormat" />
+      <el-table-column label="状态" align="center" >
+      <template slot-scope="scope">
+        <el-switch
+          v-model="scope.row.status"
+          active-value="1"
+          inactive-value="0"
+          @change="handleStatusChangeisWH(scope.row)"
+        ></el-switch>
+      </template>
+      </el-table-column>
       <el-table-column label="排序号" align="center" prop="indexs" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -139,7 +148,7 @@
 </template>
 
 <script>
-import { listType, getType, delType, addType, updateType, exportType } from "@/api/platform-web/game/type";
+import { listType, getType, delType, addType, updateType, exportType,changeStatus } from "@/api/platform-web/game/type";
 import ImageUpload from '@/components/ImageUpload';
 
 export default {
@@ -309,6 +318,21 @@ export default {
         this.download(response.msg);
       }).catch(() => {
       });
+    },
+    // 维护状态修改
+    handleStatusChangeisWH(row) {
+      let text = row.status ==="1" ? '启用' : '停用'
+      this.$confirm('确认要更改"' + text + '""' + row.name + '"吗?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        return changeStatus(row.id, row.status)
+      }).then(() => {
+        this.msgSuccess(text + '成功')
+      }).catch(function () {
+        row.status = row.status === '0' ? '1' : '0'
+      })
     }
   }
 };

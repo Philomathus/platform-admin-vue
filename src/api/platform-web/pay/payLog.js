@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import {url} from '@/utils/url'
 
-// 查询【请填写功能名称】列表
+// 查询支付下单日志列表
 export function listPayLog(query) {
   return request({
     url: url.platformWeb + '/pay/payLog/list',
@@ -10,7 +10,7 @@ export function listPayLog(query) {
   })
 }
 
-// 查询【请填写功能名称】详细
+// 查询支付下单日志详细
 export function getPayLog(id) {
   return request({
     url: url.platformWeb + '/pay/payLog/' + id,
@@ -18,7 +18,7 @@ export function getPayLog(id) {
   })
 }
 
-// 新增【请填写功能名称】
+// 新增支付下单日志
 export function addPayLog(data) {
   return request({
     url: url.platformWeb + '/pay/payLog',
@@ -27,7 +27,7 @@ export function addPayLog(data) {
   })
 }
 
-// 修改【请填写功能名称】
+// 修改支付下单日志
 export function updatePayLog(data) {
   return request({
     url: url.platformWeb + '/pay/payLog',
@@ -36,7 +36,7 @@ export function updatePayLog(data) {
   })
 }
 
-// 删除【请填写功能名称】
+// 删除支付下单日志
 export function delPayLog(id) {
   return request({
     url: url.platformWeb + '/pay/payLog/' + id,
@@ -44,7 +44,7 @@ export function delPayLog(id) {
   })
 }
 
-// 导出【请填写功能名称】
+// 导出支付下单日志
 export function exportPayLog(query) {
   return request({
     url: url.platformWeb + '/pay/payLog/export',

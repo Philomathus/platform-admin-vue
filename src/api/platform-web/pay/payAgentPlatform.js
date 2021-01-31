@@ -1,7 +1,7 @@
 import request from '@/utils/request'
-import {url} from '@/utils/url'
+import { url } from '@/utils/url'
 
-// 查询【请填写功能名称】列表
+// 查询代付平台列表
 export function listPayAgentPlatform(query) {
   return request({
     url: url.platformWeb + '/pay/payAgentPlatform/list',
@@ -10,7 +10,15 @@ export function listPayAgentPlatform(query) {
   })
 }
 
-// 查询【请填写功能名称】详细
+// 激活中代付列表
+export function effectListPayAgentPlatform() {
+  return request({
+    url: url.platformWeb + '/pay/payAgentPlatform/effect-pay-agents',
+    method: 'get'
+  })
+}
+
+// 查询代付平台详细
 export function getPayAgentPlatform(id) {
   return request({
     url: url.platformWeb + '/pay/payAgentPlatform/' + id,
@@ -18,7 +26,7 @@ export function getPayAgentPlatform(id) {
   })
 }
 
-// 新增【请填写功能名称】
+// 新增代付平台
 export function addPayAgentPlatform(data) {
   return request({
     url: url.platformWeb + '/pay/payAgentPlatform',
@@ -27,7 +35,7 @@ export function addPayAgentPlatform(data) {
   })
 }
 
-// 修改【请填写功能名称】
+// 修改代付平台
 export function updatePayAgentPlatform(data) {
   return request({
     url: url.platformWeb + '/pay/payAgentPlatform',
@@ -35,7 +43,6 @@ export function updatePayAgentPlatform(data) {
     data: data
   })
 }
-
 
 export function changePayAgentStatus(id, status) {
   const data = {
@@ -49,8 +56,7 @@ export function changePayAgentStatus(id, status) {
   })
 }
 
-
-// 删除【请填写功能名称】
+// 删除代付平台
 export function delPayAgentPlatform(id) {
   return request({
     url: url.platformWeb + '/pay/payAgentPlatform/' + id,
@@ -58,11 +64,20 @@ export function delPayAgentPlatform(id) {
   })
 }
 
-// 导出【请填写功能名称】
+// 导出代付平台
 export function exportPayAgentPlatform(query) {
   return request({
     url: url.platformWeb + '/pay/payAgentPlatform/export',
     method: 'get',
     params: query
+  })
+}
+
+// 代付下单
+export function payAgentOrder(data) {
+  return request({
+    url: url.platformWeb + '/pay/payAgentPlatform/payAgentOrder',
+    method: 'post',
+    data: data
   })
 }

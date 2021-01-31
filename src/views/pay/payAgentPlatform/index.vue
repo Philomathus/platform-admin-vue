@@ -171,7 +171,7 @@
 </template>
 
 <script>
-import { listPayAgentPlatform, getPayAgentPlatform, delPayAgentPlatform, addPayAgentPlatform, updatePayAgentPlatform, exportPayAgentPlatform,changePayAgentStatus } from "@/api/platform-web/pay/payAgentPlatform/payAgentPlatform";
+import { listPayAgentPlatform, getPayAgentPlatform, delPayAgentPlatform, addPayAgentPlatform, updatePayAgentPlatform, exportPayAgentPlatform,changePayAgentStatus } from "@/api/platform-web/pay/payAgentPlatform";
 
 
 export default {

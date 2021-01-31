@@ -1,44 +1,15 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="会员编号" prop="memberId">
-        <el-input
-          v-model="queryParams.memberId"
-          placeholder="请输入会员编号"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+      <el-form-item label="修改日期" prop="searchTime">
+        <el-date-picker type="datetimerange" v-model="queryParams.searchTime" format="yyyy-MM-dd HH:mm:ss"
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
+                        end-placeholder="结束时间" range-separator="至"
+        ></el-date-picker>
       </el-form-item>
-      <el-form-item label="提现金额" prop="withdrawMoney">
-        <el-input
-          v-model="queryParams.withdrawMoney"
-          placeholder="请输入提现金额"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="提现账号" prop="bankAccount">
-        <el-input
-          v-model="queryParams.bankAccount"
-          placeholder="请输入提现账号"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="收款人" prop="bankUserName">
-        <el-input
-          v-model="queryParams.bankUserName"
-          placeholder="请输入收款人"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small">
+      <el-form-item prop="status">
+        <el-select v-model="queryParams.status" placeholder="全部状态" clearable size="small">
+          <el-option value="-1" label="首次提现会员"/>
           <el-option
             v-for="dict in statusOptions"
             :key="dict.dictValue"
@@ -47,29 +18,35 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="更新时间" prop="updateTime">
-        <el-date-picker clearable size="small"
-                        v-model="queryParams.updateTime"
-                        type="date"
-                        value-format="yyyy-MM-dd"
-                        placeholder="选择更新时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="订单号" prop="orderNo">
+      <el-form-item prop="searchValue">
         <el-input
-          v-model="queryParams.orderNo"
-          placeholder="请输入订单号"
+          v-model="queryParams.searchValue"
+          placeholder="会员ID/会员账号/收款人/订单号"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="账号" prop="account">
+      <el-form-item label="金额" prop="withdrawMoney">
         <el-input
-          v-model="queryParams.account"
-          placeholder="请输入账号"
+          v-model="queryParams.priceMin"
+          placeholder="￥"
           clearable
+          autocomplete="on"
+          min="0"
           size="small"
+          style="width: 80px"
+          @keyup.enter.native="handleQuery"
+        />
+        -
+        <el-input
+          v-model="queryParams.priceMax"
+          placeholder="￥"
+          clearable
+          autocomplete="on"
+          min="0"
+          size="small"
+          style="width: 80px"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
@@ -78,40 +55,7 @@
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
-
     <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['admin:memberWithdrawLog:add']"
-        >新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['admin:memberWithdrawLog:edit']"
-        >修改</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['admin:memberWithdrawLog:remove']"
-        >删除</el-button>
-      </el-col>
       <el-col :span="1.5">
         <el-button
           type="warning"
@@ -119,44 +63,81 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['admin:memberWithdrawLog:export']"
-        >导出</el-button>
+          v-hasPermi="['pay:memberWithdrawLog:export']"
+        >导出
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="memberWithdrawLogList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="会员ID" align="center" prop="memberId" />
-      <el-table-column label="会员账号" align="center" prop="account" />
-      <el-table-column label="提现金额" align="center" prop="withdrawMoney" />
-      <el-table-column label="入款出款比" align="center" prop="rechargeWithdrawRate" />
-      <el-table-column label="银行账号" :show-overflow-tooltip="true" align="center" prop="bankAccount" />
-      <el-table-column label="银行" align="center" prop="bankName" />
-      <el-table-column label="状态" align="center" prop="status" :formatter="statusFormat" />
-      <el-table-column label="是否首次" align="center" prop="first" :formatter="firstFormat" />
-      <el-table-column label="收款人" align="center" prop="bankUserName" />
-      <el-table-column label="操作人" align="center" prop="opName" />
-      <el-table-column label="订单号" :show-overflow-tooltip="true" align="center" prop="orderNo" />
-      <el-table-column label="审核备注" align="center" prop="remark" />
-
-
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+    <el-table :stripe="true" v-loading="loading" :data="memberWithdrawLogList" @selection-change="handleSelectionChange">
+      <el-table-column label="会员ID" min-width="150" align="center" prop="memberId"/>
+      <el-table-column label="会员账号" min-width="100" align="center" prop="account"/>
+      <el-table-column label="入款出款比" min-width="100" align="center" prop="rechargeWithdrawRate"/>
+      <el-table-column label="提现金额" min-width="100" align="center" prop="withdrawMoney"/>
+      <el-table-column label="收款人" min-width="100" align="center" prop="bankUserName"/>
+      <el-table-column label="银行账号" min-width="180" align="center" prop="bankAccount"/>
+      <el-table-column label="银行" min-width="120" align="center" prop="bankName"/>
+      <el-table-column label="状态" min-width="120" align="center" prop="status">
+        <template slot-scope="scope">
+          <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">{{ status.dictLabel }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="是否首次" min-width="90" align="center" prop="first" :formatter="firstFormat"/>
+      <el-table-column label="操作人" min-width="100" align="center" prop="opName"/>
+      <el-table-column label="审核备注" min-width="200" align="center" prop="remark"/>
+      <el-table-column label="下单时间" min-width="150" align="center" prop="createTime"/>
+      <el-table-column label="最后修改时间" min-width="150" align="center" prop="updateTime"/>
+      <el-table-column label="操作" min-width="200" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['admin:memberWithdrawLog:edit']"
-          >修改</el-button>
+            v-if="scope.row.status == 0"
+            icon="el-icon-lock"
+            @click="handleLock(scope.row)"
+            v-has-permi="['pay:memberWithdrawLog:lock']"
+          >锁定
+          </el-button>
           <el-button
             size="mini"
             type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['admin:memberWithdrawLog:remove']"
-          >删除</el-button>
+            v-if="scope.row.status == 1"
+            icon="el-icon-unlock"
+            @click="handleUnlock(scope.row)"
+            v-has-permi="['pay:memberWithdrawLog:unlock']"
+          >解锁
+          </el-button>
+          <el-button
+            size="mini"
+            type="text"
+            style="color: #5FB878"
+            v-if="scope.row.status == 1"
+            icon="el-icon-circle-check"
+            @click="handleWithdraw(scope.row)"
+            v-has-permi="['pay:memberWithdrawLog:artificial']"
+          >出款
+          </el-button>
+          <el-button
+            size="mini"
+            type="text"
+            style="color: #FF5722"
+            v-if="scope.row.status < 2 || scope.row.status == 5"
+            icon="el-icon-circle-close"
+            @click="handleRefused(scope.row)"
+            v-has-permi="['pay:memberWithdrawLog:refused']"
+          >拒绝
+          </el-button>
+          <el-button
+            size="mini"
+            type="text"
+            style="color: #FFB800"
+            v-if="scope.row.status == 5"
+            icon="el-icon-s-custom"
+            @click="handleArtificialWithdraw(scope.row)"
+            v-has-permi="['pay:memberWithdrawLog:artificial']"
+          >人工出款
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -164,91 +145,99 @@
     <pagination
       v-show="total>0"
       :total="total"
+      :page-sizes="[100,200,500,1000]"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
 
     <!-- 添加或修改会员提现信息对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-dialog v-dialogDrag :close-on-click-modal="false" title="出款明细" :visible.sync="open" width="500px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="会员编号" prop="memberId">
-          <el-input v-model="form.memberId" placeholder="请输入会员编号" />
+          <el-input v-model="form.memberId" readonly/>
         </el-form-item>
-        <el-form-item label="提现金额" prop="withdrawMoney">
-          <el-input v-model="form.withdrawMoney" placeholder="请输入提现金额" />
+        <el-form-item label="会员账号" prop="account">
+          <el-input v-model="form.account" readonly/>
         </el-form-item>
-        <el-form-item label="银行编码" prop="bankCode">
-          <el-input v-model="form.bankCode" placeholder="请输入银行编码" />
+        <el-form-item label="真实姓名" prop="bankUserName">
+          <el-input v-model="form.bankUserName" readonly/>
         </el-form-item>
-        <el-form-item label="提现银行" prop="bankName">
-          <el-input v-model="form.bankName" placeholder="请输入提现银行" />
+        <el-form-item label="银行名称" prop="bankName">
+          <el-input v-model="form.bankName" readonly/>
         </el-form-item>
-        <el-form-item label="提现账号" prop="bankAccount">
-          <el-input v-model="form.bankAccount" placeholder="请输入提现账号" />
+        <el-form-item label="银行账号" prop="bankAccount">
+          <el-input v-model="form.bankAccount" readonly/>
         </el-form-item>
-        <el-form-item label="开户地" prop="bankAddress">
-          <el-input v-model="form.bankAddress" placeholder="请输入开户地" />
+        <el-form-item label="申请出款" prop="withdrawMoney">
+          <el-input v-model="form.withdrawMoney" readonly/>
         </el-form-item>
-        <el-form-item label="收款人" prop="bankUserName">
-          <el-input v-model="form.bankUserName" placeholder="请输入收款人" />
+        <el-form-item label="提现订单号" prop="orderNo">
+          <el-input v-model="form.orderNo" readonly/>
         </el-form-item>
-        <el-form-item label="状态(0申请中1锁定2审核不通过3人工入款成功 4代付中5代付失败6代付成功)" prop="status">
-          <el-select v-model="form.status" placeholder="请选择状态(0申请中1锁定2审核不通过3人工入款成功 4代付中5代付失败6代付成功)">
-            <el-option
-              v-for="dict in statusOptions"
-              :key="dict.dictValue"
-              :label="dict.dictLabel"
-              :value="parseInt(dict.dictValue)"
-            ></el-option>
+        <el-form-item label="Google验证码" prop="googleAuthCode">
+          <el-input v-model="form.googleAuthCode" placeholder="代付需输入Google验证码"/>
+        </el-form-item>
+        <el-form-item label="代付平台" prop="payAgentPlatId">
+          <el-select v-model="form.payAgentPlatId" placeholder="代付需选择代付平台" clearable size="small">
+            <el-option v-for="plat in payAgentPlatformOptions" :key="plat.id" :label="plat.name" :value="plat.id"/>
           </el-select>
-        </el-form-item>
-        <el-form-item label="提现类型(1提现到银行卡 2代付下单)" prop="type">
-          <el-select v-model="form.type" placeholder="请选择提现类型(1提现到银行卡 2代付下单)">
-            <el-option label="请选择字典生成" value="" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="操作人" prop="opName">
-          <el-input v-model="form.opName" placeholder="请输入操作人" />
-        </el-form-item>
-        <el-form-item label="订单号" prop="orderNo">
-          <el-input v-model="form.orderNo" placeholder="请输入订单号" />
-        </el-form-item>
-        <el-form-item label="审核备注" prop="remark">
-          <el-input v-model="form.remark" placeholder="请输入审核备注" />
-        </el-form-item>
-        <el-form-item label="账号" prop="account">
-          <el-input v-model="form.account" placeholder="请输入账号" />
-        </el-form-item>
-        <el-form-item label="是否首次1是0否" prop="first">
-          <el-select v-model="form.first" placeholder="请选择是否首次1是0否">
-            <el-option
-              v-for="dict in firstOptions"
-              :key="dict.dictValue"
-              :label="dict.dictLabel"
-              :value="parseInt(dict.dictValue)"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="入款出款比" prop="rechargeWithdrawRate">
-          <el-input v-model="form.rechargeWithdrawRate" placeholder="请输入入款出款比" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+
+        <el-button
+          type="primary"
+          plain
+          size="mini"
+          @click="handlePayAgent"
+          v-has-permi="['pay:payAgentPlatform:order']"
+        >代 付
+        </el-button>
+        <el-button
+          type="success"
+          plain size="mini"
+          @click="handleArtificialWithdraw"
+          v-has-permi="['pay:memberWithdrawLog:artificial']"
+        >出 款
+        </el-button>
+        <el-button
+          type="danger"
+          plain
+          size="mini"
+          @click="handleDialogRefused"
+          v-has-permi="['pay:memberWithdrawLog:refused']"
+        >拒 绝
+        </el-button>
+        <el-button
+          type="info"
+          plain
+          size="mini"
+          @click="cancel"
+        >取 消
+        </el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { listMemberWithdrawLog, getMemberWithdrawLog, delMemberWithdrawLog, addMemberWithdrawLog, updateMemberWithdrawLog, exportMemberWithdrawLog } from "@/api/platform-web/pay/memberWithdrawLog/memberWithdrawLog";
+import {
+  listMemberWithdrawLog,
+  getMemberWithdrawLog,
+  addMemberWithdrawLog,
+  updateMemberWithdrawLog,
+  exportMemberWithdrawLog,
+  refusedMemberWithdrawLog,
+  lockMemberWithdrawLog,
+  unlockMemberWithdrawLog,
+  artificialMemberWithdrawLog
+} from '@/api/platform-web/pay/memberWithdrawLog'
+import { effectListPayAgentPlatform, payAgentOrder } from '@/api/platform-web/pay/payAgentPlatform'
 
 export default {
-  name: "MemberWithdrawLog",
-  components: {
-  },
+  name: 'MemberWithdrawLog',
+  components: {},
   data() {
     return {
       // 遮罩层
@@ -266,168 +255,211 @@ export default {
       // 会员提现信息表格数据
       memberWithdrawLogList: [],
       // 弹出层标题
-      title: "",
+      title: '',
       // 是否显示弹出层
       open: false,
       // 状态(0申请中1锁定2审核不通过3人工入款成功 4代付中5代付失败6代付成功)字典
       statusOptions: [],
       // 是否首次1是0否字典
       firstOptions: [],
+      // 代付平台
+      payAgentPlatformOptions: [],
       // 查询参数
       queryParams: {
         pageNum: 1,
-        pageSize: 10,
-        memberId: null,
-        withdrawMoney: null,
-        bankAccount: null,
-        bankUserName: null,
+        pageSize: 100,
+        searchValue: null,
         status: null,
-        updateTime: null,
-        orderNo: null,
-        account: null,
+        searchTime: [],
+        priceMin: null,
+        priceMax: null,
+        orderByColumn: 'create_time',
+        isAsc: 'desc'
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
+        googleAuthCode: [
+          { required: true, message: 'google验证码不能为空', trigger: 'blur' }
+        ],
+        payAgentPlatId: [
+          { required: true, message: '请选择代付平台', trigger: 'blur' }
+        ]
       }
-    };
+    }
   },
   created() {
-    this.getList();
-    this.getDicts("withdraw_log_status").then(response => {
-      this.statusOptions = response.data;
-    });
-    this.getDicts("first").then(response => {
-      this.firstOptions = response.data;
-    });
+    this.getList()
+    this.getDicts('withdraw_log_status').then(response => {
+      this.statusOptions = response.data
+    })
+    this.getDicts('first').then(response => {
+      this.firstOptions = response.data
+    })
   },
   methods: {
     /** 查询会员提现信息列表 */
     getList() {
-      this.loading = true;
+      this.loading = true
       listMemberWithdrawLog(this.queryParams).then(response => {
-        this.memberWithdrawLogList = response.rows;
-        this.total = response.total;
-        this.loading = false;
-      });
+        this.memberWithdrawLogList = response.rows
+        this.total = response.total
+        this.loading = false
+      })
     },
     // 状态(0申请中1锁定2审核不通过3人工入款成功 4代付中5代付失败6代付成功)字典翻译
     statusFormat(row, column) {
-      return this.selectDictLabel(this.statusOptions, row.status);
+      return this.selectDictLabel(this.statusOptions, row.status)
     },
     // 是否首次1是0否字典翻译
     firstFormat(row, column) {
-      return this.selectDictLabel(this.firstOptions, row.first);
+      return this.selectDictLabel(this.firstOptions, row.first)
     },
     // 取消按钮
     cancel() {
-      this.open = false;
-      this.reset();
+      this.open = false
+      this.reset()
     },
     // 表单重置
     reset() {
       this.form = {
-        id: null,
-        memberId: null,
+        searchValue: null,
         withdrawMoney: null,
-        bankCode: null,
-        bankName: null,
-        bankAccount: null,
-        bankAddress: null,
-        bankUserName: null,
         status: null,
-        type: null,
-        createTime: null,
-        opName: null,
-        updateTime: null,
-        orderNo: null,
-        remark: null,
-        account: null,
-        first: null,
-        rechargeWithdrawRate: null
-      };
-      this.resetForm("form");
+        updateTime: []
+      }
+      this.resetForm('form')
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNum = 1;
-      this.getList();
+      this.queryParams.pageNum = 1
+      this.getList()
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.resetForm("queryForm");
-      this.handleQuery();
+      this.resetForm('queryForm')
+      this.handleQuery()
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
-    },
-    /** 新增按钮操作 */
-    handleAdd() {
-      this.reset();
-      this.open = true;
-      this.title = "添加会员提现信息";
-    },
-    /** 修改按钮操作 */
-    handleUpdate(row) {
-      this.reset();
-      const id = row.id || this.ids
-      getMemberWithdrawLog(id).then(response => {
-        this.form = response.data;
-        this.open = true;
-        this.title = "修改会员提现信息";
-      });
     },
     /** 提交按钮 */
     submitForm() {
-      this.$refs["form"].validate(valid => {
+      this.$refs['form'].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
             updateMemberWithdrawLog(this.form).then(response => {
-              this.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
-            });
+              this.msgSuccess('修改成功')
+              this.open = false
+              this.getList()
+            })
           } else {
             addMemberWithdrawLog(this.form).then(response => {
-              this.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
-            });
+              this.msgSuccess('新增成功')
+              this.open = false
+              this.getList()
+            })
           }
         }
-      });
-    },
-    /** 删除按钮操作 */
-    handleDelete(row) {
-      const ids = row.id || this.ids;
-      this.$confirm('是否确认删除会员提现信息编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(function() {
-        return delMemberWithdrawLog(ids);
-      }).then(() => {
-        this.getList();
-        this.msgSuccess("删除成功");
       })
     },
     /** 导出按钮操作 */
     handleExport() {
-      const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有会员提现信息数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+      const queryParams = this.queryParams
+      this.$confirm('是否确认导出所有会员提现信息数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       }).then(function() {
-        return exportMemberWithdrawLog(queryParams);
+        return exportMemberWithdrawLog(queryParams)
       }).then(response => {
-        this.download(response.msg);
+        this.download(response.msg)
+      }).catch(() => {
+      })
+    },
+    handleLock(row) {
+      lockMemberWithdrawLog({
+        id: row.id
+      }).then(response => {
+        this.msgSuccess(response.msg)
+        this.getList()
+      })
+    },
+    handleUnlock(row) {
+      unlockMemberWithdrawLog({
+        id: row.id
+      }).then(response => {
+        this.msgSuccess(response.msg)
+        this.getList()
+      })
+    },
+    handleWithdraw(row) {
+      this.reset()
+      const id = row.id
+      getMemberWithdrawLog(id).then(response => {
+        this.form = response.data
+        this.open = true
+      }).then(() => {
+        //代付平台
+        effectListPayAgentPlatform().then(response => {
+          this.payAgentPlatformOptions = response.data
+        })
+      })
+    },
+    handleArtificialWithdraw() {
+      artificialMemberWithdrawLog({
+        id: this.form.id
+      }).then(response => {
+        this.msgSuccess(response.msg)
+        if (response.code == 200) {
+          this.open = false
+          this.getList()
+        }
+      })
+    },
+    promptRefused(id) {
+      this.$prompt(null, '请输入拒绝出款原因', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      }).then(({ value }) => {
+        refusedMemberWithdrawLog({
+          id: id,
+          remark: value
+        }).then(response => {
+          this.msgSuccess(response.msg)
+          this.open = false
+          this.getList()
+        })
+      }).catch(() => {
+      })
+    },
+    handleRefused(row) {
+      this.promptRefused(row.id)
+    },
+    handleDialogRefused() {
+      this.promptRefused(this.form.id)
+    },
+    handlePayAgent() {
+      this.$refs['form'].validate(valid => {
+        if (valid) {
+          payAgentOrder({
+            payAgentPlatId: this.form.payAgentPlatId,
+            withdrawOrderNo: this.form.orderNo,
+            googleAuthCode: this.form.googleAuthCode
+          }).then(response => {
+            this.msgSuccess(response.msg)
+            if (response.code == 200) {
+              this.open = false
+              this.getList()
+            }
+          })
+        }
       })
     }
   }
-};
+}
 </script>

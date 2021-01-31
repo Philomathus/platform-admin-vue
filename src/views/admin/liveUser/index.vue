@@ -1306,12 +1306,12 @@
 <!--          <el-button type="primary" size="mini" @click="displayCheck(row,1)" v-if="row.isBan===0">是</el-button>
           <el-button type="info" size="mini" @click="displayCheck(row,0)" v-if="row.isBan===1">否</el-button>-->
           <el-switch
-            on-text ="是"
-            off-text = "否"
+            active-text ="是"
+            inactive-text = "否"
             active-value="0"
             inactive-value="1"
-            on-color="#5B7BFA"
-            off-color="#dadde5"
+            active-color="#5B7BFA"
+            inactive-color="#dadde5"
             v-model="row.isBanStr"
             @change=displayCheck(row)
           >

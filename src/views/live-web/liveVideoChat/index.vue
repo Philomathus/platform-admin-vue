@@ -1,69 +1,60 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="姓名" prop="realName">
+      <el-form-item label="主播ID" prop="poscatId">
         <el-input
-          v-model="queryParams.realName"
-          placeholder="请输入姓名"
+          v-model="queryParams.poscatId"
+          placeholder="请输入主播ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="银行名称" prop="bankName">
+      <el-form-item label="消息所在聊天组" prop="group">
         <el-input
-          v-model="queryParams.bankName"
-          placeholder="请输入银行名称"
+          v-model="queryParams.group"
+          placeholder="请输入消息所在聊天组"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="银行编码" prop="bankCode">
+      <el-form-item label="发送者id" prop="userId">
         <el-input
-          v-model="queryParams.bankCode"
-          placeholder="请输入银行编码"
+          v-model="queryParams.userId"
+          placeholder="请输入发送者id"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="银行账号" prop="bankAccount">
-        <el-input
-          v-model="queryParams.bankAccount"
-          placeholder="请输入银行账号"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="银行地址" prop="bankAddress">
-        <el-input
-          v-model="queryParams.bankAddress"
-          placeholder="请输入银行地址"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="会员编号" prop="memberId">
-        <el-input
-          v-model="queryParams.memberId"
-          placeholder="请输入会员编号"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="卡片类型1=银行卡2=支付宝" prop="type">
-        <el-select v-model="queryParams.type" placeholder="请选择卡片类型1=银行卡2=支付宝" clearable size="small">
+      <el-form-item label="消息类型 0 普通消息 1 弹幕消息" prop="type">
+        <el-select v-model="queryParams.type" placeholder="请选择消息类型 0 普通消息 1 弹幕消息" clearable size="small">
           <el-option label="请选择字典生成" value="" />
         </el-select>
       </el-form-item>
-      <el-form-item label="是否默认" prop="dv">
+      <el-form-item label="主播昵称" prop="poscatNickName">
         <el-input
-          v-model="queryParams.dv"
-          placeholder="请输入是否默认"
+          v-model="queryParams.poscatNickName"
+          placeholder="请输入主播昵称"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="发送者昵称" prop="userNickName">
+        <el-input
+          v-model="queryParams.userNickName"
+          placeholder="请输入发送者昵称"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="平台会员ID" prop="fromPlatform">
+        <el-input
+          v-model="queryParams.fromPlatform"
+          placeholder="请输入平台会员ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -83,7 +74,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['admin:memberCard:add']"
+          v-hasPermi="['admin:liveVideoChat:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -94,7 +85,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['admin:memberCard:edit']"
+          v-hasPermi="['admin:liveVideoChat:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -105,7 +96,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['admin:memberCard:remove']"
+          v-hasPermi="['admin:liveVideoChat:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -115,23 +106,23 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['admin:memberCard:export']"
+          v-hasPermi="['admin:liveVideoChat:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="memberCardList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="liveVideoChatList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="系统编号" align="center" prop="id" />
-      <el-table-column label="姓名" align="center" prop="realName" />
-      <el-table-column label="银行名称" align="center" prop="bankName" />
-      <el-table-column label="银行编码" align="center" prop="bankCode" />
-      <el-table-column label="银行账号" align="center" prop="bankAccount" />
-      <el-table-column label="银行地址" align="center" prop="bankAddress" />
-      <el-table-column label="会员编号" align="center" prop="memberId" />
-      <el-table-column label="卡片类型1=银行卡2=支付宝" align="center" prop="type" />
-      <el-table-column label="是否默认" align="center" prop="dv" />
+      <el-table-column label="平台会员ID" align="center" prop="id" />
+      <el-table-column label="主播ID" align="center" prop="poscatId" />
+      <el-table-column label="消息所在聊天组" align="center" prop="group" />
+      <el-table-column label="发送者id" align="center" prop="userId" />
+      <el-table-column label="消息内容" align="center" prop="msg" />
+      <el-table-column label="消息类型 0 普通消息 1 弹幕消息" align="center" prop="type" />
+      <el-table-column label="主播昵称" align="center" prop="poscatNickName" />
+      <el-table-column label="发送者昵称" align="center" prop="userNickName" />
+      <el-table-column label="平台会员ID" align="center" prop="fromPlatform" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -139,14 +130,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['admin:memberCard:edit']"
+            v-hasPermi="['admin:liveVideoChat:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['admin:memberCard:remove']"
+            v-hasPermi="['admin:liveVideoChat:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -160,34 +151,34 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改【请填写功能名称】对话框 -->
+    <!-- 添加或修改会员发言对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="姓名" prop="realName">
-          <el-input v-model="form.realName" placeholder="请输入姓名" />
+        <el-form-item label="主播ID" prop="poscatId">
+          <el-input v-model="form.poscatId" placeholder="请输入主播ID" />
         </el-form-item>
-        <el-form-item label="银行名称" prop="bankName">
-          <el-input v-model="form.bankName" placeholder="请输入银行名称" />
+        <el-form-item label="消息所在聊天组" prop="group">
+          <el-input v-model="form.group" placeholder="请输入消息所在聊天组" />
         </el-form-item>
-        <el-form-item label="银行编码" prop="bankCode">
-          <el-input v-model="form.bankCode" placeholder="请输入银行编码" />
+        <el-form-item label="发送者id" prop="userId">
+          <el-input v-model="form.userId" placeholder="请输入发送者id" />
         </el-form-item>
-        <el-form-item label="银行账号" prop="bankAccount">
-          <el-input v-model="form.bankAccount" placeholder="请输入银行账号" />
+        <el-form-item label="消息内容" prop="msg">
+          <el-input v-model="form.msg" type="textarea" placeholder="请输入内容" />
         </el-form-item>
-        <el-form-item label="银行地址" prop="bankAddress">
-          <el-input v-model="form.bankAddress" placeholder="请输入银行地址" />
-        </el-form-item>
-        <el-form-item label="会员编号" prop="memberId">
-          <el-input v-model="form.memberId" placeholder="请输入会员编号" />
-        </el-form-item>
-        <el-form-item label="卡片类型1=银行卡2=支付宝" prop="type">
-          <el-select v-model="form.type" placeholder="请选择卡片类型1=银行卡2=支付宝">
+        <el-form-item label="消息类型 0 普通消息 1 弹幕消息" prop="type">
+          <el-select v-model="form.type" placeholder="请选择消息类型 0 普通消息 1 弹幕消息">
             <el-option label="请选择字典生成" value="" />
           </el-select>
         </el-form-item>
-        <el-form-item label="是否默认" prop="dv">
-          <el-input v-model="form.dv" placeholder="请输入是否默认" />
+        <el-form-item label="主播昵称" prop="poscatNickName">
+          <el-input v-model="form.poscatNickName" placeholder="请输入主播昵称" />
+        </el-form-item>
+        <el-form-item label="发送者昵称" prop="userNickName">
+          <el-input v-model="form.userNickName" placeholder="请输入发送者昵称" />
+        </el-form-item>
+        <el-form-item label="平台会员ID" prop="fromPlatform">
+          <el-input v-model="form.fromPlatform" placeholder="请输入平台会员ID" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -199,10 +190,10 @@
 </template>
 
 <script>
-import { listMemberCard, getMemberCard, delMemberCard, addMemberCard, updateMemberCard, exportMemberCard } from "@/api/platform-web/admin/memberCard";
+import { listLiveVideoChat, getLiveVideoChat, delLiveVideoChat, addLiveVideoChat, updateLiveVideoChat, exportLiveVideoChat } from "@/api/live-web/liveVideoChat";
 
 export default {
-  name: "MemberCard",
+  name: "LiveVideoChat",
   components: {
   },
   data() {
@@ -219,8 +210,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 【请填写功能名称】表格数据
-      memberCardList: [],
+      // 会员发言表格数据
+      liveVideoChatList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -229,19 +220,22 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        realName: null,
-        bankName: null,
-        bankCode: null,
-        bankAccount: null,
-        bankAddress: null,
-        memberId: null,
+        poscatId: null,
+        group: null,
+        userId: null,
+        msg: null,
         type: null,
-        dv: null
+        poscatNickName: null,
+        userNickName: null,
+        fromPlatform: null
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
+        poscatId: [
+          { required: true, message: "主播ID不能为空", trigger: "blur" }
+        ],
       }
     };
   },
@@ -249,11 +243,11 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询【请填写功能名称】列表 */
+    /** 查询会员发言列表 */
     getList() {
       this.loading = true;
-      listMemberCard(this.queryParams).then(response => {
-        this.memberCardList = response.rows;
+      listLiveVideoChat(this.queryParams).then(response => {
+        this.liveVideoChatList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
@@ -267,15 +261,15 @@ export default {
     reset() {
       this.form = {
         id: null,
-        realName: null,
-        bankName: null,
-        bankCode: null,
-        bankAccount: null,
-        bankAddress: null,
-        memberId: null,
+        poscatId: null,
+        group: null,
+        userId: null,
+        msg: null,
         createTime: null,
         type: null,
-        dv: null
+        poscatNickName: null,
+        userNickName: null,
+        fromPlatform: null
       };
       this.resetForm("form");
     },
@@ -299,16 +293,16 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【请填写功能名称】";
+      this.title = "添加会员发言";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
       const id = row.id || this.ids
-      getMemberCard(id).then(response => {
+      getLiveVideoChat(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = "修改会员发言";
       });
     },
     /** 提交按钮 */
@@ -316,13 +310,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
-            updateMemberCard(this.form).then(response => {
+            updateLiveVideoChat(this.form).then(response => {
               this.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addMemberCard(this.form).then(response => {
+            addLiveVideoChat(this.form).then(response => {
               this.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -334,12 +328,12 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项?', "警告", {
+      this.$confirm('是否确认删除会员发言编号为"' + ids + '"的数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         }).then(function() {
-          return delMemberCard(ids);
+          return delLiveVideoChat(ids);
         }).then(() => {
           this.getList();
           this.msgSuccess("删除成功");
@@ -348,12 +342,12 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有【请填写功能名称】数据项?', "警告", {
+      this.$confirm('是否确认导出所有会员发言数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         }).then(function() {
-          return exportMemberCard(queryParams);
+          return exportLiveVideoChat(queryParams);
         }).then(response => {
           this.download(response.msg);
         })

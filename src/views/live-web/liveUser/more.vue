@@ -144,7 +144,7 @@
     import {
         goFamiily,
         chatPage, receiveProplist,logPage
-    } from "@/api/platform-web/admin/liveUser";
+    } from "@/api/live-web/liveUser";
 
     export default {
         props: {

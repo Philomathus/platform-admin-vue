@@ -695,7 +695,7 @@
         updateMemberInfo,
         exportMemberInfo,
         changeStatus
-    } from "@/api/platform-web/admin/memberInfo";
+    } from "@/api/platform-web/member/memberInfo";
     import {listUser} from "@/api/platform-web/system/user";
     import more from "./more";
 

@@ -120,7 +120,7 @@
         cardList,
         resetSafe,
         resetWithdrawal
-    } from "@/api/platform-web/admin/memberInfo";
+    } from "@/api/platform-web/member/memberInfo";
 
     export default {
         props: {

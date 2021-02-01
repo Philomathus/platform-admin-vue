@@ -2031,8 +2031,8 @@
         exportLiveUser,
         banDetail,
         getFamiily
-    } from "@/api/platform-web/admin/liveUser";
-    import ImageUpload from '@/components/ImageUpload';
+    } from "@/api/live-web/liveUser";
+    import ImageUpload from '@/components/ImageUpload/index';
     import more from "./more";
 
     export default {

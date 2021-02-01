@@ -137,36 +137,28 @@
         <el-form-item label="名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入名称" />
         </el-form-item>
-        <el-form-item label="编码" prop="code">
-          <el-input v-model="form.code" placeholder="请输入编码" />
-        </el-form-item>
-        <el-form-item label="图标" prop="iconUrl">
-          <el-input v-model="form.iconUrl" placeholder="请输入图标" />
+        <el-form-item label="图标" >
+          <imageUpload v-model="form.iconUrl" path="PayType"/>
         </el-form-item>
         <el-form-item label="排序" prop="indexes">
           <el-input v-model="form.indexes" placeholder="请输入排序" />
         </el-form-item>
-        <el-form-item label="是否推荐(1是0否)" prop="isRecommend">
-          <el-input v-model="form.isRecommend" placeholder="请输入是否推荐(1是0否)" />
-        </el-form-item>
-        <el-form-item label="状态(1启用0停用)">
-          <el-radio-group v-model="form.status">
-            <el-radio label="1">请选择字典生成</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="是否线上(1是0否)" prop="isOnline">
-          <el-input v-model="form.isOnline" placeholder="请输入是否线上(1是0否)" />
-        </el-form-item>
-        <el-form-item label="支付类型 1线上支付 2线下支付 3 代充支付" prop="type">
-          <el-select v-model="form.type" placeholder="请选择支付类型 1线上支付 2线下支付 3 代充支付">
-            <el-option label="请选择字典生成" value="" />
+        <el-form-item label="存入类型" prop="type">
+          <el-select
+            filterable
+            v-model="form.type"
+            placeholder="请选择存入类型"
+            clearable
+            size="small"
+            style="width: 240px"
+          >
+            <el-option
+              v-for="dict in paytypeOptions"
+              :key="dict.dictValue"
+              :label="dict.dictLabel"
+              :value="dict.dictValue"
+            />
           </el-select>
-        </el-form-item>
-        <el-form-item label="创建人" prop="creator">
-          <el-input v-model="form.creator" placeholder="请输入创建人" />
-        </el-form-item>
-        <el-form-item label="修改人" prop="updator">
-          <el-input v-model="form.updator" placeholder="请输入修改人" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -179,11 +171,15 @@
 
 <script>
 import { listPayType, getPayType, delPayType, addPayType, updatePayType, exportPayType,changePayTypeStatus,changeRecommendStatus } from "@/api/platform-web/pay/payType/payType";
+import Editor from "@/components/Editor/index";
+import ImageUpload from "@/components/ImageUpload";
 
 
 export default {
   name: "PayType",
   components: {
+    Editor,
+    ImageUpload,
   },
   data() {
     return {

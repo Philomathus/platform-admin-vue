@@ -36,10 +36,10 @@
           style="width: 240px"
         >
           <el-option
-            v-for="dict in payPlatformOptions"
-            :key="dict.id"
-            :label="dict.name"
-            :value="dict.id"
+            v-for="Platform in payPlatformOptions"
+            :key="Platform.id"
+            :label="Platform.name"
+            :value="Platform.id"
           />
         </el-select>
       </el-form-item>
@@ -168,75 +168,81 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改【请填写功能名称】对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <!-- 添加或修改【支付通道】对话框 -->
+    <el-dialog :title="title" :visible.sync="open" width="770px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="通道名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入通道名称" />
         </el-form-item>
         <el-form-item label="支付方式编码" prop="payMethod">
           <el-input v-model="form.payMethod" placeholder="请输入支付方式编码" />
         </el-form-item>
-        <el-form-item label="支付属性  0http 1支付宝sdk 2第三方app" prop="payAttr">
-          <el-input v-model="form.payAttr" placeholder="请输入支付属性  0http 1支付宝sdk 2第三方app" />
-        </el-form-item>
-        <el-form-item label="失败次数" prop="failNum">
-          <el-input v-model="form.failNum" placeholder="请输入失败次数" />
-        </el-form-item>
-        <el-form-item label="成功次数" prop="successNum">
-          <el-input v-model="form.successNum" placeholder="请输入成功次数" />
-        </el-form-item>
-        <el-form-item label="累计成功金额" prop="totalSuccessMoney">
-          <el-input v-model="form.totalSuccessMoney" placeholder="请输入累计成功金额" />
-        </el-form-item>
-        <el-form-item label="充值最低" prop="rechargeMin">
-          <el-input v-model="form.rechargeMin" placeholder="请输入充值最低" />
-        </el-form-item>
-        <el-form-item label="充值最高" prop="rechargeMax">
-          <el-input v-model="form.rechargeMax" placeholder="请输入充值最高" />
-        </el-form-item>
-        <el-form-item label="状态(1启用0停用)">
-          <el-radio-group v-model="form.status">
-            <el-radio label="1">请选择字典生成</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="是否允许回调(默认1 允许 0不允许)" prop="isCanCallback">
-          <el-input v-model="form.isCanCallback" placeholder="请输入是否允许回调(默认1 允许 0不允许)" />
-        </el-form-item>
         <el-form-item label="排序号" prop="indexes">
-          <el-input v-model="form.indexes" placeholder="请输入排序号" />
+          <el-input-number v-model="form.indexes" placeholder="请输入排序号" :min="0" />
         </el-form-item>
-        <el-form-item label="开放层级" prop="openLevel">
-          <el-input v-model="form.openLevel" placeholder="请输入开放层级" />
-        </el-form-item>
-        <el-form-item label="支付平台编号" prop="payPlatformId">
-          <el-input v-model="form.payPlatformId" placeholder="请输入支付平台编号" />
-        </el-form-item>
-        <el-form-item label="支付类型编号" prop="payTypeId">
-          <el-input v-model="form.payTypeId" placeholder="请输入支付类型编号" />
-        </el-form-item>
-        <el-form-item label="优惠比例" prop="discountBill">
-          <el-input v-model="form.discountBill" placeholder="请输入优惠比例" />
-        </el-form-item>
-        <el-form-item label="快捷金额" prop="quickAmount">
-          <el-input v-model="form.quickAmount" placeholder="请输入快捷金额" />
-        </el-form-item>
-        <el-form-item label="输入类型 (自定义金额+快捷金额1 仅快捷金额0)" prop="inputType">
-          <el-select v-model="form.inputType" placeholder="请选择输入类型 (自定义金额+快捷金额1 仅快捷金额0)">
-            <el-option label="请选择字典生成" value="" />
+        <el-form-item label="支付平台" prop="payPlatformId">
+          <el-select
+            filterable
+            v-model="form.payPlatformId"
+            placeholder="请选择存入类型"
+            clearable
+            size="small"
+            style="width: 240px"
+          >
+            <el-option
+              v-for="Platform in payPlatformOptions"
+              :key="Platform.id"
+              :label="Platform.name"
+              :value="Platform.id"
+            />
           </el-select>
         </el-form-item>
-        <el-form-item label="备注提示" prop="remark">
-          <el-input v-model="form.remark" placeholder="请输入备注提示" />
+        <el-form-item label="支付类型" prop="payTypeId">
+          <el-select
+            filterable
+            v-model="form.payTypeId"
+            placeholder="请选择存入类型"
+            clearable
+            size="small"
+            style="width: 240px"
+          >
+            <el-option
+              v-for="dict in payTypes"
+              :key="dict.id"
+              :label="dict.name"
+              :value="dict.id"
+            />
+          </el-select>
         </el-form-item>
-        <el-form-item label="创建人" prop="creator">
-          <el-input v-model="form.creator" placeholder="请输入创建人" />
+        <el-form-item label="充值最低" prop="rechargeMin">
+          <el-input-number v-model="form.rechargeMin" placeholder="请输入充值最低" :min="0"/>
         </el-form-item>
-        <el-form-item label="修改人" prop="updator">
-          <el-input v-model="form.updator" placeholder="请输入修改人" />
+        <el-form-item label="充值最高" prop="rechargeMax">
+          <el-input-number v-model="form.rechargeMax" placeholder="请输入充值最高" :min="0" />
         </el-form-item>
         <el-form-item label="通道费率" prop="payRate">
           <el-input v-model="form.payRate" placeholder="请输入通道费率" />
+        </el-form-item>
+        <el-form-item label="开放层级" prop="openLevel">
+          <el-input-number v-model="form.openLevel" placeholder="请输入开放层级"  />
+        </el-form-item>
+        <el-form-item label="支付属性" prop="payAttr">
+          <el-radio-group v-model="form.payAttr">
+            <el-radio label="0">http</el-radio>
+            <el-radio label="1">支付宝sdk</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="输入类型 " prop="inputType">
+          <el-radio-group v-model="form.inputType">
+            <el-radio label="0">自定义金额+快捷金额</el-radio>
+            <el-radio label="1">仅快捷金额</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="快捷金额" prop="quickAmount">
+          <el-input v-model="form.quickAmount" placeholder="请输入快捷金额,用','分割(英文逗号)" />
+        </el-form-item>
+        <el-form-item label="备注" prop="remark">
+          <el-input v-model="form.remark" placeholder="请输入备注提示" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -275,7 +281,7 @@ export default {
       payTypes: [],
       // 总条数
       total: 0,
-      // 【请填写功能名称】表格数据
+      // 【支付通道】表格数据
       payChannelNewList: [],
       // 弹出层标题
       title: "",
@@ -341,6 +347,7 @@ export default {
     //支付平台
     platforms().then(response => {
       this.payPlatformOptions = response.data
+      console.info(this.payPlatformOptions)
     })
     //支付类型
     payTypes().then(response => {
@@ -350,7 +357,7 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询【请填写功能名称】列表 */
+    /** 查询【支付通道】列表 */
     getList() {
       this.loading = true;
       listPayChannelNew(this.queryParams).then(response => {
@@ -445,7 +452,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【请填写功能名称】";
+      this.title = "添加【支付通道】";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -454,7 +461,7 @@ export default {
       getPayChannelNew(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = "修改【支付通道】";
       });
     },
     /** 提交按钮 */
@@ -480,7 +487,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项?', "警告", {
+      this.$confirm('是否确认删除【支付通道】编号为"' + ids + '"的数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
@@ -494,7 +501,7 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有【请填写功能名称】数据项?', "警告", {
+      this.$confirm('是否确认导出所有【支付通道】数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"

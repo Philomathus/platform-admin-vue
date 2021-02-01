@@ -1,15 +1,22 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="直播标题" prop="title">
+      <el-form-item label="直播标题" prop="hostName">
         <el-input
-          v-model="queryParams.title"
-          placeholder="请输入直播标题"
+          v-model="queryParams.hostName"
+          placeholder="请输入主播昵称"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+
+<!--      <el-form-item label="房间类型">-->
+<!--        <el-checkbox-group v-model="form.roomType">-->
+<!--          <el-checkbox>dddd</el-checkbox>-->
+<!--          <el-checkbox>dddd</el-checkbox>-->
+<!--        </el-checkbox-group>-->
+<!--      </el-form-item>-->
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -20,17 +27,20 @@
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="主播id" align="center" prop="id"/>
       <el-table-column label="主播昵称" align="center" prop="hostName"/>
-      <el-table-column label="房间类型" align="center" prop="roomType"/>
+      <el-table-column label="直播类型" align="center" prop="roomType" :formatter="typeFormat"/>
       <el-table-column label="热度" align="center" prop="voteNumber"/>
-      <el-table-column label="推荐" align="center" prop="isRecommend"/>
+      <el-table-column label="在线人数" align="center" prop="watchNumber"/>
+      <el-table-column label="推荐" align="center" prop="isRecommend" :formatter="isRecommendFormat"/>
       <el-table-column label="固定位置" align="center" prop="sort"/>
-      <el-table-column label="当前实时观看人数" align="center" prop="watchNumber"/>
+      <el-table-column label="线路名称" align="center" prop="name"/>
+      <el-table-column label="直播状态" align="center" prop="liveStatus" :formatter="statusFormat"/>
+      <el-table-column label="彩种" align="center" prop="lotteryName"/>
+      <el-table-column label="收费" align="center" prop="isLivePay" :formatter="isLivePayFormat"/>
       <el-table-column label="开始时间" align="center" prop="beginTime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.beginTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.beginTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="最大观看人数" align="center" prop="maxWatchNumber"/>
     </el-table>
 
     <pagination
@@ -84,7 +94,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        title: null,
+        hostName: null,
       },
       // 表单参数
       form: {},
@@ -113,7 +123,7 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        title: null,
+        hostName: null,
       };
       this.resetForm("form");
     },
@@ -182,6 +192,40 @@ export default {
         this.getList();
         this.msgSuccess("删除成功");
       })
+    },
+    statusFormat(row) {
+      if (row.liveStatus == "1") {
+        return "播放源正常";
+      }else if (row.liveStatus == "0") {
+        return "播放源异常";
+      }else{
+        return "检测中";
+      }
+    },
+    isRecommendFormat(row) {
+      if (row.isRecommend == "1") {
+        return "是";
+      }else{
+        return "否";
+      }
+    },
+    isLivePayFormat(row) {
+      if (row.isLivePay == "1") {
+        return "是";
+      }else{
+        return "否";
+      }
+    },
+    typeFormat(row) {
+      if (row.roomType == "2") {
+        return "性感主播";
+      }else if (row.roomType == "3") {
+        return "大秀直播";
+      }else if (row.roomType == "4") {
+        return "收费直播";
+      }else{
+        return "彩票直播";
+      }
     },
     /** 导出按钮操作 */
     handleExport() {

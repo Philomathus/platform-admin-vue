@@ -114,7 +114,7 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改【请填写功能名称】对话框 -->
+    <!-- 添加或修改h5插件对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="插件名称" prop="name">
@@ -124,7 +124,7 @@
           <el-input v-model="form.conUrl" placeholder="请输入内容地址" />
         </el-form-item>
         <el-form-item label="图标地址" prop="iconUrl">
-          <el-input v-model="form.iconUrl" placeholder="请输入图标地址" />
+          <imageUpload v-model="form.iconUrl" path="give"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -137,11 +137,11 @@
 
 <script>
 import { listH5Plugin, getH5Plugin, delH5Plugin, addH5Plugin, updateH5Plugin, exportH5Plugin } from "@/api/live-web/h5/h5Plugin";
-import {updateLiveMount} from "@/api/live-web/liveMount/liveMount";
-
+import ImageUpload from '@/components/ImageUpload';
 export default {
   name: "H5Plugin",
   components: {
+    ImageUpload
   },
   data() {
     return {
@@ -157,7 +157,7 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 【请填写功能名称】表格数据
+      // h5插件表格数据
       h5PluginList: [],
       // 弹出层标题
       title: "",
@@ -190,7 +190,7 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询【请填写功能名称】列表 */
+    /** 查询h5插件列表 */
     getList() {
       this.loading = true;
       listH5Plugin(this.queryParams).then(response => {
@@ -235,7 +235,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【请填写功能名称】";
+      this.title = "添加h5插件";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -244,7 +244,7 @@ export default {
       getH5Plugin(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = "修改h5插件";
       });
     },
     /** 提交按钮 */
@@ -270,7 +270,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项?', "警告", {
+      this.$confirm('是否确认删除h5插件编号为"' + ids + '"的数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
@@ -302,7 +302,7 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有【请填写功能名称】数据项?', "警告", {
+      this.$confirm('是否确认导出所有h5插件数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"

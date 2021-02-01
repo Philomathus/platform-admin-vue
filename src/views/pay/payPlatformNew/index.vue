@@ -74,19 +74,10 @@
 
     <el-table v-loading="loading" :data="payPlatformNewList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-<!--      <el-table-column label="主键" align="center" prop="id" />-->
       <el-table-column label="平台名称" align="center" prop="name" />
       <el-table-column label="平台编码" align="center" prop="code" />
-<!--      <el-table-column label="商户ID" align="center" prop="merId" />
-      <el-table-column label="机构号" align="center" prop="orgId" />-->
       <el-table-column label="平台下单接口地址" :show-overflow-tooltip="true" align="center" prop="platPayUrl" />
       <el-table-column label="平台订单查询地址" :show-overflow-tooltip="true" align="center" prop="platQueryUrl" />
-<!--      <el-table-column label="md5加密密钥" align="center" prop="signMd5" />
-      <el-table-column label="加密公钥" align="center" prop="signPublicKey" />
-      <el-table-column label="解密私钥" align="center" prop="signPrivateKey" />
-      <el-table-column label="平台IP白名单" align="center" prop="platWhiteIpList" />
-      <el-table-column label="创建人" align="center" prop="creator" />
-      <el-table-column label="修改人" align="center" prop="updator" />-->
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -116,12 +107,12 @@
     />
 
     <!-- 添加或修改【请填写功能名称】对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="平台名称" prop="name">
+    <el-dialog :title="title" :visible.sync="open" width="770px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+        <el-form-item label="平台" prop="name">
           <el-input v-model="form.name" placeholder="请输入平台名称" />
         </el-form-item>
-        <el-form-item label="平台编码" prop="code">
+        <el-form-item label="平台" prop="code">
           <el-input v-model="form.code" placeholder="请输入平台编码" />
         </el-form-item>
         <el-form-item label="商户ID" prop="merId">
@@ -136,8 +127,8 @@
         <el-form-item label="平台订单查询地址" prop="platQueryUrl">
           <el-input v-model="form.platQueryUrl" placeholder="请输入平台订单查询地址" />
         </el-form-item>
-        <el-form-item label="md5加密密钥" prop="signMd5">
-          <el-input v-model="form.signMd5" placeholder="请输入md5加密密钥" />
+        <el-form-item label="MD5_key" prop="signMd5">
+          <el-input v-model="form.signMd5" placeholder="请输入MD5_key" />
         </el-form-item>
         <el-form-item label="加密公钥" prop="signPublicKey">
           <el-input v-model="form.signPublicKey" type="textarea" placeholder="请输入内容" />
@@ -147,12 +138,6 @@
         </el-form-item>
         <el-form-item label="平台IP白名单" prop="platWhiteIpList">
           <el-input v-model="form.platWhiteIpList" placeholder="请输入平台IP白名单" />
-        </el-form-item>
-        <el-form-item label="创建人" prop="creator">
-          <el-input v-model="form.creator" placeholder="请输入创建人" />
-        </el-form-item>
-        <el-form-item label="修改人" prop="updator">
-          <el-input v-model="form.updator" placeholder="请输入修改人" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

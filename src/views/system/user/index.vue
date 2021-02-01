@@ -566,8 +566,8 @@ export default {
     /** 谷歌验证码绑定按钮 */
     bind() {
       bindGoogleAuth(this.userName, this.secretKey, this.googleAuthCode).then(response => {
+        this.open = false
         this.msgSuccess('绑定成功')
-        this.open = true
       })
     },
     /** 删除按钮操作 */

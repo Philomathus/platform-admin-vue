@@ -45,7 +45,7 @@
       <el-table-column label="平台类型" align="center" prop="id" />
       <el-table-column label="代理" align="center" prop="agent" />
       <el-table-column label="平台名称" align="center" prop="name" />
-      <el-table-column label="状态(1启用0停用)" align="center">
+      <el-table-column label="状态" align="center">
       <template slot-scope="scope">
         <el-switch
           v-model="scope.row.status"

@@ -27,6 +27,15 @@
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="主播id" align="center" prop="id"/>
       <el-table-column label="主播昵称" align="center" prop="hostName"/>
+      <el-table-column label="图标" align="center" prop="liveImage">
+        <template slot-scope="scope">
+          <el-image
+            style="width: 50px; height: 50px"
+            :src="scope.row.liveImage"
+          >
+          </el-image>
+        </template>
+      </el-table-column>
       <el-table-column label="直播类型" align="center" prop="roomType" :formatter="typeFormat"/>
       <el-table-column label="热度" align="center" prop="voteNumber"/>
       <el-table-column label="在线人数" align="center" prop="watchNumber"/>

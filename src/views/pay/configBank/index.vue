@@ -183,7 +183,7 @@
 </template>
 
 <script>
-import { listConfigBank, getConfigBank, delConfigBank, addConfigBank, updateConfigBank, exportConfigBank ,changeConfigBankStatus} from "@/api/platform-web/pay/configBank/configBank";
+import { listConfigBank, getConfigBank, delConfigBank, addConfigBank, updateConfigBank, exportConfigBank ,changeConfigBankStatus} from "@/api/platform-web/pay/configBank";
 import ImageUpload from '@/components/ImageUpload';
 
 

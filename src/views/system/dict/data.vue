@@ -147,7 +147,7 @@
           <el-input v-model="form.dictValue" placeholder="请输入数据键值"/>
         </el-form-item>
         <el-form-item label="展示颜色" prop="color">
-          <el-color-picker v-model="form.color" size="medium"/>
+          <el-color-picker v-model="form.color" size="medium" :predefine="predefineColors"/>
         </el-form-item>
         <el-form-item label="显示排序" prop="dictSort">
           <el-input-number v-model="form.dictSort" controls-position="right" :min="0"/>
@@ -206,6 +206,14 @@ export default {
       statusOptions: [],
       // 类型数据字典
       typeOptions: [],
+      predefineColors: [
+        '#5FB878',
+        '#FF5722',
+        '#0000FF',
+        '#FFB800',
+        '#C0C0C0',
+        '#525252'
+      ],
       // 查询参数
       queryParams: {
         pageNum: 1,

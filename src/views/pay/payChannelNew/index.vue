@@ -254,7 +254,7 @@
 </template>
 
 <script>
-import { listPayChannelNew, getPayChannelNew, delPayChannelNew, addPayChannelNew, updatePayChannelNew, exportPayChannelNew,platforms,payTypes,changePayTypeStatus,callbackStatusChange} from "@/api/platform-web/pay/payChannelNew/payChannelNew";
+import { listPayChannelNew, getPayChannelNew, delPayChannelNew, addPayChannelNew, updatePayChannelNew, exportPayChannelNew,platforms,payTypes,changePayTypeStatus,callbackStatusChange} from "@/api/platform-web/pay/payChannelNew";
 
 
 export default {

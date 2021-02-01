@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import {url} from '@/utils/url'
 
-// 查询【请填写功能名称】列表
+// 查询支付平台列表
 export function listPayPlatformNew(query) {
   return request({
     url: url.platformWeb + '/pay/payPlatformNew/list',
@@ -10,7 +10,7 @@ export function listPayPlatformNew(query) {
   })
 }
 
-// 查询【请填写功能名称】详细
+// 查询支付平台详细
 export function getPayPlatformNew(id) {
   return request({
     url: url.platformWeb + '/pay/payPlatformNew/' + id,
@@ -18,7 +18,7 @@ export function getPayPlatformNew(id) {
   })
 }
 
-// 新增【请填写功能名称】
+// 新增支付平台
 export function addPayPlatformNew(data) {
   return request({
     url: url.platformWeb + '/pay/payPlatformNew',
@@ -27,7 +27,7 @@ export function addPayPlatformNew(data) {
   })
 }
 
-// 修改【请填写功能名称】
+// 修改支付平台
 export function updatePayPlatformNew(data) {
   return request({
     url: url.platformWeb + '/pay/payPlatformNew',
@@ -36,7 +36,7 @@ export function updatePayPlatformNew(data) {
   })
 }
 
-// 删除【请填写功能名称】
+// 删除支付平台
 export function delPayPlatformNew(id) {
   return request({
     url: url.platformWeb + '/pay/payPlatformNew/' + id,
@@ -44,11 +44,20 @@ export function delPayPlatformNew(id) {
   })
 }
 
-// 导出【请填写功能名称】
+// 导出支付平台
 export function exportPayPlatformNew(query) {
   return request({
     url: url.platformWeb + '/pay/payPlatformNew/export',
     method: 'get',
     params: query
+  })
+}
+
+// 人工补单线上充值信息
+export function patchOrderPayPlatformNew(data) {
+  return request({
+    url: url.platformWeb + '/pay/payPlatformNew/payPatchOrder',
+    method: 'put',
+    data: data
   })
 }

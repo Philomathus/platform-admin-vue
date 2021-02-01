@@ -400,15 +400,17 @@ export default {
     handleWithdraw(row) {
       this.reset()
       const id = row.id
-      getMemberWithdrawLog(id).then(response => {
-        this.form = response.data
-        this.open = true
-      }).then(() => {
-        //代付平台
-        effectListPayAgentPlatform().then(response => {
-          this.payAgentPlatformOptions = response.data
+      getMemberWithdrawLog(id)
+        .then(response => {
+          this.form = response.data
+          this.open = true
         })
-      })
+        .then(() => {
+          //代付平台
+          effectListPayAgentPlatform().then(response => {
+            this.payAgentPlatformOptions = response.data
+          })
+        })
     },
     handleArtificialWithdraw() {
       artificialMemberWithdrawLog({

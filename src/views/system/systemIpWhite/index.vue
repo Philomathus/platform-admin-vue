@@ -74,7 +74,6 @@
 
     <el-table stripe v-loading="loading" :data="systemIpWhiteList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键" align="center" prop="ipId" />
       <el-table-column label="IP白名单" align="center" prop="ipAddress" />
       <el-table-column label="IP白名单启用状态" align="center" prop="ipStatus">
         <template slot-scope="scope">
@@ -122,9 +121,6 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="IP白名单" prop="ipAddress">
           <el-input v-model="form.ipAddress" placeholder="请输入IP白名单" />
-        </el-form-item>
-        <el-form-item label="添加管理员" prop="ipAdmin">
-          <el-input v-model="form.ipAdmin" placeholder="请输入添加管理员" />
         </el-form-item>
         <el-form-item label="备注" prop="mark">
           <el-input v-model="form.mark" placeholder="请输入备注" />

@@ -109,7 +109,7 @@
 
 <script>
 import { listPayLog, getPayLog, delPayLog, addPayLog, updatePayLog, exportPayLog } from "@/api/platform-web/pay/payLog";
-import {platforms} from "@/api/platform-web/pay/payChannelNew/payChannelNew";
+import {platforms} from "@/api/platform-web/pay/payChannelNew";
 
 export default {
   name: "PayLog",

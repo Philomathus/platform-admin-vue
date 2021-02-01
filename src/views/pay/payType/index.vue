@@ -170,7 +170,7 @@
 </template>
 
 <script>
-import { listPayType, getPayType, delPayType, addPayType, updatePayType, exportPayType,changePayTypeStatus,changeRecommendStatus } from "@/api/platform-web/pay/payType/payType";
+import { listPayType, getPayType, delPayType, addPayType, updatePayType, exportPayType,changePayTypeStatus,changeRecommendStatus } from "@/api/platform-web/pay/payType";
 import Editor from "@/components/Editor/index";
 import ImageUpload from "@/components/ImageUpload";
 

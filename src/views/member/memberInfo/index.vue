@@ -429,7 +429,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="memberInfoList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="memberInfoList" border @selection-change="handleSelectionChange">
       <el-table-column label="会员ID" align="center" prop="memberCode"/>
       <el-table-column label="会员vip" align="center" prop="vip"/>
       <el-table-column label="积分" align="center" prop="vip"/>
@@ -450,6 +450,12 @@
       </el-table-column>
       <el-table-column label="昵称" align="center" prop="nickName"/>
       <el-table-column label="登陆次数" align="center" prop="loginNum"/>
+      <el-table-column label="登录ip" align="center" prop="loginIp" width="180"/>
+      <el-table-column label="打码账户" align="center" prop="codeAccount" />
+      <el-table-column label="累计有效投注" align="center" prop="codeTotal" />
+      <el-table-column label="邀请码" align="center" prop="inviterCode" />
+      <el-table-column label="佣金" align="center" prop="inviteMoney" />
+      <el-table-column label="渠道号" align="center" prop="channelcode" />
 
       <!-- <el-table-column type="selection" width="55" align="center" />
        <el-table-column label="系统编号" align="center" prop="id" />
@@ -463,7 +469,7 @@
        <el-table-column label="性别(1男0女)" align="center" prop="sex" />
 
        <el-table-column label="注册ip" align="center" prop="registIp" />
-       <el-table-column label="登录ip" align="center" prop="loginIp" />
+
        <el-table-column label="登录地址" align="center" prop="loginAddress" />
        <el-table-column label="登录设备(1 ios 2 android)" align="center" prop="loginDev" />
        <el-table-column label="生日" align="center" prop="birthDay" />
@@ -485,12 +491,12 @@
          </template>
        </el-table-column>
        <el-table-column label="总的充值金额" align="center" prop="levelIntegral" />
-       <el-table-column label="邀请码" align="center" prop="inviterCode" />
-       <el-table-column label="佣金" align="center" prop="inviteMoney" />
-       <el-table-column label="打码账户" align="center" prop="codeAccount" />
+
+
+
        <el-table-column label="玩家所在游戏平台" align="center" prop="pid" />
-       <el-table-column label="累计有效投注" align="center" prop="codeTotal" />
-       <el-table-column label="渠道号" align="center" prop="channelcode" />
+
+
        <el-table-column label="0=正常 1 =禁言" align="center" prop="speak" />
 
        <el-table-column label="客户端版本号" align="center" prop="version" />
@@ -534,17 +540,22 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改【请填写功能名称】对话框 -->
+    <!-- 添加或修改用户信息对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="会员编号" prop="memberCode">
+
+        <el-form-item label="账号" prop="userName">
+          <el-input v-model="form.userName" placeholder="请输入账号"/>
+        </el-form-item>
+        <el-form-item label="密码" prop="password">
+          <el-input v-model="form.password" placeholder="请输入密码"/>
+        </el-form-item>
+
+       <!-- <el-form-item label="会员编号" prop="memberCode">
           <el-input v-model="form.memberCode" placeholder="请输入会员编号"/>
         </el-form-item>
         <el-form-item label="代理编号" prop="cxAgent">
           <el-input v-model="form.cxAgent" placeholder="请输入代理编号"/>
-        </el-form-item>
-        <el-form-item label="账号" prop="userName">
-          <el-input v-model="form.userName" placeholder="请输入账号"/>
         </el-form-item>
         <el-form-item label="姓名" prop="realName">
           <el-input v-model="form.realName" placeholder="请输入姓名"/>
@@ -566,9 +577,7 @@
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="form.email" placeholder="请输入邮箱"/>
         </el-form-item>
-        <el-form-item label="密码" prop="password">
-          <el-input v-model="form.password" placeholder="请输入密码"/>
-        </el-form-item>
+
         <el-form-item label="是否在线(1是0否)" prop="isOnline">
           <el-input v-model="form.isOnline" placeholder="请输入是否在线(1是0否)"/>
         </el-form-item>
@@ -675,7 +684,7 @@
         </el-form-item>
         <el-form-item label="设备ID" prop="deviceId">
           <el-input v-model="form.deviceId" placeholder="请输入设备ID"/>
-        </el-form-item>
+        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -720,7 +729,7 @@
                 showSearch: true,
                 // 总条数
                 total: 0,
-                // 【请填写功能名称】表格数据
+                // 用户信息表格数据
                 memberInfoList: [],
                 // 弹出层标题
                 title: "",
@@ -835,7 +844,7 @@
                 }
 
             },
-            /** 查询【请填写功能名称】列表 */
+            /** 查询用户信息列表 */
             getList() {
                 this.loading = true;
 
@@ -917,7 +926,7 @@
             handleAdd() {
                 this.reset();
                 this.open = true;
-                this.title = "添加【请填写功能名称】";
+                this.title = "添加用户信息";
             },
             /** 修改按钮操作 */
             handleUpdate(row) {
@@ -926,7 +935,7 @@
                 getMemberInfo(id).then(response => {
                     this.form = response.data;
                     this.open = true;
-                    this.title = "修改【请填写功能名称】";
+                    this.title = "修改用户信息";
                 });
             },
             /** 提交按钮 */
@@ -952,7 +961,7 @@
             /** 删除按钮操作 */
             handleDelete(row) {
                 const ids = row.id || this.ids;
-                this.$confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项?', "警告", {
+                this.$confirm('是否确认删除用户信息编号为"' + ids + '"的数据项?', "警告", {
                     confirmButtonText: "确定",
                     cancelButtonText: "取消",
                     type: "warning"

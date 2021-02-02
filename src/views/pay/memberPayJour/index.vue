@@ -76,7 +76,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="memberPayJourList">
+    <el-table :stripe="true" v-loading="loading" :data="memberPayJourList">
       <el-table-column label="会员ID" min-width="120" align="center" prop="member_id"/>
       <el-table-column label="会员账号" min-width="90" align="center" prop="user_name"/>
       <el-table-column label="订单号" min-width="190" align="center" prop="order_no"/>
@@ -213,6 +213,8 @@ export default {
         selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],//回调日期
         pageNum: 1,
         pageSize: 50,
+        orderByColumn: 'update_time',
+        isAsc: 'desc',
         searchValue: null,
         platformId: null,
         searchOrderNo: null,

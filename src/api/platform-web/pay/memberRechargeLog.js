@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import {url} from '@/utils/url'
 
-// 查询【请填写功能名称】列表
+// 查询公司入款信息列表
 export function listMemberRechargeLog(query) {
   return request({
     url: url.platformWeb + '/pay/memberRechargeLog/list',
@@ -10,7 +10,7 @@ export function listMemberRechargeLog(query) {
   })
 }
 
-// 查询【请填写功能名称】列表
+// 统计公司入款信息列表
 export function listCount(query) {
   return request({
     url: url.platformWeb + '/pay/memberRechargeLog/listCount',
@@ -19,7 +19,7 @@ export function listCount(query) {
   })
 }
 
-// 查询【请填写功能名称】详细
+// 查询公司入款信息详细
 export function getMemberRechargeLog(id) {
   return request({
     url: url.platformWeb + '/pay/memberRechargeLog/' + id,
@@ -27,37 +27,47 @@ export function getMemberRechargeLog(id) {
   })
 }
 
-// 新增【请填写功能名称】
-export function addMemberRechargeLog(data) {
-  return request({
-    url: url.platformWeb + '/pay/memberRechargeLog',
-    method: 'post',
-    data: data
-  })
-}
-
-// 修改【请填写功能名称】
-export function updateMemberRechargeLog(data) {
-  return request({
-    url: url.platformWeb + '/pay/memberRechargeLog',
-    method: 'put',
-    data: data
-  })
-}
-
-// 删除【请填写功能名称】
-export function delMemberRechargeLog(id) {
-  return request({
-    url: url.platformWeb + '/pay/memberRechargeLog/' + id,
-    method: 'delete'
-  })
-}
-
-// 导出【请填写功能名称】
+// 导出公司入款信息
 export function exportMemberRechargeLog(query) {
   return request({
     url: url.platformWeb + '/pay/memberRechargeLog/export',
     method: 'get',
     params: query
+  })
+}
+
+// 公司入款信息初审
+export function firstAuditMemberRechargeLog(data) {
+  return request({
+    url: url.platformWeb + '/pay/memberRechargeLog/firstAudit',
+    method: 'put',
+    data: data
+  })
+}
+
+// 公司入款信息终审
+export function finalAuditMemberRechargeLog(data) {
+  return request({
+    url: url.platformWeb + '/pay/memberRechargeLog/finalAudit',
+    method: 'put',
+    data: data
+  })
+}
+
+// 公司入款信息拒绝审核
+export function refusedAuditMemberRechargeLog(data) {
+  return request({
+    url: url.platformWeb + '/pay/memberRechargeLog/refusedAudit',
+    method: 'put',
+    data: data
+  })
+}
+
+// 公司入款信息恢复审核
+export function recoverAuditMemberRechargeLog(data) {
+  return request({
+    url: url.platformWeb + '/pay/memberRechargeLog/recoverAudit',
+    method: 'put',
+    data: data
   })
 }

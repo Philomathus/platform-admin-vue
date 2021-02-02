@@ -131,7 +131,7 @@
           <el-input v-model="form.merId" placeholder="请输入商户ID" />
         </el-form-item>
         <el-form-item label="代付下单地址" prop="payOrderAddr">
-          <el-input v-model="form.payOrderAddr" placeholder="请输入代付下单地址" />
+          <el-input v-model="form.payOrderAddr"  placeholder="请输入代付下单地址" />
         </el-form-item>
         <el-form-item label="代付查询地址" prop="payOrderQueryAddr">
           <el-input v-model="form.payOrderQueryAddr" placeholder="请输入代付查询地址" />
@@ -143,13 +143,13 @@
           <el-input v-model="form.signMd5" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="加密公钥" prop="signPublicKey">
-          <el-input v-model="form.signPublicKey" type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.signPublicKey" type="textarea"  placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="解密私钥" prop="signPrivateKey">
-          <el-input v-model="form.signPrivateKey" type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.signPrivateKey" type="textarea"  placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="平台IP白名单" prop="platWhiteIpList">
-          <el-input v-model="form.platWhiteIpList" placeholder="多个IP使用英文逗号','分割" />
+          <el-input v-model="form.platWhiteIpList" type="textarea" placeholder="多个IP使用英文逗号','分割" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

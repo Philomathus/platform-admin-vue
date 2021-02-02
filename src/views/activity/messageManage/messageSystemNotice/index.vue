@@ -77,10 +77,10 @@
     <el-table v-loading="loading" :data="messageSystemNoticeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="公告标题" align="center" prop="title" />
-      <el-table-column label="内容" align="center" prop="content" />
+      <el-table-column label="内容" show-overflow-tooltip align="center" prop="content" />
       <el-table-column label="发布时间" align="center" prop="pubdatetime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.pubdatetime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.pubdatetime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">

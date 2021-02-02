@@ -1,9 +1,9 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="100px">
-      <el-button type="primary">总充值 {{this.totalData.total}}</el-button>
-      <el-button type="success">总打码 {{this.totalData.cur}}</el-button>
-      <el-button type="warning">还需打码 {{this.totalData.total-this.totalData.cur}}</el-button>
+      <el-button type="primary">总充值 {{this.totalData.total.toFixed(2)}}</el-button>
+      <el-button type="success">总打码 {{this.totalData.cur.toFixed(2)}}</el-button>
+      <el-button type="warning">还需打码 {{(this.totalData.total-this.totalData.cur).toFixed(2)}}</el-button>
       <el-form-item label="会员账号ID" prop="userId">
         <el-input
           v-model="queryParams.userId"

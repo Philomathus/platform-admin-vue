@@ -35,39 +35,48 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['web:game-platform:add']"
-        >新增</el-button>
+        >新增
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="gamePlatformList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="平台类型" align="center" prop="id" />
-      <el-table-column label="代理" align="center" prop="agent" />
-      <el-table-column label="平台名称" align="center" prop="name" />
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="平台类型" align="center" prop="id"/>
+      <el-table-column label="代理" align="center" prop="agent"/>
+      <el-table-column label="平台名称" align="center" prop="name"/>
       <el-table-column label="状态" align="center">
-      <template slot-scope="scope">
-        <el-switch
-          v-model="scope.row.status"
-          active-value="1"
-          inactive-value="0"
-          @change="handleStatusChange(scope.row)"
-        ></el-switch>
-      </template>
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.status"
+            active-value="1"
+            inactive-value="0"
+            @change="handleStatusChange(scope.row)"
+          ></el-switch>
+        </template>
       </el-table-column>
-      <el-table-column label="洗码比例" align="center" prop="rateClean" />
-      <el-table-column label="打码比例" align="center" prop="rateBeat" />
-      <el-table-column label="创建人" align="center" prop="createBy" />
-      <el-table-column label="创建时间" align="center" prop="createTime" >
-      <template slot-scope="scope">
-        <span>{{ parseTime(scope.row.createTime) }}</span>
-      </template>
+      <el-table-column label="洗码比例" align="center" prop="rateClean">
+        <template v-slot="{row}">
+          {{numberUtil.toPercent(row.rateClean)}}
+        </template>
       </el-table-column>
-      <el-table-column label="最后更新人" align="center" prop="updateBy" />
+      <el-table-column label="打码比例" align="center" prop="rateBeat">
+        <template v-slot="{row}">
+          {{numberUtil.toPercent(row.rateBeat)}}
+        </template>
+      </el-table-column>
+      <el-table-column label="创建人" align="center" prop="createBy"/>
+      <el-table-column label="创建时间" align="center" prop="createTime">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.createTime) }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="最后更新人" align="center" prop="updateBy"/>
       <el-table-column label="最后更新时间" align="center" prop="updateTime">
-      <template slot-scope="scope">
-        <span>{{ parseTime(scope.row.updateTime) }}</span>
-      </template>
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.updateTime) }}</span>
+        </template>
       </el-table-column>
 
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -78,14 +87,16 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['web:game-platform:edit']"
-          >修改</el-button>
+          >修改
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['web:game-platform:remove']"
-          >删除</el-button>
+          >删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -99,34 +110,35 @@
     />
 
     <!-- 添加或修改【请填写功能名称】对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="平台id" prop="id">
-          <el-input v-model="form.id" placeholder="请输入代理id" />
+          <el-input v-model="form.id" placeholder="请输入代理id"/>
         </el-form-item>
         <el-form-item label="代理" prop="agent">
-          <el-input v-model="form.agent" placeholder="请输入代理" />
+          <el-input v-model="form.agent" placeholder="请输入代理"/>
         </el-form-item>
         <el-form-item label="平台名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入平台名称" />
+          <el-input v-model="form.name" placeholder="请输入平台名称"/>
         </el-form-item>
         <el-form-item label="DES密钥" prop="des">
-          <el-input v-model="form.des" placeholder="请输入DES密钥" />
+          <el-input v-model="form.des" placeholder="请输入DES密钥"/>
         </el-form-item>
         <el-form-item label="MD5密钥" prop="md5">
-          <el-input v-model="form.md5" placeholder="请输入MD5密钥" />
+          <el-input v-model="form.md5" placeholder="请输入MD5密钥"/>
         </el-form-item>
         <el-form-item label="洗码比例" prop="rateClean">
-          <el-input v-model="form.rateClean" placeholder="请输入洗码比例" />
+          <el-input v-model="form.rateClean" placeholder="请输入洗码比例"/>
         </el-form-item>
         <el-form-item label="打码比例" prop="rateBeat">
-          <el-input v-model="form.rateBeat" placeholder="请输入打码比例" />
+          <el-input v-model="form.rateBeat" placeholder="请输入打码比例"/>
         </el-form-item>
         <el-form-item label="API接口" prop="apiUrl">
-          <el-input v-model="form.apiUrl" placeholder="请输入API接口" />
+          <el-input v-model="form.apiUrl" placeholder="请输入API接口"/>
         </el-form-item>
         <el-form-item label="站点标识" prop="linecode">
-          <el-input v-model="form.linecode" placeholder="请输入站点标识" />
+          <el-input v-model="form.linecode" placeholder="请输入站点标识"/>
         </el-form-item>
         <el-form-item label="游戏类型" prop="gameTypeid">
           <el-select v-model="form.gameTypeid" placeholder="请选择">
@@ -149,224 +161,225 @@
 </template>
 
 <script>
-import { listGamePlatform, getGamePlatform, delGamePlatform, addGamePlatform,
-  updateGamePlatform, exportGamePlatform,changeUserStatus,getGameTpyeList} from "@/api/platform-web/game/platform";
+  import {
+    listGamePlatform, getGamePlatform, delGamePlatform, addGamePlatform,
+    updateGamePlatform, exportGamePlatform, changeUserStatus, getGameTpyeList
+  } from "@/api/platform-web/game/platform";
 
 
-export default {
-  name: "Game-platform",
-  components: {
-  },
-  data() {
-    return {
-      // pageType 新增修改判断
-      pageType: 0,
-      // 遮罩层
-      loading: true,
-      // 选中数组
-      ids: [],
-      // 非单个禁用
-      single: true,
-      // 非多个禁用
-      multiple: true,
-      // 显示搜索条件
-      showSearch: true,
-      // 总条数
-      total: 0,
-      // 【请填写功能名称】表格数据
-      gamePlatformList: [],
-      gameTypeList: [],
-      // 弹出层标题
-      title: "",
-      // 是否显示弹出层
-      open: false,
-      // 查询参数
-      queryParams: {
-      pageNum: 1,
-        pageSize: 10,
-        agent: null,
-        name: null
-    },
-    // 表单参数
-    form: {},
-    // 表单校验
-      rules: {
-        id: [
-          { required: true, message: "id不能为空", trigger: "blur" }
-        ],
-        agent: [
-          { required: true, message: "代理账号不能为空", trigger: "blur" }
-        ],
-        name: [
-          { required: true, message: "平台名称不能为空", trigger: "blur" }
-        ],
-        des: [
-          { required: true, message: "des密钥不能为空", trigger: "blur" }
-        ],
-        md5: [
-          { required: true, message: "md5密钥不能为空", trigger: "blur" }
-        ],
-        rateClean: [
-          { required: true, message: "洗码比例不能为空", trigger: "blur" }
-        ],
-        rateBeat: [
-          { required: true, message: "打码比例不能为空", trigger: "blur" }
-        ],
-        apiUrl: [
-          { required: true, message: "API接口不能为空", trigger: "blur" }
-        ],
-        linecode: [
-          { required: true, message: "站点标识不能为空", trigger: "blur" }
-        ],
-        gameTypeid: [
-          { required: true, message: "游戏类型不能为空", trigger: "blur" }
-        ]
-      }
-  };
-  },
-  created() {
-    this.getList();
-    getGameTpyeList().then(response => {
-      this.gameTypeList = response.rows;
-    });
-
-  },
-  methods: {
-    /** 查询【请填写功能名称】列表 */
-    getList() {
-      this.loading = true;
-      listGamePlatform(this.queryParams).then(response => {
-        this.gamePlatformList = response.rows;
-        this.total = response.total;
-        this.loading = false;
-      });
-    },
-    // 取消按钮
-    cancel() {
-      this.open = false;
-      this.reset();
-    },
-    // 表单重置
-    reset() {
-      this.form = {
-        id: null,
-        agent: null,
-        name: null,
-        apiUrl: null,
-        recordUrl: null,
-        des: null,
-        md5: null,
-        linecode: null,
-        rateClean: null,
-        gameTypeid: null,
-        status: 0,
-        createBy: null,
-        createTime: null,
-        updateBy: null,
-        updateTime: null,
-        rateBeat: null
-      };
-      this.resetForm("form");
-    },
-    /** 搜索按钮操作 */
-    handleQuery() {
-      this.queryParams.pageNum = 1;
-
-      this.getList();
-
-    },
-    /** 重置按钮操作 */
-    resetQuery() {
-      this.resetForm("queryForm");
-      this.handleQuery();
-    },
-    // 多选框选中数据
-    handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
-      this.multiple = !selection.length
-    },
-    /** 新增按钮操作 */
-    handleAdd() {
-      this.pageType = 0
-      this.reset();
-      this.open = true;
-      this.title = "添加【请填写功能名称】";
-    },
-
-    // 状态修改
-    handleStatusChange(row) {
-      let text = row.status ==="1" ? '启用' : '停用'
-      this.$confirm('确认要"' + text + '""' + row.name + '"吗?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(function () {
-        return changeUserStatus(row.id, row.status)
-      }).then(() => {
-        this.msgSuccess(text + '成功')
-      }).catch(function () {
-        row.status = row.status === '0' ? '1' : '0'
-      })
-    },
-    /** 修改按钮操作 */
-    handleUpdate(row) {
-      this.reset();
-      this.pageType = 1
-      const id = row.id || this.ids
-      getGamePlatform(id).then(response => {
-        this.form = response.data;
-        this.open = true;
-        this.title = "修改【请填写功能名称】";
-      });
-    },
-    /** 提交按钮 */
-    submitForm() {
-      this.$refs["form"].validate(valid => {
-        if (valid) {
-          if (this.pageType === 1) {
-            updateGamePlatform(this.form).then(response => {
-              this.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
-            });
-          } else if (this.pageType === 0) {
-            addGamePlatform(this.form).then(response => {
-              this.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
-            });
-          }
+  export default {
+    name: "Game-platform",
+    components: {},
+    data() {
+      return {
+        // pageType 新增修改判断
+        pageType: 0,
+        // 遮罩层
+        loading: true,
+        // 选中数组
+        ids: [],
+        // 非单个禁用
+        single: true,
+        // 非多个禁用
+        multiple: true,
+        // 显示搜索条件
+        showSearch: true,
+        // 总条数
+        total: 0,
+        // 【请填写功能名称】表格数据
+        gamePlatformList: [],
+        gameTypeList: [],
+        // 弹出层标题
+        title: "",
+        // 是否显示弹出层
+        open: false,
+        // 查询参数
+        queryParams: {
+          pageNum: 1,
+          pageSize: 10,
+          agent: null,
+          name: null
+        },
+        // 表单参数
+        form: {},
+        // 表单校验
+        rules: {
+          id: [
+            {required: true, message: "id不能为空", trigger: "blur"}
+          ],
+          agent: [
+            {required: true, message: "代理账号不能为空", trigger: "blur"}
+          ],
+          name: [
+            {required: true, message: "平台名称不能为空", trigger: "blur"}
+          ],
+          des: [
+            {required: true, message: "des密钥不能为空", trigger: "blur"}
+          ],
+          md5: [
+            {required: true, message: "md5密钥不能为空", trigger: "blur"}
+          ],
+          rateClean: [
+            {required: true, message: "洗码比例不能为空", trigger: "blur"}
+          ],
+          rateBeat: [
+            {required: true, message: "打码比例不能为空", trigger: "blur"}
+          ],
+          apiUrl: [
+            {required: true, message: "API接口不能为空", trigger: "blur"}
+          ],
+          linecode: [
+            {required: true, message: "站点标识不能为空", trigger: "blur"}
+          ],
+          gameTypeid: [
+            {required: true, message: "游戏类型不能为空", trigger: "blur"}
+          ]
         }
+      };
+    },
+    created() {
+      this.getList();
+      getGameTpyeList().then(response => {
+        this.gameTypeList = response.rows;
       });
+
     },
-    /** 删除按钮操作 */
-    handleDelete(row) {
-      const ids = row.id || this.ids;
-      this.$confirm('是否确认删除"' + row.name + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(function() {
-        return delGamePlatform(ids);
-      }).then(() => {
+    methods: {
+      /** 查询【请填写功能名称】列表 */
+      getList() {
+        this.loading = true;
+        listGamePlatform(this.queryParams).then(response => {
+          this.gamePlatformList = response.rows;
+          this.total = response.total;
+          this.loading = false;
+        });
+      },
+      // 取消按钮
+      cancel() {
+        this.open = false;
+        this.reset();
+      },
+      // 表单重置
+      reset() {
+        this.form = {
+          id: null,
+          agent: null,
+          name: null,
+          apiUrl: null,
+          recordUrl: null,
+          des: null,
+          md5: null,
+          linecode: null,
+          rateClean: null,
+          gameTypeid: null,
+          status: 0,
+          createBy: null,
+          createTime: null,
+          updateBy: null,
+          updateTime: null,
+          rateBeat: null
+        };
+        this.resetForm("form");
+      },
+      /** 搜索按钮操作 */
+      handleQuery() {
+        this.queryParams.pageNum = 1;
+
         this.getList();
-        this.msgSuccess("删除成功");
-      })
-    },
-    /** 导出按钮操作 */
-    handleExport() {
-      const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有【请填写功能名称】数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(function() {
-        return exportGamePlatform(queryParams);
-      }).then(response => {
-        this.download(response.msg);
-      })
+
+      },
+      /** 重置按钮操作 */
+      resetQuery() {
+        this.resetForm("queryForm");
+        this.handleQuery();
+      },
+      // 多选框选中数据
+      handleSelectionChange(selection) {
+        this.ids = selection.map(item => item.id)
+        this.single = selection.length !== 1
+        this.multiple = !selection.length
+      },
+      /** 新增按钮操作 */
+      handleAdd() {
+        this.pageType = 0
+        this.reset();
+        this.open = true;
+        this.title = "添加【请填写功能名称】";
+      },
+
+      // 状态修改
+      handleStatusChange(row) {
+        let text = row.status === "1" ? '启用' : '停用'
+        this.$confirm('确认要"' + text + '""' + row.name + '"吗?', '警告', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(function () {
+          return changeUserStatus(row.id, row.status)
+        }).then(() => {
+          this.msgSuccess(text + '成功')
+        }).catch(function () {
+          row.status = row.status === '0' ? '1' : '0'
+        })
+      },
+      /** 修改按钮操作 */
+      handleUpdate(row) {
+        this.reset();
+        this.pageType = 1
+        const id = row.id || this.ids
+        getGamePlatform(id).then(response => {
+          this.form = response.data;
+          this.open = true;
+          this.title = "修改【请填写功能名称】";
+        });
+      },
+      /** 提交按钮 */
+      submitForm() {
+        this.$refs["form"].validate(valid => {
+          if (valid) {
+            if (this.pageType === 1) {
+              updateGamePlatform(this.form).then(response => {
+                this.msgSuccess("修改成功");
+                this.open = false;
+                this.getList();
+              });
+            } else if (this.pageType === 0) {
+              addGamePlatform(this.form).then(response => {
+                this.msgSuccess("新增成功");
+                this.open = false;
+                this.getList();
+              });
+            }
+          }
+        });
+      },
+      /** 删除按钮操作 */
+      handleDelete(row) {
+        const ids = row.id || this.ids;
+        this.$confirm('是否确认删除"' + row.name + '"的数据项?', "警告", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(function () {
+          return delGamePlatform(ids);
+        }).then(() => {
+          this.getList();
+          this.msgSuccess("删除成功");
+        })
+      },
+      /** 导出按钮操作 */
+      handleExport() {
+        const queryParams = this.queryParams;
+        this.$confirm('是否确认导出所有【请填写功能名称】数据项?', "警告", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(function () {
+          return exportGamePlatform(queryParams);
+        }).then(response => {
+          this.download(response.msg);
+        })
+      }
     }
-  }
-};
+  };
 </script>

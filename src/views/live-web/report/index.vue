@@ -52,7 +52,7 @@
       <el-table-column label="榜单" align="center" prop="num"/>
       <el-table-column label="更新日期" align="center" prop="reptime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.reptime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.reptime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
     </el-table>

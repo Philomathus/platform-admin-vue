@@ -106,7 +106,7 @@
       <el-table-column label="提现金额" align="center" prop="withdrawMoney"/>
       <el-table-column label="回调时间" align="center" prop="callbackTime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.callbackTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.callbackTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="回调状态" align="center" prop="callbackStatus" :formatter="callbackStatusFormat"/>

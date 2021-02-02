@@ -23,7 +23,7 @@
       <el-table-column label="佣金" align="center" prop="commission" />
       <el-table-column label="创建时间" align="center" prop="createTime" >
       <template slot-scope="scope">
-        <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
+        <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
       </template>
       </el-table-column>
     </el-table>

@@ -92,7 +92,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table :stripe="true" v-loading="loading" :data="memberInfoList" @selection-change="handleSelectionChange">
+    <el-table :stripe="true" v-loading="loading" border :data="memberInfoList" @selection-change="handleSelectionChange">
       <el-table-column label="会员ID" align="center" prop="id" min-width="120px"/>
       <el-table-column label="账号" align="center" prop="userName" min-width="100px"/>
       <el-table-column label="昵称" :show-overflow-tooltip="true" align="center" prop="nickName" min-width="160"/>

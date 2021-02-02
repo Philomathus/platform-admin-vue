@@ -133,7 +133,7 @@
         <el-form-item label="新版图标" prop="editionIcon">
           <imageUpload v-model="form.editionIcon" path="gameInfo"/>
         </el-form-item>
-        <el-form-item label="横竖屏" prop="screen" :formatter="screen">
+        <el-form-item label="横竖屏" prop="screen" :formatter="myScreen">
           <el-select v-model="form.screen" placeholder="请选择">
             <el-option
               v-for="dict in screenList"
@@ -238,6 +238,9 @@ export default {
       platformNameList: [],
       // 表单参数
       form: {},
+      // 表单校验
+      rules: {
+      },
       defaultProps: {
         children: 'children',
         label: 'label'
@@ -293,7 +296,7 @@ export default {
       )
     },
     // 横竖屏
-    screen(row, column) {
+    myScreen(row, column) {
       if (row.screen == 0) {
         return '横屏'
       }

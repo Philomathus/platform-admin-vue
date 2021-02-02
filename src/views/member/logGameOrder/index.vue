@@ -133,12 +133,12 @@
       <el-table-column label="金额" align="center" prop="money" />
       <el-table-column label="开始时间" align="center" prop="bTime" width="120">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.bTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.bTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="结束时间" align="center" prop="eTime" width="120">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.eTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.eTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
 <!--      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">-->

@@ -92,12 +92,12 @@
       <el-table-column label="手机号" align="center" prop="mobile" />
       <el-table-column label="开店时间" align="center" prop="businessBeginTime" width="180">
 <!--        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.businessBeginTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.businessBeginTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>-->
       </el-table-column>
       <el-table-column label="关店时间" align="center" prop="businessEndTime" width="180">
 <!--        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.businessEndTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.businessEndTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>-->
       </el-table-column>
       <el-table-column label="充值优惠比例" align="center" prop="rechargeDiscountRate" width="100"  />

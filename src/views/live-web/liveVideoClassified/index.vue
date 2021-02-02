@@ -146,9 +146,9 @@
           <el-input v-model="form.sort" placeholder="请输入排序"/>
         </el-form-item>
         <el-form-item label="分类图标" prop="img">
-          <el-input v-model="form.img" placeholder="请输入分类图标"/>
+          <imageUpload v-model="form.img" path="give"/>
         </el-form-item>
-        <el-form-item label="分类id" prop="classfy">
+        <el-form-item label="分类代号" prop="classfy">
           <el-input v-model="form.classfy" placeholder="请输入分类id"/>
         </el-form-item>
       </el-form>
@@ -169,10 +169,10 @@ import {
   updateLiveVideoClassified,
   exportLiveVideoClassified
 } from "@/api/live-web/liveVideoClassified/liveVideoClassified";
-
+import ImageUpload from '@/components/ImageUpload';
 export default {
   name: "LiveVideoClassified",
-  components: {},
+  components: {    ImageUpload},
   data() {
     return {
       // 遮罩层

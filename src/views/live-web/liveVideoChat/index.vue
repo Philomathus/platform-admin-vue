@@ -302,7 +302,7 @@ export default {
       getLiveVideoChat(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改会员发言";
+        this.title = "封停会员";
       });
     },
     /** 提交按钮 */

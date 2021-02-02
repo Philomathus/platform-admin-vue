@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import {url} from '@/utils/url'
 
-// 查询【请填写功能名称】列表
+// 查询【代充人入款】列表
 export function listPayAgentRechargeAccountLog(query) {
   return request({
     url: url.platformWeb + '/pay/payAgentRechargeAccountLog/list',
@@ -10,7 +10,7 @@ export function listPayAgentRechargeAccountLog(query) {
   })
 }
 
-// 查询【请填写功能名称】详细
+// 查询【代充人入款】详细
 export function getPayAgentRechargeAccountLog(orderNo) {
   return request({
     url: url.platformWeb + '/pay/payAgentRechargeAccountLog/' + orderNo,
@@ -18,7 +18,7 @@ export function getPayAgentRechargeAccountLog(orderNo) {
   })
 }
 
-// 新增【请填写功能名称】
+// 新增【代充人入款】
 export function addPayAgentRechargeAccountLog(data) {
   return request({
     url: url.platformWeb + '/pay/payAgentRechargeAccountLog',
@@ -27,7 +27,7 @@ export function addPayAgentRechargeAccountLog(data) {
   })
 }
 
-// 修改【请填写功能名称】
+// 修改【代充人入款】
 export function updatePayAgentRechargeAccountLog(data) {
   return request({
     url: url.platformWeb + '/pay/payAgentRechargeAccountLog',
@@ -36,15 +36,50 @@ export function updatePayAgentRechargeAccountLog(data) {
   })
 }
 
-// 删除【请填写功能名称】
+// 删除【代充人入款】
 export function delPayAgentRechargeAccountLog(orderNo) {
   return request({
     url: url.platformWeb + '/pay/payAgentRechargeAccountLog/' + orderNo,
     method: 'delete'
   })
 }
+// 会员提现拒绝
+export function refusedPayAgentRechargeAccountLog(data) {
+  return request({
+    url: url.platformWeb + '/pay/payAgentRechargeAccountLog/refused',
+    method: 'put',
+    data: data
+  })
+}
 
-// 导出【请填写功能名称】
+// 会员提现锁定
+export function lockPayAgentRechargeAccountLog(data) {
+  return request({
+    url: url.platformWeb + '/pay/payAgentRechargeAccountLog/lock',
+    method: 'put',
+    data: data
+  })
+}
+
+// 会员提现解锁
+export function unlockPayAgentRechargeAccountLog(data) {
+  return request({
+    url: url.platformWeb + '/pay/payAgentRechargeAccountLog/unlock',
+    method: 'put',
+    data: data
+  })
+}
+
+// 会员提现人工出款
+export function artificialPayAgentRechargeAccountLog(data) {
+  return request({
+    url: url.platformWeb + '/pay/payAgentRechargeAccountLog/artificial',
+    method: 'put',
+    data: data
+  })
+}
+
+// 导出【代充人入款】
 export function exportPayAgentRechargeAccountLog(query) {
   return request({
     url: url.platformWeb + '/pay/payAgentRechargeAccountLog/export',

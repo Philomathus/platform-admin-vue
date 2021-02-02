@@ -119,12 +119,12 @@
     />
 
     <!-- 添加或修改代付平台列表对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="自定义编码" prop="code">
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="770px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
+        <el-form-item label="编码" prop="code">
           <el-input v-model="form.code" placeholder="请输入自定义编码" />
         </el-form-item>
-        <el-form-item label="代付平台名称" prop="name">
+        <el-form-item label="名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入代付平台名称" />
         </el-form-item>
         <el-form-item label="商户ID" prop="merId">
@@ -136,10 +136,10 @@
         <el-form-item label="代付查询地址" prop="payOrderQueryAddr">
           <el-input v-model="form.payOrderQueryAddr" placeholder="请输入代付查询地址" />
         </el-form-item>
-        <el-form-item label="头部key" prop="headerKey">
-          <el-input v-model="form.headerKey" placeholder="请输入头部key" />
+        <el-form-item label="header_key" prop="headerKey">
+          <el-input v-model="form.headerKey" placeholder="请输入header_key" />
         </el-form-item>
-        <el-form-item label="md5加密密钥" prop="signMd5">
+        <el-form-item label="MD5_key" prop="signMd5">
           <el-input v-model="form.signMd5" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="加密公钥" prop="signPublicKey">
@@ -149,17 +149,7 @@
           <el-input v-model="form.signPrivateKey" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="平台IP白名单" prop="platWhiteIpList">
-          <el-input v-model="form.platWhiteIpList" placeholder="请输入平台IP白名单" />
-        </el-form-item>
-        <el-form-item label="状态" prop="status">
-          <el-select v-model="form.status" placeholder="请选择状态">
-            <el-option
-              v-for="dict in statusOptions"
-              :key="dict.dictValue"
-              :label="dict.dictLabel"
-              :value="parseInt(dict.dictValue)"
-            ></el-option>
-          </el-select>
+          <el-input v-model="form.platWhiteIpList" placeholder="多个IP使用英文逗号','分割" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

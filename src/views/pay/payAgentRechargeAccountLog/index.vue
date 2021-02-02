@@ -104,41 +104,65 @@
 
     <el-table v-loading="loading" :data="payAgentRechargeAccountLogList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="订单号" align="center" prop="orderNo" />
+      <el-table-column label="订单号" :show-overflow-tooltip="true" width="180px" align="center" prop="orderNo" />
       <el-table-column label="代充人账号" align="center" prop="account" />
       <el-table-column label="代充人昵称" align="center" prop="nickName" />
       <el-table-column label="汇款银行卡ID" align="center" prop="bankId" />
       <el-table-column label="汇款金额" align="center" prop="rechargeMoney" />
       <el-table-column label="实际到账金额" align="center" prop="subMoney" />
       <el-table-column label="汇款姓名" align="center" prop="rechargeRealName" />
-      <el-table-column label="汇款备注" align="center" prop="remark" />
+      <el-table-column label="汇款备注" :show-overflow-tooltip="true" align="center" prop="remark" />
       <el-table-column label="状态" align="center" prop="status" :formatter="statusFormat" />
       <el-table-column label="提交时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="审核时间" align="center" prop="updateTime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width " fixed="right" width="180px">
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['pay:payAgentRechargeAccountLog:edit']"
-          >修改</el-button>
+            v-if="scope.row.status == 0"
+            icon="el-icon-lock"
+            @click="handleLock(scope.row)"
+            v-has-permi="['pay:payAgentRechargeAccountLog:lock']"
+          >锁定
+          </el-button>
           <el-button
             size="mini"
             type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['pay:payAgentRechargeAccountLog:remove']"
-          >删除</el-button>
+            v-if="scope.row.status == 1"
+            icon="el-icon-unlock"
+            @click="handleUnlock(scope.row)"
+            v-has-permi="['pay:payAgentRechargeAccountLog:unlock']"
+          >解锁
+          </el-button>
+          <el-button
+            size="mini"
+            type="text"
+            style=" color: #5FB878"
+            v-if="scope.row.status == 1"
+            icon="el-icon-circle-check"
+            @click="handleWithdraw(scope.row)"
+            v-has-permi="['pay:payAgentRechargeAccountLog:artificial']"
+          >存入
+          </el-button>
+          <el-button
+            size="mini"
+            type="text"
+            style=" color: #FF5722"
+            v-if="scope.row.status < 2 || scope.row.status == 4"
+            icon="el-icon-circle-close"
+            @click="handleRefused(scope.row)"
+            v-has-permi="['pay:payAgentRechargeAccountLog:refused']"
+          >拒绝
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -153,52 +177,65 @@
 
     <!-- 添加或修改代充人入款对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules"  label-width="80px">
+        <el-form-item label="订单号"  prop="account">
+          <el-input v-model="form.orderNo" placeholder="请输入订单号" readonly />
+        </el-form-item>
         <el-form-item label="代充人账号" prop="account">
-          <el-input v-model="form.account" placeholder="请输入代充人账号" />
+          <el-input v-model="form.account" placeholder="请输入代充人账号"  readonly/>
         </el-form-item>
         <el-form-item label="代充人昵称" prop="nickName">
-          <el-input v-model="form.nickName" placeholder="请输入代充人昵称" />
+          <el-input v-model="form.nickName" placeholder="请输入代充人昵称" readonly />
         </el-form-item>
         <el-form-item label="汇款银行卡ID" prop="bankId">
-          <el-input v-model="form.bankId" placeholder="请输入汇款银行卡ID" />
+          <el-input v-model="form.bankId" placeholder="请输入汇款银行卡ID" readonly />
         </el-form-item>
         <el-form-item label="汇款金额" prop="rechargeMoney">
-          <el-input v-model="form.rechargeMoney" placeholder="请输入汇款金额" />
+          <el-input v-model="form.rechargeMoney" placeholder="请输入汇款金额" readonly />
         </el-form-item>
         <el-form-item label="实际到账金额" prop="subMoney">
-          <el-input v-model="form.subMoney" placeholder="请输入实际到账金额" />
+          <el-input v-model="form.subMoney" placeholder="请输入实际到账金额" readonly/>
         </el-form-item>
         <el-form-item label="汇款姓名" prop="rechargeRealName">
-          <el-input v-model="form.rechargeRealName" placeholder="请输入汇款姓名" />
+          <el-input v-model="form.rechargeRealName" placeholder="请输入汇款姓名" readonly />
         </el-form-item>
         <el-form-item label="汇款备注" prop="remark">
-          <el-input v-model="form.remark" placeholder="请输入汇款备注" />
-        </el-form-item>
-        <el-form-item label="状态" prop="status">
-          <el-select v-model="form.status" placeholder="请选择状态">
-            <el-option
-              v-for="dict in statusOptions"
-              :key="dict.dictValue"
-              :label="dict.dictLabel"
-              :value="parseInt(dict.dictValue)"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="审核人" prop="opName">
-          <el-input v-model="form.opName" placeholder="请输入审核人" />
+          <el-input v-model="form.remark" placeholder="请输入汇款备注"  readonly/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button
+          type="success"
+          plain size="mini"
+          @click="handleArtificialWithdraw"
+          v-has-permi="['pay:payAgentRechargeAccountLog:artificial']"
+        >存入
+        </el-button>
+        <el-button
+          type="danger"
+          plain
+          size="mini"
+          @click="handleDialogRefused"
+          v-has-permi="['pay:payAgentRechargeAccountLog:refused']"
+        >拒 绝
+        </el-button>
+        <el-button
+          type="info"
+          plain
+          size="mini"
+          @click="cancel"
+        >取 消
+        </el-button>
+
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { listPayAgentRechargeAccountLog, getPayAgentRechargeAccountLog, delPayAgentRechargeAccountLog, addPayAgentRechargeAccountLog, updatePayAgentRechargeAccountLog, exportPayAgentRechargeAccountLog } from "@/api/platform-web/pay/payAgentRechargeAccountLog";
+import { listPayAgentRechargeAccountLog, getPayAgentRechargeAccountLog, delPayAgentRechargeAccountLog, addPayAgentRechargeAccountLog, updatePayAgentRechargeAccountLog, exportPayAgentRechargeAccountLog ,lockPayAgentRechargeAccountLog,unlockPayAgentRechargeAccountLog,artificialPayAgentRechargeAccountLog,refusedPayAgentRechargeAccountLog} from "@/api/platform-web/pay/payAgentRechargeAccountLog";
+
+
 
 export default {
   name: "PayAgentRechargeAccountLog",
@@ -223,7 +260,7 @@ export default {
       // 代充人入款表格数据
       payAgentRechargeAccountLogList: [],
       // 弹出层标题
-      title: "",
+      title: "代充人入款",
       // 是否显示弹出层
       open: false,
       // 状态字典
@@ -284,6 +321,7 @@ export default {
       this.loading = true;
       listPayAgentRechargeAccountLog(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
         this.payAgentRechargeAccountLogList = response.rows;
+        console.info(response.rows)
         this.total = response.total;
         this.loading = false;
       });
@@ -394,7 +432,67 @@ export default {
       }).then(response => {
         this.download(response.msg);
       })
-    }
+    },
+    handleWithdraw(row) {
+      this.reset()
+      const orderNo = row.orderNo
+      getPayAgentRechargeAccountLog(orderNo).then(response => {
+        this.form = response.data
+        this.open = true
+      })
+    },
+
+
+
+    handleArtificialWithdraw() {
+      artificialPayAgentRechargeAccountLog({
+        orderNo: this.form.orderNo
+      }).then(response => {
+        this.msgSuccess(response.msg)
+        if (response.code == 200) {
+          this.open = false
+          this.getList()
+        }
+      })
+    },
+    promptRefused(orderNo) {
+      this.$prompt(null, '请输入拒绝原因', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      }).then(({ value }) => {
+        refusedPayAgentRechargeAccountLog({
+          orderNo: orderNo,
+          remark: value
+        }).then(response => {
+          this.msgSuccess(response.msg)
+          this.open = false
+          this.getList()
+        })
+      }).catch(() => {
+      })
+    },
+    handleRefused(row) {
+      this.promptRefused(row.orderNo)
+    },
+    handleDialogRefused() {
+      this.promptRefused(this.form.orderNo)
+    },
+    handleLock(row) {
+      lockPayAgentRechargeAccountLog({
+        orderNo: row.orderNo
+      }).then(response => {
+        this.msgSuccess(response.msg)
+        this.getList()
+      })
+    },
+    handleUnlock(row) {
+      unlockPayAgentRechargeAccountLog({
+        orderNo: row.orderNo
+      }).then(response => {
+        this.msgSuccess(response.msg)
+        this.getList()
+      })
+    },
   }
 };
 </script>

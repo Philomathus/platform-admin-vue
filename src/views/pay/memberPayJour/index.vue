@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
-    <el-button type="primary">交易笔数 {{ this.totalData.total }}</el-button>
-    <el-button type="success">总成功金额 {{ this.totalData.totalMoney }}</el-button>
+    <el-button type="primary">交易笔数 {{ this.totalData.total || 0 }}</el-button>
+    <el-button type="success">总成功金额 {{ this.totalData.totalMoney || 0 }}</el-button>
     <el-button type="warning">补单金额 {{ this.totalData.replenishmentTotalMoney || 0 }}</el-button>
     <el-button type="info">成功率 {{ numberUtil.toPercent(this.totalData.failRate) }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 10px" v-show="showSearch" label-width="82px">

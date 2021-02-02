@@ -18,6 +18,22 @@ export function getMemberWithdrawLog(id) {
   })
 }
 
+// 查询会员提现报告信息详细
+export function getMemberWithdrawReport(id) {
+  return request({
+    url: url.platformWeb + '/pay/memberWithdrawLog/report/' + id,
+    method: 'get'
+  })
+}
+
+// 查询会员提现报告统计信息
+export function getCountTotal(id) {
+  return request({
+    url: url.platformWeb + '/pay/memberWithdrawLog/countTotal',
+    method: 'get'
+  })
+}
+
 // 新增会员提现信息
 export function addMemberWithdrawLog(data) {
   return request({

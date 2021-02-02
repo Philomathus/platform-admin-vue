@@ -73,7 +73,7 @@
       <el-table-column label="订单号备注" align="center" prop="markorder" min-width="320" :show-overflow-tooltip="true"/>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+            <a style="color: #00afff" @click="jump(scope.row.userId,parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}'))">{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</a>
         </template>
       </el-table-column>
       <el-table-column label="收入" align="center" prop="income" min-width="90"/>
@@ -147,6 +147,9 @@ export default {
     this.getTypeData()
   },
   methods: {
+    jump(userId,createTime){
+      this.$router.push({path: '/member/memberGameData',query: { userId: userId, createTime: createTime,}})
+    },
     /** 查询 会员资金信息列表 */
     getList() {
       this.loading = true

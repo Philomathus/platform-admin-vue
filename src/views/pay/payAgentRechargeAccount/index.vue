@@ -83,12 +83,12 @@
     <el-table v-loading="loading" :data="payAgentRechargeAccountList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="代充账号" align="center" prop="account" />
-      <el-table-column label="代充昵称" align="center" prop="nickName" />
-      <el-table-column label="当前余额额度" align="center" prop="balanceAmount" />
+      <el-table-column label="代充昵称" align="center" prop="nickName" width="120" />
+      <el-table-column label="当前余额额度" align="center" prop="balanceAmount" width="100" />
       <el-table-column label="代充次数" align="center" prop="rechargeNum" />
       <el-table-column label="QQ号" align="center" prop="qqAccount" />
       <el-table-column label="微信号" align="center" prop="wechatAccount" />
-      <el-table-column label="支付宝账号" align="center" prop="alipayAccount" />
+      <el-table-column label="支付宝账号" align="center" prop="alipayAccount"  width="90"/>
       <el-table-column label="手机号" align="center" prop="mobile" />
       <el-table-column label="开店时间" align="center" prop="businessBeginTime" width="180">
 <!--        <template slot-scope="scope">
@@ -100,7 +100,7 @@
           <span>{{ parseTime(scope.row.businessEndTime, '{y}-{m}-{d}') }}</span>
         </template>-->
       </el-table-column>
-      <el-table-column label="充值优惠比例" align="center" prop="rechargeDiscountRate" />
+      <el-table-column label="充值优惠比例" align="center" prop="rechargeDiscountRate" width="100"  />
       <el-table-column label="状态" align="center" prop="status"  >
         <template slot-scope="scope">
           <el-switch

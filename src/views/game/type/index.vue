@@ -25,7 +25,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['game:type:add']"
-        >新增</el-button>
+        >新增
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -36,7 +37,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['game:type:edit']"
-        >修改</el-button>
+        >修改
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -47,7 +49,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['game:type:remove']"
-        >删除</el-button>
+        >删除
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -57,14 +60,15 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['game:type:export']"
-        >导出</el-button>
+        >导出
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="typeList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="名称" align="center" prop="name" />
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="名称" align="center" prop="name"/>
       <el-table-column label="图标" align="center" prop="icon">
         <template slot-scope="scope">
           <a :href="scope.row.icon" target="_blank">
@@ -76,18 +80,18 @@
           </a>
         </template>
       </el-table-column>
-      <el-table-column label="图标类型" align="center" prop="iconType" :formatter="iconTypeFormat" />
-      <el-table-column label="状态" align="center" >
-      <template slot-scope="scope">
-        <el-switch
-          v-model="scope.row.status"
-          active-value="1"
-          inactive-value="0"
-          @change="handleStatusChangeisWH(scope.row)"
-        ></el-switch>
-      </template>
+      <el-table-column label="图标类型" align="center" prop="iconType" :formatter="iconTypeFormat"/>
+      <el-table-column label="状态" align="center">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.status"
+            active-value="1"
+            inactive-value="0"
+            @change="handleStatusChangeisWH(scope.row)"
+          ></el-switch>
+        </template>
       </el-table-column>
-      <el-table-column label="排序号" align="center" prop="indexs" />
+      <el-table-column label="排序号" align="center" prop="indexs"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -96,14 +100,16 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['game:type:edit']"
-          >修改</el-button>
+          >修改
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['game:type:remove']"
-          >删除</el-button>
+          >删除
+          </el-button>
           <el-button
             size="mini"
             type="text"
@@ -125,13 +131,14 @@
     />
 
     <!-- 添加或修改游戏类型对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="relationGame" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="relationGame" width="500px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入名称" />
+          <el-input v-model="form.name" placeholder="请输入名称"/>
         </el-form-item>
         <el-form-item label="排序号" prop="indexs">
-          <el-input v-model="form.indexs" placeholder="请输入排序号" />
+          <el-input v-model="form.indexs" placeholder="请输入排序号"/>
         </el-form-item>
         <el-form-item label="图标">
           <imageUpload v-model="form.icon" path="gameType"/>
@@ -154,9 +161,10 @@
     </el-dialog>
 
     <!-- 添加或修改游戏类型对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="relationGame" width="1000px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="relationGame" width="1000px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <template>
+        <template >
           <div style="text-align: center">
             <el-transfer
               style="text-align: left; display: inline-block"
@@ -164,7 +172,6 @@
               filterable
               :left-default-checked="[2, 3]"
               :right-default-checked="[1]"
-              :render-content="renderFunc"
               :titles="['Source', 'Target']"
               :button-texts="['到左边', '到右边']"
               :format="{
@@ -175,12 +182,11 @@
               :data="data">
             </el-transfer>
           </div>
+
         </template>
-
-
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="relationGame">确 定</el-button>
+        <el-button type="primary" @click="relationGameList">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
@@ -188,8 +194,20 @@
 </template>
 
 <script>
-import { listType, getType, delType, addType, updateType, exportType,changeStatus,getRelationGame} from "@/api/platform-web/game/type";
+import {
+  listType,
+  getType,
+  delType,
+  addType,
+  updateType,
+  exportType,
+  changeStatus,
+  upddataGameTypeInfo,
+  getRelationGame
+} from "@/api/platform-web/game/type";
 import ImageUpload from '@/components/ImageUpload';
+import {lockMemberWithdrawLog} from "@/api/platform-web/pay/memberWithdrawLog";
+
 export default {
   name: "Type",
   components: {
@@ -199,18 +217,18 @@ export default {
 
   data() {
     const generateData = _ => {
-        const data = [];
-        const cities = ['上海', '北京', '广州', '深圳', '南京', '西安', '成都'];
-        const pinyin = ['shanghai', 'beijing', 'guangzhou', 'shenzhen', 'nanjing', 'xian', 'chengdu'];
-        cities.forEach((city, index) => {
-          data.push({
-            label: city,
-            key: index,
-            pinyin: pinyin[index]
-          });
+      const data = [];
+      const cities = [];
+      const pinyin = [];
+      cities.forEach((city, index) => {
+        data.push({
+          label: city,
+          key: index,
+          pinyin: pinyin[index]
         });
-        return data;
-      };
+      });
+      return data;
+    };
     return {
       data: generateData(),
       value: [],
@@ -235,8 +253,8 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
-      relationGame:false,
-      id:null,
+       relationGame: false,
+      id: null,
       // 状态字典
       statusOptions: [],
       // 图标类型字典
@@ -250,8 +268,7 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {
-      }
+      rules: {}
     };
   },
 
@@ -273,6 +290,9 @@ export default {
         this.total = response.total;
         this.loading = false;
       });
+    },
+    handleChange(value, direction, movedKeys) {
+      console.log(value, direction, movedKeys);
     },
     // 状态字典翻译
     statusFormat(row, column) {
@@ -313,7 +333,7 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
@@ -324,14 +344,34 @@ export default {
     },
     /** 关联游戏按钮 */
     relation_Game(row) {
+
+      var that = this;
       const id = row.id || this.ids
       this.relationGame = true;
       this.title = "关联游戏类型";
       getRelationGame(id).then(response => {
-        this.form = response.data;
+        console.log(response.data)
+        that.data = [];
+        that.value = [];
+        response.data.all_games.forEach(item => {
+          var item2 = {}
+          item2.label = item.name;
+          item2.key = item.id;
+          that.data.push(item2)
+        })
+        that.value =response.data.type_games;
         this.title = "关联游戏类型";
         this.relationGame = true;
-      });
+      })
+    },
+    relationGameList() {
+      debugger;
+      // const value =this.value;
+      // var id = value.id;
+      var all_games = this.data;
+      var type_games = this.value;
+      upddataGameTypeInfo(all_games,type_games).then(response => {
+      })
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -370,7 +410,7 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
-      }).then(function() {
+      }).then(function () {
         return delType(ids);
       }).then(() => {
         this.getList();
@@ -385,7 +425,7 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
-      }).then(function() {
+      }).then(function () {
         return exportType(queryParams);
       }).then(response => {
         this.download(response.msg);
@@ -394,7 +434,7 @@ export default {
     },
     // 维护状态修改
     handleStatusChangeisWH(row) {
-      let text = row.status ==="1" ? '启用' : '停用'
+      let text = row.status === "1" ? '启用' : '停用'
       this.$confirm('确认要更改"' + text + '""' + row.name + '"吗?', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

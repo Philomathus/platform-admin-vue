@@ -35,6 +35,18 @@ export function updateType(data) {
     data: data
   })
 }
+// 修改游戏类型
+export function upddataGameTypeInfo(all_games,type_games) {
+  const dataList = {
+    all_games,
+    type_games
+  }
+  return request({
+    url: url.platformWeb + '/game/type//add-type-games',
+    method: 'post',
+    data: dataList
+  })
+}
 
 // 删除游戏类型
 export function delType(id) {

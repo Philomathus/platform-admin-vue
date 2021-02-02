@@ -347,7 +347,6 @@ export default {
     //支付平台
     platforms().then(response => {
       this.payPlatformOptions = response.data
-      console.info(this.payPlatformOptions)
     })
     //支付类型
     payTypes().then(response => {

@@ -344,7 +344,6 @@ export default {
       this.loading = true;
       agentStatistic(this.queryParams).then(response => {
         this.data= response.data;
-        console.info(this.data)
         this.loading = false;
       });
     },
@@ -451,7 +450,6 @@ export default {
       this.reset()
       const orderNo = row.orderNo
       getPayAgentRechargeAccountLog(orderNo).then(response => {
-        console.info(response.data)
         this.form = response.data;
         this.open = true;
         this.title = "存入明细";

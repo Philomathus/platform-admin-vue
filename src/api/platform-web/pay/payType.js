@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import {url} from '@/utils/url'
 
-// 查询【请填写功能名称】列表
+// 查询【支付类型】列表
 export function listPayType(query) {
   return request({
     url: url.platformWeb + '/pay/payType/list',
@@ -10,7 +10,7 @@ export function listPayType(query) {
   })
 }
 
-// 查询【请填写功能名称】详细
+// 查询【支付类型】详细
 export function getPayType(id) {
   return request({
     url: url.platformWeb + '/pay/payType/' + id,
@@ -44,7 +44,7 @@ export function changeRecommendStatus(id, isRecommend) {
 }
 
 
-// 新增【请填写功能名称】
+// 新增【支付类型】
 export function addPayType(data) {
   return request({
     url: url.platformWeb + '/pay/payType',
@@ -53,7 +53,7 @@ export function addPayType(data) {
   })
 }
 
-// 修改【请填写功能名称】
+// 修改【支付类型】
 export function updatePayType(data) {
   return request({
     url: url.platformWeb + '/pay/payType',
@@ -62,7 +62,7 @@ export function updatePayType(data) {
   })
 }
 
-// 删除【请填写功能名称】
+// 删除【支付类型】
 export function delPayType(id) {
   return request({
     url: url.platformWeb + '/payType/' + id,
@@ -70,7 +70,7 @@ export function delPayType(id) {
   })
 }
 
-// 导出【请填写功能名称】
+// 导出【支付类型】
 export function exportPayType(query) {
   return request({
     url: url.platformWeb + '/payType/export',

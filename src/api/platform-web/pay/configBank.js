@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import {url} from '@/utils/url'
 
-// 查询【请填写功能名称】列表
+// 查询【公司入款银行】列表
 export function listConfigBank(query) {
   return request({
     url: url.platformWeb + '/pay/configBank/list',
@@ -10,7 +10,7 @@ export function listConfigBank(query) {
   })
 }
 
-// 查询【请填写功能名称】详细
+// 查询【公司入款银行】详细
 export function getConfigBank(id) {
   return request({
     url: url.platformWeb + '/pay/configBank/' + id,
@@ -29,7 +29,7 @@ export function changeConfigBankStatus(id, status) {
     data: data
   })
 }
-// 新增【请填写功能名称】
+// 新增【公司入款银行】
 export function addConfigBank(data) {
   return request({
     url: url.platformWeb + '/pay/configBank',
@@ -38,7 +38,7 @@ export function addConfigBank(data) {
   })
 }
 
-// 修改【请填写功能名称】
+// 修改【公司入款银行】
 export function updateConfigBank(data) {
   return request({
     url: url.platformWeb + '/pay/configBank',
@@ -47,7 +47,7 @@ export function updateConfigBank(data) {
   })
 }
 
-// 删除【请填写功能名称】
+// 删除【公司入款银行】
 export function delConfigBank(id) {
   return request({
     url: url.platformWeb + '/pay/configBank/' + id,
@@ -55,7 +55,7 @@ export function delConfigBank(id) {
   })
 }
 
-// 导出【请填写功能名称】
+// 导出【公司入款银行】
 export function exportConfigBank(query) {
   return request({
     url: url.platformWeb + '/pay/configBank/export',

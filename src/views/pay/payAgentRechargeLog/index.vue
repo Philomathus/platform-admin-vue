@@ -52,8 +52,8 @@
       </el-form-item>
     </el-form>
 
-    <el-button type="primary" id="copy1" @click="copy1">交易笔数: {{this.data.countNumber}}</el-button>
-    <el-button type="success" id="copy2" @click="copy2">总上分金额: {{this.data.countMoney}}</el-button>
+    <el-button type="primary" @click="copy1">交易笔数: {{this.data.countNumber}}</el-button>
+    <el-button type="success" @click="copy2">总上分金额: {{this.data.countMoney}}</el-button>
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
@@ -223,24 +223,10 @@ export default {
     },
     //复制
     copy1() {
-      let text = document.getElementById('copy1').innerText;
-      let inputElement = document.createElement('input')
-      inputElement.value = text;
-      document.body.appendChild(inputElement);
-      inputElement .select(); //选中文本
-      document.execCommand("copy"); //执行浏览器复制命令
-      inputElement.remove();
-      this.msgSuccess("复制成功")
+      this.copyCommand(this.data.countNumber)
     },
     copy2() {
-      let text = document.getElementById('copy2').innerText;
-      let inputElement = document.createElement('input')
-      inputElement.value = text;
-      document.body.appendChild(inputElement);
-      inputElement .select(); //选中文本
-      document.execCommand("copy"); //执行浏览器复制命令
-      inputElement.remove();
-      this.msgSuccess("复制成功")
+      this.copyCommand(this.data.countMoney)
     },
     // 表单重置
     reset() {

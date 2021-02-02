@@ -24,8 +24,8 @@
 
 
 
-    <el-button type="primary" id="copy1" @click="copy1">总投注金额: {{this.data.countBetMoney}}</el-button>
-    <el-button type="success" id="copy2" @click="copy2">总投注人数: {{this.data.countBetPeople}}</el-button>
+    <el-button type="primary" @click="copy1">总投注金额: {{this.data.countBetMoney}}</el-button>
+    <el-button type="success" @click="copy2">总投注人数: {{this.data.countBetPeople}}</el-button>
     <el-table v-loading="loading"
               :data="list.slice((pageNum-1)*pageSize,pageNum*pageSize)"
               style="width: 100%;">
@@ -90,24 +90,10 @@ export default {
     },
     //复制
     copy1() {
-      let text = document.getElementById('copy1').innerText;
-      let inputElement = document.createElement('input')
-      inputElement.value = text;
-      document.body.appendChild(inputElement);
-      inputElement .select(); //选中文本
-      document.execCommand("copy"); //执行浏览器复制命令
-      inputElement.remove();
-      this.msgSuccess("复制成功")
+      this.copyCommand(this.data.countBetMoney)
     },
     copy2() {
-      let text = document.getElementById('copy2').innerText;
-      let inputElement = document.createElement('input')
-      inputElement.value = text;
-      document.body.appendChild(inputElement);
-      inputElement .select(); //选中文本
-      document.execCommand("copy"); //执行浏览器复制命令
-      inputElement.remove();
-      this.msgSuccess("复制成功")
+      this.copyCommand(this.data.countBetPeople)
     },
     //统计
     count() {

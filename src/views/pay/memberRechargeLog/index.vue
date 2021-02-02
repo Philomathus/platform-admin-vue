@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
-    <el-button type="success" id="copy1" @click="copy1">交易笔数 {{ this.totalData.total }}</el-button>
-    <el-button type="warning" id="copy2" @click="copy2">总成功金额 {{ this.totalData.successMoney || 0 }}</el-button>
+    <el-button type="success" @click="copy1">交易笔数 {{ this.totalData.total }}</el-button>
+    <el-button type="warning" @click="copy2">总成功金额 {{ this.totalData.successMoney || 0 }}</el-button>
     <el-button type="info" id="copy3" @click="copy3">成功率 {{ numberUtil.toPercent(this.totalData.successRate) }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 10px" v-show="showSearch" label-width="82px">
       <el-form-item label="审核时间" prop="selectDate" label-width="100px">
@@ -269,34 +269,13 @@ export default {
     },
     //复制
     copy1() {
-      let text = document.getElementById('copy1').innerText;
-      let inputElement = document.createElement('input')
-      inputElement.value = text;
-      document.body.appendChild(inputElement);
-      inputElement .select(); //选中文本
-      document.execCommand("copy"); //执行浏览器复制命令
-      inputElement.remove();
-      this.msgSuccess("复制成功")
+      this.copyCommand(this.totalData.total)
     },
     copy2() {
-      let text = document.getElementById('copy2').innerText;
-      let inputElement = document.createElement('input')
-      inputElement.value = text;
-      document.body.appendChild(inputElement);
-      inputElement .select(); //选中文本
-      document.execCommand("copy"); //执行浏览器复制命令
-      inputElement.remove();
-      this.msgSuccess("复制成功")
+      this.copyCommand(this.totalData.successMoney)
     },
     copy3() {
-      let text = document.getElementById('copy3').innerText;
-      let inputElement = document.createElement('input')
-      inputElement.value = text;
-      document.body.appendChild(inputElement);
-      inputElement .select(); //选中文本
-      document.execCommand("copy"); //执行浏览器复制命令
-      inputElement.remove();
-      this.msgSuccess("复制成功")
+      this.copyCommand(this.numberUtil.toPercent(this.totalData.successRate))
     },
     // 状态字典翻译
     firstStatusFormat(row, column) {

@@ -46,6 +46,9 @@
       </el-form-item>
     </el-form>
 
+    <el-button type="primary" @click="deposit">人工存入</el-button>
+    <el-button type="primary" @click="proposed">人工提出</el-button>
+
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
@@ -55,7 +58,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['pay:payAgentRechargeRecord:add']"
-        >新增</el-button>
+        >新增
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -66,7 +70,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['pay:payAgentRechargeRecord:edit']"
-        >修改</el-button>
+        >修改
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -77,7 +82,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['pay:payAgentRechargeRecord:remove']"
-        >删除</el-button>
+        >删除
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -87,25 +93,26 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['pay:payAgentRechargeRecord:export']"
-        >导出</el-button>
+        >导出
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="payAgentRechargeRecordList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="订单号主键" align="center" prop="orderNo" />
-      <el-table-column label="代充账号" align="center" prop="rechargeAcount" />
-      <el-table-column label="代充昵称" align="center" prop="rechargeNickName" />
-      <el-table-column label="存入(提出)类型" align="center" prop="type" />
-      <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="存入(提出)金额" align="center" prop="money" />
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="订单号主键" align="center" prop="orderNo"/>
+      <el-table-column label="代充账号" align="center" prop="rechargeAcount"/>
+      <el-table-column label="代充昵称" align="center" prop="rechargeNickName"/>
+      <el-table-column label="存入(提出)类型" align="center" prop="type"/>
+      <el-table-column label="备注" align="center" prop="remark"/>
+      <el-table-column label="存入(提出)金额" align="center" prop="money"/>
       <el-table-column label="操作时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作人" align="center" prop="opName" />
+      <el-table-column label="操作人" align="center" prop="opName"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -114,14 +121,16 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['pay:payAgentRechargeRecord:edit']"
-          >修改</el-button>
+          >修改
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['pay:payAgentRechargeRecord:remove']"
-          >删除</el-button>
+          >删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -134,8 +143,81 @@
       @pagination="getList"
     />
 
+    <!-- 人工存入弹框 -->
+    <el-dialog
+      v-dialogDrag
+      :close-on-click-modal="false"
+      title="人工存入"
+      :visible.sync="peopledeposit"
+      width="500px"
+      append-to-body
+    >
+      <el-form ref="formdeposit" :model="formdeposit" :rules="rules" label-width="80px">
+        <el-form-item label="代充账号" prop="rechargeAcount">
+          <el-input placeholder="请输入代充账号" v-model="formdeposit.rechargeAcount"
+          />
+        </el-form-item>
+        <el-form-item label="存入类型" prop="type">
+          <el-select v-model="formdeposit.type" placeholder="请选择存入类型" clearable size="small">
+            <el-option
+              v-for="item in deposittype"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="存入金额" prop="money">
+          <el-input placeholder="请输入存入金额" v-model="formdeposit.money"/>
+        </el-form-item>
+        <el-form-item label="备注" prop="remark">
+          <el-input placeholder="请输入备注" v-model="formdeposit.remark"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitDeposit">立即提交</el-button>
+      </div>
+    </el-dialog>
+
+    <!-- 人工提出弹框 -->
+    <el-dialog
+      v-dialogDrag
+      :close-on-click-modal="false"
+      title="人工存入"
+      :visible.sync="peopleproposed"
+      width="500px"
+      append-to-body
+    >
+      <el-form ref="formproposed" :model="formproposed" :rules="rules" label-width="80px">
+        <el-form-item label="代充账号" prop="rechargeAcount">
+          <el-input placeholder="请输入代充账号" v-model="formproposed.rechargeAcount"
+          />
+        </el-form-item>
+        <el-form-item label="存入类型" prop="type">
+          <el-select v-model="formproposed.type" placeholder="请选择存入类型" clearable size="small">
+            <el-option
+              v-for="item in proposedtype"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="存入金额" prop="money">
+          <el-input placeholder="请输入存入金额" v-model="formproposed.money"/>
+        </el-form-item>
+        <el-form-item label="备注" prop="remark">
+          <el-input placeholder="请输入备注" v-model="formproposed.remark"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitProposed">立即提交</el-button>
+      </div>
+    </el-dialog>
+
     <!-- 添加或修改代充存提对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -147,14 +229,42 @@
 </template>
 
 <script>
-import { listPayAgentRechargeRecord, getPayAgentRechargeRecord, delPayAgentRechargeRecord, addPayAgentRechargeRecord, updatePayAgentRechargeRecord, exportPayAgentRechargeRecord } from "@/api/platform-web/pay/payAgentRechargeRecord";
+import {
+  listPayAgentRechargeRecord,
+  getPayAgentRechargeRecord,
+  delPayAgentRechargeRecord,
+  addPayAgentRechargeRecord,
+  updatePayAgentRechargeRecord,
+  exportPayAgentRechargeRecord,
+  deposit,
+  proposed
+} from "@/api/platform-web/pay/payAgentRechargeRecord";
+import {getGoogleAuth} from "@/api/platform-web/system/user";
 
 export default {
   name: "PayAgentRechargeRecord",
-  components: {
-  },
+  components: {},
   data() {
     return {
+      //存入类型选择栏
+      deposittype: [{
+        value: '人工存入',
+        label: '人工存入'
+      }, {
+        value: '重复充值',
+        label: '重复充值'
+      }, {
+        value: '调单调整',
+        label: '调单调整'
+      }],
+      //提出类型选择栏
+      proposedtype: [{
+        value: '未给会员充值',
+        label: '未给会员充值'
+      }, {
+        value: '其他',
+        label: '其他'
+      }],
       // 遮罩层
       loading: true,
       // 选中数组
@@ -173,6 +283,10 @@ export default {
       payAgentRechargeRecordList: [],
       // 弹出层标题
       title: "",
+      //人工存入弹出层
+      peopledeposit: false,
+      //人工提出弹出层
+      peopleproposed: false,
       // 是否显示弹出层
       open: false,
       // 查询参数
@@ -186,22 +300,26 @@ export default {
       },
       // 表单参数
       form: {},
+      //存入框参数
+      formdeposit: {},
+      //提出框参数
+      formproposed: {},
       // 表单校验
       rules: {
         rechargeAcount: [
-          { required: true, message: "代充账号不能为空", trigger: "blur" }
+          {required: true, message: "代充账号不能为空", trigger: "blur"}
         ],
         type: [
-          { required: true, message: "存入(提出)类型不能为空", trigger: "change" }
+          {required: true, message: "存入(提出)类型不能为空", trigger: "change"}
         ],
         money: [
-          { required: true, message: "存入(提出)金额不能为空", trigger: "blur" }
+          {required: true, message: "存入(提出)金额不能为空", trigger: "blur"}
         ],
         createTime: [
-          { required: true, message: "操作时间不能为空", trigger: "blur" }
+          {required: true, message: "操作时间不能为空", trigger: "blur"}
         ],
         opName: [
-          { required: true, message: "操作人不能为空", trigger: "blur" }
+          {required: true, message: "操作人不能为空", trigger: "blur"}
         ]
       }
     };
@@ -223,6 +341,16 @@ export default {
     cancel() {
       this.open = false;
       this.reset();
+    },
+    //人工存入
+    deposit() {
+      this.reset()
+      this.peopledeposit = true
+    },
+    //人工提出
+    proposed() {
+      this.reset()
+      this.peopleproposed = true
     },
     // 表单重置
     reset() {
@@ -252,7 +380,7 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.orderNo)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
@@ -269,6 +397,30 @@ export default {
         this.form = response.data;
         this.open = true;
         this.title = "修改代充存提";
+      });
+    },
+    /** 人工存入按钮 */
+    submitDeposit() {
+      this.$refs["formdeposit"].validate(valid => {
+          if (this.formdeposit.userId != null) {
+            deposit(this.formdeposit).then(response => {
+              this.msgSuccess("提交成功");
+              this.open = false;
+              this.getList();
+            });
+          }
+      });
+    },
+    /** 人工提出按钮 */
+    submitProposed() {
+      this.$refs["formproposed"].validate(valid => {
+        if (this.formproposed.userId != null) {
+          deposit(this.formproposed).then(response => {
+            this.msgSuccess("提交成功");
+            this.open = false;
+            this.getList();
+          });
+        }
       });
     },
     /** 提交按钮 */
@@ -298,7 +450,7 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
-      }).then(function() {
+      }).then(function () {
         return delPayAgentRechargeRecord(orderNos);
       }).then(() => {
         this.getList();
@@ -312,7 +464,7 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
-      }).then(function() {
+      }).then(function () {
         return exportPayAgentRechargeRecord(queryParams);
       }).then(response => {
         this.download(response.msg);

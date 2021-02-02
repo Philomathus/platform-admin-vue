@@ -36,52 +36,6 @@
     </el-form>
 
     <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['admin:liveFamily:add']"
-        >新增
-        </el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['admin:liveFamily:edit']"
-        >修改
-        </el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['admin:liveFamily:remove']"
-        >删除
-        </el-button>
-      </el-col>
-<!--      <el-col :span="1.5">-->
-<!--        <el-button-->
-<!--          type="warning"-->
-<!--          plain-->
-<!--          icon="el-icon-download"-->
-<!--          size="mini"-->
-<!--          @click="handleExport"-->
-<!--          v-hasPermi="['admin:liveFamily:export']"-->
-<!--        >导出-->
-<!--        </el-button>-->
-<!--      </el-col>-->
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -287,6 +241,9 @@ export default {
         liveLevel: null,
         familyRecom: null
       };
+      this.queryParams={
+        status: null
+      }
       this.resetForm("form");
     },
     /** 搜索按钮操作 */
@@ -296,6 +253,7 @@ export default {
     },
     /** 重置按钮操作 */
     resetQuery() {
+      this.reset();
       this.resetForm("queryForm");
       this.handleQuery();
     },

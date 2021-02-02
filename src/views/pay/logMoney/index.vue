@@ -66,20 +66,20 @@
     </el-row>
 
     <el-table stripe v-loading="loading" :data="logMoneyList">
-      <el-table-column label="会员编号" align="center" prop="userId"/>
-      <el-table-column label="账号" align="center" prop="userName"/>
-      <el-table-column label="行为类型" align="center" prop="des"/>
-      <el-table-column label="备注" align="center" prop="mark" width="260"/>
-      <el-table-column label="订单号备注" align="center" prop="markorder" width="320"/>
-      <el-table-column label="收入" align="center" prop="income"/>
-      <el-table-column label="支出" align="center" prop="pay"/>
-      <el-table-column label="变化前余额" align="center" prop="totalBefore"/>
-      <el-table-column label="余额" align="center" prop="total"/>
+      <el-table-column label="会员编号" align="center" prop="userId" min-width="120"/>
+      <el-table-column label="账号" align="center" prop="userName" min-width="80"/>
+      <el-table-column label="行为类型" align="center" prop="des" min-width="120"/>
+      <el-table-column label="备注" align="center" prop="mark" min-width="260" :show-overflow-tooltip="true"/>
+      <el-table-column label="订单号备注" align="center" prop="markorder" min-width="320" :show-overflow-tooltip="true"/>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="收入" align="center" prop="income" min-width="90"/>
+      <el-table-column label="支出" align="center" prop="pay" min-width="90"/>
+      <el-table-column label="变化前余额" align="center" prop="totalBefore" min-width="90"/>
+      <el-table-column label="余额" align="center" prop="total" min-width="90"/>
     </el-table>
 
     <pagination

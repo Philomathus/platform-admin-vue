@@ -15,20 +15,32 @@ import '@/utils/directives' // 弹窗拖拽
 
 import './assets/icons' // icon
 import './permission' // permission control
-import { getDicts } from "@/api/platform-web/system/dict/data";
-import { getConfigKey } from "@/api/platform-web/system/config";
-import { parseTime, resetForm, addDateRange, selectDictLabel, selectDictLabels, download, handleTree } from "@/utils/common";
-import Pagination from "@/components/Pagination";
+import { getDicts } from '@/api/platform-web/system/dict/data'
+import { getConfigKey } from '@/api/platform-web/system/config'
+import {
+  parseTime,
+  getTodayStartTime,
+  getTodayEndTime,
+  resetForm,
+  addDateRange,
+  selectDictLabel,
+  selectDictLabels,
+  download,
+  handleTree
+} from '@/utils/common'
+import Pagination from '@/components/Pagination'
 // 自定义表格工具扩展
-import RightToolbar from "@/components/RightToolbar"
+import RightToolbar from '@/components/RightToolbar'
 // 引入 vue-ele-form
 import EleForm from 'vue-ele-form'
-import * as numberUtil from "@/utils/number.js"
+import * as numberUtil from '@/utils/number.js'
 
 // 全局方法挂载
 Vue.prototype.getDicts = getDicts
 Vue.prototype.getConfigKey = getConfigKey
 Vue.prototype.parseTime = parseTime
+Vue.prototype.getTodayStartTime = getTodayStartTime
+Vue.prototype.getTodayEndTime = getTodayEndTime
 Vue.prototype.resetForm = resetForm
 Vue.prototype.addDateRange = addDateRange
 Vue.prototype.selectDictLabel = selectDictLabel
@@ -37,16 +49,16 @@ Vue.prototype.download = download
 Vue.prototype.handleTree = handleTree
 Vue.prototype.numberUtil = numberUtil
 
-Vue.prototype.msgSuccess = function (msg) {
-  this.$message({ showClose: true, message: msg, type: "success" });
+Vue.prototype.msgSuccess = function(msg) {
+  this.$message({ showClose: true, message: msg, type: 'success' })
 }
 
-Vue.prototype.msgError = function (msg) {
-  this.$message({ showClose: true, message: msg, type: "error" });
+Vue.prototype.msgError = function(msg) {
+  this.$message({ showClose: true, message: msg, type: 'error' })
 }
 
-Vue.prototype.msgInfo = function (msg) {
-  this.$message.info(msg);
+Vue.prototype.msgInfo = function(msg) {
+  this.$message.info(msg)
 }
 
 // 全局组件挂载

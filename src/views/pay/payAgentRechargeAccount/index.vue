@@ -220,7 +220,7 @@
 </template>
 
 <script>
-import { listPayAgentRechargeAccount, getPayAgentRechargeAccount, delPayAgentRechargeAccount, addPayAgentRechargeAccount, updatePayAgentRechargeAccount, exportPayAgentRechargeAccount ,changeStatus} from "@/api/platform-web/pay/payAgentRechargeAccount/payAgentRechargeAccount";
+import { listPayAgentRechargeAccount, getPayAgentRechargeAccount, delPayAgentRechargeAccount, addPayAgentRechargeAccount, updatePayAgentRechargeAccount, exportPayAgentRechargeAccount ,changeStatus} from "@/api/platform-web/pay/payAgentRechargeAccount";
 
 
 export default {

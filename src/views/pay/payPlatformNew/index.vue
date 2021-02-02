@@ -149,7 +149,7 @@
 </template>
 
 <script>
-import { listPayPlatformNew, getPayPlatformNew, delPayPlatformNew, addPayPlatformNew, updatePayPlatformNew, exportPayPlatformNew } from "@/api/platform-web/pay/payPlatformNew/payPlatformNew";
+import { listPayPlatformNew, getPayPlatformNew, delPayPlatformNew, addPayPlatformNew, updatePayPlatformNew, exportPayPlatformNew } from "@/api/platform-web/pay/payPlatformNew";
 
 export default {
   name: "PayPlatformNew",

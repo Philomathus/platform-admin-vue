@@ -235,7 +235,7 @@
 </template>
 
 <script>
-import { listMemberRechargeLog, listCount, getMemberRechargeLog, delMemberRechargeLog, addMemberRechargeLog, updateMemberRechargeLog, exportMemberRechargeLog } from "@/api/platform-web/pay/memberRechargeLog/memberRechargeLog";
+import { listMemberRechargeLog, listCount, getMemberRechargeLog, delMemberRechargeLog, addMemberRechargeLog, updateMemberRechargeLog, exportMemberRechargeLog } from "@/api/platform-web/pay/memberRechargeLog";
 
 export default {
   name: "MemberRechargeLog",

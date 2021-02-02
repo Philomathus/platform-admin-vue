@@ -194,7 +194,7 @@
 </template>
 
 <script>
-import { listPayAgentRechargeAccountLog, getPayAgentRechargeAccountLog, delPayAgentRechargeAccountLog, addPayAgentRechargeAccountLog, updatePayAgentRechargeAccountLog, exportPayAgentRechargeAccountLog } from "@/api/platform-web/pay/payAgentRechargeAccountLog/payAgentRechargeAccountLog";
+import { listPayAgentRechargeAccountLog, getPayAgentRechargeAccountLog, delPayAgentRechargeAccountLog, addPayAgentRechargeAccountLog, updatePayAgentRechargeAccountLog, exportPayAgentRechargeAccountLog } from "@/api/platform-web/pay/payAgentRechargeAccountLog";
 
 export default {
   name: "PayAgentRechargeAccountLog",

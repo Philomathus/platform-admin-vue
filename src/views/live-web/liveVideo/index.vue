@@ -11,6 +11,17 @@
         />
       </el-form-item>
 
+      <el-form-item label="直播线路">
+        <el-select v-model="queryParams.paiId" placeholder="请选择">
+          <el-option
+            v-for="dict in serverOptions"
+            :key="dict.id"
+            :label="dict.name"
+            :value="dict.id"
+          ></el-option>
+        </el-select>
+      </el-form-item>
+
 <!--      <el-form-item label="房间类型">-->
 <!--        <el-checkbox-group v-model="form.roomType">-->
 <!--          <el-checkbox>dddd</el-checkbox>-->
@@ -73,6 +84,8 @@ import {
   exportLiveVideo
 } from "@/api/live-web/liveVideo/liveVideo";
 import ImageUpload from '@/components/ImageUpload';
+import request from "@/utils/request";
+import {url} from "@/utils/url";
 
 export default {
   name: "LiveVideo",
@@ -95,6 +108,7 @@ export default {
       total: 0,
       // 直播表格数据
       liveVideoList: [],
+      serverOptions:[],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -104,6 +118,7 @@ export default {
         pageNum: 1,
         pageSize: 10,
         hostName: null,
+        paiId:null
       },
       // 表单参数
       form: {},
@@ -113,6 +128,10 @@ export default {
   },
   created() {
     this.getList();
+    debugger;
+    this.getServerLine().then(response => {
+      this.serverOptions = response.rows
+    })
   },
   methods: {
     /** 查询直播列表 */
@@ -133,7 +152,12 @@ export default {
     reset() {
       this.form = {
         hostName: null,
+        paiId:null
       };
+      this.queryParams={
+        hostName: null,
+        paiId:null
+      }
       this.resetForm("form");
     },
     /** 搜索按钮操作 */
@@ -143,6 +167,7 @@ export default {
     },
     /** 重置按钮操作 */
     resetQuery() {
+      this.reset();
       this.resetForm("queryForm");
       this.handleQuery();
     },
@@ -235,6 +260,12 @@ export default {
       }else{
         return "彩票直播";
       }
+    },
+    getServerLine(){
+     return  request({
+        url: url.platformWeb + '/server/live/getAlllist',
+        method: 'get'
+      })
     },
     /** 导出按钮操作 */
     handleExport() {

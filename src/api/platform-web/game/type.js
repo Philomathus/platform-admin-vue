@@ -52,6 +52,15 @@ export function exportType(query) {
     params: query
   })
 }
+
+// 导出游戏类型
+export function getRelationGame(id) {
+  return request({
+    url: url.platformWeb + '/game/type/getRelationGame/'+id,
+    method: 'get'
+  })
+}
+
 export function changeStatus(id,status ) {
   const data = {
     id,

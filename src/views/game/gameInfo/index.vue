@@ -65,8 +65,8 @@
       <el-table-column label="排序号" align="center" prop="indexs" />
       <el-table-column label="游戏平台" align="center" prop="platformName"/>
       <el-table-column label="高宽比" align="center" prop="highWide"/>
-      <el-table-column label="0 =不填充 1=填充" align="center" prop="isFull" :formatter="statusFormat" />
-      <el-table-column label="是否维护(1是0否)" align="center">
+      <el-table-column label="是否填充" align="center" prop="isFull" :formatter="statusFormat" />
+      <el-table-column label="是否维护" align="center">
       <template slot-scope="scope">
         <el-switch
           v-model="scope.row.isWh"
@@ -76,7 +76,7 @@
         ></el-switch>
       </template>
       </el-table-column>
-      <el-table-column label="状态(1启用0停用)" align="center"  >
+      <el-table-column label="启用状态" align="center"  >
       <template slot-scope="scope">
         <el-switch
           v-model="scope.row.status"

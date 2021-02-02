@@ -49,6 +49,16 @@ export function parseTime(time, pattern) {
   return time_str
 }
 
+// 获取今天开始时间
+export function getTodayStartTime() {
+  return new Date(new Date().toLocaleDateString())
+}
+
+// 获取今天结束时间
+export function getTodayEndTime() {
+  return new Date(new Date().toLocaleDateString() + ' 23:59:59')
+}
+
 // 表单重置
 export function resetForm(refName) {
   if (this.$refs[refName]) {

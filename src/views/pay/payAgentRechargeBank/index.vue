@@ -192,7 +192,7 @@
 </template>
 
 <script>
-import { listPayAgentRechargeBank, getPayAgentRechargeBank, delPayAgentRechargeBank, addPayAgentRechargeBank, updatePayAgentRechargeBank, exportPayAgentRechargeBank ,changeStatus} from "@/api/platform-web/pay/payAgentRechargeBank/payAgentRechargeBank";
+import { listPayAgentRechargeBank, getPayAgentRechargeBank, delPayAgentRechargeBank, addPayAgentRechargeBank, updatePayAgentRechargeBank, exportPayAgentRechargeBank ,changeStatus} from "@/api/platform-web/pay/payAgentRechargeBank";
 
 
 export default {

@@ -55,18 +55,20 @@ export function exportPayAgentRechargeRecord(query) {
 
 //人工存入
 export function deposit(query) {
+  console.info(query)
   return request({
     url: url.platformWeb + '/pay/payAgentRechargeRecord/deposit',
-    method: 'post',
+    method: 'put',
     params: query
   })
 }
 
 //人工提出
 export function proposed(query) {
+  console.info(query)
   return request({
     url: url.platformWeb + '/pay/payAgentRechargeRecord/proposed',
-    method: 'post',
+    method: 'put',
     params: query
   })
 }

@@ -102,19 +102,19 @@
 
     <el-table v-loading="loading" :data="payAgentRechargeRecordList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="订单号主键" align="center" prop="orderNo"/>
+      <el-table-column label="订单号" align="center" prop="orderNo"/>
       <el-table-column label="代充账号" align="center" prop="rechargeAcount"/>
       <el-table-column label="代充昵称" align="center" prop="rechargeNickName"/>
       <el-table-column label="存入(提出)类型" align="center" prop="type"/>
-      <el-table-column label="备注" align="center" prop="remark"/>
       <el-table-column label="存入(提出)金额" align="center" prop="money"/>
+      <el-table-column label="备注" align="center" prop="remark"/>
       <el-table-column label="操作时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作人" align="center" prop="opName"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+<!--      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -133,7 +133,7 @@
           >删除
           </el-button>
         </template>
-      </el-table-column>
+      </el-table-column>-->
     </el-table>
 
     <pagination
@@ -169,7 +169,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="存入金额" prop="money">
-          <el-input placeholder="请输入存入金额" v-model="formdeposit.money"/>
+          <el-input type="number" placeholder="请输入存入金额" v-model="formdeposit.money"/>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input placeholder="请输入备注" v-model="formdeposit.remark"/>
@@ -205,7 +205,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="提出金额" prop="money">
-          <el-input placeholder="请输入提出金额" v-model="formproposed.money"/>
+          <el-input placeholder="请输入提出金额" type="number" label="BigDecimal" v-model="formproposed.money"/>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input placeholder="请输入备注" v-model="formproposed.remark"/>
@@ -402,7 +402,7 @@ export default {
     /** 人工存入按钮 */
     submitDeposit() {
       this.$refs["formdeposit"].validate(valid => {
-          if (this.formdeposit.userId != null) {
+          if (this.formdeposit.rechargeAcount != null) {
             deposit(this.formdeposit).then(response => {
               this.msgSuccess("提交成功");
               this.open = false;
@@ -414,7 +414,7 @@ export default {
     /** 人工提出按钮 */
     submitProposed() {
       this.$refs["formproposed"].validate(valid => {
-        if (this.formproposed.userId != null) {
+        if (this.formproposed.rechargeAcount != null) {
           proposed(this.formproposed).then(response => {
             this.msgSuccess("提交成功");
             this.open = false;

@@ -44,10 +44,11 @@
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
+      <el-form-item>
+      <el-button type="primary" size="medium" @click="deposit">人工存入</el-button>
+      <el-button type="primary" size="medium" @click="proposed">人工提出</el-button>
+      </el-form-item>
     </el-form>
-
-    <el-button type="primary" @click="deposit">人工存入</el-button>
-    <el-button type="primary" @click="proposed">人工提出</el-button>
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">

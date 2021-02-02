@@ -204,7 +204,7 @@ export default {
         getLiveVideoChat(id).then(response => {
           this.form = response.data;
           this.open = true;
-          this.title = "修改会员发言";
+          this.title = "封停用户";
         });
       }else{
         this.$confirm('确定要'+row.fromPlatform+'解封吗?', "警告", {

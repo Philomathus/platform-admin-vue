@@ -56,6 +56,9 @@
       </el-form-item>
     </el-form>
 
+    <el-button type="primary" id="copy1" >交易笔数: {{this.data.countNumber}}</el-button>
+    <el-button type="success" id="copy2" >总汇款金额: {{this.data.countMoney}}</el-button>
+
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
@@ -233,7 +236,8 @@
 </template>
 
 <script>
-import { listPayAgentRechargeAccountLog, getPayAgentRechargeAccountLog, delPayAgentRechargeAccountLog, addPayAgentRechargeAccountLog, updatePayAgentRechargeAccountLog, exportPayAgentRechargeAccountLog ,lockPayAgentRechargeAccountLog,unlockPayAgentRechargeAccountLog,artificialPayAgentRechargeAccountLog,refusedPayAgentRechargeAccountLog} from "@/api/platform-web/pay/payAgentRechargeAccountLog";
+import { listPayAgentRechargeAccountLog, getPayAgentRechargeAccountLog, delPayAgentRechargeAccountLog, addPayAgentRechargeAccountLog, agentStatistic,updatePayAgentRechargeAccountLog, exportPayAgentRechargeAccountLog ,lockPayAgentRechargeAccountLog,unlockPayAgentRechargeAccountLog,artificialPayAgentRechargeAccountLog,refusedPayAgentRechargeAccountLog} from "@/api/platform-web/pay/payAgentRechargeAccountLog";
+
 
 
 
@@ -257,6 +261,7 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
+      data: {},
       // 代充人入款表格数据
       payAgentRechargeAccountLogList: [],
       // 弹出层标题
@@ -311,6 +316,7 @@ export default {
   },
   created() {
     this.getList();
+    this.statistic();
     this.getDicts("recharge_status").then(response => {
       this.statusOptions = response.data;
     });
@@ -334,6 +340,13 @@ export default {
       this.open = false;
       this.reset();
     },
+    statistic() {
+      this.loading = true;
+      agentStatistic(this.queryParams).then(response => {
+        this.data= response.data;
+        this.loading = false;
+      });
+    },
     // 表单重置
     reset() {
       this.form = {
@@ -356,6 +369,7 @@ export default {
     handleQuery() {
       this.queryParams.pageNum = 1;
       this.getList();
+      this.statistic();
     },
     /** 重置按钮操作 */
     resetQuery() {
@@ -436,7 +450,6 @@ export default {
       this.reset()
       const orderNo = row.orderNo
       getPayAgentRechargeAccountLog(orderNo).then(response => {
-        console.info(response.data)
         this.form = response.data;
         this.open = true;
         this.title = "存入明细";

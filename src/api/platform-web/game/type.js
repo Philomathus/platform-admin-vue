@@ -36,9 +36,9 @@ export function updateType(data) {
   })
 }
 // 修改游戏类型
-export function upddataGameTypeInfo(all_games,type_games) {
+export function upddataGameTypeInfo(typeId,type_games) {
   const dataList = {
-    all_games,
+    typeId,
     type_games
   }
   return request({

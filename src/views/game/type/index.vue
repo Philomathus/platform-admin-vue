@@ -131,7 +131,7 @@
     />
 
     <!-- 添加或修改游戏类型对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="relationGame" width="500px"
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="名称" prop="name">
@@ -187,7 +187,6 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="relationGameList">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
   </div>
@@ -363,14 +362,15 @@ export default {
         this.title = "关联游戏类型";
         this.relationGame = true;
       })
+      this.id=row.id
     },
     relationGameList() {
-      debugger;
-      // const value =this.value;
-      // var id = value.id;
-      var all_games = this.data;
+      var typeId = this.id;
       var type_games = this.value;
-      upddataGameTypeInfo(all_games,type_games).then(response => {
+      upddataGameTypeInfo(typeId,type_games).then(response => {
+        this.relationGame = false;
+        this.msgSuccess("修改成功");
+        this.getList();
       })
     },
     /** 修改按钮操作 */

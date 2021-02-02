@@ -244,7 +244,6 @@ export default {
     this.getList();
     this.getDicts("pay_type").then(response => {
       this.paytypeOptions = response.data;
-      console.info(response.data)
     });
   },
   methods: {

@@ -87,3 +87,12 @@ export function exportPayAgentRechargeAccountLog(query) {
     params: query
   })
 }
+
+// 统计
+export function agentStatistic(query) {
+  return request({
+    url: url.platformWeb + '/pay/payAgentRechargeAccountLog/statistic',
+    method: 'get',
+    params: query
+  })
+}

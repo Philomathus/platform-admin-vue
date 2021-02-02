@@ -176,8 +176,8 @@
     />
 
     <!-- 添加或修改代充人入款对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules"  label-width="80px">
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="600px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules"  label-width="120px">
         <el-form-item label="订单号"  prop="account">
           <el-input v-model="form.orderNo" placeholder="请输入订单号" readonly />
         </el-form-item>
@@ -321,7 +321,6 @@ export default {
       this.loading = true;
       listPayAgentRechargeAccountLog(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
         this.payAgentRechargeAccountLogList = response.rows;
-        console.info(response.rows)
         this.total = response.total;
         this.loading = false;
       });
@@ -437,8 +436,10 @@ export default {
       this.reset()
       const orderNo = row.orderNo
       getPayAgentRechargeAccountLog(orderNo).then(response => {
-        this.form = response.data
-        this.open = true
+        console.info(response.data)
+        this.form = response.data;
+        this.open = true;
+        this.title = "存入明细";
       })
     },
 

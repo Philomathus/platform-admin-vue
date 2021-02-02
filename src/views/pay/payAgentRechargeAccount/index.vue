@@ -91,14 +91,14 @@
       <el-table-column label="支付宝账号" align="center" prop="alipayAccount" />
       <el-table-column label="手机号" align="center" prop="mobile" />
       <el-table-column label="开店时间" align="center" prop="businessBeginTime" width="180">
-        <template slot-scope="scope">
+<!--        <template slot-scope="scope">
           <span>{{ parseTime(scope.row.businessBeginTime, '{y}-{m}-{d}') }}</span>
-        </template>
+        </template>-->
       </el-table-column>
       <el-table-column label="关店时间" align="center" prop="businessEndTime" width="180">
-        <template slot-scope="scope">
+<!--        <template slot-scope="scope">
           <span>{{ parseTime(scope.row.businessEndTime, '{y}-{m}-{d}') }}</span>
-        </template>
+        </template>-->
       </el-table-column>
       <el-table-column label="充值优惠比例" align="center" prop="rechargeDiscountRate" />
       <el-table-column label="状态" align="center" prop="status"  >
@@ -113,20 +113,20 @@
       </el-table-column>
       <el-table-column label="注册时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="上次登录时间" align="center" prop="beforeLoginTime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.beforeLoginTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.beforeLoginTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="本次登录时间" align="center" prop="loginTime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.loginTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.loginTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right" width="120px">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -155,60 +155,48 @@
     />
 
     <!-- 添加或修改代充人管理对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="110px">
         <el-form-item label="代充账号" prop="account">
           <el-input v-model="form.account" placeholder="请输入代充账号" />
         </el-form-item>
         <el-form-item label="代充昵称" prop="nickName">
           <el-input v-model="form.nickName" placeholder="请输入代充昵称" />
         </el-form-item>
-        <el-form-item label="当前余额额度" prop="balanceAmount">
-          <el-input v-model="form.balanceAmount" placeholder="请输入当前余额额度" />
-        </el-form-item>
-        <el-form-item label="代充次数" prop="rechargeNum">
-          <el-input v-model="form.rechargeNum" placeholder="请输入代充次数" />
-        </el-form-item>
         <el-form-item label="QQ号" prop="qqAccount">
           <el-input v-model="form.qqAccount" placeholder="请输入QQ号" />
         </el-form-item>
-        <el-form-item label="微信号或微信注册手机号" prop="wechatAccount">
+        <el-form-item label="微信号" prop="wechatAccount">
           <el-input v-model="form.wechatAccount" placeholder="请输入微信号或微信注册手机号" />
         </el-form-item>
-        <el-form-item label="支付宝账号或支付宝注册手机号" prop="alipayAccount">
+        <el-form-item label="支付宝账号" prop="alipayAccount">
           <el-input v-model="form.alipayAccount" placeholder="请输入支付宝账号或支付宝注册手机号" />
         </el-form-item>
         <el-form-item label="手机号" prop="mobile">
           <el-input v-model="form.mobile" placeholder="请输入手机号" />
         </el-form-item>
         <el-form-item label="开店时间" prop="businessBeginTime">
-          <el-date-picker clearable size="small"
-                          v-model="form.businessBeginTime"
-                          type="date"
-                          value-format="yyyy-MM-dd"
-                          placeholder="选择开店时间">
-          </el-date-picker>
+          <el-time-picker
+            arrow-control
+            v-model="value1"
+            :picker-options="{
+      selectableRange: ''
+    }"
+            placeholder="任意时间点">
+          </el-time-picker>
         </el-form-item>
         <el-form-item label="关店时间" prop="businessEndTime">
-          <el-date-picker clearable size="small"
-                          v-model="form.businessEndTime"
-                          type="date"
-                          value-format="yyyy-MM-dd"
-                          placeholder="选择关店时间">
-          </el-date-picker>
+          <el-time-picker
+            arrow-control
+            v-model="value2"
+            :picker-options="{
+      selectableRange: ''
+    }"
+            placeholder="任意时间点">
+          </el-time-picker>
         </el-form-item>
         <el-form-item label="充值优惠比例" prop="rechargeDiscountRate">
           <el-input v-model="form.rechargeDiscountRate" placeholder="请输入充值优惠比例" />
-        </el-form-item>
-        <el-form-item label="状态" prop="status">
-          <el-select v-model="form.status" placeholder="请选择状态">
-            <el-option
-              v-for="dict in statusOptions"
-              :key="dict.dictValue"
-              :label="dict.dictLabel"
-              :value="parseInt(dict.dictValue)"
-            ></el-option>
-          </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -229,6 +217,8 @@ export default {
   },
   data() {
     return {
+      value1: new Date(2016, 9, 10, 18, 40),
+      value2: new Date(2016, 9, 10, 18, 40),
       // 遮罩层
       loading: true,
       // 选中数组

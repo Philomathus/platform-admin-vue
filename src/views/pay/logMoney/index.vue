@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
-    <el-button type="primary">总收入 {{ this.totalData.totalIncome || 0 }}</el-button>
-    <el-button type="success">总支出 {{ this.totalData.totalPay || 0 }}</el-button>
+    <el-button type="primary" id="copy1" @click="copy1">总收入 {{ this.totalData.totalIncome || 0 }}</el-button>
+    <el-button type="success" id="copy2" @click="copy2">总支出 {{ this.totalData.totalPay || 0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="行为类型" prop="type" class="checkbox-type">
         <el-checkbox-group v-model="queryParams.types" size="medium">
@@ -158,6 +158,27 @@ export default {
       totalCount(this.queryParams).then((res) => {
               this.totalData = res.data;
             })
+    },
+    //复制
+    copy1() {
+      let text = document.getElementById('copy1').innerText;
+      let inputElement = document.createElement('input')
+      inputElement.value = text;
+      document.body.appendChild(inputElement);
+      inputElement .select(); //选中文本
+      document.execCommand("copy"); //执行浏览器复制命令
+      inputElement.remove();
+      this.msgSuccess("复制成功")
+    },
+    copy2() {
+      let text = document.getElementById('copy2').innerText;
+      let inputElement = document.createElement('input')
+      inputElement.value = text;
+      document.body.appendChild(inputElement);
+      inputElement .select(); //选中文本
+      document.execCommand("copy"); //执行浏览器复制命令
+      inputElement.remove();
+      this.msgSuccess("复制成功")
     },
     jump(userId,createTime){
       this.$router.push({path: '/member/memberGameData',query: { userId: userId, createTime: createTime,}})

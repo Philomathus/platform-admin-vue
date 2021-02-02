@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
-    <el-button type="success">出款笔数 {{ this.totalData.total || 0 }}</el-button>
-    <el-button type="warning">总出款金额 {{ this.totalData.successTotal || 0 }}</el-button>
-    <el-button type="info">成功率 {{ numberUtil.toPercent(this.totalData.successRate) }}</el-button>
+    <el-button type="success" id="copy1" @click="copy1">出款笔数 {{ this.totalData.total || 0 }}</el-button>
+    <el-button type="warning" id="copy2" @click="copy2">总出款金额 {{ this.totalData.successTotal || 0 }}</el-button>
+    <el-button type="info" id="copy3" @click="copy3">成功率 {{ numberUtil.toPercent(this.totalData.successRate) }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px" style="margin-top: 20px">
       <el-form-item label="修改日期" prop="searchTime">
         <el-date-picker type="datetimerange" v-model="queryParams.searchTime" format="yyyy-MM-dd HH:mm:ss"
@@ -335,6 +335,37 @@
         });
         this.fundsOpen = true
 
+      },
+      //复制
+      copy1() {
+        let text = document.getElementById('copy1').innerText;
+        let inputElement = document.createElement('input')
+        inputElement.value = text;
+        document.body.appendChild(inputElement);
+        inputElement .select(); //选中文本
+        document.execCommand("copy"); //执行浏览器复制命令
+        inputElement.remove();
+        this.msgSuccess("复制成功")
+      },
+      copy2() {
+        let text = document.getElementById('copy2').innerText;
+        let inputElement = document.createElement('input')
+        inputElement.value = text;
+        document.body.appendChild(inputElement);
+        inputElement .select(); //选中文本
+        document.execCommand("copy"); //执行浏览器复制命令
+        inputElement.remove();
+        this.msgSuccess("复制成功")
+      },
+      copy3() {
+        let text = document.getElementById('copy3').innerText;
+        let inputElement = document.createElement('input')
+        inputElement.value = text;
+        document.body.appendChild(inputElement);
+        inputElement .select(); //选中文本
+        document.execCommand("copy"); //执行浏览器复制命令
+        inputElement.remove();
+        this.msgSuccess("复制成功")
       },
       getCountTotal(){
         getCountTotal(this.queryParams).then((res) => {

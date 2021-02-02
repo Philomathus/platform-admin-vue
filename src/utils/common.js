@@ -169,3 +169,13 @@ export function handleTree(data, id, parentId, children, rootId) {
   })
   return treeData != '' ? treeData : data
 }
+
+export function copyCommand(value){
+  let inputElement = document.createElement('input')
+  inputElement.value = value
+  document.body.appendChild(inputElement)
+  inputElement.select() //选中文本
+  document.execCommand('copy') //执行浏览器复制命令
+  inputElement.remove()
+  this.msgSuccess('复制成功')
+}

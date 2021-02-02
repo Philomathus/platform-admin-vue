@@ -36,55 +36,56 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['web:game-info:add']"
-        >新增</el-button>
+        >新增
+        </el-button>
       </el-col>
 
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
-    <el-table v-loading="loading" :data="report" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="游戏名称" align="center" prop="name" />
-      <el-table-column label="图标" align="center" prop="icon" >
-      <template slot-scope="scope">
-        <el-image
-          style="width: 50px; height: 50px"
-          :src="scope.row.icon"
-        >
-        </el-image>
-      </template>
+    <el-table :stripe="true" v-loading="loading" :data="report" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="游戏名称" align="center" prop="name"/>
+      <el-table-column label="图标" align="center" prop="icon">
+        <template slot-scope="scope">
+          <el-image
+            style="width: 50px; height: 50px"
+            :src="scope.row.icon"
+          >
+          </el-image>
+        </template>
       </el-table-column>
       <el-table-column label="新版图标" align="center" prop="editionIcon">
-      <template slot-scope="scope">
-        <el-image
-          style="width: 50px; height: 50px"
-          :src="scope.row.editionIcon"
-        >
-        </el-image>
-      </template>
+        <template slot-scope="scope">
+          <el-image
+            style="width: 50px; height: 50px"
+            :src="scope.row.editionIcon"
+          >
+          </el-image>
+        </template>
       </el-table-column>
-      <el-table-column label="排序号" align="center" prop="indexs" />
+      <el-table-column label="排序号" align="center" prop="indexs"/>
       <el-table-column label="游戏平台" align="center" prop="platformName"/>
       <el-table-column label="高宽比" align="center" prop="highWide"/>
-      <el-table-column label="是否填充" align="center" prop="isFull" :formatter="statusFormat" />
+      <el-table-column label="是否填充" align="center" prop="isFull" :formatter="statusFormat"/>
       <el-table-column label="是否维护" align="center">
-      <template slot-scope="scope">
-        <el-switch
-          v-model="scope.row.isWh"
-          active-value="1"
-          inactive-value="0"
-          @change="handleStatusChangeisWH(scope.row)"
-        ></el-switch>
-      </template>
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.isWh"
+            active-value="1"
+            inactive-value="0"
+            @change="handleStatusChangeisWH(scope.row)"
+          ></el-switch>
+        </template>
       </el-table-column>
-      <el-table-column label="启用状态" align="center"  >
-      <template slot-scope="scope">
-        <el-switch
-          v-model="scope.row.status"
-          active-value="1"
-          inactive-value="0"
-          @change="handleStatusChange(scope.row)"
-        ></el-switch>
-      </template>
+      <el-table-column label="启用状态" align="center">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.status"
+            active-value="1"
+            inactive-value="0"
+            @change="handleStatusChange(scope.row)"
+          ></el-switch>
+        </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -94,14 +95,16 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['web:game-info:edit']"
-          >修改</el-button>
+          >修改
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['web:game-info:remove']"
-          >删除</el-button>
+          >删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -115,15 +118,14 @@
     />
 
 
-
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="游戏名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入游戏名称" />
+          <el-input v-model="form.name" placeholder="请输入游戏名称"/>
         </el-form-item>
         <el-form-item label="排序号" prop="indexs">
-          <el-input v-model="form.indexs" placeholder="请输入排序号" />
+          <el-input v-model="form.indexs" placeholder="请输入排序号"/>
         </el-form-item>
         <el-form-item label="图标" prop="icon">
           <imageUpload v-model="form.icon" path="gameInfo"/>
@@ -142,10 +144,10 @@
           </el-select>
         </el-form-item>
         <el-form-item label="高宽比" prop="highWide">
-          <el-input v-model="form.highWide" placeholder="请输入高宽比" />
+          <el-input v-model="form.highWide" placeholder="请输入高宽比"/>
         </el-form-item>
         <el-form-item label="是否填充" prop="isFull">
-            <el-select v-model="form.isFull" placeholder="请选择">
+          <el-select v-model="form.isFull" placeholder="请选择">
             <el-option
               v-for="dict in isFullList"
               :key="dict.dictValue"
@@ -165,7 +167,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="简介" prop="remark">
-          <el-input v-model="form.remark" placeholder="请输入简介" />
+          <el-input v-model="form.remark" placeholder="请输入简介"/>
         </el-form-item>
 
       </el-form>
@@ -188,24 +190,24 @@ import {
   getGameInfo,
   addGameInfoOne,
   updateGameInfo,
-  delGameInfo,
+  delGameInfo
 } from '@/api/platform-web/game/gameInfo'
 import ImageUpload from '@/components/ImageUpload'
-import {getToken} from '@/utils/auth'
+import { getToken } from '@/utils/auth'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 
 export default {
   name: 'User',
-  components: {ImageUpload,},
+  components: { ImageUpload },
   data() {
     return {
       //谷歌验证码点击关闭
       dialogVisible: false,
       //谷歌二维码
       pic: '',
-      secretKey: "",
-      googleAuthCode: "",
-      userName: "",
+      secretKey: '',
+      googleAuthCode: '',
+      userName: '',
       // 遮罩层
       loading: true,
       // 选中数组
@@ -251,7 +253,7 @@ export default {
         // 是否更新已经存在的用户数据
         updateSupport: 0,
         // 设置上传的请求头部
-        headers: {Authorization: 'Bearer ' + getToken()},
+        headers: { Authorization: 'Bearer ' + getToken() },
         // 上传的地址
         url: process.env.VUE_APP_BASE_API + '/system/user/importData'
       },
@@ -262,7 +264,7 @@ export default {
         platformId: null,
         platformName: null,
         name: null
-      },
+      }
 
     }
   },
@@ -274,11 +276,10 @@ export default {
     this.getDicts('game_isFull').then(response => {
       this.isFullList = response.data
     })
-     getGameInfo().then(response => {
-        this.platformNameList = response.data;
-      });
+    getGameInfo().then(response => {
+      this.platformNameList = response.data
+    })
   },
-
 
   methods: {
     /** 查询用户列表 */
@@ -293,53 +294,52 @@ export default {
     },
     // 横竖屏
     screen(row, column) {
-    if (row.screen==0){
-      return '横屏'
-    }
-    if (row.isFull==1){
-      return '竖屏'
-    }
+      if (row.screen == 0) {
+        return '横屏'
+      }
+      if (row.isFull == 1) {
+        return '竖屏'
+      }
     },
     // 是否填充
     statusFormat(row, column) {
-      if (row.isFull==0){
+      if (row.isFull == 0) {
         return '不填充'
       }
-      if (row.isFull==1){
+      if (row.isFull == 1) {
         return '填充'
       }
     },
     // 状态修改
     handleStatusChange(row) {
-      let text = row.status ==="1" ? '启用' : '停用'
+      let text = row.status === '1' ? '启用' : '停用'
       this.$confirm('确认要"' + text + '""' + row.name + '"吗?', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function () {
+      }).then(function() {
         return changeUserStatus(row.id, row.status)
       }).then(() => {
         this.msgSuccess(text + '成功')
-      }).catch(function () {
+      }).catch(function() {
         row.status = row.status === '0' ? '1' : '0'
       })
     },
     // 维护状态修改
     handleStatusChangeisWH(row) {
-      let text = row.isWh ==="1" ? '是' : '否'
+      let text = row.isWh === '1' ? '是' : '否'
       this.$confirm('确认要"' + text + '""' + row.name + '"吗?', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function () {
+      }).then(function() {
         return changeIsWh(row.id, row.isWh)
       }).then(() => {
         this.msgSuccess(text + '成功')
-      }).catch(function () {
+      }).catch(function() {
         row.isWh = row.isWh === '0' ? '1' : '0'
       })
     },
-
 
     // 取消按钮
     cancel() {
@@ -365,8 +365,8 @@ export default {
         highWide: null,
         isFull: null,
         iconType: null
-      };
-      this.resetForm("form");
+      }
+      this.resetForm('form')
     },
     /** 搜索按钮操作 */
     handleQuery() {
@@ -375,64 +375,62 @@ export default {
     },
 
     handleUpdate(row) {
-      this.reset();
+      this.reset()
       const id = row.id || this.ids
       getInfo(id).then(response => {
-        this.form = response.data;
-        this.open = true;
-        this.title = "修改游戏";
-      });
+        this.form = response.data
+        this.open = true
+        this.title = '修改游戏'
+      })
     },
-
-
 
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
     handleAdd() {
-      this.reset();
-      this.open = true;
-      this.title = "添加【请填写功能名称】";
+      this.reset()
+      this.open = true
+      this.title = '添加【请填写功能名称】'
     },
 
     /** 提交按钮 */
     submitForm() {
-      this.$refs["form"].validate(valid => {
+      this.$refs['form'].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
             updateGameInfo(this.form).then(response => {
-              this.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
-            });
+              this.msgSuccess('修改成功')
+              this.open = false
+              this.getList()
+            })
           } else {
             addGameInfoOne(this.form).then(response => {
-              this.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
-            });
+              this.msgSuccess('新增成功')
+              this.open = false
+              this.getList()
+            })
           }
         }
-      });
+      })
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const ids = row.id || this.ids;
-      this.$confirm('是否确认删除游戏名为"' + row.name + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+      const ids = row.id || this.ids
+      this.$confirm('是否确认删除游戏名为"' + row.name + '"的数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       }).then(function() {
-        return delGameInfo(ids);
+        return delGameInfo(ids)
       }).then(() => {
-        this.getList();
-        this.msgSuccess("删除成功");
+        this.getList()
+        this.msgSuccess('删除成功')
       })
-    },
+    }
 
   }
 }

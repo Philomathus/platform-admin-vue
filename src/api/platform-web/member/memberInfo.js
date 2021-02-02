@@ -1,10 +1,10 @@
 import request from '@/utils/request'
 import {url} from '@/utils/url'
 
-// 查询【请填写功能名称】列表
+// 查询会员信息列表
 export function listMemberInfo(query) {
   return request({
-    url: url.platformWeb + '/admin/memberInfo/list',
+    url: url.platformWeb + '/member/memberInfo/list',
     method: 'get',
     params: query
   })
@@ -21,7 +21,7 @@ export function gameBalance(query) {
 // 查询资金明细列表
 export function memberWithdrawLog(query) {
   return request({
-    url: url.platformWeb + '/admin/memberInfo/report',
+    url: url.platformWeb + '/member/memberInfo/report',
     method: 'get',
     params: query
   })
@@ -29,7 +29,7 @@ export function memberWithdrawLog(query) {
 // 加分提交接口
 export function addScore(query) {
   return request({
-    url: url.platformWeb + '/admin/memberInfo/addScore',
+    url: url.platformWeb + '/member/memberInfo/addScore',
     method: 'post',
     params: query
   })
@@ -37,14 +37,14 @@ export function addScore(query) {
 // 重置密码接口
 export function resetPassword(query) {
   return request({
-    url: url.platformWeb + '/admin/memberInfo/reset/'+query,
+    url: url.platformWeb + '/member/memberInfo/reset/'+query,
     method: 'delete',
   })
 }
 // 查询银行卡列表接口
 export function cardList(query) {
   return request({
-    url: url.platformWeb + '/admin/memberInfo/card-list/',
+    url: url.platformWeb + '/member/memberInfo/card-list/',
     method: 'get',
     params: query
   })
@@ -52,7 +52,7 @@ export function cardList(query) {
 // 修改用户状态
 export function changeStatus(query) {
   return request({
-    url: url.platformWeb + '/admin/memberInfo/change-status/',
+    url: url.platformWeb + '/member/memberInfo/change-status/',
     method: 'put',
     params: query
   })
@@ -60,7 +60,7 @@ export function changeStatus(query) {
 // 重置保险箱
 export function resetSafe(query) {
   return request({
-    url: url.platformWeb + '/admin/memberInfo/resetPassword',
+    url: url.platformWeb + '/member/memberInfo/resetPassword',
     method: 'post',
     params: query
   })
@@ -68,50 +68,42 @@ export function resetSafe(query) {
 // 重置体现
 export function resetWithdrawal(query) {
   return request({
-    url: url.platformWeb + '/admin/memberInfo/resettx',
+    url: url.platformWeb + '/member/memberInfo/resettx',
     method: 'post',
     params: query
   })
 }
 
-// 查询【请填写功能名称】详细
+// 查询会员信息详细
 export function getMemberInfo(id) {
   return request({
-    url: url.platformWeb + '/admin/memberInfo/' + id,
+    url: url.platformWeb + '/member/memberInfo/' + id,
     method: 'get'
   })
 }
 
-// 新增【请填写功能名称】
+// 新增会员信息
 export function addMemberInfo(data) {
   return request({
-    url: url.platformWeb + '/admin/memberInfo',
+    url: url.platformWeb + '/member/memberInfo',
     method: 'post',
     data: data
   })
 }
 
-// 修改【请填写功能名称】
+// 修改会员信息
 export function updateMemberInfo(data) {
   return request({
-    url: url.platformWeb + '/admin/memberInfo',
+    url: url.platformWeb + '/member/memberInfo',
     method: 'put',
     data: data
   })
 }
 
-// 删除【请填写功能名称】
-export function delMemberInfo(id) {
-  return request({
-    url: url.platformWeb + '/admin/memberInfo/' + id,
-    method: 'delete'
-  })
-}
-
-// 导出【请填写功能名称】
+// 导出会员信息
 export function exportMemberInfo(query) {
   return request({
-    url: url.platformWeb + '/admin/memberInfo/export',
+    url: url.platformWeb + '/member/memberInfo/export',
     method: 'get',
     params: query
   })

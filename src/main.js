@@ -26,7 +26,8 @@ import {
   selectDictLabel,
   selectDictLabels,
   download,
-  handleTree
+  handleTree,
+  copyCommand
 } from '@/utils/common'
 import Pagination from '@/components/Pagination'
 // 自定义表格工具扩展
@@ -47,6 +48,7 @@ Vue.prototype.selectDictLabel = selectDictLabel
 Vue.prototype.selectDictLabels = selectDictLabels
 Vue.prototype.download = download
 Vue.prototype.handleTree = handleTree
+Vue.prototype.copyCommand = copyCommand
 Vue.prototype.numberUtil = numberUtil
 
 Vue.prototype.msgSuccess = function(msg) {

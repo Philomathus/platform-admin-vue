@@ -40,7 +40,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="configGametypeList" @selection-change="handleSelectionChange">
+    <el-table :stripe="true" v-loading="loading" :data="configGametypeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="平台id" align="center" prop="platformId" />
       <el-table-column label="平台名称" align="center" prop="platformName" />

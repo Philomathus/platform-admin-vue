@@ -190,7 +190,6 @@ import {
   refusedAuditMemberRechargeLog,
   recoverAuditMemberRechargeLog
 } from '@/api/platform-web/pay/memberRechargeLog'
-import { refusedMemberWithdrawLog } from '@/api/platform-web/pay/memberWithdrawLog'
 
 export default {
   name: 'MemberRechargeLog',

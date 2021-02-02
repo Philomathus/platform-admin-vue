@@ -52,3 +52,12 @@ export function exportPayAgentRechargeLog(query) {
     params: query
   })
 }
+
+// 统计
+export function countMoney(query) {
+  return request({
+    url: url.platformWeb + '/pay/payAgentRechargeLog/count',
+    method: 'get',
+    params: query
+  })
+}

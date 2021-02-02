@@ -52,6 +52,9 @@
       </el-form-item>
     </el-form>
 
+    <el-button type="primary">交易笔数: {{this.data.countNumber}}</el-button>
+    <el-button type="success">总上分金额: {{this.data.countMoney}}</el-button>
+
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
@@ -130,7 +133,7 @@
 </template>
 
 <script>
-import { listPayAgentRechargeLog, getPayAgentRechargeLog, delPayAgentRechargeLog, addPayAgentRechargeLog, updatePayAgentRechargeLog, exportPayAgentRechargeLog } from "@/api/platform-web/pay/payAgentRechargeLog/payAgentRechargeLog";
+import { listPayAgentRechargeLog, getPayAgentRechargeLog, delPayAgentRechargeLog, addPayAgentRechargeLog, updatePayAgentRechargeLog, exportPayAgentRechargeLog, countMoney } from "@/api/platform-web/pay/payAgentRechargeLog/payAgentRechargeLog";
 
 export default {
   name: "PayAgentRechargeLog",
@@ -150,6 +153,7 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
+      data: {},
       // 代充信息日志表格数据
       payAgentRechargeLogList: [],
       // 弹出层标题
@@ -193,6 +197,7 @@ export default {
   },
   created() {
     this.getList();
+    this.count();
   },
   methods: {
     /** 查询代充信息日志列表 */
@@ -208,6 +213,14 @@ export default {
     cancel() {
       this.open = false;
       this.reset();
+    },
+    count() {
+      this.loading = true;
+      countMoney(this.queryParams).then(response => {
+        this.data= response.data;
+        console.info(response.data);
+        this.loading = false;
+      });
     },
     // 表单重置
     reset() {
@@ -226,6 +239,7 @@ export default {
     handleQuery() {
       this.queryParams.pageNum = 1;
       this.getList();
+      this.count();
     },
     /** 重置按钮操作 */
     resetQuery() {

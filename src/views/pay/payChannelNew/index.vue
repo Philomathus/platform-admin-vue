@@ -234,8 +234,8 @@
         </el-form-item>
         <el-form-item label="输入类型 " prop="inputType">
           <el-radio-group v-model="form.inputType">
-            <el-radio label="0">自定义金额+快捷金额</el-radio>
-            <el-radio label="1">仅快捷金额</el-radio>
+            <el-radio label="1">自定义金额+快捷金额</el-radio>
+            <el-radio label="0">仅快捷金额</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="快捷金额" prop="quickAmount">
@@ -307,7 +307,7 @@ export default {
         payTypeId: null,
         discountBill: null,
         quickAmount: null,
-        inputType: null,
+        inputType: '1',
         creator: null,
         updator: null,
         payRate: null
@@ -413,7 +413,7 @@ export default {
         totalSuccessMoney: null,
         rechargeMin: null,
         rechargeMax: null,
-        status: 0,
+        status: '0',
         isCanCallback: null,
         indexes: null,
         openLevel: null,
@@ -421,7 +421,7 @@ export default {
         payTypeId: null,
         discountBill: null,
         quickAmount: null,
-        inputType: null,
+        inputType: '1',
         remark: null,
         creator: null,
         createTime: null,

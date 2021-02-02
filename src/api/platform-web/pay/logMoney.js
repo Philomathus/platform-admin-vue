@@ -10,6 +10,15 @@ export function listLogMoney(query) {
   })
 }
 
+// 查询会员资金信息统计
+export function totalCount(query) {
+  return request({
+    url: url.platformWeb + '/pay/logMoney/totalCount',
+    method: 'get',
+    params: query
+  })
+}
+
 // 导出会员资金信息
 export function exportLogMoney(query) {
   return request({

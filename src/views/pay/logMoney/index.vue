@@ -1,5 +1,7 @@
 <template>
   <div class="app-container">
+    <el-button type="primary">总收入 {{ this.totalData.totalIncome || 0 }}</el-button>
+    <el-button type="success">总支出 {{ this.totalData.totalPay || 0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="行为类型" prop="type" class="checkbox-type">
         <el-checkbox-group v-model="queryParams.types" size="medium">
@@ -93,7 +95,7 @@
 </template>
 
 <script>
-import { listLogMoney, exportLogMoney } from '@/api/platform-web/pay/logMoney'
+import { listLogMoney, exportLogMoney, totalCount } from '@/api/platform-web/pay/logMoney'
 import { allTradeType } from '@/api/platform-web/config/tradeType'
 
 export default {
@@ -101,6 +103,8 @@ export default {
   components: {},
   data() {
     return {
+      //统计
+      totalData: {},
       // 遮罩层
       loading: true,
       // 选中数组
@@ -143,12 +147,18 @@ export default {
   },
   created() {
     this.getList()
+    this.totalCount()
     this.getDicts('log_money_mark').then(response => {
       this.markOptions = response.data
     })
     this.getTypeData()
   },
   methods: {
+    totalCount(){
+      totalCount(this.queryParams).then((res) => {
+              this.totalData = res.data;
+            })
+    },
     jump(userId,createTime){
       this.$router.push({path: '/member/memberGameData',query: { userId: userId, createTime: createTime,}})
     },
@@ -171,6 +181,7 @@ export default {
     handleQuery() {
       this.queryParams.pageNum = 1
       this.getList()
+      this.totalCount()
     },
     /** 重置按钮操作 */
     resetQuery() {

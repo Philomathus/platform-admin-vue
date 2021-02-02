@@ -320,7 +320,6 @@ export default {
     };
   },
   created() {
-
     var userId = this.$route.query.userId;
     var createTime = this.$route.query.createTime;
     if (createTime) {

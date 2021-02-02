@@ -38,13 +38,17 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="审核时间" prop="updateTime">
-        <el-date-picker clearable size="small"
-                        v-model="queryParams.updateTime"
-                        type="date"
-                        value-format="yyyy-MM-dd"
-                        placeholder="选择审核时间">
-        </el-date-picker>
+      <el-form-item label="审核日期" prop="updateTime">
+        <el-date-picker
+          v-model="dateRange"
+          size="small"
+          style="width: 240px"
+          value-format="yyyy-MM-dd"
+          type="daterange"
+          range-separator="-"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+        ></el-date-picker>
       </el-form-item>
       <el-form-item style="margin-left: 27px">
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -206,6 +210,8 @@ export default {
       loading: true,
       // 选中数组
       ids: [],
+      // 日期范围
+      dateRange: [],
       // 非单个禁用
       single: true,
       // 非多个禁用
@@ -276,7 +282,7 @@ export default {
     /** 查询代充人入款列表 */
     getList() {
       this.loading = true;
-      listPayAgentRechargeAccountLog(this.queryParams).then(response => {
+      listPayAgentRechargeAccountLog(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
         this.payAgentRechargeAccountLogList = response.rows;
         this.total = response.total;
         this.loading = false;
@@ -316,6 +322,7 @@ export default {
     },
     /** 重置按钮操作 */
     resetQuery() {
+      this.dateRange = []
       this.resetForm("queryForm");
       this.handleQuery();
     },

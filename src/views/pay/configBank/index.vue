@@ -73,7 +73,6 @@
 
     <el-table v-loading="loading" :data="configBankList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="银行编码" align="center" prop="code" />
       <el-table-column label="银行名称" align="center" prop="name" />
       <el-table-column label="图标" align="center" prop="icon" >
         <template slot-scope="scope">
@@ -128,8 +127,8 @@
     />
 
     <!-- 添加或修改公司入款银行列表对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="银行编码" prop="code">
           <el-input v-model="form.code" placeholder="请输入银行编码" />
         </el-form-item>
@@ -142,24 +141,11 @@
         <el-form-item label="银行官网地址" prop="url">
           <el-input v-model="form.url" placeholder="请输入银行官网地址" />
         </el-form-item>
-        <el-form-item label="排序" prop="indexs">
-          <el-input v-model="form.indexs" placeholder="请输入排序" />
-        </el-form-item>
         <el-form-item label="银行账号" prop="bankAccount">
           <el-input v-model="form.bankAccount" placeholder="请输入银行账号" />
         </el-form-item>
         <el-form-item label="备注信息" prop="remark">
           <el-input v-model="form.remark" placeholder="请输入备注信息" />
-        </el-form-item>
-        <el-form-item label="状态" prop="status">
-          <el-select v-model="form.status" placeholder="请选择状态">
-            <el-option
-              v-for="dict in statusOptions"
-              :key="dict.dictValue"
-              :label="dict.dictLabel"
-              :value="parseInt(dict.dictValue)"
-            ></el-option>
-          </el-select>
         </el-form-item>
         <el-form-item label="开户人" prop="accountName">
           <el-input v-model="form.accountName" placeholder="请输入开户人" />
@@ -171,7 +157,7 @@
           <el-input v-model="form.discountBill" placeholder="请输入优惠比例" />
         </el-form-item>
         <el-form-item label="开放层级" prop="openLevel">
-          <el-input v-model="form.openLevel" placeholder="请输入开放层级" />
+          <el-input v-model="form.openLevel" type="number" placeholder="请输入开放层级" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

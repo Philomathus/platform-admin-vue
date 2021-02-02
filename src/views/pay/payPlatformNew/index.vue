@@ -106,13 +106,13 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改【请填写功能名称】对话框 -->
+    <!-- 添加或修改【支付平台】对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="770px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-        <el-form-item label="平台" prop="name">
+      <el-form ref="form" :model="form" :rules="rules" label-width="135px">
+        <el-form-item label="名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入平台名称" />
         </el-form-item>
-        <el-form-item label="平台" prop="code">
+        <el-form-item label="编码" prop="code">
           <el-input v-model="form.code" placeholder="请输入平台编码" />
         </el-form-item>
         <el-form-item label="商户ID" prop="merId">
@@ -137,7 +137,7 @@
           <el-input v-model="form.signPrivateKey" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="平台IP白名单" prop="platWhiteIpList">
-          <el-input v-model="form.platWhiteIpList" placeholder="请输入平台IP白名单" />
+          <el-input v-model="form.platWhiteIpList"  type="textarea" placeholder="请输入平台IP白名单" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -169,10 +169,10 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 【请填写功能名称】表格数据
+      // 【支付平台】表格数据
       payPlatformNewList: [],
       // 弹出层标题
-      title: "",
+      title: "支付平台",
       // 是否显示弹出层
       open: false,
       // 查询参数
@@ -215,7 +215,7 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询【请填写功能名称】列表 */
+    /** 查询【支付平台】列表 */
     getList() {
       this.loading = true;
       listPayPlatformNew(this.queryParams).then(response => {
@@ -270,7 +270,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【请填写功能名称】";
+      this.title = "添加【支付平台】";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -279,7 +279,7 @@ export default {
       getPayPlatformNew(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = "修改【支付平台】";
       });
     },
     /** 提交按钮 */
@@ -305,7 +305,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项?', "警告", {
+      this.$confirm('是否确认删除【支付平台】编号为"' + ids + '"的数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
@@ -319,7 +319,7 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有【请填写功能名称】数据项?', "警告", {
+      this.$confirm('是否确认导出所有【支付平台】数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"

@@ -178,7 +178,7 @@
           <el-input v-model="form.payMethod" placeholder="请输入支付方式编码" />
         </el-form-item>
         <el-form-item label="排序号" prop="indexes">
-          <el-input-number v-model="form.indexes" placeholder="请输入排序号" :min="0" />
+          <el-input type="number" v-model="form.indexes" placeholder="请输入排序号" :min="0" />
         </el-form-item>
         <el-form-item label="支付平台" prop="payPlatformId">
           <el-select
@@ -215,16 +215,16 @@
           </el-select>
         </el-form-item>
         <el-form-item label="充值最低" prop="rechargeMin">
-          <el-input-number v-model="form.rechargeMin" placeholder="请输入充值最低" :min="0"/>
+          <el-input type="number" v-model="form.rechargeMin" placeholder="请输入充值最低" :min="0"/>
         </el-form-item>
         <el-form-item label="充值最高" prop="rechargeMax">
-          <el-input-number v-model="form.rechargeMax" placeholder="请输入充值最高" :min="0" />
+          <el-input type="number" v-model="form.rechargeMax" placeholder="请输入充值最高" :min="0" />
         </el-form-item>
         <el-form-item label="通道费率" prop="payRate">
           <el-input v-model="form.payRate" placeholder="请输入通道费率" />
         </el-form-item>
         <el-form-item label="开放层级" prop="openLevel">
-          <el-input-number v-model="form.openLevel" placeholder="请输入开放层级"  />
+          <el-input type="number" v-model="form.openLevel" placeholder="请输入开放层级"  />
         </el-form-item>
         <el-form-item label="支付属性" prop="payAttr">
           <el-radio-group v-model="form.payAttr">
@@ -239,7 +239,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="快捷金额" prop="quickAmount">
-          <el-input v-model="form.quickAmount" placeholder="请输入快捷金额,用','分割(英文逗号)" />
+          <el-input v-model="form.quickAmount"  type="textarea" placeholder="请输入快捷金额,用','分割(英文逗号)" />
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input v-model="form.remark" placeholder="请输入备注提示" />

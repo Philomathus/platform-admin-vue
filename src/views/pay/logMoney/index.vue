@@ -1,5 +1,7 @@
 <template>
   <div class="app-container">
+    <el-button type="primary" id="copy1" @click="copy1">总收入 {{ this.totalData.totalIncome || 0 }}</el-button>
+    <el-button type="success" id="copy2" @click="copy2">总支出 {{ this.totalData.totalPay || 0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="行为类型" prop="type" class="checkbox-type">
         <el-checkbox-group v-model="queryParams.types" size="medium">
@@ -73,7 +75,7 @@
       <el-table-column label="订单号备注" align="center" prop="markorder" min-width="320" :show-overflow-tooltip="true"/>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+            <a style="color: #00afff" @click="jump(scope.row.userId,parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}'))">{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</a>
         </template>
       </el-table-column>
       <el-table-column label="收入" align="center" prop="income" min-width="90"/>
@@ -93,7 +95,7 @@
 </template>
 
 <script>
-import { listLogMoney, exportLogMoney } from '@/api/platform-web/pay/logMoney'
+import { listLogMoney, exportLogMoney, totalCount } from '@/api/platform-web/pay/logMoney'
 import { allTradeType } from '@/api/platform-web/config/tradeType'
 
 export default {
@@ -101,6 +103,8 @@ export default {
   components: {},
   data() {
     return {
+      //统计
+      totalData: {},
       // 遮罩层
       loading: true,
       // 选中数组
@@ -127,6 +131,8 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 20,
+        orderByColumn: 'create_time',
+        isAsc: 'desc',
         userId: null,
         userName: null,
         types: [],
@@ -141,12 +147,42 @@ export default {
   },
   created() {
     this.getList()
+    this.totalCount()
     this.getDicts('log_money_mark').then(response => {
       this.markOptions = response.data
     })
     this.getTypeData()
   },
   methods: {
+    totalCount(){
+      totalCount(this.queryParams).then((res) => {
+              this.totalData = res.data;
+            })
+    },
+    //复制
+    copy1() {
+      let text = document.getElementById('copy1').innerText;
+      let inputElement = document.createElement('input')
+      inputElement.value = text;
+      document.body.appendChild(inputElement);
+      inputElement .select(); //选中文本
+      document.execCommand("copy"); //执行浏览器复制命令
+      inputElement.remove();
+      this.msgSuccess("复制成功")
+    },
+    copy2() {
+      let text = document.getElementById('copy2').innerText;
+      let inputElement = document.createElement('input')
+      inputElement.value = text;
+      document.body.appendChild(inputElement);
+      inputElement .select(); //选中文本
+      document.execCommand("copy"); //执行浏览器复制命令
+      inputElement.remove();
+      this.msgSuccess("复制成功")
+    },
+    jump(userId,createTime){
+      this.$router.push({path: '/member/memberGameData',query: { userId: userId, createTime: createTime,}})
+    },
     /** 查询 会员资金信息列表 */
     getList() {
       this.loading = true
@@ -166,6 +202,7 @@ export default {
     handleQuery() {
       this.queryParams.pageNum = 1
       this.getList()
+      this.totalCount()
     },
     /** 重置按钮操作 */
     resetQuery() {

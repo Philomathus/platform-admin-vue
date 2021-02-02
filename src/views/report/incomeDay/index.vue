@@ -10,10 +10,8 @@
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
       </el-form-item>
     </el-form>
-<!--    <el-button type="text">总成功金额</el-button>-->
-<!--    <el-button type="text" disabled>455</el-button>-->
 
-    <el-button type="primary">总成功金额: {{this.data.countSuccessMoney}}</el-button>
+    <el-button type="primary" id="copy1" @click="copy1">总成功金额: {{this.data.countSuccessMoney}}</el-button>
     <el-table v-loading="loading" :data="report">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="收款金额" align="center" prop="money"/>
@@ -93,6 +91,17 @@ export default {
         this.total = response.total;
         this.loading = false;
       });
+    },
+    //复制
+    copy1() {
+      let text = document.getElementById('copy1').innerText;
+      let inputElement = document.createElement('input')
+      inputElement.value = text;
+      document.body.appendChild(inputElement);
+      inputElement .select(); //选中文本
+      document.execCommand("copy"); //执行浏览器复制命令
+      inputElement.remove();
+      this.msgSuccess("复制成功")
     },
     count() {
       this.loading = true;

@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import {url} from '@/utils/url'
 
-// 查询【请填写功能名称】列表
+// 查询【代充人管理】列表
 export function listPayAgentRechargeAccount(query) {
   return request({
     url: url.platformWeb + '/pay/payAgentRechargeAccount/list',
@@ -10,7 +10,7 @@ export function listPayAgentRechargeAccount(query) {
   })
 }
 
-// 查询【请填写功能名称】详细
+// 查询【代充人管理】详细
 export function getPayAgentRechargeAccount(id) {
   return request({
     url: url.platformWeb + '/pay/payAgentRechargeAccount/' + id,
@@ -18,7 +18,7 @@ export function getPayAgentRechargeAccount(id) {
   })
 }
 
-// 新增【请填写功能名称】
+// 新增【代充人管理】
 export function addPayAgentRechargeAccount(data) {
   return request({
     url: url.platformWeb + '/pay/payAgentRechargeAccount',
@@ -27,7 +27,7 @@ export function addPayAgentRechargeAccount(data) {
   })
 }
 
-// 修改【请填写功能名称】
+// 修改【代充人管理】
 export function updatePayAgentRechargeAccount(data) {
   return request({
     url: url.platformWeb + '/pay/payAgentRechargeAccount',
@@ -46,7 +46,7 @@ export function changeStatus(id, status) {
     data: data
   })
 }
-// 删除【请填写功能名称】
+// 删除【代充人管理】
 export function delPayAgentRechargeAccount(id) {
   return request({
     url: url.platformWeb + '/pay/payAgentRechargeAccount/' + id,
@@ -54,7 +54,7 @@ export function delPayAgentRechargeAccount(id) {
   })
 }
 
-// 导出【请填写功能名称】
+// 导出【代充人管理】
 export function exportPayAgentRechargeAccount(query) {
   return request({
     url: url.platformWeb + '/pay/payAgentRechargeAccount/export',

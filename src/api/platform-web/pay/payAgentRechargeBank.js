@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import {url} from '@/utils/url'
 
-// 查询【请填写功能名称】列表
+// 查询【代充银行列表】列表
 export function listPayAgentRechargeBank(query) {
   return request({
     url: url.platformWeb + '/pay/payAgentRechargeBank/list',
@@ -10,7 +10,7 @@ export function listPayAgentRechargeBank(query) {
   })
 }
 
-// 查询【请填写功能名称】详细
+// 查询【代充银行列表】详细
 export function getPayAgentRechargeBank(id) {
   return request({
     url: url.platformWeb + '/pay/payAgentRechargeBank/' + id,
@@ -31,7 +31,7 @@ export function changeStatus(id, status) {
   })
 }
 
-// 新增【请填写功能名称】
+// 新增【代充银行列表】
 export function addPayAgentRechargeBank(data) {
   return request({
     url: url.platformWeb + '/pay/payAgentRechargeBank',
@@ -40,7 +40,7 @@ export function addPayAgentRechargeBank(data) {
   })
 }
 
-// 修改【请填写功能名称】
+// 修改【代充银行列表】
 export function updatePayAgentRechargeBank(data) {
   return request({
     url: url.platformWeb + '/pay/payAgentRechargeBank',
@@ -49,7 +49,7 @@ export function updatePayAgentRechargeBank(data) {
   })
 }
 
-// 删除【请填写功能名称】
+// 删除【代充银行列表】
 export function delPayAgentRechargeBank(id) {
   return request({
     url: url.platformWeb + '/pay/payAgentRechargeBank/' + id,
@@ -57,7 +57,7 @@ export function delPayAgentRechargeBank(id) {
   })
 }
 
-// 导出【请填写功能名称】
+// 导出【代充银行列表】
 export function exportPayAgentRechargeBank(query) {
   return request({
     url: url.platformWeb + '/pay/payAgentRechargeBank/export',

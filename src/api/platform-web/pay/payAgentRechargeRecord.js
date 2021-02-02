@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import {url} from '@/utils/url'
 
-// 查询【请填写功能名称】列表
+// 查询【代充存提】列表
 export function listPayAgentRechargeRecord(query) {
   return request({
     url: url.platformWeb + '/pay/payAgentRechargeRecord/list',
@@ -10,7 +10,7 @@ export function listPayAgentRechargeRecord(query) {
   })
 }
 
-// 查询【请填写功能名称】详细
+// 查询【代充存提】详细
 export function getPayAgentRechargeRecord(orderNo) {
   return request({
     url: url.platformWeb + '/pay/payAgentRechargeRecord/' + orderNo,
@@ -18,7 +18,7 @@ export function getPayAgentRechargeRecord(orderNo) {
   })
 }
 
-// 新增【请填写功能名称】
+// 新增【代充存提】
 export function addPayAgentRechargeRecord(data) {
   return request({
     url: url.platformWeb + '/pay/payAgentRechargeRecord',
@@ -27,7 +27,7 @@ export function addPayAgentRechargeRecord(data) {
   })
 }
 
-// 修改【请填写功能名称】
+// 修改【代充存提】
 export function updatePayAgentRechargeRecord(data) {
   return request({
     url: url.platformWeb + '/pay/payAgentRechargeRecord',
@@ -36,7 +36,7 @@ export function updatePayAgentRechargeRecord(data) {
   })
 }
 
-// 删除【请填写功能名称】
+// 删除【代充存提】
 export function delPayAgentRechargeRecord(orderNo) {
   return request({
     url: url.platformWeb + '/pay/payAgentRechargeRecord/' + orderNo,
@@ -44,7 +44,7 @@ export function delPayAgentRechargeRecord(orderNo) {
   })
 }
 
-// 导出【请填写功能名称】
+// 导出【代充存提】
 export function exportPayAgentRechargeRecord(query) {
   return request({
     url: url.platformWeb + '/pay/payAgentRechargeRecord/export',

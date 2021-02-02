@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import {url} from '@/utils/url'
 
-// 查询【请填写功能名称】列表
+// 查询【支付通道】列表
 export function listPayChannelNew(query) {
   return request({
     url: url.platformWeb + '/pay/payChannelNew/list',
@@ -10,7 +10,7 @@ export function listPayChannelNew(query) {
   })
 }
 
-// 查询【请填写功能名称】详细
+// 查询【支付通道】详细
 export function getPayChannelNew(id) {
   return request({
     url: url.platformWeb + '/pay/payChannelNew/' + id,
@@ -18,7 +18,7 @@ export function getPayChannelNew(id) {
   })
 }
 
-// 新增【请填写功能名称】
+// 新增【支付通道】
 export function addPayChannelNew(data) {
   return request({
     url: url.platformWeb + '/pay/payChannelNew',
@@ -27,7 +27,7 @@ export function addPayChannelNew(data) {
   })
 }
 
-// 修改【请填写功能名称】
+// 修改【支付通道】
 export function updatePayChannelNew(data) {
   return request({
     url: url.platformWeb + '/pay/payChannelNew',
@@ -85,7 +85,7 @@ export function callbackStatusChange(id, isCanCallback) {
     data: data
   })
 }
-// 删除【请填写功能名称】
+// 删除【支付通道】
 export function delPayChannelNew(id) {
   return request({
     url: url.platformWeb + '/pay/payChannelNew/' + id,
@@ -93,7 +93,7 @@ export function delPayChannelNew(id) {
   })
 }
 
-// 导出【请填写功能名称】
+// 导出【支付通道】
 export function exportPayChannelNew(query) {
   return request({
     url: url.platformWeb + '/pay/payChannelNew/export',

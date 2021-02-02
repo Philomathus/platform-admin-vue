@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import {url} from '@/utils/url'
 
-// 查询【请填写功能名称】列表
+// 查询【代付下单日志】列表
 export function listPayAgentLog(query) {
   return request({
     url: url.platformWeb + '/pay/payAgentLog/list',
@@ -10,7 +10,7 @@ export function listPayAgentLog(query) {
   })
 }
 
-// 查询【请填写功能名称】详细
+// 查询【代付下单日志】详细
 export function getPayAgentLog(id) {
   return request({
     url: url.platformWeb + '/pay/payAgentLog/' + id,
@@ -18,7 +18,7 @@ export function getPayAgentLog(id) {
   })
 }
 
-// 新增【请填写功能名称】
+// 新增【代付下单日志】
 export function addPayAgentLog(data) {
   return request({
     url: url.platformWeb + '/pay/payAgentLog',
@@ -27,7 +27,7 @@ export function addPayAgentLog(data) {
   })
 }
 
-// 修改【请填写功能名称】
+// 修改【代付下单日志】
 export function updatePayAgentLog(data) {
   return request({
     url: url.platformWeb + '/pay/payAgentLog',
@@ -36,7 +36,7 @@ export function updatePayAgentLog(data) {
   })
 }
 
-// 删除【请填写功能名称】
+// 删除【代付下单日志】
 export function delPayAgentLog(id) {
   return request({
     url: url.platformWeb + '/pay/payAgentLog/' + id,
@@ -44,7 +44,7 @@ export function delPayAgentLog(id) {
   })
 }
 
-// 导出【请填写功能名称】
+// 导出【代付下单日志】
 export function exportPayAgentLog(query) {
   return request({
     url: url.platformWeb + '/pay/payAgentLog/export',

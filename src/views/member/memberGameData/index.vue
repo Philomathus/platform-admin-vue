@@ -305,7 +305,7 @@ export default {
         platformType: null,
         status: null,
         gameStartTime: null,
-        selectDate: null,
+        selectDate: [],
         orderByColumn: 'game_end_time',
         isAsc: 'desc',
       },
@@ -320,6 +320,12 @@ export default {
     };
   },
   created() {
+    var userId = this.$route.query.userId;
+    var createTime = this.$route.query.createTime;
+    if (createTime) {
+      this.queryParams.selectDate[0] = createTime;
+      this.queryParams.selectDate[1] = this.parseTime(this.getTodayEndTime());
+    }
     this.getList();
   },
   methods: {

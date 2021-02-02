@@ -239,7 +239,6 @@ import {
   deposit,
   proposed
 } from "@/api/platform-web/pay/payAgentRechargeRecord";
-import {getGoogleAuth} from "@/api/platform-web/system/user";
 
 export default {
   name: "PayAgentRechargeRecord",
@@ -415,7 +414,7 @@ export default {
     submitProposed() {
       this.$refs["formproposed"].validate(valid => {
         if (this.formproposed.userId != null) {
-          deposit(this.formproposed).then(response => {
+          proposed(this.formproposed).then(response => {
             this.msgSuccess("提交成功");
             this.open = false;
             this.getList();

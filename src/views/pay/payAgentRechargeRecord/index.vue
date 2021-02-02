@@ -183,7 +183,7 @@
     <el-dialog
       v-dialogDrag
       :close-on-click-modal="false"
-      title="人工存入"
+      title="人工提出"
       :visible.sync="peopleproposed"
       width="500px"
       append-to-body
@@ -193,8 +193,8 @@
           <el-input placeholder="请输入代充账号" v-model="formproposed.rechargeAcount"
           />
         </el-form-item>
-        <el-form-item label="存入类型" prop="type">
-          <el-select v-model="formproposed.type" placeholder="请选择存入类型" clearable size="small">
+        <el-form-item label="提出类型" prop="type">
+          <el-select v-model="formproposed.type" placeholder="请选择提出类型" clearable size="small">
             <el-option
               v-for="item in proposedtype"
               :key="item.value"
@@ -203,8 +203,8 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="存入金额" prop="money">
-          <el-input placeholder="请输入存入金额" v-model="formproposed.money"/>
+        <el-form-item label="提出金额" prop="money">
+          <el-input placeholder="请输入提出金额" v-model="formproposed.money"/>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input placeholder="请输入备注" v-model="formproposed.remark"/>

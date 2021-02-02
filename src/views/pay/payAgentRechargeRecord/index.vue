@@ -28,7 +28,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="选择操作日期" prop="createTime">
+      <el-form-item label="选择日期" prop="createTime">
         <el-date-picker
           v-model="dateRange"
           size="small"
@@ -45,8 +45,8 @@
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
       <el-form-item>
-      <el-button type="primary" size="medium" @click="deposit">人工存入</el-button>
-      <el-button type="primary" size="medium" @click="proposed">人工提出</el-button>
+      <el-button type="primary" size="medium" @click="deposit" round>人工存入</el-button>
+      <el-button type="primary" size="medium" @click="proposed" round>人工提出</el-button>
       </el-form-item>
     </el-form>
 

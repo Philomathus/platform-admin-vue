@@ -133,7 +133,7 @@
 </template>
 
 <script>
-import { listPayAgentRechargeLog, getPayAgentRechargeLog, delPayAgentRechargeLog, addPayAgentRechargeLog, updatePayAgentRechargeLog, exportPayAgentRechargeLog, countMoney } from "@/api/platform-web/pay/payAgentRechargeLog/payAgentRechargeLog";
+import { listPayAgentRechargeLog, getPayAgentRechargeLog, delPayAgentRechargeLog, addPayAgentRechargeLog, updatePayAgentRechargeLog, exportPayAgentRechargeLog, countMoney } from "@/api/platform-web/pay/payAgentRechargeLog";
 
 export default {
   name: "PayAgentRechargeLog",

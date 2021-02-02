@@ -29,7 +29,6 @@ export function addConfigGametype(data) {
 
 // 修改【请填写功能名称】
 export function updateConfigGametype(data) {
-  debugger;
   return request({
     url: url.platformWeb + '/web/config-gametype',
     method: 'put',

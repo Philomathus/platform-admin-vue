@@ -90,10 +90,14 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="活动详情" align="center" prop="content"/>
+      <el-table-column label="活动详情" align="center" prop="content" >
+      <template v-slot="{row}">
+        <div v-html="row.content" style="max-height: 120px"></div>
+      </template>
+      </el-table-column>
       <el-table-column label="发布时间" align="center" prop="ctime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.ctime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.ctime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">

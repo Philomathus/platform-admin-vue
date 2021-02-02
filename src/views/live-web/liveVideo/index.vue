@@ -128,7 +128,6 @@ export default {
   },
   created() {
     this.getList();
-    debugger;
     this.getServerLine().then(response => {
       this.serverOptions = response.rows
     })

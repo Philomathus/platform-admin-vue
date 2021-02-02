@@ -131,12 +131,12 @@
 <!--      <el-table-column label="本地平台id" align="center" prop="platformId" />-->
       <el-table-column label="状态" align="center" prop="status" :formatter="formatterStatus"/>
       <el-table-column label="金额" align="center" prop="money" />
-      <el-table-column label="开始时间" align="center" prop="bTime" width="120">
+      <el-table-column label="开始时间" align="center" prop="bTime" width="150">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.bTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="结束时间" align="center" prop="eTime" width="120">
+      <el-table-column label="结束时间" align="center" prop="eTime" width="150">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.eTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>

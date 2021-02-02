@@ -86,7 +86,7 @@
       <el-table-column label="动作" align="center" prop="action" />
       <el-table-column label="发布时间" align="center" prop="pubdatetime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.pubdatetime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.pubdatetime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="内容" align="center" prop="content" />

@@ -60,11 +60,11 @@
       <el-table-column label="成员数量" align="center" prop="userCount"/>
       <el-table-column label="日期" align="center" prop="createDate" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.createDate, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.createDate, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="备注" align="center" prop="memo"/>
-      <el-table-column label="状态" align="center" prop="status"/>
+      <el-table-column label="状态" align="center" prop="status" :formatter="formatterStatus"/>
       <el-table-column label="家族成员的贡献" align="center" prop="contribution"/>
       <el-table-column label="家族等级" align="center" prop="familyLevel"/>
       <el-table-column label="直播时间" align="center" prop="videoTime"/>
@@ -201,6 +201,19 @@ export default {
     this.getList();
   },
   methods: {
+    // 状态，0未审核，1审核通过，2拒绝通过 4 解散
+    formatterStatus(row){
+      if (row.status == 0) {
+        return '未审核';
+      }else if (row.status == 1) {
+        return '审核通过';
+      }else if (row.status == 2) {
+        return '拒绝通过';
+      }else if (row.status == 4) {
+        return '解散';
+      }
+      return '未知';
+    },
     /** 查询家族列表 */
     getList() {
       this.loading = true;

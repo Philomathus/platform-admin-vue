@@ -144,7 +144,7 @@
       <el-table-column label="送礼金额" align="center" prop="toUserId" />
       <el-table-column label="送礼日期" align="center" prop="createtime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.createtime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.createtime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
 <!--      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">-->

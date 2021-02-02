@@ -1395,12 +1395,12 @@
          <el-table-column label="是否同步成功 : 0指同步失败 ， 1指同步成功" align="center" prop="synchronize" />
          <el-table-column label="最近上线时间" align="center" prop="loginTime" width="180">
            <template slot-scope="scope">
-             <span>{{ parseTime(scope.row.loginTime, '{y}-{m}-{d}') }}</span>
+             <span>{{ parseTime(scope.row.loginTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
            </template>
          </el-table-column>
          <el-table-column label="最近下线时间" align="center" prop="logoutTime" width="180">
            <template slot-scope="scope">
-             <span>{{ parseTime(scope.row.logoutTime, '{y}-{m}-{d}') }}</span>
+             <span>{{ parseTime(scope.row.logoutTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
            </template>
          </el-table-column>
          <el-table-column label="是否同意直播协议 0 表示不同意 1表示同意" align="center" prop="isAgree" />
@@ -1472,7 +1472,7 @@
          <el-table-column label="聊天价格" align="center" prop="weiboChatPrice" />
          <el-table-column label="微信更新时间" align="center" prop="weixinAccountTime" width="180">
            <template slot-scope="scope">
-             <span>{{ parseTime(scope.row.weixinAccountTime, '{y}-{m}-{d}') }}</span>
+             <span>{{ parseTime(scope.row.weixinAccountTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
            </template>
          </el-table-column>
          <el-table-column label="分成计划中的推广人id" align="center" prop="autoInvitationSid" />

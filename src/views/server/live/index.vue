@@ -86,6 +86,7 @@
             style="color: #5FB878"
             @click="handleEffect(scope.row, 1)"
             v-hasPermi="['server:live:effect']"
+            icon="el-icon-sunny"
           >绿色直播
           </el-button>
           <el-button
@@ -95,6 +96,7 @@
             style="color: #FFB800"
             @click="handleEffect(scope.row, 2)"
             v-hasPermi="['server:live:effect']"
+            icon="el-icon-moon"
           >成人直播
           </el-button>
           <el-button
@@ -104,6 +106,7 @@
             style="color: #FF5722"
             @click="handleEffect(scope.row, -1)"
             v-hasPermi="['server:live:effect']"
+            icon="el-icon-circle-close"
           >已封停
           </el-button>
           <el-button
@@ -113,6 +116,7 @@
             style="color: #C0C0C0"
             @click="handleEffect(scope.row, 0)"
             v-hasPermi="['server:live:effect']"
+            icon="el-icon-remove-outline"
           >未生效
           </el-button>
         </template>
@@ -122,6 +126,7 @@
     <pagination
       v-show="total>0"
       :total="total"
+      :page-sizes="[15,30,100]"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
@@ -214,7 +219,7 @@ export default {
       // 查询参数
       queryParams: {
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 15,
         name: null,
         provider: null,
         orderByColumn: 'status',

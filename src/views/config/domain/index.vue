@@ -135,7 +135,9 @@
           </el-select>
         </el-form-item>
         <el-form-item label="域名" prop="domain">
-          <el-input v-model="form.domain" placeholder="请输入域名"/>
+          <el-input v-model="form.domain" placeholder="请输入域名">
+            <template slot="prepend">https://</template>
+          </el-input>
         </el-form-item>
         <el-form-item label="动态编码" prop="dcode">
           <el-input v-model="form.dcode" placeholder="请输入动态编码"/>
@@ -156,12 +158,33 @@
 </template>
 
 <script>
-import { listDomain, getDomain, delDomain, addDomain, updateDomain } from '@/api/platform-web/config/domain'
+import { listDomain, getDomain, existsDomain, delDomain, addDomain, updateDomain } from '@/api/platform-web/config/domain'
 
 export default {
   name: 'Domain',
   components: {},
   data() {
+    const validUrl = (rule, value, callback) => {
+      if (/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/.test(value) == false) {
+        callback(new Error('请输入正确的URL'))
+      } else {
+        if (this.form.dgroup && this.form.id == null) {
+          existsDomain({
+            dgroup: this.form.dgroup,
+            domain: 'https://' + value.trim()
+          }).then(response => {
+            if (response.data == 1) {
+              callback(new Error('所在分组重复输入URL'))
+            } else {
+              callback()
+            }
+          })
+        } else {
+          callback()
+        }
+
+      }
+    }
     return {
       // 遮罩层
       loading: true,
@@ -190,7 +213,7 @@ export default {
         domain: null,
         dcode: null,
         dgroup: null,
-        orderByColumn: 'dgroup,sort',
+        orderByColumn: 'dgroup,sort'
       },
       // 表单参数
       form: {},
@@ -198,15 +221,7 @@ export default {
       rules: {
         domain: [
           { required: true, message: '域名不能为空', trigger: 'blur' },
-          {
-            validator: function(rule, value, callback) {
-              if (/(http|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/.test(value) == false) {
-                callback(new Error('请输入正确的Url'))
-              } else {
-                callback()
-              }
-            }, trigger: 'blur'
-          }
+          { required: true, validator: validUrl, trigger: 'blur' }
         ],
         dgroup: [
           { required: true, message: '域名分组不能为空', trigger: 'change' }
@@ -292,6 +307,7 @@ export default {
       const id = row.id || this.ids
       getDomain(id).then(response => {
         this.form = response.data
+        this.form.domain = this.form.domain.substring(8, this.form.domain.length)
         this.open = true
         this.title = '修改域名配置'
       })
@@ -300,6 +316,7 @@ export default {
     submitForm() {
       this.$refs['form'].validate(valid => {
         if (valid) {
+          this.form.domain = 'https://' + this.form.domain.trim()
           if (this.form.id != null) {
             updateDomain(this.form).then(response => {
               this.msgSuccess('修改成功')

@@ -18,6 +18,15 @@ export function getDomain(id) {
   })
 }
 
+// 查询域名配置列表
+export function existsDomain(query) {
+  return request({
+    url: url.platformWeb + '/config/domain/exists',
+    method: 'get',
+    params: query
+  })
+}
+
 // 新增域名配置
 export function addDomain(data) {
   return request({

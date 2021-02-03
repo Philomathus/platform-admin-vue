@@ -60,7 +60,7 @@
       <el-table-column label="名称" align="center" prop="name"/>
       <el-table-column label="访问域名" align="center" prop="endpoint"/>
       <el-table-column label="文件存储" align="center" prop="bucket"/>
-      <el-table-column label="加速域名" align="center" prop="vhost"/>
+      <!-- <el-table-column label="加速域名" align="center" prop="vhost"/>-->
       <el-table-column label="状态" align="center" prop="isEffect">
         <template slot-scope="scope">
           <span :style="{color: (status = isEffectOptions[parseInt(scope.row.isEffect)]).color}">{{ status.dictLabel }}</span>
@@ -92,6 +92,7 @@
     <pagination
       v-show="total>0"
       :total="total"
+      :page-sizes="[15,30,100]"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
@@ -115,9 +116,9 @@
         <el-form-item label="文件存储" prop="bucket">
           <el-input v-model="form.bucket" placeholder="请输入文件存储"/>
         </el-form-item>
-        <el-form-item label="加速域名" prop="vhost">
-          <el-input v-model="form.vhost" placeholder="请输入加速域名"/>
-        </el-form-item>
+        <!--        <el-form-item label="加速域名" prop="vhost">-->
+        <!--          <el-input v-model="form.vhost" placeholder="请输入加速域名"/>-->
+        <!--        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -169,7 +170,7 @@ export default {
       // 查询参数
       queryParams: {
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 15,
         name: null,
         orderByColumn: 'is_effect',
         isAsc: 'desc'
@@ -196,9 +197,9 @@ export default {
         bucket: [
           { required: true, message: '文件存储不能为空', trigger: 'blur' }
         ],
-        vhost: [
-          { required: true, message: '加速域名不能为空', trigger: 'blur' }
-        ],
+        // vhost: [
+        //   { required: true, message: '加速域名不能为空', trigger: 'blur' }
+        // ],
         isEffect: [
           { required: true, message: '状态不能为空', trigger: 'blur' }
         ]
@@ -239,7 +240,7 @@ export default {
         accessSecret: null,
         endpoint: null,
         bucket: null,
-        vhost: null,
+        //vhost: null,
         isEffect: 0,
         createBy: null,
         createTime: null,

@@ -1,5 +1,9 @@
 <template>
   <div class="app-container">
+    <el-button type="primary" @click="copy1">入款总额: {{ this.data.paymentAmount }}</el-button>
+    <el-button type="success" @click="copy2">出款总额: {{ this.data.outMoney }}</el-button>
+    <el-button type="primary" @click="copy3">金额合计: {{ this.data.countMoney }}</el-button>
+    <el-button type="success" @click="copy4">送礼总额: {{ this.data.totalAccountGifts }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="创建时间" prop="reptime">
         <el-date-picker
@@ -17,31 +21,28 @@
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
       </el-form-item>
     </el-form>
-    <el-button type="primary" @click="copy1">入款总额: {{this.data.paymentAmount}}</el-button>
-    <el-button type="success" @click="copy2">出款总额: {{this.data.outMoney}}</el-button>
-    <el-button type="primary" @click="copy3">金额合计: {{this.data.countMoney}}</el-button>
-    <el-button type="success" @click="copy4">送礼总额: {{this.data.totalAccountGifts}}</el-button>
 
-    <el-table v-loading="loading" :data="report" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :stripe="true" :data="report" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="报表时间" align="center" prop="reptime"/>
-      <el-table-column label="入款总人数" align="center" prop="totalRukuanrenshu"/>
-      <el-table-column label="公司入款人数" align="center" prop="gsRukuanrenshu"/>
-      <el-table-column label="公司入款金额" align="center" prop="gsRukuanjine"/>
-      <el-table-column label="公司出款总人数" align="center" prop="totalChukuanrenshu"/>
-      <el-table-column label="线上入款人数" align="center" prop="xsRukunanrenshu"/>
-      <el-table-column label="线上入款金额" align="center" prop="xsRukunanjine"/>
-      <el-table-column label="人工入款人数" align="center" prop="rgRukunanrenshu"/>
-      <el-table-column label="人工入款金额" align="center" prop="rgRukunanjine"/>
-      <el-table-column label="平台优惠人数" align="center" prop="palmYouhuirenshu"/>
-      <el-table-column label="平台优惠金额" align="center" prop="palmYouhuijine"/>
-      <el-table-column label="预估会员剩余积分" align="center" prop="totalAccount"/>
-      <el-table-column label="每日平台盈利" align="center" prop="totalProfile"/>
-      <el-table-column label="每日送礼金额" align="center" prop="totalGiveprop"/>
+      <el-table-column label="入款总人数" min-width="90" align="center" prop="totalRukuanrenshu"/>
+      <el-table-column label="公司入款人数" min-width="100" align="center" prop="gsRukuanrenshu"/>
+      <el-table-column label="公司入款金额" min-width="100" align="center" prop="gsRukuanjine"/>
+      <el-table-column label="公司出款总人数" min-width="120" align="center" prop="totalChukuanrenshu"/>
+      <el-table-column label="线上入款人数" min-width="100" align="center" prop="xsRukunanrenshu"/>
+      <el-table-column label="线上入款金额" min-width="100" align="center" prop="xsRukunanjine"/>
+      <el-table-column label="人工入款人数" min-width="100" align="center" prop="rgRukunanrenshu"/>
+      <el-table-column label="人工入款金额" min-width="100" align="center" prop="rgRukunanjine"/>
+      <el-table-column label="平台优惠人数" min-width="100" align="center" prop="palmYouhuirenshu"/>
+      <el-table-column label="平台优惠金额" min-width="100" align="center" prop="palmYouhuijine"/>
+      <el-table-column label="预估会员剩余积分" min-width="130" align="center" prop="totalAccount"/>
+      <el-table-column label="每日平台盈利" min-width="100" align="center" prop="totalProfile"/>
+      <el-table-column label="每日送礼金额" min-width="100" align="center" prop="totalGiveprop"/>
       <el-table-column label="合计偏差" align="center" prop="totalLast"/>
-      <el-table-column label="入款总金额" align="center" prop="totalRukuanjine"/>
-      <el-table-column label="出款总金额" align="center" prop="totalChukuanjine" />
-      <el-table-column label="合计" align="center" prop="totalChukuanjineMath" :formatter="totalChukuanjineMath" />
+      <el-table-column label="入款总金额" min-width="90" align="center" prop="totalRukuanjine"/>
+      <el-table-column label="出款总金额" min-width="90" align="center" prop="totalChukuanjine"/>
+      <el-table-column label="合计" align="center" prop="totalChukuanjineMath" fixed="right"
+                       :formatter="totalChukuanjineMath"/>
     </el-table>
 
     <pagination
@@ -57,7 +58,7 @@
 </template>
 
 <script>
-import {listReport,count} from "@/api/platform-web/report/rechargeStatistics";
+import {listReport, count} from "@/api/platform-web/report/rechargeStatistics";
 import FileUpload from '@/components/FileUpload';
 
 
@@ -131,7 +132,7 @@ export default {
     count() {
       this.loading = true;
       count(this.queryParams).then(response => {
-        this.data= response.data;
+        this.data = response.data;
         this.loading = false;
       });
     },
@@ -158,7 +159,7 @@ export default {
       this.single = selection.length !== 1
       this.multiple = !selection.length
     },
-    totalChukuanjineMath(rows,column) {
+    totalChukuanjineMath(rows, column) {
       return rows.totalRukuanjine - rows.totalChukuanjine
     }
 

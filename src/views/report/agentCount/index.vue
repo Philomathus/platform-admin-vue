@@ -23,35 +23,35 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-        <el-form-item label="邀请账号" prop="agentname">
-          <el-input
-            v-model="queryParams.agentname"
-            placeholder="请输入用户名称"
-            clearable
-            size="small"
-            @keyup.enter.native="handleQuery"
-          />
-        </el-form-item>
+      <el-form-item label="邀请账号" prop="agentname">
+        <el-input
+          v-model="queryParams.agentname"
+          placeholder="请输入用户名称"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="report" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="report" :stripe="true" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="渠道编码" align="center" prop="agentcode"/>
       <el-table-column label="邀请账号" align="center" prop="agentname"/>
       <el-table-column label="统计时间" align="center" prop="agenttime"/>
-      <el-table-column label="当日/总(注册人数)" align="center" prop="regisNumber" :formatter="regisNumber" />
-      <el-table-column label="公司入款（首充）" align="center" prop="gsRukuanjine"/>
-      <el-table-column label="线上入款（首充）" align="center" prop="xsRukuanjine"/>
-      <el-table-column label="手工入款（首充）" align="center" prop="sgRukuanjine"/>
-      <el-table-column label="入款总（首充）" align="center" prop="totalfristRukuanjine"/>
-      <el-table-column label="人/笔/金额（入款日总）" align="center" prop="totalRukuanjine"/>
-      <el-table-column label="出款金额（首充）" align="center" prop="chukuanjine"/>
-      <el-table-column label="人/笔/金额（出款日总）" align="center" prop="totalChukuanjine"/>
-      <el-table-column label="送礼次数/金额" align="center" prop="totalGiveprop"/>
-      <el-table-column label="直播间次数/活跃安卓/活跃苹果" align="center" prop="ios" :formatter="ios"/>
+      <el-table-column label="当日/总(注册人数)" min-width="130" align="center" prop="regisNumber" :formatter="regisNumber"/>
+      <el-table-column label="公司入款（首充）" min-width="130" align="center" prop="gsRukuanjine"/>
+      <el-table-column label="线上入款（首充）" min-width="130" align="center" prop="xsRukuanjine"/>
+      <el-table-column label="手工入款（首充）" min-width="130" align="center" prop="sgRukuanjine"/>
+      <el-table-column label="入款总（首充）" min-width="120" align="center" prop="totalfristRukuanjine"/>
+      <el-table-column label="人/笔/金额（入款日总）" min-width="160" align="center" prop="totalRukuanjine"/>
+      <el-table-column label="出款金额（首充）" min-width="130" align="center" prop="chukuanjine"/>
+      <el-table-column label="人/笔/金额（出款日总）" min-width="160" align="center" prop="totalChukuanjine"/>
+      <el-table-column label="送礼次数/金额" min-width="120" align="center" prop="totalGiveprop"/>
+      <el-table-column label="直播间次数/活跃安卓/活跃苹果" min-width="200" align="center" prop="ios" :formatter="ios" fixed="right"/>
     </el-table>
 
     <pagination
@@ -142,11 +142,11 @@ export default {
       this.single = selection.length !== 1
       this.multiple = !selection.length
     },
-    regisNumber(rows,column) {
-      return rows.newmember+"/"+rows.totalmember
+    regisNumber(rows, column) {
+      return rows.newmember + "/" + rows.totalmember
     },
     ios(rows, column) {
-      return rows.total_enterlivetimes + "/" + rows.total_activeandroid + "/" + rows.total_activeios
+      return rows.totalEnterlivetimes + "/" + rows.totalActiveandroid + "/" + rows.totalActiveios
     }
 
   }

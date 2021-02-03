@@ -26,6 +26,7 @@
       v-loading="loading"
       :data="list.slice((pageNum-1)*pageSize,pageNum*pageSize)"
       style="width: 100%;"
+      :stripe="true"
     >
       <el-table-column label="序号" type="index" align="center">
         <template slot-scope="scope">

@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <el-button type="primary" @click="copy1">总成功金额: {{this.data.countSuccessMoney}}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="创建时间" prop="paydate">
         <el-date-picker v-model="queryParams.paydate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
@@ -10,9 +11,7 @@
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
       </el-form-item>
     </el-form>
-
-    <el-button type="primary" @click="copy1">总成功金额: {{this.data.countSuccessMoney}}</el-button>
-    <el-table v-loading="loading" :data="report">
+    <el-table v-loading="loading" :data="report" :stripe="true">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="收款金额" align="center" prop="money"/>
       <el-table-column label="线下或者线上" align="center" prop="type"/>

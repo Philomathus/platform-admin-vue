@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="创建时间" prop="reptime">
+      <el-form-item label="日期选择" prop="reptime">
         <el-date-picker
           v-model="dateRange"
           size="small"

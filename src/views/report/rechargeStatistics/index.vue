@@ -5,7 +5,7 @@
     <el-button type="primary" @click="copy3">金额合计: {{ this.data.countMoney }}</el-button>
     <el-button type="success" @click="copy4">送礼总额: {{ this.data.totalAccountGifts }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="创建时间" prop="reptime">
+      <el-form-item label="日期选择" prop="reptime">
         <el-date-picker
           v-model="dateRange"
           size="small"

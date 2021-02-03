@@ -115,7 +115,13 @@
       <el-table-column label="实际到账金额" align="center" prop="subMoney" />
       <el-table-column label="汇款姓名" align="center" prop="rechargeRealName" />
       <el-table-column label="汇款备注" :show-overflow-tooltip="true" align="center" prop="remark" />
-      <el-table-column label="状态" align="center" prop="status" :formatter="statusFormat" />
+      <el-table-column label="状态" align="center" prop="status"  >
+        <template slot-scope="scope">
+          <span
+            :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}"
+          >{{ status.dictLabel }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="提交时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>

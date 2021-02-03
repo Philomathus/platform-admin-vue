@@ -46,19 +46,22 @@
       <el-table-column label="平台名称" align="center" prop="platformName" />
       <el-table-column label="子平台id" align="center" prop="sonPlatformId" />
       <el-table-column label="子平台名称" align="center" prop="sonPlatformName" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作"   align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
+            style="color: #FF5722"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['web:config-gametype:edit']"
           >修改</el-button>
           <el-button
+            fixed = "right"
             size="mini"
             type="text"
             icon="el-icon-delete"
+            style="color: #FF5722"
             @click="handleDelete(scope.row)"
             v-hasPermi="['web:config-gametype:remove']"
           >删除</el-button>
@@ -75,7 +78,7 @@
     />
 
     <!-- 添加或修改【请填写功能名称】对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="600px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="平台名称" prop="platformName">
           <el-select v-model="form.platformName" placeholder="请选择">
@@ -198,7 +201,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【请填写功能名称】";
+      this.title = "添加";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {

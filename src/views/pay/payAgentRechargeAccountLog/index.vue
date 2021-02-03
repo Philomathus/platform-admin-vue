@@ -105,7 +105,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="payAgentRechargeAccountLogList" @selection-change="handleSelectionChange">
+    <el-table :stripe="true" v-loading="loading" :data="payAgentRechargeAccountLogList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="订单号" :show-overflow-tooltip="true" width="180px" align="center" prop="orderNo" />
       <el-table-column label="代充人账号" align="center" prop="account" />

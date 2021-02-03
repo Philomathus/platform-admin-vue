@@ -8,7 +8,7 @@
       <el-form-item label="回调时间" prop="selectDate" label-width="100px">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
-                        end-placeholder="结束时间" range-separator="至" clearable
+                        end-placeholder="结束时间" range-separator="至" clearable :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="status" style="width: 100px">
@@ -175,12 +175,14 @@ import {
 } from '@/api/platform-web/pay/memberPayJour'
 import { platforms } from '@/api/platform-web/pay/payChannelNew'
 import { patchOrderPayPlatformNew } from '@/api/platform-web/pay/payPlatformNew'
+import { pickerDateTimeShortcuts } from '@/utils/dateUtils'
 
 export default {
   name: 'MemberPayJour',
   components: {},
   data() {
     return {
+      pickerOptions: { shortcuts: pickerDateTimeShortcuts },
       //统计总的数据
       totalData: {
         total: 0,

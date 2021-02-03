@@ -4,16 +4,8 @@
     <el-button type="success" @click="copy2">总投注人数: {{ this.data.countBetPeople }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="68px">
       <el-form-item label="日期选择" prop="begindate">
-        <el-date-picker
-          v-model="dateRange"
-          size="small"
-          style="width: 240px"
-          value-format="yyyy-MM-dd"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-        ></el-date-picker>
+        <el-date-picker v-model="queryParams.begindate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
+                        :style="{width: '100%'}" placeholder="请选择日期选择" clearable></el-date-picker>
       </el-form-item>
       <el-form-item label="平台名称" prop="gameplame">
         <el-input

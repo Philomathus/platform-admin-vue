@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="直播标题" prop="hostName">
+      <el-form-item label="直播昵称" prop="hostName">
         <el-input
           v-model="queryParams.hostName"
           placeholder="请输入主播昵称"

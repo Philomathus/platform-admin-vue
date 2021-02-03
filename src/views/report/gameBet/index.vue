@@ -61,8 +61,6 @@ export default {
       // countBetPeople:null,
       // 表格数据
       list: [],
-      // 日期范围
-      dateRange: [],
       data: {},
       pageNum: 1,
       pageSize: 20,
@@ -81,7 +79,7 @@ export default {
 
     getList() {
       this.loading = true;
-      list(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
+      list(this.queryParams).then(response => {
         this.list = response.rows;
         this.total = response.total;
         this.loading = false;
@@ -110,7 +108,6 @@ export default {
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.dateRange = []
       this.resetForm("queryForm");
       this.handleQuery();
     },

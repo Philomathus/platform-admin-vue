@@ -61,8 +61,6 @@ export default {
     return {
       // 遮罩层
       loading: true,
-      // 日期范围
-      dateRange: [],
       // 总条数
       total: 0,
       // 表格数据
@@ -83,7 +81,7 @@ export default {
     /** 查询登录日志列表 */
     getList() {
       this.loading = true;
-      list(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
+      list(this.queryParams).then(response => {
         this.list = response.rows;
         this.total = response.total;
         this.loading = false;
@@ -97,7 +95,6 @@ export default {
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.dateRange = []
       this.resetForm("queryForm");
       this.handleQuery();
     },

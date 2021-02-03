@@ -58,8 +58,6 @@ export default {
       total: 0,
       // 平台资金报，记录平台每日收入及支出总额，预估当前会员的积分余额表格数据
       report: [],
-      // 日期范围
-      dateRange: [],
       data: {},
       // 弹出层标题
       title: "",
@@ -85,7 +83,7 @@ export default {
     /** 查询平台资金报，记录平台每日收入及支出总额，预估当前会员的积分余额列表 */
     getList() {
       this.loading = true;
-      listReport(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
+      listReport(this.queryParams).then(response => {
         this.report = response.rows;
         this.total = response.total;
         this.loading = false;

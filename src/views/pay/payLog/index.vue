@@ -82,7 +82,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="payLogList" @selection-change="handleSelectionChange">
+    <el-table :stripe="true" v-loading="loading" :data="payLogList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="会员ID" align="center" prop="memberId" />
       <el-table-column label="会员账号" align="center" prop="memberAccount" />
@@ -91,7 +91,13 @@
       <el-table-column label="支付通道编号" align="center" prop="channelId" />
       <el-table-column label="支付通道名称" align="center" prop="channelName" />
       <el-table-column label="下单金额" align="center" prop="money" />
-      <el-table-column label="下单状态" align="center" prop="success" :formatter="successFormat" />
+      <el-table-column label="下单状态" align="center" prop="success"  >
+        <template slot-scope="scope">
+          <span
+            :style="{color: (success = successOptions[parseInt(scope.row.success)]).color}"
+          >{{ success.dictLabel }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="失败原因" align="center" prop="failReason" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
@@ -201,7 +207,7 @@ export default {
     /*paychannels().then(response => {
       this.payChannelOptions = response.data
     })*/
-    this.getDicts("successOptions").then(response => {
+    this.getDicts("success_pay_log").then(response => {
       this.successOptions = response.data;
     });
   },

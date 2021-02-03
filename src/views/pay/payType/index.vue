@@ -62,10 +62,10 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table stripe v-loading="loading" :data="payTypeList" @selection-change="handleSelectionChange">
+    <el-table stripe :stripe="true" v-loading="loading" :data="payTypeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
 <!--      <el-table-column label="编号" align="center" prop="id" />-->
-      <el-table-column label="编号" align="center" prop="code" />
+<!--      <el-table-column label="编号" align="center" prop="code" />-->
       <el-table-column label="排序" align="center" prop="indexes" />
       <el-table-column label="名称" align="center" prop="name" />
       <el-table-column label="图标" align="center" prop="iconUrl">

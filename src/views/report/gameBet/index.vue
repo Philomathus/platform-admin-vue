@@ -1,12 +1,12 @@
 <template>
   <div class="app-container">
+    <el-button type="primary" @click="copy1">总投注金额: {{ this.data.countBetMoney }}</el-button>
+    <el-button type="success" @click="copy2">总投注人数: {{ this.data.countBetPeople }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="68px">
-
-      <el-form-item label="发布日期" prop="begindate">
+      <el-form-item label="日期选择" prop="begindate">
         <el-date-picker v-model="queryParams.begindate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
                         :style="{width: '100%'}" placeholder="请选择日期选择" clearable></el-date-picker>
       </el-form-item>
-
       <el-form-item label="平台名称" prop="gameplame">
         <el-input
           v-model="queryParams.gameplame"
@@ -22,13 +22,10 @@
       </el-form-item>
     </el-form>
 
-
-
-    <el-button type="primary" @click="copy1">总投注金额: {{this.data.countBetMoney}}</el-button>
-    <el-button type="success" @click="copy2">总投注人数: {{this.data.countBetPeople}}</el-button>
     <el-table v-loading="loading"
               :data="list.slice((pageNum-1)*pageSize,pageNum*pageSize)"
-              style="width: 100%;">
+              style="width: 100%;"
+              :stripe="true">
       <el-table-column label="平台编号" align="center" prop="gameagent" :show-overflow-tooltip="true"/>
       <el-table-column label="名称-详情" align="center" prop="gameplame" :show-overflow-tooltip="true"/>
       <el-table-column label="投注人数" align="center" prop="gamepepole"/>
@@ -49,7 +46,7 @@
 </template>
 
 <script>
-import {list,count} from "@/api/platform-web/report/gameBet";
+import {list, count} from "@/api/platform-web/report/gameBet";
 
 
 export default {
@@ -98,8 +95,8 @@ export default {
     //统计
     count() {
       this.loading = true;
-       count(this.queryParams).then(response => {
-        this.data= response.data;
+      count(this.queryParams).then(response => {
+        this.data = response.data;
         this.loading = false;
       });
     },

@@ -1,7 +1,8 @@
 <template>
   <div class="app-container">
+    <el-button type="primary" @click="copy1">总成功金额: {{this.data.countSuccessMoney}}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="创建时间" prop="paydate">
+      <el-form-item label="日期选择" prop="paydate">
         <el-date-picker v-model="queryParams.paydate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
                         :style="{width: '100%'}" placeholder="请选择日期选择" clearable></el-date-picker>
       </el-form-item>
@@ -10,9 +11,7 @@
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
       </el-form-item>
     </el-form>
-
-    <el-button type="primary" @click="copy1">总成功金额: {{this.data.countSuccessMoney}}</el-button>
-    <el-table v-loading="loading" :data="report">
+    <el-table v-loading="loading" :data="report" :stripe="true">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="收款金额" align="center" prop="money"/>
       <el-table-column label="线下或者线上" align="center" prop="type"/>
@@ -59,8 +58,6 @@ export default {
       total: 0,
       // 平台资金报，记录平台每日收入及支出总额，预估当前会员的积分余额表格数据
       report: [],
-      // 日期范围
-      dateRange: [],
       data: {},
       // 弹出层标题
       title: "",
@@ -86,7 +83,7 @@ export default {
     /** 查询平台资金报，记录平台每日收入及支出总额，预估当前会员的积分余额列表 */
     getList() {
       this.loading = true;
-      listReport(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
+      listReport(this.queryParams).then(response => {
         this.report = response.rows;
         this.total = response.total;
         this.loading = false;

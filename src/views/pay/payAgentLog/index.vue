@@ -45,26 +45,20 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="选择提交日期" prop="createTime">
+      <el-form-item label="回调日期" prop="callbackTime">
+        <span class="demonstration"></span>
         <el-date-picker
           v-model="dateRange"
           size="small"
           style="width: 240px"
+          unlink-panels
           value-format="yyyy-MM-dd"
           type="daterange"
           range-separator="-"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
+          :picker-options="pickerOptions"
         ></el-date-picker>
-      </el-form-item>
-      <el-form-item label="回调时间" prop="callbackTime">
-        <el-date-picker clearable size="small"
-                        v-model="queryParams.callbackTime"
-                        type="date"
-                        value-format="yyyy-MM-dd"
-                        placeholder="选择回调时间"
-        >
-        </el-date-picker>
       </el-form-item>
       <el-form-item label="状态" prop="callbackStatus">
         <el-select v-model="queryParams.callbackStatus" placeholder="请选择回调状态" clearable size="small">
@@ -97,7 +91,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="payAgentLogList">
+    <el-table :stripe="true" v-loading="loading" :data="payAgentLogList">
       <el-table-column label="提现订单号" align="center" prop="withdrawOrderNo"/>
       <el-table-column label="代付订单号" align="center" prop="payAgentOrderNo"/>
       <el-table-column label="代付平台ID" align="center" prop="payAgentPlatId"/>
@@ -134,6 +128,50 @@ export default {
   components: {},
   data() {
     return {
+      pickerOptions: {
+        shortcuts: [{
+          text: '今日',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            //start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+            text: '昨日',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24);
+              end.setTime(end.getTime() - 3600 * 1000 * 24 );
+              picker.$emit('pick', [start, end]);
+            }
+          },{
+          text: '最近一周',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近一个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近三个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+            picker.$emit('pick', [start, end]);
+          }
+        }]
+      },
       // 遮罩层
       loading: true,
       // 选中数组

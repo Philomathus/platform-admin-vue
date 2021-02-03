@@ -95,7 +95,7 @@
           <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">{{ status.dictLabel }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="是否首次" align="center" prop="first" :formatter="firstStatusFormat" min-width="70"/>
+      <el-table-column label="是否首次" align="center" prop="first" :formatter="firstStatusFormat" min-width="75"/>
       <el-table-column label="操作人" align="center" prop="opName" min-width="100"/>
       <el-table-column label="用户下单时间" align="center" prop="createTime" width="160"/>
       <el-table-column label="最后修改时间" align="center" prop="updateTime" width="160"/>

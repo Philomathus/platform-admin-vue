@@ -3,8 +3,13 @@
     <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="68px">
 
       <el-form-item label="日期选择" prop="reporttime">
-        <el-date-picker v-model="queryParams.reporttime" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
-                        :style="{width: '100%'}" placeholder="请选择日期选择" clearable></el-date-picker>
+        <el-input
+          v-model="queryParams.reporttime"
+          placeholder="请输入日期"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
 
       <el-form-item label="名称" prop="classTwoname">
@@ -26,6 +31,7 @@
       v-loading="loading"
       :data="list.slice((pageNum-1)*pageSize,pageNum*pageSize)"
       style="width: 100%;"
+      :stripe="true"
     >
       <el-table-column label="序号" type="index" align="center">
         <template slot-scope="scope">

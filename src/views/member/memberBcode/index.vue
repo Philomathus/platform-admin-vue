@@ -100,7 +100,7 @@
 
     <el-table v-loading="loading" :data="memberBcodeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="系统编号" align="center" prop="id" />
+<!--      <el-table-column label="系统编号" align="center" prop="id" />-->
       <el-table-column label="会员账号ID" align="center" prop="userId" />
       <el-table-column label="描述" align="center" prop="des" />
       <el-table-column label="收入" align="center" prop="income" />

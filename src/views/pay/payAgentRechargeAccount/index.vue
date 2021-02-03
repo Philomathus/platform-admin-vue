@@ -80,22 +80,22 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="payAgentRechargeAccountList" @selection-change="handleSelectionChange">
+    <el-table :stripe="true" v-loading="loading" :data="payAgentRechargeAccountList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="代充账号" align="center" prop="account" />
+      <el-table-column label="代充账号" align="center" prop="account" width="100" />
       <el-table-column label="代充昵称" align="center" prop="nickName" width="120" />
       <el-table-column label="当前余额额度" align="center" prop="balanceAmount" width="100" />
       <el-table-column label="代充次数" align="center" prop="rechargeNum" />
-      <el-table-column label="QQ号" align="center" prop="qqAccount" />
-      <el-table-column label="微信号" align="center" prop="wechatAccount" />
-      <el-table-column label="支付宝账号" align="center" prop="alipayAccount"  width="90"/>
-      <el-table-column label="手机号" align="center" prop="mobile" />
-      <el-table-column label="开店时间" align="center" prop="businessBeginTime" width="180">
+      <el-table-column label="QQ号" align="center" prop="qqAccount" width="100" />
+      <el-table-column label="微信号" align="center" prop="wechatAccount" width="120" />
+      <el-table-column label="支付宝账号" align="center" prop="alipayAccount"  width="120"/>
+      <el-table-column label="手机号" align="center" prop="mobile" width="110" />
+      <el-table-column label="开店时间" align="center" prop="businessBeginTime" width="110">
 <!--        <template slot-scope="scope">
           <span>{{ parseTime(scope.row.businessBeginTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>-->
       </el-table-column>
-      <el-table-column label="关店时间" align="center" prop="businessEndTime" width="180">
+      <el-table-column label="关店时间" align="center" prop="businessEndTime" width="110">
 <!--        <template slot-scope="scope">
           <span>{{ parseTime(scope.row.businessEndTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>-->
@@ -178,20 +178,14 @@
         <el-form-item label="开店时间" prop="businessBeginTime">
           <el-time-picker
             arrow-control
-            v-model="value1"
-            :picker-options="{
-      selectableRange: ''
-    }"
+            v-model="form.businessBeginTime"
             placeholder="任意时间点">
           </el-time-picker>
         </el-form-item>
         <el-form-item label="关店时间" prop="businessEndTime">
           <el-time-picker
             arrow-control
-            v-model="value2"
-            :picker-options="{
-      selectableRange: ''
-    }"
+            v-model="form.businessEndTime"
             placeholder="任意时间点">
           </el-time-picker>
         </el-form-item>
@@ -217,8 +211,6 @@ export default {
   },
   data() {
     return {
-      value1: new Date(2016, 9, 10, 18, 40),
-      value2: new Date(2016, 9, 10, 18, 40),
       // 遮罩层
       loading: true,
       // 选中数组
@@ -362,6 +354,7 @@ export default {
       const id = row.id || this.ids
       getPayAgentRechargeAccount(id).then(response => {
         this.form = response.data;
+        console.info(this.form)
         this.open = true;
         this.title = "修改代充人管理";
       });

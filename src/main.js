@@ -18,17 +18,21 @@ import './permission' // permission control
 import { getDicts } from '@/api/platform-web/system/dict/data'
 import { getConfigKey } from '@/api/platform-web/system/config'
 import {
-  parseTime,
-  getTodayStartTime,
-  getTodayEndTime,
   resetForm,
-  addDateRange,
   selectDictLabel,
   selectDictLabels,
   download,
   handleTree,
   copyCommand
 } from '@/utils/common'
+import {
+  parseTime,
+  getTodayStartTime,
+  getTodayEndTime,
+  getDateStartTime,
+  getDateEndTime,
+  addDateRange
+} from '@/utils/dateUtils'
 import Pagination from '@/components/Pagination'
 // 自定义表格工具扩展
 import RightToolbar from '@/components/RightToolbar'
@@ -39,16 +43,21 @@ import * as numberUtil from '@/utils/number.js'
 // 全局方法挂载
 Vue.prototype.getDicts = getDicts
 Vue.prototype.getConfigKey = getConfigKey
-Vue.prototype.parseTime = parseTime
-Vue.prototype.getTodayStartTime = getTodayStartTime
-Vue.prototype.getTodayEndTime = getTodayEndTime
+
 Vue.prototype.resetForm = resetForm
-Vue.prototype.addDateRange = addDateRange
 Vue.prototype.selectDictLabel = selectDictLabel
 Vue.prototype.selectDictLabels = selectDictLabels
 Vue.prototype.download = download
 Vue.prototype.handleTree = handleTree
 Vue.prototype.copyCommand = copyCommand
+
+Vue.prototype.parseTime = parseTime
+Vue.prototype.getTodayStartTime = getTodayStartTime
+Vue.prototype.getTodayEndTime = getTodayEndTime
+Vue.prototype.getDateStartTime = getDateStartTime
+Vue.prototype.getDateEndTime = getDateEndTime
+Vue.prototype.addDateRange = addDateRange
+
 Vue.prototype.numberUtil = numberUtil
 
 Vue.prototype.msgSuccess = function(msg) {
@@ -85,7 +94,7 @@ Vue.use(Element, {
 
 Vue.config.productionTip = false
 
-new Vue({
+window.vue = new Vue({
   el: '#app',
   router,
   store,

@@ -48,6 +48,18 @@
           <el-table :stripe="true" v-loading="loading" :data="configEnvironmentList" width="150px"
                     @selection-change="handleSelectionChange"
           >
+            <el-table-column  label="参数名称" align="center">
+              <template v-slot="{row}">
+                <el-input
+                  :class="row.envStatus === 0  ? 'ban' : ''"
+                  v-model="row.envTitle"
+                  placeholder="请输入参数编码"
+                  clearable
+                  size="small"
+                  @keyup.enter.native="handleQuery"
+                />
+              </template>
+            </el-table-column>
             <el-table-column  label="参数编码" align="center">
               <template v-slot="{row}">
                 <el-input
@@ -60,6 +72,7 @@
                 />
               </template>
             </el-table-column>
+
             <el-table-column  label="参数值" min-width="150" align="center">
               <template v-slot="{row}">
                 <el-input

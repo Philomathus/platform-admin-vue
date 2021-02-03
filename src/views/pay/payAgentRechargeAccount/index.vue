@@ -178,20 +178,14 @@
         <el-form-item label="开店时间" prop="businessBeginTime">
           <el-time-picker
             arrow-control
-            v-model="value1"
-            :picker-options="{
-      selectableRange: ''
-    }"
+            v-model="form.businessBeginTime"
             placeholder="任意时间点">
           </el-time-picker>
         </el-form-item>
         <el-form-item label="关店时间" prop="businessEndTime">
           <el-time-picker
             arrow-control
-            v-model="value2"
-            :picker-options="{
-      selectableRange: ''
-    }"
+            v-model="form.businessEndTime"
             placeholder="任意时间点">
           </el-time-picker>
         </el-form-item>
@@ -217,8 +211,6 @@ export default {
   },
   data() {
     return {
-      value1: new Date(2016, 9, 10, 18, 40),
-      value2: new Date(2016, 9, 10, 18, 40),
       // 遮罩层
       loading: true,
       // 选中数组
@@ -362,6 +354,7 @@ export default {
       const id = row.id || this.ids
       getPayAgentRechargeAccount(id).then(response => {
         this.form = response.data;
+        console.info(this.form)
         this.open = true;
         this.title = "修改代充人管理";
       });

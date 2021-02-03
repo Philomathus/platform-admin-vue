@@ -6,80 +6,11 @@ import { url } from '@/utils/url'
 import request from '@/utils/request'
 import fileDownload from 'js-file-download'
 
-// 日期格式化
-export function parseTime(time, pattern) {
-  if (arguments.length === 0 || !time) {
-    return null
-  }
-  const format = pattern || '{y}-{m}-{d} {h}:{i}:{s}'
-  let date
-  if (typeof time === 'object') {
-    date = time
-  } else {
-    if ((typeof time === 'string') && (/^[0-9]+$/.test(time))) {
-      time = parseInt(time)
-    } else if (typeof time === 'string') {
-      time = time.replace(new RegExp(/-/gm), '/')
-    }
-    if ((typeof time === 'number') && (time.toString().length === 10)) {
-      time = time * 1000
-    }
-    date = new Date(time)
-  }
-  const formatObj = {
-    y: date.getFullYear(),
-    m: date.getMonth() + 1,
-    d: date.getDate(),
-    h: date.getHours(),
-    i: date.getMinutes(),
-    s: date.getSeconds(),
-    a: date.getDay()
-  }
-  const time_str = format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
-    let value = formatObj[key]
-    // Note: getDay() returns 0 on Sunday
-    if (key === 'a') {
-      return ['日', '一', '二', '三', '四', '五', '六'][value]
-    }
-    if (result.length > 0 && value < 10) {
-      value = '0' + value
-    }
-    return value || 0
-  })
-  return time_str
-}
-
-// 获取今天开始时间
-export function getTodayStartTime() {
-  return new Date(new Date().toLocaleDateString())
-}
-
-// 获取今天结束时间
-export function getTodayEndTime() {
-  return new Date(new Date().toLocaleDateString() + ' 23:59:59')
-}
-
 // 表单重置
 export function resetForm(refName) {
   if (this.$refs[refName]) {
     this.$refs[refName].resetFields()
   }
-}
-
-// 添加日期范围
-export function addDateRange(params, dateRange, propName) {
-  var search = params
-  search.params = {}
-  if (null != dateRange && '' != dateRange) {
-    if (typeof (propName) === 'undefined') {
-      search.params['beginTime'] = dateRange[0]
-      search.params['endTime'] = dateRange[1]
-    } else {
-      search.params['begin' + propName] = dateRange[0]
-      search.params['end' + propName] = dateRange[1]
-    }
-  }
-  return search
 }
 
 // 回显数据字典
@@ -170,7 +101,7 @@ export function handleTree(data, id, parentId, children, rootId) {
   return treeData != '' ? treeData : data
 }
 
-export function copyCommand(value){
+export function copyCommand(value) {
   let inputElement = document.createElement('input')
   inputElement.value = value
   document.body.appendChild(inputElement)

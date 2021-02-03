@@ -1,52 +1,52 @@
 import request from '@/utils/request'
 import {url} from '@/utils/url'
 
-// 查询【请填写功能名称】列表
+// 查询游戏平台列表
 export function listGamePlatform(query) {
   return request({
-    url: url.platformWeb + '/web/game-platform/list',
+    url: url.platformWeb + '/game/platform/list',
     method: 'get',
     params: query
   })
 }
 
-// 查询【请填写功能名称】详细
+// 查询游戏平台详细
 export function getGamePlatform(id) {
   return request({
-    url: url.platformWeb + '/web/game-platform/' + id,
+    url: url.platformWeb + '/game/platform/' + id,
     method: 'get'
   })
 }
 
-// 新增【请填写功能名称】
+// 新增游戏平台
 export function addGamePlatform(data) {
   return request({
-    url: url.platformWeb + '/web/game-platform',
+    url: url.platformWeb + '/game/platform',
     method: 'post',
     data: data
   })
 }
 
-// 修改【请填写功能名称】
+// 修改游戏平台
 export function updateGamePlatform(data) {
   return request({
-    url: url.platformWeb + '/web/game-platform',
+    url: url.platformWeb + '/game/platform',
     method: 'put',
     data: data
   })
 }
 
-// 删除【请填写功能名称】
+// 删除游戏平台
 export function delGamePlatform(id) {
   return request({
-    url: url.platformWeb + '/web/game-platform/' + id,
+    url: url.platformWeb + '/game/platform/' + id,
     method: 'delete'
   })
 }
-// 导出【请填写功能名称】
+// 导出游戏平台
 export function exportGamePlatform(query) {
   return request({
-    url: url.platformWeb + '/web/game-platform/export',
+    url: url.platformWeb + '/game/platform/export',
     method: 'get',
     params: query
   })
@@ -58,12 +58,11 @@ export function changeUserStatus(id, status) {
     status
   }
   return request({
-    url: url.platformWeb + '/web/game-platform/changeStatus',
+    url: url.platformWeb + '/game/platform/changeStatus',
     method: 'put',
     data: data
   })
 }
-// 查询用户详细
 export function getGameTpyeList() {
   return request({
     url: url.platformWeb + '/game/type/list' ,

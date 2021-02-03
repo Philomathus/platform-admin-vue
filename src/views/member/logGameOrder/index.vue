@@ -124,10 +124,10 @@
 
     <el-table v-loading="loading" :data="logGameOrderList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="本地ID" align="center" prop="id" />
-      <el-table-column label="类型" align="center" prop="type" width="60" :formatter="formatterType"/>
+<!--      <el-table-column label="本地ID" align="center" prop="id" />-->
       <el-table-column label="玩家ID" align="center" prop="memberId" />
       <el-table-column label="账号" align="center" prop="userName" />
+      <el-table-column label="类型" align="center" prop="type" width="60" :formatter="formatterType"/>
 <!--      <el-table-column label="本地平台id" align="center" prop="platformId" />-->
       <el-table-column label="状态" align="center" prop="status" :formatter="formatterStatus"/>
       <el-table-column label="金额" align="center" prop="money" />

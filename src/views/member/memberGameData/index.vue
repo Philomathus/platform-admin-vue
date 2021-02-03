@@ -164,9 +164,9 @@
 
     <el-table v-loading="loading" :data="memberGameDataList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="本地ID" align="center" prop="id" />
-      <el-table-column label="游戏局号" align="center" prop="gameId" />
       <el-table-column label="账号" align="center" prop="account" />
+<!--      <el-table-column label="本地ID" align="center" prop="id" />-->
+      <el-table-column label="游戏局号" align="center" prop="gameId" />
       <el-table-column label="游戏id" align="center" prop="kindId" />
       <el-table-column label="有效下注" align="center" prop="cellScore" />
       <el-table-column label="总下注" align="center" prop="allBet" />

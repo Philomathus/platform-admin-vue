@@ -172,9 +172,9 @@
       <el-table-column label="总下注" align="center" prop="allBet" />
       <el-table-column label="盈利" align="center" prop="profit" />
       <el-table-column label="抽水" align="center" prop="revenue" />
-      <el-table-column label="本地平台id" min-width="100" align="center" prop="platformId" />
+      <el-table-column label="本地平台id" align="center" prop="platformId" />
       <el-table-column label="代理编号" align="center" prop="agent" />
-      <el-table-column label="游戏平台类型" min-width="100" align="center" prop="platformType" />
+      <el-table-column label="游戏平台类型" align="center" prop="platformType" />
       <el-table-column label="洗码状态" align="center" prop="status" :formatter="formatterStatus"/>
       <el-table-column label="游戏开始时间" align="center" width="150px" prop="gameStartTime" />
       <el-table-column label="游戏结束时间" align="center" width="150px" prop="gameEndTime" />

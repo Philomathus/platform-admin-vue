@@ -61,6 +61,17 @@
           <span>{{ parseTime(scope.row.beginTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            @click="close(scope.row)"
+            v-hasPermi="['admin:liveVideoChat:edit']"
+          >关播</el-button>
+        </template>
+      </el-table-column>
     </el-table>
 
     <pagination
@@ -76,6 +87,7 @@
 
 <script>
 import {
+  close,
   listLiveVideo,
   getLiveVideo,
   delLiveVideo,
@@ -190,6 +202,12 @@ export default {
         this.form = response.data;
         this.open = true;
         this.title = "修改直播";
+      });
+    },
+    close(row){
+      close(row.id).then(response => {
+        this.getList();
+        this.msgSuccess("关播成功");
       });
     },
     /** 提交按钮 */

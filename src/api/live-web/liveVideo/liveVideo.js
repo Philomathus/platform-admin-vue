@@ -18,6 +18,13 @@ export function getLiveVideo(id) {
   })
 }
 
+export function close(id) {
+  return request({
+    url: url.platformWeb + '/admin/liveVideo/close/' + id,
+    method: 'get'
+  })
+}
+
 // 新增直播
 export function addLiveVideo(data) {
   return request({

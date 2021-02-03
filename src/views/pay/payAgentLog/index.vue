@@ -130,6 +130,23 @@ export default {
     return {
       pickerOptions: {
         shortcuts: [{
+          text: '今日',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            //start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+            text: '昨日',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24);
+              end.setTime(end.getTime() - 3600 * 1000 * 24 );
+              picker.$emit('pick', [start, end]);
+            }
+          },{
           text: '最近一周',
           onClick(picker) {
             const end = new Date();

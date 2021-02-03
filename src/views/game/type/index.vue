@@ -92,12 +92,13 @@
         </template>
       </el-table-column>
       <el-table-column label="排序号" align="center" prop="indexs"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" fixed = "right" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
+            style="color: #FF5722"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['game:type:edit']"
           >修改
@@ -106,6 +107,7 @@
             size="mini"
             type="text"
             icon="el-icon-delete"
+            style="color: #FF5722"
             @click="handleDelete(scope.row)"
             v-hasPermi="['game:type:remove']"
           >删除
@@ -114,6 +116,7 @@
             size="mini"
             type="text"
             icon="el-icon-menu"
+            style="color: #FF5722"
             @click="relation_Game(scope.row)"
             v-hasPermi="['game:type:edit']"
           >关联游戏
@@ -172,7 +175,7 @@
               filterable
               :left-default-checked="[2, 3]"
               :right-default-checked="[1]"
-              :titles="['Source', 'Target']"
+              :titles="['未关联', '已关联']"
               :button-texts="['到左边', '到右边']"
               :format="{
         noChecked: '${total}',
@@ -205,7 +208,7 @@ import {
   getRelationGame
 } from "@/api/platform-web/game/type";
 import ImageUpload from '@/components/ImageUpload';
-import {lockMemberWithdrawLog} from "@/api/platform-web/pay/memberWithdrawLog";
+
 
 export default {
   name: "Type",

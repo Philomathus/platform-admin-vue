@@ -87,13 +87,14 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作"  align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
+            style="color: #FF5722"
             v-hasPermi="['web:game-info:edit']"
           >修改
           </el-button>
@@ -102,6 +103,7 @@
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
+            style="color: #FF5722"
             v-hasPermi="['web:game-info:remove']"
           >删除
           </el-button>
@@ -397,7 +399,7 @@ export default {
     handleAdd() {
       this.reset()
       this.open = true
-      this.title = '添加【请填写功能名称】'
+      this.title = '新增'
     },
 
     /** 提交按钮 */

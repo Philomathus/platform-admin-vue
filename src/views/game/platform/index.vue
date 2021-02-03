@@ -67,24 +67,25 @@
         </template>
       </el-table-column>
       <el-table-column label="创建人" align="center" prop="createBy"/>
-      <el-table-column label="创建时间" align="center" prop="createTime">
+      <el-table-column label="创建时间" min-width="140" align="center" prop="createTime">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="最后更新人" align="center" prop="updateBy"/>
-      <el-table-column label="最后更新时间" align="center" prop="updateTime">
+      <el-table-column label="最后更新时间" min-width="140" align="center" prop="updateTime">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.updateTime) }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作"  align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
+            style="color: #FF5722"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['web:game-platform:edit']"
           >修改
@@ -93,6 +94,7 @@
             size="mini"
             type="text"
             icon="el-icon-delete"
+            style="color: #FF5722"
             @click="handleDelete(scope.row)"
             v-hasPermi="['web:game-platform:remove']"
           >删除

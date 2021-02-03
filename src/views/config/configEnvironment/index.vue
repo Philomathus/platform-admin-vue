@@ -111,7 +111,16 @@
                 <span>{{row.envDes}}</span>
               </template>
             </el-table-column>
+
+<!--            <el-form-item style="float: right;margin-right: 20%">
+              <el-button type="primary" size="mini" v-show="configEnvironmentList.length>0" @click="handleConfirm">确定
+              </el-button>
+              &lt;!&ndash;              <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>&ndash;&gt;
+            </el-form-item>-->
           </el-table>
+            <el-button type="primary" v-show="configEnvironmentList.length>0" style="float: right;margin-top: 20px" @click="handleConfirm">确定
+            </el-button>
+            <!--               <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">删除</el-button>-->
          <!-- <el-form :model="queryParams" ref="queryForm" v-show="showSearch" label-width="68px">
             <el-form-item v-for=" item in configEnvironmentList" :label="item.envTitle" prop="envDes" label-width="10%">
               <el-input

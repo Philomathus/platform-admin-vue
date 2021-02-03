@@ -67,7 +67,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table stripe v-loading="loading" :data="logMoneyList">
+    <el-table :stripe="true" stripe v-loading="loading" :data="logMoneyList">
       <el-table-column label="会员编号" align="center" prop="userId" min-width="120"/>
       <el-table-column label="账号" align="center" prop="userName" min-width="80"/>
       <el-table-column label="行为类型" align="center" prop="des" min-width="120"/>

@@ -82,7 +82,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="payLogList" @selection-change="handleSelectionChange">
+    <el-table :stripe="true" v-loading="loading" :data="payLogList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="会员ID" align="center" prop="memberId" />
       <el-table-column label="会员账号" align="center" prop="memberAccount" />

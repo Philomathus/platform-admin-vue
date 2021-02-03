@@ -72,10 +72,10 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="payAgentPlatformList" @selection-change="handleSelectionChange">
+    <el-table :stripe="true" v-loading="loading" :data="payAgentPlatformList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键" align="center" prop="id" />
-      <el-table-column label="自定义编码" align="center" prop="code" />
+      <el-table-column label="ID" align="center" prop="id" />
+      <el-table-column label="编码" align="center" prop="code" />
       <el-table-column label="代付平台名称" align="center" prop="name" />
       <el-table-column label="商户ID" align="center" prop="merId" />
       <el-table-column label="代付下单地址" :show-overflow-tooltip="true" align="center" prop="payOrderAddr" />

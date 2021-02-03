@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="收款账号名称" prop="name">
+      <el-form-item label="收款名称" prop="name">
         <el-input
           v-model="queryParams.name"
           placeholder="请输入收款账号名称"
@@ -89,7 +89,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="payAgentRechargeBankList" @selection-change="handleSelectionChange">
+    <el-table :stripe="true" v-loading="loading" :data="payAgentRechargeBankList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="收款账号名称" align="center" prop="name" />
       <el-table-column label="收款账号" :show-overflow-tooltip="true" align="center" prop="bankAccount" />

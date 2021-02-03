@@ -72,7 +72,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="payPlatformNewList" @selection-change="handleSelectionChange">
+    <el-table  :stripe="true" v-loading="loading" :data="payPlatformNewList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="平台名称" align="center" prop="name" />
       <el-table-column label="平台编码" align="center" prop="code" />

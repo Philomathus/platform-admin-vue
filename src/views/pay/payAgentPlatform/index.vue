@@ -74,10 +74,10 @@
 
     <el-table :stripe="true" v-loading="loading" :data="payAgentPlatformList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="ID" align="center" prop="id" />
-      <el-table-column label="编码" align="center" prop="code" />
+      <el-table-column label="ID" align="center" prop="id" width="55" />
+      <el-table-column label="编码" align="center" prop="code" width="90" />
       <el-table-column label="代付平台名称" align="center" prop="name" />
-      <el-table-column label="商户ID" align="center" prop="merId" />
+      <el-table-column label="商户ID" align="center" prop="merId"  width="150"/>
       <el-table-column label="代付下单地址" :show-overflow-tooltip="true" align="center" prop="payOrderAddr" />
       <el-table-column label="代付查询地址" :show-overflow-tooltip="true"  align="center" prop="payOrderQueryAddr" />
       <el-table-column label="状态" align="center" prop="status" >
@@ -90,7 +90,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" fixed="right"  class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"

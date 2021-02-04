@@ -102,7 +102,16 @@
 
     <el-table :stripe="true" v-loading="loading" :data="payAgentRechargeRecordList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="订单号" align="center" prop="orderNo"/>
+      <el-table-column label="复制" align="center" >
+        <template slot-scope="scope">
+          <el-button
+            type="primary" size="mini"
+            @click="handleCopy(scope.row)"
+          >复制
+          </el-button>
+        </template>
+      </el-table-column>
+      <el-table-column label="订单号" align="center" prop="orderNo" :show-overflow-tooltip="true" width="190"/>
       <el-table-column label="代充账号" align="center" prop="rechargeAcount"/>
       <el-table-column label="代充昵称" align="center" prop="rechargeNickName"/>
       <el-table-column label="存入(提出)类型" align="center" prop="type"/>
@@ -114,26 +123,6 @@
         </template>
       </el-table-column>
       <el-table-column label="操作人" align="center" prop="opName"/>
-<!--      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['pay:payAgentRechargeRecord:edit']"
-          >修改
-          </el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['pay:payAgentRechargeRecord:remove']"
-          >删除
-          </el-button>
-        </template>
-      </el-table-column>-->
     </el-table>
 
     <pagination
@@ -337,6 +326,13 @@ export default {
         this.loading = false;
       });
     },
+    onCopy: function (e) {
+      alert('You just copied: ' + e.text)
+    },
+    onError: function (e) {
+      console.log(e)
+      alert('Failed to copy texts')
+    },
     // 取消按钮
     cancel() {
       this.open = false;
@@ -399,6 +395,38 @@ export default {
         this.title = "修改代充存提";
       });
     },
+    /** 复制按钮 */
+    handleCopy(row){
+      var textarea = document.createElement("textarea");
+      let html = '<table><tr>'
+      html += '<td>' + row.orderNo + '</td>'
+      html += '<td>' + row.rechargeAcount + '</td>'
+      html += '<td>' + row.rechargeNickName + '</td>'
+      html += '<td>' + row.type + '</td>'
+      html += '<td>' + row.money + '</td>'
+      html += '<td>' + row.createTime + '</td>'
+      html += '<td>' + row.opName + '</td>'
+      html += '<td>' + row.remark + '</td>'
+      html += '</tr></table>'
+      textarea.value = html;
+      console.info(html)
+      this.copyData = html
+      this.copy(this.copyData)
+    },
+    copy(data){
+      let url = data;
+      let oInput = document.createElement('input');
+      oInput.value = url;
+      document.body.appendChild(oInput);
+      oInput.select(); // 选择对象;
+      document.execCommand("Copy"); // 执行浏览器复制命令
+      this.$message({
+        message: '复制成功',
+        type: 'success'
+      });
+      oInput.remove()
+    },
+
     /** 人工存入按钮 */
     submitDeposit() {
       this.$refs["formdeposit"].validate(valid => {

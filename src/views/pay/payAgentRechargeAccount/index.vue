@@ -82,7 +82,7 @@
 
     <el-table :stripe="true" v-loading="loading" :data="payAgentRechargeAccountList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="代充账号" align="center" prop="account" width="100" />
+      <el-table-column label="代充账号" align="center" prop="account" width="130" />
       <el-table-column label="代充昵称" align="center" prop="nickName" width="120" />
       <el-table-column label="当前余额额度" align="center" prop="balanceAmount" width="100" />
       <el-table-column label="代充次数" align="center" prop="rechargeNum" />
@@ -179,6 +179,7 @@
           <el-time-picker
             arrow-control
             v-model="form.businessBeginTime"
+            value-format="HH:mm:ss"
             placeholder="任意时间点">
           </el-time-picker>
         </el-form-item>
@@ -186,6 +187,7 @@
           <el-time-picker
             arrow-control
             v-model="form.businessEndTime"
+            value-format="HH:mm:ss"
             placeholder="任意时间点">
           </el-time-picker>
         </el-form-item>

@@ -37,7 +37,7 @@
           type="daterange"
           range-separator="-"
           start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          end-placeholder="结束日期" :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item>
@@ -228,12 +228,14 @@ import {
   deposit,
   proposed
 } from "@/api/platform-web/pay/payAgentRechargeRecord";
+import { pickerDateShortcuts } from '@/utils/dateUtils'
 
 export default {
   name: "PayAgentRechargeRecord",
   components: {},
   data() {
     return {
+      pickerOptions: { shortcuts: pickerDateShortcuts },
       //存入类型选择栏
       deposittype: [{
         value: '人工存入',

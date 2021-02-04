@@ -59,7 +59,7 @@
           type="daterange"
           range-separator="-"
           start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          end-placeholder="结束日期" :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item>
@@ -119,6 +119,7 @@
 <script>
 import { listPayLog, getPayLog, delPayLog, addPayLog, updatePayLog, exportPayLog } from "@/api/platform-web/pay/payLog";
 import {platforms} from "@/api/platform-web/pay/payChannelNew";
+import { pickerDateShortcuts } from '@/utils/dateUtils'
 
 export default {
   name: "PayLog",
@@ -126,12 +127,13 @@ export default {
   },
   data() {
     return {
+      pickerOptions: { shortcuts: pickerDateShortcuts },
       // 遮罩层
       loading: true,
       // 选中数组
       ids: [],
       // 日期范围
-      dateRange: [],
+      dateRange: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
       // 非单个禁用
       single: true,
       // 非多个禁用

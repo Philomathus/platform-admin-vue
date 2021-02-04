@@ -177,7 +177,7 @@ export default {
       // 选中数组
       ids: [],
       // 日期范围
-      dateRange: [],
+      dateRange: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
       // 非单个禁用
       single: true,
       // 非多个禁用

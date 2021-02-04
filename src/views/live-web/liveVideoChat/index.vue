@@ -119,7 +119,7 @@
       <el-table-column label="消息所在聊天组" align="center" prop="group" />
       <el-table-column label="发送者id" align="center" prop="userId" />
       <el-table-column label="消息内容" align="center" prop="msg" />
-      <el-table-column label="消息类型 0 普通消息 1 弹幕消息" align="center" prop="type" />
+      <el-table-column label="消息类型" align="center" prop="type" />
       <el-table-column label="主播昵称" align="center" prop="poscatNickName" />
       <el-table-column label="发送者昵称" align="center" prop="userNickName" />
       <el-table-column label="平台会员ID" align="center" prop="fromPlatform" />

@@ -1,6 +1,13 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+      <el-form-item label="直播类型" prop="type" style="width: 100%;">
+        <el-checkbox-group v-model="queryParams.types" size="medium">
+          <el-checkbox v-for="item in typeOptions" :key="item.dictValue" :label="item.dictValue">
+            {{item.dictLabel}}
+          </el-checkbox>
+        </el-checkbox-group>
+      </el-form-item>
       <el-form-item label="直播昵称" prop="hostName">
         <el-input
           v-model="queryParams.hostName"
@@ -10,7 +17,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-
       <el-form-item label="直播线路">
         <el-select v-model="queryParams.paiId" placeholder="请选择">
           <el-option
@@ -47,7 +53,7 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="直播类型" align="center" prop="roomType" :formatter="typeFormat"/>
+      <el-table-column label="直播类型" align="center" prop="cateId" :formatter="typeFormat"/>
       <el-table-column label="热度" align="center" prop="voteNumber"/>
       <el-table-column label="在线人数" align="center" prop="watchNumber"/>
       <el-table-column label="推荐" align="center" prop="isRecommend" :formatter="isRecommendFormat"/>
@@ -152,6 +158,7 @@ export default {
       // 直播表格数据
       liveVideoList: [],
       serverOptions: [],
+      typeOptions: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -161,7 +168,8 @@ export default {
         pageNum: 1,
         pageSize: 10,
         hostName: null,
-        paiId: null
+        paiId: null,
+        types: []
       },
       // 表单参数
       form: {},
@@ -173,6 +181,9 @@ export default {
     this.getList();
     this.getServerLine().then(response => {
       this.serverOptions = response.rows
+    })
+    this.getDicts('videoType').then(response => {
+      this.typeOptions = response.data;
     })
   },
   methods: {
@@ -194,11 +205,13 @@ export default {
     reset() {
       this.form = {
         hostName: null,
-        paiId: null
+        paiId: null,
+        types: []
       };
       this.queryParams = {
         hostName: null,
-        paiId: null
+        paiId: null,
+        types: []
       }
       this.resetForm("form");
     },
@@ -245,9 +258,9 @@ export default {
     },
     /** 提交按钮 */
     submitForm() {
-      if(this.form.liveFee==0){
+      if (this.form.liveFee == 0) {
         this.msgError("付费金额必须大于0!");
-        return ;
+        return;
       }
       updateLivePay(this.form).then(response => {
         this.msgSuccess("修改成功");
@@ -293,11 +306,11 @@ export default {
       }
     },
     typeFormat(row) {
-      if (row.roomType == "2") {
+      if (row.cateId == "2") {
         return "性感主播";
-      } else if (row.roomType == "3") {
+      } else if (row.cateId == "3") {
         return "大秀直播";
-      } else if (row.roomType == "4") {
+      } else if (row.cateId == "4") {
         return "收费直播";
       } else {
         return "彩票直播";

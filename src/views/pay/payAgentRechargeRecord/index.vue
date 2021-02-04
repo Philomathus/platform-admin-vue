@@ -101,7 +101,6 @@
     </el-row>
 
     <el-table :stripe="true" v-loading="loading" :data="payAgentRechargeRecordList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="复制" align="center" >
         <template slot-scope="scope">
           <el-button

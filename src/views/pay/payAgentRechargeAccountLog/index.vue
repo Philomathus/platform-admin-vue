@@ -116,7 +116,7 @@
         </template>
       </el-table-column>
       <el-table-column label="订单号" :show-overflow-tooltip="true" width="180px" align="center" prop="orderNo" />
-      <el-table-column label="代充人账号" align="center" prop="account" />
+      <el-table-column label="代充人账号" align="center" prop="account"  width="150px"/>
       <el-table-column label="代充人昵称" align="center" prop="nickName" />
       <el-table-column label="汇款银行卡ID" align="center" prop="bankId" />
       <el-table-column label="汇款金额" align="center" prop="rechargeMoney" />
@@ -198,7 +198,7 @@
         <el-form-item label="订单号"  prop="account">
           <el-input v-model="form.orderNo" placeholder="请输入订单号" readonly />
         </el-form-item>
-        <el-form-item label="代充人账号" prop="account">
+        <el-form-item label="代充人账号" prop="account" >
           <el-input v-model="form.account" placeholder="请输入代充人账号"  readonly/>
         </el-form-item>
         <el-form-item label="代充人昵称" prop="nickName">

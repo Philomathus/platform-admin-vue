@@ -10,6 +10,15 @@ export function listMemberGameData(query) {
   })
 }
 
+// 查询会员注单数据统计
+export function getCount(query) {
+  return request({
+    url: url.platformWeb + '/member/memberGameData/getCount',
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询会员注单数据详细
 export function getMemberGameData(id) {
   return request({

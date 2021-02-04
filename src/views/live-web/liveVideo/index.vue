@@ -40,6 +40,21 @@
       </el-form-item>
     </el-form>
 
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="mini"
+          @click="closeIds"
+          v-hasPermi="['admin:liveVideoClassified:add']"
+        >批量关播
+        </el-button>
+      </el-col>
+      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+    </el-row>
+
     <el-table v-loading="loading" :data="liveVideoList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="主播id" align="center" prop="id"/>
@@ -128,6 +143,7 @@ import {
   listLiveVideo,
   getLiveVideo,
   delLiveVideo,
+  closeIds,
   addLiveVideo,
   updateLiveVideo,
   exportLiveVideo
@@ -248,6 +264,13 @@ export default {
         this.title = "付费设置";
         console.info(this.form.isLivePay)
         this.form.isLivePay = "" + this.form.isLivePay;
+      });
+    },
+    closeIds(){
+      this.msgSuccess("正在关播中!");
+      close(this.ids).then(response => {
+        this.getList();
+        this.msgSuccess("关播成功");
       });
     },
     close(row) {

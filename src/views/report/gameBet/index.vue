@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="copy1">总投注金额: {{ this.data.countBetMoney }}</el-button>
-    <el-button type="success" @click="copy2">总投注人数: {{ this.data.countBetPeople }}</el-button>
+    <el-button type="primary" @click="copy1">总投注金额: {{ this.data.countBetMoney||0 }}</el-button>
+    <el-button type="success" @click="copy2">总投注人数: {{ this.data.countBetPeople||0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="68px">
       <el-form-item label="日期选择" prop="begindate">
         <el-date-picker v-model="queryParams.begindate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
@@ -35,18 +35,14 @@
       <el-table-column label="平台抽水" align="center" prop="gamerevenve"/>
       <el-table-column label="会员盈利" align="center" prop="gameprofit"/>
       <el-table-column label="比例" align="center" prop="bili"/>
-      <el-table-column label="日期" align="center" prop="begindate">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.begindate) }}</span>
-        </template>
-      </el-table-column>
+      <el-table-column label="日期" align="center" prop="begindate"/>
     </el-table>
     <pagination v-show="total>0" :total="total" :page.sync="pageNum" :limit.sync="pageSize"/>
   </div>
 </template>
 
 <script>
-import {list, count} from "@/api/platform-web/report/gameBet";
+import {list, count,liststorage} from "@/api/platform-web/report/gameBet";
 
 
 export default {
@@ -72,6 +68,7 @@ export default {
     };
   },
   created() {
+    this.getliststorage();
     this.getList();
     this.count();
   },
@@ -83,6 +80,11 @@ export default {
         this.list = response.rows;
         this.total = response.total;
         this.loading = false;
+      })
+    },
+    getliststorage() {
+      this.loading = true;
+      liststorage(this.queryParams).then(response => {
       });
     },
     //复制
@@ -96,13 +98,17 @@ export default {
     count() {
       this.loading = true;
       count(this.queryParams).then(response => {
-        this.data = response.data;
+        if (response.data){
+          this.data = response.data;
+        }
         this.loading = false;
       });
     },
     /** 搜索按钮操作 */
     handleQuery() {
+
       this.pageNum = 1;
+     this.getliststorage();
       this.getList();
       this.count();
     },

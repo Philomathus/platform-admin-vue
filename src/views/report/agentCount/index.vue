@@ -41,7 +41,7 @@
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="渠道编码" align="center" prop="agentcode"/>
       <el-table-column label="邀请账号" align="center" prop="agentname"/>
-      <el-table-column label="统计时间" align="center" prop="agenttime"/>
+      <el-table-column label="统计时间" align="center" prop="agenttime" min-width="120"/>
       <el-table-column label="当日/总(注册人数)" min-width="130" align="center" prop="regisNumber" :formatter="regisNumber"/>
       <el-table-column label="公司入款（首充）" min-width="130" align="center" prop="gsRukuanjine"/>
       <el-table-column label="线上入款（首充）" min-width="130" align="center" prop="xsRukuanjine"/>
@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import {listReport} from "@/api/platform-web/report/agentCount";
+import {listReport,liststorage} from "@/api/platform-web/report/agentCount";
 import FileUpload from '@/components/FileUpload';
 
 export default {
@@ -108,6 +108,7 @@ export default {
     };
   },
   created() {
+    this.getListstorage();
     this.getList();
   },
   methods: {
@@ -120,6 +121,12 @@ export default {
         this.loading = false;
       });
     },
+    getListstorage() {
+      this.loading = true;
+      liststorage(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
+        this.getList();
+      });
+    },
     // 取消按钮
     cancel() {
       this.open = false;
@@ -127,6 +134,7 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
+      this.getListstorage();
       this.queryParams.pageNum = 1;
       this.getList();
     },

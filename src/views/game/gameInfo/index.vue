@@ -35,7 +35,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['web:game-info:add']"
+          v-hasPermi="['game:info:add']"
         >新增
         </el-button>
       </el-col>
@@ -95,7 +95,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             style="color: #FF5722"
-            v-hasPermi="['web:game-info:edit']"
+            v-hasPermi="['game:info:edit']"
           >修改
           </el-button>
           <el-button
@@ -104,7 +104,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             style="color: #FF5722"
-            v-hasPermi="['web:game-info:remove']"
+            v-hasPermi="['game:info:remove']"
           >删除
           </el-button>
         </template>

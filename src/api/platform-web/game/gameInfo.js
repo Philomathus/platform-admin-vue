@@ -4,8 +4,9 @@ import { praseStrEmpty } from "@/utils/common";
 
 // 查询用户列表
 export function listUser(query) {
+
   return request({
-    url: url.platformWeb + '/web/game-info/list',
+    url: url.platformWeb + '/game/info/list',
     method: 'get',
     params: query
   })
@@ -17,7 +18,7 @@ export function changeUserStatus(id, status) {
     status
   }
   return request({
-    url: url.platformWeb + '/web/game-info/changeStatus',
+    url: url.platformWeb + '/game/info/changeStatus',
     method: 'put',
     data: data
   })
@@ -29,16 +30,16 @@ export function changeIsWh(id,isWh ) {
     isWh
   }
   return request({
-    url: url.platformWeb + '/web/game-info/changeIsWh',
+    url: url.platformWeb + '/game/info/changeIsWh',
     method: 'put',
     data: data
   })
 }
 
-// 修改【请填写功能名称】
+// 修改游戏信息
 export function updateGameInfo(data) {
   return request({
-    url: url.platformWeb + '/web/game-info',
+    url: url.platformWeb + '/game/info',
     method: 'put',
     data: data
   })
@@ -46,7 +47,7 @@ export function updateGameInfo(data) {
 // 查询用户详细
 export function getInfo(id) {
   return request({
-    url: url.platformWeb + '/web/game-info/' + praseStrEmpty(id),
+    url: url.platformWeb + '/game/info/' + praseStrEmpty(id),
     method: 'get'
   })
 }
@@ -54,15 +55,15 @@ export function getInfo(id) {
 // 查询用户详细
 export function getGameInfo() {
   return request({
-    url: url.platformWeb + '/web/game-info/listGame' ,
+    url: url.platformWeb + '/game/info/listGame' ,
     method: 'get'
   })
 }
 
-// 新增【请填写功能名称】
+// 新增游戏信息
 export function  addGameInfoOne(data) {
   return request({
-    url: url.platformWeb + '/web/game-info/add',
+    url: url.platformWeb + '/game/info/add',
     method: 'post',
     data: data
   })
@@ -70,10 +71,10 @@ export function  addGameInfoOne(data) {
 
 
 
-// 删除【请填写功能名称】
+// 删除游戏信息
 export function delGameInfo(id) {
   return request({
-    url: url.platformWeb + '/web/game-info/' + id,
+    url: url.platformWeb + '/game/info/' + id,
     method: 'delete'
   })
 }

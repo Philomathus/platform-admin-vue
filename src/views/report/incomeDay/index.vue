@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="copy1">总成功金额: {{this.data.countSuccessMoney}}</el-button>
+    <el-button type="primary" @click="copy1">总成功金额: {{this.data.countSuccessMoney||0}}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="日期选择" prop="paydate">
         <el-date-picker v-model="queryParams.paydate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
@@ -86,8 +86,7 @@ export default {
       listReport(this.queryParams).then(response => {
         this.report = response.rows;
         this.total = response.total;
-        this.loading = false;
-      });
+      }).finally(()=>{this.loading = false;});
     },
     //复制
     copy1() {
@@ -96,8 +95,10 @@ export default {
     count() {
       this.loading = true;
       count(this.queryParams).then(response => {
-        this.data= response.data;
-        this.loading = false;
+        if (response.data){
+          this.data = response.data;
+        }
+      }).finally(()=>{this.loading = false;
       });
     },
     // 取消按钮

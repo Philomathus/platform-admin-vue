@@ -1,9 +1,9 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="copy1">入款总额: {{ this.data.paymentAmount }}</el-button>
-    <el-button type="success" @click="copy2">出款总额: {{ this.data.outMoney }}</el-button>
-    <el-button type="primary" @click="copy3">金额合计: {{ this.data.countMoney }}</el-button>
-    <el-button type="success" @click="copy4">送礼总额: {{ this.data.totalAccountGifts }}</el-button>
+    <el-button type="primary" @click="copy1">入款总额: {{ this.data.paymentAmount||0 }}</el-button>
+    <el-button type="success" @click="copy2">出款总额: {{ this.data.outMoney||0 }}</el-button>
+    <el-button type="primary" @click="copy3">金额合计: {{ this.data.countMoney||0 }}</el-button>
+    <el-button type="success" @click="copy4">送礼总额: {{ this.data.totalAccountGifts||0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="日期选择" prop="reptime">
         <el-date-picker
@@ -24,7 +24,7 @@
 
     <el-table v-loading="loading" :stripe="true" :data="report" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="报表时间" align="center" prop="reptime"/>
+      <el-table-column label="报表时间" align="center" prop="reptime" min-width="120"/>
       <el-table-column label="入款总人数" min-width="90" align="center" prop="totalRukuanrenshu"/>
       <el-table-column label="公司入款人数" min-width="100" align="center" prop="gsRukuanrenshu"/>
       <el-table-column label="公司入款金额" min-width="100" align="center" prop="gsRukuanjine"/>
@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import {listReport, count} from "@/api/platform-web/report/rechargeStatistics";
+import {listReport, count,liststorage} from "@/api/platform-web/report/rechargeStatistics";
 import FileUpload from '@/components/FileUpload';
 
 
@@ -103,6 +103,7 @@ export default {
     };
   },
   created() {
+    this.getliststorage()
     this.getList();
     this.count();
   },
@@ -114,6 +115,12 @@ export default {
         this.report = response.rows;
         this.total = response.total;
         this.loading = false;
+      });
+    },
+    getliststorage() {
+      this.loading = true;
+      liststorage(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
+        this.getList();
       });
     },
     //复制
@@ -144,6 +151,7 @@ export default {
     /** 搜索按钮操作 */
     handleQuery() {
       this.queryParams.pageNum = 1;
+      this.getliststorage();
       this.getList();
       this.count();
     },

@@ -84,6 +84,7 @@ export default {
     getList() {
       this.loading = true;
       listReport(this.queryParams).then(response => {
+        debugger;
         this.report = response.rows;
         this.total = response.total;
         this.loading = false;

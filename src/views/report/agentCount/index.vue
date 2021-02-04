@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import {listReport} from "@/api/platform-web/report/agentCount";
+import {listReport,liststorage} from "@/api/platform-web/report/agentCount";
 import FileUpload from '@/components/FileUpload';
 
 export default {
@@ -108,6 +108,7 @@ export default {
     };
   },
   created() {
+    this.getListstorage();
     this.getList();
   },
   methods: {
@@ -120,6 +121,12 @@ export default {
         this.loading = false;
       });
     },
+    getListstorage() {
+      this.loading = true;
+      liststorage(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
+        this.getList();
+      });
+    },
     // 取消按钮
     cancel() {
       this.open = false;
@@ -127,6 +134,7 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
+      this.getListstorage();
       this.queryParams.pageNum = 1;
       this.getList();
     },

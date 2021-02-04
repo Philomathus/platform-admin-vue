@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import {listReport, count} from "@/api/platform-web/report/rechargeStatistics";
+import {listReport, count,liststorage} from "@/api/platform-web/report/rechargeStatistics";
 import FileUpload from '@/components/FileUpload';
 
 
@@ -103,6 +103,7 @@ export default {
     };
   },
   created() {
+    this.getliststorage()
     this.getList();
     this.count();
   },
@@ -114,6 +115,12 @@ export default {
         this.report = response.rows;
         this.total = response.total;
         this.loading = false;
+      });
+    },
+    getliststorage() {
+      this.loading = true;
+      liststorage(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
+        this.getList();
       });
     },
     //复制
@@ -144,6 +151,7 @@ export default {
     /** 搜索按钮操作 */
     handleQuery() {
       this.queryParams.pageNum = 1;
+      this.getliststorage();
       this.getList();
       this.count();
     },

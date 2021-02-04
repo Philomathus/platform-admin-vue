@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import {list, count} from "@/api/platform-web/report/gameBet";
+import {list, count,liststorage} from "@/api/platform-web/report/gameBet";
 
 
 export default {
@@ -72,6 +72,7 @@ export default {
     };
   },
   created() {
+    this.getliststorage();
     this.getList();
     this.count();
   },
@@ -80,9 +81,15 @@ export default {
     getList() {
       this.loading = true;
       list(this.queryParams).then(response => {
+        debugger
         this.list = response.rows;
         this.total = response.total;
         this.loading = false;
+      })
+    },
+    getliststorage() {
+      this.loading = true;
+      liststorage(this.queryParams).then(response => {
       });
     },
     //复制
@@ -102,7 +109,9 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
+
       this.pageNum = 1;
+     this.getliststorage();
       this.getList();
       this.count();
     },

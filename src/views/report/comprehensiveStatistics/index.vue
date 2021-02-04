@@ -3,13 +3,8 @@
     <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="68px">
 
       <el-form-item label="日期选择" prop="reporttime">
-        <el-input
-          v-model="queryParams.reporttime"
-          placeholder="请输入日期"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-date-picker v-model="queryParams.reporttime" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
+                        :style="{width: '100%'}" placeholder="请选择日期选择" clearable></el-date-picker>
       </el-form-item>
 
       <el-form-item label="名称" prop="classTwoname">
@@ -52,7 +47,7 @@
 </template>
 
 <script>
-import {list} from "@/api/platform-web/report/comprehensiveStatistics";
+import {list,listStorage} from "@/api/platform-web/report/comprehensiveStatistics";
 
 
 export default {
@@ -75,10 +70,18 @@ export default {
     };
   },
   created() {
+    this.getlistStorage();
     this.getList();
+
   },
   methods: {
     /** 查询登录日志列表 */
+    getlistStorage() {
+      console.info(1111);
+      this.loading = true;
+      listStorage(this.queryParams).then(response => {
+      });
+    },
     getList() {
       this.loading = true;
       list(this.queryParams).then(response => {
@@ -91,7 +94,9 @@ export default {
     /** 搜索按钮操作 */
     handleQuery() {
       this.pageNum = 1;
+      this.getlistStorage();
       this.getList();
+
     },
     /** 重置按钮操作 */
     resetQuery() {

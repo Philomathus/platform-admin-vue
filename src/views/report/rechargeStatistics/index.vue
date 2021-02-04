@@ -1,9 +1,9 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="copy1">入款总额: {{ this.data.paymentAmount }}</el-button>
-    <el-button type="success" @click="copy2">出款总额: {{ this.data.outMoney }}</el-button>
-    <el-button type="primary" @click="copy3">金额合计: {{ this.data.countMoney }}</el-button>
-    <el-button type="success" @click="copy4">送礼总额: {{ this.data.totalAccountGifts }}</el-button>
+    <el-button type="primary" @click="copy1">入款总额: {{ this.data.paymentAmount||0 }}</el-button>
+    <el-button type="success" @click="copy2">出款总额: {{ this.data.outMoney||0 }}</el-button>
+    <el-button type="primary" @click="copy3">金额合计: {{ this.data.countMoney||0 }}</el-button>
+    <el-button type="success" @click="copy4">送礼总额: {{ this.data.totalAccountGifts||0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="日期选择" prop="reptime">
         <el-date-picker

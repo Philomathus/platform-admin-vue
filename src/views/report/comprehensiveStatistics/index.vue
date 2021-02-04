@@ -36,10 +36,7 @@
       <el-table-column label="名称" align="center" prop="classTwoname" :show-overflow-tooltip="true"/>
       <el-table-column label="金额" align="center" prop="tValue" :show-overflow-tooltip="true"/>
       <el-table-column label="类型" align="center" prop="type"/>
-      <el-table-column label="时间" align="center" prop="reporttime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.reporttime) }}</span>
-        </template>
+      <el-table-column label="时间" align="center" prop="reporttime" width="180"/>
       </el-table-column>
     </el-table>
     <pagination v-show="total>0" :total="total" :page.sync="pageNum" :limit.sync="pageSize"/>

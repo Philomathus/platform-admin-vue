@@ -24,7 +24,7 @@
 
     <el-table v-loading="loading" :stripe="true" :data="report" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="报表时间" align="center" prop="reptime"/>
+      <el-table-column label="报表时间" align="center" prop="reptime" min-width="120"/>
       <el-table-column label="入款总人数" min-width="90" align="center" prop="totalRukuanrenshu"/>
       <el-table-column label="公司入款人数" min-width="100" align="center" prop="gsRukuanrenshu"/>
       <el-table-column label="公司入款金额" min-width="100" align="center" prop="gsRukuanjine"/>

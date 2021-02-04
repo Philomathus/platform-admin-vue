@@ -35,11 +35,7 @@
       <el-table-column label="平台抽水" align="center" prop="gamerevenve"/>
       <el-table-column label="会员盈利" align="center" prop="gameprofit"/>
       <el-table-column label="比例" align="center" prop="bili"/>
-      <el-table-column label="日期" align="center" prop="begindate">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.begindate) }}</span>
-        </template>
-      </el-table-column>
+      <el-table-column label="日期" align="center" prop="begindate"/>
     </el-table>
     <pagination v-show="total>0" :total="total" :page.sync="pageNum" :limit.sync="pageSize"/>
   </div>
@@ -81,7 +77,6 @@ export default {
     getList() {
       this.loading = true;
       list(this.queryParams).then(response => {
-        debugger
         this.list = response.rows;
         this.total = response.total;
         this.loading = false;

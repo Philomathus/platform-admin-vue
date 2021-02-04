@@ -92,7 +92,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table :stripe="true" v-loading="loading" border :data="memberInfoList" @selection-change="handleSelectionChange">
+    <el-table :stripe="true" v-loading="loading" :data="memberInfoList" @selection-change="handleSelectionChange">
       <el-table-column label="会员ID" align="center" prop="id" min-width="120px"/>
       <el-table-column label="账号" align="center" prop="userName" min-width="100px"/>
       <el-table-column label="昵称" :show-overflow-tooltip="true" align="center" prop="nickName" min-width="160"/>
@@ -154,7 +154,7 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
-    <more ref="more" :user-id="userId" @memberMore="handleQuery"></more>
+    <more ref="more" :member-id="memberId" :member-code="memberCode" @memberMore="handleQuery"></more>
   </div>
 </template>
 
@@ -178,8 +178,9 @@ export default {
     return {
       // 遮罩层
       loading: true,
-      // 传递到子组件的userId
-      userId: 0,
+      // 传递到子组件的memberId/memberCode
+      memberCode: 0,
+      memberId: null,
       // 选中数组
       ids: [],
       // 非单个禁用
@@ -349,7 +350,8 @@ export default {
     },
     /** 更多按钮操作 */
     handleMore(row) {
-      this.userId = row.memberCode
+      this.memberCode = row.memberCode
+      this.memberId = row.id
       this.$refs.more.show()
     },
     /** 导出按钮操作 */

@@ -1,6 +1,14 @@
 <template>
   <!-- 导入表 -->
-  <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="visible" width="800px" top="5vh" append-to-body>
+  <el-dialog
+    v-dialogDrag
+    :close-on-click-modal="false"
+    :title="title"
+    :visible.sync="visible"
+    width="800px"
+    top="5vh"
+    append-to-body
+  >
     <!--顶部按钮-->
     <div class="page-tab" style="margin-bottom: 20px">
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(1,'积分明细')">
@@ -20,27 +28,24 @@
     </div>
     <!--积分明细-->
     <el-row v-if="index===1">
-      <el-table @row-click="clickRow" ref="table" :data="dbTableList" @selection-change="handleSelectionChange"
-                height="260px">
-<!--        <el-table-column type="selection" width="55"></el-table-column>-->
-        <el-table-column prop="class_twoname" label="游戏名称" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="t_value" label="金额" :show-overflow-tooltip="true"></el-table-column>
+      <el-table @row-click="clickRow" ref="table" :data="dbTableList" height="460px" v-loading="loading">
+        <el-table-column prop="name" label="游戏名称" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="value" label="金额" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="createTime" label="操作">
-          <button>下分</button>
+          <el-button>下分</el-button>
         </el-table-column>
       </el-table>
-      <pagination
-        v-show="total>0"
-        :total="total"
-        :page.sync="queryParams.pageNum"
-        :limit.sync="queryParams.pageSize"
-        @pagination="getList"
-      />
     </el-row>
     <!--资金明细-->
     <el-row v-if="index===2">
-      <el-table @row-click="clickRow" ref="table" :data="dbTableList" @selection-change="handleSelectionChange"
-                height="260px">
+      <el-table
+        @row-click="clickRow"
+        ref="table"
+        :data="dbTableList"
+        @selection-change="handleSelectionChange"
+        height="460px"
+        v-loading="loading"
+      >
         <!--<el-table-column type="selection" width="55"></el-table-column>-->
         <el-table-column prop="class_twoname" label="项目名称" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="t_value" label="项目值" :show-overflow-tooltip="true"></el-table-column>
@@ -56,7 +61,7 @@
 
     <!--加分-->
     <el-row v-if="index===3">
-      <el-form ref="form" :model="form"  label-width="80px">
+      <el-form ref="form" :model="form" label-width="100px">
         <el-form-item label="加分金额" prop="score">
           <el-input v-model="form.score" placeholder="请输入金额"/>
         </el-form-item>
@@ -74,7 +79,7 @@
         <el-form-item label="打码倍数" prop="beatNum">
           <el-input v-model="form.beatNum" placeholder="请输入打码倍数，默认请填写1,如未打算打码可填写为0"/>
         </el-form-item>
-        <el-form-item label="google验证码" prop="googleAuthCode" label-width="100px">
+        <el-form-item label="google验证码" prop="googleAuthCode">
           <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>
         </el-form-item>
 
@@ -84,14 +89,21 @@
 
     <!--银行卡-->
     <el-row v-if="index===5">
-      <el-table @row-click="clickRow" ref="table" :data="dbTableList" @selection-change="handleSelectionChange"
-                height="260px">
-<!--        <el-table-column type="selection" width="55"></el-table-column>-->
+      <el-table
+        @row-click="clickRow"
+        ref="table"
+        :data="dbTableList"
+        @selection-change="handleSelectionChange"
+        height="460px"
+        v-loading="loading"
+      >
+        <!--        <el-table-column type="selection" width="55"></el-table-column>-->
         <el-table-column prop="bank_name" label="银行名称" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="bank_account" label="银行卡号" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="bank_address" label="银行地址" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="type" label="银行类型" :show-overflow-tooltip="true"
-                         :formatter="formatterBankType"></el-table-column>
+                         :formatter="formatterBankType"
+        ></el-table-column>
       </el-table>
       <pagination
         v-show="total>0"
@@ -111,294 +123,302 @@
 </template>
 
 <script>
-    import {listDbTable, importTable} from "@/api/platform-web/tool/gen";
-    import {
-        gameBalance,
-        memberWithdrawLog,
-        addScore,
-        resetPassword,
-        cardList,
-        resetSafe,
-        resetWithdrawal
-    } from "@/api/platform-web/member/memberInfo";
+import { gameBalance, gameEsc } from '@/api/platform-web/game/base'
+import {
+  memberWithdrawLog,
+  addScore,
+  resetPassword,
+  cardList,
+  resetSafe,
+  resetWithdrawal
+} from '@/api/platform-web/member/memberInfo'
 
-    export default {
-        props: {
-            userId: {
-                required: false,
-                default: 0,
-            },
-        },
-        data() {
-            return {
-                //弹出框标题
-                title: '积分明细',
-                //页面编码
-                index: 1,
-                // 遮罩层
-                visible: false,
-                // 选中数组值
-                tables: [],
-                //加分备注别表
-                addScoreRemarks: [{label: '人工备注'}, {label: '线上入款'}, {label: '线下入款'}],
-                //加分提交的数据
-                form: {
-                    beatNum: '',
-                    googleAuthCode: '',
-                    id: '',
-                    mk: '',
-                    moneydes: '',
-                    ordermk: '',
-                    score: ''
-                },
-                // 总条数
-                total: 0,
-                // 表数据
-                dbTableList: [],
-                // 查询参数
-                queryParams: {
-                    pageNum: 1,
-                    pageSize: 10,
-                    tableName: undefined,
-                    tableComment: undefined
-                }
-            };
-        },
-        methods: {
-            //银行卡类型格式化
-            formatterBankType(row, column) {
-                switch (column.type) {
-                    case 1:
-                        return '银行卡转账';
-                        break;
-                }
-                return '未知';
-            },
-            //切换页面
-            change(index, title) {
-                this.index = index
-                this.title = title
-                this.reset();
-                var hint = '';
-                //如果是重置密码,保险箱,体现
-                switch (index) {
-                    case 4 :
-                        hint = '确定重置码123456?'
-                        this.open(hint, 1);
-                        break;
-                    case 6 :
-                        hint = '确定重置保险箱?'
-                        this.open(hint, 1);
-                        break;
-                    case 7 :
-                        hint = '请输入您的谷歌验证码'
-                        this.open(hint, 2);
-                        break;
-                }
-                //其他的就是获取列表
-                this.getList()
-            },
-            reset(){
-                // 总条数
-                this.total= 0
-                // 表数据
-                this.dbTableList = []
-            },
-            //打开提示框
-            open(hint, type) {
-                console.log(type)
-                if (type === 1) {
-                    this.$confirm(hint, '提示', {
-                        confirmButtonText: '确定',
-                        cancelButtonText: '取消',
-                        type: 'warning'
-                    }).then(() => {
-                        this.$message({
-                            type: 'success',
-                            message: '操作成功!'
-                        });
-                        if (this.index === 4) {
-                            resetPassword(this.userId).then((res) => {
-                                if(res.code === 0){
-                                    this.$notify.success('重置密码成功')
-                                }else {
-                                    this.$notify.error('重置密码失败')
-                                }
-                            }).catch(() => {
-                                this.$notify.error('网络异常')
-                            });
-                        } else {
-                            resetSafe({userId: this.userId}).then((res) => {
-                                if(res.code === 0){
-                                    this.$notify.success('重置保险箱成功')
-                                }else {
-                                    this.$notify.error('重置保险箱失败')
-                                }
-                            }).catch(() => {
-                                this.$notify.error('网络异常')
-                            });
-                        }
-                    }).catch(() => {
-                        this.$message({
-                            type: 'info',
-                            message: '已取消'
-                        });
-                    });
-                } else {
-                    this.$prompt(hint, '提示', {
-                        confirmButtonText: '确定',
-                        cancelButtonText: '取消',
-                        /*inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
-                        inputErrorMessage: '验证码格式不正确'*/
-                    }).then(({value}) => {
-                        this.$message({
-                            type: 'success',
-                            message: '你的谷歌验证码是: ' + value
-                        });
-                        resetWithdrawal({
-                            googleAuthCode: value,
-                            id: this.userId
-                        }).then((res) => {
-                            if(res.code === 0){
-                                this.$notify.success('重置提现成功')
-                            }else {
-                                this.$notify.error('重置提现失败')
-                            }
-                        }).catch(() => {
-                            this.$notify.error('网络异常')
-                        });
-                    }).catch(() => {
-                        this.$message({
-                            type: 'info',
-                            message: '取消输入'
-                        });
-                    });
-                }
-
-            },
-            // 显示弹框
-            show() {
-                this.getList();
-                this.visible = true;
-            },
-            clickRow(row) {
-                this.$refs.table.toggleRowSelection(row);
-            },
-            // 多选框选中数据
-            handleSelectionChange(selection) {
-                this.tables = selection.map(item => item.tableName);
-            },
-            // 查询表数据
-            getList() {
-                switch (this.index) {
-                    case 1:
-                        this.gameBalance();
-                        break;
-                    case 2:
-                        this.memberWithdrawLog();
-                        break;
-                    case 5:
-                        this.cardList()
-                        break;
-                }
-                /* listDbTable(this.queryParams).then(res => {
-                     if (res.code === 200) {
-                         this.dbTableList = res.rows;
-                         this.total = res.total;
-                     }
-                 });*/
-            },
-            //获取积分列表
-            gameBalance() {
-                gameBalance({
-                    userId: this.userId,
-                    page: this.queryParams.pageNum,
-                    limit: this.queryParams.pageSize,
-                    _: new Date().getTime()
-                }).then((res) => {
-                        if (res.code === 200) {
-                            this.dbTableList = res.data;
-                            this.total = res.total;
-                        }
-                    }
-                ).catch(() => {
-                    this.$notify.warning('获取积分列表失败')
-                });
-            },
-            //获取资金明细列表
-            memberWithdrawLog() {
-                memberWithdrawLog({
-                    id: this.userId,
-                    page: this.queryParams.pageNum,
-                    limit: this.queryParams.pageSize,
-                    _: new Date().getTime()
-                }).then((res) => {
-                    console.log(res)
-                    if (res.code === 0) {
-                        this.dbTableList = res.data;
-                        this.total = res.count;
-                    }
-                }).catch(() => {
-                    this.$notify.warning('获取资金明细列表失败')
-                });
-            },
-            //加分提交接口
-            addScore() {
-                addScore({
-                    beatNum: this.form.beatNum,
-                    googleAuthCode: this.form.googleAuthCode,
-                    id: this.userId,
-                    mk: this.form.mk,
-                    moneydes: this.form.moneydes,
-                    ordermk: this.form.ordermk,
-                    score: this.form.score,
-                }).then((res) => {
-                    if (json1.status === 200) {
-                        this.$notify.success(res.data.message);
-                    }
-                }).catch((error) => {
-                    this.$notify.warning('error')
-                });
-            },
-            //银行卡列表接口
-            cardList() {
-                cardList({
-                    id: this.userId,
-                    page: this.queryParams.pageNum,
-                    limit: this.queryParams.pageSize,
-                    orderBy: 'create_time desc',
-                    _: new Date().getTime()
-                }).then((res) => {
-                    if (res.code === 0) {
-                        this.dbTableList = res.data;
-                        this.total = res.count;
-                    }
-                }).catch((error) => {
-                    this.$notify.warning('获取银行卡列表失败')
-                });
-            },
-
-            /** 搜索按钮操作 */
-            handleQuery() {
-                this.queryParams.pageNum = 1;
-                this.getList();
-            },
-            /** 重置按钮操作 */
-            resetQuery() {
-                this.resetForm("queryForm");
-                this.handleQuery();
-            },
-            /** 导入按钮操作 */
-            handleImportTable() {
-                /*importTable({tables: this.tables.join(",")}).then(res => {
-                    this.msgSuccess(res.msg);
-                    if (res.code === 200) {
-                        this.visible = false;
-                        this.$emit("ok");
-                    }
-                });*/
-                this.addScore()
+export default {
+  props: {
+    memberId: {
+      required: false,
+      default: null
+    },
+    memberCode: {
+      required: false,
+      default: 0
+    }
+  },
+  data() {
+    return {
+      // 遮罩层
+      loading: true,
+      //弹出框标题
+      title: '积分明细',
+      //页面编码
+      index: 1,
+      // 遮罩层
+      visible: false,
+      // 选中数组值
+      tables: [],
+      //加分备注别表
+      addScoreRemarks: [{ label: '人工备注' }, { label: '线上入款' }, { label: '线下入款' }],
+      //加分提交的数据
+      form: {
+        beatNum: '',
+        googleAuthCode: '',
+        id: '',
+        mk: '',
+        moneydes: '',
+        ordermk: '',
+        score: ''
+      },
+      // 总条数
+      total: 0,
+      // 表数据
+      dbTableList: [],
+      // 查询参数
+      queryParams: {
+        pageNum: 1,
+        pageSize: 10,
+        tableName: undefined,
+        tableComment: undefined
+      }
+    }
+  },
+  methods: {
+    //银行卡类型格式化
+    formatterBankType(row, column) {
+      switch (column.type) {
+        case 1:
+          return '银行卡转账'
+      }
+      return '未知'
+    },
+    //切换页面
+    change(index, title) {
+      this.index = index
+      this.title = title
+      this.reset()
+      var hint = ''
+      //如果是重置密码,保险箱,体现
+      switch (index) {
+        case 4 :
+          hint = '确定重置码123456?'
+          this.open(hint, 1)
+          break
+        case 6 :
+          hint = '确定重置保险箱?'
+          this.open(hint, 1)
+          break
+        case 7 :
+          hint = '请输入您的谷歌验证码'
+          this.open(hint, 2)
+          break
+      }
+      //其他的就是获取列表
+      this.getList()
+    },
+    reset() {
+      // 总条数
+      this.total = 0
+      // 表数据
+      this.dbTableList = []
+    },
+    //打开提示框
+    open(hint, type) {
+      if (type === 1) {
+        this.$confirm(hint, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '操作成功!'
+          })
+          if (this.index === 4) {
+            resetPassword(this.memberCode).then((res) => {
+              if (res.code === 0) {
+                this.$notify.success('重置密码成功')
+              } else {
+                this.$notify.error('重置密码失败')
+              }
+            }).catch(() => {
+              this.$notify.error('网络异常')
+            })
+          } else {
+            resetSafe({ userId: this.memberCode }).then((res) => {
+              if (res.code === 0) {
+                this.$notify.success('重置保险箱成功')
+              } else {
+                this.$notify.error('重置保险箱失败')
+              }
+            }).catch(() => {
+              this.$notify.error('网络异常')
+            })
+          }
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          })
+        })
+      } else {
+        this.$prompt(hint, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消'
+          /*inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+          inputErrorMessage: '验证码格式不正确'*/
+        }).then(({ value }) => {
+          this.$message({
+            type: 'success',
+            message: '你的谷歌验证码是: ' + value
+          })
+          resetWithdrawal({
+            googleAuthCode: value,
+            id: this.memberCode
+          }).then((res) => {
+            if (res.code === 0) {
+              this.$notify.success('重置提现成功')
+            } else {
+              this.$notify.error('重置提现失败')
             }
+          }).catch(() => {
+            this.$notify.error('网络异常')
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消输入'
+          })
+        })
+      }
+
+    },
+    // 显示弹框
+    show() {
+      this.getList()
+      this.visible = true
+    },
+    clickRow(row) {
+      this.$refs.table.toggleRowSelection(row)
+    },
+    // 多选框选中数据
+    handleSelectionChange(selection) {
+      this.tables = selection.map(item => item.tableName)
+    },
+    // 查询表数据
+    getList() {
+      switch (this.index) {
+        case 1:
+          this.gameBalance()
+          break
+        case 2:
+          this.memberWithdrawLog()
+          break
+        case 5:
+          this.cardList()
+          break
+      }
+      /* listDbTable(this.queryParams).then(res => {
+           if (res.code === 200) {
+               this.dbTableList = res.rows;
+               this.total = res.total;
+           }
+       });*/
+    },
+    //获取积分列表
+    gameBalance() {
+      this.dbTableList = []
+      this.loading = true
+      gameBalance(this.memberId).then((res) => {
+          if (res.code === 200) {
+            this.dbTableList = res.data
+            this.loading = false
+          }
         }
-    };
+      ).catch(() => {
+        this.$notify.warning('获取积分列表失败')
+        this.loading = false
+      })
+    },
+    //获取资金明细列表
+    memberWithdrawLog() {
+      this.dbTableList = []
+      this.loading = true
+      memberWithdrawLog({
+        id: this.memberCode,
+        page: this.queryParams.pageNum,
+        limit: this.queryParams.pageSize,
+        _: new Date().getTime()
+      }).then((res) => {
+        if (res.code === 0) {
+          this.dbTableList = res.data
+          this.total = res.count
+          this.loading = false
+        }
+      }).catch(() => {
+        this.$notify.warning('获取资金明细列表失败')
+        this.loading = false
+      })
+    },
+    //加分提交接口
+    addScore() {
+      addScore({
+        beatNum: this.form.beatNum,
+        googleAuthCode: this.form.googleAuthCode,
+        id: this.memberCode,
+        mk: this.form.mk,
+        moneydes: this.form.moneydes,
+        ordermk: this.form.ordermk,
+        score: this.form.score
+      }).then((res) => {
+        if (json1.status === 200) {
+          this.$notify.success(res.data.message)
+        }
+      }).catch((error) => {
+        this.$notify.warning('error')
+      })
+    },
+    //银行卡列表接口
+    cardList() {
+      this.dbTableList = []
+      this.loading = true
+      cardList({
+        id: this.memberCode,
+        page: this.queryParams.pageNum,
+        limit: this.queryParams.pageSize,
+        orderBy: 'create_time desc',
+        _: new Date().getTime()
+      }).then((res) => {
+        if (res.code === 0) {
+          this.dbTableList = res.data
+          this.total = res.count
+          this.loading = false
+        }
+      }).catch((error) => {
+        this.$notify.warning('获取银行卡列表失败')
+        this.loading = false
+      })
+    },
+
+    /** 搜索按钮操作 */
+    handleQuery() {
+      this.queryParams.pageNum = 1
+      this.getList()
+    },
+    /** 重置按钮操作 */
+    resetQuery() {
+      this.resetForm('queryForm')
+      this.handleQuery()
+    },
+    /** 导入按钮操作 */
+    handleImportTable() {
+      /*importTable({tables: this.tables.join(",")}).then(res => {
+          this.msgSuccess(res.msg);
+          if (res.code === 200) {
+              this.visible = false;
+              this.$emit("ok");
+          }
+      });*/
+      this.addScore()
+    }
+  }
+}
 </script>

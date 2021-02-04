@@ -43,6 +43,14 @@ export function updateLiveVideo(data) {
   })
 }
 
+// 修改直播
+export function updateLivePay(data) {
+  return request({
+    url: url.platformWeb + '/admin/liveVideo/livePay',
+    method: 'put',
+    data: data
+  })
+}
 // 删除直播
 export function delLiveVideo(id) {
   return request({

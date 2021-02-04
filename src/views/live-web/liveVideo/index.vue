@@ -22,12 +22,12 @@
         </el-select>
       </el-form-item>
 
-<!--      <el-form-item label="房间类型">-->
-<!--        <el-checkbox-group v-model="form.roomType">-->
-<!--          <el-checkbox>dddd</el-checkbox>-->
-<!--          <el-checkbox>dddd</el-checkbox>-->
-<!--        </el-checkbox-group>-->
-<!--      </el-form-item>-->
+      <!--      <el-form-item label="房间类型">-->
+      <!--        <el-checkbox-group v-model="form.roomType">-->
+      <!--          <el-checkbox>dddd</el-checkbox>-->
+      <!--          <el-checkbox>dddd</el-checkbox>-->
+      <!--        </el-checkbox-group>-->
+      <!--      </el-form-item>-->
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -69,11 +69,41 @@
             icon="el-icon-edit"
             @click="close(scope.row)"
             v-hasPermi="['admin:liveVideoChat:edit']"
-          >关播</el-button>
+          >关播
+          </el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            @click="handleUpdate(scope.row)"
+            v-hasPermi="['admin:liveVideoChat:edit']"
+          >付费设置
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
 
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="800px"
+               append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
+        <el-form-item label="房间ID" prop="id">
+          <el-input v-model="form.id" placeholder="房间ID" readonly disabled/>
+        </el-form-item>
+        <el-form-item label="是否付费">
+          <el-radio-group v-model="form.isLivePay">
+            <el-radio label="true">是</el-radio>
+            <el-radio label="false">否</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="观看费用" prop="liveFee">
+          <el-input v-model="form.liveFee" placeholder="观看费用"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
     <pagination
       v-show="total>0"
       :total="total"
@@ -88,6 +118,7 @@
 <script>
 import {
   close,
+  updateLivePay,
   listLiveVideo,
   getLiveVideo,
   delLiveVideo,
@@ -120,7 +151,7 @@ export default {
       total: 0,
       // 直播表格数据
       liveVideoList: [],
-      serverOptions:[],
+      serverOptions: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -130,7 +161,7 @@ export default {
         pageNum: 1,
         pageSize: 10,
         hostName: null,
-        paiId:null
+        paiId: null
       },
       // 表单参数
       form: {},
@@ -163,11 +194,11 @@ export default {
     reset() {
       this.form = {
         hostName: null,
-        paiId:null
+        paiId: null
       };
-      this.queryParams={
+      this.queryParams = {
         hostName: null,
-        paiId:null
+        paiId: null
       }
       this.resetForm("form");
     },
@@ -197,14 +228,16 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const id = row.id || this.ids
+      const id = row.id || this.ids;
       getLiveVideo(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改直播";
+        this.title = "付费设置";
+        console.info(this.form.isLivePay)
+        this.form.isLivePay = "" + this.form.isLivePay;
       });
     },
-    close(row){
+    close(row) {
       close(row.id).then(response => {
         this.getList();
         this.msgSuccess("关播成功");
@@ -212,22 +245,14 @@ export default {
     },
     /** 提交按钮 */
     submitForm() {
-      this.$refs["form"].validate(valid => {
-        if (valid) {
-          if (this.form.id != null) {
-            updateLiveVideo(this.form).then(response => {
-              this.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
-            });
-          } else {
-            addLiveVideo(this.form).then(response => {
-              this.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
-            });
-          }
-        }
+      if(this.form.liveFee==0){
+        this.msgError("付费金额必须大于0!");
+        return ;
+      }
+      updateLivePay(this.form).then(response => {
+        this.msgSuccess("修改成功");
+        this.open = false;
+        this.getList();
       });
     },
     /** 删除按钮操作 */
@@ -247,39 +272,39 @@ export default {
     statusFormat(row) {
       if (row.liveStatus == "1") {
         return "播放源正常";
-      }else if (row.liveStatus == "0") {
+      } else if (row.liveStatus == "0") {
         return "播放源异常";
-      }else{
+      } else {
         return "检测中";
       }
     },
     isRecommendFormat(row) {
       if (row.isRecommend == "1") {
         return "是";
-      }else{
+      } else {
         return "否";
       }
     },
     isLivePayFormat(row) {
       if (row.isLivePay == "1") {
         return "是";
-      }else{
+      } else {
         return "否";
       }
     },
     typeFormat(row) {
       if (row.roomType == "2") {
         return "性感主播";
-      }else if (row.roomType == "3") {
+      } else if (row.roomType == "3") {
         return "大秀直播";
-      }else if (row.roomType == "4") {
+      } else if (row.roomType == "4") {
         return "收费直播";
-      }else{
+      } else {
         return "彩票直播";
       }
     },
-    getServerLine(){
-     return  request({
+    getServerLine() {
+      return request({
         url: url.platformWeb + '/server/live/getAlllist',
         method: 'get'
       })

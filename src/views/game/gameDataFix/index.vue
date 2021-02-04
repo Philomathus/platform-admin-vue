@@ -25,7 +25,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['admin:memberGameDatafix:add']"
+          v-hasPermi="['game:memberGameDatafix:add']"
         >新增</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>

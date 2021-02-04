@@ -41,7 +41,7 @@
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="渠道编码" align="center" prop="agentcode"/>
       <el-table-column label="邀请账号" align="center" prop="agentname"/>
-      <el-table-column label="统计时间" align="center" prop="agenttime"/>
+      <el-table-column label="统计时间" align="center" prop="agenttime" min-width="120"/>
       <el-table-column label="当日/总(注册人数)" min-width="130" align="center" prop="regisNumber" :formatter="regisNumber"/>
       <el-table-column label="公司入款（首充）" min-width="130" align="center" prop="gsRukuanjine"/>
       <el-table-column label="线上入款（首充）" min-width="130" align="center" prop="xsRukuanjine"/>

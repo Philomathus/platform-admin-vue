@@ -82,7 +82,6 @@
         <el-form-item label="google验证码" prop="googleAuthCode">
           <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>
         </el-form-item>
-
       </el-form>
     </el-row>
 
@@ -135,19 +134,21 @@ import {
 
 export default {
   props: {
-    memberId: {
+/*    memberId: {
       required: false,
       default: null
     },
     memberCode: {
       required: false,
       default: 0
-    }
+    }*/
   },
   data() {
     return {
       // 遮罩层
       loading: true,
+      memberId: null,
+      memberCode: null,
       //弹出框标题
       title: '积分明细',
       //页面编码
@@ -292,7 +293,9 @@ export default {
 
     },
     // 显示弹框
-    show() {
+    show(memberId,memberCode) {
+      this.memberId = memberId
+      this.memberCode = memberCode
       this.getList()
       this.visible = true
     },
@@ -325,6 +328,8 @@ export default {
     },
     //获取积分列表
     gameBalance() {
+      console.log(this)
+      debugger;
       this.dbTableList = []
       this.loading = true
       gameBalance(this.memberId).then((res) => {

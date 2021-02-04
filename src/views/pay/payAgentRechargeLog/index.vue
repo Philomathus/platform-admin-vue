@@ -102,7 +102,15 @@
     </el-row>
 
     <el-table :stripe="true" v-loading="loading" :data="payAgentRechargeLogList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
+      <el-table-column label="复制" align="center" >
+        <template slot-scope="scope">
+          <el-button
+            type="primary" size="mini"
+            @click="handleCopy(scope.row)"
+          >复制
+          </el-button>
+        </template>
+      </el-table-column>
       <el-table-column label="订单号" align="center" prop="orderNo" />
       <el-table-column label="代充账号" align="center" prop="rechargeAcount" />
       <el-table-column label="代充昵称" align="center" prop="rechargeNickName" />
@@ -273,6 +281,36 @@ export default {
         this.open = true;
         this.title = "修改代充信息日志";
       });
+    },
+    /** 复制按钮 */
+    handleCopy(row){
+      var textarea = document.createElement("textarea");
+      let html = '<table><tr>'
+      html += '<td>' + row.orderNo + '</td>'
+      html += '<td>' + row.rechargeAcount + '</td>'
+      html += '<td>' + row.rechargeNickName + '</td>'
+      html += '<td>' + row.memberId + '</td>'
+      html += '<td>' + row.userName + '</td>'
+      html += '<td>' + row.money + '</td>'
+      html += '<td>' + row.createTime + '</td>'
+      html += '</tr></table>'
+      textarea.value = html;
+      console.info(html)
+      this.copyData = html
+      this.copy(this.copyData)
+    },
+    copy(data){
+      let url = data;
+      let oInput = document.createElement('input');
+      oInput.value = url;
+      document.body.appendChild(oInput);
+      oInput.select(); // 选择对象;
+      document.execCommand("Copy"); // 执行浏览器复制命令
+      this.$message({
+        message: '复制成功',
+        type: 'success'
+      });
+      oInput.remove()
     },
     /** 提交按钮 */
     submitForm() {

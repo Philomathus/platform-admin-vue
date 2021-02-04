@@ -106,7 +106,15 @@
     </el-row>
 
     <el-table :stripe="true" v-loading="loading" :data="payAgentRechargeAccountLogList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
+      <el-table-column label="复制" align="center" >
+        <template slot-scope="scope">
+          <el-button
+            type="primary" size="mini"
+            @click="handleCopy(scope.row)"
+          >复制
+          </el-button>
+        </template>
+      </el-table-column>
       <el-table-column label="订单号" :show-overflow-tooltip="true" width="180px" align="center" prop="orderNo" />
       <el-table-column label="代充人账号" align="center" prop="account" />
       <el-table-column label="代充人昵称" align="center" prop="nickName" />
@@ -404,6 +412,41 @@ export default {
         this.open = true;
         this.title = "修改代充人入款";
       });
+    },
+    /** 复制按钮 */
+    handleCopy(row){
+      var status=this.statusOptions[parseInt(row.status)];
+      var textarea = document.createElement("textarea");
+      let html = '<table><tr>'
+      html += '<td>' + row.orderNo + '</td>'
+      html += '<td>' + row.account + '</td>'
+      html += '<td>' + row.nickName + '</td>'
+      html += '<td>' + row.bankId + '</td>'
+      html += '<td>' + row.rechargeMoney + '</td>'
+      html += '<td>' + row.subMoney + '</td>'
+      html += '<td>' + row.rechargeRealName + '</td>'
+      html += '<td>' + row.remark + '</td>'
+      html += '<td>' + status.dictLabel + '</td>'
+      html += '<td>' + row.createTime + '</td>'
+      html += '<td>' + row.updateTime  + '</td>'
+      html += '</tr></table>'
+      textarea.value = html;
+      console.info(html)
+      this.copyData = html
+      this.copy(this.copyData)
+    },
+    copy(data){
+      let url = data;
+      let oInput = document.createElement('input');
+      oInput.value = url;
+      document.body.appendChild(oInput);
+      oInput.select(); // 选择对象;
+      document.execCommand("Copy"); // 执行浏览器复制命令
+      this.$message({
+        message: '复制成功',
+        type: 'success'
+      });
+      oInput.remove()
     },
     /** 提交按钮 */
     submitForm() {

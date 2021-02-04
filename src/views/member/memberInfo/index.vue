@@ -352,7 +352,7 @@ export default {
     handleMore(row) {
       this.memberCode = row.memberCode
       this.memberId = row.id
-      this.$refs.more.show()
+      this.$refs.more.show(this.memberId,this.memberCode)
     },
     /** 导出按钮操作 */
     handleExport() {

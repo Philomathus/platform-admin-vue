@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="copy1">总投注金额: {{ this.data.countBetMoney }}</el-button>
-    <el-button type="success" @click="copy2">总投注人数: {{ this.data.countBetPeople }}</el-button>
+    <el-button type="primary" @click="copy1">总投注金额: {{ this.data.countBetMoney||0 }}</el-button>
+    <el-button type="success" @click="copy2">总投注人数: {{ this.data.countBetPeople||0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="68px">
       <el-form-item label="日期选择" prop="begindate">
         <el-date-picker v-model="queryParams.begindate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
@@ -103,7 +103,9 @@ export default {
     count() {
       this.loading = true;
       count(this.queryParams).then(response => {
-        this.data = response.data;
+        if (response.data){
+          this.data = response.data;
+        }
         this.loading = false;
       });
     },

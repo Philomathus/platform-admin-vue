@@ -54,7 +54,7 @@
           icon="el-icon-edit"
           size="mini"
           :disabled="single"
-          @click="handleUpdate"
+          @click="handleUpdateSelect"
           v-hasPermi="['config:tradeType:edit']"
         >修改
         </el-button>
@@ -66,7 +66,7 @@
           icon="el-icon-delete"
           size="mini"
           :disabled="multiple"
-          @click="handleDelete"
+          @click="handleDeleteSelect"
           v-hasPermi="['config:tradeType:remove']"
         >删除
         </el-button>
@@ -110,7 +110,7 @@
     />
 
     <!-- 添加或修改资金交易类型对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title"  :dialogType="dialogType" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="交易类型" prop="type">
           <el-input v-model="form.type" placeholder="请输入交易类型" type="number"/>
@@ -132,6 +132,7 @@
 
 <script>
 import { listTradeType, getTradeType, delTradeType, addTradeType, updateTradeType } from '@/api/platform-web/config/tradeType'
+import { delPayType } from '@/api/platform-web/pay/payType'
 
 export default {
   name: 'TradeType',
@@ -154,6 +155,7 @@ export default {
       tradeTypeList: [],
       // 弹出层标题
       title: '',
+      dialogType:'',
       // 是否显示弹出层
       open: false,
       // 查询参数
@@ -204,8 +206,7 @@ export default {
       this.form = {
         type: null,
         name: null,
-        des: null,
-        od: null
+        des: null
       }
       this.resetForm('form')
     },
@@ -239,13 +240,25 @@ export default {
         this.form = response.data
         this.open = true
         this.title = '修改资金交易类型'
+        this.dialogType='1'
+      })
+    },
+    /** 修改按钮操作 */
+    handleUpdateSelect() {
+      this.reset()
+      const type =this.ids
+      getTradeType(type).then(response => {
+        this.form = response.data
+        this.open = true
+        this.title = '修改资金交易类型'
+        this.dialogType='1'
       })
     },
     /** 提交按钮 */
     submitForm() {
       this.$refs['form'].validate(valid => {
         if (valid) {
-          if (this.form.type != null) {
+          if (this.dialogType == '1') {
             updateTradeType(this.form).then(response => {
               this.msgSuccess('修改成功')
               this.open = false
@@ -275,7 +288,23 @@ export default {
         this.msgSuccess('删除成功')
       }).catch(() => {
       })
-    }
+    },
+    /** 删除按钮操作 */
+    handleDeleteSelect() {
+      const types =this.ids
+      this.$confirm('是否确认删除资金交易类型编号为"' + types + '"的数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return delTradeType(types)
+      }).then(() => {
+        this.getList()
+        this.msgSuccess('删除成功')
+      }).catch(() => {
+      })
+    },
+
   }
 }
 </script>

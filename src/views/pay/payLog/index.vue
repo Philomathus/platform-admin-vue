@@ -44,7 +44,7 @@
           />
         </el-select>
       </el-form-item>-->
-      <el-form-item label="状态">
+      <el-form-item label="状态" prop="success">
         <el-select v-model="queryParams.success" clearable placeholder="请选择状态">
           <el-option label="成功" value="1"></el-option>
           <el-option label="失败" value="0"></el-option>

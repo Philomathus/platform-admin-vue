@@ -117,12 +117,10 @@
             getList() {
                 this.loading = true;
                 listAnchorAward(this.queryParams).then(response => {
-                  debugger;
                     this.liveUserList = response.rows;
                     this.msg=response.msg;
                     if (this.msg!=null){
                       this.msgSuccess(this.msg)
-
                     }
                     this.total = response.total;
                     this.loading = false;

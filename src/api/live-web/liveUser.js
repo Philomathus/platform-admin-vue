@@ -105,3 +105,11 @@ export function exportLiveUser(query) {
     params: query
   })
 }
+// 查询//用户信息列表
+export function listAnchorAward(query) {
+  return request({
+    url: url.platformWeb + '/admin/liveUser/anchorAward',
+    method: 'get',
+    params: query
+  })
+}

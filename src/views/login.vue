@@ -60,8 +60,8 @@ export default {
   data() {
     return {
       loginForm: {
-        username: "admin",
-        password: "admin123",
+        username: "",
+        password: "",
         googleAuthCode: "",
         uuid: ""
       },

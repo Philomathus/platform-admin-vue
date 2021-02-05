@@ -1,6 +1,9 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="100px">
+    <el-button type="primary">有效下注 {{this.totalData.totalSuccessBet.toFixed(2)}}</el-button>
+    <el-button type="success">总下注 {{this.totalData.totalBet.toFixed(2)}}</el-button>
+    <el-button type="warning">盈利 {{this.totalData.totalIncome.toFixed(2)}}</el-button>
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" style="margin-top: 20px">
 <!--      <el-form-item label="游戏局号" prop="gameId">-->
 <!--        <el-input-->
 <!--          v-model="queryParams.gameId"-->
@@ -23,6 +26,15 @@
         <el-input
           v-model="queryParams.kindId"
           placeholder="请输入游戏id"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="本地平台id" prop="platformId">
+        <el-input
+          v-model="queryParams.platformId"
+          placeholder="请输入本地平台id"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -164,7 +176,12 @@
 
     <el-table v-loading="loading" :data="memberGameDataList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="账号" align="center" prop="account" />
+      <el-table-column label="账号" align="center" prop="account" >
+        <template v-slot="{row}">
+          <a  @click="" style="color: #00afff" v-if="row.platformId==10000||row.platformId==80000">{{row.account}}</a>
+          <div v-else>{{row.account}}</div>
+        </template>
+      </el-table-column>
 <!--      <el-table-column label="本地ID" align="center" prop="id" />-->
       <el-table-column label="游戏局号" align="center" prop="gameId" />
       <el-table-column label="游戏id" align="center" prop="kindId" />
@@ -174,7 +191,7 @@
       <el-table-column label="抽水" align="center" prop="revenue" />
       <el-table-column label="本地平台id" align="center" prop="platformId" />
       <el-table-column label="代理编号" align="center" prop="agent" />
-      <el-table-column label="游戏平台类型" align="center" prop="platformType" />
+<!--      <el-table-column label="游戏平台类型" align="center" prop="platformType" />-->
       <el-table-column label="洗码状态" align="center" prop="status" :formatter="formatterStatus"/>
       <el-table-column label="游戏开始时间" align="center" width="150px" prop="gameStartTime" />
       <el-table-column label="游戏结束时间" align="center" width="150px" prop="gameEndTime" />
@@ -262,7 +279,7 @@
 </template>
 
 <script>
-import { listMemberGameData, getMemberGameData, delMemberGameData, addMemberGameData, updateMemberGameData, exportMemberGameData } from "@/api/platform-web/member/memberGameData";
+import { listMemberGameData, getMemberGameData, delMemberGameData, addMemberGameData, updateMemberGameData, exportMemberGameData,getCount } from "@/api/platform-web/member/memberGameData";
 
 export default {
   name: "MemberGameData",
@@ -270,6 +287,8 @@ export default {
   },
   data() {
     return {
+      //统计数据
+      totalData: {},
       // 遮罩层
       loading: true,
       // 选中数组
@@ -327,6 +346,7 @@ export default {
       this.queryParams.selectDate[1] = this.parseTime(this.getTodayEndTime());
     }
     this.getList();
+    this.getCount()
   },
   methods: {
     // 0:未洗码1已经洗码
@@ -338,6 +358,13 @@ export default {
       }else {
         return '未知';
       }
+    },
+    getCount(){
+      getCount(this.queryParams).then((res) => {
+              this.totalData = res.data
+            }).finally(() => {
+              this.loading = false;
+            });
     },
     /** 查询会员注单数据列表 */
     getList() {

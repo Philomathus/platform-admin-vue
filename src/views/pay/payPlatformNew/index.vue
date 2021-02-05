@@ -74,11 +74,11 @@
 
     <el-table  :stripe="true" v-loading="loading" :data="payPlatformNewList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="平台名称" align="center" prop="name" />
-      <el-table-column label="平台编码" align="center" prop="code" />
+      <el-table-column label="平台名称" align="center" prop="name" width="150" />
+      <el-table-column label="平台编码" align="center" prop="code" width="130"/>
       <el-table-column label="平台下单接口地址" :show-overflow-tooltip="true" align="center" prop="platPayUrl" />
       <el-table-column label="平台订单查询地址" :show-overflow-tooltip="true" align="center" prop="platQueryUrl" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"

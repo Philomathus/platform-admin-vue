@@ -192,7 +192,6 @@
       <el-input
         placeholder="请输入谷歌验证码"
         v-model="googleAuthCode"
-        size="small"
         style="width: 70%"
         @keyup.enter.native="bind"
         @input="change($event)"

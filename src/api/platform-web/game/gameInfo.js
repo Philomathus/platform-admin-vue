@@ -4,6 +4,7 @@ import { praseStrEmpty } from "@/utils/common";
 
 // 查询用户列表
 export function listUser(query) {
+
   return request({
     url: url.platformWeb + '/game/info/list',
     method: 'get',

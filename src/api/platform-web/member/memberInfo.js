@@ -9,15 +9,6 @@ export function listMemberInfo(query) {
     params: query
   })
 }
-
-// 查询积分明细列表
-export function gameBalance(query) {
-  return request({
-    url: url.platformWeb + '/v1.0/game-balance',
-    method: 'get',
-    params: query
-  })
-}
 // 查询资金明细列表
 export function memberWithdrawLog(query) {
   return request({

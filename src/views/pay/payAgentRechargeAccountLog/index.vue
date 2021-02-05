@@ -47,7 +47,7 @@
           type="daterange"
           range-separator="-"
           start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          end-placeholder="结束日期" :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item style="margin-left: 27px">
@@ -106,9 +106,17 @@
     </el-row>
 
     <el-table :stripe="true" v-loading="loading" :data="payAgentRechargeAccountLogList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
+      <el-table-column label="复制" align="center" >
+        <template slot-scope="scope">
+          <el-button
+            type="primary" size="mini"
+            @click="handleCopy(scope.row)"
+          >复制
+          </el-button>
+        </template>
+      </el-table-column>
       <el-table-column label="订单号" :show-overflow-tooltip="true" width="180px" align="center" prop="orderNo" />
-      <el-table-column label="代充人账号" align="center" prop="account" />
+      <el-table-column label="代充人账号" align="center" prop="account"  width="150px"/>
       <el-table-column label="代充人昵称" align="center" prop="nickName" />
       <el-table-column label="汇款银行卡ID" align="center" prop="bankId" />
       <el-table-column label="汇款金额" align="center" prop="rechargeMoney" />
@@ -190,7 +198,7 @@
         <el-form-item label="订单号"  prop="account">
           <el-input v-model="form.orderNo" placeholder="请输入订单号" readonly />
         </el-form-item>
-        <el-form-item label="代充人账号" prop="account">
+        <el-form-item label="代充人账号" prop="account" >
           <el-input v-model="form.account" placeholder="请输入代充人账号"  readonly/>
         </el-form-item>
         <el-form-item label="代充人昵称" prop="nickName">
@@ -243,6 +251,7 @@
 
 <script>
 import { listPayAgentRechargeAccountLog, getPayAgentRechargeAccountLog, delPayAgentRechargeAccountLog, addPayAgentRechargeAccountLog, agentStatistic,updatePayAgentRechargeAccountLog, exportPayAgentRechargeAccountLog ,lockPayAgentRechargeAccountLog,unlockPayAgentRechargeAccountLog,artificialPayAgentRechargeAccountLog,refusedPayAgentRechargeAccountLog} from "@/api/platform-web/pay/payAgentRechargeAccountLog";
+import { pickerDateShortcuts } from '@/utils/dateUtils'
 
 
 
@@ -253,12 +262,13 @@ export default {
   },
   data() {
     return {
+      pickerOptions: { shortcuts: pickerDateShortcuts },
       // 遮罩层
       loading: true,
       // 选中数组
       ids: [],
       // 日期范围
-      dateRange: [],
+      dateRange: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
       // 非单个禁用
       single: true,
       // 非多个禁用
@@ -404,6 +414,41 @@ export default {
         this.open = true;
         this.title = "修改代充人入款";
       });
+    },
+    /** 复制按钮 */
+    handleCopy(row){
+      var status=this.statusOptions[parseInt(row.status)];
+      var textarea = document.createElement("textarea");
+      let html = '<table><tr>'
+      html += '<td>' + row.orderNo + '</td>'
+      html += '<td>' + row.account + '</td>'
+      html += '<td>' + row.nickName + '</td>'
+      html += '<td>' + row.bankId + '</td>'
+      html += '<td>' + row.rechargeMoney + '</td>'
+      html += '<td>' + row.subMoney + '</td>'
+      html += '<td>' + row.rechargeRealName + '</td>'
+      html += '<td>' + row.remark + '</td>'
+      html += '<td>' + status.dictLabel + '</td>'
+      html += '<td>' + row.createTime + '</td>'
+      html += '<td>' + row.updateTime  + '</td>'
+      html += '</tr></table>'
+      textarea.value = html;
+      console.info(html)
+      this.copyData = html
+      this.copy(this.copyData)
+    },
+    copy(data){
+      let url = data;
+      let oInput = document.createElement('input');
+      oInput.value = url;
+      document.body.appendChild(oInput);
+      oInput.select(); // 选择对象;
+      document.execCommand("Copy"); // 执行浏览器复制命令
+      this.$message({
+        message: '复制成功',
+        type: 'success'
+      });
+      oInput.remove()
     },
     /** 提交按钮 */
     submitForm() {

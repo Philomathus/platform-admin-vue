@@ -89,8 +89,8 @@
       <el-table-column label="排序号" align="center" prop="indexs" />
       <el-table-column label="目标任务量" align="center" prop="target" />
       <el-table-column label="完成后增加的资金" align="center" prop="reward" />
-      <el-table-column label="任务详情" align="center" prop="detail" />
       <el-table-column label="描述" align="center" prop="content" />
+      <el-table-column label="任务详情" min-width="200" align="center" prop="detail" />
       <el-table-column label="发布时间" align="center" prop="ctime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.ctime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>

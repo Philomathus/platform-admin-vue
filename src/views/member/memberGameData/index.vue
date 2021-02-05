@@ -163,6 +163,7 @@
       </el-table-column>
 <!--      <el-table-column label="本地ID" align="center" prop="id" />-->
 <!--      <el-table-column label="游戏局号" align="center" prop="gameId" />-->
+      <el-table-column label="平台ID" align="center" prop="agent" />
       <el-table-column label="平台名称" align="center" prop="platformName" />
       <el-table-column label="子平台名称" align="center" prop="sonPlatformName" />
 <!--      <el-table-column label="游戏id" align="center" prop="kindId" />-->
@@ -171,7 +172,6 @@
       <el-table-column label="盈利" align="center" prop="profit" />
       <el-table-column label="抽水" align="center" prop="revenue" />
 <!--      <el-table-column label="本地平台id" align="center" prop="platformId" />-->
-<!--      <el-table-column label="代理编号" align="center" prop="agent" />-->
 <!--      <el-table-column label="游戏平台类型" align="center" prop="platformType" />-->
 <!--      <el-table-column label="洗码状态" align="center" prop="status" :formatter="formatterStatus"/>-->
       <el-table-column label="游戏开始时间" align="center" width="150px" prop="gameStartTime" />

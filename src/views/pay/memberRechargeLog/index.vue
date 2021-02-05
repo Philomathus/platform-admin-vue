@@ -7,7 +7,7 @@
       <el-form-item label="审核时间" prop="selectDate" label-width="100px">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
-                        end-placeholder="结束时间" range-separator="至" clearable
+                        end-placeholder="结束时间" range-separator="至" clearable :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="status">
@@ -190,12 +190,14 @@ import {
   refusedAuditMemberRechargeLog,
   recoverAuditMemberRechargeLog
 } from '@/api/platform-web/pay/memberRechargeLog'
+import { pickerDateTimeShortcuts } from '@/utils/dateUtils'
 
 export default {
   name: 'MemberRechargeLog',
   components: {},
   data() {
     return {
+      pickerOptions: { shortcuts: pickerDateTimeShortcuts },
       totalData: {},
       // 遮罩层
       loading: true,
@@ -221,7 +223,7 @@ export default {
       refusedAuditReasonOptions: [],
       // 查询参数
       queryParams: {
-        selectDate: [],
+        selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
         pageNum: 1,
         pageSize: 50,
         orderByColumn: 'create_time',

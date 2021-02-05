@@ -4,48 +4,33 @@
     <el-button type="success">总下注 {{this.totalData.totalBet.toFixed(2)}}</el-button>
     <el-button type="warning">盈利 {{this.totalData.totalIncome.toFixed(2)}}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" style="margin-top: 20px">
-<!--      <el-form-item label="游戏局号" prop="gameId">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.gameId"-->
-<!--          placeholder="请输入游戏局号"-->
-<!--          clearable-->
-<!--          size="small"-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
-      <el-form-item label="账号" prop="account">
+      <el-form-item label="日期范围" prop="selectDate">
+        <el-date-picker type="daterange" v-model="queryParams.selectDate" format="yyyy-MM-dd"
+                        value-format="yyyy-MM-dd" :style="{width: '90%'}" start-placeholder="开始日期"
+                        end-placeholder="结束日期"
+                        range-separator="至" clearable></el-date-picker>
+      </el-form-item>
+      <el-form-item prop="account">
         <el-input
           v-model="queryParams.account"
-          placeholder="请输入账号"
+          placeholder="请输入会员ID"
           clearable
-          size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="游戏id" prop="kindId">
+      <el-form-item prop="platformId">
         <el-input
-          v-model="queryParams.kindId"
-          placeholder="请输入游戏id"
+          v-model="queryParams.agent"
+          placeholder="请输入平台ID"
           clearable
-          size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="本地平台id" prop="platformId">
+      <el-form-item prop="kindId">
         <el-input
-          v-model="queryParams.platformId"
-          placeholder="请输入本地平台id"
+          v-model="queryParams.sonPlatformName"
+          placeholder="请输入子平台名称"
           clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="本地平台id" prop="platformId">
-        <el-input
-          v-model="queryParams.platformId"
-          placeholder="请输入本地平台id"
-          clearable
-          size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
@@ -85,12 +70,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>-->
-      <el-form-item label="日期范围" prop="selectDate">
-        <el-date-picker type="daterange" v-model="queryParams.selectDate" format="yyyy-MM-dd"
-                        value-format="yyyy-MM-dd" :style="{width: '60%'}" start-placeholder="开始日期"
-                        end-placeholder="结束日期"
-                        range-separator="至" clearable></el-date-picker>
-      </el-form-item>
 <!--      <el-form-item>
       <el-form-item label="游戏开始时间" prop="gameStartTime">
           <el-date-picker v-model="queryParams.gameStartTime" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
@@ -176,23 +155,25 @@
 
     <el-table v-loading="loading" :data="memberGameDataList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="账号" align="center" prop="account" >
+      <el-table-column label="会员ID" align="center" prop="account" >
         <template v-slot="{row}">
           <a  @click="" style="color: #00afff" v-if="row.platformId==10000||row.platformId==80000">{{row.account}}</a>
           <div v-else>{{row.account}}</div>
         </template>
       </el-table-column>
 <!--      <el-table-column label="本地ID" align="center" prop="id" />-->
-      <el-table-column label="游戏局号" align="center" prop="gameId" />
-      <el-table-column label="游戏id" align="center" prop="kindId" />
+<!--      <el-table-column label="游戏局号" align="center" prop="gameId" />-->
+      <el-table-column label="平台名称" align="center" prop="platformName" />
+      <el-table-column label="子平台名称" align="center" prop="sonPlatformName" />
+<!--      <el-table-column label="游戏id" align="center" prop="kindId" />-->
       <el-table-column label="有效下注" align="center" prop="cellScore" />
       <el-table-column label="总下注" align="center" prop="allBet" />
       <el-table-column label="盈利" align="center" prop="profit" />
       <el-table-column label="抽水" align="center" prop="revenue" />
-      <el-table-column label="本地平台id" align="center" prop="platformId" />
-      <el-table-column label="代理编号" align="center" prop="agent" />
+<!--      <el-table-column label="本地平台id" align="center" prop="platformId" />-->
+<!--      <el-table-column label="代理编号" align="center" prop="agent" />-->
 <!--      <el-table-column label="游戏平台类型" align="center" prop="platformType" />-->
-      <el-table-column label="洗码状态" align="center" prop="status" :formatter="formatterStatus"/>
+<!--      <el-table-column label="洗码状态" align="center" prop="status" :formatter="formatterStatus"/>-->
       <el-table-column label="游戏开始时间" align="center" width="150px" prop="gameStartTime" />
       <el-table-column label="游戏结束时间" align="center" width="150px" prop="gameEndTime" />
       <!--<el-table-column label="操作" align="center" class-name="small-padding fixed-width">

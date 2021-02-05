@@ -332,7 +332,7 @@ export default {
     },
     // 维护状态修改
     handleStatusChangeisWH(row) {
-      let text = row.isWh === '1' ? '是' : '否'
+      let text = row.isWh === '1' ? '维护' : '取消维护'
       this.$confirm('确认要"' + text + '""' + row.name + '"吗?', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

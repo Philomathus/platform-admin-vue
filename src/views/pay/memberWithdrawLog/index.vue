@@ -5,9 +5,19 @@
     <el-button type="info" @click="copy3">成功率 {{ numberUtil.toPercent(this.totalData.successRate) }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px" style="margin-top: 20px">
       <el-form-item label="修改日期" prop="searchTime">
-        <el-date-picker type="datetimerange" v-model="queryParams.searchTime" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
-                        end-placeholder="结束时间" range-separator="至"
+<!--        <el-date-picker type="datetimerange" v-model="queryParams.searchTime" format="yyyy-MM-dd "
+                        value-format="yyyy-MM-dd" :style="{width: '100%'}" start-placeholder="开始时间"
+                        end-placeholder="结束时间" range-separator="至" :picker-options="pickerOptions"
+        ></el-date-picker>-->
+        <el-date-picker
+          v-model="queryParams.searchTime"
+          size="small"
+          style="width: 240px"
+          value-format="yyyy-MM-dd"
+          type="daterange"
+          range-separator="-"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期" :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="status">
@@ -257,12 +267,14 @@ import {
   getCountTotal
 } from '@/api/platform-web/pay/memberWithdrawLog'
 import { effectListPayAgentPlatform, payAgentOrder } from '@/api/platform-web/pay/payAgentPlatform'
+import { pickerDateShortcuts } from '@/utils/dateUtils'
 
 export default {
   name: 'MemberWithdrawLog',
   components: {},
   data() {
     return {
+      pickerOptions: { shortcuts: pickerDateShortcuts },
       // 头部数据
       totalData: {},
       // 遮罩层
@@ -299,7 +311,7 @@ export default {
         pageSize: 100,
         searchValue: null,
         status: null,
-        searchTime: [],
+        searchTime: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
         priceMin: null,
         priceMax: null,
         orderByColumn: 'create_time',

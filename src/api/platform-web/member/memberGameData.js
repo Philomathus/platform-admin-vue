@@ -18,7 +18,18 @@ export function getCount(query) {
     params: query
   })
 }
-
+// 查询会员注单数据统计
+export function getLotteryBetData(agent,gameId) {
+  const data = {
+    agent,
+    gameId
+  }
+  return request({
+    url: url.platformWeb + '/member/memberGameData/getLotteryBetData',
+    method: 'put',
+    params: data
+  })
+}
 // 查询会员注单数据详细
 export function getMemberGameData(id) {
   return request({

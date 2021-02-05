@@ -1,6 +1,7 @@
 import request from '@/utils/request'
-import {url} from '@/utils/url'
-import { praseStrEmpty } from "@/utils/common";
+import { url } from '@/utils/url'
+import { praseStrEmpty } from '@/utils/common'
+import { encrypt } from '@/utils/jsencrypt'
 
 // 查询用户列表
 export function listUser(query) {
@@ -100,13 +101,14 @@ export function updateUserProfile(data) {
 // 用户密码重置
 export function updateUserPwd(oldPassword, newPassword) {
   const data = {
-    oldPassword,
-    newPassword
+    oldPwd: oldPassword,
+    newPwd: newPassword
   }
+  let encryptData = encrypt(JSON.stringify(data))
   return request({
     url: url.platformWeb + '/system/user/profile/updatePwd',
     method: 'put',
-    params: data
+    data: encryptData
   })
 }
 
@@ -141,7 +143,7 @@ export function getGoogleAuth(name) {
 }
 
 //绑定谷歌验证码
-export function bindGoogleAuth(googleAuthName,googleAuthKey,googleAuthCode) {
+export function bindGoogleAuth(googleAuthName, googleAuthKey, googleAuthCode) {
   const data = {
     googleAuthCode: googleAuthCode,
     googleAuthKey: googleAuthKey,

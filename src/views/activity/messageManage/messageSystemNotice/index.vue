@@ -168,7 +168,9 @@ export default {
         pageNum: 1,
         pageSize: 10,
         title: null,
-        pubdatetime: null
+        pubdatetime: null,
+        orderByColumn: 'pubdatetime',
+        isAsc: 'desc'
       },
       // 表单参数
       form: {},

@@ -216,7 +216,9 @@ export default {
         pageNum: 1,
         pageSize: 10,
         title: null,
-        ctime: null
+        ctime: null,
+        orderByColumn: 'ctime',
+        isAsc: 'desc'
       },
       // 表单参数
       form: {},

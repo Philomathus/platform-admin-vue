@@ -241,7 +241,9 @@ export default {
         content: null,
         gameId: null,
         kindId: null,
-        platformId: null
+        platformId: null,
+        orderByColumn: 'ctime',
+        isAsc: 'desc'
       },
       // 表单参数
       form: {},

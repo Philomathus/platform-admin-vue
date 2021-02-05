@@ -177,7 +177,9 @@ export default {
         receiverType: null,
         receiver: null,
         action: null,
-        pubdatetime: null
+        pubdatetime: null,
+        orderByColumn: 'pubdatetime',
+        isAsc: 'desc'
       },
       // 表单参数
       form: {},

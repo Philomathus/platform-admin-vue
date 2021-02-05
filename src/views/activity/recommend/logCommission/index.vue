@@ -87,6 +87,8 @@ export default {
         pageSize: 10,
         memberId: null,
         commission: null,
+        orderByColumn: 'createTime',
+        isAsc: 'desc'
       },
       // 表单参数
       form: {},

@@ -267,6 +267,10 @@ export default {
       });
     },
     closeIds(){
+      if(this.ids==null||this.ids==""){
+        this.msgError("请选择关闭直播间");
+        return ;
+      }
       this.msgSuccess("正在关播中!");
       close(this.ids).then(response => {
         this.getList();

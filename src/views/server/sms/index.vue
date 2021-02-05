@@ -331,6 +331,14 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids
+      for (const item of this.smsList) {
+        for (const id of ids) {
+          if (id === item.id && item.isEffect === 1) {
+            this.msgWarning('编号' + id + '已激活，请勿删除')
+            return
+          }
+        }
+      }
       this.$confirm('是否确认删除SMS短信服务配置编号为"' + ids + '"的数据项?', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

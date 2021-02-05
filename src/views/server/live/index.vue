@@ -68,16 +68,16 @@
     <el-table stripe v-loading="loading" :data="liveList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="名称" align="center" prop="name"/>
-      <el-table-column label="服务商" align="center" prop="provider" :formatter="providerFormat"/>
+      <el-table-column label="服务商" align="center" prop="provider" width="100px" :formatter="providerFormat"/>
       <el-table-column label="推流域名" align="center" prop="pushDomain"/>
       <el-table-column label="拉流域名" align="center" prop="pullDomain"/>
-      <el-table-column label="状态" align="center" prop="status">
+      <el-table-column label="状态" align="center" prop="status" width="100px">
         <template slot-scope="scope">
           <span :style="{color: (status = statusOptions[parseInt(scope.row.status)+1]).color}">{{ status.dictLabel }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="在线主播" align="center" prop="countNum"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column label="在线主播" align="center" prop="countNum" width="100px"/>
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="230px" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -354,6 +354,19 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids
+      let noDels = []
+      for (const item of this.liveList) {
+        for (const id of ids) {
+          if (id == item.id && item.status > 0) {
+            noDels.push(id)
+
+          }
+        }
+      }
+      if (noDels.length > 0) {
+        this.msgWarning('编号' + noDels + '已激活，请勿删除')
+        return
+      }
       this.$confirm('是否确认删除直播流服务配置编号为"' + ids + '"的数据项?', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

@@ -64,6 +64,10 @@ Vue.prototype.msgSuccess = function(msg) {
   this.$message({ showClose: true, message: msg, type: 'success' })
 }
 
+Vue.prototype.msgWarning = function(msg) {
+  this.$message({ showClose: true, message: msg, type: 'warning' })
+}
+
 Vue.prototype.msgError = function(msg) {
   this.$message({ showClose: true, message: msg, type: 'error' })
 }

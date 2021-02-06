@@ -8,7 +8,7 @@
       </el-form-item>
       <el-form-item prop="code">
         <el-input
-          v-model="queryParams.code"
+          v-model="queryParams.searchValue"
           placeholder="会员ID/账号/手机号"
           clearable
           size="small"
@@ -209,7 +209,7 @@ export default {
         pageNum: 1,
         pageSize: 20,
         bankAccount: null,
-        code: null, //会员Id,账号,手机号
+        searchValue: null, //会员Id,账号,手机号
         status: null,
         loginIp: null,
         nickName: null,

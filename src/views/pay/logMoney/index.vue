@@ -8,10 +8,10 @@
           <el-checkbox v-for="item in typeOptions" :key="item.type" :label="item.type">{{ item.des }}</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
-      <el-form-item label="会员编号" prop="userId">
+      <el-form-item label="会员ID" prop="userId">
         <el-input
           v-model="queryParams.userId"
-          placeholder="请输入会员编号"
+          placeholder="请输入会员ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -68,7 +68,7 @@
     </el-row>
 
     <el-table :stripe="true" stripe v-loading="loading" :data="logMoneyList">
-      <el-table-column label="会员编号" align="center" prop="userId" min-width="120"/>
+      <el-table-column label="会员ID" align="center" prop="userId" min-width="120"/>
       <el-table-column label="账号" align="center" prop="userName" min-width="80"/>
       <el-table-column label="行为类型" align="center" prop="des" min-width="120"/>
       <el-table-column label="备注" align="center" prop="mark" min-width="260" :show-overflow-tooltip="true"/>

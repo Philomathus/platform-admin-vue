@@ -185,7 +185,7 @@
                append-to-body
     >
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-        <el-form-item label="会员编号" prop="memberId">
+        <el-form-item label="会员ID" prop="memberId">
           <el-input v-model="form.memberId" readonly/>
         </el-form-item>
         <el-form-item label="会员账号" prop="account">

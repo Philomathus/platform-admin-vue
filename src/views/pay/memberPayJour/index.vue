@@ -40,7 +40,7 @@
       <el-form-item prop="searchValue">
         <el-input
           v-model="queryParams.searchValue"
-          placeholder="会员编号/会员账号"
+          placeholder="会员ID/会员账号"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -127,7 +127,7 @@
 
     <el-dialog v-dialogDrag :close-on-click-modal="false" title="人工补单" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-        <el-form-item label="会员编号" prop="member_id">
+        <el-form-item label="会员ID" prop="member_id">
           <el-input v-model="form.member_id" readonly/>
         </el-form-item>
         <el-form-item label="会员账号" prop="user_name">

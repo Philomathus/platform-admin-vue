@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="会员编号" prop="memberId">
+      <el-form-item label="会员ID" prop="memberId">
         <el-input
           v-model="queryParams.memberId"
-          placeholder="请输入会员编号"
+          placeholder="请输入会员ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -169,7 +169,7 @@ export default {
       // 表单校验
       rules: {
         memberId: [
-          { required: true, message: "会员编号不能为空", trigger: "blur" }
+          { required: true, message: "会员ID不能为空", trigger: "blur" }
         ],
         memberAccount: [
           { required: true, message: "会员账号不能为空", trigger: "blur" }

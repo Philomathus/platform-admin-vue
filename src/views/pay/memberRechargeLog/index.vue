@@ -38,7 +38,7 @@
       <el-form-item prop="userName" style="width: 160px;">
         <el-input
           v-model="queryParams.userName"
-          placeholder="会员编号/会员账号"
+          placeholder="会员ID/会员账号"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"

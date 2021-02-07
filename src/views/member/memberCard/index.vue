@@ -46,10 +46,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="会员编号" prop="memberId">
+      <el-form-item label="会员ID" prop="memberId">
         <el-input
           v-model="queryParams.memberId"
-          placeholder="请输入会员编号"
+          placeholder="请输入会员ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -129,7 +129,7 @@
       <el-table-column label="银行编码" align="center" prop="bankCode" />
       <el-table-column label="银行账号" align="center" prop="bankAccount" />
       <el-table-column label="银行地址" align="center" prop="bankAddress" />
-      <el-table-column label="会员编号" align="center" prop="memberId" />
+      <el-table-column label="会员ID" align="center" prop="memberId" />
       <el-table-column label="卡片类型1=银行卡2=支付宝" align="center" prop="type" />
       <el-table-column label="是否默认" align="center" prop="dv" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -178,8 +178,8 @@
         <el-form-item label="银行地址" prop="bankAddress">
           <el-input v-model="form.bankAddress" placeholder="请输入银行地址" />
         </el-form-item>
-        <el-form-item label="会员编号" prop="memberId">
-          <el-input v-model="form.memberId" placeholder="请输入会员编号" />
+        <el-form-item label="会员ID" prop="memberId">
+          <el-input v-model="form.memberId" placeholder="请输入会员ID" />
         </el-form-item>
         <el-form-item label="卡片类型1=银行卡2=支付宝" prop="type">
           <el-select v-model="form.type" placeholder="请选择卡片类型1=银行卡2=支付宝">

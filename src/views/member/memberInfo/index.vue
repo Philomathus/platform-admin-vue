@@ -223,7 +223,7 @@ export default {
       // 表单校验
       rules: {
         memberCode: [
-          { required: true, message: '会员编号不能为空', trigger: 'blur' }
+          { required: true, message: '会员ID不能为空', trigger: 'blur' }
         ],
         cxAgent: [
           { required: true, message: '代理编号不能为空', trigger: 'blur' }

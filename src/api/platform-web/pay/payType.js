@@ -65,7 +65,7 @@ export function updatePayType(data) {
 // 删除【支付类型】
 export function delPayType(id) {
   return request({
-    url: url.platformWeb + '/payType/' + id,
+    url: url.platformWeb + '/pay/payType/' + id,
     method: 'delete'
   })
 }
@@ -73,7 +73,7 @@ export function delPayType(id) {
 // 导出【支付类型】
 export function exportPayType(query) {
   return request({
-    url: url.platformWeb + '/payType/export',
+    url: url.platformWeb + '/pay/payType/export',
     method: 'get',
     params: query
   })

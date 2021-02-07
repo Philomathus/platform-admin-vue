@@ -34,7 +34,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['pay:configBank:add']"
-        >新增</el-button>
+        >新增
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -45,7 +46,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['pay:configBank:edit']"
-        >修改</el-button>
+        >修改
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -56,7 +58,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['pay:configBank:remove']"
-        >删除</el-button>
+        >删除
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -66,15 +69,16 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['pay:configBank:export']"
-        >导出</el-button>
+        >导出
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table :stripe="true" v-loading="loading" :data="configBankList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="银行名称" align="center" prop="name" />
-      <el-table-column label="图标" align="center" prop="icon" >
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="银行名称" align="center" prop="name"/>
+      <el-table-column label="图标" align="center" prop="icon">
         <template slot-scope="scope">
           <el-image
             style="width: 50px; height: 50px"
@@ -83,10 +87,10 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="银行官网地址" align="center" prop="url" />
-      <el-table-column label="排序" align="center" prop="indexs" />
-      <el-table-column label="银行账号" :show-overflow-tooltip="true" align="center" prop="bankAccount" />
-      <el-table-column label="状态" align="center" prop="status" >
+      <el-table-column label="银行官网地址" :show-overflow-tooltip="true" align="center" prop="url"/>
+      <el-table-column label="排序" align="center" prop="indexs"/>
+      <el-table-column label="银行账号" :show-overflow-tooltip="true" align="center" prop="bankAccount"/>
+      <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -96,8 +100,8 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="开户人" align="center" prop="accountName" />
-      <el-table-column label="开放层级" align="center" prop="openLevel" />
+      <el-table-column label="开户人" align="center" prop="accountName"/>
+      <el-table-column label="开放层级" align="center" prop="openLevel"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -106,14 +110,16 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['pay:configBank:edit']"
-          >修改</el-button>
+          >修改
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['pay:configBank:remove']"
-          >删除</el-button>
+          >删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -130,34 +136,34 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="银行编码" prop="code">
-          <el-input v-model="form.code" placeholder="请输入银行编码" />
+          <el-input v-model="form.code" placeholder="请输入银行编码"/>
         </el-form-item>
         <el-form-item label="银行名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入银行名称" />
+          <el-input v-model="form.name" placeholder="请输入银行名称"/>
         </el-form-item>
         <el-form-item label="图标">
           <imageUpload v-model="form.icon"/>
         </el-form-item>
         <el-form-item label="银行官网地址" prop="url">
-          <el-input v-model="form.url" placeholder="请输入银行官网地址" />
+          <el-input v-model="form.url" placeholder="请输入银行官网地址"/>
         </el-form-item>
         <el-form-item label="银行账号" prop="bankAccount">
-          <el-input v-model="form.bankAccount" placeholder="请输入银行账号" />
+          <el-input v-model="form.bankAccount" placeholder="请输入银行账号"/>
         </el-form-item>
         <el-form-item label="备注信息" prop="remark">
-          <el-input v-model="form.remark" placeholder="请输入备注信息" />
+          <el-input v-model="form.remark" placeholder="请输入备注信息"/>
         </el-form-item>
         <el-form-item label="开户人" prop="accountName">
-          <el-input v-model="form.accountName" placeholder="请输入开户人" />
+          <el-input v-model="form.accountName" placeholder="请输入开户人"/>
         </el-form-item>
         <el-form-item label="开户地址" prop="bankAddress">
-          <el-input v-model="form.bankAddress" placeholder="请输入开户地址" />
+          <el-input v-model="form.bankAddress" placeholder="请输入开户地址"/>
         </el-form-item>
         <el-form-item label="优惠比例" prop="discountBill">
-          <el-input v-model="form.discountBill" placeholder="请输入优惠比例" />
+          <el-input v-model="form.discountBill" placeholder="请输入优惠比例"/>
         </el-form-item>
         <el-form-item label="开放层级" prop="openLevel">
-          <el-input v-model="form.openLevel" type="number" placeholder="请输入开放层级" />
+          <el-input v-model="form.openLevel" type="number" placeholder="请输入开放层级"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -169,14 +175,21 @@
 </template>
 
 <script>
-import { listConfigBank, getConfigBank, delConfigBank, addConfigBank, updateConfigBank, exportConfigBank ,changeConfigBankStatus} from "@/api/platform-web/pay/configBank";
-import ImageUpload from '@/components/ImageUpload';
-
+import {
+  listConfigBank,
+  getConfigBank,
+  delConfigBank,
+  addConfigBank,
+  updateConfigBank,
+  exportConfigBank,
+  changeConfigBankStatus
+} from '@/api/platform-web/pay/configBank'
+import ImageUpload from '@/components/ImageUpload'
 
 export default {
-  name: "ConfigBank",
+  name: 'ConfigBank',
   components: {
-    ImageUpload,
+    ImageUpload
   },
   data() {
     return {
@@ -195,7 +208,7 @@ export default {
       // 公司入款银行列表表格数据
       configBankList: [],
       // 弹出层标题
-      title: "",
+      title: '',
       // 是否显示弹出层
       open: false,
       // 状态字典
@@ -206,49 +219,49 @@ export default {
         pageSize: 10,
         code: null,
         name: null,
+        orderByColumn: 'status desc,create_time desc'
       },
       // 表单参数
       form: {},
       // 表单校验
-      rules: {
-      }
-    };
+      rules: {}
+    }
   },
   created() {
-    this.getList();
-    this.getDicts("sys_common_status").then(response => {
-      this.statusOptions = response.data;
-    });
+    this.getList()
+    this.getDicts('sys_common_status').then(response => {
+      this.statusOptions = response.data
+    })
   },
   methods: {
     /** 查询公司入款银行列表列表 */
     getList() {
-      this.loading = true;
+      this.loading = true
       listConfigBank(this.queryParams).then(response => {
-        this.configBankList = response.rows;
-        this.total = response.total;
-        this.loading = false;
-      });
+        this.configBankList = response.rows
+        this.total = response.total
+        this.loading = false
+      })
     },
     handleStatusChange(row) {
-      let text = row.status === "1" ? "启用" : "停用";
-      this.$confirm('确认要"' + text + '""' + row.name + '"吗?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+      let text = row.status === '1' ? '启用' : '停用'
+      this.$confirm('确认要"' + text + '""' + row.name + '"吗?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       }).then(function() {
-        return changeConfigBankStatus(row.id, row.status);
+        return changeConfigBankStatus(row.id, row.status)
       }).then(() => {
-        this.msgSuccess(text + "成功");
+        this.msgSuccess(text + '成功')
       }).catch(function() {
-        row.status = row.status === "0" ? "1" : "0";
-      });
+        row.status = row.status === '0' ? '1' : '0'
+      })
     },
 
     // 取消按钮
     cancel() {
-      this.open = false;
-      this.reset();
+      this.open = false
+      this.reset()
     },
     // 表单重置
     reset() {
@@ -270,88 +283,88 @@ export default {
         bankAddress: null,
         discountBill: null,
         openLevel: null
-      };
-      this.resetForm("form");
+      }
+      this.resetForm('form')
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNum = 1;
-      this.getList();
+      this.queryParams.pageNum = 1
+      this.getList()
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.resetForm("queryForm");
-      this.handleQuery();
+      this.resetForm('queryForm')
+      this.handleQuery()
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
     handleAdd() {
-      this.reset();
-      this.open = true;
-      this.title = "添加公司入款银行列表";
+      this.reset()
+      this.open = true
+      this.title = '添加公司入款银行列表'
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
-      this.reset();
+      this.reset()
       const id = row.id || this.ids
       getConfigBank(id).then(response => {
-        this.form = response.data;
-        this.open = true;
-        this.title = "修改公司入款银行列表";
-      });
+        this.form = response.data
+        this.open = true
+        this.title = '修改公司入款银行列表'
+      })
     },
     /** 提交按钮 */
     submitForm() {
-      this.$refs["form"].validate(valid => {
+      this.$refs['form'].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
             updateConfigBank(this.form).then(response => {
-              this.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
-            });
+              this.msgSuccess('修改成功')
+              this.open = false
+              this.getList()
+            })
           } else {
             addConfigBank(this.form).then(response => {
-              this.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
-            });
+              this.msgSuccess('新增成功')
+              this.open = false
+              this.getList()
+            })
           }
         }
-      });
+      })
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const ids = row.id || this.ids;
-      this.$confirm('是否确认删除公司入款银行列表编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+      const ids = row.id || this.ids
+      this.$confirm('是否确认删除公司入款银行列表编号为"' + ids + '"的数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       }).then(function() {
-        return delConfigBank(ids);
+        return delConfigBank(ids)
       }).then(() => {
-        this.getList();
-        this.msgSuccess("删除成功");
+        this.getList()
+        this.msgSuccess('删除成功')
       })
     },
     /** 导出按钮操作 */
     handleExport() {
-      const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有公司入款银行列表数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+      const queryParams = this.queryParams
+      this.$confirm('是否确认导出所有公司入款银行列表数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       }).then(function() {
-        return exportConfigBank(queryParams);
+        return exportConfigBank(queryParams)
       }).then(response => {
-        this.download(response.msg);
+        this.download(response.msg)
       })
     }
   }
-};
+}
 </script>

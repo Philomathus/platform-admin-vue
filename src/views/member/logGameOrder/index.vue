@@ -164,6 +164,7 @@
     <pagination
       v-show="total>0"
       :total="total"
+      :page-sizes="[20,50,100]"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
@@ -253,7 +254,7 @@ export default {
       // 查询参数
       queryParams: {
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 20,
         orderByColumn: 'e_time',
         isAsc: 'desc',
         type: null,

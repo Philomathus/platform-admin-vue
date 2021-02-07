@@ -78,10 +78,10 @@
 
     <el-table :stripe="true" v-loading="loading" :data="memberPayJourList">
       <el-table-column label="会员ID" min-width="120" align="center" prop="member_id"/>
-      <el-table-column label="会员账号" min-width="90" align="center" prop="user_name"/>
+      <el-table-column label="会员账号" min-width="120" align="center" prop="user_name"/>
       <el-table-column label="订单号" min-width="190" align="center" prop="order_no"/>
       <el-table-column label="支付平台" min-width="120" align="center" prop="platform_name"/>
-      <el-table-column label="支付通道" min-width="120" align="center" prop="channel_name"/>
+      <el-table-column label="支付通道" min-width="150" align="center" prop="channel_name"/>
       <el-table-column label="费率" min-width="80" align="center" prop="pay_rate_str"/>
       <el-table-column label="成功率" min-width="80" align="center" prop="current_success_rate_str"/>
       <el-table-column label="请求金额" min-width="80" align="center" prop="money"/>
@@ -98,7 +98,7 @@
       </el-table-column>
       <el-table-column label="订单时间" min-width="160" align="center" prop="pay_time"/>
       <el-table-column label="更新时间" min-width="160" align="center" prop="update_time"/>
-      <el-table-column label="上游订单号" min-width="180" align="center" prop="trade_sn"/>
+      <el-table-column label="上游订单号" min-width="220" align="center" prop="trade_sn"/>
       <el-table-column label="备注" min-width="180" align="center" prop="remark" :show-overflow-tooltip="true"/>
       <el-table-column label="操作" min-width="100" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">

@@ -91,7 +91,7 @@
           <a style="color: #00afff" @click="funds(row.memberId)">{{ row.memberId }}</a>
         </template>
       </el-table-column>
-      <el-table-column label="会员账号" min-width="100" align="center" prop="account"/>
+      <el-table-column label="会员账号" min-width="120" align="center" prop="account"/>
       <el-table-column label="入款出款比" min-width="100" align="center" prop="rechargeWithdrawRate"/>
       <el-table-column label="提现金额" min-width="100" align="center" prop="withdrawMoney"/>
       <el-table-column label="收款人" min-width="100" align="center" prop="bankUserName"/>
@@ -105,7 +105,7 @@
         </template>
       </el-table-column>
       <el-table-column label="是否首次" min-width="90" align="center" prop="first" :formatter="firstFormat"/>
-      <el-table-column label="操作人" min-width="100" align="center" prop="opName"/>
+      <el-table-column label="操作人" min-width="120" align="center" prop="opName"/>
       <el-table-column label="审核备注" min-width="200" align="center" prop="remark"/>
       <el-table-column label="下单时间" min-width="150" align="center" prop="createTime"/>
       <el-table-column label="最后修改时间" min-width="150" align="center" prop="updateTime"/>

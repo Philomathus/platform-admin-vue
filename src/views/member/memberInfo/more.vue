@@ -96,13 +96,11 @@
         height="460px"
         v-loading="loading"
       >
-        <!--        <el-table-column type="selection" width="55"></el-table-column>-->
-        <el-table-column prop="bank_name" label="银行名称" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="bank_account" label="银行卡号" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="bank_address" label="银行地址" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="type" label="银行类型" :show-overflow-tooltip="true"
-                         :formatter="formatterBankType"
-        ></el-table-column>
+        <el-table-column prop="realName" label="真实姓名" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="bankName" label="银行名称" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="bankAccount" label="银行卡号" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="bankAddress" label="银行地址" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="createTime" label=" 绑定时间" :show-overflow-tooltip="true"></el-table-column>
       </el-table>
       <pagination
         v-show="total>0"
@@ -134,14 +132,14 @@ import {
 
 export default {
   props: {
-/*    memberId: {
-      required: false,
-      default: null
-    },
-    memberCode: {
-      required: false,
-      default: 0
-    }*/
+    /*    memberId: {
+          required: false,
+          default: null
+        },
+        memberCode: {
+          required: false,
+          default: 0
+        }*/
   },
   data() {
     return {
@@ -293,7 +291,7 @@ export default {
 
     },
     // 显示弹框
-    show(memberId,memberCode) {
+    show(memberId, memberCode) {
       this.memberId = memberId
       this.memberCode = memberCode
       this.getList()
@@ -347,7 +345,7 @@ export default {
       this.dbTableList = []
       this.loading = true
       memberWithdrawLog({
-        id: this.memberCode,
+        id: this.memberId,
         page: this.queryParams.pageNum,
         limit: this.queryParams.pageSize,
         _: new Date().getTime()
@@ -385,7 +383,7 @@ export default {
       this.dbTableList = []
       this.loading = true
       cardList({
-        id: this.memberCode,
+        id: this.memberId,
         page: this.queryParams.pageNum,
         limit: this.queryParams.pageSize,
         orderBy: 'create_time desc',

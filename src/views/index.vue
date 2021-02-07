@@ -40,7 +40,7 @@
     },
     /*组件的初始化方法*/
     created() {
-      this.test('世界威望');
+      this.test('77后台');
     },
     /*组件的销毁方法*/
     destroyed() {

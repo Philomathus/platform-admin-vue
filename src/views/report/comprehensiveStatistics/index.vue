@@ -73,7 +73,6 @@ export default {
   methods: {
     /** 查询登录日志列表 */
     getlistStorage() {
-      console.info(1111);
       this.loading = true;
       listStorage(this.queryParams).then(response => {
       });

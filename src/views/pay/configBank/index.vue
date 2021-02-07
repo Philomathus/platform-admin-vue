@@ -81,7 +81,7 @@
       <el-table-column label="图标" align="center" prop="icon">
         <template slot-scope="scope">
           <el-image
-            style="width: 50px; height: 50px"
+            style="width: auto; height: 50px"
             :src="scope.row.icon"
           >
           </el-image>

@@ -87,7 +87,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="操作"  align="center" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -241,8 +241,7 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {
-      },
+      rules: {},
       defaultProps: {
         children: 'children',
         label: 'label'
@@ -268,9 +267,10 @@ export default {
         pageSize: 20,
         platformId: null,
         platformName: null,
-        name: null
+        name: null,
+        orderByColumn: 'indexs',
+        isAsc: 'desc'
       }
-
     }
   },
   created() {

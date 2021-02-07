@@ -140,6 +140,7 @@
       <el-table-column label="支付平台名称" align="center" prop="payPlatformName" />
       <el-table-column label="支付类型名称" align="center" prop="payTypeName" />
       <el-table-column label="通道费率" align="center" prop="payRateStr" />
+      <el-table-column label="排序" align="center" prop="indexes" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button

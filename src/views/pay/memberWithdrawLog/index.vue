@@ -5,10 +5,10 @@
     <el-button type="info" @click="copy3">成功率 {{ numberUtil.toPercent(this.totalData.successRate) }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px" style="margin-top: 20px">
       <el-form-item label="修改日期" prop="searchTime">
-<!--        <el-date-picker type="datetimerange" v-model="queryParams.searchTime" format="yyyy-MM-dd "
-                        value-format="yyyy-MM-dd" :style="{width: '100%'}" start-placeholder="开始时间"
-                        end-placeholder="结束时间" range-separator="至" :picker-options="pickerOptions"
-        ></el-date-picker>-->
+        <!--        <el-date-picker type="datetimerange" v-model="queryParams.searchTime" format="yyyy-MM-dd "
+                                value-format="yyyy-MM-dd" :style="{width: '100%'}" start-placeholder="开始时间"
+                                end-placeholder="结束时间" range-separator="至" :picker-options="pickerOptions"
+                ></el-date-picker>-->
         <el-date-picker
           v-model="queryParams.searchTime"
           size="small"
@@ -93,10 +93,26 @@
       </el-table-column>
       <el-table-column label="会员账号" min-width="120" align="center" prop="account"/>
       <el-table-column label="入款出款比" min-width="100" align="center" prop="rechargeWithdrawRate"/>
-      <el-table-column label="提现金额" min-width="100" align="center" prop="withdrawMoney"/>
-      <el-table-column label="收款人" min-width="100" align="center" prop="bankUserName"/>
-      <el-table-column label="银行账号" min-width="180" align="center" prop="bankAccount"/>
-      <el-table-column label="银行" min-width="120" align="center" prop="bankName"/>
+      <el-table-column label="提现金额" min-width="100" align="center" prop="withdrawMoney">
+        <template v-slot="{row}">
+          <a style="color: #00afff" @click="copyColumn(row.withdrawMoney)">{{ row.withdrawMoney }}</a>
+        </template>
+      </el-table-column>
+      <el-table-column label="收款人" min-width="100" align="center" prop="bankUserName">
+        <template v-slot="{row}">
+          <a style="color: #00afff" @click="copyColumn(row.bankUserName)">{{ row.bankUserName }}</a>
+        </template>
+      </el-table-column>
+      <el-table-column label="银行账号" min-width="180" align="center" prop="bankAccount">
+        <template v-slot="{row}">
+          <a style="color: #00afff" @click="copyColumn(row.bankAccount)">{{ row.bankAccount }}</a>
+        </template>
+      </el-table-column>
+      <el-table-column label="银行" min-width="120" align="center" prop="bankName">
+        <template v-slot="{row}">
+          <a style="color: #00afff" @click="copyColumn(row.bankName)">{{ row.bankName }}</a>
+        </template>
+      </el-table-column>
       <el-table-column label="状态" min-width="120" align="center" prop="status">
         <template slot-scope="scope">
           <span
@@ -356,6 +372,9 @@ export default {
     },
     copy3() {
       this.copyCommand(this.numberUtil.toPercent(this.totalData.successRate))
+    },
+    copyColumn(value) {
+      this.copyCommand(value)
     },
     getCountTotal() {
       getCountTotal(this.queryParams).then((res) => {

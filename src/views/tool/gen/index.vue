@@ -114,32 +114,32 @@
         align="center"
         prop="tableName"
         :show-overflow-tooltip="true"
-        width="120"
+        min-width="180"
       />
       <el-table-column
         label="库名"
         align="center"
         prop="tableSchema"
         :show-overflow-tooltip="true"
-        width="120"
+        min-width="120"
       />
       <el-table-column
         label="表描述"
         align="center"
         prop="tableComment"
         :show-overflow-tooltip="true"
-        width="120"
+        min-width="120"
       />
       <el-table-column
         label="实体"
         align="center"
         prop="className"
         :show-overflow-tooltip="true"
-        width="120"
+        min-width="160"
       />
       <el-table-column label="创建时间" align="center" prop="createTime" width="160"/>
       <el-table-column label="更新时间" align="center" prop="updateTime" width="160"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" min-width="180">
         <template slot-scope="scope">
           <el-button
             type="text"
@@ -255,7 +255,9 @@ export default {
         pageSize: 10,
         tableName: undefined,
         tableComment: undefined,
-        tableSchema: undefined
+        tableSchema: undefined,
+        orderByColumn: 'create_time',
+        isAsc: 'desc'
       },
       // 预览参数
       preview: {

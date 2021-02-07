@@ -16,3 +16,10 @@ export const toPercent = function(point) {
   }
   return str + '%'
 }
+
+export const toFixed = function(number) {
+  if (typeof (number) === 'undefined' || number == 0) {
+    return 0
+  }
+  return number.toFixed(2)
+}

@@ -368,14 +368,14 @@ export default {
       addScore({
         beatNum: this.form.beatNum,
         googleAuthCode: this.form.googleAuthCode,
-        id: this.memberCode,
+        id: this.memberId,
         mk: this.form.mk,
         moneydes: this.form.moneydes,
         ordermk: this.form.ordermk,
         score: this.form.score
       }).then((res) => {
-        if (json1.status === 200) {
-          this.$notify.success(res.data.message)
+        if (res.code === 0) {
+          this.$notify.success(res.msg)
         }
       }).catch((error) => {
         this.$notify.warning('error')

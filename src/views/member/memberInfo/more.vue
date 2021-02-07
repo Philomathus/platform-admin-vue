@@ -329,7 +329,6 @@ export default {
     //获取积分列表
     gameBalance() {
       console.log(this)
-      debugger;
       this.dbTableList = []
       this.loading = true
       gameBalance(this.memberId).then((res) => {

@@ -57,7 +57,6 @@
     </el-row>
 
     <el-table v-loading="loading" :data="memberGameDataList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="会员ID" align="center" prop="account">
         <template v-slot="{row}">
           <a @click="" style="color: #00afff" v-if="row.platformId==10000||row.platformId==80000">{{ row.account }}</a>

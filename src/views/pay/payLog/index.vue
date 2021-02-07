@@ -72,6 +72,11 @@
       <el-table-column label="支付平台名称" align="center" prop="platformName" min-width="120"/>
       <el-table-column label="支付通道名称" align="center" prop="channelName" min-width="150"/>
       <el-table-column label="下单金额" align="center" prop="money" min-width="100"/>
+      <el-table-column label="创建时间" align="center" prop="createTime" width="160">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="下单状态" align="center" prop="success" min-width="100">
         <template slot-scope="scope">
           <span
@@ -79,12 +84,8 @@
           >{{ success.dictLabel }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="失败原因" :show-overflow-tooltip="true" align="center" prop="failReason"/>
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
-        </template>
-      </el-table-column>
+      <el-table-column label="失败原因" :show-overflow-tooltip="true" min-width="220" align="center" prop="failReason"/>
+
     </el-table>
 
     <pagination
@@ -151,7 +152,7 @@ export default {
       // 表单校验
       rules: {
         memberId: [
-          { required: true, message: "会员ID不能为空", trigger: "blur" }
+          { required: true, message: '会员ID不能为空', trigger: 'blur' }
         ],
         memberAccount: [
           { required: true, message: '会员账号不能为空', trigger: 'blur' }

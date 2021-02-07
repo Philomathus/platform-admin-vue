@@ -217,6 +217,8 @@ export default {
         type: null,
         creator: null,
         updator: null,
+        //排序
+        orderByColumn: 'indexes',
       },
       // 表单参数
       form: {},

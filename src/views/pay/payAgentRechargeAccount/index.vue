@@ -160,7 +160,7 @@
         <el-form-item label="代充账号" prop="account">
           <el-input v-model="form.account" placeholder="请输入代充账号" />
         </el-form-item>
-        <el-form-item label="代充昵称" prop="nickName">
+        <el-form-item label="代充昵称" prop="nickName" v-if="form.id != null">
           <el-input v-model="form.nickName" placeholder="请输入代充昵称" />
         </el-form-item>
         <el-form-item label="QQ号" prop="qqAccount">
@@ -193,6 +193,12 @@
         </el-form-item>
         <el-form-item label="充值优惠比例" prop="rechargeDiscountRate">
           <el-input v-model="form.rechargeDiscountRate" placeholder="请输入充值优惠比例" />
+        </el-form-item>
+        <el-form-item label="状态" prop="status" v-if="form.id == null" >
+          <el-radio-group v-model="form.status">
+            <el-radio label="1">正常</el-radio>
+            <el-radio label="0">拉黑</el-radio>
+          </el-radio-group>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -240,6 +246,8 @@ export default {
         account: null,
         nickName: null,
         mobile: null,
+        orderByColumn: 'create_time',
+        isAsc: 'desc'
       },
       // 表单参数
       form: {},
@@ -257,6 +265,12 @@ export default {
         mobile: [
           { required: true, message: "手机号不能为空", trigger: "blur" }
         ],
+        businessBeginTime: [
+          { required: true, message: "开店时间不能为空", trigger: "blur" }
+        ],
+        businessEndTime: [
+          { required: true, message: "关店时间不能为空", trigger: "blur" }
+        ],
         rechargeDiscountRate: [
           { required: true, message: "充值优惠比例不能为空", trigger: "blur" }
         ],
@@ -271,7 +285,7 @@ export default {
   },
   created() {
     this.getList();
-    this.getDicts("sys_common_status").then(response => {
+    this.getDicts("recharge_account_status").then(response => {
       this.statusOptions = response.data;
     });
   },
@@ -318,10 +332,10 @@ export default {
         wechatAccount: null,
         alipayAccount: null,
         mobile: null,
-        businessBeginTime: null,
-        businessEndTime: null,
+        businessBeginTime: '00:00:00',
+        businessEndTime: '23:59:59',
         rechargeDiscountRate: null,
-        status: null,
+        status:  '1',
         createTime: null,
         beforeLoginTime: null,
         loginTime: null
@@ -356,7 +370,6 @@ export default {
       const id = row.id || this.ids
       getPayAgentRechargeAccount(id).then(response => {
         this.form = response.data;
-        console.info(this.form)
         this.open = true;
         this.title = "修改代充人管理";
       });

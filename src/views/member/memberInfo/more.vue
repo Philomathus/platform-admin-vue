@@ -24,7 +24,7 @@
       <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(6,'重置保险箱')">
         <span>重置保险箱</span></button>
       <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(7,'重置提现')">
-        <span>重置体现</span></button>
+        <span>重置提现</span></button>
     </div>
     <!--积分明细-->
     <el-row v-if="index===1">
@@ -98,9 +98,9 @@
       >
         <el-table-column prop="realName" label="真实姓名" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="bankName" label="银行名称" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="bankAccount" label="银行卡号" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="bankAccount" label="银行卡号" :show-overflow-tooltip="true" min-width="150" align="center"></el-table-column>
         <el-table-column prop="bankAddress" label="银行地址" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="createTime" label=" 绑定时间" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="createTime" label=" 绑定时间" :show-overflow-tooltip="true" min-width="160" align="center"></el-table-column>
       </el-table>
       <pagination
         v-show="total>0"

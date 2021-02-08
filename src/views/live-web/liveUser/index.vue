@@ -42,7 +42,7 @@
     </el-form>
 
     <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
+<!--      <el-col :span="1.5">
         <el-button
           type="success"
           plain
@@ -53,7 +53,7 @@
           v-hasPermi="['admin:liveUser:edit']"
         >修改
         </el-button>
-      </el-col>
+      </el-col>-->
       <el-col :span="1.5">
         <el-button
           type="warning"
@@ -69,7 +69,7 @@
     </el-row>
 
     <el-table v-loading="loading" :data="liveUserList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center"/>
+<!--      <el-table-column type="selection" width="55" align="center"/>-->
       <el-table-column label="主播ID" align="center" prop="id"/>
       <el-table-column label="主播昵称" align="center" prop="nickName"/>
       <el-table-column label="头像" align="center" prop="headImage">
@@ -111,10 +111,17 @@
           <el-button
             size="mini"
             type="text"
+            icon="el-icon-edit"
+            @click="handleUpdate(scope.row)"
+            v-hasPermi="['admin:liveUser:edit']"
+          >修改</el-button>
+          <el-button
+            size="mini"
+            type="text"
             icon="el-icon-menu"
             @click="handleMore(scope.row)"
-            v-hasPermi="['admin:memberInfo:remove']"
           >更多
+            <!-- v-hasPermi="['admin:memberInfo:remove']"-->
           </el-button>
         </template>
       </el-table-column>
@@ -129,35 +136,78 @@
     />
 
     <!-- 添加或修改//用户信息对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" style="max-height:600px; overflow-y: scroll;" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="主播昵称" prop="nickName">
           <el-input v-model="form.nickName" placeholder="请输入用户昵称"/>
         </el-form-item>
         <el-form-item label="手机号" prop="mobile">
           <el-input v-model="form.mobile" placeholder="请输入手机号"/>
         </el-form-item>
-        <el-form-item label="能否修改性别 1为可修改 0为不可修改" prop="isEditSex">
+<!--        <el-form-item label="能否修改性别 1为可修改 0为不可修改" prop="isEditSex">
           <el-select v-model="form.isEditSex" placeholder="请选择能否修改性别 1为可修改 0为不可修改">
             <el-option label="请选择字典生成" value=""/>
           </el-select>
+        </el-form-item>-->
+        <el-form-item label="性别" prop="sex">
+          <el-select v-model="form.sex" placeholder="请选择性别">
+            <el-option v-for="item in sexList" :label="item.label" :value="item.value"/>
+          </el-select>
         </el-form-item>
-        <el-form-item label="创建时间" prop="mobile">
-          <el-input v-model="form.mobile" placeholder="请输入手机号"/>
+        <el-form-item label="创建时间" prop="createTime" disabled>
+          <el-input v-model="form.createTime" disabled/>
         </el-form-item>
-        <el-form-item label="会员等级;live_user_level.level" prop="userLevel">
-          <el-input v-model="form.userLevel" placeholder="请输入用户等级;live_user_level.level"/>
+        <el-form-item label="会员等级" prop="userLevel">
+          <el-input v-model="form.userLevel" placeholder="请输入用户等级"/>
         </el-form-item>
         <el-form-item label="个性签名" prop="signature">
           <el-input v-model="form.signature" type="textarea" placeholder="请输入内容"/>
         </el-form-item>
-        <el-form-item label="用户密码" prop="userPwd">
+        <el-form-item label="禁播状态" prop="isBan">
+          <el-select v-model="form.isBan" placeholder="请选择禁播状态">
+            <el-option v-for="item in banStatusList" :label="item.label" :value="item.value"/>
+          </el-select>
+        </el-form-item>
+<!--        <el-form-item label="禁播结束时间" prop="banTime">
+          <el-input v-model="form.banTime" placeholder="请输入禁播结束时间"/>
+        </el-form-item>-->
+<!--        <el-form-item label="是否VIP会员；0：否、1：是" prop="isVip">
+          <el-input v-model="form.isVip" placeholder="请输入是否VIP会员；0：否、1：是"/>
+        </el-form-item>
+        <el-form-item label="会员到期时间" prop="vipExpireTime">
+          <el-input v-model="form.vipExpireTime" placeholder="请输入会员到期时间"/>
+        </el-form-item>
+        <el-form-item label="设置主播提现比例,如果为空,则使用后台通用比例" prop="aloneTicketRatio">
+          <el-input v-model="form.aloneTicketRatio" placeholder="请输入设置主播提现比例,如果为空,则使用后台通用比例"/>
+        </el-form-item>-->
+        <el-form-item label="是否认证" prop="isAuthentication">
+          <el-select v-model="form.isAuthentication" placeholder="请选择认证状态">
+            <el-option v-for="item in attestList" :label="item.label" :value="item.value"/>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="认证名称" prop="authenticationName">
+          <el-input v-model="form.authenticationName" placeholder="请输入认证名称"/>
+        </el-form-item>
+        <el-form-item label="联系方式" prop="contact">
+          <el-input v-model="form.contact" placeholder="请输入联系方式"/>
+        </el-form-item>
+        <el-form-item label="身份证号码" prop="identifyNumber">
+          <el-input v-model="form.identifyNumber" placeholder="请输入身份证号码"/>
+        </el-form-item>
+        <el-form-item label="手持身份证照片">
+          <imageUpload v-model="form.identifyHoldImage"/>
+        </el-form-item>
+        <el-form-item label="身份证正面">
+          <imageUpload v-model="form.identifyPositiveImage"/>
+        </el-form-item>
+        <el-form-item label="身份证反面">
+          <imageUpload v-model="form.identifyNagativeImage"/>
+        </el-form-item>
+ <!--       <el-form-item label="用户密码" prop="userPwd">
           <el-input v-model="form.userPwd" placeholder="请输入用户密码"/>
-        </el-form-item>
+        </el-form-item>-->
 
-        <el-form-item label="是否认证 0指未认证  1指待审核 2指认证 3指审核不通过" prop="isAuthentication">
-          <el-input v-model="form.isAuthentication" placeholder="请输入是否认证 0指未认证  1指待审核 2指认证 3指审核不通过"/>
-        </el-form-item>
+<!--
         <el-form-item label="0：微信；1：QQ；2：手机；3：微博 ;4 : 游客登录" prop="loginType">
           <el-select v-model="form.loginType" placeholder="请选择0：微信；1：QQ；2：手机；3：微博 ;4 : 游客登录">
             <el-option label="请选择字典生成" value=""/>
@@ -177,12 +227,6 @@
         </el-form-item>
         <el-form-item label="市" prop="city">
           <el-input v-model="form.city" placeholder="请输入市"/>
-        </el-form-item>
-
-        <el-form-item label="性别 0:未知, 1-男，2-女" prop="sex">
-          <el-select v-model="form.sex" placeholder="请选择性别 0:未知, 1-男，2-女">
-            <el-option label="请选择字典生成" value=""/>
-          </el-select>
         </el-form-item>
         <el-form-item label="出生日期" prop="birthday">
           <el-input v-model="form.birthday" placeholder="请输入出生日期"/>
@@ -226,8 +270,6 @@
         <el-form-item label="验证" prop="verify">
           <el-input v-model="form.verify" placeholder="请输入验证"/>
         </el-form-item>
-
-
         <el-form-item label="用户类型 0指 普通用户 ，1指企业会员" prop="userType">
           <el-select v-model="form.userType" placeholder="请选择用户类型 0指 普通用户 ，1指企业会员">
             <el-option label="请选择字典生成" value=""/>
@@ -244,27 +286,15 @@
             <el-option label="请选择字典生成" value=""/>
           </el-select>
         </el-form-item>
-        <el-form-item label="认证名称" prop="authenticationName">
-          <el-input v-model="form.authenticationName" placeholder="请输入认证名称"/>
-        </el-form-item>
-        <el-form-item label="联系方式" prop="contact">
-          <el-input v-model="form.contact" placeholder="请输入联系方式"/>
-        </el-form-item>
+
+
         <el-form-item label="来自平台" prop="fromPlatform">
           <el-input v-model="form.fromPlatform" placeholder="请输入来自平台"/>
         </el-form-item>
         <el-form-item label="百度百科" prop="wiki">
           <el-input v-model="form.wiki" placeholder="请输入百度百科"/>
         </el-form-item>
-        <el-form-item label="手持身份证照片">
-          <imageUpload v-model="form.identifyHoldImage"/>
-        </el-form-item>
-        <el-form-item label="身份证正面">
-          <imageUpload v-model="form.identifyPositiveImage"/>
-        </el-form-item>
-        <el-form-item label="身份证反面">
-          <imageUpload v-model="form.identifyNagativeImage"/>
-        </el-form-item>
+
         <el-form-item label="微信openid" prop="wxOpenid">
           <el-input v-model="form.wxOpenid" placeholder="请输入微信openid"/>
         </el-form-item>
@@ -397,12 +427,7 @@
         <el-form-item label="可回看的直播数量" prop="videoCount">
           <el-input v-model="form.videoCount" placeholder="请输入可回看的直播数量"/>
         </el-form-item>
-        <el-form-item label="禁播状态 0-正常；1-禁播" prop="isBan">
-          <el-input v-model="form.isBan" placeholder="请输入禁播状态 0-正常；1-禁播"/>
-        </el-form-item>
-        <el-form-item label="禁播结束时间" prop="banTime">
-          <el-input v-model="form.banTime" placeholder="请输入禁播结束时间"/>
-        </el-form-item>
+
         <el-form-item label="身份证号码" prop="identifyNumber">
           <el-input v-model="form.identifyNumber" placeholder="请输入身份证号码"/>
         </el-form-item>
@@ -461,12 +486,7 @@
             <el-option label="请选择字典生成" value=""/>
           </el-select>
         </el-form-item>
-        <el-form-item label="是否VIP会员；0：否、1：是" prop="isVip">
-          <el-input v-model="form.isVip" placeholder="请输入是否VIP会员；0：否、1：是"/>
-        </el-form-item>
-        <el-form-item label="会员到期时间" prop="vipExpireTime">
-          <el-input v-model="form.vipExpireTime" placeholder="请输入会员到期时间"/>
-        </el-form-item>
+
         <el-form-item label="游戏币" prop="coin">
           <el-input v-model="form.coin" placeholder="请输入游戏币"/>
         </el-form-item>
@@ -506,9 +526,7 @@
         <el-form-item label="审核失败时间" prop="investorTime">
           <el-input v-model="form.investorTime" placeholder="请输入审核失败时间"/>
         </el-form-item>
-        <el-form-item label="设置主播提现比例,如果为空,则使用后台通用比例" prop="aloneTicketRatio">
-          <el-input v-model="form.aloneTicketRatio" placeholder="请输入设置主播提现比例,如果为空,则使用后台通用比例"/>
-        </el-form-item>
+
         <el-form-item label="是否开启游戏  0为 禁用 1 为不禁用" prop="openGame">
           <el-input v-model="form.openGame" placeholder="请输入是否开启游戏  0为 禁用 1 为不禁用"/>
         </el-form-item>
@@ -617,6 +635,7 @@
         <el-form-item label="主播禁播原因" prop="banRemark">
           <el-input v-model="form.banRemark" placeholder="请输入主播禁播原因"/>
         </el-form-item>
+      </el-form>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -648,7 +667,13 @@ export default {
     more: more
   },
   data() {
-    return {
+    return{
+      // 0指未认证  1指待审核 2指认证 3指审核不通过
+      attestList: [{label: '未认证',value: 0},{label: '待审核',value: 1},{label: '认证',value: 2},{label: '审核不通过',value: 3}],
+    // 0-正常；1-禁播
+      banStatusList: [{label: '正常',value: 0},{label: '禁播',value: 1}],
+    //性别列表 0:未知, 1-男，2-女
+      sexList: [{label: '未知',value: 0},{label: '男',value: 1},{label: '女',value: 2}],
       //所选的用户id
       userId: 0,
       // 遮罩层

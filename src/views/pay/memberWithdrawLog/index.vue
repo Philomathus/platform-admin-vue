@@ -86,6 +86,15 @@
     <el-table :stripe="true" v-loading="loading" :data="memberWithdrawLogList"
               @selection-change="handleSelectionChange"
     >
+      <el-table-column label="复制" align="center" >
+        <template slot-scope="scope">
+          <el-button
+            type="primary" size="mini"
+            @click="handleCopy(scope.row)"
+          >复制
+          </el-button>
+        </template>
+      </el-table-column>
       <el-table-column label="会员ID" min-width="150" align="center" prop="memberId">
         <template v-slot="{row}">
           <a style="color: #00afff" @click="funds(row.memberId)">{{ row.memberId }}</a>
@@ -423,6 +432,40 @@ export default {
     resetQuery() {
       this.resetForm('queryForm')
       this.handleQuery()
+    },
+    /** 复制按钮 */
+    handleCopy(row){
+      var status=this.statusOptions[parseInt(row.status)];
+      var textarea = document.createElement("textarea");
+      let html = '<table><tr>'
+      html += '<td>' + row.memberId + '</td>'
+      html += '<td>' + row.account + '</td>'
+      html += '<td>' + row.withdrawMoney + '</td>'
+      html += '<td>' + row.bankUserName + '</td>'
+      html += '<td>' + "'" +row.bankAccount + "'" + '</td>'
+      html += '<td>' + row.bankName + '</td>'
+      html += '<td>' + status.dictLabel + '</td>'
+      html += '<td>' + row.opName + '</td>'
+      html += '<td>' + row.createTime + '</td>'
+      html += '<td>' + row.updateTime  + '</td>'
+      html += '</tr></table>'
+      textarea.value = html;
+      console.info(html)
+      this.copyData = html
+      this.copy(this.copyData)
+    },
+    copy(data){
+      let url = data;
+      let oInput = document.createElement('input');
+      oInput.value = url;
+      document.body.appendChild(oInput);
+      oInput.select(); // 选择对象;
+      document.execCommand("Copy"); // 执行浏览器复制命令
+      this.$message({
+        message: '复制成功',
+        type: 'success'
+      });
+      oInput.remove()
     },
     // 多选框选中数据
     handleSelectionChange(selection) {

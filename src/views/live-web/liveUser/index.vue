@@ -151,7 +151,7 @@
         </el-form-item>-->
         <el-form-item label="性别" prop="sex">
           <el-select v-model="form.sex" placeholder="请选择性别">
-            <el-option v-for="item in sexList" :label="item.label" :value="item.value"/>
+            <el-option v-for="item in sexList" :key="item.value" :label="item.label" :value="item.value"/>
           </el-select>
         </el-form-item>
         <el-form-item label="创建时间" prop="createTime" disabled>
@@ -165,7 +165,7 @@
         </el-form-item>
         <el-form-item label="禁播状态" prop="isBan">
           <el-select v-model="form.isBan" placeholder="请选择禁播状态">
-            <el-option v-for="item in banStatusList" :label="item.label" :value="item.value"/>
+            <el-option v-for="item in banStatusList" :key="item.value" :label="item.label" :value="item.value"/>
           </el-select>
         </el-form-item>
 <!--        <el-form-item label="禁播结束时间" prop="banTime">
@@ -182,7 +182,7 @@
         </el-form-item>-->
         <el-form-item label="是否认证" prop="isAuthentication">
           <el-select v-model="form.isAuthentication" placeholder="请选择认证状态">
-            <el-option v-for="item in attestList" :label="item.label" :value="item.value"/>
+            <el-option v-for="item in attestList" :key="item.value" :label="item.label" :value="item.value"/>
           </el-select>
         </el-form-item>
         <el-form-item label="认证名称" prop="authenticationName">

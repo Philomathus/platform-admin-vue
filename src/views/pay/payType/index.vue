@@ -71,7 +71,7 @@
       <el-table-column label="图标" align="center" prop="iconUrl">
       <template slot-scope="scope">
         <el-image
-          style="width: auto; height: 50px"
+          style="width: auto; height: 100%"
           :src="scope.row.iconUrl"
         >
         </el-image>
@@ -217,8 +217,8 @@ export default {
         type: null,
         creator: null,
         updator: null,
-        //排序
         orderByColumn: 'indexes',
+        isAsc: 'desc',
       },
       // 表单参数
       form: {},

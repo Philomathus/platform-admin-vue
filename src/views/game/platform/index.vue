@@ -111,7 +111,7 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改【请填写功能名称】对话框 -->
+    <!-- 添加或修改游戏平台对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
@@ -188,7 +188,7 @@
         showSearch: true,
         // 总条数
         total: 0,
-        // 【请填写功能名称】表格数据
+        // 游戏平台表格数据
         gamePlatformList: [],
         gameTypeList: [],
         // 弹出层标题
@@ -247,7 +247,7 @@
 
     },
     methods: {
-      /** 查询【请填写功能名称】列表 */
+      /** 查询游戏平台列表 */
       getList() {
         this.loading = true;
         listGamePlatform(this.queryParams).then(response => {
@@ -306,7 +306,7 @@
         this.pageType = 0
         this.reset();
         this.open = true;
-        this.title = "添加【请填写功能名称】";
+        this.title = "添加游戏平台";
       },
 
       // 状态修改
@@ -332,7 +332,7 @@
         getGamePlatform(id).then(response => {
           this.form = response.data;
           this.open = true;
-          this.title = "修改【请填写功能名称】";
+          this.title = "修改游戏平台";
         });
       },
       /** 提交按钮 */
@@ -372,7 +372,7 @@
       /** 导出按钮操作 */
       handleExport() {
         const queryParams = this.queryParams;
-        this.$confirm('是否确认导出所有【请填写功能名称】数据项?', "警告", {
+        this.$confirm('是否确认导出所有游戏平台数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"

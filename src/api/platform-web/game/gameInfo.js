@@ -52,7 +52,7 @@ export function getInfo(id) {
   })
 }
 
-// 查询用户详细
+// 查询游戏平台
 export function getGameInfo() {
   return request({
     url: url.platformWeb + '/game/info/listGame' ,

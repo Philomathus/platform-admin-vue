@@ -232,8 +232,8 @@ export default {
         accountName: [
           { required: true, message: "收款人不能为空", trigger: "blur" }
         ],
-        status: [
-          { required: true, message: "状态(1启用0停用)不能为空", trigger: "change" }
+        icon: [
+          { required: true, message: "图标不能为空", trigger: "change" }
         ],
         createTime: [
           { required: true, message: "创建时间不能为空", trigger: "blur" }
@@ -263,6 +263,7 @@ export default {
     },
     //状态修改
     handleStatusChange(row) {
+      console.info(row)
       let text = row.status === "1" ? "启用" : "停用";
       this.$confirm('确认要"' + text + '""' + row.name + '"吗?', "警告", {
         confirmButtonText: "确定",

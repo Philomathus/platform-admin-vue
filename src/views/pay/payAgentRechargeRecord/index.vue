@@ -341,13 +341,33 @@ export default {
     },
     //人工存入
     deposit() {
-      this.reset()
+      this.resetformdeposit()
       this.peopledeposit = true
     },
     //人工提出
     proposed() {
-      this.reset()
+      this.resetformproposed()
       this.peopleproposed = true
+    },
+    // 人工提出表单重置
+    resetformproposed() {
+      this.formproposed = {
+        rechargeAcount: null,
+        type: null,
+        money: null,
+        remark: null
+      };
+      this.resetForm("formproposed");
+    },
+    // 人工存入重置
+    resetformdeposit() {
+      this.formdeposit = {
+        rechargeAcount: null,
+        type: null,
+        money: null,
+        remark: null
+      };
+      this.resetForm("formdeposit");
     },
     // 表单重置
     reset() {

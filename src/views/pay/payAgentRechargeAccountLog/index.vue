@@ -295,6 +295,8 @@ export default {
         nickName: null,
         status: null,
         updateTime: null,
+        orderByColumn: 'updateTime',
+        isAsc: 'desc'
       },
       // 表单参数
       form: {},

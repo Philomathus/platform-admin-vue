@@ -70,7 +70,7 @@
         </el-form-item>
 
         <el-form-item label="本地平台id" prop="platformId">
-          <el-input v-model="form.platformId" placeholder="请输入本地平台id" />
+          <el-input v-model="form.platformId" placeholder="请输入本地平台id" type="number"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -123,6 +123,12 @@ export default {
       form: {},
       // 表单校验
       rules: {
+        userId: [
+          {required: true, message: "账号不能为空", trigger: "blur"}
+        ],
+        platformId: [
+          {required: true, message: "本地平台id不能为空", trigger: "blur"}
+        ],
       }
     };
   },
@@ -204,6 +210,7 @@ export default {
               this.getList();
             });
           } else {
+
             addMemberGameDatafix(this.form).then(response => {
               this.msgSuccess("新增成功");
               this.open = false;

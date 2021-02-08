@@ -345,7 +345,6 @@ export default {
       html += '<td>' + row.updateTime  + '</td>'
       html += '</tr></table>'
       textarea.value = html;
-      console.info(html)
       this.copyData = html
       this.copy(this.copyData)
     },

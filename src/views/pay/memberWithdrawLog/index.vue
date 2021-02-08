@@ -198,7 +198,7 @@
     />
 
     <!-- 添加或修改会员提现信息对话框 -->
-    <el-dialog v-dialogDrag title="资金明细" :visible.sync="fundsOpen" width="450px" append-to-body>
+    <el-dialog v-dialogDrag title="资金明细" :visible.sync="fundsOpen" width="450px" style="max-height:600px; overflow-y: scroll;" append-to-body>
       <el-table :stripe="true" v-loading="loading" :data="fundsData" @selection-change="handleSelectionChange">
         <el-table-column label="项目名称" align="center" width="120px" prop="class_twoname"/>
         <el-table-column label="项目值" align="center" prop="t_value"/>
@@ -450,7 +450,6 @@ export default {
       html += '<td>' + row.updateTime  + '</td>'
       html += '</tr></table>'
       textarea.value = html;
-      console.info(html)
       this.copyData = html
       this.copy(this.copyData)
     },

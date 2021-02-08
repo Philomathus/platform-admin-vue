@@ -96,11 +96,14 @@
     </el-row>
 
     <el-table id="out-table" stripe v-loading="loading" :data="liveHostWageNoteList" @selection-change="handleSelectionChange"
-              border lazy :load="load" row-key="familyId" :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
 <!--      <el-table-column type="selection" width="55" align="center" />-->
 <!--      <el-table-column label="家族长ID" align="center" prop="id" />-->
-      <el-table-column label="家族ID/主播ID" align="center" prop="familyId" />
+      <el-table-column label="家族ID/主播ID" align="center" prop="familyId" >
+        <template v-slot="{row}">
+          <a style="color: #00afff" @click="familyShow(row.familyId)">{{ row.familyId }}</a>
+        </template>
+      </el-table-column>
       <el-table-column label="家族名称" align="center" prop="familyName" />
       <el-table-column label="组长昵称/主播昵称" align="center" prop="familyNickName" />
 <!--      <el-table-column label="主播ID" align="center" prop="hostId" />-->
@@ -144,26 +147,20 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改主播时长对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
-      </div>
-    </el-dialog>
+    <more ref="more" @liveHostWageNoteMore="handleQuery"></more>
   </div>
 </template>
 
 <script>
 import { listLiveHostWageNote,listFamilyPage,getPage, getLiveHostWageNote, delLiveHostWageNote, addLiveHostWageNote, updateLiveHostWageNote, exportLiveHostWageNote } from "@/api/live-web/liveHostWageNote";
+import more from './more'
 // 引入导出Excel表格依赖
 import FileSaver from 'file-saver';
 import XLSX from 'xlsx';
 export default {
   name: "LiveHostWageNote",
   components: {
+    more: more
   },
   data() {
     return {
@@ -208,6 +205,10 @@ export default {
     this.getList();
   },
   methods: {
+    familyShow(familyId) {
+      console.log(familyId)
+      this.$refs.more.show(familyId)
+    },
     // 定义导出Excel表格事件
     exportExcel () {
       /* 从表生成工作簿对象 */
@@ -236,50 +237,25 @@ export default {
     load(tree, treeNode, resolve) {
       console.log(tree)
       getPage({familyId: tree.familyId}).then((res) => {
-        console.log(JSON.stringify(res.rows))
-        res.rows.forEach((value, index, array) => {
-          delete value['selectDate']
-        });
-        console.log(res.rows)
         // resolve(res.rows)
         var arr = []
         res.rows.forEach((value, index, array) => {
-          var item = {"familyId": value.familyId,
-            "alltime": value.alltime,
-            "alltimeDes": value.alltimeDes,
-            "allticket": value.allticket,
-            "shijian": value.shijian,
-            "allCpCost": value.allCpCost,
-            "allPrize": value.allPrize,
-            "timedata": value.timedata,
-            "familyName": value.familyName,
-            "familyNickName": value.familyNickName,
-            "nickName": value.nickName,
-            "allticketRes": value.allticketRes,
-            "settlementRate": value.settlementRate};
+          var item = {"familyId": value.familyId || 0,
+            "alltime": value.alltime || 0,
+            "alltimeDes": value.alltimeDes || 0,
+            "allticket": value.allticket || 0,
+            "shijian": value.shijian || 0,
+            "allCpCost": value.allCpCost || 0,
+            "allPrize": value.allPrize || 0,
+            "timedata": value.timedata || 0,
+            "familyName": value.familyName || 0,
+            "familyNickName": value.familyNickName || 0,
+            "nickName": value.nickName || 0,
+            "allticketRes": value.allticketRes || 0,
+            "settlementRate": value.settlementRate || 0};
           arr.push(item)
         });
-          resolve(arr)
             })
-      // setTimeout(() => {
-      //   resolve([
-      //     {
-      //       "familyId": 123,
-      //       "alltime": 84236,
-      //       "alltimeDes": "23.40",
-      //       "allticket": "12074.64",
-      //       "shijian": "2021-02-01",
-      //       "allCpCost": 16,
-      //       "allPrize": 0,
-      //       "timedata": "2021-02-01-2021-02-28",
-      //       "familyName": "直播家族散户(未入家族)",
-      //       "familyNickName": null,
-      //       "nickName": null,
-      //       "allticketRes": 8452.25,
-      //       "settlementRate": 0.7
-      //     }
-      //   ])
-      // }, 1000)
     },
     /** 查询主播时长列表 */
     getList() {

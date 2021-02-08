@@ -531,7 +531,9 @@ export default {
     handleResetPwd(row) {
       this.$prompt('请输入"' + row.userName + '"的新密码', '提示', {
         confirmButtonText: '确定',
-        cancelButtonText: '取消'
+        cancelButtonText: '取消',
+        inputPattern: /^(?![\d]+$)(?![a-zA-Z]+$)(?![!#$%^&*]+$)[\da-zA-Z!#$%^&*]{6,20}$/,
+        inputErrorMessage: '密码格式为6-20位字母和数字组合，特殊字符的范围为!#$%^&*'
       }).then(({ value }) => {
         resetUserPwd(row.userId, value).then(response => {
           this.msgSuccess('修改成功，新密码是：' + value)

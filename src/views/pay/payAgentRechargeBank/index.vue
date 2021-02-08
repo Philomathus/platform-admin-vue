@@ -169,7 +169,7 @@
               v-for="dict in statusOptions"
               :key="dict.dictValue"
               :label="dict.dictLabel"
-              :value="parseInt(dict.dictValue)"
+              :value="dict.dictValue"
             ></el-option>
           </el-select>
         </el-form-item>

@@ -145,7 +145,9 @@ export default {
         platformId: null,
         channelId: null,
         success: null,
-        createTime: null
+        createTime: null,
+        orderByColumn: 'create_time',
+        isAsc: 'desc'
       },
       // 表单参数
       form: {},

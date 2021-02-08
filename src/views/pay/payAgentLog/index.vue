@@ -206,7 +206,9 @@ export default {
         memberAccount: null,
         createTime: null,
         callbackTime: null,
-        callbackStatus: null
+        callbackStatus: null,
+        orderByColumn: 'create_time',
+        isAsc: 'desc'
       },
     }
   },

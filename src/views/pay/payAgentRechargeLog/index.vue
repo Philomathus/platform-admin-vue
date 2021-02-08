@@ -102,7 +102,7 @@
     </el-row>
 
     <el-table :stripe="true" v-loading="loading" :data="payAgentRechargeLogList" @selection-change="handleSelectionChange">
-      <el-table-column label="复制" align="center" >
+      <el-table-column label="复制" align="center" width="70">
         <template slot-scope="scope">
           <el-button
             type="primary" size="mini"
@@ -177,6 +177,8 @@ export default {
         rechargeNickName: null,
         memberId: null,
         userName: null,
+        orderByColumn: 'create_time',
+        isAsc: 'desc'
       },
       // 表单参数
       form: {},

@@ -120,7 +120,7 @@
     />
 
 
-    <!-- 添加或修改【请填写功能名称】对话框 -->
+    <!-- 添加或修改游戏信息对话框 -->
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="游戏名称" prop="name">
@@ -388,7 +388,7 @@ export default {
       getInfo(id).then(response => {
         this.form = response.data
         this.open = true
-        this.title = '修改游戏'
+        this.title = '修改游戏信息'
       })
     },
 
@@ -402,7 +402,7 @@ export default {
     handleAdd() {
       this.reset()
       this.open = true
-      this.title = '新增'
+      this.title = '新增游戏信息'
     },
 
     /** 提交按钮 */

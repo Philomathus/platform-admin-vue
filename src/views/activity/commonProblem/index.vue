@@ -195,7 +195,7 @@ export default {
         title: null,
         status: null,
         orderByColumn: 'indexs',
-        isAsc: 'desc'
+        isAsc: 'asc'
       },
       // 表单参数
       form: {},

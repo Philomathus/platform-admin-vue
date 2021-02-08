@@ -27,13 +27,6 @@
           ></el-option>
         </el-select>
       </el-form-item>
-
-      <!--      <el-form-item label="房间类型">-->
-      <!--        <el-checkbox-group v-model="form.roomType">-->
-      <!--          <el-checkbox>dddd</el-checkbox>-->
-      <!--          <el-checkbox>dddd</el-checkbox>-->
-      <!--        </el-checkbox-group>-->
-      <!--      </el-form-item>-->
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>

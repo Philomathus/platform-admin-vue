@@ -146,8 +146,8 @@
     />
 
     <!-- 添加或修改代充银行卡对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="收款账号名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入收款账号名称" />
         </el-form-item>
@@ -158,29 +158,13 @@
           <el-input v-model="form.bankName" placeholder="请输入银行名称" />
         </el-form-item>
         <el-form-item label="银行图标" prop="icon">
-          <el-input v-model="form.icon" placeholder="请输入银行图标" />
+          <imageUpload v-model="form.icon" path="PayAgentRechargeBank"/>
         </el-form-item>
         <el-form-item label="收款人" prop="accountName">
           <el-input v-model="form.accountName" placeholder="请输入收款人" />
         </el-form-item>
-        <el-form-item label="状态(1启用0停用)" prop="status">
-          <el-select v-model="form.status" placeholder="请选择状态(1启用0停用)">
-            <el-option
-              v-for="dict in statusOptions"
-              :key="dict.dictValue"
-              :label="dict.dictLabel"
-              :value="dict.dictValue"
-            ></el-option>
-          </el-select>
-        </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input v-model="form.remark" placeholder="请输入备注" />
-        </el-form-item>
-        <el-form-item label="创建人" prop="creator">
-          <el-input v-model="form.creator" placeholder="请输入创建人" />
-        </el-form-item>
-        <el-form-item label="修改人" prop="updator">
-          <el-input v-model="form.updator" placeholder="请输入修改人" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -193,11 +177,12 @@
 
 <script>
 import { listPayAgentRechargeBank, getPayAgentRechargeBank, delPayAgentRechargeBank, addPayAgentRechargeBank, updatePayAgentRechargeBank, exportPayAgentRechargeBank ,changeStatus} from "@/api/platform-web/pay/payAgentRechargeBank";
-
+import ImageUpload from "@/components/ImageUpload";
 
 export default {
   name: "PayAgentRechargeBank",
   components: {
+    ImageUpload
   },
   data() {
     return {
@@ -247,8 +232,8 @@ export default {
         accountName: [
           { required: true, message: "收款人不能为空", trigger: "blur" }
         ],
-        status: [
-          { required: true, message: "状态(1启用0停用)不能为空", trigger: "change" }
+        icon: [
+          { required: true, message: "图标不能为空", trigger: "change" }
         ],
         createTime: [
           { required: true, message: "创建时间不能为空", trigger: "blur" }
@@ -278,6 +263,7 @@ export default {
     },
     //状态修改
     handleStatusChange(row) {
+      console.info(row)
       let text = row.status === "1" ? "启用" : "停用";
       this.$confirm('确认要"' + text + '""' + row.name + '"吗?', "警告", {
         confirmButtonText: "确定",

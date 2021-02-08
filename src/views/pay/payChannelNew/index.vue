@@ -140,6 +140,7 @@
       <el-table-column label="支付平台名称" align="center" prop="payPlatformName" />
       <el-table-column label="支付类型名称" align="center" prop="payTypeName" />
       <el-table-column label="通道费率" align="center" prop="payRateStr" />
+      <el-table-column label="排序" align="center" prop="indexes" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -163,6 +164,7 @@
     <pagination
       v-show="total>0"
       :total="total"
+      :page-sizes="[20,50,100]"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
@@ -290,7 +292,7 @@ export default {
       // 查询参数
       queryParams: {
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 20,
         name: null,
         payMethod: null,
         payAttr: null,
@@ -307,7 +309,7 @@ export default {
         payTypeId: null,
         discountBill: null,
         quickAmount: null,
-        inputType: '1',
+        inputType: null,
         creator: null,
         updator: null,
         payRate: null

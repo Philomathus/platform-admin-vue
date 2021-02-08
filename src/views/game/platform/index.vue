@@ -43,9 +43,8 @@
 
     <el-table v-loading="loading" :data="gamePlatformList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="平台类型" align="center" prop="id"/>
-      <el-table-column label="代理" align="center" prop="agent"/>
-      <el-table-column label="平台名称" align="center" prop="name"/>
+      <el-table-column label="代理" min-width="100" align="center" prop="agent"/>
+      <el-table-column label="平台名称" min-width="100" align="center" prop="name"/>
       <el-table-column label="状态" align="center">
         <template slot-scope="scope">
           <el-switch
@@ -56,30 +55,30 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="洗码比例" align="center" prop="rateClean">
+      <el-table-column label="洗码比例" min-width="100" align="center" prop="rateClean">
         <template v-slot="{row}">
           {{numberUtil.toPercent(row.rateClean)}}
         </template>
       </el-table-column>
-      <el-table-column label="打码比例" align="center" prop="rateBeat">
+      <el-table-column label="打码比例" min-width="100" align="center" prop="rateBeat">
         <template v-slot="{row}">
           {{numberUtil.toPercent(row.rateBeat)}}
         </template>
       </el-table-column>
-      <el-table-column label="创建人" align="center" prop="createBy"/>
-      <el-table-column label="创建时间" min-width="140" align="center" prop="createTime">
+      <el-table-column label="创建人" min-width="90" align="center" prop="createBy"/>
+      <el-table-column label="创建时间" min-width="160" align="center" prop="createTime">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="最后更新人" align="center" prop="updateBy"/>
-      <el-table-column label="最后更新时间" min-width="140" align="center" prop="updateTime">
+      <el-table-column label="最后更新人" min-width="90" align="center" prop="updateBy"/>
+      <el-table-column label="最后更新时间" min-width="160" align="center" prop="updateTime">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.updateTime) }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="操作"  align="center" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column label="操作" width="120" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -106,6 +105,7 @@
     <pagination
       v-show="total>0"
       :total="total"
+      :page-sizes="[15,50,100]"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
@@ -198,7 +198,7 @@
         // 查询参数
         queryParams: {
           pageNum: 1,
-          pageSize: 10,
+          pageSize: 15,
           agent: null,
           name: null
         },

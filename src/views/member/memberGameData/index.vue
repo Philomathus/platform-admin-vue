@@ -57,7 +57,6 @@
     </el-row>
 
     <el-table v-loading="loading" :data="memberGameDataList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="会员ID" align="center" prop="account">
         <template v-slot="{row}">
           <a @click="" style="color: #00afff" v-if="row.platformId==10000||row.platformId==80000">{{ row.account }}</a>
@@ -84,6 +83,7 @@
     <pagination
       v-show="total>0"
       :total="total"
+      :page-sizes="[15,50,100]"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
@@ -187,7 +187,7 @@ export default {
       // 查询参数
       queryParams: {
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 15,
         gameId: null,
         account: null,
         kindId: null,

@@ -6,7 +6,7 @@
           <el-option
             v-for="dict in platformNameList"
             :key="dict.id"
-            :label="dict.platformName"
+            :label="dict.name"
             :value="dict.id"
           ></el-option>
         </el-select>
@@ -121,7 +121,7 @@
 
 
     <!-- 添加或修改【请填写功能名称】对话框 -->
-    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="游戏名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入游戏名称"/>
@@ -146,7 +146,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="高宽比" prop="highWide">
-          <el-input v-model="form.highWide" placeholder="请输入高宽比"/>
+          <el-input v-model="form.highWide" placeholder="请输入高宽比" style="width: 240px"/>
         </el-form-item>
         <el-form-item label="是否填充" prop="isFull">
           <el-select v-model="form.isFull" placeholder="请选择">
@@ -159,17 +159,20 @@
           </el-select>
         </el-form-item>
         <el-form-item label="游戏平台" prop="platformName">
-          <el-select v-model="form.platformName" placeholder="请选择">
+          <el-select v-model="form.platformId"
+                     filterable
+                     clearable
+                     placeholder="请选择">
             <el-option
               v-for="dict in platformNameList"
               :key="dict.id"
-              :label="dict.platformName"
+              :label="dict.name"
               :value="dict.id"
             ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="简介" prop="remark">
-          <el-input v-model="form.remark" placeholder="请输入简介"/>
+          <el-input v-model="form.remark" placeholder="请输入简介" style="width: 240px"/>
         </el-form-item>
 
       </el-form>

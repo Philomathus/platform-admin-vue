@@ -34,7 +34,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:liveMount:add']"
-        >新增</el-button>
+        >新增
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -45,7 +46,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:liveMount:edit']"
-        >修改</el-button>
+        >修改
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -56,25 +58,26 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:liveMount:remove']"
-        >删除</el-button>
+        >删除
+        </el-button>
       </el-col>
-<!--      <el-col :span="1.5">-->
-<!--        <el-button-->
-<!--          type="warning"-->
-<!--          plain-->
-<!--          icon="el-icon-download"-->
-<!--          size="mini"-->
-<!--          @click="handleExport"-->
-<!--          v-hasPermi="['admin:liveMount:export']"-->
-<!--        >导出</el-button>-->
-<!--      </el-col>-->
+      <!--      <el-col :span="1.5">-->
+      <!--        <el-button-->
+      <!--          type="warning"-->
+      <!--          plain-->
+      <!--          icon="el-icon-download"-->
+      <!--          size="mini"-->
+      <!--          @click="handleExport"-->
+      <!--          v-hasPermi="['admin:liveMount:export']"-->
+      <!--        >导出</el-button>-->
+      <!--      </el-col>-->
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="liveMountList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="vip等级" align="center" prop="gvip" />
-      <el-table-column label="坐骑名" align="center" prop="name" />
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="vip等级" align="center" prop="gvip"/>
+      <el-table-column label="坐骑名" align="center" prop="name"/>
       <el-table-column label="状态" align="center" key="status" v-if="columns[0].visible">
         <template slot-scope="scope">
           <el-switch
@@ -94,9 +97,9 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="价格" align="center" prop="price" />
-      <el-table-column label="折扣价格" align="center" prop="disPrice" />
-      <el-table-column label="有效天数" align="center" prop="vday" />
+      <el-table-column label="价格" align="center" prop="price"/>
+      <el-table-column label="折扣价格" align="center" prop="disPrice"/>
+      <el-table-column label="有效天数" align="center" prop="vday"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -105,14 +108,16 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:liveMount:edit']"
-          >修改</el-button>
+          >修改
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:liveMount:remove']"
-          >删除</el-button>
+          >删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -126,13 +131,14 @@
     />
 
     <!-- 添加或修改礼物列对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="vip等级" prop="gvip">
-          <el-input v-model="form.gvip" placeholder="请输入免费领取VIP(-1只能买)" />
+          <el-input v-model="form.gvip" placeholder="请输入免费领取VIP(-1只能买)"/>
         </el-form-item>
         <el-form-item label="坐骑名" prop="name">
-          <el-input v-model="form.name" placeholder="请输入坐骑名" />
+          <el-input v-model="form.name" placeholder="请输入坐骑名"/>
         </el-form-item>
         <el-form-item label="图标" prop="iconUrl">
           <imageUpload v-model="form.iconUrl" path="mount"/>
@@ -147,13 +153,13 @@
           <fileUpload v-model="form.svgUrl" path="mount"/>
         </el-form-item>
         <el-form-item label="价格" prop="price">
-          <el-input v-model="form.price" placeholder="请输入价格" />
+          <el-input v-model="form.price" placeholder="请输入价格"/>
         </el-form-item>
         <el-form-item label="折扣价格" prop="disPrice">
-          <el-input v-model="form.disPrice" placeholder="请输入折扣价格" />
+          <el-input v-model="form.disPrice" placeholder="请输入折扣价格"/>
         </el-form-item>
         <el-form-item label="有效天数" prop="vday">
-          <el-input v-model="form.vday" placeholder="请输入有效天数" />
+          <el-input v-model="form.vday" placeholder="请输入有效天数"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -165,11 +171,19 @@
 </template>
 
 <script>
-import { listLiveMount, getLiveMount, delLiveMount, addLiveMount, updateLiveMount, exportLiveMount } from "@/api/live-web/liveMount/liveMount";
+import {
+  listLiveMount,
+  getLiveMount,
+  delLiveMount,
+  addLiveMount,
+  updateLiveMount,
+  exportLiveMount
+} from "@/api/live-web/liveMount/liveMount";
 import {updateLiveProp} from "@/api/live-web/liveProp/liveProp";
 import ImageUpload from '@/components/ImageUpload';
 import FileUpload from '@/components/FileUpload';
 import Editor from "@/components/Editor";
+
 export default {
   name: "LiveMount",
   components: {
@@ -219,17 +233,29 @@ export default {
       // 表单校验
       rules: {
         id: [
-          { required: true, message: "ID不能为空", trigger: "blur" }
+          {required: true, message: "ID不能为空", trigger: "blur"}
         ],
         name: [
-          { required: true, message: "坐骑名不能为空", trigger: "blur" }
+          {required: true, message: "坐骑名不能为空", trigger: "blur"}
         ],
         status: [
-          { required: true, message: "0:禁用;1:启用;默认启用不能为空", trigger: "blur" }
+          {required: true, message: "状态不能为空", trigger: "blur"}
         ],
         iconUrl: [
-          { required: true, message: "PC端图标不能为空", trigger: "blur" }
+          {required: true, message: "PC端图标不能为空", trigger: "blur"}
         ],
+        gvip: [
+          {required: true, message: "vip等级不能为空", trigger: "blur"}
+        ], svgUrl: [
+          {required: true, message: "svgUrl动画不能为空", trigger: "blur"}
+        ], price: [
+          {required: true, message: "价格不能为空", trigger: "blur"}
+        ], disPrice: [
+          {required: true, message: "折扣价格不能为空", trigger: "blur"}
+        ], vday: [
+          {required: true, message: "赠送天数不能为空", trigger: "blur"}
+        ]
+
       }
     };
   },
@@ -279,7 +305,7 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
@@ -322,15 +348,15 @@ export default {
     handleDelete(row) {
       const ids = row.id || this.ids;
       this.$confirm('是否确认删除礼物列编号为"' + ids + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return delLiveMount(ids);
-        }).then(() => {
-          this.getList();
-          this.msgSuccess("删除成功");
-        })
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function () {
+        return delLiveMount(ids);
+      }).then(() => {
+        this.getList();
+        this.msgSuccess("删除成功");
+      })
     },
     // 状态修改
     handleStatusChange(row) {
@@ -340,9 +366,9 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function () {
-        var data={};
-        data.id=row.id;
-        data.status=row.status;
+        var data = {};
+        data.id = row.id;
+        data.status = row.status;
         return updateLiveMount(data)
       }).then(() => {
         this.msgSuccess(text + '成功')
@@ -354,14 +380,14 @@ export default {
     handleExport() {
       const queryParams = this.queryParams;
       this.$confirm('是否确认导出所有礼物列数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return exportLiveMount(queryParams);
-        }).then(response => {
-          this.download(response.msg);
-        })
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function () {
+        return exportLiveMount(queryParams);
+      }).then(response => {
+        this.download(response.msg);
+      })
     }
   }
 };

@@ -60,6 +60,18 @@ export function getDateEndTime(date) {
   return new Date(date.toLocaleDateString() + ' 23:59:59')
 }
 
+export function getYesterDate(){
+  const date = new Date()
+  date.setTime(date.getTime() - 3600 * 1000 * 24)
+  return date;
+}
+
+export function get7beforeDay(){
+  const date = new Date()
+  date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
+  return date;
+}
+
 // 添加日期范围
 export function addDateRange(params, dateRange, propName) {
   var search = params

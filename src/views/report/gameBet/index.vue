@@ -1,11 +1,12 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="copy1">总投注金额: {{ this.data.countBetMoney||0 }}</el-button>
-    <el-button type="success" @click="copy2">总投注人数: {{ this.data.countBetPeople||0 }}</el-button>
+    <el-button type="primary" @click="copy1">总投注金额: {{ this.data.countBetMoney || 0 }}</el-button>
+    <el-button type="success" @click="copy2">总投注人数: {{ this.data.countBetPeople || 0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="68px">
       <el-form-item label="日期选择" prop="begindate">
         <el-date-picker v-model="queryParams.begindate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
-                        :style="{width: '100%'}" placeholder="请选择日期选择" clearable></el-date-picker>
+                        :style="{width: '100%'}" placeholder="请选择日期选择" clearable
+        ></el-date-picker>
       </el-form-item>
       <el-form-item label="平台名称" prop="gameplame">
         <el-input
@@ -25,7 +26,8 @@
     <el-table v-loading="loading"
               :data="list"
               style="width: 100%;"
-              :stripe="true">
+              :stripe="true"
+    >
       <el-table-column label="平台编号" align="center" prop="gameagent" :show-overflow-tooltip="true"/>
       <el-table-column label="名称-详情" align="center" prop="gameplame" :show-overflow-tooltip="true"/>
       <el-table-column label="投注人数" align="center" prop="gamepepole"/>
@@ -42,11 +44,11 @@
 </template>
 
 <script>
-import {list, count,liststorage} from "@/api/platform-web/report/gameBet";
-
+import { list, count, liststorage } from '@/api/platform-web/report/gameBet'
+import { getYesterDate } from '@/utils/dateUtils'
 
 export default {
-  name: "Online",
+  name: 'Online',
   data() {
     return {
       // 遮罩层
@@ -60,30 +62,30 @@ export default {
       data: {},
       // 查询参数
       queryParams: {
-        begindate: undefined,
+        begindate: this.parseTime(getYesterDate(), '{y}-{m}-{d}'),
         gameplame: undefined
       }
-    };
+    }
   },
   created() {
-    this.getliststorage();
-    this.getList();
-    this.count();
+    this.getliststorage()
+    this.getList()
+    this.count()
   },
   methods: {
 
     getList() {
-      this.loading = true;
+      this.loading = true
       list(this.queryParams).then(response => {
-        this.list = response.rows;
-        this.total = response.total;
-        this.loading = false;
+        this.list = response.rows
+        this.total = response.total
+        this.loading = false
       })
     },
     getliststorage() {
-      this.loading = true;
+      this.loading = true
       liststorage(this.queryParams).then(response => {
-      });
+      })
     },
     //复制
     copy1() {
@@ -94,28 +96,28 @@ export default {
     },
     //统计
     count() {
-      this.loading = true;
+      this.loading = true
       count(this.queryParams).then(response => {
-        if (response.data){
-          this.data = response.data;
+        if (response.data) {
+          this.data = response.data
         }
-        this.loading = false;
-      });
+        this.loading = false
+      })
     },
     /** 搜索按钮操作 */
     handleQuery() {
 
-      this.pageNum = 1;
-     this.getliststorage();
-      this.getList();
-      this.count();
+      this.pageNum = 1
+      this.getliststorage()
+      this.getList()
+      this.count()
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.resetForm("queryForm");
-      this.handleQuery();
-    },
+      this.resetForm('queryForm')
+      this.handleQuery()
+    }
   }
-};
+}
 </script>
 

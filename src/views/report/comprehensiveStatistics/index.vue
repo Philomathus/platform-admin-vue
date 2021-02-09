@@ -4,7 +4,8 @@
 
       <el-form-item label="日期选择" prop="reporttime">
         <el-date-picker v-model="queryParams.reporttime" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
-                        :style="{width: '100%'}" placeholder="请选择日期选择" clearable></el-date-picker>
+                        :style="{width: '100%'}" placeholder="请选择日期选择" clearable
+        ></el-date-picker>
       </el-form-item>
 
       <el-form-item label="名称" prop="classTwoname">
@@ -38,11 +39,11 @@
 </template>
 
 <script>
-import {list,listStorage} from "@/api/platform-web/report/comprehensiveStatistics";
-
+import { list, listStorage } from '@/api/platform-web/report/comprehensiveStatistics'
+import { getYesterDate } from '@/utils/dateUtils'
 
 export default {
-  name: "Online",
+  name: 'Online',
   data() {
     return {
       // 遮罩层
@@ -53,45 +54,45 @@ export default {
       list: [],
       // 查询参数
       queryParams: {
-        reporttime: undefined,
+        reporttime: this.parseTime(getYesterDate(), '{y}-{m}-{d}'),
         classTwoname: undefined
       }
-    };
+    }
   },
   created() {
-    this.getlistStorage();
-    this.getList();
+    this.getlistStorage()
+    this.getList()
 
   },
   methods: {
     /** 查询登录日志列表 */
     getlistStorage() {
-      this.loading = true;
+      this.loading = true
       listStorage(this.queryParams).then(response => {
-      });
+      })
     },
     getList() {
-      this.loading = true;
+      this.loading = true
       list(this.queryParams).then(response => {
-        this.list = response.rows;
-        this.total = response.total;
-        this.loading = false;
-      });
+        this.list = response.rows
+        this.total = response.total
+        this.loading = false
+      })
     },
 
     /** 搜索按钮操作 */
     handleQuery() {
-      this.pageNum = 1;
-      this.getlistStorage();
-      this.getList();
+      this.pageNum = 1
+      this.getlistStorage()
+      this.getList()
 
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.resetForm("queryForm");
-      this.handleQuery();
-    },
+      this.resetForm('queryForm')
+      this.handleQuery()
+    }
   }
-};
+}
 </script>
 

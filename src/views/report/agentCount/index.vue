@@ -3,7 +3,7 @@
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="日期选择" prop="reptime">
         <el-date-picker
-          v-model="dateRange"
+          v-model="queryParams.dateRange"
           size="small"
           style="width: 240px"
           value-format="yyyy-MM-dd"
@@ -11,6 +11,7 @@
           range-separator="-"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
+          clearable
         ></el-date-picker>
       </el-form-item>
 
@@ -37,17 +38,16 @@
       </el-form-item>
     </el-form>
 
-    <el-table v-loading="loading" :data="report" :stripe="true" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center"/>
+    <el-table v-loading="loading" :data="report" :stripe="true">
       <el-table-column label="渠道编码" align="center" prop="agentcode"/>
-      <el-table-column label="邀请账号" align="center" prop="agentname"/>
+      <el-table-column label="邀请账号" min-width="150" align="center" prop="agentname"/>
       <el-table-column label="统计时间" align="center" prop="agenttime" min-width="120"/>
       <el-table-column label="当日/总(注册人数)" min-width="130" align="center" prop="regisNumber" :formatter="regisNumber"/>
       <el-table-column label="公司入款（首充）" min-width="130" align="center" prop="gsRukuanjine"/>
       <el-table-column label="线上入款（首充）" min-width="130" align="center" prop="xsRukuanjine"/>
       <el-table-column label="手工入款（首充）" min-width="130" align="center" prop="sgRukuanjine"/>
       <el-table-column label="入款总（首充）" min-width="120" align="center" prop="totalfristRukuanjine"/>
-      <el-table-column label="人/笔/金额（入款日总）" min-width="160" align="center" prop="totalRukuanjine"/>
+      <el-table-column label="人/笔/金额（入款日总）" min-width="170" align="center" prop="totalRukuanjine"/>
       <el-table-column label="出款金额（首充）" min-width="130" align="center" prop="chukuanjine"/>
       <el-table-column label="人/笔/金额（出款日总）" min-width="160" align="center" prop="totalChukuanjine"/>
       <el-table-column label="送礼次数/金额" min-width="120" align="center" prop="totalGiveprop"/>
@@ -65,14 +65,12 @@
 </template>
 
 <script>
-import {listReport,liststorage} from "@/api/platform-web/report/agentCount";
-import FileUpload from '@/components/FileUpload';
+import { listReport, liststorage } from '@/api/platform-web/report/agentCount'
+import { getYesterDate } from '@/utils/dateUtils'
 
 export default {
-  name: "Report-moneyinfo",
-  components: {
-    FileUpload,
-  },
+  name: 'Report-moneyinfo',
+  components: {},
   data() {
     return {
       // 遮罩层
@@ -89,58 +87,56 @@ export default {
       total: 0,
       // 平台资金报，记录平台每日收入及支出总额，预估当前会员的积分余额表格数据
       report: [],
-      // 日期范围
-      dateRange: [],
       // 弹出层标题
-      title: "",
+      title: '',
       // 是否显示弹出层
       open: false,
       // 查询参数
       queryParams: {
-        reptime: null
+        reptime: null,
+        dateRange: [this.parseTime(getYesterDate(), '{y}-{m}-{d}'), this.parseTime(getYesterDate(), '{y}-{m}-{d}')]
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {}
-    };
+    }
   },
   created() {
-    this.getListstorage();
-    this.getList();
+    this.getListstorage()
+    this.getList()
   },
   methods: {
     /** 查询平台资金报，记录平台每日收入及支出总额，预估当前会员的积分余额列表 */
     getList() {
-      this.loading = true;
-      listReport(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-        this.report = response.rows;
-        this.total = response.total;
-        this.loading = false;
-      });
+      this.loading = true
+      listReport(this.addDateRange(this.queryParams, this.queryParams.dateRange)).then(response => {
+        this.report = response.rows
+        this.total = response.total
+        this.loading = false
+      })
     },
     getListstorage() {
-      this.loading = true;
-      liststorage(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-        this.getList();
-      });
+      this.loading = true
+      liststorage(this.addDateRange(this.queryParams, this.queryParams.dateRange)).then(response => {
+        this.getList()
+      })
     },
     // 取消按钮
     cancel() {
-      this.open = false;
-      this.reset();
+      this.open = false
+      this.reset()
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.getListstorage();
-      this.queryParams.pageNum = 1;
-      this.getList();
+      this.getListstorage()
+      this.queryParams.pageNum = 1
+      this.getList()
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.dateRange = []
-      this.resetForm("queryForm");
-      this.handleQuery();
+      this.resetForm('queryForm')
+      this.handleQuery()
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
@@ -149,12 +145,12 @@ export default {
       this.multiple = !selection.length
     },
     regisNumber(rows, column) {
-      return rows.newmember + "/" + rows.totalmember
+      return rows.newmember + '/' + rows.totalmember
     },
     ios(rows, column) {
-      return rows.totalEnterlivetimes + "/" + rows.totalActiveandroid + "/" + rows.totalActiveios
+      return rows.totalEnterlivetimes + '/' + rows.totalActiveandroid + '/' + rows.totalActiveios
     }
 
   }
-};
+}
 </script>

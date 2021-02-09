@@ -34,13 +34,11 @@
 <script>
 
 import {listReport,count} from "@/api/platform-web/report/incomeDay";
-import FileUpload from '@/components/FileUpload';
-
+import { getYesterDate } from '@/utils/dateUtils'
 
 export default {
   name: "memberGame",
   components: {
-    FileUpload,
   },
   data() {
     return {
@@ -65,7 +63,7 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
-        paydate: null
+        paydate: this.parseTime(getYesterDate(), '{y}-{m}-{d}')
       },
       // 表单参数
       form: {},

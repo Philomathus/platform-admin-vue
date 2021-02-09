@@ -29,8 +29,8 @@
 <!--          &lt;!&ndash; <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>&ndash;&gt;-->
 <!--        </el-form-item>-->
 <!--      </el-form>-->
-      <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-        <el-tab-pane v-for="(item,index) in tabList" :label="item.dictLabel" :name="item.dictValue">
+      <el-tabs v-model="activeName"  type="card" @tab-click="handleClick">
+        <el-tab-pane v-for="(item,index) in tabList" :lazy="true" :label="item.dictLabel" :name="item.dictValue">
           <comprehensive v-if="item.dictValue==='1'"></comprehensive>
           <game-bet v-if="item.dictValue==='2'"></game-bet>
           <recharge-statistics v-if="item.dictValue==='3'"></recharge-statistics>

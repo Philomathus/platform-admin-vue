@@ -81,28 +81,28 @@
         >删除
         </el-button>
       </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="info"
-          plain
-          icon="el-icon-upload2"
-          size="mini"
-          @click="handleImport"
-          v-hasPermi="['system:user:import']"
-        >导入
-        </el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['system:user:export']"
-        >导出
-        </el-button>
-      </el-col>
+<!--      <el-col :span="1.5">-->
+<!--        <el-button-->
+<!--          type="info"-->
+<!--          plain-->
+<!--          icon="el-icon-upload2"-->
+<!--          size="mini"-->
+<!--          @click="handleImport"-->
+<!--          v-hasPermi="['system:user:import']"-->
+<!--        >导入-->
+<!--        </el-button>-->
+<!--      </el-col>-->
+<!--      <el-col :span="1.5">-->
+<!--        <el-button-->
+<!--          type="warning"-->
+<!--          plain-->
+<!--          icon="el-icon-download"-->
+<!--          size="mini"-->
+<!--          @click="handleExport"-->
+<!--          v-hasPermi="['system:user:export']"-->
+<!--        >导出-->
+<!--        </el-button>-->
+<!--      </el-col>-->
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList" :columns="columns"></right-toolbar>
     </el-row>
 
@@ -117,12 +117,15 @@
       />
       <el-table-column label="状态" align="center" key="status" v-if="columns[3].visible">
         <template slot-scope="scope">
+          <div v-if="scope.row.userName!='admin'">
           <el-switch
             v-model="scope.row.status"
             active-value="0"
             inactive-value="1"
             @change="handleStatusChange(scope.row)"
           ></el-switch>
+          </div>
+          <span type="text" v-if="scope.row.userName=='admin'">已启用</span>
         </template>
       </el-table-column>
       <el-table-column label="google验证码" align="center" key="googleAuthSecret" prop="googleAuthSecret"
@@ -569,7 +572,7 @@ export default {
       bindGoogleAuth(this.userName, this.secretKey, this.googleAuthCode).then(response => {
         if (response.code === 200) {
           this.msgSuccess('绑定成功')
-          this.open = false
+          this.open = true
           this.getList()
         } else {
           this.msgError(response.msg)

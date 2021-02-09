@@ -311,7 +311,7 @@ export default {
           cancelButtonText: "取消",
           type: "warning"
         }).then(function () {
-          updateLiveFamily(data);
+          return updateLiveFamily(data);
         }).then(() => {
           this.getList();
           this.msgSuccess("审核通过");
@@ -323,7 +323,7 @@ export default {
           cancelButtonText: "取消",
           type: "warning"
         }).then(function () {
-          updateLiveFamily(data);
+          return updateLiveFamily(data);
         }).then(() => {
           this.getList();
           this.msgSuccess("审核拒绝成功");

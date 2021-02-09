@@ -4,7 +4,7 @@
     <el-button type="success" @click="copy2">出款总额: {{ this.data.outMoney || 0 }}</el-button>
     <el-button type="primary" @click="copy3">金额合计: {{ this.data.countMoney || 0 }}</el-button>
     <el-button type="success" @click="copy4">送礼总额: {{ this.data.totalAccountGifts || 0 }}</el-button>
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="日期选择" prop="reptime">
         <el-date-picker
           v-model="dateRange"
@@ -45,13 +45,13 @@
       />
     </el-table>
 
-<!--    <pagination-->
-<!--      v-show="total>0"-->
-<!--      :total="total"-->
-<!--      :page.sync="queryParams.pageNum"-->
-<!--      :limit.sync="queryParams.pageSize"-->
-<!--      @pagination="getList"-->
-<!--    />-->
+    <!--    <pagination-->
+    <!--      v-show="total>0"-->
+    <!--      :total="total"-->
+    <!--      :page.sync="queryParams.pageNum"-->
+    <!--      :limit.sync="queryParams.pageSize"-->
+    <!--      @pagination="getList"-->
+    <!--    />-->
 
 
   </div>
@@ -163,7 +163,7 @@ export default {
       this.multiple = !selection.length
     },
     totalChukuanjineMath(rows, column) {
-      return rows.totalRukuanjine - rows.totalChukuanjine
+      return (rows.totalRukuanjine - rows.totalChukuanjine).toFixed(2)
     }
 
   }

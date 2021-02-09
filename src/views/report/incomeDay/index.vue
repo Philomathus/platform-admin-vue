@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-button type="primary" @click="copy1">总成功金额: {{this.data.countSuccessMoney||0}}</el-button>
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="日期选择" prop="paydate">
         <el-date-picker v-model="queryParams.paydate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
                         :style="{width: '100%'}" placeholder="请选择日期选择" clearable></el-date-picker>
@@ -12,7 +12,6 @@
       </el-form-item>
     </el-form>
     <el-table v-loading="loading" :data="report" :stripe="true">
-      <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="收款金额" align="center" prop="money"/>
       <el-table-column label="线下或者线上" align="center" prop="type"/>
       <el-table-column label="收款平台" align="center" prop="payplam"/>
@@ -21,26 +20,24 @@
       <el-table-column label="时间" align="center" prop="paydate">
       </el-table-column>
     </el-table>
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
+<!--    <pagination-->
+<!--      v-show="total>0"-->
+<!--      :total="total"-->
+<!--      :page.sync="queryParams.pageNum"-->
+<!--      :limit.sync="queryParams.pageSize"-->
+<!--      @pagination="getList"-->
+<!--    />-->
   </div>
 </template>
 
 <script>
 
 import {listReport,count} from "@/api/platform-web/report/incomeDay";
-import FileUpload from '@/components/FileUpload';
-
+import { getYesterDate } from '@/utils/dateUtils'
 
 export default {
   name: "memberGame",
   components: {
-    FileUpload,
   },
   data() {
     return {
@@ -65,9 +62,7 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
-        pageNum: 1,
-        pageSize: 10,
-        paydate: null
+        paydate: this.parseTime(getYesterDate(), '{y}-{m}-{d}')
       },
       // 表单参数
       form: {},

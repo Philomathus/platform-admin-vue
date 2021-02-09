@@ -44,7 +44,6 @@
         @row-click="clickRow"
         ref="table"
         :data="dbTableList"
-        @selection-change="handleSelectionChange"
         height="460px"
         v-loading="loading"
       >
@@ -52,13 +51,6 @@
         <el-table-column prop="class_twoname" label="项目名称" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="t_value" label="项目值" :show-overflow-tooltip="true"></el-table-column>
       </el-table>
-      <pagination
-        v-show="total>0"
-        :total="total"
-        :page.sync="queryParams.pageNum"
-        :limit.sync="queryParams.pageSize"
-        @pagination="getList"
-      />
     </el-row>
     <!--加分-->
     <el-row v-if="index===3">
@@ -358,8 +350,6 @@ export default {
       this.loading = true
       memberWithdrawLog({
         id: this.memberId,
-        page: this.queryParams.pageNum,
-        limit: this.queryParams.pageSize,
         _: new Date().getTime()
       }).then((res) => {
         if (res.code === 0) {

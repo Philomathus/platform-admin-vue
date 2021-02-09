@@ -4,7 +4,7 @@
       <el-form-item label="直播类型" prop="type" style="width: 100%;">
         <el-checkbox-group v-model="queryParams.types" size="medium">
           <el-checkbox v-for="item in typeOptions" :key="item.dictValue" :label="item.dictValue">
-            {{item.dictLabel}}
+            {{ item.dictLabel }}
           </el-checkbox>
         </el-checkbox-group>
       </el-form-item>
@@ -50,32 +50,32 @@
 
     <el-table v-loading="loading" :data="liveVideoList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="主播id" align="center" prop="id"/>
-      <el-table-column label="主播昵称" align="center" prop="hostName"/>
-      <el-table-column label="图标" align="center" prop="liveImage">
-        <template slot-scope="scope">
-          <el-image
-            style="width: 50px; height: 50px"
-            :src="scope.row.liveImage"
-          >
-          </el-image>
-        </template>
-      </el-table-column>
-      <el-table-column label="直播类型" align="center" prop="cateId" :formatter="typeFormat"/>
-      <el-table-column label="热度" align="center" prop="voteNumber"/>
-      <el-table-column label="在线人数" align="center" prop="watchNumber"/>
-      <el-table-column label="推荐" align="center" prop="isRecommend" :formatter="isRecommendFormat"/>
-      <el-table-column label="固定位置" align="center" prop="sort"/>
-      <el-table-column label="线路名称" align="center" prop="name"/>
-      <el-table-column label="直播状态" align="center" prop="liveStatus" :formatter="statusFormat"/>
-      <el-table-column label="彩种" align="center" prop="lotteryName"/>
-      <el-table-column label="收费" align="center" prop="isLivePay" :formatter="isLivePayFormat"/>
-      <el-table-column label="开始时间" align="center" prop="beginTime" width="180">
+      <el-table-column label="主播id" min-width="120" align="center" prop="id"/>
+      <el-table-column label="主播昵称" min-width="120" align="center" prop="hostName"/>
+      <!--      <el-table-column label="图标" align="center" prop="liveImage">-->
+      <!--        <template slot-scope="scope">-->
+      <!--          <el-image-->
+      <!--            style="width: 50px; height: 50px"-->
+      <!--            :src="scope.row.liveImage"-->
+      <!--          >-->
+      <!--          </el-image>-->
+      <!--        </template>-->
+      <!--      </el-table-column>-->
+      <el-table-column label="直播类型" min-width="120" align="center" prop="cateId" :formatter="typeFormat"/>
+      <el-table-column label="热度" min-width="120" align="center" prop="voteNumber"/>
+      <el-table-column label="在线人数" min-width="120" align="center" prop="watchNumber"/>
+      <el-table-column label="推荐" min-width="120" align="center" prop="isRecommend" :formatter="isRecommendFormat"/>
+      <el-table-column label="固定位置" min-width="120" align="center" prop="sort"/>
+      <el-table-column label="线路名称" min-width="120" align="center" prop="name"/>
+      <el-table-column label="直播状态" min-width="120" align="center" prop="liveStatus" :formatter="statusFormat"/>
+      <el-table-column label="彩种" min-width="120" align="center" prop="lotteryName"/>
+      <el-table-column label="收费" min-width="120" align="center" prop="isLivePay" :formatter="isLivePayFormat"/>
+      <el-table-column label="开始时间" align="center" prop="beginTime" width="160">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.beginTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" min-width="120" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -98,7 +98,8 @@
     </el-table>
 
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="800px"
-               append-to-body>
+               append-to-body
+    >
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="房间ID" prop="id">
           <el-input v-model="form.id" placeholder="房间ID" readonly disabled/>
@@ -137,20 +138,14 @@ import {
   listLiveVideo,
   getLiveVideo,
   delLiveVideo,
-  closeIds,
-  addLiveVideo,
-  updateLiveVideo,
   exportLiveVideo
-} from "@/api/live-web/liveVideo/liveVideo";
-import ImageUpload from '@/components/ImageUpload';
-import request from "@/utils/request";
-import {url} from "@/utils/url";
+} from '@/api/live-web/liveVideo/liveVideo'
+import request from '@/utils/request'
+import { url } from '@/utils/url'
 
 export default {
-  name: "LiveVideo",
-  components: {
-    ImageUpload,
-  },
+  name: 'LiveVideo',
+  components: {},
   data() {
     return {
       // 遮罩层
@@ -170,7 +165,7 @@ export default {
       serverOptions: [],
       typeOptions: [],
       // 弹出层标题
-      title: "",
+      title: '',
       // 是否显示弹出层
       open: false,
       // 查询参数
@@ -185,31 +180,31 @@ export default {
       form: {},
       // 表单校验
       rules: {}
-    };
+    }
   },
   created() {
-    this.getList();
+    this.getList()
     this.getServerLine().then(response => {
       this.serverOptions = response.rows
     })
     this.getDicts('videoType').then(response => {
-      this.typeOptions = response.data;
+      this.typeOptions = response.data
     })
   },
   methods: {
     /** 查询直播列表 */
     getList() {
-      this.loading = true;
+      this.loading = true
       listLiveVideo(this.queryParams).then(response => {
-        this.liveVideoList = response.rows;
-        this.total = response.total;
-        this.loading = false;
-      });
+        this.liveVideoList = response.rows
+        this.total = response.total
+        this.loading = false
+      })
     },
     // 取消按钮
     cancel() {
-      this.open = false;
-      this.reset();
+      this.open = false
+      this.reset()
     },
     // 表单重置
     reset() {
@@ -217,24 +212,24 @@ export default {
         hostName: null,
         paiId: null,
         types: []
-      };
+      }
       this.queryParams = {
         hostName: null,
         paiId: null,
         types: []
       }
-      this.resetForm("form");
+      this.resetForm('form')
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNum = 1;
-      this.getList();
+      this.queryParams.pageNum = 1
+      this.getList()
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.reset();
-      this.resetForm("queryForm");
-      this.handleQuery();
+      this.reset()
+      this.resetForm('queryForm')
+      this.handleQuery()
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
@@ -244,97 +239,97 @@ export default {
     },
     /** 新增按钮操作 */
     handleAdd() {
-      this.reset();
-      this.open = true;
-      this.title = "添加直播";
+      this.reset()
+      this.open = true
+      this.title = '添加直播'
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
-      this.reset();
-      const id = row.id || this.ids;
+      this.reset()
+      const id = row.id || this.ids
       getLiveVideo(id).then(response => {
-        this.form = response.data;
-        this.open = true;
-        this.title = "付费设置";
+        this.form = response.data
+        this.open = true
+        this.title = '付费设置'
         console.info(this.form.isLivePay)
-        this.form.isLivePay = "" + this.form.isLivePay;
-      });
+        this.form.isLivePay = '' + this.form.isLivePay
+      })
     },
-    closeIds(){
-      if(this.ids==null||this.ids==""){
-        this.msgError("请选择关闭直播间");
-        return ;
+    closeIds() {
+      if (this.ids == null || this.ids == '') {
+        this.msgError('请选择关闭直播间')
+        return
       }
-      this.msgSuccess("正在关播中!");
+      this.msgSuccess('正在关播中!')
       close(this.ids).then(response => {
-        this.getList();
-        this.msgSuccess("关播成功");
-      });
+        this.getList()
+        this.msgSuccess('关播成功')
+      })
     },
     close(row) {
       close(row.id).then(response => {
-        this.getList();
-        this.msgSuccess("关播成功");
-      });
+        this.getList()
+        this.msgSuccess('关播成功')
+      })
     },
     /** 提交按钮 */
     submitForm() {
       if (this.form.liveFee == 0) {
-        this.msgError("付费金额必须大于0!");
-        return;
+        this.msgError('付费金额必须大于0!')
+        return
       }
       updateLivePay(this.form).then(response => {
-        this.msgSuccess("修改成功");
-        this.open = false;
-        this.getList();
-      });
+        this.msgSuccess('修改成功')
+        this.open = false
+        this.getList()
+      })
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const ids = row.id || this.ids;
-      this.$confirm('是否确认删除直播编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(function () {
-        return delLiveVideo(ids);
+      const ids = row.id || this.ids
+      this.$confirm('是否确认删除直播编号为"' + ids + '"的数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return delLiveVideo(ids)
       }).then(() => {
-        this.getList();
-        this.msgSuccess("删除成功");
+        this.getList()
+        this.msgSuccess('删除成功')
       })
     },
     statusFormat(row) {
-      if (row.liveStatus == "1") {
-        return "播放源正常";
-      } else if (row.liveStatus == "0") {
-        return "播放源异常";
+      if (row.liveStatus == '1') {
+        return '播放源正常'
+      } else if (row.liveStatus == '0') {
+        return '播放源异常'
       } else {
-        return "检测中";
+        return '检测中'
       }
     },
     isRecommendFormat(row) {
-      if (row.isRecommend == "1") {
-        return "是";
+      if (row.isRecommend == '1') {
+        return '是'
       } else {
-        return "否";
+        return '否'
       }
     },
     isLivePayFormat(row) {
-      if (row.isLivePay == "1") {
-        return "是";
+      if (row.isLivePay == '1') {
+        return '是'
       } else {
-        return "否";
+        return '否'
       }
     },
     typeFormat(row) {
-      if (row.cateId == "2") {
-        return "性感主播";
-      } else if (row.cateId == "3") {
-        return "大秀直播";
-      } else if (row.cateId == "4") {
-        return "收费直播";
+      if (row.cateId == '2') {
+        return '性感主播'
+      } else if (row.cateId == '3') {
+        return '大秀直播'
+      } else if (row.cateId == '4') {
+        return '收费直播'
       } else {
-        return "彩票直播";
+        return '彩票直播'
       }
     },
     getServerLine() {
@@ -345,17 +340,17 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有直播数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(function () {
-        return exportLiveVideo(queryParams);
+      const queryParams = this.queryParams
+      this.$confirm('是否确认导出所有直播数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return exportLiveVideo(queryParams)
       }).then(response => {
-        this.download(response.msg);
+        this.download(response.msg)
       })
     }
   }
-};
+}
 </script>

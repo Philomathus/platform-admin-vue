@@ -20,22 +20,21 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="liveVideoChatList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="平台会员ID" align="center" prop="fromPlatform" />
-      <el-table-column label="用户昵称" align="center" prop="userNickName" />
-      <el-table-column label="消息类型" align="center" prop="type" :formatter="msgFormat"/>
-      <el-table-column label="消息内容" align="center" prop="msg" />
+    <el-table v-loading="loading" :data="liveVideoChatList">
+      <el-table-column label="平台会员ID" min-width="120" align="center" prop="fromPlatform" />
+      <el-table-column label="用户昵称" min-width="120" align="center" prop="userNickName" />
+      <el-table-column label="消息类型" min-width="120" align="center" prop="type" :formatter="msgFormat"/>
+      <el-table-column label="消息内容" :show-overflow-tooltip="true" min-width="220" align="center" prop="msg" />
 <!--      <el-table-column label="会员ID" align="center" prop="id" />-->
-      <el-table-column label="主播ID" align="center" prop="poscatId" />
+      <el-table-column label="主播ID" min-width="120" align="center" prop="poscatId" />
 <!--      <el-table-column label="消息所在聊天组" align="center" prop="group" />-->
 <!--      <el-table-column label="发送者id" align="center" prop="userId" />-->
 
-      <el-table-column label="主播昵称" align="center" prop="poscatNickName" />
-      <el-table-column label="发送时间" align="center" prop="createTimes" />
-      <el-table-column label="是否封停" align="center" prop="noSpeaking" :formatter="speakFormat"/>
-      <el-table-column label="是否禁言" align="center" prop="forbid" :formatter="forbidFormat"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="主播昵称" min-width="120" align="center" prop="poscatNickName" />
+      <el-table-column label="发送时间" width="160" align="center" prop="createTimes" />
+      <el-table-column label="是否封停" min-width="120" align="center" prop="noSpeaking" :formatter="speakFormat"/>
+      <el-table-column label="是否禁言" min-width="120" align="center" prop="forbid" :formatter="forbidFormat"/>
+      <el-table-column label="操作" min-width="150" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -58,6 +57,7 @@
     <pagination
       v-show="total>0"
       :total="total"
+      :page-sizes="[20,50,100]"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
@@ -118,7 +118,7 @@ export default {
       // 查询参数
       queryParams: {
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 20,
         poscatId: null,
         group: null,
         userId: null,

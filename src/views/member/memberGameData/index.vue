@@ -19,10 +19,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="platformId">
+      <el-form-item prop="agent">
         <el-input
           v-model="queryParams.agent"
-          placeholder="请输入平台ID"
+          placeholder="请输入子平台ID"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -59,25 +59,24 @@
     <el-table v-loading="loading" :data="memberGameDataList" @selection-change="handleSelectionChange">
       <el-table-column label="会员ID" align="center" prop="account">
         <template v-slot="{row}">
-          <a @click="" style="color: #00afff" v-if="row.platformId==10000||row.platformId==80000">{{ row.account }}</a>
-          <div v-else>{{ row.account }}</div>
+          <a  @click="lotteryBetData(row)" style="color: #00afff" v-if="row.agent==10000">{{row.account}}</a>
+          <a  @click="lotteryBetData(row)" style="color: #f38010" v-else-if="row.agent==80000">{{row.account}}</a>
+          <div v-else>{{row.account}}</div>
         </template>
       </el-table-column>
-      <!--      <el-table-column label="本地ID" align="center" prop="id" />-->
-      <!--      <el-table-column label="游戏局号" align="center" prop="gameId" />-->
-      <el-table-column label="平台ID" align="center" prop="agent"/>
+      <el-table-column label="子平台ID" align="center" prop="agent"/>
       <el-table-column label="平台名称" align="center" prop="platformName"/>
       <el-table-column label="子平台名称" align="center" prop="sonPlatformName"/>
       <!--      <el-table-column label="游戏id" align="center" prop="kindId" />-->
-      <el-table-column label="有效下注" align="center" prop="cellScore"/>
-      <el-table-column label="总下注" align="center" prop="allBet"/>
+      <el-table-column label="有效下注" align="center" prop="cell_score"/>
+      <el-table-column label="总下注" align="center" prop="all_bet"/>
       <el-table-column label="盈利" align="center" prop="profit"/>
       <el-table-column label="抽水" align="center" prop="revenue"/>
       <!--      <el-table-column label="本地平台id" align="center" prop="platformId" />-->
       <!--      <el-table-column label="游戏平台类型" align="center" prop="platformType" />-->
       <!--      <el-table-column label="洗码状态" align="center" prop="status" :formatter="formatterStatus"/>-->
-      <el-table-column label="游戏开始时间" align="center" width="150px" prop="gameStartTime"/>
-      <el-table-column label="游戏结束时间" align="center" width="150px" prop="gameEndTime"/>
+      <el-table-column label="游戏开始时间" align="center" width="150px" prop="game_start_time"/>
+      <el-table-column label="游戏结束时间" align="center" width="150px" prop="game_end_time"/>
     </el-table>
 
     <pagination
@@ -141,6 +140,13 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+<!--会员注单数据详情-->
+    <el-dialog v-dialogDrag title="注单数据详情" :visible.sync="openBetData" width="450px" append-to-body>
+      <el-table :stripe="true" v-loading="loading" :data="betData" @selection-change="handleSelectionChange">
+        <el-table-column label="项目名称" align="center" width="120px" prop="label"/>
+        <el-table-column label="项目值" align="center" prop="value"/>
+      </el-table>
+    </el-dialog>
   </div>
 </template>
 
@@ -152,7 +158,7 @@ import {
   addMemberGameData,
   updateMemberGameData,
   exportMemberGameData,
-  getCount
+  getCount,getLotteryBetData
 } from '@/api/platform-web/member/memberGameData'
 
 export default {
@@ -178,6 +184,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
+      openBetData:false,
+      betData: [],
       // 会员注单数据表格数据
       memberGameDataList: [],
       // 弹出层标题
@@ -358,7 +366,51 @@ export default {
       }).then(response => {
         this.download(response.msg)
       })
-    }
+    },
+    lotteryBetData(row) {
+
+      this.openBetData = true
+      const agent = row.agent;
+      const gameId=row.gameId;
+      this.reset();
+      getLotteryBetData(agent,gameId).then(response => {
+        debugger;
+        this.betData = [];
+        var data = response.data;
+        var item = {}; var item2 = {}; var item3 = {}; var item4= {};
+        var item5 = {}; var item6 = {}; var item7 = {}; var item8 = {};
+        item.label = '会员平台ID';
+        item.value = data.userid;
+        this.betData.push(item);
+        item2.label="期数";
+        item2.value=data.issue;
+        this.betData.push(item2);
+        item3.label="彩票金额";
+        item3.value=data.bet_amount;
+        this.betData.push(item3);
+        item4.label="金额";
+        if (data.prize>0){
+          item4.value=data.prize+"  已中奖";
+        }else {
+          item4.value=data.prize+"  未中奖";
+        }
+        this.betData.push(item4);
+        item5.label="彩票名称";
+        item5.value=data.son_platform_name;
+        this.betData.push(item5);
+        item6.label="下注时间";
+        item6.value=data.bet_time;
+        this.betData.push(item6);
+        item7.label="彩票码";
+        item7.value=data.code;
+        this.betData.push(item7);
+        item8.label="下注内容";
+        item8.value=data.bet_select;
+        this.betData.push(item8);
+        this.openBetData = true;
+        this.title = '注单数据'
+      })
+    },
   }
 }
 </script>

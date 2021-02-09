@@ -71,6 +71,24 @@
       <el-table-column label="积分" align="center" prop="score"/>
       <el-table-column label="家族等级" align="center" prop="liveLevel"/>
       <el-table-column label="家族推荐号" align="center" prop="familyRecom"/>
+      <el-table-column label="操作" align="center" width="150px" class-name="small-padding fixed-width">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            v-if="scope.row.status ==0"
+            @click="handleUpdate(scope.row,1)"
+          >通过</el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            v-if="scope.row.status ==0"
+            @click="handleUpdate(scope.row,0)"
+          >不通过</el-button>
+        </template>
+      </el-table-column>
     </el-table>
 
     <pagination
@@ -283,14 +301,34 @@ export default {
       this.title = "添加家族";
     },
     /** 修改按钮操作 */
-    handleUpdate(row) {
-      this.reset();
-      const id = row.id || this.ids
-      getLiveFamily(id).then(response => {
-        this.form = response.data;
-        this.open = true;
-        this.title = "修改家族";
-      });
+    handleUpdate(row,flag) {
+      var data={};
+      data.id=row.id;
+      if(flag==1){
+        data.status=1;
+        this.$confirm('是否确认通过审核家族名称"' + row.name + '"的数据项?', "警告", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(function () {
+          return updateLiveFamily(data);
+        }).then(() => {
+          this.getList();
+          this.msgSuccess("审核通过");
+        })
+      }else{
+        data.status=2;
+        this.$confirm('是否确认拒绝家族名称"' + row.name + '"的数据项?', "警告", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(function () {
+          return updateLiveFamily(data);
+        }).then(() => {
+          this.getList();
+          this.msgSuccess("审核拒绝成功");
+        })
+      }
     },
     /** 提交按钮 */
     submitForm() {

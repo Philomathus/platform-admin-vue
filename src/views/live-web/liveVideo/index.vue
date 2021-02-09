@@ -120,6 +120,7 @@
     </el-dialog>
     <pagination
       v-show="total>0"
+      :page-sizes="[50,100,200,500]"
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
@@ -175,7 +176,7 @@ export default {
       // 查询参数
       queryParams: {
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 50,
         hostName: null,
         paiId: null,
         types: []

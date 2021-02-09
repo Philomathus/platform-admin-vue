@@ -48,7 +48,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="liveVideoList" @selection-change="handleSelectionChange">
+    <el-table stripe v-loading="loading" :data="liveVideoList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="主播id" min-width="120" align="center" prop="id"/>
       <el-table-column label="主播昵称" min-width="120" align="center" prop="hostName"/>
@@ -75,7 +75,7 @@
           <span>{{ parseTime(scope.row.beginTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" min-width="120" align="center" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column label="操作" min-width="150" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="mini"

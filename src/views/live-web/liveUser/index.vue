@@ -68,7 +68,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="liveUserList" @selection-change="handleSelectionChange">
+    <el-table stripe v-loading="loading" :data="liveUserList">
 <!--      <el-table-column type="selection" width="55" align="center"/>-->
       <el-table-column label="主播ID" min-width="120" align="center" prop="id"/>
       <el-table-column label="主播昵称" min-width="140" :show-overflow-tooltip="true" align="center" prop="nickName"/>
@@ -104,7 +104,7 @@
         </template>
       </el-table-column>
       <el-table-column label="累计观看" min-width="120" align="center" prop="viewCount"/>
-      <el-table-column label="登陆IP" min-width="120" align="center" prop="loginIp"/>
+      <el-table-column label="登陆IP" min-width="120" :show-overflow-tooltip="true" align="center" prop="loginIp"/>
       <el-table-column label="禁播备注" min-width="150" align="center" prop="banRemark"/>
       <el-table-column label="操作" min-width="120" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
@@ -130,6 +130,7 @@
     <pagination
       v-show="total>0"
       :total="total"
+      :page-sizes="[20,50,100]"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
@@ -698,7 +699,7 @@ export default {
       // 查询参数
       queryParams: {
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 20,
         id: null,
         nickName: null,
         userPwd: null,

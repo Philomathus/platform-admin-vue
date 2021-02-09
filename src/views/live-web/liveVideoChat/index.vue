@@ -112,7 +112,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="liveVideoChatList" @selection-change="handleSelectionChange">
+    <el-table stripe v-loading="loading" :data="liveVideoChatList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="平台会员ID" align="center" prop="id" />
       <el-table-column label="主播ID" align="center" prop="poscatId" />

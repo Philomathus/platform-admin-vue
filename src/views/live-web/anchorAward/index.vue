@@ -34,8 +34,7 @@
     </el-form>
 
 
-    <el-table v-loading="loading" :data="liveUserList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center"/>
+    <el-table stripe v-loading="loading" :data="liveUserList" @selection-change="handleSelectionChange">
       <el-table-column label="主播ID" align="center" prop="id"/>
       <el-table-column label="主播昵称" align="center" prop="nickName"/>
       <el-table-column label="投注" align="center" prop="cost"/>

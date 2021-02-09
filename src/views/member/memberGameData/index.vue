@@ -63,21 +63,19 @@
           <div v-else>{{ row.account }}</div>
         </template>
       </el-table-column>
-      <!--      <el-table-column label="本地ID" align="center" prop="id" />-->
-      <!--      <el-table-column label="游戏局号" align="center" prop="gameId" />-->
       <el-table-column label="平台ID" align="center" prop="agent"/>
       <el-table-column label="平台名称" align="center" prop="platformName"/>
       <el-table-column label="子平台名称" align="center" prop="sonPlatformName"/>
       <!--      <el-table-column label="游戏id" align="center" prop="kindId" />-->
-      <el-table-column label="有效下注" align="center" prop="cellScore"/>
-      <el-table-column label="总下注" align="center" prop="allBet"/>
+      <el-table-column label="有效下注" align="center" prop="cell_score"/>
+      <el-table-column label="总下注" align="center" prop="all_bet"/>
       <el-table-column label="盈利" align="center" prop="profit"/>
       <el-table-column label="抽水" align="center" prop="revenue"/>
       <!--      <el-table-column label="本地平台id" align="center" prop="platformId" />-->
       <!--      <el-table-column label="游戏平台类型" align="center" prop="platformType" />-->
       <!--      <el-table-column label="洗码状态" align="center" prop="status" :formatter="formatterStatus"/>-->
-      <el-table-column label="游戏开始时间" align="center" width="150px" prop="gameStartTime"/>
-      <el-table-column label="游戏结束时间" align="center" width="150px" prop="gameEndTime"/>
+      <el-table-column label="游戏开始时间" align="center" width="150px" prop="game_start_time"/>
+      <el-table-column label="游戏结束时间" align="center" width="150px" prop="game_end_time"/>
     </el-table>
 
     <pagination

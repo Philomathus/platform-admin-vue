@@ -51,7 +51,7 @@
       <el-table-column label="出款金额（首充）" min-width="130" align="center" prop="chukuanjine"/>
       <el-table-column label="人/笔/金额（出款日总）" min-width="170" align="center" prop="totalChukuanjine"/>
       <el-table-column label="送礼次数/金额" min-width="120" align="center" prop="totalGiveprop"/>
-      <el-table-column label="直播间次数/活跃安卓/活跃苹果" min-width="200" align="center" prop="ios" :formatter="ios" fixed="right"/>
+      <el-table-column label="直播间次数/活跃安卓/活跃苹果" min-width="210" align="center" prop="ios" :formatter="ios" fixed="right"/>
     </el-table>
 
     <pagination

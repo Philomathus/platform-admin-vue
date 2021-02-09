@@ -41,7 +41,7 @@
       <el-table-column label="入款总金额" min-width="90" align="center" prop="totalRukuanjine"/>
       <el-table-column label="出款总金额" min-width="90" align="center" prop="totalChukuanjine"/>
       <el-table-column label="合计" align="center" prop="totalChukuanjineMath" fixed="right"
-                       :formatter="totalChukuanjineMath"
+                       :formatter="totalChukuanjineMath" min-width="130"
       />
     </el-table>
 

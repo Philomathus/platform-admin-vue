@@ -38,20 +38,20 @@
       <el-table-column label="预估会员剩余积分" min-width="130" align="center" prop="totalAccount"/>
       <el-table-column label="每日平台盈利" min-width="100" align="center" prop="totalProfile"/>
       <el-table-column label="每日送礼金额" min-width="100" align="center" prop="totalGiveprop"/>
-      <el-table-column label="合计偏差" align="center" prop="totalLast"/>
+      <el-table-column label="合计偏差" align="center" min-width="100" prop="totalLast"/>
       <el-table-column label="入款总金额" min-width="90" align="center" prop="totalRukuanjine"/>
       <el-table-column label="出款总金额" min-width="90" align="center" prop="totalChukuanjine"/>
       <el-table-column label="合计" align="center" prop="totalChukuanjineMath" fixed="right"
                        :formatter="totalChukuanjineMath"/>
     </el-table>
 
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
+<!--    <pagination-->
+<!--      v-show="total>0"-->
+<!--      :total="total"-->
+<!--      :page.sync="queryParams.pageNum"-->
+<!--      :limit.sync="queryParams.pageSize"-->
+<!--      @pagination="getList"-->
+<!--    />-->
 
 
   </div>
@@ -92,8 +92,6 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
-        pageNum: 1,
-        pageSize: 10,
         reptime: null
       },
       // 表单参数

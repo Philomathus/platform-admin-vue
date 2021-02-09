@@ -23,7 +23,7 @@
     </el-form>
 
     <el-table v-loading="loading"
-              :data="list.slice((pageNum-1)*pageSize,pageNum*pageSize)"
+              :data="list"
               style="width: 100%;"
               :stripe="true">
       <el-table-column label="平台编号" align="center" prop="gameagent" :show-overflow-tooltip="true"/>
@@ -37,7 +37,7 @@
       <el-table-column label="比例" align="center" prop="bili"/>
       <el-table-column label="日期" align="center" prop="begindate"/>
     </el-table>
-    <pagination v-show="total>0" :total="total" :page.sync="pageNum" :limit.sync="pageSize"/>
+<!--    <pagination v-show="total>0" :total="total" :page.sync="pageNum" :limit.sync="pageSize"/>-->
   </div>
 </template>
 
@@ -58,8 +58,6 @@ export default {
       // 表格数据
       list: [],
       data: {},
-      pageNum: 1,
-      pageSize: 20,
       // 查询参数
       queryParams: {
         begindate: undefined,

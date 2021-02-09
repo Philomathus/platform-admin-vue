@@ -54,13 +54,13 @@
       <el-table-column label="直播间次数/活跃安卓/活跃苹果" min-width="200" align="center" prop="ios" :formatter="ios" fixed="right"/>
     </el-table>
 
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
+<!--    <pagination-->
+<!--      v-show="total>0"-->
+<!--      :total="total"-->
+<!--      :page.sync="queryParams.pageNum"-->
+<!--      :limit.sync="queryParams.pageSize"-->
+<!--      @pagination="getList"-->
+<!--    />-->
   </div>
 </template>
 
@@ -97,8 +97,6 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
-        pageNum: 1,
-        pageSize: 10,
         reptime: null
       },
       // 表单参数

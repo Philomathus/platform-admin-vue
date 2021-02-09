@@ -24,21 +24,16 @@
     </el-form>
     <el-table
       v-loading="loading"
-      :data="list.slice((pageNum-1)*pageSize,pageNum*pageSize)"
+      :data="list"
       style="width: 100%;"
       :stripe="true"
     >
-      <el-table-column label="序号" type="index" align="center">
-        <template slot-scope="scope">
-          <span>{{ (pageNum - 1) * pageSize + scope.$index + 1 }}</span>
-        </template>
-      </el-table-column>
       <el-table-column label="名称" align="center" prop="classTwoname" :show-overflow-tooltip="true"/>
       <el-table-column label="金额" align="center" prop="tValue" :show-overflow-tooltip="true"/>
       <el-table-column label="类型" align="center" prop="type"/>
       <el-table-column label="时间" align="center" prop="reporttime" width="180"/>
     </el-table>
-    <pagination v-show="total>0" :total="total" :page.sync="pageNum" :limit.sync="pageSize"/>
+<!--    <pagination v-show="total>0" :total="total" :page.sync="pageNum" :limit.sync="pageSize"/>-->
   </div>
 </template>
 
@@ -56,8 +51,6 @@ export default {
       total: 0,
       // 表格数据
       list: [],
-      pageNum: 1,
-      pageSize: 20,
       // 查询参数
       queryParams: {
         reporttime: undefined,

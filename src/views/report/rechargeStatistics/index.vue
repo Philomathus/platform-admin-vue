@@ -177,7 +177,8 @@ export default {
     },
     totalChukuanjineMath(rows, column) {
       return (rows.totalRukuanjine - rows.totalChukuanjine).toFixed(2)
-    },   handleExport() {
+    },
+    handleExport() {
       const queryParams = this.queryParams
       this.$confirm('是否确认导出所有列表数据项?', '警告', {
         confirmButtonText: '确定',

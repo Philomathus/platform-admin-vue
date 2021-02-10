@@ -43,7 +43,12 @@
               :stripe="true"
     >
       <el-table-column label="平台编号" align="center" prop="gameagent" :show-overflow-tooltip="true"/>
-      <el-table-column label="名称-详情" align="center" prop="gameplame" :show-overflow-tooltip="true"/>
+      <el-table-column label="名称-详情" align="center" prop="gameplame"/>
+      <el-table-column label="名称-详情" align="center" prop="gameplame">
+      <template slot-scope="scope">
+        <a style="color: #00afff" @click="jump(scope.row.begindate,scope.row.gameplame)">{{scope.row.gameplame}}</a>
+      </template>
+      </el-table-column>
       <el-table-column label="投注人数" align="center" prop="gamepepole"/>
       <el-table-column label="投注比数" align="center" prop="gametouzhu"/>
       <el-table-column label="总投注金额" align="center" prop="gamecell"/>
@@ -53,7 +58,7 @@
       <el-table-column label="比例" align="center" prop="bili"/>
       <el-table-column label="日期" align="center" prop="begindate"/>
     </el-table>
-<!--    <pagination v-show="total>0" :total="total" :page.sync="pageNum" :limit.sync="pageSize"/>-->
+    <!--    <pagination v-show="total>0" :total="total" :page.sync="pageNum" :limit.sync="pageSize"/>-->
   </div>
 </template>
 
@@ -79,11 +84,19 @@ export default {
       // 查询参数
       queryParams: {
         begindate: this.parseTime(getYesterDate(), '{y}-{m}-{d}'),
-        gameplame: undefined
+        gameplame: null
       }
     }
   },
   created() {
+    var begindate = this.$route.query.begindate;
+    var gameplame = this.$route.query.gameplame;
+    if(gameplame!=null) {
+      this.queryParams.gameplame = gameplame
+    }
+    if(begindate!=null) {
+       this.queryParams.begindate = begindate
+    }
     this.getliststorage()
     this.getList()
     this.count()
@@ -109,6 +122,9 @@ export default {
     },
     copy2() {
       this.copyCommand(this.data.countBetPeople)
+    },
+    jump(begindate,gameplame){
+      this.$router.push({path: '/report/gameBet',query: { begindate: begindate, gameplame:gameplame}})
     },
     //统计
     count() {

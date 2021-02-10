@@ -326,6 +326,7 @@ export default {
           }else{
             this.form.animType="";
           }
+          this.form.score=0;
           if (this.form.id != null) {
             updateLiveProp(this.form).then(response => {
               this.msgSuccess("修改成功");

@@ -199,7 +199,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="编码" prop="envCode">
+              <el-form-item label="编码" prop="envCode" v-if="form.menuType == 'C'">
                 <el-input v-model="form.envCode" placeholder="请输入编码"/>
               </el-form-item>
             </el-col>
@@ -320,7 +320,7 @@
       this.getList(1);
       //获取对应页面的列表
       this.getDicts("config_environment_group").then(response => {
-        this.tabList = response.data;
+        this.tabList = response.data.sort((v1,v2)=>{ return v1.dictSort-v2.dictSort });
         //通过tabList的对应的类型的groupId来查询对应的类型
         this.getList();
       });
@@ -345,8 +345,14 @@
       getList(type) {
         this.loading = true;
         var that = this;
+        var tabItem = {}
+        this.tabList.forEach((item, index, array) => {
+          if (item.dictValue == this.activeName) {
+            tabItem = item;
+          }
+        });
         if (!type) {
-          var dictValue = this.tabList[parseInt(this.activeName) - 1].dictValue;
+          var dictValue = tabItem.dictValue;
           this.queryParams.envGroup = dictValue
         }
         listConfigEnvironment(this.queryParams).then(response => {

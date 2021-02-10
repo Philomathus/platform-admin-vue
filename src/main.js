@@ -4,7 +4,7 @@ import Cookies from 'js-cookie'
 
 import Element from 'element-ui'
 import './assets/styles/element-variables.scss'
-
+import '@/js/html.js'
 import '@/assets/styles/index.scss' // global css
 import '@/assets/styles/common.scss' // common css
 import App from './App'

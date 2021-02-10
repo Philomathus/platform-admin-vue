@@ -146,9 +146,9 @@
             <el-radio label="2">大型动画礼物</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="大型道具类型">
-          <el-input v-model="form.animType" placeholder="请输入大型道具类型" />
-        </el-form-item>
+<!--        <el-form-item label="大型道具类型">-->
+<!--          <el-input v-model="form.animType" placeholder="请输入大型道具类型" />-->
+<!--        </el-form-item>-->
         <el-form-item label="svga动画" prop="animatedUrl">
           <fileUpload v-model="form.animatedUrl" path="give"/>
         </el-form-item>
@@ -321,6 +321,11 @@ export default {
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
+          if(this.form.isAnimated==2){
+            this.form.animType="svga";
+          }else{
+            this.form.animType="";
+          }
           if (this.form.id != null) {
             updateLiveProp(this.form).then(response => {
               this.msgSuccess("修改成功");

@@ -184,7 +184,7 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
-        selectDate: null,
+        selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
         familyName: null,
         familyNickName: null,
         settlementRate: 0.7,

@@ -185,11 +185,9 @@ export default {
         }
       }).catch(() => {
         this.$notify.error('网络异常')
-      }).finally(
-        () => {
-          this.loading = false
-        }
-      )
+      }).finally(() => {
+        this.loading = false
+      })
     },
     //银行卡类型格式化
     formatterBankType(row, column) {

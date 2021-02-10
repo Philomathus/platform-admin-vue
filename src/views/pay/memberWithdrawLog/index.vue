@@ -5,10 +5,6 @@
     <el-button type="info" @click="copy3">成功率 {{ numberUtil.toPercent(this.totalData.successRate) }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px" style="margin-top: 20px">
       <el-form-item label="修改日期" prop="searchTime">
-        <!--        <el-date-picker type="datetimerange" v-model="queryParams.searchTime" format="yyyy-MM-dd "
-                                value-format="yyyy-MM-dd" :style="{width: '100%'}" start-placeholder="开始时间"
-                                end-placeholder="结束时间" range-separator="至" :picker-options="pickerOptions"
-                ></el-date-picker>-->
         <el-date-picker
           v-model="queryParams.searchTime"
           size="small"

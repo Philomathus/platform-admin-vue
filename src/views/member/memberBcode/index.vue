@@ -1,90 +1,38 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="100px">
-      <el-button type="primary">总充值 {{this.totalData.total.toFixed(2)}}</el-button>
-      <el-button type="success">总打码 {{this.totalData.cur.toFixed(2)}}</el-button>
-      <el-button type="warning">还需打码 {{(this.totalData.total-this.totalData.cur).toFixed(2)}}</el-button>
-      <el-form-item label="会员账号ID" prop="userId">
+    <el-button type="primary">总充值 {{ this.totalData.total.toFixed(2) }}</el-button>
+    <el-button type="success">总打码 {{ this.totalData.cur.toFixed(2) }}</el-button>
+    <el-button type="warning">还需打码 {{ (this.totalData.total - this.totalData.cur).toFixed(2) }}</el-button>
+    <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" v-show="showSearch" label-width="100px">
+      <el-form-item label="日期范围" prop="selectDate">
+        <el-date-picker
+          type="daterange"
+          v-model="queryParams.selectDate"
+          format="yyyy-MM-dd"
+          value-format="yyyy-MM-dd"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          range-separator="至"
+          clearable
+          :picker-options="pickerOptions"
+        />
+      </el-form-item>
+      <el-form-item prop="userId">
         <el-input
           v-model="queryParams.userId"
-          placeholder="请输入会员账号ID"
+          placeholder="会员ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-<!--      <el-form-item label="描述" prop="des">
-        <el-input
-          v-model="queryParams.des"
-          placeholder="请输入描述"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="收入" prop="income">
-        <el-input
-          v-model="queryParams.income"
-          placeholder="请输入收入"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="0=未打码 1=已打码" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择0=未打码 1=已打码" clearable size="small">
-          <el-option label="请选择字典生成" value="" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="当前打码量" prop="cur">
-        <el-input
-          v-model="queryParams.cur"
-          placeholder="请输入当前打码量"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>-->
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="getTotalData">刷新统计</el-button>
       </el-form-item>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
-<!--      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['member:memberBcode:add']"
-        >新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['member:memberBcode:edit']"
-        >修改</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['member:memberBcode:remove']"
-        >删除</el-button>
-      </el-col>-->
       <el-col :span="1.5">
         <el-button
           type="warning"
@@ -93,37 +41,19 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['member:memberBcode:export']"
-        >导出</el-button>
+        >导出
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="memberBcodeList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-<!--      <el-table-column label="系统编号" align="center" prop="id" />-->
-      <el-table-column label="会员账号ID" align="center" prop="userId" />
-      <el-table-column label="描述" align="center" prop="des" />
-      <el-table-column label="收入" align="center" prop="income" />
-      <el-table-column label="打码状态" align="center" prop="status" :formatter="formatterStatus"/>
-      <el-table-column label="当前打码量" align="center" prop="cur" />
-   <!--   <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['member:memberBcode:edit']"
-          >修改</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['member:memberBcode:remove']"
-          >删除</el-button>
-        </template>
-      </el-table-column>-->
+    <el-table v-loading="loading" :data="memberBcodeList">
+      <el-table-column label="会员ID" align="center" prop="userId"/>
+      <el-table-column label="收入" align="center" prop="income"/>
+      <el-table-column label="描述" align="center" prop="des"/>
+      <el-table-column label="是否打码" align="center" prop="status" :formatter="formatterStatus"/>
+      <el-table-column label="当前打码量" align="center" prop="cur"/>
+      <el-table-column label="创建时间" align="center" prop="createTime" min-width="160"/>
     </el-table>
 
     <pagination
@@ -135,48 +65,25 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改会员打码数据对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="会员账号ID" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入会员账号ID" />
-        </el-form-item>
-        <el-form-item label="描述" prop="des">
-          <el-input v-model="form.des" placeholder="请输入描述" />
-        </el-form-item>
-        <el-form-item label="收入" prop="income">
-          <el-input v-model="form.income" placeholder="请输入收入" />
-        </el-form-item>
-        <el-form-item label="0=未打码 1=已打码">
-          <el-radio-group v-model="form.status">
-            <el-radio label="1">请选择字典生成</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="当前打码量" prop="cur">
-          <el-input v-model="form.cur" placeholder="请输入当前打码量" />
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
 <script>
-import { listMemberBcode, getMemberBcode, delMemberBcode, addMemberBcode, updateMemberBcode, exportMemberBcode, getTotalData } from "@/api/platform-web/member/memberBcode";
+import {
+  listMemberBcode,
+  exportMemberBcode,
+  getTotalData
+} from '@/api/platform-web/member/memberBcode'
+import { pickerDateShortcuts } from '@/utils/dateUtils'
 
 export default {
-  name: "MemberBcode",
-  components: {
-  },
+  name: 'MemberBcode',
+  components: {},
   data() {
     return {
+      pickerOptions: { shortcuts: pickerDateShortcuts },
       //顶部的三个总数据
-      totalData: {
-
-      },
+      totalData: {},
       // 遮罩层
       loading: true,
       // 选中数组
@@ -192,7 +99,7 @@ export default {
       // 会员打码数据表格数据
       memberBcodeList: [],
       // 弹出层标题
-      title: "",
+      title: '',
       // 是否显示弹出层
       open: false,
       // 查询参数
@@ -200,55 +107,51 @@ export default {
         pageNum: 1,
         pageSize: 20,
         userId: null,
-        des: null,
-        income: null,
-        status: null,
-        cur: null,
+        selectDate: [this.parseTime(new Date), this.parseTime(new Date)],
         orderByColumn: 'create_time',
-        isAsc: 'desc',
+        isAsc: 'desc'
       },
       // 表单参数
       form: {},
       // 表单校验
-      rules: {
-      }
-    };
+      rules: {}
+    }
   },
   created() {
-    this.getList();
-    this.getTotalData();
+    this.getList()
+    this.getTotalData()
   },
   methods: {
-    getTotalData(){
+    getTotalData() {
       getTotalData({}).then((res) => {
-        this.totalData = res.data;
-            }).catch(() => {
-              this.$notify.error('网络异常')
-            });
+        this.totalData = res.data
+      }).catch(() => {
+        this.$notify.error('网络异常')
+      })
     },
     // 0:未洗码1已经洗码
-    formatterStatus(row){
+    formatterStatus(row) {
       if (row.status == 0) {
-        return '未打码';
-      }else if (row.status == 1){
-        return '已打码';
-      }else {
-        return '未知';
+        return '未打码'
+      } else if (row.status == 1) {
+        return '已打码'
+      } else {
+        return '未知'
       }
     },
     /** 查询会员打码数据列表 */
     getList() {
-      this.loading = true;
+      this.loading = true
       listMemberBcode(this.queryParams).then(response => {
-        this.memberBcodeList = response.rows;
-        this.total = response.total;
-        this.loading = false;
-      });
+        this.memberBcodeList = response.rows
+        this.total = response.total
+        this.loading = false
+      })
     },
     // 取消按钮
     cancel() {
-      this.open = false;
-      this.reset();
+      this.open = false
+      this.reset()
     },
     // 表单重置
     reset() {
@@ -260,88 +163,33 @@ export default {
         createTime: null,
         status: 0,
         cur: null
-      };
-      this.resetForm("form");
+      }
+      this.resetForm('form')
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNum = 1;
-      this.getList();
+      this.queryParams.pageNum = 1
+      this.getList()
+      this.getTotalData()
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.resetForm("queryForm");
-      this.handleQuery();
-    },
-    // 多选框选中数据
-    handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
-      this.multiple = !selection.length
-    },
-    /** 新增按钮操作 */
-    handleAdd() {
-      this.reset();
-      this.open = true;
-      this.title = "添加会员打码数据";
-    },
-    /** 修改按钮操作 */
-    handleUpdate(row) {
-      this.reset();
-      const id = row.id || this.ids
-      getMemberBcode(id).then(response => {
-        this.form = response.data;
-        this.open = true;
-        this.title = "修改会员打码数据";
-      });
-    },
-    /** 提交按钮 */
-    submitForm() {
-      this.$refs["form"].validate(valid => {
-        if (valid) {
-          if (this.form.id != null) {
-            updateMemberBcode(this.form).then(response => {
-              this.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
-            });
-          } else {
-            addMemberBcode(this.form).then(response => {
-              this.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
-            });
-          }
-        }
-      });
-    },
-    /** 删除按钮操作 */
-    handleDelete(row) {
-      const ids = row.id || this.ids;
-      this.$confirm('是否确认删除会员打码数据编号为"' + ids + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return delMemberBcode(ids);
-        }).then(() => {
-          this.getList();
-          this.msgSuccess("删除成功");
-        })
+      this.resetForm('queryForm')
+      this.handleQuery()
     },
     /** 导出按钮操作 */
     handleExport() {
-      const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有会员打码数据数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return exportMemberBcode(queryParams);
-        }).then(response => {
-          this.download(response.msg);
-        })
+      const queryParams = this.queryParams
+      this.$confirm('是否确认导出所有会员打码数据数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return exportMemberBcode(queryParams)
+      }).then(response => {
+        this.download(response.msg)
+      })
     }
   }
-};
+}
 </script>

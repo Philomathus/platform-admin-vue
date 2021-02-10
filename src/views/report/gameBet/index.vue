@@ -43,7 +43,6 @@
               :stripe="true"
     >
       <el-table-column label="平台编号" align="center" prop="gameagent" :show-overflow-tooltip="true"/>
-      <el-table-column label="名称-详情" align="center" prop="gameplame"/>
       <el-table-column label="名称-详情" align="center" prop="gameplame">
       <template slot-scope="scope">
         <a style="color: #00afff" @click="jump(scope.row.begindate,scope.row.gameplame)">{{scope.row.gameplame}}</a>

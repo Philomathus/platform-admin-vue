@@ -324,7 +324,7 @@ export default {
           if(this.form.isAnimated==2){
             this.form.animType="svga";
           }else{
-            this.form.animType="";
+            this.form.animType="svga";
           }
           this.form.score=0;
           if (this.form.id != null) {

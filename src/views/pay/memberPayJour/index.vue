@@ -77,32 +77,32 @@
     </el-row>
 
     <el-table :stripe="true" v-loading="loading" :data="memberPayJourList">
-      <el-table-column label="会员ID" min-width="120" align="center" prop="member_id"/>
-      <el-table-column label="会员账号" min-width="120" align="center" prop="user_name"/>
-      <el-table-column label="订单号" min-width="190" align="center" prop="order_no"/>
-      <el-table-column label="支付平台" min-width="120" align="center" prop="platform_name"/>
-      <el-table-column label="支付通道" min-width="150" align="center" prop="channel_name" :show-overflow-tooltip="true"/>
-      <el-table-column label="费率" min-width="80" align="center" prop="pay_rate_str"/>
-      <el-table-column label="成功率" min-width="80" align="center" prop="current_success_rate_str">
+      <el-table-column label="会员ID" min-width="120" align="center" prop="memberId"/>
+      <el-table-column label="会员账号" min-width="120" align="center" prop="userName"/>
+      <el-table-column label="订单号" min-width="190" align="center" prop="orderNo"/>
+      <el-table-column label="支付平台" min-width="120" align="center" prop="platformName"/>
+      <el-table-column label="支付通道" min-width="150" align="center" prop="channelName" :show-overflow-tooltip="true"/>
+      <el-table-column label="费率" min-width="80" align="center" prop="payRateStr"/>
+      <el-table-column label="成功率" min-width="80" align="center" prop="currentSuccessRate">
         <template v-slot="{row}">
-          <span style="color: #5fb878">{{ row.current_success_rate_str }}</span>
+          <span style="color: #5fb878">{{ row.currentSuccessRateStr }}</span>
         </template>
       </el-table-column>
       <el-table-column label="请求金额" min-width="80" align="center" prop="money"/>
-      <el-table-column label="实际金额" min-width="80" align="center" prop="sub_money"/>
+      <el-table-column label="实际金额" min-width="80" align="center" prop="subMoney"/>
       <el-table-column label="订单状态" min-width="80" align="center" prop="status">
         <template slot-scope="scope">
-          <span v-if="!scope.row.is_patch_order" :style="{color: (status = statusOptions[parseInt(scope.row.status) + 1]).color}">
+          <span v-if="!scope.row.isPatchOrder" :style="{color: (status = statusOptions[parseInt(scope.row.status) + 1]).color}">
             {{ status.dictLabel }}
           </span>
-          <span v-if="scope.row.is_patch_order" :style="{color: (status = statusOptions[3]).color}">
+          <span v-if="scope.row.isPatchOrder" :style="{color: (status = statusOptions[3]).color}">
             {{ status.dictLabel }}
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="订单时间" min-width="160" align="center" prop="pay_time"/>
-      <el-table-column label="更新时间" min-width="160" align="center" prop="update_time"/>
-      <el-table-column label="上游订单号" min-width="220" align="center" prop="trade_sn" :show-overflow-tooltip="true"/>
+      <el-table-column label="订单时间" min-width="160" align="center" prop="payTime"/>
+      <el-table-column label="更新时间" min-width="160" align="center" prop="updateTime"/>
+      <el-table-column label="上游订单号" min-width="220" align="center" prop="tradeSn" :show-overflow-tooltip="true"/>
       <el-table-column label="备注" min-width="180" align="center" prop="remark" :show-overflow-tooltip="true"/>
       <el-table-column label="操作" min-width="100" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
@@ -132,22 +132,22 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" title="人工补单" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="会员ID" prop="member_id">
-          <el-input v-model="form.member_id" readonly/>
+          <el-input v-model="form.memberId" readonly/>
         </el-form-item>
         <el-form-item label="会员账号" prop="user_name">
-          <el-input v-model="form.user_name" readonly/>
+          <el-input v-model="form.userName" readonly/>
         </el-form-item>
         <el-form-item label="订单编号" prop="order_no">
-          <el-input v-model="form.order_no" readonly/>
+          <el-input v-model="form.orderNo" readonly/>
         </el-form-item>
         <el-form-item label="支付平台" prop="platform_name">
-          <el-input v-model="form.platform_name" readonly/>
+          <el-input v-model="form.platformName" readonly/>
         </el-form-item>
         <el-form-item label="支付渠道" prop="channel_name">
-          <el-input v-model="form.channel_name" readonly/>
+          <el-input v-model="form.channelName" readonly/>
         </el-form-item>
         <el-form-item label="订单时间" prop="pay_time">
-          <el-input v-model="form.pay_time" readonly/>
+          <el-input v-model="form.payTime" readonly/>
         </el-form-item>
         <el-form-item label="支付状态" prop="status">
           <el-input v-model="form.statusStr" readonly/>
@@ -156,7 +156,7 @@
           <el-input v-model="form.money" readonly/>
         </el-form-item>
         <el-form-item label="实际到账金额" prop="sub_money">
-          <el-input v-model="form.sub_money" type="number" placeholder="请输入实际到账金额"/>
+          <el-input v-model="form.subMoney" type="number" placeholder="请输入实际到账金额"/>
         </el-form-item>
         <el-form-item label="google验证码" prop="googleAuthCode">
           <el-input v-model="form.googleAuthCode" type="number" placeholder="请输入google验证码"/>
@@ -219,8 +219,6 @@ export default {
         selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],//回调日期
         pageNum: 1,
         pageSize: 50,
-        orderByColumn: 'update_time',
-        isAsc: 'desc',
         searchValue: null,
         platformId: null,
         searchOrderNo: null,
@@ -230,7 +228,7 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        sub_money: [
+        subMoney: [
           { required: true, message: '实际到账金额不能为空', trigger: 'blur' }
         ],
         googleAuthCode: [
@@ -292,16 +290,16 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        member_id: null,
-        user_name: null,
-        order_no: null,
-        pay_time: null,
-        platform_name: null,
-        channel_name: null,
+        memberId: null,
+        userName: null,
+        orderNo: null,
+        payTime: null,
+        platformName: null,
+        channelName: null,
         statusStr: null,
         status: null,
         money: null,
-        sub_money: null,
+        subMoney: null,
         googleAuthCode: null
       }
       this.resetForm('form')
@@ -322,8 +320,8 @@ export default {
       this.$refs['form'].validate(valid => {
         if (valid) {
           patchOrderPayPlatformNew({
-            orderNo: this.form.order_no,
-            subMoney: this.form.sub_money,
+            orderNo: this.form.orderNo,
+            subMoney: this.form.subMoney,
             googleAuthCode: this.form.googleAuthCode
           }).then(response => {
             this.msgSuccess(response.msg)

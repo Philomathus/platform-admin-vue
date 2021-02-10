@@ -25,3 +25,10 @@ export function count(query) {
   })
 }
 
+export function exportReportPlamGames(query) {
+  return request({
+    url: url.platformWeb + '/admin/report-plam-games/export',
+    method: 'get',
+    params: query
+  })
+}

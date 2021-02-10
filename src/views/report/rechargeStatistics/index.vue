@@ -21,7 +21,20 @@
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
       </el-form-item>
     </el-form>
-
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button
+          type="warning"
+          plain
+          icon="el-icon-download"
+          size="mini"
+          @click="handleExport"
+          v-hasPermi="['web:report-moneyinfo:export']"
+        >导出
+        </el-button>
+      </el-col>
+      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+    </el-row>
     <el-table v-loading="loading" :stripe="true" :data="report" @selection-change="handleSelectionChange">
       <el-table-column label="报表时间" align="center" prop="reptime" min-width="120"  fixed="left"/>
       <el-table-column label="入款总人数" min-width="90" align="center" prop="totalRukuanrenshu"/>
@@ -58,7 +71,7 @@
 </template>
 
 <script>
-import { listReport, count, liststorage } from '@/api/platform-web/report/rechargeStatistics'
+import { listReport, count, liststorage,exportReportMonwyInfo } from '@/api/platform-web/report/rechargeStatistics'
 import { get7beforeDay } from '@/utils/dateUtils'
 
 export default {
@@ -164,6 +177,17 @@ export default {
     },
     totalChukuanjineMath(rows, column) {
       return (rows.totalRukuanjine - rows.totalChukuanjine).toFixed(2)
+    },   handleExport() {
+      const queryParams = this.queryParams
+      this.$confirm('是否确认导出所有列表数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return exportReportMonwyInfo(queryParams)
+      }).then(response => {
+        this.download(response.msg)
+      })
     }
 
   }

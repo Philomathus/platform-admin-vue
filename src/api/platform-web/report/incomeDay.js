@@ -27,3 +27,10 @@ export function count(query) {
     params: query
   })
 }
+export function exportReportIncomeDay(query) {
+  return request({
+    url: url.platformWeb + '/admin/reportIncomeDay/export',
+    method: 'get',
+    params: query
+  })
+}

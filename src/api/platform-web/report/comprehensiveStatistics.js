@@ -20,4 +20,12 @@ export function list(query) {
   })
 }
 
+export function exportReportPlamCom(query) {
+  return request({
+    url: url.platformWeb + '/admin/report-plam-com/export',
+    method: 'get',
+    params: query
+  })
+}
+
 

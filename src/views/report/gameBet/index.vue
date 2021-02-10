@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-button type="primary" @click="copy1">总投注金额: {{ this.data.countBetMoney || 0 }}</el-button>
     <el-button type="success" @click="copy2">总投注人数: {{ this.data.countBetPeople || 0 }}</el-button>
-    <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" label-width="68px" v-show="showSearch">
       <el-form-item label="日期选择" prop="begindate">
         <el-date-picker v-model="queryParams.begindate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
                         :style="{width: '100%'}" placeholder="请选择日期选择" clearable
@@ -23,6 +23,20 @@
       </el-form-item>
     </el-form>
 
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button
+          type="warning"
+          plain
+          icon="el-icon-download"
+          size="mini"
+          @click="handleExport"
+          v-hasPermi="['admin:reportPlamGames:export']"
+        >导出
+        </el-button>
+      </el-col>
+      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+    </el-row>
     <el-table v-loading="loading"
               :data="list"
               style="width: 100%;"
@@ -44,7 +58,7 @@
 </template>
 
 <script>
-import { list, count, liststorage } from '@/api/platform-web/report/gameBet'
+import { list, count, liststorage,exportReportPlamGames } from '@/api/platform-web/report/gameBet'
 import { getYesterDate } from '@/utils/dateUtils'
 
 export default {
@@ -55,6 +69,8 @@ export default {
       loading: true,
       // 总条数
       total: 0,
+      // 显示搜索条件
+      showSearch: true,
       // countBetMoney:null,
       // countBetPeople:null,
       // 表格数据
@@ -116,6 +132,19 @@ export default {
     resetQuery() {
       this.resetForm('queryForm')
       this.handleQuery()
+    },
+    /** 导出按钮操作 */
+    handleExport() {
+      const queryParams = this.queryParams
+      this.$confirm('是否确认导出所有会员数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return exportReportPlamGames(queryParams)
+      }).then(response => {
+        this.download(response.msg)
+      })
     }
   }
 }

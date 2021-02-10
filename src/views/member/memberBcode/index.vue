@@ -47,7 +47,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="memberBcodeList">
+    <el-table stripe v-loading="loading" :data="memberBcodeList">
       <el-table-column label="会员ID" align="center" prop="userId"/>
       <el-table-column label="收入" align="center" prop="income"/>
       <el-table-column label="描述" align="center" prop="des"/>

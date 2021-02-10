@@ -56,25 +56,21 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="memberGameDataList" @selection-change="handleSelectionChange">
+    <el-table stripe v-loading="loading" :data="memberGameDataList">
       <el-table-column label="会员ID" align="center" prop="account">
         <template v-slot="{row}">
-          <a  @click="lotteryBetData(row)" style="color: #00afff" v-if="row.agent==10000">{{row.account}}</a>
-          <a  @click="lotteryBetData(row)" style="color: #f38010" v-else-if="row.agent==80000">{{row.account}}</a>
-          <div v-else>{{row.account}}</div>
+          <a @click="lotteryBetData(row)" style="color: #00afff" v-if="row.agent==10000">{{ row.account }}</a>
+          <a @click="lotteryBetData(row)" style="color: #f38010" v-else-if="row.agent==80000">{{ row.account }}</a>
+          <div v-else>{{ row.account }}</div>
         </template>
       </el-table-column>
       <el-table-column label="子平台ID" align="center" prop="agent"/>
       <el-table-column label="平台名称" align="center" prop="platformName"/>
       <el-table-column label="子平台名称" align="center" prop="sonPlatformName"/>
-      <!--      <el-table-column label="游戏id" align="center" prop="kindId" />-->
       <el-table-column label="有效下注" align="center" prop="cell_score"/>
       <el-table-column label="总下注" align="center" prop="all_bet"/>
       <el-table-column label="盈利" align="center" prop="profit"/>
       <el-table-column label="抽水" align="center" prop="revenue"/>
-      <!--      <el-table-column label="本地平台id" align="center" prop="platformId" />-->
-      <!--      <el-table-column label="游戏平台类型" align="center" prop="platformType" />-->
-      <!--      <el-table-column label="洗码状态" align="center" prop="status" :formatter="formatterStatus"/>-->
       <el-table-column label="游戏开始时间" align="center" width="150px" prop="game_start_time"/>
       <el-table-column label="游戏结束时间" align="center" width="150px" prop="game_end_time"/>
     </el-table>
@@ -88,59 +84,7 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改会员注单数据对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="游戏局号" prop="gameId">
-          <el-input v-model="form.gameId" placeholder="请输入游戏局号"/>
-        </el-form-item>
-        <el-form-item label="账号" prop="account">
-          <el-input v-model="form.account" placeholder="请输入账号"/>
-        </el-form-item>
-        <el-form-item label="游戏id" prop="kindId">
-          <el-input v-model="form.kindId" placeholder="请输入游戏id"/>
-        </el-form-item>
-        <el-form-item label="有效下注" prop="cellScore">
-          <el-input v-model="form.cellScore" placeholder="请输入有效下注"/>
-        </el-form-item>
-        <el-form-item label="总下注" prop="allBet">
-          <el-input v-model="form.allBet" placeholder="请输入总下注"/>
-        </el-form-item>
-        <el-form-item label="盈利" prop="profit">
-          <el-input v-model="form.profit" placeholder="请输入盈利"/>
-        </el-form-item>
-        <el-form-item label="抽水" prop="revenue">
-          <el-input v-model="form.revenue" placeholder="请输入抽水"/>
-        </el-form-item>
-        <el-form-item label="游戏结束时间" prop="gameEndTime">
-          <el-input v-model="form.gameEndTime" placeholder="请输入游戏结束时间"/>
-        </el-form-item>
-        <el-form-item label="本地平台id" prop="platformId">
-          <el-input v-model="form.platformId" placeholder="请输入本地平台id"/>
-        </el-form-item>
-        <el-form-item label="代理编号" prop="agent">
-          <el-input v-model="form.agent" placeholder="请输入代理编号"/>
-        </el-form-item>
-        <el-form-item label="游戏平台类型" prop="platformType">
-          <el-select v-model="form.platformType" placeholder="请选择游戏平台类型">
-            <el-option label="请选择字典生成" value=""/>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="0:未洗码1已经洗码">
-          <el-radio-group v-model="form.status">
-            <el-radio label="1">请选择字典生成</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="游戏开始时间" prop="gameStartTime">
-          <el-input v-model="form.gameStartTime" placeholder="请输入游戏开始时间"/>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
-      </div>
-    </el-dialog>
-<!--会员注单数据详情-->
+    <!--会员注单数据详情-->
     <el-dialog v-dialogDrag title="注单数据详情" :visible.sync="openBetData" width="450px" append-to-body>
       <el-table :stripe="true" v-loading="loading" :data="betData" @selection-change="handleSelectionChange">
         <el-table-column label="项目名称" align="center" width="120px" prop="label"/>
@@ -153,12 +97,8 @@
 <script>
 import {
   listMemberGameData,
-  getMemberGameData,
-  delMemberGameData,
-  addMemberGameData,
-  updateMemberGameData,
   exportMemberGameData,
-  getCount,getLotteryBetData
+  getCount, getLotteryBetData
 } from '@/api/platform-web/member/memberGameData'
 
 export default {
@@ -184,7 +124,7 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      openBetData:false,
+      openBetData: false,
       betData: [],
       // 会员注单数据表格数据
       memberGameDataList: [],
@@ -298,62 +238,6 @@ export default {
       this.resetForm('queryForm')
       this.handleQuery()
     },
-    // 多选框选中数据
-    handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
-      this.single = selection.length !== 1
-      this.multiple = !selection.length
-    },
-    /** 新增按钮操作 */
-    handleAdd() {
-      this.reset()
-      this.open = true
-      this.title = '添加会员注单数据'
-    },
-    /** 修改按钮操作 */
-    handleUpdate(row) {
-      this.reset()
-      const id = row.id || this.ids
-      getMemberGameData(id).then(response => {
-        this.form = response.data
-        this.open = true
-        this.title = '修改会员注单数据'
-      })
-    },
-    /** 提交按钮 */
-    submitForm() {
-      this.$refs['form'].validate(valid => {
-        if (valid) {
-          if (this.form.id != null) {
-            updateMemberGameData(this.form).then(response => {
-              this.msgSuccess('修改成功')
-              this.open = false
-              this.getList()
-            })
-          } else {
-            addMemberGameData(this.form).then(response => {
-              this.msgSuccess('新增成功')
-              this.open = false
-              this.getList()
-            })
-          }
-        }
-      })
-    },
-    /** 删除按钮操作 */
-    handleDelete(row) {
-      const ids = row.id || this.ids
-      this.$confirm('是否确认删除会员注单数据编号为"' + ids + '"的数据项?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(function() {
-        return delMemberGameData(ids)
-      }).then(() => {
-        this.getList()
-        this.msgSuccess('删除成功')
-      })
-    },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
@@ -370,47 +254,53 @@ export default {
     lotteryBetData(row) {
 
       this.openBetData = true
-      const agent = row.agent;
-      const gameId=row.gameId;
-      this.reset();
-      getLotteryBetData(agent,gameId).then(response => {
+      const agent = row.agent
+      const gameId = row.gameId
+      this.reset()
+      getLotteryBetData(agent, gameId).then(response => {
         debugger;
-        this.betData = [];
-        var data = response.data;
-        var item = {}; var item2 = {}; var item3 = {}; var item4= {};
-        var item5 = {}; var item6 = {}; var item7 = {}; var item8 = {};
-        item.label = '会员平台ID';
-        item.value = data.userid;
-        this.betData.push(item);
-        item2.label="期数";
-        item2.value=data.issue;
-        this.betData.push(item2);
-        item3.label="彩票金额";
-        item3.value=data.bet_amount;
-        this.betData.push(item3);
-        item4.label="金额";
-        if (data.prize>0){
-          item4.value=data.prize+"  已中奖";
-        }else {
-          item4.value=data.prize+"  未中奖";
+        this.betData = []
+        var data = response.data
+        var item = {}
+        var item2 = {}
+        var item3 = {}
+        var item4 = {}
+        var item5 = {}
+        var item6 = {}
+        var item7 = {}
+        var item8 = {}
+        item.label = '会员平台ID'
+        item.value = data.userid
+        this.betData.push(item)
+        item2.label = '期数'
+        item2.value = data.issue
+        this.betData.push(item2)
+        item3.label = '彩票金额'
+        item3.value = data.bet_amount
+        this.betData.push(item3)
+        item4.label = '金额'
+        if (data.prize > 0) {
+          item4.value = data.prize + '  已中奖'
+        } else {
+          item4.value = data.prize + '  未中奖'
         }
-        this.betData.push(item4);
-        item5.label="彩票名称";
-        item5.value=data.son_platform_name;
-        this.betData.push(item5);
-        item6.label="下注时间";
-        item6.value=data.bet_time;
-        this.betData.push(item6);
-        item7.label="彩票码";
-        item7.value=data.code;
-        this.betData.push(item7);
-        item8.label="下注内容";
-        item8.value=data.bet_select;
-        this.betData.push(item8);
-        this.openBetData = true;
+        this.betData.push(item4)
+        item5.label = '彩票名称'
+        item5.value = data.son_platform_name
+        this.betData.push(item5)
+        item6.label = '下注时间'
+        item6.value = data.bet_time
+        this.betData.push(item6)
+        item7.label = '彩票码'
+        item7.value = data.code
+        this.betData.push(item7)
+        item8.label = '下注内容'
+        item8.value = data.bet_select
+        this.betData.push(item8)
+        this.openBetData = true
         this.title = '注单数据'
       })
-    },
+    }
   }
 }
 </script>

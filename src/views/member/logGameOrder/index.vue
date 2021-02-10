@@ -49,7 +49,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="logGameOrderList">
+    <el-table stripe v-loading="loading" :data="logGameOrderList">
       <el-table-column label="会员ID" align="center" prop="memberId"/>
       <el-table-column label="会员账号" align="center" prop="userName"/>
       <el-table-column label="游戏平台" align="center" prop="platformName"/>

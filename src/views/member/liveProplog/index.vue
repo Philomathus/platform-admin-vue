@@ -44,7 +44,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="liveProplogList">
+    <el-table stripe v-loading="loading" :data="liveProplogList">
       <el-table-column label="会员ID" align="center" prop="pUserId" width="120"/>
       <el-table-column label="礼物名" align="center" prop="propName"/>
       <el-table-column label="礼物金额" align="center" prop="totalDiamonds"/>

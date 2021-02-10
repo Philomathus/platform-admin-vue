@@ -275,8 +275,8 @@ export default {
             });
           } else {
             addSystemIpWhite(this.form).then(response => {
-              if(response.data.code == 0){
-                this.msg(response.data.msg);
+              if(response.code == 0){
+                this.msgError(response.msg);
               }else {
                 this.msgSuccess("新增成功");
                 this.open = false;

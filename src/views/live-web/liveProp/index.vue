@@ -321,7 +321,11 @@ export default {
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          this.form.animType="svga";
+          // if(this.form.isAnimated==2){
+          //   this.form.animType="svga";
+          // }else{
+          //   this.form.animType="svga";
+          // }
           this.form.score=0;
           if (this.form.id != null) {
             updateLiveProp(this.form).then(response => {

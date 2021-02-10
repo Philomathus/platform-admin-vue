@@ -99,7 +99,7 @@ export default {
         pageNum: 1,
         pageSize: 20,
         searchValue: null,
-        selectDate: [this.parseTime(new Date), this.parseTime(new Date)],
+        selectDate: [this.parseTime(new Date,'{y}-{m}-{d}'), this.parseTime(new Date,'{y}-{m}-{d}')],
         orderByColumn: 'createtime',
         isAsc: 'desc'
       },

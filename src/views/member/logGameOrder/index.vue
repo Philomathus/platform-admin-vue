@@ -115,7 +115,7 @@ export default {
         searchValue: null,
         type: null,
         status: null,
-        selectDate: [this.parseTime(new Date), this.parseTime(new Date)]
+        selectDate: [this.parseTime(new Date,'{y}-{m}-{d}'), this.parseTime(new Date,'{y}-{m}-{d}')]
       },
       // 表单参数
       form: {},

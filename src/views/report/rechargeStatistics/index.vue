@@ -23,7 +23,7 @@
     </el-form>
 
     <el-table v-loading="loading" :stripe="true" :data="report" @selection-change="handleSelectionChange">
-      <el-table-column label="报表时间" align="center" prop="reptime" min-width="120"/>
+      <el-table-column label="报表时间" align="center" prop="reptime" min-width="120"  fixed="left"/>
       <el-table-column label="入款总人数" min-width="90" align="center" prop="totalRukuanrenshu"/>
       <el-table-column label="公司入款人数" min-width="100" align="center" prop="gsRukuanrenshu"/>
       <el-table-column label="公司入款金额" min-width="100" align="center" prop="gsRukuanjine"/>
@@ -38,8 +38,8 @@
       <el-table-column label="每日平台盈利" min-width="100" align="center" prop="totalProfile"/>
       <el-table-column label="每日送礼金额" min-width="100" align="center" prop="totalGiveprop"/>
       <el-table-column label="合计偏差" min-width="130" align="center" prop="totalLast"/>
-      <el-table-column label="入款总金额" min-width="90" align="center" prop="totalRukuanjine"/>
-      <el-table-column label="出款总金额" min-width="90" align="center" prop="totalChukuanjine"/>
+      <el-table-column label="入款总金额" min-width="90" align="center" prop="totalRukuanjine" fixed="right"/>
+      <el-table-column label="出款总金额" min-width="90" align="center" prop="totalChukuanjine"  fixed="right"/>
       <el-table-column label="合计" align="center" prop="totalChukuanjineMath" fixed="right"
                        :formatter="totalChukuanjineMath" min-width="130"
       />

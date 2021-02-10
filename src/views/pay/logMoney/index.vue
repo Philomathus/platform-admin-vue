@@ -27,7 +27,7 @@
         />
       </el-form-item>
 
-      <el-form-item label="创建时间" prop="createTime">
+<!--      <el-form-item label="创建时间" prop="createTime">
         <el-date-picker clearable size="small"
                         v-model="queryParams.createTime"
                         type="date"
@@ -35,6 +35,12 @@
                         placeholder="选择创建时间"
         >
         </el-date-picker>
+      </el-form-item>-->
+      <el-form-item label="创建时间" prop="selectDate" label-width="100px">
+        <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
+                        end-placeholder="结束时间" range-separator="至" clearable :picker-options="pickerOptions"
+        ></el-date-picker>
       </el-form-item>
       <el-form-item label="入款备注" prop="mark">
         <el-select v-model="queryParams.mark" placeholder="请选择入款备注" clearable size="small">
@@ -97,12 +103,14 @@
 <script>
 import { listLogMoney, exportLogMoney, totalCount } from '@/api/platform-web/pay/logMoney'
 import { allTradeType } from '@/api/platform-web/config/tradeType'
+import { pickerDateTimeShortcuts } from '@/utils/dateUtils'
 
 export default {
   name: 'LogMoney',
   components: {},
   data() {
     return {
+      pickerOptions: { shortcuts: pickerDateTimeShortcuts },
       //统计
       totalData: {},
       // 遮罩层
@@ -129,6 +137,7 @@ export default {
       typeOptions: [],
       // 查询参数
       queryParams: {
+        selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
         pageNum: 1,
         pageSize: 20,
         orderByColumn: 'create_time',
@@ -172,6 +181,7 @@ export default {
     /** 查询 会员资金信息列表 */
     getList() {
       this.loading = true
+      console.info(this.queryParams)
       listLogMoney(this.queryParams).then(response => {
         this.logMoneyList = response.rows
         this.total = response.total

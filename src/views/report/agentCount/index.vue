@@ -38,6 +38,21 @@
       </el-form-item>
     </el-form>
 
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button
+          type="warning"
+          plain
+          icon="el-icon-download"
+          size="mini"
+          @click="handleExport"
+          v-hasPermi="['admin:reportAgentcount:export']"
+        >导出
+        </el-button>
+      </el-col>
+      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+    </el-row>
+
     <el-table v-loading="loading" :data="report" :stripe="true">
       <el-table-column label="渠道编码" align="center" prop="agentcode"/>
       <el-table-column label="邀请账号" min-width="150" align="center" prop="agentname"/>
@@ -66,7 +81,7 @@
 </template>
 
 <script>
-import { listReport, liststorage } from '@/api/platform-web/report/agentCount'
+import { listReport, liststorage,exportReportAgentCount} from '@/api/platform-web/report/agentCount'
 import { getYesterDate } from '@/utils/dateUtils'
 
 export default {
@@ -152,6 +167,18 @@ export default {
     },
     ios(rows, column) {
       return rows.totalEnterlivetimes + '/' + rows.totalActiveandroid + '/' + rows.totalActiveios
+    },
+    handleExport() {
+      const queryParams = this.queryParams
+      this.$confirm('是否确认导出所有列表数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return exportReportAgentCount(queryParams)
+      }).then(response => {
+        this.download(response.msg)
+      })
     }
 
   }

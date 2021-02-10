@@ -24,3 +24,11 @@ export function count(query) {
   })
 }
 
+export function exportReportMonwyInfo(query) {
+  return request({
+    url: url.platformWeb + '/web/report-moneyinfo/export',
+    method: 'get',
+    params: query
+  })
+}
+

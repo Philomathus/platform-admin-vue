@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="68px" v-show="showSearch">
 
       <el-form-item label="日期选择" prop="reporttime">
         <el-date-picker v-model="queryParams.reporttime" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
@@ -21,8 +21,23 @@
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
-
     </el-form>
+
+
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button
+          type="warning"
+          plain
+          icon="el-icon-download"
+          size="mini"
+          @click="handleExport"
+          v-hasPermi="['admin:report-plam-com:export']"
+        >导出
+        </el-button>
+      </el-col>
+      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+    </el-row>
     <el-table
       v-loading="loading"
       :data="list"
@@ -39,7 +54,7 @@
 </template>
 
 <script>
-import { list, listStorage } from '@/api/platform-web/report/comprehensiveStatistics'
+import { list, listStorage,exportReportPlamCom } from '@/api/platform-web/report/comprehensiveStatistics'
 import { getYesterDate } from '@/utils/dateUtils'
 
 export default {
@@ -50,6 +65,8 @@ export default {
       loading: true,
       // 总条数
       total: 0,
+      // 显示搜索条件
+      showSearch: true,
       // 表格数据
       list: [],
       // 查询参数
@@ -91,6 +108,19 @@ export default {
     resetQuery() {
       this.resetForm('queryForm')
       this.handleQuery()
+    },
+    /** 导出按钮操作 */
+    handleExport() {
+      const queryParams = this.queryParams
+      this.$confirm('是否确认导出所有列表数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return exportReportPlamCom(queryParams)
+      }).then(response => {
+        this.download(response.msg)
+      })
     }
   }
 }

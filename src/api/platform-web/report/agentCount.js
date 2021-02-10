@@ -14,9 +14,12 @@ export function listReport(query) {
     method: 'get',
     params: query
   })
-
-
-
 }
-
+export function exportReportAgentCount(query) {
+  return request({
+    url: url.platformWeb + '/admin/reportAgentcount/export',
+    method: 'get',
+    params: query
+  })
+}
 

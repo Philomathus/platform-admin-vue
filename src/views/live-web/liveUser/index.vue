@@ -68,29 +68,29 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="liveUserList" @selection-change="handleSelectionChange">
+    <el-table stripe v-loading="loading" :data="liveUserList">
 <!--      <el-table-column type="selection" width="55" align="center"/>-->
-      <el-table-column label="主播ID" align="center" prop="id"/>
-      <el-table-column label="主播昵称" align="center" prop="nickName"/>
-      <el-table-column label="头像" align="center" prop="headImage">
-        <template slot-scope="scope">
-          <a :href="scope.row.headImage" target="_blank">
-            <el-image
-              style="width: 50px; height: 50px"
-              :src="scope.row.headImage"
-            >
-            </el-image>
-          </a>
-        </template>
+      <el-table-column label="主播ID" min-width="120" align="center" prop="id"/>
+      <el-table-column label="主播昵称" min-width="140" :show-overflow-tooltip="true" align="center" prop="nickName"/>
+<!--      <el-table-column label="头像" align="center" prop="headImage">-->
+<!--        <template slot-scope="scope">-->
+<!--          <a :href="scope.row.headImage" target="_blank">-->
+<!--            <el-image-->
+<!--              style="width: 50px; height: 50px"-->
+<!--              :src="scope.row.headImage"-->
+<!--            >-->
+<!--            </el-image>-->
+<!--          </a>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+      <el-table-column label="家族ID" min-width="120" align="center" prop="familyId">
       </el-table-column>
-      <el-table-column label="家族ID" align="center" prop="familyId">
-      </el-table-column>
-      <el-table-column label="已认证" align="center" prop="authenticationType"/>
-      <el-table-column label="印票" align="center" prop="ticket"/>
-      <el-table-column label="可用印票" align="center" prop="ticket"/>
-      <el-table-column label="粉丝" align="center" prop="fansCount"/>
-      <el-table-column label="等级" align="center" prop="userLevel"/>
-      <el-table-column label="禁播状态" align="center" prop="isBanStr" :formatter="formatterIsBan">
+      <el-table-column label="已认证" min-width="120" align="center" prop="authenticationType"/>
+      <el-table-column label="印票" min-width="120" align="center" prop="ticket"/>
+      <el-table-column label="可用印票" min-width="120" align="center" prop="ticket"/>
+      <el-table-column label="粉丝" min-width="120" align="center" prop="fansCount"/>
+      <el-table-column label="等级" min-width="120" align="center" prop="userLevel"/>
+      <el-table-column label="禁播状态" min-width="120" align="center" prop="isBanStr" :formatter="formatterIsBan">
         <template v-slot="{row}">
           <el-switch
             active-value="0"
@@ -103,10 +103,10 @@
           </el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="累计观看" align="center" prop="viewCount"/>
-      <el-table-column label="登陆IP" min-width="100" align="center" prop="loginIp"/>
-      <el-table-column label="禁播备注" align="center" prop="banRemark"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="累计观看" min-width="120" align="center" prop="viewCount"/>
+      <el-table-column label="登陆IP" min-width="120" :show-overflow-tooltip="true" align="center" prop="loginIp"/>
+      <el-table-column label="禁播备注" min-width="150" align="center" prop="banRemark"/>
+      <el-table-column label="操作" min-width="120" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -130,6 +130,7 @@
     <pagination
       v-show="total>0"
       :total="total"
+      :page-sizes="[20,50,100]"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
@@ -698,7 +699,7 @@ export default {
       // 查询参数
       queryParams: {
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 20,
         id: null,
         nickName: null,
         userPwd: null,

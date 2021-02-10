@@ -40,8 +40,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="reportAnchorhotDayList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center"/>
+    <el-table stripe v-loading="loading" :data="reportAnchorhotDayList">
 <!--      <el-table-column label="id" align="center" prop="repId"/>-->
       <el-table-column label="主播ID" align="center" prop="anchorid"/>
       <el-table-column label="主播昵称" align="center" prop="nickname"/>
@@ -60,6 +59,7 @@
     <pagination
       v-show="total>0"
       :total="total"
+      :page-sizes="[20,50,100]"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
@@ -116,7 +116,7 @@ export default {
         type: "0",
         reptime: new Date(),
         pageNum: 1,
-        pageSize: 10
+        pageSize: 20
       },
       // 表单参数
       form: {},

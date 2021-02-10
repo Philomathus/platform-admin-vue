@@ -39,39 +39,38 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="liveFamilyList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="ID" align="center" prop="id"/>
-<!--      <el-table-column label="家族LOGO" align="center" prop="logo"/>-->
-      <el-table-column label="图标" align="center" prop="logo">
+    <el-table stripe v-loading="loading" :data="liveFamilyList">
+      <el-table-column label="ID" min-width="120" align="center" prop="id"/>
+      <!--      <el-table-column label="家族LOGO" align="center" prop="logo"/>
+            <el-table-column label="图标" align="center" prop="logo">
+              <template slot-scope="scope">
+                <el-image
+                  style="width: 50px; height: 50px"
+                  :src="scope.row.logo"
+                >
+                </el-image>
+              </template>
+            </el-table-column>-->
+      <el-table-column label="家族名称" :show-overflow-tooltip="true" min-width="120" align="center" prop="name"/>
+      <el-table-column label="公告" :show-overflow-tooltip="true" min-width="120" align="center" prop="notice"/>
+      <el-table-column label="家族宣言" :show-overflow-tooltip="true" min-width="150" align="center" prop="manifesto"/>
+      <el-table-column label="族推荐号" min-width="120" align="center" prop="nickName"/>
+      <el-table-column label="家族长ID" min-width="120" align="center" prop="userId"/>
+      <el-table-column label="成员数量" min-width="120" align="center" prop="userCount"/>
+      <el-table-column label="创建时间" width="160" align="center" prop="createTimes">
         <template slot-scope="scope">
-          <el-image
-            style="width: 50px; height: 50px"
-            :src="scope.row.logo"
-          >
-          </el-image>
+          <span>{{ parseTime(scope.row.createTimes, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="家族名称" align="center" prop="name"/>
-      <el-table-column label="公告" align="center" prop="notice"/>
-      <el-table-column label="家族宣言" align="center" prop="manifesto"/>
-      <el-table-column label="族推荐号" align="center" prop="nickName"/>
-      <el-table-column label="家族长ID" align="center" prop="userId"/>
-      <el-table-column label="成员数量" align="center" prop="userCount"/>
-      <el-table-column label="日期" align="center" prop="createDate" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.createDate, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="备注" align="center" prop="memo"/>
-      <el-table-column label="状态" align="center" prop="status" :formatter="formatterStatus"/>
-      <el-table-column label="家族成员的贡献" align="center" prop="contribution"/>
-      <el-table-column label="家族等级" align="center" prop="familyLevel"/>
-      <el-table-column label="直播时间" align="center" prop="videoTime"/>
-      <el-table-column label="积分" align="center" prop="score"/>
-      <el-table-column label="家族等级" align="center" prop="liveLevel"/>
-      <el-table-column label="家族推荐号" align="center" prop="familyRecom"/>
-      <el-table-column label="操作" align="center" width="150px" class-name="small-padding fixed-width">
+      <el-table-column label="备注" :show-overflow-tooltip="true" min-width="120" align="center" prop="memo"/>
+      <el-table-column label="状态" min-width="120" align="center" prop="status" :formatter="formatterStatus"/>
+      <el-table-column label="家族成员的贡献" min-width="120" align="center" prop="contribution"/>
+      <el-table-column label="家族等级" min-width="120" align="center" prop="familyLevel"/>
+      <el-table-column label="直播时间" min-width="120" align="center" prop="videoTime"/>
+      <el-table-column label="积分" min-width="120" align="center" prop="score"/>
+      <el-table-column label="家族等级" min-width="120" align="center" prop="liveLevel"/>
+      <el-table-column label="家族推荐号" min-width="120" align="center" prop="familyRecom"/>
+      <el-table-column label="操作" min-width="120" align="center" width="150px" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -79,14 +78,16 @@
             icon="el-icon-edit"
             v-if="scope.row.status ==0"
             @click="handleUpdate(scope.row,1)"
-          >通过</el-button>
+          >通过
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             v-if="scope.row.status ==0"
             @click="handleUpdate(scope.row,0)"
-          >不通过</el-button>
+          >不通过
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -94,6 +95,7 @@
     <pagination
       v-show="total>0"
       :total="total"
+      :page-sizes="[20,50,100]"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
@@ -110,10 +112,10 @@ import {
   addLiveFamily,
   updateLiveFamily,
   exportLiveFamily
-} from "@/api/live-web/family/liveFamily";
+} from '@/api/live-web/family/liveFamily'
 
 export default {
-  name: "LiveFamily",
+  name: 'LiveFamily',
   components: {},
   data() {
     return {
@@ -132,13 +134,13 @@ export default {
       // 家族表格数据
       liveFamilyList: [],
       // 弹出层标题
-      title: "",
+      title: '',
       // 是否显示弹出层
       open: false,
       // 查询参数
       queryParams: {
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 20,
         logo: null,
         name: null,
         notice: null,
@@ -165,86 +167,86 @@ export default {
       // 表单校验
       rules: {
         logo: [
-          {required: true, message: "头像", trigger: "blur"}
+          { required: true, message: '头像', trigger: 'blur' }
         ],
         name: [
-          {required: true, message: "名称", trigger: "blur"}
+          { required: true, message: '名称', trigger: 'blur' }
         ],
         notice: [
-          {required: true, message: "公告不能为空", trigger: "blur"}
+          { required: true, message: '公告不能为空', trigger: 'blur' }
         ],
         manifesto: [
-          {required: true, message: "家族宣言不能为空", trigger: "blur"}
+          { required: true, message: '家族宣言不能为空', trigger: 'blur' }
         ],
         userId: [
-          {required: true, message: "族长ID", trigger: "blur"}
+          { required: true, message: '族长ID', trigger: 'blur' }
         ],
         userCount: [
-          {required: true, message: "成员数量不能为空", trigger: "blur"}
+          { required: true, message: '成员数量不能为空', trigger: 'blur' }
         ],
         createTime: [
-          {required: true, message: "创建时间不能为空", trigger: "blur"}
+          { required: true, message: '创建时间不能为空', trigger: 'blur' }
         ],
         createDate: [
-          {required: true, message: "日期字段,按日期归档不能为空", trigger: "blur"}
+          { required: true, message: '日期字段,按日期归档不能为空', trigger: 'blur' }
         ],
         memo: [
-          {required: true, message: "备注不能为空", trigger: "blur"}
+          { required: true, message: '备注不能为空', trigger: 'blur' }
         ],
         status: [
-          {required: true, message: "状态，0未审核，1审核通过，2拒绝通过 4 解散不能为空", trigger: "blur"}
+          { required: true, message: '状态，0未审核，1审核通过，2拒绝通过 4 解散不能为空', trigger: 'blur' }
         ],
         contribution: [
-          {required: true, message: "家族成员的贡献不能为空", trigger: "blur"}
+          { required: true, message: '家族成员的贡献不能为空', trigger: 'blur' }
         ],
         familyLevel: [
-          {required: true, message: "家族等级;live_family_level.level不能为空", trigger: "blur"}
+          { required: true, message: '家族等级;live_family_level.level不能为空', trigger: 'blur' }
         ],
         videoTime: [
-          {required: true, message: "家族总的直播时间，单位为秒不能为空", trigger: "blur"}
+          { required: true, message: '家族总的直播时间，单位为秒不能为空', trigger: 'blur' }
         ],
         score: [
-          {required: true, message: "积分不能为空", trigger: "blur"}
+          { required: true, message: '积分不能为空', trigger: 'blur' }
         ],
         liveLevel: [
-          {required: true, message: "家族等级;live_family_level.level不能为空", trigger: "blur"}
+          { required: true, message: '家族等级;live_family_level.level不能为空', trigger: 'blur' }
         ],
         familyRecom: [
-          {required: true, message: "家族推荐号 创建家族后随机生成，用于主播审核时填写不能为空", trigger: "blur"}
+          { required: true, message: '家族推荐号 创建家族后随机生成，用于主播审核时填写不能为空', trigger: 'blur' }
         ]
       }
-    };
+    }
   },
   created() {
-    this.getList();
+    this.getList()
   },
   methods: {
     // 状态，0未审核，1审核通过，2拒绝通过 4 解散
-    formatterStatus(row){
+    formatterStatus(row) {
       if (row.status == 0) {
-        return '未审核';
-      }else if (row.status == 1) {
-        return '审核通过';
-      }else if (row.status == 2) {
-        return '拒绝通过';
-      }else if (row.status == 4) {
-        return '解散';
+        return '未审核'
+      } else if (row.status == 1) {
+        return '审核通过'
+      } else if (row.status == 2) {
+        return '拒绝通过'
+      } else if (row.status == 4) {
+        return '解散'
       }
-      return '未知';
+      return '未知'
     },
     /** 查询家族列表 */
     getList() {
-      this.loading = true;
+      this.loading = true
       listLiveFamily(this.queryParams).then(response => {
-        this.liveFamilyList = response.rows;
-        this.total = response.total;
-        this.loading = false;
-      });
+        this.liveFamilyList = response.rows
+        this.total = response.total
+        this.loading = false
+      })
     },
     // 取消按钮
     cancel() {
-      this.open = false;
-      this.reset();
+      this.open = false
+      this.reset()
     },
     // 表单重置
     reset() {
@@ -271,22 +273,22 @@ export default {
         score: null,
         liveLevel: null,
         familyRecom: null
-      };
-      this.queryParams={
+      }
+      this.queryParams = {
         status: null
       }
-      this.resetForm("form");
+      this.resetForm('form')
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNum = 1;
-      this.getList();
+      this.queryParams.pageNum = 1
+      this.getList()
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.reset();
-      this.resetForm("queryForm");
-      this.handleQuery();
+      this.reset()
+      this.resetForm('queryForm')
+      this.handleQuery()
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
@@ -296,87 +298,87 @@ export default {
     },
     /** 新增按钮操作 */
     handleAdd() {
-      this.reset();
-      this.open = true;
-      this.title = "添加家族";
+      this.reset()
+      this.open = true
+      this.title = '添加家族'
     },
     /** 修改按钮操作 */
-    handleUpdate(row,flag) {
-      var data={};
-      data.id=row.id;
-      if(flag==1){
-        data.status=1;
-        this.$confirm('是否确认通过审核家族名称"' + row.name + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function () {
-          return updateLiveFamily(data);
+    handleUpdate(row, flag) {
+      var data = {}
+      data.id = row.id
+      if (flag == 1) {
+        data.status = 1
+        this.$confirm('是否确认通过审核家族名称"' + row.name + '"的数据项?', '警告', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(function() {
+          return updateLiveFamily(data)
         }).then(() => {
-          this.getList();
-          this.msgSuccess("审核通过");
+          this.getList()
+          this.msgSuccess('审核通过')
         })
-      }else{
-        data.status=2;
-        this.$confirm('是否确认拒绝家族名称"' + row.name + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function () {
-          return updateLiveFamily(data);
+      } else {
+        data.status = 2
+        this.$confirm('是否确认拒绝家族名称"' + row.name + '"的数据项?', '警告', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(function() {
+          return updateLiveFamily(data)
         }).then(() => {
-          this.getList();
-          this.msgSuccess("审核拒绝成功");
+          this.getList()
+          this.msgSuccess('审核拒绝成功')
         })
       }
     },
     /** 提交按钮 */
     submitForm() {
-      this.$refs["form"].validate(valid => {
+      this.$refs['form'].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
             updateLiveFamily(this.form).then(response => {
-              this.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
-            });
+              this.msgSuccess('修改成功')
+              this.open = false
+              this.getList()
+            })
           } else {
             addLiveFamily(this.form).then(response => {
-              this.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
-            });
+              this.msgSuccess('新增成功')
+              this.open = false
+              this.getList()
+            })
           }
         }
-      });
+      })
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const ids = row.id || this.ids;
-      this.$confirm('是否确认删除家族编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(function () {
-        return delLiveFamily(ids);
+      const ids = row.id || this.ids
+      this.$confirm('是否确认删除家族编号为"' + ids + '"的数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return delLiveFamily(ids)
       }).then(() => {
-        this.getList();
-        this.msgSuccess("删除成功");
+        this.getList()
+        this.msgSuccess('删除成功')
       })
     },
     /** 导出按钮操作 */
     handleExport() {
-      const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有家族数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(function () {
-        return exportLiveFamily(queryParams);
+      const queryParams = this.queryParams
+      this.$confirm('是否确认导出所有家族数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return exportLiveFamily(queryParams)
       }).then(response => {
-        this.download(response.msg);
+        this.download(response.msg)
       })
     }
   }
-};
+}
 </script>

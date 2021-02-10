@@ -13,7 +13,6 @@ export function gameBalance(managerId) {
 export function gameEsc(platformId, managerId) {
   return request({
     url: url.platformWeb + '/game/base/esc/' + platformId + '/' + managerId,
-    method: 'get',
-    params: query
+    method: 'get'
   })
 }

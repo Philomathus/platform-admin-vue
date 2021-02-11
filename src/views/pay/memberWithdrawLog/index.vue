@@ -442,6 +442,7 @@ export default {
       html += '<td>' + '\'' + row.bankAccount + '\'' + '</td>'
       html += '<td>' + row.bankName + '</td>'
       html += '<td>' + status.dictLabel + '</td>'
+      html += '<td>' + row.first + '</td>'
       html += '<td>' + row.opName + '</td>'
       html += '<td>' + row.createTime + '</td>'
       html += '<td>' + row.updateTime + '</td>'

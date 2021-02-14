@@ -86,7 +86,7 @@
 
     <!--会员注单数据详情-->
     <el-dialog v-dialogDrag title="注单数据详情" :visible.sync="openBetData" width="450px" append-to-body>
-      <el-table :stripe="true" v-loading="loading" :data="betData" @selection-change="handleSelectionChange">
+      <el-table :stripe="true" v-loading="loading" :data="betData">
         <el-table-column label="项目名称" align="center" width="120px" prop="label"/>
         <el-table-column label="项目值" align="center" prop="value"/>
       </el-table>

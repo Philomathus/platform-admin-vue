@@ -16,9 +16,9 @@
       </el-form-item>
     </el-form>
 
-    <el-row :gutter="10" class="mb8">
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-    </el-row>
+<!--    <el-row :gutter="10" class="mb8">-->
+<!--      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>-->
+<!--    </el-row>-->
 
     <el-table stripe v-loading="loading" :data="liveVideoChatList">
       <el-table-column label="平台会员ID" min-width="120" align="center" prop="fromPlatform" />

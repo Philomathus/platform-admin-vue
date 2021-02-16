@@ -149,7 +149,7 @@
 <!--        <el-form-item label="大型道具类型">-->
 <!--          <el-input v-model="form.animType" placeholder="请输入大型道具类型" />-->
 <!--        </el-form-item>-->
-        <el-form-item label="svga动画" prop="animatedUrl">
+        <el-form-item label="svga动画" prop="animatedUrl" v-if="form.isAnimated === '2'">
           <fileUpload v-model="form.animatedUrl" path="give"/>
         </el-form-item>
 

@@ -48,8 +48,9 @@
       <el-table-column label="图标" align="center" prop="icon">
         <template slot-scope="scope">
           <el-image
-            style="width: 50px; height: 50px"
+            style="width: 50px;"
             :src="scope.row.icon"
+            fit="contain"
           >
           </el-image>
         </template>
@@ -57,8 +58,9 @@
       <el-table-column label="新版图标" align="center" prop="editionIcon">
         <template slot-scope="scope">
           <el-image
-            style="width: 50px; height: 50px"
+            style="width: 50px;"
             :src="scope.row.editionIcon"
+            fit="contain"
           >
           </el-image>
         </template>

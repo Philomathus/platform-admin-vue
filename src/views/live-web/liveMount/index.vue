@@ -91,8 +91,9 @@
       <el-table-column label="图标" align="center" prop="iconUrl">
         <template slot-scope="scope">
           <el-image
-            style="width: 50px; height: 50px"
+            style="width: 50px;"
             :src="scope.row.iconUrl"
+            fit="contain"
           >
           </el-image>
         </template>
@@ -132,8 +133,9 @@
 
     <!-- 添加或修改礼物列对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
-               append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+               append-to-body
+    >
+      <el-form ref="form" :model="form" :rules="rules" label-width="85px">
         <el-form-item label="vip等级" prop="gvip">
           <el-input v-model="form.gvip" placeholder="请输入免费领取VIP(-1只能买)"/>
         </el-form-item>
@@ -178,18 +180,15 @@ import {
   addLiveMount,
   updateLiveMount,
   exportLiveMount
-} from "@/api/live-web/liveMount/liveMount";
-import {updateLiveProp} from "@/api/live-web/liveProp/liveProp";
-import ImageUpload from '@/components/ImageUpload';
-import FileUpload from '@/components/FileUpload';
-import Editor from "@/components/Editor";
+} from '@/api/live-web/liveMount/liveMount'
+import ImageUpload from '@/components/ImageUpload'
+import FileUpload from '@/components/FileUpload'
 
 export default {
-  name: "LiveMount",
+  name: 'LiveMount',
   components: {
     ImageUpload,
-    FileUpload,
-    Editor
+    FileUpload
   },
   data() {
     return {
@@ -208,7 +207,7 @@ export default {
       // 礼物列表格数据
       liveMountList: [],
       // 弹出层标题
-      title: "",
+      title: '',
       // 是否显示弹出层
       open: false,
       // 查询参数
@@ -226,56 +225,56 @@ export default {
       },
       // 列信息
       columns: [
-        {key: 0, label: `状态`, visible: true}
+        { key: 0, label: `状态`, visible: true }
       ],
       // 表单参数
       form: {},
       // 表单校验
       rules: {
         id: [
-          {required: true, message: "ID不能为空", trigger: "blur"}
+          { required: true, message: 'ID不能为空', trigger: 'blur' }
         ],
         name: [
-          {required: true, message: "坐骑名不能为空", trigger: "blur"}
+          { required: true, message: '坐骑名不能为空', trigger: 'blur' }
         ],
         status: [
-          {required: true, message: "状态不能为空", trigger: "blur"}
+          { required: true, message: '状态不能为空', trigger: 'blur' }
         ],
         iconUrl: [
-          {required: true, message: "PC端图标不能为空", trigger: "blur"}
+          { required: true, message: 'PC端图标不能为空', trigger: 'blur' }
         ],
         gvip: [
-          {required: true, message: "vip等级不能为空", trigger: "blur"}
+          { required: true, message: 'vip等级不能为空', trigger: 'blur' }
         ], svgUrl: [
-          {required: true, message: "svgUrl动画不能为空", trigger: "blur"}
+          { required: true, message: 'svgUrl动画不能为空', trigger: 'blur' }
         ], price: [
-          {required: true, message: "价格不能为空", trigger: "blur"}
+          { required: true, message: '价格不能为空', trigger: 'blur' }
         ], disPrice: [
-          {required: true, message: "折扣价格不能为空", trigger: "blur"}
+          { required: true, message: '折扣价格不能为空', trigger: 'blur' }
         ], vday: [
-          {required: true, message: "赠送天数不能为空", trigger: "blur"}
+          { required: true, message: '赠送天数不能为空', trigger: 'blur' }
         ]
 
       }
-    };
+    }
   },
   created() {
-    this.getList();
+    this.getList()
   },
   methods: {
     /** 查询礼物列列表 */
     getList() {
-      this.loading = true;
+      this.loading = true
       listLiveMount(this.queryParams).then(response => {
-        this.liveMountList = response.rows;
-        this.total = response.total;
-        this.loading = false;
-      });
+        this.liveMountList = response.rows
+        this.total = response.total
+        this.loading = false
+      })
     },
     // 取消按钮
     cancel() {
-      this.open = false;
-      this.reset();
+      this.open = false
+      this.reset()
     },
     // 表单重置
     reset() {
@@ -289,18 +288,18 @@ export default {
         price: null,
         disPrice: null,
         vday: null
-      };
-      this.resetForm("form");
+      }
+      this.resetForm('form')
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNum = 1;
-      this.getList();
+      this.queryParams.pageNum = 1
+      this.getList()
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.resetForm("queryForm");
-      this.handleQuery();
+      this.resetForm('queryForm')
+      this.handleQuery()
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
@@ -310,52 +309,52 @@ export default {
     },
     /** 新增按钮操作 */
     handleAdd() {
-      this.reset();
-      this.open = true;
-      this.title = "添加礼物列";
+      this.reset()
+      this.open = true
+      this.title = '添加礼物'
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
-      this.reset();
+      this.reset()
       const id = row.id || this.ids
       getLiveMount(id).then(response => {
-        this.form = response.data;
-        this.open = true;
-        this.title = "修改礼物列";
-      });
+        this.form = response.data
+        this.open = true
+        this.title = '修改礼物'
+      })
     },
     /** 提交按钮 */
     submitForm() {
-      this.$refs["form"].validate(valid => {
+      this.$refs['form'].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
             updateLiveMount(this.form).then(response => {
-              this.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
-            });
+              this.msgSuccess('修改成功')
+              this.open = false
+              this.getList()
+            })
           } else {
             addLiveMount(this.form).then(response => {
-              this.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
-            });
+              this.msgSuccess('新增成功')
+              this.open = false
+              this.getList()
+            })
           }
         }
-      });
+      })
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const ids = row.id || this.ids;
-      this.$confirm('是否确认删除礼物列编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(function () {
-        return delLiveMount(ids);
+      const ids = row.id || this.ids
+      this.$confirm('是否确认删除礼物列编号为"' + ids + '"的数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return delLiveMount(ids)
       }).then(() => {
-        this.getList();
-        this.msgSuccess("删除成功");
+        this.getList()
+        this.msgSuccess('删除成功')
       })
     },
     // 状态修改
@@ -365,30 +364,30 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function () {
-        var data = {};
-        data.id = row.id;
-        data.status = row.status;
+      }).then(function() {
+        var data = {}
+        data.id = row.id
+        data.status = row.status
         return updateLiveMount(data)
       }).then(() => {
         this.msgSuccess(text + '成功')
-      }).catch(function () {
+      }).catch(function() {
         row.status = row.status === '0' ? '1' : '0'
       })
     },
     /** 导出按钮操作 */
     handleExport() {
-      const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有礼物列数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(function () {
-        return exportLiveMount(queryParams);
+      const queryParams = this.queryParams
+      this.$confirm('是否确认导出所有礼物列数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return exportLiveMount(queryParams)
       }).then(response => {
-        this.download(response.msg);
+        this.download(response.msg)
       })
     }
   }
-};
+}
 </script>

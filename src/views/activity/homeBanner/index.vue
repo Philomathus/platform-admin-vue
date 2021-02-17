@@ -82,8 +82,9 @@
       <el-table-column label="图片" align="center" prop="coverImg">
         <template slot-scope="scope">
           <el-image
-            style="width: auto; height: 50px"
+            style="height: 80px"
             :src="scope.row.coverImg"
+            fit="contain"
           >
           </el-image>
         </template>

@@ -38,8 +38,9 @@
         <template slot-scope="scope">
           <a :href="scope.row.icon" target="_blank">
             <el-image
-              style="width: 50px; height: 50px"
+              style="width: 50px;"
               :src="scope.row.icon"
+              fit="contain"
             >
             </el-image>
           </a>

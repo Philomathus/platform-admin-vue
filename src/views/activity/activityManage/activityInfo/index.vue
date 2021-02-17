@@ -84,15 +84,16 @@
       <el-table-column label="图标" align="center" prop="icon">
         <template slot-scope="scope">
           <el-image
-            style="width:300px"
+            style="height:80px"
             :src="scope.row.icon"
+            fit="contain"
           >
           </el-image>
         </template>
       </el-table-column>
       <el-table-column label="活动详情" align="center" prop="content" >
       <template v-slot="{row}">
-        <div v-html="row.content" style="max-height: 120px"></div>
+        <div v-html="row.content" style="max-height: 80px"></div>
       </template>
       </el-table-column>
       <el-table-column label="发布时间" align="center" prop="ctime" width="180">

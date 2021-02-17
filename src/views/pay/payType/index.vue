@@ -75,8 +75,9 @@
       <el-table-column label="图标" align="center" prop="iconUrl">
         <template slot-scope="scope">
           <el-image
-            style="object-fit: contain;max-height: 50px"
+            style="height: 50px;"
             :src="scope.row.iconUrl"
+            fit="contain"
           >
           </el-image>
         </template>

@@ -80,8 +80,9 @@
       <el-table-column label="图标" align="center" prop="iconUrl">
         <template slot-scope="scope">
           <el-image
-            style="width: 50px; height: 50px"
+            style="width: 50px;"
             :src="scope.row.iconUrl"
+            fit="contain"
           >
           </el-image>
         </template>

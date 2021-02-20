@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" label-width="68px" v-show="showSearch">
-      <el-button type="primary" icon="el-icon-search" @click="comeback" width="80%">返回上一级</el-button>
+      <el-button type="primary" icon="el-icon-arrow-left" @click="comeback" width="80%">返回上一级</el-button>
       <el-form-item label="日期选择" prop="begindate">
         <el-date-picker v-model="queryParams.begindate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
                         :style="{width: '100%'}" placeholder="请选择日期选择" clearable

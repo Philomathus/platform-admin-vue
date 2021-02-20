@@ -181,7 +181,6 @@ export default {
     /** 查询 会员资金信息列表 */
     getList() {
       this.loading = true
-      console.info(this.queryParams)
       listLogMoney(this.queryParams).then(response => {
         this.logMoneyList = response.rows
         this.total = response.total

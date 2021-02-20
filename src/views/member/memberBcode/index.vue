@@ -83,7 +83,10 @@ export default {
     return {
       pickerOptions: { shortcuts: pickerDateShortcuts },
       //顶部的三个总数据
-      totalData: {},
+      totalData: {
+        total: 0,
+        cur: 0
+      },
       // 遮罩层
       loading: true,
       // 选中数组
@@ -107,7 +110,7 @@ export default {
         pageNum: 1,
         pageSize: 20,
         userId: null,
-        selectDate: [this.parseTime(new Date,'{y}-{m}-{d}'), this.parseTime(new Date,'{y}-{m}-{d}')],
+        selectDate: [this.parseTime(new Date, '{y}-{m}-{d}'), this.parseTime(new Date, '{y}-{m}-{d}')],
         orderByColumn: 'create_time',
         isAsc: 'desc'
       },

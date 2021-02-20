@@ -120,14 +120,14 @@
         <el-form-item label="内容">
           <editor v-model="form.content" :min-height="192"/>
         </el-form-item>
-        <el-form-item label="接收者类型" prop="receiverType">
-          <el-select v-model="form.receiverType" placeholder="请选择接收者类型">
-            <el-option label="请选择字典生成" value="" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="接收者" prop="receiver">
-          <el-input v-model="form.receiver" placeholder="请输入接收者" />
-        </el-form-item>
+<!--        <el-form-item label="接收者类型" prop="receiverType">-->
+<!--          <el-select v-model="form.receiverType" placeholder="请选择接收者类型">-->
+<!--            <el-option label="请选择字典生成" value="" />-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="接收者" prop="receiver">-->
+<!--          <el-input v-model="form.receiver" placeholder="请输入接收者" />-->
+<!--        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>

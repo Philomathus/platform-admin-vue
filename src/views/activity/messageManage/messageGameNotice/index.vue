@@ -124,9 +124,9 @@
         <el-form-item label="公告标题" prop="title">
           <el-input v-model="form.title" placeholder="请输入公告标题" />
         </el-form-item>
-        <el-form-item label="设备端" prop="device">
-          <el-input v-model="form.device" placeholder="请输入设备端" />
-        </el-form-item>
+<!--        <el-form-item label="设备端" prop="device">-->
+<!--          <el-input v-model="form.device" placeholder="请输入设备端" />-->
+<!--        </el-form-item>-->
         <el-form-item label="发布时间" prop="pubdatetime">
           <el-date-picker clearable size="small"
             v-model="form.pubdatetime"

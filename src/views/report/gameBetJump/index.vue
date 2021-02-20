@@ -7,12 +7,19 @@
                         :style="{width: '100%'}" placeholder="请选择日期选择" clearable
         ></el-date-picker>
       </el-form-item>
-      <el-form-item label="平台名称" prop="gameplame">
+      <el-form-item label="子平台名" prop="agentchildname">
         <el-input
-          v-model="queryParams.gameplame"
-          placeholder="请输入平台名称"
+          v-model="queryParams.agentchildname"
+          placeholder="请输入子平台名称"
           clearable
           size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item prop="gameplame" v-show="false">
+        <el-input
+          v-model="queryParams.gameplame"
+          v-show="false"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
@@ -30,8 +37,9 @@
               :stripe="true"
     >
       <el-table-column label="平台编号" align="center" prop="gameagent" :show-overflow-tooltip="true"/>
-      <el-table-column label="名称-详情" align="center" prop="gameplame">
-      </el-table-column>
+      <el-table-column label="名称-详情" align="center" prop="gameplame"/>
+      <el-table-column label="子平台编号" align="center" prop="agentchild"/>
+      <el-table-column label="子平台名称" align="center" prop="agentchildname"/>
       <el-table-column label="投注人数" align="center" prop="gamepepole"/>
       <el-table-column label="投注比数" align="center" prop="gametouzhu"/>
       <el-table-column label="总投注金额" align="center" prop="gamecell"/>
@@ -64,6 +72,7 @@ export default {
       data: {},
       // 查询参数
       queryParams: {
+        agentchildname: null,
         begindate: null,
         gameplame: null
       }

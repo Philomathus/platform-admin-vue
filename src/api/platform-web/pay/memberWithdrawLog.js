@@ -27,10 +27,11 @@ export function getMemberWithdrawReport(id) {
 }
 
 // 查询会员提现报告统计信息
-export function getCountTotal(id) {
+export function getCountTotal(query) {
   return request({
     url: url.platformWeb + '/pay/memberWithdrawLog/countTotal',
-    method: 'get'
+    method: 'get',
+    params: query
   })
 }
 

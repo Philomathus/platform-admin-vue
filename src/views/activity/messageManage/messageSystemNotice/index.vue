@@ -118,7 +118,7 @@
           <el-input v-model="form.title" placeholder="请输入公告标题" />
         </el-form-item>
         <el-form-item label="内容">
-          <editor v-model="form.content" :min-height="192"/>
+          <el-input v-model="form.content" type="textarea" placeholder="请输入内容" rows="5" />
         </el-form-item>
         <el-form-item label="设备" prop="device">
           <el-input v-model="form.device" placeholder="请输入设备" />

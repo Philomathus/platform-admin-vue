@@ -88,7 +88,10 @@ export default {
         // 然后将数组转为对象数组
         return list.map((item) => {
           if (typeof item === 'string') {
-            item = { name: item, url: item }
+            item = {
+              name: item,
+              url: (item.startsWith('http') ? '' : localStorage.getItem('vHostUrl')) + item
+            }
           }
           item.uid = item.uid || new Date().getTime() + temp++
           return item

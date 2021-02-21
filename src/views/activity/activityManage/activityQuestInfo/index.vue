@@ -178,7 +178,7 @@
           <el-input v-model="form.detail" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="描述">
-          <editor v-model="form.content" :min-height="192"/>
+          <el-input v-model="form.content" type="textarea" placeholder="请输入内容" rows="5" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

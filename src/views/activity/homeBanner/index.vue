@@ -137,6 +137,16 @@
         <el-form-item label="图片">
           <imageUpload v-model="form.coverImg"/>
         </el-form-item>
+        <el-form-item label="状态">
+          <el-radio-group v-model="form.status">
+            <el-radio
+              v-for="dict in statusOptions"
+              :key="dict.dictValue"
+              :label="parseInt(dict.dictValue)"
+            >{{ dict.dictLabel }}
+            </el-radio>
+          </el-radio-group>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>

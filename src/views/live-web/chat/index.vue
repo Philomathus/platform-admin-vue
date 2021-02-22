@@ -32,6 +32,7 @@
 
       <el-table-column label="主播昵称" min-width="120" align="center" prop="poscatNickName" />
       <el-table-column label="发送时间" width="160" align="center" prop="createTimes" />
+      <el-table-column label="发言ip" width="160" align="center" prop="userIp" />
       <el-table-column label="是否封停" min-width="120" align="center" prop="noSpeaking" :formatter="speakFormat"/>
       <el-table-column label="是否禁言" min-width="120" align="center" prop="forbid" :formatter="forbidFormat"/>
       <el-table-column label="操作" min-width="150" align="center" class-name="small-padding fixed-width" fixed="right">
@@ -77,9 +78,12 @@
         <el-form-item label="消息内容" prop="msg">
           <el-input v-model="form.msg"  readonly disabled/>
         </el-form-item>
+        <el-form-item label="消息内容" prop="userIp">
+          <el-input v-model="form.userIp"  readonly disabled/>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="suspendUser('',true,1)">确 定</el-button>
+        <el-button type="primary" @click="suspendUser('',true,1,form.userIp)">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
@@ -212,7 +216,7 @@ export default {
           cancelButtonText: "取消",
           type: "warning"
         }).then(function() {
-          return that.suspendUser(row.fromPlatform,false,0);
+          return that.suspendUser(row.fromPlatform,false,0,row.userIp);
         }).then(() => {
           that.msgSuccess("解封成功");
         })
@@ -242,7 +246,7 @@ export default {
       this.open = false;
       this.getList();
     },
-    suspendUser(pUserId,falg,num){
+    suspendUser(pUserId,falg,num,userIp){
       var data={};
       if(num==1){
         data.pUserId=this.form.fromPlatform;
@@ -251,6 +255,7 @@ export default {
       }
       data.flag=falg;
       data.num=num;
+      data.userIp=userIp;
       request({
         url: url.platformWeb + '/admin/liveVideoChat/suspendUser',
         method: 'post',

@@ -143,7 +143,7 @@
           <el-input v-model="form.name" placeholder="请输入银行名称"/>
         </el-form-item>
         <el-form-item label="图标">
-          <imageUpload v-model="form.icon"/>
+          <imageUpload v-model="form.icon" path="ConfigBank"/>
         </el-form-item>
         <el-form-item label="银行官网地址" prop="url">
           <el-input v-model="form.url" placeholder="请输入银行官网地址"/>

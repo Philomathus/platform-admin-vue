@@ -106,6 +106,7 @@
       </el-table-column>
       <!--      <el-table-column label="是否线上(1是0否)" align="center" prop="isOnline" />-->
       <el-table-column label="支付类型" align="center" prop="type" :formatter="successFormat"/>
+      <el-table-column label="开放层级" align="center" prop="openLevel"/>
       <el-table-column label="创建人" align="center" prop="creator"/>
       <el-table-column label="修改人" align="center" prop="updator"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -166,6 +167,9 @@
               :value="dict.dictValue"
             />
           </el-select>
+        </el-form-item>
+        <el-form-item label="开放层级" prop="openLevel">
+          <el-input type="number" v-model="form.openLevel" placeholder="请输入开放层级"  />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

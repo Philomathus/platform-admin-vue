@@ -572,7 +572,7 @@ export default {
       bindGoogleAuth(this.userName, this.secretKey, this.googleAuthCode).then(response => {
         if (response.code === 200) {
           this.msgSuccess('绑定成功')
-          this.open = true
+          this.dialogVisible = false
           this.getList()
         } else {
           this.msgError(response.msg)

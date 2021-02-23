@@ -36,10 +36,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="0=开启中1=封盘中" prop="su">
+      <el-form-item label="开启或封盘" prop="su">
         <el-input
           v-model="queryParams.su"
-          placeholder="请输入0=开启中1=封盘中"
+          placeholder="0=开启中1=封盘中"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"

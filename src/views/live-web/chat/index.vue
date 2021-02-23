@@ -10,11 +10,34 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="会员id" prop="fromPlatform">
+        <el-input
+          v-model="queryParams.fromPlatform"
+          placeholder="会员id"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
+
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="mini"
+          @click="openIpBlackList()"
+        >查看封停ip
+        </el-button>
+      </el-col>
+      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+    </el-row>
 
 <!--    <el-row :gutter="10" class="mb8">-->
 <!--      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>-->
@@ -78,7 +101,7 @@
         <el-form-item label="消息内容" prop="msg">
           <el-input v-model="form.msg"  readonly disabled/>
         </el-form-item>
-        <el-form-item label="消息内容" prop="userIp">
+        <el-form-item label="封停ip" prop="userIp">
           <el-input v-model="form.userIp"  readonly disabled/>
         </el-form-item>
       </el-form>
@@ -87,6 +110,24 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+
+    <!--查看封停ip-->
+    <el-dialog v-dialogDrag title="查看封停ip" :visible.sync="speakIpBlackListList" width="750px" append-to-body>
+      <el-table :stripe="true" v-loading="loading"  :data="speakIpBlackData" >
+        <el-table-column type="selection" width="55" align="center" />
+        <el-table-column label="会员ID" align="center" prop="userId" />
+        <el-table-column label="会员ip" align="center" prop="userIp" />
+        <el-table-column label="封停时间" align="center" prop="createTime" />
+      </el-table>
+      <pagination
+        v-show="total>0"
+        :total="total"
+        :page-sizes="[10,20,100]"
+        :page.sync="queryParams.pageNum"
+        :limit.sync="queryParams.pageSize"
+        @pagination="openIpBlackList"
+      />
+    </el-dialog>
   </div>
 </template>
 
@@ -94,6 +135,7 @@
 import { Forbid,suspendUser,listLiveVideoChat, getLiveVideoChat, delLiveVideoChat, addLiveVideoChat, updateLiveVideoChat, exportLiveVideoChat } from "@/api/live-web/chat/liveVideoChat";
 import request from "@/utils/request";
 import {url} from "@/utils/url";
+import {listSpeakIpBlackList} from "@/api/live-web/chat/speakIpBlackList";
 
 export default {
   name: "LiveVideoChat",
@@ -113,8 +155,10 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
+      speakIpBlackListList: false,
       // 会员发言表格数据
       liveVideoChatList: [],
+      speakIpBlackData: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -151,6 +195,15 @@ export default {
       this.loading = true;
       listLiveVideoChat(this.queryParams).then(response => {
         this.liveVideoChatList = response.rows;
+        this.total = response.total;
+        this.loading = false;
+      });
+    },
+    openIpBlackList(){
+      this.speakIpBlackListList = true;
+      this.title='查看已封停的ip'
+      listSpeakIpBlackList(this.queryParams).then(response => {
+        this.speakIpBlackData = response.rows;
         this.total = response.total;
         this.loading = false;
       });

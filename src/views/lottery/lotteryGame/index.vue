@@ -11,9 +11,13 @@
         />
       </el-form-item>
       <el-form-item label="类型" prop="type">
-        <el-select v-model="queryParams.type" placeholder="请选择类型" clearable size="small">
-          <el-option label="请选择字典生成" value="" />
-        </el-select>
+        <el-input
+          v-model="queryParams.type"
+          placeholder="请输入类型"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
       <el-form-item label="简介" prop="info">
         <el-input
@@ -42,37 +46,14 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="唯一编号" prop="ind">
-        <el-input
-          v-model="queryParams.ind"
-          placeholder="请输入唯一编号"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
-    <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['admin:lotteryGame:edit']"
-        >修改</el-button>
-      </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-    </el-row>
 
-    <el-table stripe v-loading="loading" :data="lotteryGameList" @selection-change="handleSelectionChange">
+    <el-table stripe v-loading="loading" :data="lotteryGameList">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="主键" align="center" prop="id" />
       <el-table-column label="菜单id" align="center" prop="methodId" />
@@ -102,28 +83,11 @@
       @pagination="getList"
     />
 
-    <!-- 修改下注对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="菜单id" prop="methodId">
-          <el-input v-model="form.methodId" placeholder="请输入菜单id" />
-        </el-form-item>
-        <el-form-item label="类型" prop="type">
-          <el-select v-model="form.type" placeholder="请选择类型">
-            <el-option label="请选择字典生成" value="" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="简介" prop="info">
-          <el-input v-model="form.info" placeholder="请输入简介" />
-        </el-form-item>
+    <!-- 修改赔率对话框 -->
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="300px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="40px">
         <el-form-item label="赔率" prop="odds">
           <el-input v-model="form.odds" placeholder="请输入赔率" />
-        </el-form-item>
-        <el-form-item label="获奖规则" prop="victoryRule">
-          <el-input v-model="form.victoryRule" placeholder="请输入获奖规则" />
-        </el-form-item>
-        <el-form-item label="唯一编号" prop="ind">
-          <el-input v-model="form.ind" placeholder="请输入唯一编号" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -170,7 +134,9 @@ export default {
         info: null,
         odds: null,
         victoryRule: null,
-        ind: null
+        ind: null,
+        orderByColumn: 'ind',
+        isAsc: 'asc'
       },
       // 表单参数
       form: {},
@@ -221,12 +187,6 @@ export default {
       this.resetForm("queryForm");
       this.handleQuery();
     },
-    // 多选框选中数据
-    handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
-      this.multiple = !selection.length
-    },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
@@ -234,7 +194,7 @@ export default {
       getLotteryGame(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改下注";
+        this.title = "修改赔率";
       });
     },
     /** 提交按钮 */

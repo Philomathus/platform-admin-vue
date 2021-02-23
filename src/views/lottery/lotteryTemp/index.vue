@@ -36,14 +36,15 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="开启或封盘" prop="su">
-        <el-input
-          v-model="queryParams.su"
-          placeholder="0=开启中1=封盘中"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+      <el-form-item label="开启封盘" prop="su">
+        <el-select v-model="queryParams.su" placeholder="请选择开启封盘状态" clearable size="small">
+          <el-option
+            v-for="item in su"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -86,6 +87,14 @@ export default {
   },
   data() {
     return {
+      //开启封盘选择栏
+      su: [{
+        value: '0',
+        label: '开启中'
+      }, {
+        value: '1',
+        label: '封盘中'
+      }],
       // 遮罩层
       loading: true,
       // 选中数组

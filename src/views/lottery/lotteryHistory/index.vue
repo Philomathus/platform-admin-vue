@@ -37,8 +37,13 @@
         </el-date-picker>
       </el-form-item>
       <el-form-item label="状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择0=投注中1=已开奖2=已派奖3=开奖失败" clearable size="small">
-          <el-option label="请选择字典生成" value="" />
+        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small">
+          <el-option
+            v-for="item in status"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="彩票名称" prop="name">
@@ -50,51 +55,52 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="自开实际杀率" prop="killRate">
-        <el-input
-          v-model="queryParams.killRate"
-          placeholder="请输入自开实际杀率"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="总投注" prop="totalBet">
-        <el-input
-          v-model="queryParams.totalBet"
-          placeholder="请输入总投注"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="预计派奖总额" prop="totalPrize">
-        <el-input
-          v-model="queryParams.totalPrize"
-          placeholder="请输入预计派奖总额"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+<!--      <el-form-item label="自开实际杀率" prop="killRate">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.killRate"-->
+<!--          placeholder="请输入自开实际杀率"-->
+<!--          clearable-->
+<!--          size="small"-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="总投注" prop="totalBet">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.totalBet"-->
+<!--          placeholder="请输入总投注"-->
+<!--          clearable-->
+<!--          size="small"-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="预计派奖总额" prop="totalPrize">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.totalPrize"-->
+<!--          placeholder="请输入预计派奖总额"-->
+<!--          clearable-->
+<!--          size="small"-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
       <el-form-item label="杀法" prop="ctl">
-        <el-input
-          v-model="queryParams.ctl"
-          placeholder="请输入0=未杀1=控杀"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-select v-model="queryParams.ctl" placeholder="请选择杀法" clearable size="small">
+          <el-option
+            v-for="item in ctl"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
       </el-form-item>
-      <el-form-item label="开奖分析" prop="analyse">
-        <el-input
-          v-model="queryParams.analyse"
-          placeholder="请输入开奖分析"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+<!--      <el-form-item label="开奖分析" prop="analyse">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.analyse"-->
+<!--          placeholder="请输入开奖分析"-->
+<!--          clearable-->
+<!--          size="small"-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -137,6 +143,28 @@ export default {
   },
   data() {
     return {
+      //状态选择栏
+      status: [{
+        value: '0',
+        label: '投注中'
+      }, {
+        value: '1',
+        label: '已开奖'
+      }, {
+        value: '2',
+        label: '已派奖'
+      }, {
+        value: '3',
+        label: '开奖失败'
+      }],
+      //杀法选择栏
+      ctl: [{
+        value: '0',
+        label: '未杀'
+      }, {
+        value: '1',
+        label: '控杀'
+      }],
       // 遮罩层
       loading: true,
       // 选中数组

@@ -11,32 +11,33 @@
         />
       </el-form-item>
       <el-form-item label="类型" prop="type">
-        <el-select v-model="queryParams.type" placeholder="请选择类型" clearable size="small">
-          <el-option label="请选择字典生成" value="" />
-        </el-select>
+        <el-input
+          v-model="queryParams.type"
+          placeholder="请输入类型"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
       <el-form-item label="状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择1 启用 0 禁用" clearable size="small">
-          <el-option label="请选择字典生成" value="" />
+        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small">
+          <el-option
+            v-for="item in status"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="图标" prop="icon">
-        <el-input
-          v-model="queryParams.icon"
-          placeholder="请输入图标"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="0=官方1=自开" prop="official">
-        <el-input
-          v-model="queryParams.official"
-          placeholder="请输入0=官方1=自开"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+      <el-form-item label="开奖形式" prop="official">
+        <el-select v-model="queryParams.official" placeholder="请选择开奖形式" clearable size="small">
+          <el-option
+            v-for="item in official"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="杀率" prop="killRate">
         <el-input
@@ -47,24 +48,24 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="最小投注金额" prop="minCost">
-        <el-input
-          v-model="queryParams.minCost"
-          placeholder="请输入最小投注金额"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="周期" prop="cycle">
-        <el-input
-          v-model="queryParams.cycle"
-          placeholder="请输入周期"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+<!--      <el-form-item label="最小投注金额" prop="minCost">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.minCost"-->
+<!--          placeholder="请输入最小投注金额"-->
+<!--          clearable-->
+<!--          size="small"-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="周期" prop="cycle">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.cycle"-->
+<!--          placeholder="请输入周期"-->
+<!--          clearable-->
+<!--          size="small"-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -104,6 +105,22 @@ export default {
   },
   data() {
     return {
+      //状态选择栏
+      status: [{
+        value: '1',
+        label: '启用'
+      }, {
+        value: '0',
+        label: '禁用'
+      }],
+      //开奖形式选择栏
+      official: [{
+        value: '0',
+        label: '官方'
+      }, {
+        value: '1',
+        label: '自开'
+      }],
       // 遮罩层
       loading: true,
       // 选中数组

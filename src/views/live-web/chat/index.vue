@@ -115,7 +115,7 @@
     <el-dialog v-dialogDrag title="查看封停ip" :visible.sync="speakIpBlackListList" width="750px" append-to-body>
       <el-table :stripe="true" v-loading="loading"  :data="speakIpBlackData" >
         <el-table-column type="selection" width="55" align="center" />
-        <el-table-column label="会员ID" align="center" prop="id" />
+        <el-table-column label="会员ID" align="center" prop="userId" />
         <el-table-column label="会员ip" align="center" prop="userIp" />
         <el-table-column label="封停时间" align="center" prop="createTime" />
       </el-table>

@@ -138,7 +138,7 @@
           <el-input v-model="form.title" placeholder="请输入标题"/>
         </el-form-item>
         <el-form-item label="内容">
-          <el-input v-model="form.content" type="textarea" placeholder="请输入内容" rows="5" />
+          <el-input v-model="form.content" type="textarea" placeholder="请输入内容" rows="5"/>
         </el-form-item>
         <el-form-item label="排序" prop="indexs">
           <el-input v-model="form.indexs" placeholder="请输入排序"/>
@@ -181,13 +181,10 @@ import {
   updateHomeNotice,
   exportHomeNotice
 } from '@/api/activity/homeNotice'
-import Editor from '@/components/Editor'
 
 export default {
   name: 'HomeNotice',
-  components: {
-    Editor
-  },
+  components: {},
   data() {
     return {
       // 遮罩层

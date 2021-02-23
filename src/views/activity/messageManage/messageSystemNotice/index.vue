@@ -134,12 +134,10 @@
 
 <script>
 import { listMessageSystemNotice, getMessageSystemNotice, delMessageSystemNotice, addMessageSystemNotice, updateMessageSystemNotice, exportMessageSystemNotice } from "@/api/activity/messageSystemNotice";
-import Editor from '@/components/Editor';
 
 export default {
   name: "MessageSystemNotice",
   components: {
-    Editor,
   },
   data() {
     return {

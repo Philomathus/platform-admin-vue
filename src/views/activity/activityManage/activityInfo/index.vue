@@ -158,7 +158,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="活动详情">
-          <editor v-model="form.content" :min-height="192"/>
+          <editor v-model="form.content" path="ActivityInfo"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -180,7 +180,7 @@ import {
   activityTypes
 } from "@/api/activity/activityInfo";
 import ImageUpload from "@/components/ImageUpload";
-import Editor from "@/components/Editor";
+import Editor from "@/components/WangEditor";
 
 export default {
   name: "ActivityInfo",

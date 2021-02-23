@@ -169,7 +169,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="开放层级" prop="openLevel">
-          <el-input type="number" v-model="form.openLevel" placeholder="请输入开放层级"  />
+          <el-input type="number" v-model="form.openLevel" placeholder="请输入开放层级"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -191,13 +191,11 @@ import {
   changePayTypeStatus,
   changeRecommendStatus
 } from '@/api/platform-web/pay/payType'
-import Editor from '@/components/Editor/index'
 import ImageUpload from '@/components/ImageUpload'
 
 export default {
   name: 'PayType',
   components: {
-    Editor,
     ImageUpload
   },
   data() {

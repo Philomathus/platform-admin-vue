@@ -23,6 +23,10 @@ export default {
       fullLoading: false
     }
   },
+  model: {
+    prop: 'value',
+    event: 'change'
+  },
   props: {
     value: {
       type: String,
@@ -61,6 +65,9 @@ export default {
         }
       }
       this.editor.config.uploadImgTimeout = 3 * 60 * 1000
+      this.editor.config.onchange = (html) => {
+        this.$emit('change', html)
+      }
       this.editor.create()
       this.fullLoading = false
     }

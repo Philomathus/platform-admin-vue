@@ -55,7 +55,7 @@
 
     <el-table stripe v-loading="loading" :data="lotteryGameList">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键" align="center" prop="id" />
+<!--      <el-table-column label="主键" align="center" prop="id" />-->
       <el-table-column label="菜单id" align="center" prop="methodId" />
       <el-table-column label="类型" align="center" prop="type" />
       <el-table-column label="简介" align="center" prop="info" />

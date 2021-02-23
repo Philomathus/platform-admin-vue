@@ -48,41 +48,50 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-<!--      <el-form-item label="最小投注金额" prop="minCost">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.minCost"-->
-<!--          placeholder="请输入最小投注金额"-->
-<!--          clearable-->
-<!--          size="small"-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
-<!--      <el-form-item label="周期" prop="cycle">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.cycle"-->
-<!--          placeholder="请输入周期"-->
-<!--          clearable-->
-<!--          size="small"-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
+      <!--      <el-form-item label="最小投注金额" prop="minCost">-->
+      <!--        <el-input-->
+      <!--          v-model="queryParams.minCost"-->
+      <!--          placeholder="请输入最小投注金额"-->
+      <!--          clearable-->
+      <!--          size="small"-->
+      <!--          @keyup.enter.native="handleQuery"-->
+      <!--        />-->
+      <!--      </el-form-item>-->
+      <!--      <el-form-item label="周期" prop="cycle">-->
+      <!--        <el-input-->
+      <!--          v-model="queryParams.cycle"-->
+      <!--          placeholder="请输入周期"-->
+      <!--          clearable-->
+      <!--          size="small"-->
+      <!--          @keyup.enter.native="handleQuery"-->
+      <!--        />-->
+      <!--      </el-form-item>-->
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
-    <el-table stripe v-loading="loading" :data="lotteryInfoList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="彩种编号" align="center" prop="id" />
-      <el-table-column label="彩种名称" align="center" prop="name" />
-      <el-table-column label="类型" align="center" prop="type" />
-      <el-table-column label="1 启用 0 禁用" align="center" prop="status" />
-      <el-table-column label="图标" align="center" prop="icon" />
-      <el-table-column label="0=官方1=自开" align="center" prop="official" />
-      <el-table-column label="杀率" align="center" prop="killRate" />
-      <el-table-column label="最小投注金额" align="center" prop="minCost" />
-      <el-table-column label="周期" align="center" prop="cycle" />
+    <el-table stripe v-loading="loading" :data="lotteryInfoList">
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="彩种编号" align="center" prop="id"/>
+      <el-table-column label="彩种名称" align="center" prop="name"/>
+      <el-table-column label="类型" align="center" prop="type"/>
+      <el-table-column label="状态" align="center" prop="status" :formatter="formatterStatus"/>
+      <el-table-column label="图标" align="center" prop="icon">
+        <template slot-scope="scope">
+          <el-image
+            style="height:50px"
+            :src="scope.row.icon"
+            fit="contain"
+          >
+          </el-image>
+        </template>
+      </el-table-column>
+      <el-table-column label="开奖形式" align="center" prop="official" :formatter="formatterofficial"/>
+      <el-table-column label="杀率" align="center" prop="killRate"/>
+      <el-table-column label="最小投注金额" align="center" prop="minCost"/>
+      <el-table-column label="周期" align="center" prop="cycle"/>
     </el-table>
 
     <pagination
@@ -97,12 +106,11 @@
 </template>
 
 <script>
-import { listLotteryInfo, } from "@/api/platform-web/lottery/lotteryInfo";
+import {listLotteryInfo,} from "@/api/platform-web/lottery/lotteryInfo";
 
 export default {
   name: "LotteryInfo",
-  components: {
-  },
+  components: {},
   data() {
     return {
       //状态选择栏
@@ -119,7 +127,10 @@ export default {
         label: '官方'
       }, {
         value: '1',
-        label: '自开'
+        label: '自开(数据库)'
+      }, {
+        value: '2',
+        label: '自开(程序)'
       }],
       // 遮罩层
       loading: true,
@@ -157,7 +168,7 @@ export default {
       // 表单校验
       rules: {
         name: [
-          { required: true, message: "彩种名称不能为空", trigger: "blur" }
+          {required: true, message: "彩种名称不能为空", trigger: "blur"}
         ]
       }
     };
@@ -174,6 +185,26 @@ export default {
         this.total = response.total;
         this.loading = false;
       });
+    },
+    // 0=官方1=自开（数据库）2=自开（程序）
+    formatterofficial(row) {
+      if (row.official == 0) {
+        return '官方'
+      } else if (row.official == 1) {
+        return '自开（数据库）'
+      } else {
+        return '自开（程序）'
+      }
+    },
+    // 禁用启用
+    formatterStatus(row) {
+      if (row.status == 0) {
+        return '禁用'
+      } else if (row.status == 1) {
+        return '启用'
+      } else {
+        return '未知'
+      }
     },
     // 取消按钮
     cancel() {

@@ -30,10 +30,10 @@
       </el-form-item>
       <el-form-item label="开奖时间" prop="ktime">
         <el-date-picker clearable size="small"
-          v-model="queryParams.ktime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="选择开奖时间">
+                        v-model="queryParams.ktime"
+                        type="date"
+                        value-format="yyyy-MM-dd"
+                        placeholder="选择开奖时间">
         </el-date-picker>
       </el-form-item>
       <el-form-item label="状态" prop="status">
@@ -55,33 +55,33 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-<!--      <el-form-item label="自开实际杀率" prop="killRate">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.killRate"-->
-<!--          placeholder="请输入自开实际杀率"-->
-<!--          clearable-->
-<!--          size="small"-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
-<!--      <el-form-item label="总投注" prop="totalBet">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.totalBet"-->
-<!--          placeholder="请输入总投注"-->
-<!--          clearable-->
-<!--          size="small"-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
-<!--      <el-form-item label="预计派奖总额" prop="totalPrize">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.totalPrize"-->
-<!--          placeholder="请输入预计派奖总额"-->
-<!--          clearable-->
-<!--          size="small"-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
+      <!--      <el-form-item label="自开实际杀率" prop="killRate">-->
+      <!--        <el-input-->
+      <!--          v-model="queryParams.killRate"-->
+      <!--          placeholder="请输入自开实际杀率"-->
+      <!--          clearable-->
+      <!--          size="small"-->
+      <!--          @keyup.enter.native="handleQuery"-->
+      <!--        />-->
+      <!--      </el-form-item>-->
+      <!--      <el-form-item label="总投注" prop="totalBet">-->
+      <!--        <el-input-->
+      <!--          v-model="queryParams.totalBet"-->
+      <!--          placeholder="请输入总投注"-->
+      <!--          clearable-->
+      <!--          size="small"-->
+      <!--          @keyup.enter.native="handleQuery"-->
+      <!--        />-->
+      <!--      </el-form-item>-->
+      <!--      <el-form-item label="预计派奖总额" prop="totalPrize">-->
+      <!--        <el-input-->
+      <!--          v-model="queryParams.totalPrize"-->
+      <!--          placeholder="请输入预计派奖总额"-->
+      <!--          clearable-->
+      <!--          size="small"-->
+      <!--          @keyup.enter.native="handleQuery"-->
+      <!--        />-->
+      <!--      </el-form-item>-->
       <el-form-item label="杀法" prop="ctl">
         <el-select v-model="queryParams.ctl" placeholder="请选择杀法" clearable size="small">
           <el-option
@@ -92,15 +92,15 @@
           </el-option>
         </el-select>
       </el-form-item>
-<!--      <el-form-item label="开奖分析" prop="analyse">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.analyse"-->
-<!--          placeholder="请输入开奖分析"-->
-<!--          clearable-->
-<!--          size="small"-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
+      <!--      <el-form-item label="开奖分析" prop="analyse">-->
+      <!--        <el-input-->
+      <!--          v-model="queryParams.analyse"-->
+      <!--          placeholder="请输入开奖分析"-->
+      <!--          clearable-->
+      <!--          size="small"-->
+      <!--          @keyup.enter.native="handleQuery"-->
+      <!--        />-->
+      <!--      </el-form-item>-->
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -108,19 +108,23 @@
     </el-form>
 
     <el-table stripe v-loading="loading" :data="lotteryHistoryList">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="ID" align="center" prop="id" />
-      <el-table-column label="期数" align="center" prop="issue" />
-      <el-table-column label="所属彩种" align="center" prop="lotteryId" />
-      <el-table-column label="开奖号码" align="center" prop="code" />
-      <el-table-column label="开奖时间" align="center" prop="ktime" />
-      <el-table-column label="状态" align="center" prop="status" />
-      <el-table-column label="彩票名称" align="center" prop="name" />
-      <el-table-column label="自开实际杀率" align="center" prop="killRate" />
-      <el-table-column label="总投注" align="center" prop="totalBet" />
-      <el-table-column label="预计派奖总额" align="center" prop="totalPrize" />
-      <el-table-column label="杀法" align="center" prop="ctl" />
-      <el-table-column label="开奖分析" align="center" prop="analyse" />
+      <el-table-column type="selection" width="55" align="center"/>
+<!--      <el-table-column label="ID" align="center" prop="id"/>-->
+      <el-table-column label="期数" align="center" prop="issue"/>
+      <el-table-column label="所属彩种" align="center" prop="lotteryId"/>
+      <el-table-column label="开奖号码" align="center" prop="code"/>
+      <el-table-column label="开奖时间" min-width="160px" align="center" prop="ktime">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.ktime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="状态" align="center" prop="status" :formatter="formatterStatus"/>
+      <el-table-column label="彩票名称" align="center" prop="name"/>
+      <el-table-column label="自开实际杀率" align="center" prop="killRate"/>
+      <el-table-column label="总投注" align="center" prop="totalBet"/>
+      <el-table-column label="预计派奖总额" align="center" prop="totalPrize"/>
+      <el-table-column label="杀法" align="center" prop="ctl" :formatter="formatterctl"/>
+      <el-table-column label="开奖分析" align="center" prop="analyse"/>
     </el-table>
 
     <pagination
@@ -135,12 +139,11 @@
 </template>
 
 <script>
-import { listLotteryHistory } from "@/api/platform-web/lottery/lotteryHistory";
+import {listLotteryHistory} from "@/api/platform-web/lottery/lotteryHistory";
 
 export default {
   name: "LotteryHistory",
-  components: {
-  },
+  components: {},
   data() {
     return {
       //状态选择栏
@@ -204,7 +207,7 @@ export default {
       // 表单校验
       rules: {
         ktime: [
-          { required: true, message: "开奖时间不能为空", trigger: "blur" }
+          {required: true, message: "开奖时间不能为空", trigger: "blur"}
         ],
       }
     };
@@ -221,6 +224,27 @@ export default {
         this.total = response.total;
         this.loading = false;
       });
+    },
+    // 0=投注中1=已开奖2=已派奖3=开奖失败
+    formatterStatus(row) {
+      if (row.status == 0) {
+        return '投注中'
+      } else if (row.status == 1) {
+        return '已开奖'
+      } else if (row.status == 2) {
+        return '已派奖'
+      } else {
+        return '开奖失败'
+      }
+    },
+    formatterctl(row) {
+      if (row.ctl == 0) {
+        return '未杀'
+      } else if(row.ctl == 1){
+        return '控杀'
+      } else if(row.ctl == null){
+        return ''
+      }
     },
     // 取消按钮
     cancel() {

@@ -117,15 +117,14 @@
       />
       <el-table-column label="状态" align="center" key="status" v-if="columns[3].visible">
         <template slot-scope="scope">
-          <div v-if="scope.row.userName!='admin'">
           <el-switch
+            v-if="scope.row.userId !== 1"
             v-model="scope.row.status"
             active-value="0"
             inactive-value="1"
             @change="handleStatusChange(scope.row)"
           ></el-switch>
-          </div>
-          <span type="text" v-if="scope.row.userName=='admin'">已启用</span>
+          <span type="text" v-else>已启用</span>
         </template>
       </el-table-column>
       <el-table-column label="google验证码" align="center" key="googleAuthSecret" prop="googleAuthSecret"
@@ -144,6 +143,7 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
+            v-if="scope.row.userId !== 1"
             size="mini"
             type="text"
             icon="el-icon-edit"
@@ -161,6 +161,7 @@
           >删除
           </el-button>
           <el-button
+            v-if="scope.row.userId !== 1"
             size="mini"
             type="text"
             icon="el-icon-key"
@@ -168,6 +169,7 @@
             v-hasPermi="['system:user:resetPwd']"
           >重置
           </el-button>
+<!--          <span type="text" v-else>不允许操作admin用户</span>-->
         </template>
       </el-table-column>
     </el-table>

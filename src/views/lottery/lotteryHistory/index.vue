@@ -1,6 +1,26 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+      <el-form-item label="状态" prop="status">
+        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small">
+          <el-option
+            v-for="item in status"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="杀法" prop="ctl">
+        <el-select v-model="queryParams.ctl" placeholder="请选择杀法" clearable size="small">
+          <el-option
+            v-for="item in ctl"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item label="期数" prop="issue">
         <el-input
           v-model="queryParams.issue"
@@ -35,16 +55,6 @@
                         value-format="yyyy-MM-dd"
                         placeholder="选择开奖时间">
         </el-date-picker>
-      </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small">
-          <el-option
-            v-for="item in status"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
       </el-form-item>
       <el-form-item label="彩票名称" prop="name">
         <el-input
@@ -82,16 +92,6 @@
       <!--          @keyup.enter.native="handleQuery"-->
       <!--        />-->
       <!--      </el-form-item>-->
-      <el-form-item label="杀法" prop="ctl">
-        <el-select v-model="queryParams.ctl" placeholder="请选择杀法" clearable size="small">
-          <el-option
-            v-for="item in ctl"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-      </el-form-item>
       <!--      <el-form-item label="开奖分析" prop="analyse">-->
       <!--        <el-input-->
       <!--          v-model="queryParams.analyse"-->

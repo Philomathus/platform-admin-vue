@@ -1,24 +1,6 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="彩种名称" prop="name">
-        <el-input
-          v-model="queryParams.name"
-          placeholder="请输入彩种名称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="类型" prop="type">
-        <el-input
-          v-model="queryParams.type"
-          placeholder="请输入类型"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item label="状态" prop="status">
         <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small">
           <el-option
@@ -38,6 +20,24 @@
             :value="item.value">
           </el-option>
         </el-select>
+      </el-form-item>
+      <el-form-item label="彩种名称" prop="name">
+        <el-input
+          v-model="queryParams.name"
+          placeholder="请输入彩种名称"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="类型" prop="type">
+        <el-input
+          v-model="queryParams.type"
+          placeholder="请输入类型"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
       <el-form-item label="杀率" prop="killRate">
         <el-input

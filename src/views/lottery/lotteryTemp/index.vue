@@ -1,14 +1,15 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="当前期数" prop="issue">
-        <el-input
-          v-model="queryParams.issue"
-          placeholder="请输入当前期数"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+      <el-form-item label="开启封盘" prop="su">
+        <el-select v-model="queryParams.su" placeholder="请选择开启封盘状态" clearable size="small">
+          <el-option
+            v-for="item in su"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="开奖时间" prop="ktime">
         <el-date-picker clearable size="small"
@@ -17,6 +18,15 @@
           value-format="yyyy-MM-dd"
           placeholder="选择开奖时间">
         </el-date-picker>
+      </el-form-item>
+      <el-form-item label="当前期数" prop="issue">
+        <el-input
+          v-model="queryParams.issue"
+          placeholder="请输入当前期数"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
       <el-form-item label="上期期号" prop="issueJust">
         <el-input
@@ -35,16 +45,6 @@
           size="small"
           @keyup.enter.native="handleQuery"
         />
-      </el-form-item>
-      <el-form-item label="开启封盘" prop="su">
-        <el-select v-model="queryParams.su" placeholder="请选择开启封盘状态" clearable size="small">
-          <el-option
-            v-for="item in su"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>

@@ -10,15 +10,15 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-<!--      <el-form-item label="排序键" prop="order">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.order"-->
-<!--          placeholder="请输入排序键"-->
-<!--          clearable-->
-<!--          size="small"-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
+      <!--      <el-form-item label="排序键" prop="order">-->
+      <!--        <el-input-->
+      <!--          v-model="queryParams.order"-->
+      <!--          placeholder="请输入排序键"-->
+      <!--          clearable-->
+      <!--          size="small"-->
+      <!--          @keyup.enter.native="handleQuery"-->
+      <!--        />-->
+      <!--      </el-form-item>-->
       <el-form-item label="投注名称" prop="name">
         <el-input
           v-model="queryParams.name"
@@ -28,15 +28,15 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-<!--      <el-form-item label="排序键" prop="ind">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.ind"-->
-<!--          placeholder="请输入排序键"-->
-<!--          clearable-->
-<!--          size="small"-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
+      <!--      <el-form-item label="排序键" prop="ind">-->
+      <!--        <el-input-->
+      <!--          v-model="queryParams.ind"-->
+      <!--          placeholder="请输入排序键"-->
+      <!--          clearable-->
+      <!--          size="small"-->
+      <!--          @keyup.enter.native="handleQuery"-->
+      <!--        />-->
+      <!--      </el-form-item>-->
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -45,12 +45,12 @@
 
 
     <el-table stripe v-loading="loading" :data="lotteryMethodList">
-      <el-table-column width="55" align="center" />
-<!--      <el-table-column label="ID" align="center" prop="id" />-->
-      <el-table-column label="所属彩种类型" align="center" prop="lotteryType" />
-      <el-table-column label="投注名称" align="center" prop="name" />
-      <el-table-column label="排序键order" align="center" prop="order" />
-      <el-table-column label="排序键ind" align="center" prop="ind" />
+      <el-table-column width="55" align="center"/>
+      <!--      <el-table-column label="ID" align="center" prop="id" />-->
+      <el-table-column label="所属彩种类型" align="center" prop="lotteryType"/>
+      <el-table-column label="投注名称" align="center" prop="name"/>
+      <el-table-column label="排序键order" align="center" prop="order"/>
+      <el-table-column label="排序键ind" align="center" prop="ind"/>
     </el-table>
 
     <pagination
@@ -65,12 +65,11 @@
 </template>
 
 <script>
-import { listLotteryMethod } from "@/api/platform-web/lottery/lotteryMethod";
+import {listLotteryMethod} from "@/api/platform-web/lottery/lotteryMethod";
 
 export default {
   name: "LotteryMethod",
-  components: {
-  },
+  components: {},
   data() {
     return {
       // 遮罩层
@@ -105,7 +104,7 @@ export default {
       // 表单校验
       rules: {
         lotteryType: [
-          { required: true, message: "所属彩种类型不能为空", trigger: "change" }
+          {required: true, message: "所属彩种类型不能为空", trigger: "change"}
         ]
       }
     };

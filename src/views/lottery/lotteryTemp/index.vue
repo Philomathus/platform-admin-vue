@@ -13,10 +13,10 @@
       </el-form-item>
       <el-form-item label="开奖时间" prop="ktime">
         <el-date-picker clearable size="small"
-          v-model="queryParams.ktime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="选择开奖时间">
+                        v-model="queryParams.ktime"
+                        type="date"
+                        value-format="yyyy-MM-dd"
+                        placeholder="选择开奖时间">
         </el-date-picker>
       </el-form-item>
       <el-form-item label="当前期数" prop="issue">
@@ -53,12 +53,12 @@
     </el-form>
 
 
-    <el-table stripe v-loading="loading" :data="lotteryTempList" >
-      <el-table-column width="55" align="center" />
-      <el-table-column label="彩种id" align="center" prop="id" />
-      <el-table-column label="当前期数" align="center" prop="issue" />
-      <el-table-column label="上期期号" align="center" prop="issueJust" />
-      <el-table-column label="上期开奖" align="center" prop="codeJust" />
+    <el-table stripe v-loading="loading" :data="lotteryTempList">
+      <el-table-column width="55" align="center"/>
+      <el-table-column label="彩种id" align="center" prop="id"/>
+      <el-table-column label="当前期数" align="center" prop="issue"/>
+      <el-table-column label="上期期号" align="center" prop="issueJust"/>
+      <el-table-column label="上期开奖" align="center" prop="codeJust"/>
       <el-table-column label="开启或封盘" align="center" prop="su" :formatter="formattersu"/>
       <el-table-column label="开奖时间" align="center" prop="ktime" width="180">
         <template slot-scope="scope">
@@ -79,12 +79,11 @@
 </template>
 
 <script>
-import { listLotteryTemp } from "@/api/platform-web/lottery/lotteryTemp";
+import {listLotteryTemp} from "@/api/platform-web/lottery/lotteryTemp";
 
 export default {
   name: "LotteryTemp",
-  components: {
-  },
+  components: {},
   data() {
     return {
       //开启封盘选择栏
@@ -126,8 +125,7 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {
-      }
+      rules: {}
     };
   },
   created() {
@@ -150,7 +148,7 @@ export default {
       } else if (row.su == 1) {
         return '封盘中'
       } else {
-        return '未知'
+        return ''
       }
     },
     // 取消按钮

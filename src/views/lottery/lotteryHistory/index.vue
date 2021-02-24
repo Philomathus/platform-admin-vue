@@ -109,16 +109,17 @@
 
     <el-table stripe v-loading="loading" :data="lotteryHistoryList">
       <el-table-column width="55" align="center"/>
-<!--      <el-table-column label="ID" align="center" prop="id"/>-->
+      <!--      <el-table-column label="ID" align="center" prop="id"/>-->
       <el-table-column label="期数" align="center" prop="issue"/>
       <el-table-column label="所属彩种" align="center" prop="lotteryId"/>
       <el-table-column label="开奖号码" align="center" prop="code"/>
       <el-table-column label="状态" align="center" prop="status" :formatter="formatterStatus"/>
-      <el-table-column label="彩票名称" align="center" prop="name"/><el-table-column label="开奖时间" min-width="160px" align="center" prop="ktime">
-      <template slot-scope="scope">
-        <span>{{ parseTime(scope.row.ktime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
-      </template>
-    </el-table-column>
+      <el-table-column label="彩票名称" align="center" prop="name"/>
+      <el-table-column label="开奖时间" min-width="160px" align="center" prop="ktime">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.ktime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="自开实际杀率" align="center" prop="killRate"/>
       <el-table-column label="总投注" align="center" prop="totalBet"/>
       <el-table-column label="预计派奖总额" align="center" prop="totalPrize"/>
@@ -232,16 +233,18 @@ export default {
         return '已开奖'
       } else if (row.status == 2) {
         return '已派奖'
-      } else {
+      } else if (row.status == 3) {
         return '开奖失败'
+      } else {
+        return ''
       }
     },
     formatterctl(row) {
       if (row.ctl == 0) {
         return '未杀'
-      } else if(row.ctl == 1){
+      } else if (row.ctl == 1) {
         return '控杀'
-      } else if(row.ctl == null){
+      } else if (row.ctl == null) {
         return ''
       }
     },

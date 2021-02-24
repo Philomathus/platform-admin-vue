@@ -54,14 +54,14 @@
 
 
     <el-table stripe v-loading="loading" :data="lotteryGameList">
-      <el-table-column width="55" align="center" />
-<!--      <el-table-column label="主键" align="center" prop="id" />-->
-      <el-table-column label="菜单id" align="center" prop="methodId" />
-      <el-table-column label="类型" align="center" prop="type" />
-      <el-table-column label="简介" align="center" prop="info" />
-      <el-table-column label="赔率" align="center" prop="odds" />
-      <el-table-column label="获奖规则" align="center" prop="victoryRule" />
-      <el-table-column label="唯一编号" align="center" prop="ind" />
+      <el-table-column width="55" align="center"/>
+      <!--      <el-table-column label="主键" align="center" prop="id" />-->
+      <el-table-column label="菜单id" align="center" prop="methodId"/>
+      <el-table-column label="类型" align="center" prop="type"/>
+      <el-table-column label="简介" align="center" prop="info"/>
+      <el-table-column label="赔率" align="center" prop="odds"/>
+      <el-table-column label="获奖规则" align="center" prop="victoryRule"/>
+      <el-table-column label="唯一编号" align="center" prop="ind"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -70,7 +70,8 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:lotteryGame:edit']"
-          >修改赔率</el-button>
+          >修改赔率
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -84,10 +85,11 @@
     />
 
     <!-- 修改赔率对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="300px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="300px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="40px">
         <el-form-item label="赔率" prop="odds">
-          <el-input v-model="form.odds" placeholder="请输入赔率" />
+          <el-input v-model="form.odds" placeholder="请输入赔率"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -99,12 +101,11 @@
 </template>
 
 <script>
-import { listLotteryGame, getLotteryGame, updateLotteryGame } from "@/api/platform-web/lottery/lotteryGame";
+import {listLotteryGame, getLotteryGame, updateLotteryGame} from "@/api/platform-web/lottery/lotteryGame";
 
 export default {
   name: "LotteryGame",
-  components: {
-  },
+  components: {},
   data() {
     return {
       // 遮罩层
@@ -141,8 +142,7 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {
-      }
+      rules: {}
     };
   },
   created() {

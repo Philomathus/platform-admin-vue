@@ -192,8 +192,10 @@ export default {
         return '官方'
       } else if (row.official == 1) {
         return '自开（数据库）'
-      } else {
+      } else if (row.official == 2) {
         return '自开（程序）'
+      } else {
+        return ''
       }
     },
     // 禁用启用

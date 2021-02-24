@@ -199,7 +199,6 @@ export default {
     })
     this.getDicts('liveStatus').then(response => {
       this.statusOptions = response.data
-      console.info(this.statusOptions)
     })
   },
   methods: {

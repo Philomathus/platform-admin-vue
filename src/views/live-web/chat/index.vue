@@ -126,7 +126,7 @@
         <el-form-item label="会员ip" prop="userIp">
           <el-input
             v-model="queryParams.userIp"
-            placeholder="会员id"
+            placeholder="会员ip"
             clearable
             size="small"
             @keyup.enter.native="handleQuery"

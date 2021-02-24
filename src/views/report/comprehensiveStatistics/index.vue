@@ -77,7 +77,6 @@ export default {
     }
   },
   created() {
-    this.getlistStorage()
     this.getList()
 
   },

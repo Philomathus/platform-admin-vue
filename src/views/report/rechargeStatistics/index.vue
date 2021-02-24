@@ -111,7 +111,6 @@ export default {
     }
   },
   created() {
-    this.getliststorage()
     this.getList()
     this.count()
   },

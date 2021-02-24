@@ -54,33 +54,33 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['system:user:add']"
-        >新增
+        >新增用户
         </el-button>
       </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['system:user:edit']"
-        >修改
-        </el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['system:user:remove']"
-        >删除
-        </el-button>
-      </el-col>
+<!--      <el-col :span="1.5">-->
+<!--        <el-button-->
+<!--          type="success"-->
+<!--          plain-->
+<!--          icon="el-icon-edit"-->
+<!--          size="mini"-->
+<!--          :disabled="single"-->
+<!--          @click="handleUpdate"-->
+<!--          v-hasPermi="['system:user:edit']"-->
+<!--        >修改-->
+<!--        </el-button>-->
+<!--      </el-col>-->
+<!--      <el-col :span="1.5">-->
+<!--        <el-button-->
+<!--          type="danger"-->
+<!--          plain-->
+<!--          icon="el-icon-delete"-->
+<!--          size="mini"-->
+<!--          :disabled="multiple"-->
+<!--          @click="handleDelete"-->
+<!--          v-hasPermi="['system:user:remove']"-->
+<!--        >删除-->
+<!--        </el-button>-->
+<!--      </el-col>-->
 <!--      <el-col :span="1.5">-->
 <!--        <el-button-->
 <!--          type="info"-->
@@ -107,8 +107,8 @@
     </el-row>
 
     <el-table stripe v-loading="loading" :data="userList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="50" align="center"/>
-      <el-table-column label="用户编号" align="center" key="userId" prop="userId" v-if="columns[0].visible"/>
+      <el-table-column width="50" align="center"/>
+<!--      <el-table-column label="用户编号" align="center" key="userId" prop="userId" v-if="columns[0].visible"/>-->
       <el-table-column label="用户名称" align="center" key="userName" prop="userName" v-if="columns[1].visible"
                        :show-overflow-tooltip="true"
       />
@@ -117,15 +117,14 @@
       />
       <el-table-column label="状态" align="center" key="status" v-if="columns[3].visible">
         <template slot-scope="scope">
-          <div v-if="scope.row.userName!='admin'">
           <el-switch
+            v-if="scope.row.userId !== 1"
             v-model="scope.row.status"
             active-value="0"
             inactive-value="1"
             @change="handleStatusChange(scope.row)"
           ></el-switch>
-          </div>
-          <span type="text" v-if="scope.row.userName=='admin'">已启用</span>
+          <span type="text" v-else>已启用</span>
         </template>
       </el-table-column>
       <el-table-column label="google验证码" align="center" key="googleAuthSecret" prop="googleAuthSecret"
@@ -142,7 +141,7 @@
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template slot-scope="scope" v-if="scope.row.userId !== 1">
           <el-button
             size="mini"
             type="text"
@@ -152,7 +151,6 @@
           >修改
           </el-button>
           <el-button
-            v-if="scope.row.userId !== 1"
             size="mini"
             type="text"
             icon="el-icon-delete"
@@ -168,6 +166,7 @@
             v-hasPermi="['system:user:resetPwd']"
           >重置
           </el-button>
+<!--          <span type="text" v-else>不允许操作admin用户</span>-->
         </template>
       </el-table-column>
     </el-table>

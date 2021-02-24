@@ -121,7 +121,6 @@ export default {
     }
   },
   created() {
-    this.getListstorage()
     this.getList()
   },
   methods: {

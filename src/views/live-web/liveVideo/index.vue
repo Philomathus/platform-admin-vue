@@ -67,6 +67,12 @@
       <el-table-column label="推荐" min-width="120" align="center" prop="isRecommend" :formatter="isRecommendFormat"/>
       <el-table-column label="固定位置" min-width="120" align="center" prop="sort"/>
       <el-table-column label="线路名称" min-width="120" align="center" prop="name"/>
+<!--      <el-table-column label="直播性质" min-width="120" align="center" prop="liveStatus" :formatter="liveStatus"/>-->
+      <el-table-column label="直播性质" align="center" prop="liveStatus" width="100px">
+        <template slot-scope="scope">
+          <span :style="{color: (status = statusOptions[parseInt(scope.row.liveStatus)+1]).color}">{{ status.dictLabel }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="直播状态" min-width="120" align="center" prop="liveStatus" :formatter="statusFormat"/>
       <el-table-column label="彩种" min-width="120" align="center" prop="lotteryName"/>
       <el-table-column label="收费" min-width="120" align="center" prop="isLivePay" :formatter="isLivePayFormat"/>
@@ -160,6 +166,7 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
+      statusOptions: [],
       // 直播表格数据
       liveVideoList: [],
       serverOptions: [],
@@ -189,6 +196,9 @@ export default {
     })
     this.getDicts('videoType').then(response => {
       this.typeOptions = response.data
+    })
+    this.getDicts('liveStatus').then(response => {
+      this.statusOptions = response.data
     })
   },
   methods: {

@@ -123,6 +123,7 @@
       <el-table-column label="抽奖历史id" align="center" prop="wheelHistoryId" />
       <el-table-column label="用户id" align="center" prop="puserId" />
       <el-table-column label="用户昵称" align="center" prop="nickName" />
+      <el-table-column label="中奖金额" align="center" prop="prize" :formatter="formatterPrize"/>
       <el-table-column label="游戏大区" align="center" prop="daQu" />
       <el-table-column label="游戏昵称" align="center" prop="name" />
       <el-table-column label="皮肤名称" align="center" prop="skin" />
@@ -270,6 +271,9 @@ export default {
         }
       });
       return msg;
+    },
+    formatterPrize(row){
+      return row.prize + '元';
     },
     /** 查询转盘皮肤领取列表 */
     getList() {

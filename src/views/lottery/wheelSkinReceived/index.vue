@@ -129,7 +129,7 @@
       <el-table-column label="皮肤名称" align="center" prop="skin" />
       <el-table-column label="领取状态" align="center" prop="receiveType" :formatter="formatterType" >
         <template v-slot="{row}">
-          <el-select v-model="row.receiveType" placeholder="请选择领取状态" clearable size="small" @change="changeReceivedType(row)">
+          <el-select v-model="row.receiveType" placeholder="请选择领取状态" size="small" @change="changeReceivedType(row)">
             <el-option
               v-for="dict in typeList "
               :key="dict.dictValue"

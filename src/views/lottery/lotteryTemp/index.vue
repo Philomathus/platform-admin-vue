@@ -54,7 +54,7 @@
 
 
     <el-table stripe v-loading="loading" :data="lotteryTempList" >
-      <el-table-column type="selection" width="55" align="center" />
+      <el-table-column width="55" align="center" />
       <el-table-column label="彩种id" align="center" prop="id" />
       <el-table-column label="当前期数" align="center" prop="issue" />
       <el-table-column label="上期期号" align="center" prop="issueJust" />

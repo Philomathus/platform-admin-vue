@@ -73,7 +73,7 @@
     </el-form>
 
     <el-table stripe v-loading="loading" :data="lotteryInfoList">
-      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column width="55" align="center"/>
       <el-table-column label="彩种编号" align="center" prop="id"/>
       <el-table-column label="彩种名称" align="center" prop="name"/>
       <el-table-column label="类型" align="center" prop="type"/>

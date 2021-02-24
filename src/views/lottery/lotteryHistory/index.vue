@@ -108,7 +108,7 @@
     </el-form>
 
     <el-table stripe v-loading="loading" :data="lotteryHistoryList">
-      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column width="55" align="center"/>
 <!--      <el-table-column label="ID" align="center" prop="id"/>-->
       <el-table-column label="期数" align="center" prop="issue"/>
       <el-table-column label="所属彩种" align="center" prop="lotteryId"/>

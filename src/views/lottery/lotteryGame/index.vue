@@ -70,7 +70,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:lotteryGame:edit']"
-          >修改</el-button>
+          >修改赔率</el-button>
         </template>
       </el-table-column>
     </el-table>

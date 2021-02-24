@@ -57,14 +57,14 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="彩种id" align="center" prop="id" />
       <el-table-column label="当前期数" align="center" prop="issue" />
+      <el-table-column label="上期期号" align="center" prop="issueJust" />
+      <el-table-column label="上期开奖" align="center" prop="codeJust" />
+      <el-table-column label="开启或封盘" align="center" prop="su" :formatter="formattersu"/>
       <el-table-column label="开奖时间" align="center" prop="ktime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.ktime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="上期期号" align="center" prop="issueJust" />
-      <el-table-column label="上期开奖" align="center" prop="codeJust" />
-      <el-table-column label="开启或封盘" align="center" prop="su" />
     </el-table>
 
     <pagination
@@ -142,6 +142,16 @@ export default {
         this.total = response.total;
         this.loading = false;
       });
+    },
+    //开启封盘
+    formattersu(row) {
+      if (row.su == 0) {
+        return '开启中'
+      } else if (row.su == 1) {
+        return '封盘中'
+      } else {
+        return '未知'
+      }
     },
     // 取消按钮
     cancel() {

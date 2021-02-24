@@ -46,11 +46,11 @@
 
     <el-table stripe v-loading="loading" :data="lotteryMethodList">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="ID" align="center" prop="id" />
+<!--      <el-table-column label="ID" align="center" prop="id" />-->
       <el-table-column label="所属彩种类型" align="center" prop="lotteryType" />
-      <el-table-column label="排序键" align="center" prop="order" />
       <el-table-column label="投注名称" align="center" prop="name" />
-      <el-table-column label="排序键" align="center" prop="ind" />
+      <el-table-column label="排序键order" align="center" prop="order" />
+      <el-table-column label="排序键ind" align="center" prop="ind" />
     </el-table>
 
     <pagination

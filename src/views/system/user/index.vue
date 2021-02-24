@@ -54,7 +54,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['system:user:add']"
-        >新增
+        >新增用户
         </el-button>
       </el-col>
 <!--      <el-col :span="1.5">-->

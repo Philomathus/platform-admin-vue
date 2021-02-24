@@ -113,11 +113,45 @@
 
     <!--查看封停ip-->
     <el-dialog v-dialogDrag title="查看封停ip" :visible.sync="speakIpBlackListList" width="750px" append-to-body>
+      <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+        <el-form-item label="会员id" prop="userId">
+          <el-input
+            v-model="queryParams.userId"
+            placeholder="会员id"
+            clearable
+            size="small"
+            @keyup.enter.native="handleQuery"
+          />
+        </el-form-item>
+        <el-form-item label="会员ip" prop="userIp">
+          <el-input
+            v-model="queryParams.userIp"
+            placeholder="会员id"
+            clearable
+            size="small"
+            @keyup.enter.native="handleQuery"
+          />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQueryIpBlack">搜索</el-button>
+        </el-form-item>
+      </el-form>
+
       <el-table :stripe="true" v-loading="loading"  :data="speakIpBlackData" >
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column label="会员ID" align="center" prop="userId" />
         <el-table-column label="会员ip" align="center" prop="userIp" />
         <el-table-column label="封停时间" align="center" prop="createTime" />
+        <el-table-column label="操作" min-width="60" align="center" class-name="small-padding fixed-width" fixed="right">
+          <template slot-scope="scope">
+            <el-button
+              size="mini"
+              type="text"
+              icon="el-icon-edit"
+              @click="handleUpdateIpBlack(scope.row)"
+            >解封</el-button>
+          </template>
+        </el-table-column>
       </el-table>
       <pagination
         v-show="total>0"
@@ -135,7 +169,7 @@
 import { Forbid,suspendUser,listLiveVideoChat, getLiveVideoChat, delLiveVideoChat, addLiveVideoChat, updateLiveVideoChat, exportLiveVideoChat } from "@/api/live-web/chat/liveVideoChat";
 import request from "@/utils/request";
 import {url} from "@/utils/url";
-import {listSpeakIpBlackList} from "@/api/live-web/chat/speakIpBlackList";
+import {listSpeakIpBlackList,updateSpeakIpBlackList} from "@/api/live-web/chat/speakIpBlackList";
 
 export default {
   name: "LiveVideoChat",
@@ -203,6 +237,7 @@ export default {
       this.speakIpBlackListList = true;
       this.title='查看已封停的ip'
       listSpeakIpBlackList(this.queryParams).then(response => {
+
         this.speakIpBlackData = response.rows;
         this.total = response.total;
         this.loading = false;
@@ -233,6 +268,10 @@ export default {
     handleQuery() {
       this.queryParams.pageNum = 1;
       this.getList();
+    },
+    handleQueryIpBlack(){
+      this.queryParams.pageNum=1;
+      this.openIpBlackList();
     },
     /** 重置按钮操作 */
     resetQuery() {
@@ -274,6 +313,25 @@ export default {
           that.msgSuccess("解封成功");
         })
       }
+    },
+    /** 修改按钮操作 */
+    handleUpdateIpBlack(row) {
+      var that = this;
+        this.$confirm('确定要'+row.userId+'解封吗?', "警告", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(function() {
+          var data={};
+          data.userIp=row.userIp;
+          data.userId=row.userId;
+          return updateSpeakIpBlackList(data);
+        }).then(() => {
+          that.msgSuccess("解封成功");
+          this.openIpBlackList();
+          that.getList();
+        })
+
     },
     handleForbid(row) {
       var that = this;

@@ -134,6 +134,7 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
+        sonPlatformName: null,
         pageNum: 1,
         pageSize: 15,
         gameId: null,
@@ -235,6 +236,7 @@ export default {
     },
     /** 重置按钮操作 */
     resetQuery() {
+      this.queryParams.sonPlatformName = null;
       this.resetForm('queryForm')
       this.handleQuery()
     },

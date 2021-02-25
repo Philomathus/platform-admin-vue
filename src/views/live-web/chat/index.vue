@@ -268,6 +268,14 @@ export default {
   created() {
     this.getList()
   },
+  activated() {
+    this.refreshType = 'primary'
+    this.refreshIcon = 'el-icon-refresh'
+    this.refreshLabel = '开始刷新'
+    this.refreshDesc = ''
+
+    this.stopRefresh()
+  },
   methods: {
     /** 查询会员发言列表 */
     getList() {

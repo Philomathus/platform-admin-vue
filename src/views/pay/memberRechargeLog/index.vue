@@ -281,6 +281,14 @@ export default {
       this.firstStatusOptions = response.data
     })
   },
+  activated() {
+    this.refreshType = 'primary'
+    this.refreshIcon = 'el-icon-refresh'
+    this.refreshLabel = '开始刷新'
+    this.refreshDesc = ''
+
+    this.stopRefresh()
+  },
   methods: {
     listCount() {
       listCount(this.queryParams).then((res) => {

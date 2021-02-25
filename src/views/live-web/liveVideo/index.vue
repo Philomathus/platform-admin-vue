@@ -66,7 +66,7 @@
       <el-table-column label="直播状态" min-width="120" align="center" prop="liveStatus">
         <template slot-scope="scope">
           <span v-if="scope.row.liveStatus === ''">检测中...</span>
-          <span v-else :style="{color: (status = liveStatusOption[parseInt(scope.row.liveStatus)+1]).color}">{{ status.dictLabel }}</span>
+          <span v-else :style="{color: (status = liveStatusOption[parseInt(scope.row.liveStatus)]).color}">{{ status.dictLabel }}</span>
         </template>
       </el-table-column>
       <el-table-column label="彩种" min-width="120" align="center" prop="lotteryName"/>

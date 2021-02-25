@@ -28,7 +28,7 @@ export function addSpeakIpBlackList(data) {
 }
 
 // 修改【请填写功能名称】
-export function updateSpeakIpBlackList(data) {
+export function  updateSpeakIpBlackList(data) {
   return request({
     url: url.platformWeb + '/admin/speakIpBlackList',
     method: 'put',

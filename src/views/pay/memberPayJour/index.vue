@@ -4,7 +4,7 @@
     <el-button type="success" @click="copy2">总成功金额 {{ this.totalData.totalMoney || 0 }}</el-button>
     <el-button type="warning" @click="copy3">补单金额 {{ this.totalData.replenishmentTotalMoney || 0 }}</el-button>
     <el-button type="info" id="copy4" @click="copy4">成功率 {{ numberUtil.toPercent(this.totalData.failRate) }}</el-button>
-    <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 10px" v-show="showSearch" label-width="82px">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 10px" v-show="showSearch" label-width="100px">
       <el-form-item label="回调时间" prop="selectDate" label-width="100px">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
@@ -58,6 +58,19 @@
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+      </el-form-item>
+      <el-form-item label="记录刷新">
+        <el-select v-model="refreshSec" clearable placeholder="时间间隔" style="width: 110px">
+          <el-option value="5" label="5秒"></el-option>
+          <el-option value="10" label="10秒"></el-option>
+          <el-option value="15" label="15秒"></el-option>
+          <el-option value="20" label="20秒"></el-option>
+          <el-option value="30" label="30秒"></el-option>
+        </el-select>
+        <div style="width: 120px;display: inline-block;text-align: center">
+          <span>{{ refreshDesc }}</span>
+        </div>
+        <el-button :type="refreshType" :icon="refreshIcon" size="mini" @click="refreshData">{{ refreshLabel }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -186,6 +199,11 @@ export default {
   components: {},
   data() {
     return {
+      refreshSec: '5',
+      refreshType: 'primary',
+      refreshIcon: 'el-icon-refresh',
+      refreshLabel: '开始刷新',
+      refreshDesc: '',
       pickerOptions: { shortcuts: pickerDateTimeShortcuts },
       //统计总的数据
       totalData: {
@@ -247,6 +265,14 @@ export default {
     this.getDicts('pay_jour_status').then(response => {
       this.statusOptions = response.data
     })
+  },
+  activated() {
+    this.refreshType = 'primary'
+    this.refreshIcon = 'el-icon-refresh'
+    this.refreshLabel = '开始刷新'
+    this.refreshDesc = ''
+
+    this.stopRefresh()
   },
   methods: {
     //
@@ -356,7 +382,40 @@ export default {
           this.getList()
         }
       })
+    },
+    refreshData() {
+      if (this.refreshType === 'primary') {
+        this.refreshType = 'danger'
+        this.refreshIcon = 'el-icon-circle-close'
+        this.refreshLabel = '停止刷新'
+        this.refreshDesc = ''
 
+        this.stopRefresh()
+        this.getList()
+        this.startRefresh()
+      } else {
+        this.refreshType = 'primary'
+        this.refreshIcon = 'el-icon-refresh'
+        this.refreshLabel = '开始刷新'
+        this.refreshDesc = ''
+
+        this.stopRefresh()
+      }
+    },
+    startRefresh() {
+      const thet = this
+      let secs = thet.refreshSec
+      window.refreshInterval = setInterval(function() {
+        if (secs === 0) {
+          thet.getList()
+          secs = thet.refreshSec
+        }
+        thet.refreshDesc = secs + '秒后开始刷新'
+        secs--
+      }, 1000)
+    },
+    stopRefresh() {
+      clearInterval(window.refreshInterval)
     }
   }
 }

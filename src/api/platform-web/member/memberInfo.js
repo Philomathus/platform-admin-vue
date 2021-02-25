@@ -99,3 +99,14 @@ export function exportMemberInfo(query) {
     params: query
   })
 }
+export function changeSpeak(id,speak ) {
+  const data = {
+    id,
+    speak
+  }
+  return request({
+    url: url.platformWeb + '/member/memberInfo/changeSpeak',
+    method: 'put',
+    data: data
+  })
+}

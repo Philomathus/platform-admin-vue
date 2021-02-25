@@ -51,7 +51,7 @@
     <el-table stripe v-loading="loading" :data="liveVideoList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="主播id" min-width="120" align="center" prop="id"/>
-      <el-table-column label="主播昵称" min-width="120" align="center" prop="hostName"/>
+      <el-table-column label="主播昵称" min-width="120" align="center" prop="hostName" :show-overflow-tooltip="true"/>
       <el-table-column label="直播类型" min-width="120" align="center" prop="cateId" :formatter="typeFormat"/>
       <el-table-column label="热度" min-width="120" align="center" prop="voteNumber"/>
       <el-table-column label="在线人数" min-width="120" align="center" prop="watchNumber"/>

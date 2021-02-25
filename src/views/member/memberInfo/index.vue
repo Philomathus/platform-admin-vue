@@ -116,6 +116,16 @@
       <el-table-column label="邀请码" align="center" prop="inviterCode" min-width="100px"/>
       <el-table-column label="佣金" align="center" prop="inviteMoney" min-width="100px"/>
       <el-table-column label="渠道号" align="center" prop="channelcode" min-width="100px"/>
+      <el-table-column label="是否禁言" align="center" prop="speak">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.speak"
+            active-value="1"
+            inactive-value="0"
+            @change="handleStatusChange(scope.row)"
+          ></el-switch>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
@@ -140,7 +150,8 @@
     />
 
     <!-- 添加或修改用户信息对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="账号" prop="userName">
           <el-input v-model="form.userName" placeholder="请输入账号"/>
@@ -165,6 +176,7 @@ import {
   addMemberInfo,
   updateMemberInfo,
   exportMemberInfo,
+  changeSpeak,
   changeStatus
 } from '@/api/platform-web/member/memberInfo'
 import more from './more'
@@ -199,10 +211,10 @@ export default {
       open: false,
       // 状态列表0= 禁用 1=正常 2=测试号3=超管号
       typeList: [
-        { label: '禁用', value: 0 },
-        { label: '正常', value: 1 },
-        { label: '测试号', value: 2 },
-        { label: '超管号', value: 3 }
+        {label: '禁用', value: 0},
+        {label: '正常', value: 1},
+        {label: '测试号', value: 2},
+        {label: '超管号', value: 3}
       ],
       // 查询参数
       queryParams: {
@@ -223,16 +235,16 @@ export default {
       // 表单校验
       rules: {
         memberCode: [
-          { required: true, message: '会员ID不能为空', trigger: 'blur' }
+          {required: true, message: '会员ID不能为空', trigger: 'blur'}
         ],
         cxAgent: [
-          { required: true, message: '代理编号不能为空', trigger: 'blur' }
+          {required: true, message: '代理编号不能为空', trigger: 'blur'}
         ],
         userName: [
-          { required: true, message: '账号不能为空', trigger: 'blur' }
+          {required: true, message: '账号不能为空', trigger: 'blur'}
         ],
         loginNum: [
-          { required: true, message: '登陆次数不能为空', trigger: 'blur' }
+          {required: true, message: '登陆次数不能为空', trigger: 'blur'}
         ]
       }
     }
@@ -352,7 +364,7 @@ export default {
     handleMore(row) {
       this.memberCode = row.memberCode
       this.memberId = row.id
-      this.$refs.more.show(this.memberId,this.memberCode)
+      this.$refs.more.show(this.memberId, this.memberCode)
     },
     /** 导出按钮操作 */
     handleExport() {
@@ -361,10 +373,24 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportMemberInfo(queryParams)
       }).then(response => {
         this.download(response.msg)
+      })
+    },
+    handleStatusChange(row) {
+      let text = row.speak === "1" ? '禁言' : '解禁'
+      this.$confirm('确认要更改"' + text + '""' + row.userName + '"吗?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        return changeSpeak(row.id, row.speak)
+      }).then(() => {
+        this.msgSuccess(text + '成功')
+      }).catch(function () {
+        row.speak = row.speak === '0' ? '1' : '0'
       })
     }
   }

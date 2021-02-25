@@ -310,9 +310,9 @@ export default {
     },
     statusFormat(row) {
       if (row.liveStatus == '1') {
-        return '播放源正常'
+        return '<span style="color: green">播放源正常</span>'
       } else if (row.liveStatus == '0') {
-        return '播放源异常'
+        return '<span style="color: red">播放源异常</span>'
       } else {
         return '检测中'
       }

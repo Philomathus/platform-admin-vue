@@ -4,7 +4,8 @@
     <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="日期选择" prop="paydate">
         <el-date-picker v-model="queryParams.paydate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
-                        :style="{width: '100%'}" placeholder="请选择日期选择" clearable></el-date-picker>
+                        :style="{width: '100%'}" placeholder="请选择日期选择" clearable :picker-options="pickerOptions"
+        ></el-date-picker>
       </el-form-item>
 
       <el-form-item>
@@ -56,6 +57,25 @@ export default {
   },
   data() {
     return {
+      //日期快捷
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now();
+        },
+        shortcuts: [{
+          text: '今天',
+          onClick(picker) {
+            picker.$emit('pick', new Date());
+          }
+        }, {
+          text: '昨天',
+          onClick(picker) {
+            const date = new Date();
+            date.setTime(date.getTime() - 3600 * 1000 * 24);
+            picker.$emit('pick', date);
+          }
+        }]
+      },
       // 遮罩层
       loading: true,
       // 选中数组

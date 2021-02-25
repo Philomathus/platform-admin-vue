@@ -4,7 +4,7 @@
 
       <el-form-item label="日期选择" prop="reporttime">
         <el-date-picker v-model="queryParams.reporttime" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
-                        :style="{width: '100%'}" placeholder="请选择日期选择" clearable
+                        :style="{width: '100%'}" placeholder="请选择日期选择" clearable :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
 
@@ -61,6 +61,25 @@ export default {
   name: 'Online',
   data() {
     return {
+      //日期快捷
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now();
+        },
+        shortcuts: [{
+          text: '今天',
+          onClick(picker) {
+            picker.$emit('pick', new Date());
+          }
+        }, {
+          text: '昨天',
+          onClick(picker) {
+            const date = new Date();
+            date.setTime(date.getTime() - 3600 * 1000 * 24);
+            picker.$emit('pick', date);
+          }
+        }]
+      },
       // 遮罩层
       loading: true,
       // 总条数

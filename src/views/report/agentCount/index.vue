@@ -1,17 +1,9 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="日期选择" prop="reptime">
-        <el-date-picker
-          v-model="queryParams.dateRange"
-          size="small"
-          style="width: 240px"
-          value-format="yyyy-MM-dd"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-          clearable
+      <el-form-item label="日期选择" prop="agenttime">
+        <el-date-picker v-model="queryParams.agenttime" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
+                        :style="{width: '100%'}" placeholder="请选择日期选择" clearable :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
 
@@ -89,6 +81,25 @@ export default {
   components: {},
   data() {
     return {
+      //日期快捷
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now();
+        },
+        shortcuts: [{
+          text: '今天',
+          onClick(picker) {
+            picker.$emit('pick', new Date());
+          }
+        }, {
+          text: '昨天',
+          onClick(picker) {
+            const date = new Date();
+            date.setTime(date.getTime() - 3600 * 1000 * 24);
+            picker.$emit('pick', date);
+          }
+        }]
+      },
       // 遮罩层
       loading: true,
       // 选中数组
@@ -111,8 +122,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 20,
-        reptime: null,
-        dateRange: [this.parseTime(getYesterDate(), '{y}-{m}-{d}'), this.parseTime(getYesterDate(), '{y}-{m}-{d}')]
+        agenttime: this.parseTime(getYesterDate(), '{y}-{m}-{d}')
       },
       // 表单参数
       form: {},

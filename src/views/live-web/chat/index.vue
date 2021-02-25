@@ -67,8 +67,26 @@
       <el-table-column label="主播昵称" min-width="120" align="center" prop="poscatNickName"/>
       <el-table-column label="发送时间" width="160" align="center" prop="createTimes"/>
       <el-table-column label="发言ip" width="160" align="center" prop="userIp"/>
-      <el-table-column label="是否封停" min-width="120" align="center" prop="noSpeaking" :formatter="speakFormat"/>
-      <el-table-column label="是否禁言" min-width="120" align="center" prop="forbid" :formatter="forbidFormat"/>
+      <el-table-column label="是否封停" min-width="120" align="center" prop="noSpeaking">
+        <template slot-scope="scope">
+          <span v-if="scope.row.noSpeaking" style="color: #FF5722">
+            已封停
+          </span>
+          <span v-else style="color: #5FB878">
+            正常
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column label="是否禁言" min-width="120" align="center" prop="forbid">
+        <template slot-scope="scope">
+          <span v-if="scope.row.forbid" style="color: #FF5722">
+            禁言
+          </span>
+          <span v-else style="color: #5FB878">
+            正常
+          </span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" min-width="150" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button

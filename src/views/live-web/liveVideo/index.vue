@@ -52,28 +52,23 @@
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="主播id" min-width="120" align="center" prop="id"/>
       <el-table-column label="主播昵称" min-width="120" align="center" prop="hostName"/>
-      <!--      <el-table-column label="图标" align="center" prop="liveImage">-->
-      <!--        <template slot-scope="scope">-->
-      <!--          <el-image-->
-      <!--            style="width: 50px; height: 50px"-->
-      <!--            :src="scope.row.liveImage"-->
-      <!--          >-->
-      <!--          </el-image>-->
-      <!--        </template>-->
-      <!--      </el-table-column>-->
       <el-table-column label="直播类型" min-width="120" align="center" prop="cateId" :formatter="typeFormat"/>
       <el-table-column label="热度" min-width="120" align="center" prop="voteNumber"/>
       <el-table-column label="在线人数" min-width="120" align="center" prop="watchNumber"/>
       <el-table-column label="推荐" min-width="120" align="center" prop="isRecommend" :formatter="isRecommendFormat"/>
       <el-table-column label="固定位置" min-width="120" align="center" prop="sort"/>
       <el-table-column label="线路名称" min-width="120" align="center" prop="name"/>
-<!--      <el-table-column label="直播性质" min-width="120" align="center" prop="liveStatus" :formatter="liveStatus"/>-->
-      <el-table-column label="直播性质" align="center" prop="liveStatus" width="100px">
+      <el-table-column label="直播性质" align="center" prop="lineStatus" width="100px">
         <template slot-scope="scope">
-          <span :style="{color: (status = statusOptions[parseInt(scope.row.liveStatus)+1]).color}">{{ status.dictLabel }}</span>
+          <span :style="{color: (status = lineStatusOption[parseInt(scope.row.lineStatus)+1]).color}">{{ status.dictLabel }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="直播状态" min-width="120" align="center" prop="liveStatus" :formatter="statusFormat"/>
+      <el-table-column label="直播状态" min-width="120" align="center" prop="liveStatus">
+        <template slot-scope="scope">
+          <span v-if="scope.row.liveStatus === ''">检测中...</span>
+          <span v-else :style="{color: (status = liveStatusOption[parseInt(scope.row.liveStatus)+1]).color}">{{ status.dictLabel }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="彩种" min-width="120" align="center" prop="lotteryName"/>
       <el-table-column label="收费" min-width="120" align="center" prop="isLivePay" :formatter="isLivePayFormat"/>
       <el-table-column label="开始时间" align="center" prop="beginTime" width="160">
@@ -171,6 +166,8 @@ export default {
       liveVideoList: [],
       serverOptions: [],
       typeOptions: [],
+      lineStatusOption: [],
+      liveStatusOption:[],
       // 弹出层标题
       title: '',
       // 是否显示弹出层
@@ -181,7 +178,9 @@ export default {
         pageSize: 50,
         hostName: null,
         paiId: null,
-        types: []
+        types: [],
+        orderByColumn: 'sort',
+        isAsc: 'asc'
       },
       // 表单参数
       form: {},
@@ -198,7 +197,10 @@ export default {
       this.typeOptions = response.data
     })
     this.getDicts('liveStatus').then(response => {
-      this.statusOptions = response.data
+      this.liveStatusOption = response.data
+    })
+    this.getDicts('lineStatus').then(response => {
+      this.lineStatusOption = response.data
     })
   },
   methods: {
@@ -307,15 +309,6 @@ export default {
         this.getList()
         this.msgSuccess('删除成功')
       })
-    },
-    statusFormat(row) {
-      if (row.liveStatus == '1') {
-        return '<span style="color: green">播放源正常</span>'
-      } else if (row.liveStatus == '0') {
-        return '<span style="color: red">播放源异常</span>'
-      } else {
-        return '检测中'
-      }
     },
     isRecommendFormat(row) {
       if (row.isRecommend == '1') {

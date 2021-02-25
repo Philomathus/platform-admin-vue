@@ -10,7 +10,7 @@
 <style scoped>
   video{
     position: fixed;
-    top: 3%;
+    top: 4.5%;
     left: 0%;
 
 /*    right: 0px;

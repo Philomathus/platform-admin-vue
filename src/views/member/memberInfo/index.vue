@@ -111,11 +111,6 @@
       <el-table-column label="注册时间" align="center" prop="regTime" width="160"/>
       <el-table-column label="登陆次数" align="center" prop="loginNum" min-width="100px"/>
       <el-table-column label="登录ip" :show-overflow-tooltip="true" align="center" prop="loginIp" width="180"/>
-      <el-table-column label="打码账户" align="center" prop="codeAccount" min-width="100px"/>
-      <el-table-column label="累计有效投注" align="center" prop="codeTotal" min-width="100px"/>
-      <el-table-column label="邀请码" align="center" prop="inviterCode" min-width="100px"/>
-      <el-table-column label="佣金" align="center" prop="inviteMoney" min-width="100px"/>
-      <el-table-column label="渠道号" align="center" prop="channelcode" min-width="100px"/>
       <el-table-column label="是否禁言" align="center" prop="speak">
         <template slot-scope="scope">
           <el-switch
@@ -126,6 +121,12 @@
           ></el-switch>
         </template>
       </el-table-column>
+      <el-table-column label="打码账户" align="center" prop="codeAccount" min-width="100px"/>
+
+      <el-table-column label="累计有效投注" align="center" prop="codeTotal" min-width="100px"/>
+      <el-table-column label="邀请码" align="center" prop="inviterCode" min-width="100px"/>
+      <el-table-column label="佣金" align="center" prop="inviteMoney" min-width="100px"/>
+      <el-table-column label="渠道号" align="center" prop="channelcode" min-width="100px"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button

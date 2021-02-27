@@ -139,6 +139,11 @@
           </el-select>
         </template>
       </el-table-column>
+      <el-table-column label="失败信息" align="center" prop="errorRemark" >
+        <template v-slot="{row}">
+          <el-input placeholder="" v-model="row.errorRemark" @blur="changeReceivedType(row)"/>
+        </template>
+      </el-table-column>
       <!--<el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -257,6 +262,7 @@ export default {
   },
   methods: {
     changeReceivedType(row){
+      console.log(row)
       updateWheelSkinReceived(row).then(response => {
         this.msgSuccess("修改成功");
         this.open = false;

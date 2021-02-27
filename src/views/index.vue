@@ -12,17 +12,12 @@
     position: fixed;
     top: 4.5%;
     left: 0%;
-
-/*    right: 0px;
-    bottom: 0px;*/
-    /*height: 100%;*/
-
     height: 100%;
     width: 100%;
     /*加滤镜*/
     /*filter: blur(15px);*/
     /*-webkit-filter: grayscale(100%);*/
- /*背景灰度设置*/
+    /*背景灰度设置*/
  /*   filter:grayscale(100%);*/
     z-index:-11
   }

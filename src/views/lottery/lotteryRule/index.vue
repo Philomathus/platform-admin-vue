@@ -73,10 +73,12 @@
 
     <el-table stripe v-loading="loading" :data="lotteryRuleList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="彩票类型id" align="center" prop="id" />
+      <el-table-column label="主键id" align="center" prop="id" />
       <el-table-column label="彩票类型名称" align="center" prop="name" />
-      <el-table-column label="开奖说明" align="center" prop="des" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="彩票类型id" align="center" prop="kind" />
+      <el-table-column label="排序号" align="center" prop="ind" />
+      <el-table-column label="开奖说明" align="center" min-width="1205px" prop="des" />
+      <el-table-column label="操作" align="center" min-width="100px" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -107,11 +109,14 @@
     <!-- 添加或修改开奖规则说明对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-        <el-form-item label="彩票类型id" prop="id">
-          <el-input v-model="form.id" placeholder="请输入彩票类型id" />
-        </el-form-item>
         <el-form-item label="彩票类型名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入彩票类型名称" />
+        </el-form-item>
+        <el-form-item label="彩票类型id" prop="kind">
+          <el-input v-model="form.kind" placeholder="请输入彩票类型id" />
+        </el-form-item>
+        <el-form-item label="排序号" prop="ind">
+          <el-input v-model="form.ind" placeholder="请输入排序号" />
         </el-form-item>
         <el-form-item label="开奖说明" prop="des">
           <el-input v-model="form.des" type="textarea" placeholder="请输入开奖说明" />

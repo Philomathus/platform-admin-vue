@@ -1,33 +1,32 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="100px">
-      <el-form-item label="彩票类型id" prop="id">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+      <el-form-item label="价格" prop="prize">
         <el-input
-          v-model="queryParams.id"
-          placeholder="请输入彩票类型id"
+          v-model="queryParams.prize"
+          placeholder="请输入价格"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="彩票类型名称" prop="name">
+      <el-form-item label="皮肤名称" prop="skinName">
         <el-input
-          v-model="queryParams.name"
-          placeholder="请输入彩票类型名称"
+          v-model="queryParams.skinName"
+          placeholder="请输入皮肤名称"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="所属彩种类型" prop="kind">
-        <el-select v-model="queryParams.kind" placeholder="请选择所属彩种类型" clearable size="small">
-          <el-option
-            v-for="item in kind"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
+      <el-form-item label="英雄名称" prop="heroName">
+        <el-input
+          v-model="queryParams.heroName"
+          placeholder="请输入英雄名称"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -43,7 +42,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['admin:lotteryRule:add']"
+          v-hasPermi="['lottery:wheelSkin:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -54,7 +53,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['admin:lotteryRule:edit']"
+          v-hasPermi="['lottery:wheelSkin:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -65,7 +64,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['admin:lotteryRule:remove']"
+          v-hasPermi="['lottery:wheelSkin:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -75,34 +74,33 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['admin:lotteryRule:export']"
+          v-hasPermi="['lottery:wheelSkin:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table stripe v-loading="loading" :data="lotteryRuleList" @selection-change="handleSelectionChange">
+    <el-table stripe v-loading="loading" :data="wheelSkinList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键id" align="center" prop="id" />
-      <el-table-column label="彩票类型名称" align="center" prop="name" />
-      <el-table-column label="所属彩种类型" align="center" prop="kind" :formatter="formatterKind"/>
-      <el-table-column label="排序号" align="center" prop="ind" />
-      <el-table-column label="开奖说明" align="center" min-width="900px" prop="des" />
-      <el-table-column label="操作" align="center" min-width="100px" class-name="small-padding fixed-width">
+      <el-table-column label="id" align="center" prop="id" />
+      <el-table-column label="价格" align="center" prop="prize" />
+      <el-table-column label="皮肤名称" align="center" prop="skinName" />
+      <el-table-column label="英雄名称" align="center" prop="heroName" />
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['admin:lotteryRule:edit']"
+            v-hasPermi="['lottery:wheelSkin:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['admin:lotteryRule:remove']"
+            v-hasPermi="['lottery:wheelSkin:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -116,27 +114,17 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改开奖规则说明对话框 -->
+    <!-- 添加或修改转盘皮肤列对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-        <el-form-item label="彩票类型名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入彩票类型名称" />
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="价格" prop="prize">
+          <el-input v-model="form.prize" placeholder="请输入价格" />
         </el-form-item>
-        <el-form-item label="所属彩种类型" prop="kind">
-          <el-select v-model="queryParams.kind" placeholder="请选择所属彩种类型" clearable size="small">
-            <el-option
-              v-for="item in kind"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
+        <el-form-item label="皮肤名称" prop="skinName">
+          <el-input v-model="form.skinName" placeholder="请输入皮肤名称" />
         </el-form-item>
-        <el-form-item label="排序号" prop="ind">
-          <el-input v-model="form.ind" placeholder="请输入排序号" />
-        </el-form-item>
-        <el-form-item label="开奖说明" prop="des">
-          <el-input v-model="form.des" type="textarea" placeholder="请输入开奖说明" />
+        <el-form-item label="英雄名称" prop="heroName">
+          <el-input v-model="form.heroName" placeholder="请输入英雄名称" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -148,31 +136,14 @@
 </template>
 
 <script>
-import { listLotteryRule, getLotteryRule, delLotteryRule, addLotteryRule, updateLotteryRule, exportLotteryRule } from "@/api/platform-web/lottery/lotteryRule";
+import { listWheelSkin, getWheelSkin, delWheelSkin, addWheelSkin, updateWheelSkin, exportWheelSkin } from "@/api/platform-web/lottery/wheelSkin";
 
 export default {
-  name: "LotteryRule",
+  name: "WheelSkin",
   components: {
   },
   data() {
     return {
-      //所属彩种类型下拉框
-      kind: [{
-        value: '0',
-        label: '时时彩'
-      }, {
-        value: '1',
-        label: '11选5'
-      }, {
-        value: '2',
-        label: '快三'
-      }, {
-        value: '3',
-        label: '赛车'
-      }, {
-        value: '4',
-        label: '六合彩'
-      }],
       // 遮罩层
       loading: true,
       // 选中数组
@@ -185,8 +156,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 开奖规则说明表格数据
-      lotteryRuleList: [],
+      // 转盘皮肤列表格数据
+      wheelSkinList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -195,8 +166,9 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        name: null,
-        des: null
+        prize: null,
+        skinName: null,
+        heroName: null,
       },
       // 表单参数
       form: {},
@@ -209,30 +181,14 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询开奖规则说明列表 */
+    /** 查询转盘皮肤列列表 */
     getList() {
       this.loading = true;
-      listLotteryRule(this.queryParams).then(response => {
-        this.lotteryRuleList = response.rows;
+      listWheelSkin(this.queryParams).then(response => {
+        this.wheelSkinList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
-    },
-    // 0=时时彩,1=11选5,2=快三3=赛车4=六合彩
-    formatterKind(row) {
-      if (row.kind == 0) {
-        return '时时彩'
-      } else if (row.kind == 1) {
-        return '11选5'
-      } else if (row.kind == 2) {
-        return '快三'
-      } else if (row.kind == 3) {
-        return '赛车'
-      } else if (row.kind == 4) {
-        return '六合彩'
-      } else {
-        return ''
-      }
     },
     // 取消按钮
     cancel() {
@@ -243,8 +199,11 @@ export default {
     reset() {
       this.form = {
         id: null,
-        name: null,
-        des: null
+        prize: null,
+        skinName: null,
+        heroName: null,
+        createTime: null,
+        updateTime: null
       };
       this.resetForm("form");
     },
@@ -268,16 +227,16 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加开奖规则说明";
+      this.title = "添加转盘皮肤列";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
       const id = row.id || this.ids
-      getLotteryRule(id).then(response => {
+      getWheelSkin(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改开奖规则说明";
+        this.title = "修改转盘皮肤列";
       });
     },
     /** 提交按钮 */
@@ -285,13 +244,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
-            updateLotteryRule(this.form).then(response => {
+            updateWheelSkin(this.form).then(response => {
               this.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addLotteryRule(this.form).then(response => {
+            addWheelSkin(this.form).then(response => {
               this.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -303,12 +262,12 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除开奖规则说明编号为"' + ids + '"的数据项?', "警告", {
+      this.$confirm('是否确认删除转盘皮肤列编号为"' + ids + '"的数据项?', "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       }).then(function() {
-        return delLotteryRule(ids);
+        return delWheelSkin(ids);
       }).then(() => {
         this.getList();
         this.msgSuccess("删除成功");
@@ -318,12 +277,12 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有开奖规则说明数据项?', "警告", {
+      this.$confirm('是否确认导出所有转盘皮肤列数据项?', "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       }).then(function() {
-        return exportLotteryRule(queryParams);
+        return exportWheelSkin(queryParams);
       }).then(response => {
         this.download(response.msg);
       }).catch(() => {

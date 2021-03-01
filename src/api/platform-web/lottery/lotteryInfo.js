@@ -9,3 +9,11 @@ export function listLotteryInfo(query) {
     params: query
   })
 }
+
+//彩票种类类型
+export function listLotteryRuleName() {
+  return request({
+    url: url.platformWeb + '/admin/lotteryInfo/lotteryType',
+    method: 'get'
+  })
+}

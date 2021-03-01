@@ -31,13 +31,21 @@
         />
       </el-form-item>
       <el-form-item label="类型" prop="type">
-        <el-input
-          v-model="queryParams.type"
-          placeholder="请输入类型"
+        <el-select
+          filterable
+          v-model="form.type"
+          placeholder="请选择类型"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          style="width: 240px"
+        >
+          <el-option
+            v-for="dict in typeOptions"
+            :key="dict.id"
+            :label="dict.name"
+            :value="dict.id"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item label="杀率" prop="killRate">
         <el-input
@@ -106,7 +114,7 @@
 </template>
 
 <script>
-import {listLotteryInfo,} from "@/api/platform-web/lottery/lotteryInfo";
+import {listLotteryInfo, listLotteryRuleName } from "@/api/platform-web/lottery/lotteryInfo";
 
 export default {
   name: "LotteryInfo",
@@ -132,6 +140,8 @@ export default {
         value: '2',
         label: '自开(程序)'
       }],
+      //类型下拉框
+      typeOptions: [],
       // 遮罩层
       loading: true,
       // 选中数组
@@ -175,6 +185,9 @@ export default {
   },
   created() {
     this.getList();
+    // listLotteryRuleName().then(response => {
+    //   this.typeOptions = response.data
+    // })
   },
   methods: {
     /** 查询彩票名称列表 */
@@ -205,7 +218,7 @@ export default {
       } else if (row.status == 1) {
         return '启用'
       } else {
-        return '未知'
+        return ''
       }
     },
     // 取消按钮

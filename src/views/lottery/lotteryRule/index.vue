@@ -19,6 +19,16 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="所属彩种类型" prop="kind">
+        <el-select v-model="queryParams.kind" placeholder="请选择所属彩种类型" clearable size="small">
+          <el-option
+            v-for="item in kind"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -73,10 +83,12 @@
 
     <el-table stripe v-loading="loading" :data="lotteryRuleList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="彩票类型id" align="center" prop="id" />
+      <el-table-column label="主键id" align="center" prop="id" />
       <el-table-column label="彩票类型名称" align="center" prop="name" />
-      <el-table-column label="开奖说明" align="center" prop="des" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="所属彩种类型" align="center" prop="kind" :formatter="formatterKind"/>
+      <el-table-column label="排序号" align="center" prop="ind" />
+      <el-table-column label="开奖说明" align="center" min-width="900px" prop="des" />
+      <el-table-column label="操作" align="center" min-width="100px" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -107,11 +119,21 @@
     <!-- 添加或修改开奖规则说明对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-        <el-form-item label="彩票类型id" prop="id">
-          <el-input v-model="form.id" placeholder="请输入彩票类型id" />
-        </el-form-item>
         <el-form-item label="彩票类型名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入彩票类型名称" />
+        </el-form-item>
+        <el-form-item label="所属彩种类型" prop="kind">
+          <el-select v-model="queryParams.kind" placeholder="请选择所属彩种类型" clearable size="small">
+            <el-option
+              v-for="item in kind"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="排序号" prop="ind">
+          <el-input v-model="form.ind" placeholder="请输入排序号" />
         </el-form-item>
         <el-form-item label="开奖说明" prop="des">
           <el-input v-model="form.des" type="textarea" placeholder="请输入开奖说明" />
@@ -134,6 +156,23 @@ export default {
   },
   data() {
     return {
+      //所属彩种类型下拉框
+      kind: [{
+        value: '0',
+        label: '时时彩'
+      }, {
+        value: '1',
+        label: '11选5'
+      }, {
+        value: '2',
+        label: '快三'
+      }, {
+        value: '3',
+        label: '赛车'
+      }, {
+        value: '4',
+        label: '六合彩'
+      }],
       // 遮罩层
       loading: true,
       // 选中数组
@@ -178,6 +217,22 @@ export default {
         this.total = response.total;
         this.loading = false;
       });
+    },
+    // 0=时时彩,1=11选5,2=快三3=赛车4=六合彩
+    formatterKind(row) {
+      if (row.kind == 0) {
+        return '时时彩'
+      } else if (row.kind == 1) {
+        return '11选5'
+      } else if (row.kind == 2) {
+        return '快三'
+      } else if (row.kind == 3) {
+        return '赛车'
+      } else if (row.kind == 4) {
+        return '六合彩'
+      } else {
+        return ''
+      }
     },
     // 取消按钮
     cancel() {

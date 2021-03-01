@@ -19,6 +19,16 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="所属彩种类型" prop="kind">
+        <el-select v-model="queryParams.kind" placeholder="请选择所属彩种类型" clearable size="small">
+          <el-option
+            v-for="item in kind"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -112,8 +122,8 @@
         <el-form-item label="彩票类型名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入彩票类型名称" />
         </el-form-item>
-        <el-form-item label="所属彩种类型" prop="status">
-          <el-select v-model="queryParams.status" placeholder="请选择所属彩种类型" clearable size="small">
+        <el-form-item label="所属彩种类型" prop="kind">
+          <el-select v-model="queryParams.kind" placeholder="请选择所属彩种类型" clearable size="small">
             <el-option
               v-for="item in kind"
               :key="item.value"

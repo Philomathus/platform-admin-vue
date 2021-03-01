@@ -1,14 +1,15 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="所属彩种" prop="lotteryType">
-        <el-input
-          v-model="queryParams.lotteryType"
-          placeholder="请输入所属彩种类型"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="100px">
+      <el-form-item label="所属彩种类型" prop="lotteryType">
+        <el-select v-model="queryParams.lotteryType" placeholder="请选择所属彩种类型" clearable size="small">
+          <el-option
+            v-for="item in lotteryType"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
       </el-form-item>
       <!--      <el-form-item label="排序键" prop="order">-->
       <!--        <el-input-->
@@ -46,11 +47,10 @@
 
     <el-table stripe v-loading="loading" :data="lotteryMethodList">
       <el-table-column width="55" align="center"/>
-      <!--      <el-table-column label="ID" align="center" prop="id" />-->
       <el-table-column label="所属彩种类型" align="center" prop="lotteryType"/>
       <el-table-column label="投注名称" align="center" prop="name"/>
+      <el-table-column label="ind" align="center" prop="ind"/>
       <el-table-column label="排序键order" align="center" prop="order"/>
-      <el-table-column label="排序键ind" align="center" prop="ind"/>
     </el-table>
 
     <pagination
@@ -72,6 +72,23 @@ export default {
   components: {},
   data() {
     return {
+      //所属彩种类型下拉框
+      lotteryType: [{
+        value: '时时彩',
+        label: '时时彩'
+      }, {
+        value: '11选5',
+        label: '11选5'
+      }, {
+        value: '快三',
+        label: '快三'
+      }, {
+        value: '赛车',
+        label: '赛车'
+      }, {
+        value: '六合彩',
+        label: '六合彩'
+      }],
       // 遮罩层
       loading: true,
       // 选中数组
@@ -93,11 +110,13 @@ export default {
       // 查询参数
       queryParams: {
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 15,
         lotteryType: null,
         order: null,
         name: null,
-        ind: null
+        ind: null,
+        orderByColumn: 'ind',
+        isAsc: 'asc'
       },
       // 表单参数
       form: {},

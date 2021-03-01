@@ -143,7 +143,7 @@
 
     <el-table stripe v-loading="loading" :data="wheelLotteryList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="彩票ID-日期" align="center" prop="id"/>
+<!--      <el-table-column label="彩票ID-日期" align="center" prop="id"/>-->
       <el-table-column label="彩票ID" align="center" prop="lotteryId"/>
       <el-table-column label="名称" align="center" prop="name"/>
 

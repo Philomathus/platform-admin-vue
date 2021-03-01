@@ -217,10 +217,10 @@
                   <el-input v-model="form.minPrize" placeholder="请输入奖金池最小生效废弃）" />
                 </el-form-item>-->
         <el-form-item label="最小投注" prop="minBet">
-          <el-input v-model="form.minBet" placeholder="请输入最小投注"/>
+          <el-input v-model="form.minBet" type="number" placeholder="请输入最小投注"/>
         </el-form-item>
         <el-form-item label="预备派奖金额" prop="prePrize">
-          <el-input v-model="form.prePrize" placeholder="请输入预备派奖金额"/>
+          <el-input v-model="form.prePrize" type="number" placeholder="请输入预备派奖金额"/>
         </el-form-item>
         <!--        <el-form-item label="实际派奖金额" prop="actPrize">
                   <el-input v-model="form.actPrize" placeholder="请输入实际派奖金额" />

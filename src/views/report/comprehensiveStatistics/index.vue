@@ -118,7 +118,6 @@ export default {
     /** 搜索按钮操作 */
     handleQuery() {
       this.pageNum = 1
-      this.getlistStorage()
       this.getList()
 
     },

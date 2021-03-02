@@ -149,7 +149,6 @@ export default {
     handleQuery() {
 
       this.pageNum = 1
-      this.getliststorage()
       this.getList()
       this.count()
     },

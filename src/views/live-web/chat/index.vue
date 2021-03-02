@@ -254,7 +254,9 @@ export default {
         type: null,
         poscatNickName: null,
         userNickName: null,
-        fromPlatform: null
+        fromPlatform: null,
+        orderByColumn: 'create_time',
+        isAsc: 'desc'
       },
       // 表单参数
       form: {},

@@ -55,22 +55,13 @@
                   :class="row.envStatus === 0  ? 'ban' : ''"
                   v-model="row.envTitle"
                   placeholder="请输入参数编码"
-                  clearable
                   size="small"
-                  @keyup.enter.native="handleQuery"
                 />
               </template>
             </el-table-column>
             <el-table-column label="参数编码" align="center">
               <template v-slot="{row}">
-                <el-input
-                  :class="row.envStatus === 0  ? 'ban' : ''"
-                  v-model="row.envCode"
-                  placeholder="请输入参数编码"
-                  clearable
-                  size="small"
-                  @keyup.enter.native="handleQuery"
-                />
+                <span>{{row.envCode}}</span>
               </template>
             </el-table-column>
 
@@ -80,28 +71,25 @@
                   :class="row.envStatus === 0  ? 'ban' : ''"
                   v-model="row.envValue"
                   placeholder="请输入参数值"
-                  clearable
                   size="small"
-                  @keyup.enter.native="handleQuery"
                 />
               </template>
             </el-table-column>
             <el-table-column label="序列号" width="100" align="center">
               <template v-slot="{row}">
                 <el-input
+                  type="number"
                   :class="row.envStatus === 0  ? 'ban' : ''"
                   v-model="row.envSort"
                   placeholder="请输入序列号"
-                  clearable
                   size="small"
-                  @keyup.enter.native="handleQuery"
                 />
               </template>
             </el-table-column>
             <el-table-column label="状态" width="100" align="center">
               <template v-slot="{row}">
                 <el-select :class="row.envStatus === 0  ? 'ban' : ''"
-                           v-model="row.envStatus" placeholder="请选择" clearable size="small"
+                           v-model="row.envStatus" placeholder="请选择" size="small"
                 >
                   <el-option v-for="(item,index) in statusList" :key="index" :label="item.dictLabel"
                              :value="parseInt(item.dictValue)"
@@ -111,7 +99,11 @@
             </el-table-column>
             <el-table-column label="备注" min-width="150" align="center">
               <template v-slot="{row}">
-                <span>{{ row.envDes }}</span>
+                <el-input
+                  :class="row.envStatus === 0  ? 'ban' : ''"
+                  v-model="row.envDes"
+                  size="small"
+                />
               </template>
             </el-table-column>
 

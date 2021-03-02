@@ -137,13 +137,13 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="suspendUser('',true,1,form.userIp)">确 定</el-button>
+        <el-button type="primary" @click="suspendUser('',true,1,form.userIp,form.msg)">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
 
     <!--查看封停ip-->
-    <el-dialog v-dialogDrag title="查看封停ip" :visible.sync="speakIpBlackListList" width="750px" append-to-body>
+    <el-dialog v-dialogDrag title="查看封停ip" :visible.sync="speakIpBlackListList" width="1200px" append-to-body>
       <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
         <el-form-item label="会员id" prop="userId">
           <el-input
@@ -172,6 +172,7 @@
         <el-table-column type="selection" width="55" align="center"/>
         <el-table-column label="会员ID" align="center" prop="userId"/>
         <el-table-column label="会员ip" align="center" prop="userIp"/>
+        <el-table-column label="封停备注" align="center" prop="msg"/>
         <el-table-column label="封停时间" align="center" prop="createTime"/>
         <el-table-column label="操作" min-width="60" align="center" class-name="small-padding fixed-width" fixed="right">
           <template slot-scope="scope">
@@ -360,7 +361,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(function() {
-          return that.suspendUser(row.fromPlatform, false, 0, row.userIp)
+          return that.suspendUser(row.fromPlatform, false, 0, row.userIp,row.msg)
         }).then(() => {
           that.msgSuccess('解封成功')
         })
@@ -409,7 +410,7 @@ export default {
       this.open = false
       this.getList()
     },
-    suspendUser(pUserId, falg, num, userIp) {
+    suspendUser(pUserId, falg, num, userIp,msg) {
       var data = {}
       if (num == 1) {
         data.pUserId = this.form.fromPlatform
@@ -419,6 +420,7 @@ export default {
       data.flag = falg
       data.num = num
       data.userIp = userIp
+      data.msg = msg
       request({
         url: url.platformWeb + '/admin/liveVideoChat/suspendUser',
         method: 'post',

@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="100px">
       <el-form-item label="状态" prop="status">
         <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small">
           <el-option
@@ -30,10 +30,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="所属彩种" prop="lotteryId">
+      <el-form-item label="所属彩种类型" prop="lotteryId">
         <el-input
           v-model="queryParams.lotteryId"
-          placeholder="请输入所属彩种"
+          placeholder="请输入所属彩种类型"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -111,7 +111,7 @@
       <el-table-column width="55" align="center"/>
       <!--      <el-table-column label="ID" align="center" prop="id"/>-->
       <el-table-column label="期数" align="center" prop="issue"/>
-      <el-table-column label="所属彩种" align="center" prop="lotteryId"/>
+      <el-table-column label="所属彩种类型" align="center" prop="lotteryId"/>
       <el-table-column label="开奖号码" align="center" prop="code"/>
       <el-table-column label="状态" align="center" prop="status" :formatter="formatterStatus"/>
       <el-table-column label="彩票名称" align="center" prop="name"/>

@@ -226,7 +226,6 @@ export default {
             });
           } else {
             addConfigGametype(this.form).then(response => {
-              debugger;
               this.msgSuccess(response.msg);
               this.open = false;
               this.getList();

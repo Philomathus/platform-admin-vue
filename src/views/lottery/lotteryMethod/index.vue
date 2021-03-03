@@ -109,7 +109,7 @@ export default {
       // 查询参数
       queryParams: {
         pageNum: 1,
-        pageSize: 15,
+        pageSize: 20,
         lotteryType: null,
         order: null,
         name: null,

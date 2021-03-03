@@ -93,9 +93,9 @@
       <el-table-column label="备注信息" align="center" prop="remark"/>
       <el-table-column label="更新人" align="center" prop="updateBy"/>
       <el-table-column label="更新时间" align="center" prop="updateTime">
-      <template slot-scope="scope">
-        <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
-      </template>
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+        </template>
       </el-table-column>
       <el-table-column label="排序" align="center" prop="indexs"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -133,13 +133,13 @@
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="类型" prop="type">
-          <el-select v-model="form.type" placeholder="请选择类型" clearable size="small">
+          <el-select v-model="form.type" placeholder="请选择">
             <el-option
-              v-for="item in type"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
+              v-for="dict in qqwechatType"
+              :key="dict.dictValue"
+              :label="dict.dictLabel"
+              :value="dict.dictValue"
+            ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="账号" prop="code">
@@ -195,14 +195,6 @@ export default {
           return ''
         }
       },
-      //类型选择栏
-      type: [{
-        value: '1',
-        label: 'qq'
-      }, {
-        value: '2',
-        label: '微信'
-      }],
       // 遮罩层
       loading: true,
       // 选中数组
@@ -221,6 +213,9 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      //类型字典
+      type: [],
+      qqwechatType: [],
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -242,6 +237,9 @@ export default {
   },
   created() {
     this.getList();
+    this.getDicts('waiter_qqwechatType').then(response => {
+      this.qqwechatType = response.data
+    })
   },
   methods: {
     /** 查询客服管理列表 */

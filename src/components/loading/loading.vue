@@ -25,13 +25,13 @@ export default {
 </script>
 <style lang="scss" scoped>
   .rj-loading{
-    position: relative;
+    position: absolute;
     /*margin-top: 240px;*/
     /*margin-left: calc(100vh - 80px);*/
     /*margin-left: 200px;*/
     width: 100%;
     height: 100%;
-    min-height: 50vh;
+    min-height: 20vh;
     background: rgba(23, 23, 23, 0.62);
     z-index: 10000;
     top: 0;

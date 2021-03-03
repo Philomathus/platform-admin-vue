@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container" ref="container" style="position: relative">
+  <div class="app-container">
     <el-button type="primary" @click="copy1">总投注金额: {{ this.data.countBetMoney || 0 }}</el-button>
     <el-button type="success" @click="copy2">总投注人数: {{ this.data.countBetPeople || 0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" label-width="68px" v-show="showSearch">
@@ -37,6 +37,9 @@
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
+    <div ref="container" style="position: relative">
+
+
     <el-table v-loading="loading"
               :data="list"
               style="width: 100%;"
@@ -57,6 +60,7 @@
       <el-table-column label="比例" align="center" prop="bili"/>
       <el-table-column label="日期" align="center" prop="begindate"/>
     </el-table>
+    </div>
     <!--    <pagination v-show="total>0" :total="total" :page.sync="pageNum" :limit.sync="pageSize"/>-->
   </div>
 </template>
@@ -126,7 +130,6 @@ export default {
         // this.total = response.total
         this.$loading.hide();
       }).catch((err) => {
-        debugger;
         if (err=='Error: 报表正在生成，请稍后...'){
           that.$loading.show('报表正在生成',that);
           if (!that.interval.listTime){

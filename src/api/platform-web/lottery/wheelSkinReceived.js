@@ -8,6 +8,13 @@ export function listWheelSkinReceived(query) {
     method: 'get',
     params: query
   })
+}// 查询转盘皮肤领取列表
+export function listTotalWheelSkinReceived(query) {
+  return request({
+    url: url.platformWeb + '/lottery/wheelSkinReceived/getTotal',
+    method: 'get',
+    params: query
+  })
 }
 
 // 查询转盘皮肤领取详细

@@ -1,7 +1,24 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="100px">
-      <el-form-item label="状态" prop="status">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="70px">
+      <el-form-item prop="name">
+        <el-select
+          filterable
+          v-model="queryParams.name"
+          placeholder="请选择彩种"
+          clearable
+          size="small"
+          style="width: 240px"
+        >
+          <el-option
+            v-for="dict in historyNameOptions"
+            :key="dict.name"
+            :label="dict.name"
+            :value="dict.name"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item prop="status">
         <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small">
           <el-option
             v-for="item in status"
@@ -11,17 +28,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="杀法" prop="ctl">
-        <el-select v-model="queryParams.ctl" placeholder="请选择杀法" clearable size="small">
-          <el-option
-            v-for="item in ctl"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="期数" prop="issue">
+      <el-form-item prop="issue">
         <el-input
           v-model="queryParams.issue"
           placeholder="请输入期数"
@@ -30,40 +37,17 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="所属彩种类型" prop="lotteryId">
-        <el-input
-          v-model="queryParams.lotteryId"
-          placeholder="请输入所属彩种类型"
-          clearable
+      <el-form-item prop="ktime">
+        <el-date-picker
+          v-model="dateRange"
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="开奖号码" prop="code">
-        <el-input
-          v-model="queryParams.code"
-          placeholder="请输入开奖号码"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="开奖时间" prop="ktime">
-        <el-date-picker clearable size="small"
-                        v-model="queryParams.ktime"
-                        type="date"
-                        value-format="yyyy-MM-dd"
-                        placeholder="选择开奖时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="彩票名称" prop="name">
-        <el-input
-          v-model="queryParams.name"
-          placeholder="请输入彩票名称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          style="width: 240px"
+          value-format="yyyy-MM-dd"
+          type="daterange"
+          range-separator="-"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+        ></el-date-picker>
       </el-form-item>
       <!--      <el-form-item label="自开实际杀率" prop="killRate">-->
       <!--        <el-input-->
@@ -108,23 +92,21 @@
     </el-form>
 
     <el-table stripe v-loading="loading" :data="lotteryHistoryList">
-      <el-table-column width="55" align="center"/>
       <!--      <el-table-column label="ID" align="center" prop="id"/>-->
-      <el-table-column label="期数" align="center" prop="issue"/>
-      <el-table-column label="所属彩种类型" align="center" prop="lotteryId"/>
-      <el-table-column label="开奖号码" align="center" prop="code"/>
-      <el-table-column label="状态" align="center" prop="status" :formatter="formatterStatus"/>
       <el-table-column label="彩票名称" align="center" prop="name"/>
-      <el-table-column label="开奖时间" min-width="160px" align="center" prop="ktime">
+      <el-table-column label="期数" align="center" prop="issue"/>
+      <el-table-column label="开奖号码" align="center" min-width="150px" prop="code"/>
+      <el-table-column label="开奖时间" min-width="90px" align="center" prop="ktime">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.ktime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="自开实际杀率" align="center" prop="killRate"/>
       <el-table-column label="总投注" align="center" prop="totalBet"/>
-      <el-table-column label="预计派奖总额" align="center" prop="totalPrize"/>
-      <el-table-column label="杀法" align="center" prop="ctl" :formatter="formatterctl"/>
-      <el-table-column label="开奖分析" align="center" prop="analyse"/>
+      <el-table-column label="杀率" align="center" prop="killRate"/>
+      <el-table-column label="派奖" align="center" prop="totalPrize"/>
+      <el-table-column label="状态" align="center" prop="status" :formatter="formatterStatus"/>
+<!--      <el-table-column label="杀法" align="center" prop="ctl" :formatter="formatterctl"/>-->
+<!--      <el-table-column label="开奖分析" align="center" prop="analyse"/>-->
     </el-table>
 
     <pagination
@@ -139,8 +121,7 @@
 </template>
 
 <script>
-import {listLotteryHistory} from "@/api/platform-web/lottery/lotteryHistory";
-
+import {listLotteryHistory, historyName} from "@/api/platform-web/lottery/lotteryHistory";
 export default {
   name: "LotteryHistory",
   components: {},
@@ -168,6 +149,10 @@ export default {
         value: '1',
         label: '控杀'
       }],
+      //全部彩种
+      historyNameOptions: [],
+      // 日期范围
+      dateRange: [],
       // 遮罩层
       loading: true,
       // 选中数组
@@ -200,7 +185,9 @@ export default {
         totalBet: null,
         totalPrize: null,
         ctl: null,
-        analyse: null
+        analyse: null,
+        orderByColumn: 'ktime',
+        isAsc: 'desc'
       },
       // 表单参数
       form: {},
@@ -214,12 +201,16 @@ export default {
   },
   created() {
     this.getList();
+    //全部彩种
+    historyName().then(response => {
+      this.historyNameOptions = response.data
+    })
   },
   methods: {
     /** 查询开奖历史列表 */
     getList() {
       this.loading = true;
-      listLotteryHistory(this.queryParams).then(response => {
+      listLotteryHistory(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
         this.lotteryHistoryList = response.rows;
         this.total = response.total;
         this.loading = false;
@@ -278,6 +269,7 @@ export default {
     },
     /** 重置按钮操作 */
     resetQuery() {
+      this.dateRange = []
       this.resetForm("queryForm");
       this.handleQuery();
     }

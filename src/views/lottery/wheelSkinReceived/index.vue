@@ -1,6 +1,7 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+    <el-button type="primary">皮肤总支出 {{ numberUtil.toFixed(totalData.totalPay) }}</el-button>
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px" style="margin-top: 20px">
 <!--      <el-form-item label="抽奖历史id" prop="wheelHistoryId">
         <el-input
           v-model="queryParams.wheelHistoryId"
@@ -71,8 +72,8 @@
       </el-form-item>
     </el-form>
 
-   <!-- <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
+    <el-row :gutter="10" class="mb8">
+<!--      <el-col :span="1.5">
         <el-button
           type="primary"
           plain
@@ -103,7 +104,7 @@
           @click="handleDelete"
           v-hasPermi="['lottery:wheelSkinReceived:remove']"
         >删除</el-button>
-      </el-col>
+      </el-col>-->
       <el-col :span="1.5">
         <el-button
           type="warning"
@@ -115,7 +116,7 @@
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-    </el-row>-->
+    </el-row>
 
     <el-table stripe v-loading="loading" :data="wheelSkinReceivedList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
@@ -205,7 +206,7 @@
 </template>
 
 <script>
-import { listWheelSkinReceived, getWheelSkinReceived, delWheelSkinReceived, addWheelSkinReceived, updateWheelSkinReceived, exportWheelSkinReceived } from "@/api/platform-web/lottery/wheelSkinReceived";
+import { listWheelSkinReceived, listTotalWheelSkinReceived, getWheelSkinReceived, delWheelSkinReceived, addWheelSkinReceived, updateWheelSkinReceived, exportWheelSkinReceived } from "@/api/platform-web/lottery/wheelSkinReceived";
 
 export default {
   name: "WheelSkinReceived",
@@ -213,6 +214,7 @@ export default {
   },
   data() {
     return {
+      totalData: {},
       // 遮罩层
       loading: true,
       // 选中数组
@@ -259,8 +261,15 @@ export default {
     this.getDicts('sys_receive_type').then(response => {
       this.typeList = response.data;
     })
+    this.listTotalWheelSkinReceived();
   },
   methods: {
+    listTotalWheelSkinReceived(){
+      listTotalWheelSkinReceived(this.queryParams).then((res) => {
+        console.log(res)
+        this.totalData.totalPay = res.data.totalPay
+            });
+    },
     changeReceivedType(row){
       console.log(row)
       updateWheelSkinReceived(row).then(response => {
@@ -314,6 +323,7 @@ export default {
     handleQuery() {
       this.queryParams.pageNum = 1;
       this.getList();
+      this.listTotalWheelSkinReceived();
     },
     /** 重置按钮操作 */
     resetQuery() {

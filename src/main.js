@@ -12,7 +12,7 @@ import store from './store'
 import router from './router'
 import permission from './directive/permission'
 import '@/utils/directives' // 弹窗拖拽
-
+import loading from '@/components/loading/index';
 import './assets/icons' // icon
 import './permission' // permission control
 import { getDicts } from '@/api/platform-web/system/dict/data'
@@ -95,7 +95,7 @@ Vue.use(permission)
 Vue.use(Element, {
   size: Cookies.get('size') || 'medium' // set element-ui default size
 })
-
+Vue.use(loading);
 Vue.config.productionTip = false
 
 window.vue = new Vue({

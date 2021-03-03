@@ -186,7 +186,7 @@ export default {
       // 查询参数
       queryParams: {
         pageNum: 1,
-        pageSize: 15,
+        pageSize: 20,
         name: null,
         des: null,
         orderByColumn: 'ind',

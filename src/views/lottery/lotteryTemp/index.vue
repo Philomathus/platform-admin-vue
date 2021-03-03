@@ -1,22 +1,23 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-<!--      <el-form-item label="开启封盘" prop="su">-->
-<!--        <el-select v-model="queryParams.su" placeholder="请选择开启封盘状态" clearable size="small">-->
-<!--          <el-option-->
-<!--            v-for="item in su"-->
-<!--            :key="item.value"-->
-<!--            :label="item.label"-->
-<!--            :value="item.value">-->
-<!--          </el-option>-->
-<!--        </el-select>-->
-<!--      </el-form-item>-->
+      <!--      <el-form-item label="开启封盘" prop="su">-->
+      <!--        <el-select v-model="queryParams.su" placeholder="请选择开启封盘状态" clearable size="small">-->
+      <!--          <el-option-->
+      <!--            v-for="item in su"-->
+      <!--            :key="item.value"-->
+      <!--            :label="item.label"-->
+      <!--            :value="item.value">-->
+      <!--          </el-option>-->
+      <!--        </el-select>-->
+      <!--      </el-form-item>-->
       <el-form-item label="开奖时间" prop="ktime">
         <el-date-picker clearable size="small"
                         v-model="queryParams.ktime"
                         type="date"
                         value-format="yyyy-MM-dd"
-                        placeholder="选择开奖时间">
+                        placeholder="选择开奖时间"
+        >
         </el-date-picker>
       </el-form-item>
       <el-form-item label="当前期数" prop="issue">
@@ -58,7 +59,7 @@
       <el-table-column label="当前期数" align="center" prop="issue"/>
       <el-table-column label="上期期号" align="center" prop="issueJust"/>
       <el-table-column label="上期开奖" align="center" prop="codeJust"/>
-<!--      <el-table-column label="开启或封盘" align="center" prop="su" :formatter="formattersu"/>-->
+      <!--      <el-table-column label="开启或封盘" align="center" prop="su" :formatter="formattersu"/>-->
       <el-table-column label="开奖时间" align="center" prop="ktime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.ktime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
@@ -78,10 +79,10 @@
 </template>
 
 <script>
-import {listLotteryTemp} from "@/api/platform-web/lottery/lotteryTemp";
+import { listLotteryTemp } from '@/api/platform-web/lottery/lotteryTemp'
 
 export default {
-  name: "LotteryTemp",
+  name: 'LotteryTemp',
   components: {},
   data() {
     return {
@@ -108,7 +109,7 @@ export default {
       // 彩票即时信息表格数据
       lotteryTempList: [],
       // 弹出层标题
-      title: "",
+      title: '',
       // 是否显示弹出层
       open: false,
       // 查询参数
@@ -119,26 +120,28 @@ export default {
         ktime: null,
         issueJust: null,
         codeJust: null,
-        su: null
+        su: null,
+        orderByColumn: 'ktime',
+        isAsc: 'desc'
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {}
-    };
+    }
   },
   created() {
-    this.getList();
+    this.getList()
   },
   methods: {
     /** 查询彩票即时信息列表 */
     getList() {
-      this.loading = true;
+      this.loading = true
       listLotteryTemp(this.queryParams).then(response => {
-        this.lotteryTempList = response.rows;
-        this.total = response.total;
-        this.loading = false;
-      });
+        this.lotteryTempList = response.rows
+        this.total = response.total
+        this.loading = false
+      })
     },
     //开启封盘
     formattersu(row) {
@@ -152,8 +155,8 @@ export default {
     },
     // 取消按钮
     cancel() {
-      this.open = false;
-      this.reset();
+      this.open = false
+      this.reset()
     },
     // 表单重置
     reset() {
@@ -164,19 +167,19 @@ export default {
         issueJust: null,
         codeJust: null,
         su: null
-      };
-      this.resetForm("form");
+      }
+      this.resetForm('form')
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNum = 1;
-      this.getList();
+      this.queryParams.pageNum = 1
+      this.getList()
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.resetForm("queryForm");
-      this.handleQuery();
+      this.resetForm('queryForm')
+      this.handleQuery()
     }
   }
-};
+}
 </script>

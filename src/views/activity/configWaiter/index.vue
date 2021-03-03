@@ -133,7 +133,7 @@
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="类型" prop="type">
-          <el-select v-model="form.type" placeholder="请选择杀法" clearable size="small">
+          <el-select v-model="form.type" placeholder="请选择类型" clearable size="small">
             <el-option
               v-for="item in type"
               :key="item.value"
@@ -176,10 +176,13 @@ import {
   exportConfigWaiter,
   changeStatus
 } from "@/api/activity/configWaiter";
+import ImageUpload from "@/components/ImageUpload";
 
 export default {
   name: "ConfigWaiter",
-  components: {},
+  components: {
+    ImageUpload,
+  },
   data() {
     return {
       // 1=qq,2=微信

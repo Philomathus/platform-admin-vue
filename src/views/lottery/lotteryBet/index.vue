@@ -57,19 +57,19 @@
     </el-form>
 
     <el-table stripe v-loading="loading" :data="lotteryBet0List" >
-      <el-table-column label="下注彩种id" align="center" prop="lotteryId" />
-      <el-table-column label="平台用户ID" align="center" prop="puserId" />
-      <el-table-column label="下注期数" align="center" prop="issue" />
-      <el-table-column label="状态" align="center" prop="status" :formatter="formatterStatus"/>
-      <el-table-column label="下注选择菜单" align="center" prop="methodId" />
-      <el-table-column label="下注选择" align="center" prop="betSelect" />
-      <el-table-column label="下注索引" align="center" prop="betIds" />
-      <el-table-column label="筹码" align="center" prop="chip" />
-      <el-table-column label="中奖金额" align="center" prop="prize" />
-      <el-table-column label="投资" align="center" prop="cost" />
+      <el-table-column label="用户ID" align="center" prop="puserId" />
       <el-table-column label="彩票名称" align="center" prop="lotteryName" />
-      <el-table-column label="主播ID" align="center" prop="anchor" />
+      <el-table-column label="下注期数" align="center" prop="issue" />
       <el-table-column label="开奖号码" align="center" prop="code" />
+      <el-table-column label="投注筹码" align="center" prop="chip" />
+      <el-table-column label="投注金额" align="center" prop="cost" />
+      <el-table-column label="中奖状态" align="center" prop="status" :formatter="formatterStatus"/>
+      <el-table-column label="中奖金额" align="center" prop="prize" />
+<!--      <el-table-column label="下注选择菜单" align="center" prop="methodId" />-->
+<!--      <el-table-column label="下注选择" align="center" prop="betSelect" />-->
+<!--      <el-table-column label="下注索引" align="center" prop="betIds" />-->
+<!--      <el-table-column label="下注彩种id" align="center" prop="lotteryId" />-->
+<!--      <el-table-column label="主播ID" align="center" prop="anchor" />-->
       <el-table-column label="下注时间" align="center" min-width="120px" prop="betTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.betTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>

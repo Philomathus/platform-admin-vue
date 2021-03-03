@@ -116,7 +116,6 @@ export default {
       this.loading = true
       list(this.queryParams).then(response => {
         this.list = response.rows
-        this.total = response.total
         this.loading = false
       })
     },

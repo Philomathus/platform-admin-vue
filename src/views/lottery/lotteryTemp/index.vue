@@ -1,16 +1,16 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="开启封盘" prop="su">
-        <el-select v-model="queryParams.su" placeholder="请选择开启封盘状态" clearable size="small">
-          <el-option
-            v-for="item in su"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-      </el-form-item>
+<!--      <el-form-item label="开启封盘" prop="su">-->
+<!--        <el-select v-model="queryParams.su" placeholder="请选择开启封盘状态" clearable size="small">-->
+<!--          <el-option-->
+<!--            v-for="item in su"-->
+<!--            :key="item.value"-->
+<!--            :label="item.label"-->
+<!--            :value="item.value">-->
+<!--          </el-option>-->
+<!--        </el-select>-->
+<!--      </el-form-item>-->
       <el-form-item label="开奖时间" prop="ktime">
         <el-date-picker clearable size="small"
                         v-model="queryParams.ktime"
@@ -54,12 +54,11 @@
 
 
     <el-table stripe v-loading="loading" :data="lotteryTempList">
-      <el-table-column width="55" align="center"/>
       <el-table-column label="彩种id" align="center" prop="id"/>
       <el-table-column label="当前期数" align="center" prop="issue"/>
       <el-table-column label="上期期号" align="center" prop="issueJust"/>
       <el-table-column label="上期开奖" align="center" prop="codeJust"/>
-      <el-table-column label="开启或封盘" align="center" prop="su" :formatter="formattersu"/>
+<!--      <el-table-column label="开启或封盘" align="center" prop="su" :formatter="formattersu"/>-->
       <el-table-column label="开奖时间" align="center" prop="ktime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.ktime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>

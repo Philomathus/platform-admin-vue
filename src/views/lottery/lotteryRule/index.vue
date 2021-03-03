@@ -188,7 +188,9 @@ export default {
         pageNum: 1,
         pageSize: 15,
         name: null,
-        des: null
+        des: null,
+        orderByColumn: 'ind',
+        isAsc: 'asc'
       },
       // 表单参数
       form: {},

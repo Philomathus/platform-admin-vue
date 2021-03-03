@@ -9,3 +9,11 @@ export function listLotteryHistory(query) {
     params: query
   })
 }
+
+//全部彩种
+export function historyName() {
+  return request({
+    url: url.platformWeb + '/admin/lotteryHistory/lotteryName',
+    method: 'get'
+  })
+}

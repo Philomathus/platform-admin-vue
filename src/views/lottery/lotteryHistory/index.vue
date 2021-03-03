@@ -19,13 +19,13 @@
         </el-select>
       </el-form-item>
       <el-form-item prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small">
+        <el-select v-model="queryParams.status" placeholder="全部状态" clearable size="small">
           <el-option
-            v-for="item in status"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
+            v-for="dict in statusOptions"
+            :key="dict.dictValue"
+            :label="dict.dictLabel"
+            :value="dict.dictValue"
+          />
         </el-select>
       </el-form-item>
       <el-form-item prop="issue">
@@ -104,9 +104,13 @@
       <el-table-column label="总投注" align="center" prop="totalBet"/>
       <el-table-column label="杀率" align="center" prop="killRate"/>
       <el-table-column label="派奖" align="center" prop="totalPrize"/>
-      <el-table-column label="状态" align="center" prop="status" :formatter="formatterStatus"/>
-<!--      <el-table-column label="杀法" align="center" prop="ctl" :formatter="formatterctl"/>-->
-<!--      <el-table-column label="开奖分析" align="center" prop="analyse"/>-->
+      <el-table-column label="状态" align="center" prop="status">
+        <template slot-scope="scope">
+          <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">
+            {{ status.dictLabel }}
+          </span>
+        </template>
+      </el-table-column>
     </el-table>
 
     <pagination
@@ -127,28 +131,6 @@ export default {
   components: {},
   data() {
     return {
-      //状态选择栏
-      status: [{
-        value: '0',
-        label: '投注中'
-      }, {
-        value: '1',
-        label: '已开奖'
-      }, {
-        value: '2',
-        label: '已派奖'
-      }, {
-        value: '3',
-        label: '开奖失败'
-      }],
-      //杀法选择栏
-      ctl: [{
-        value: '0',
-        label: '未杀'
-      }, {
-        value: '1',
-        label: '控杀'
-      }],
       //全部彩种
       historyNameOptions: [],
       // 日期范围
@@ -167,6 +149,7 @@ export default {
       total: 0,
       // 开奖历史表格数据
       lotteryHistoryList: [],
+      statusOptions: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -184,7 +167,6 @@ export default {
         killRate: null,
         totalBet: null,
         totalPrize: null,
-        ctl: null,
         analyse: null,
         orderByColumn: 'ktime',
         isAsc: 'desc'
@@ -204,6 +186,9 @@ export default {
     //全部彩种
     historyName().then(response => {
       this.historyNameOptions = response.data
+    })
+    this.getDicts('lottery_history_status').then(response => {
+      this.statusOptions = response.data
     })
   },
   methods: {
@@ -230,15 +215,6 @@ export default {
         return ''
       }
     },
-    formatterctl(row) {
-      if (row.ctl == 0) {
-        return '未杀'
-      } else if (row.ctl == 1) {
-        return '控杀'
-      } else if (row.ctl == null) {
-        return ''
-      }
-    },
     // 取消按钮
     cancel() {
       this.open = false;
@@ -257,7 +233,6 @@ export default {
         killRate: null,
         totalBet: null,
         totalPrize: null,
-        ctl: null,
         analyse: null
       };
       this.resetForm("form");

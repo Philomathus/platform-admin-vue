@@ -20,13 +20,13 @@
         />
       </el-form-item>
       <el-form-item prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small">
+        <el-select v-model="queryParams.status" placeholder="全部状态" clearable size="small">
           <el-option
-            v-for="item in status"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
+            v-for="dict in statusOptions"
+            :key="dict.dictValue"
+            :label="dict.dictLabel"
+            :value="dict.dictValue"
+          />
         </el-select>
       </el-form-item>
       <el-form-item  prop="lotteryName">
@@ -63,7 +63,13 @@
       <el-table-column label="开奖号码" align="center" prop="code" />
       <el-table-column label="投注筹码" align="center" prop="chip" />
       <el-table-column label="投注金额" align="center" prop="cost" />
-      <el-table-column label="中奖状态" align="center" prop="status" :formatter="formatterStatus"/>
+      <el-table-column label="中奖状态" align="center" prop="status">
+        <template slot-scope="scope">
+          <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">
+            {{ status.dictLabel }}
+          </span>
+        </template>
+      </el-table-column>
       <el-table-column label="中奖金额" align="center" prop="prize" />
 <!--      <el-table-column label="下注选择菜单" align="center" prop="methodId" />-->
 <!--      <el-table-column label="下注选择" align="center" prop="betSelect" />-->
@@ -97,17 +103,6 @@ export default {
   },
   data() {
     return {
-      //状态选择栏
-      status: [{
-        value: '0',
-        label: '待开奖'
-      }, {
-        value: '1',
-        label: '已中奖'
-      }, {
-        value: '2',
-        label: '未中奖'
-      }],
       // 遮罩层
       loading: true,
       // 选中数组
@@ -124,6 +119,7 @@ export default {
       total: 0,
       // 用户投资行为表格数据
       lotteryBet0List: [],
+      statusOptions: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -159,6 +155,9 @@ export default {
   },
   created() {
     this.getList();
+    this.getDicts('lottery_bat_status').then(response => {
+      this.statusOptions = response.data
+    })
   },
   methods: {
     /** 查询用户投资行为列表 */

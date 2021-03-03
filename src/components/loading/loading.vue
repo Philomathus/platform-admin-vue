@@ -33,7 +33,7 @@ export default {
     height: 100%;
     min-height: 20vh;
     background: rgba(23, 23, 23, 0.62);
-    z-index: 10000;
+    z-index: 1;
     top: 0;
     left: 0;
     transition: opacity 0.3s;

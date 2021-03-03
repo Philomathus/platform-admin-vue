@@ -142,6 +142,8 @@ export default {
         anchor: null,
         code: null,
         betTime: null,
+        orderByColumn: 'bet_time',
+        isAsc: 'desc'
       },
       // 表单参数
       form: {},

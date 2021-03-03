@@ -226,7 +226,8 @@ export default {
             });
           } else {
             addConfigGametype(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              debugger;
+              this.msgSuccess(response.msg);
               this.open = false;
               this.getList();
             });

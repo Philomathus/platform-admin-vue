@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="app-container" ref="container" style="position: relative">
     <el-button type="primary" @click="copy1">总投注金额: {{ this.data.countBetMoney || 0 }}</el-button>
     <el-button type="success" @click="copy2">总投注人数: {{ this.data.countBetPeople || 0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" label-width="68px" v-show="showSearch">
@@ -88,6 +88,7 @@ export default {
           }
         }]
       },
+      interval: {listTime: null},
       // 遮罩层
       loading: true,
       // 总条数
@@ -110,14 +111,34 @@ export default {
     this.getList()
     this.count()
   },
+  destroyed(){
+    if (this.interval.listTime){
+      clearTimeout(this.interval.listTime)
+    }
+  },
   methods: {
 
     getList() {
+      var that = this
       this.loading = true
       list(this.queryParams).then(response => {
         this.list = response.rows
-        this.loading = false
-      })
+        // this.total = response.total
+        this.$loading.hide();
+      }).catch((err) => {
+        debugger;
+        if (err=='Error: 报表正在生成，请稍后...'){
+          that.$loading.show('报表正在生成',that);
+          if (!that.interval.listTime){
+            that.interval.listTime = setTimeout(() => {
+              that.getList();
+            }, 5000);
+          }
+        }
+      }).finally(() => {
+          this.loading = false
+        }
+      );
     },
     getliststorage() {
       this.loading = true

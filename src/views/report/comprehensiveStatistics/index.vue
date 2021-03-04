@@ -58,7 +58,7 @@ import { list, listStorage,exportReportPlamCom } from '@/api/platform-web/report
 import { getYesterDate } from '@/utils/dateUtils'
 
 export default {
-  name: 'Online',
+  name: 'Report',
   data() {
     return {
       //日期快捷
@@ -80,6 +80,9 @@ export default {
           }
         }]
       },
+      interval: {listTime: null},
+      // 遮罩层
+      listLoading: false,
       // 遮罩层
       loading: true,
       // 总条数
@@ -99,6 +102,11 @@ export default {
     this.getList()
 
   },
+  destroyed(){
+    if (this.interval.listTime){
+      clearTimeout(this.interval.listTime)
+    }
+  },
   methods: {
     /** 查询登录日志列表 */
     getlistStorage() {
@@ -107,12 +115,28 @@ export default {
       })
     },
     getList() {
+      var that = this
       this.loading = true
       list(this.queryParams).then(response => {
         this.list = response.rows
-        this.total = response.total
-        this.loading = false
-      })
+        that.listLoading=false;
+        that.$loading.hide();
+      }).catch((err) => {
+          if (err=='Error: 报表正在生成，请稍后...'){
+            if (!that.listLoading) {
+              that.listLoading=true;
+              that.$loading.show('报表正在生成',that);
+            }
+
+            that.interval.listTime = setTimeout(() => {
+              that.getList();
+            }, 5000);
+
+          }
+        }).finally(() => {
+          this.loading = false
+        }
+      );
     },
 
     /** 搜索按钮操作 */

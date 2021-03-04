@@ -86,7 +86,7 @@ import { listReport, liststorage,exportReportAgentCount} from '@/api/platform-we
 import { getYesterDate } from '@/utils/dateUtils'
 
 export default {
-  name: 'Report-moneyinfo',
+  name: 'Agent',
   components: {},
   data() {
     return {

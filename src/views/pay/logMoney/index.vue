@@ -18,7 +18,7 @@
         />
       </el-form-item>
       <el-form-item label="行为类型" prop="types">
-        <el-select v-model="queryParams.types" multiple placeholder="行为类型" clearable size="small">
+        <el-select v-model="queryParams.types" multiple placeholder="请选择行为类型(可多选)" clearable size="small">
           <el-option
             v-for="item in typeOptions"
             :key="item.type"

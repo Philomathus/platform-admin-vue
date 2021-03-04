@@ -161,9 +161,6 @@ export default {
     this.getDicts('log_money_mark').then(response => {
       this.markOptions = response.data
     })
-    this.getDicts('log_money_types').then(response => {
-      this.typeOptions = response.data
-    })
     this.getTypeData()
   },
   methods: {

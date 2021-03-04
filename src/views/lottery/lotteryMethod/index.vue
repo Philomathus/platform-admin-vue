@@ -47,7 +47,11 @@
 
     <el-table stripe v-loading="loading" :data="lotteryMethodList">
       <el-table-column label="所属彩种类型" align="center" prop="lotteryType"/>
-      <el-table-column label="投注名称" align="center" prop="name"/>
+      <el-table-column label="投注名称" align="center" prop="name">
+        <template v-slot="{row}">
+          <a @click="$router.push({path: '/lottery/lotteryGame',query: { type: row.name}})" style="color: #00afff"> {{ row.name }}</a>
+        </template>
+      </el-table-column>
       <el-table-column label="ind" align="center" prop="ind"/>
       <el-table-column label="排序键order" align="center" prop="order"/>
     </el-table>
@@ -127,7 +131,14 @@ export default {
       }
     };
   },
-  created() {
+/*  created() {
+    this.getList();
+  },*/
+  activated() {
+    var lotteryType = this.$route.query.lotteryType;
+    if (lotteryType) {
+      this.queryParams.lotteryType=lotteryType
+    }
     this.getList();
   },
   methods: {

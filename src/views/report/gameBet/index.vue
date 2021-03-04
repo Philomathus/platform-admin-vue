@@ -125,6 +125,7 @@ export default {
   methods: {
 
     getList() {
+      debugger;
       var that = this
       this.loading = true
       list(this.queryParams).then(response => {

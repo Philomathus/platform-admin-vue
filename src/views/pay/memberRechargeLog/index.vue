@@ -4,7 +4,7 @@
     <el-button type="warning" @click="copy2">总成功金额 {{ this.totalData.successMoney || 0 }}</el-button>
     <el-button type="info" id="copy3" @click="copy3">成功率 {{ numberUtil.toPercent(this.totalData.successRate) }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 10px" v-show="showSearch" label-width="100px">
-      <el-form-item label="审核时间" prop="selectDate" label-width="100px">
+      <el-form-item label="审核时间" prop="selectDate" label-width="70px">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
                         end-placeholder="结束时间" range-separator="至" clearable :picker-options="pickerOptions"
@@ -37,7 +37,7 @@
       </el-form-item>
       <el-form-item prop="userName" style="width: 160px;">
         <el-input
-          v-model="queryParams.userName"
+          v-model="queryParams.searchValue"
           placeholder="会员ID/会员账号"
           clearable
           size="small"
@@ -66,7 +66,7 @@
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
-      <el-form-item label="记录刷新">
+      <el-form-item label="记录刷新" label-width="70px">
         <el-select v-model="refreshSec" clearable placeholder="时间间隔" style="width: 110px">
           <el-option value="5" label="5秒"></el-option>
           <el-option value="10" label="10秒"></el-option>

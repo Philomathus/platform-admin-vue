@@ -57,7 +57,7 @@ import { list } from '@/api/platform-web/report/gameBetJump'
 import { getYesterDate } from '@/utils/dateUtils'
 
 export default {
-  name: 'Online',
+  name: 'GameBetJump',
   data() {
     return {
       // 遮罩层

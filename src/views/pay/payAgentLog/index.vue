@@ -122,56 +122,14 @@ import {
   exportPayAgentLog
 } from '@/api/platform-web/pay/payAgentLog'
 import { effectListPayAgentPlatform } from '@/api/platform-web/pay/payAgentPlatform'
+import {pickerDateShortcuts} from "@/utils/dateUtils";
 
 export default {
   name: 'PayAgentLog',
   components: {},
   data() {
     return {
-      pickerOptions: {
-        shortcuts: [{
-          text: '今日',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            //start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-            picker.$emit('pick', [start, end]);
-          }
-        }, {
-            text: '昨日',
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24);
-              end.setTime(end.getTime() - 3600 * 1000 * 24 );
-              picker.$emit('pick', [start, end]);
-            }
-          },{
-          text: '最近一周',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-            picker.$emit('pick', [start, end]);
-          }
-        }, {
-          text: '最近一个月',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-            picker.$emit('pick', [start, end]);
-          }
-        }, {
-          text: '最近三个月',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-            picker.$emit('pick', [start, end]);
-          }
-        }]
-      },
+      pickerOptions: {shortcuts: pickerDateShortcuts},
       // 遮罩层
       loading: true,
       // 选中数组

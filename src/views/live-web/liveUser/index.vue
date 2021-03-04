@@ -32,7 +32,7 @@
         <el-date-picker type="daterange" v-model="selectDate" format="yyyy-MM-dd"
                         value-format="yyyy-MM-dd" :style="{width: '60%'}" start-placeholder="开始日期"
                         end-placeholder="结束日期"
-                        range-separator="至" clearable
+                        range-separator="至" clearable :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item>
@@ -660,6 +660,7 @@ import {
 } from '@/api/live-web/liveUser'
 import ImageUpload from '@/components/ImageUpload/index'
 import more from './more'
+import {pickerDateShortcuts} from "@/utils/dateUtils";
 
 export default {
   name: 'LiveUser',
@@ -669,6 +670,7 @@ export default {
   },
   data() {
     return{
+      pickerOptions: { shortcuts: pickerDateShortcuts },
       // 0指未认证  1指待审核 2指认证 3指审核不通过
       attestList: [{label: '未认证',value: 0},{label: '待审核',value: 1},{label: '认证',value: 2},{label: '审核不通过',value: 3}],
     // 0-正常；1-禁播

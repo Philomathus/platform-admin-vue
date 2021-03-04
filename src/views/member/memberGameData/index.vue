@@ -8,7 +8,7 @@
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}" start-placeholder="开始时间"
                         end-placeholder="开始时间"
-                        range-separator="至" clearable
+                        range-separator="至" clearable :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="account">
@@ -100,12 +100,14 @@ import {
   exportMemberGameData,
   getCount, getLotteryBetData
 } from '@/api/platform-web/member/memberGameData'
+import {pickerDateShortcuts} from "@/utils/dateUtils";
 
 export default {
   name: 'MemberGameData',
   components: {},
   data() {
     return {
+      pickerOptions: { shortcuts: pickerDateShortcuts },
       //统计数据
       totalData: {
         totalSuccessBet: 0,

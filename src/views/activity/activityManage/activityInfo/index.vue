@@ -20,6 +20,7 @@
           range-separator="-"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
+          :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item>
@@ -181,6 +182,7 @@ import {
 } from "@/api/activity/activityInfo";
 import ImageUpload from "@/components/ImageUpload";
 import Editor from "@/components/WangEditor";
+import {pickerDateShortcuts} from "@/utils/dateUtils";
 
 export default {
   name: "ActivityInfo",
@@ -190,6 +192,7 @@ export default {
   },
   data() {
     return {
+      pickerOptions: { shortcuts: pickerDateShortcuts },
       // 遮罩层
       loading: true,
       // 选中数组

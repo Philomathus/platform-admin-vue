@@ -123,8 +123,35 @@ export default {
             start.setTime(start.getTime() - 3600 * 1000 * 24 * 61);
             picker.$emit('pick', [start, end]);
           }
+        }, {
+          text: '最近三个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 92);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近半年',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 183);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近一年',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 365);
+            picker.$emit('pick', [start, end]);
+          }
         }]
       },
+      interval: {listTime: null},
+      // 遮罩层
+      listLoading: false,
       // 遮罩层
       loading: true,
       // 选中数组
@@ -160,15 +187,36 @@ export default {
     this.getList()
     this.count()
   },
+  destroyed(){
+    if (this.interval.listTime){
+      clearTimeout(this.interval.listTime)
+    }
+  },
   methods: {
     /** 查询平台资金报，记录平台每日收入及支出总额，预估当前会员的积分余额列表 */
     getList() {
+      var that = this
       this.loading = true
       listReport(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
         this.report = response.rows
-        this.total = response.total
-        this.loading = false
-      })
+        that.listLoading=false;
+        that.$loading.hide();
+      }).catch((err) => {
+        if (err=='Error: 报表正在生成，请稍后...'){
+          if (!that.listLoading) {
+            that.listLoading=true;
+            that.$loading.show('报表正在生成',that);
+          }
+
+          that.interval.listTime = setTimeout(() => {
+            that.getList();
+          }, 5000);
+
+        }
+      }).finally(() => {
+          this.loading = false
+        }
+      );
     },
     getliststorage() {
       this.loading = true

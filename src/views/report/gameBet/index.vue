@@ -113,11 +113,7 @@ export default {
       }
     }
   },
-/*  created() {
-    this.getList()
-    this.count()
-  },*/
-  activated() {
+  created() {
     this.getList()
     this.count()
   },
@@ -129,6 +125,7 @@ export default {
   methods: {
 
     getList() {
+      debugger;
       var that = this
       this.loading = true
       list(this.queryParams).then(response => {

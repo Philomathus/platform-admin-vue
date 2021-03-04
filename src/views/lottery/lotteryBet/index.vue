@@ -64,6 +64,7 @@
       <el-table-column label="开奖号码" align="center" prop="code" />
       <el-table-column label="投注筹码" align="center" prop="chip" />
       <el-table-column label="投注金额" align="center" prop="cost" />
+      <el-table-column label="下注选择" align="center" prop="betSelect"/>
       <el-table-column label="中奖状态" align="center" prop="status">
         <template slot-scope="scope">
           <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">
@@ -73,7 +74,6 @@
       </el-table-column>
       <el-table-column label="中奖金额" align="center" prop="prize" />
 <!--      <el-table-column label="下注选择菜单" align="center" prop="methodId" />-->
-<!--      <el-table-column label="下注选择" align="center" prop="betSelect" />-->
 <!--      <el-table-column label="下注索引" align="center" prop="betIds" />-->
 <!--      <el-table-column label="下注彩种id" align="center" prop="lotteryId" />-->
 <!--      <el-table-column label="主播ID" align="center" prop="anchor" />-->

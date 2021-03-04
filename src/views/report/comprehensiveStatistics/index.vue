@@ -38,6 +38,7 @@
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
+    <div ref="container" style="position: relative">
     <el-table
       v-loading="loading"
       :data="list"
@@ -49,6 +50,7 @@
       <el-table-column label="类型" align="center" prop="type"/>
       <el-table-column label="时间" align="center" prop="reporttime" width="180"/>
     </el-table>
+    </div>
 <!--    <pagination v-show="total>0" :total="total" :page.sync="pageNum" :limit.sync="pageSize"/>-->
   </div>
 </template>

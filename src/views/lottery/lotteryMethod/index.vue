@@ -131,7 +131,10 @@ export default {
       }
     };
   },
-  created() {
+/*  created() {
+    this.getList();
+  },*/
+  activated() {
     var lotteryType = this.$route.query.lotteryType;
     if (lotteryType) {
       this.queryParams.lotteryType=lotteryType

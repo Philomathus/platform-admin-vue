@@ -37,7 +37,7 @@
       </el-form-item>
       <el-form-item prop="userName" style="width: 160px;">
         <el-input
-          v-model="queryParams.userName"
+          v-model="queryParams.searchValue"
           placeholder="会员ID/会员账号"
           clearable
           size="small"

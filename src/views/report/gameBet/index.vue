@@ -113,7 +113,11 @@ export default {
       }
     }
   },
-  created() {
+/*  created() {
+    this.getList()
+    this.count()
+  },*/
+  activated() {
     this.getList()
     this.count()
   },

@@ -114,7 +114,6 @@ export default {
     }
   },
   created() {
-    console.log('创建了')
     this.getList()
     this.count()
   },

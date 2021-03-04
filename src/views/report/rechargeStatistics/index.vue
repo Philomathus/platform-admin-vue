@@ -36,6 +36,7 @@
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
+    <div ref="container" style="position: relative">
     <el-table v-loading="loading" :stripe="true" :data="report" @selection-change="handleSelectionChange">
       <el-table-column label="报表时间" align="center" prop="reptime" min-width="120"  fixed="left"/>
       <el-table-column label="入款总人数" min-width="90" align="center" prop="totalRukuanrenshu"/>
@@ -58,6 +59,7 @@
                        :formatter="totalChukuanjineMath" min-width="130"
       />
     </el-table>
+    </div>  
 
     <!--    <pagination-->
     <!--      v-show="total>0"-->

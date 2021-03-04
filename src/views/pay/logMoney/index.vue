@@ -2,29 +2,30 @@
   <div class="app-container">
     <el-button type="primary" @click="copy1">总收入 {{ this.totalData.totalIncome || 0 }}</el-button>
     <el-button type="success" @click="copy2">总支出 {{ this.totalData.totalPay || 0 }}</el-button>
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="行为类型" prop="type" class="checkbox-type">
-        <el-checkbox-group v-model="queryParams.types" size="medium">
-          <el-checkbox v-for="item in typeOptions" :key="item.type" :label="item.type">{{ item.des }}</el-checkbox>
-        </el-checkbox-group>
-      </el-form-item>
-      <el-form-item label="会员ID" prop="userId">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="88px">
+<!--      <el-form-item label="行为类型" prop="type" class="checkbox-type">-->
+<!--        <el-checkbox-group v-model="queryParams.types" size="medium">-->
+<!--          <el-checkbox v-for="item in typeOptions" :key="item.type" :label="item.type">{{ item.des }}</el-checkbox>-->
+<!--        </el-checkbox-group>-->
+<!--      </el-form-item>-->
+      <el-form-item label="会员ID/账号" prop="searchValue">
         <el-input
-          v-model="queryParams.userId"
-          placeholder="请输入会员ID"
+          v-model="queryParams.searchValue"
+          placeholder="请输入会员ID/账号"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="账号" prop="userName">
-        <el-input
-          v-model="queryParams.userName"
-          placeholder="请输入账号"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+      <el-form-item label="行为类型" prop="types">
+        <el-select v-model="queryParams.types" multiple placeholder="行为类型" clearable size="small">
+          <el-option
+            v-for="item in typeOptions"
+            :key="item.type"
+            :label="item.des"
+            :value="item.type">
+          </el-option>
+        </el-select>
       </el-form-item>
 
 <!--      <el-form-item label="创建时间" prop="createTime">
@@ -159,6 +160,9 @@ export default {
     this.totalCount()
     this.getDicts('log_money_mark').then(response => {
       this.markOptions = response.data
+    })
+    this.getDicts('log_money_types').then(response => {
+      this.typeOptions = response.data
     })
     this.getTypeData()
   },

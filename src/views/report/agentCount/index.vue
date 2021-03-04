@@ -84,6 +84,7 @@
 <script>
 import { listReport, liststorage,exportReportAgentCount} from '@/api/platform-web/report/agentCount'
 import { getYesterDate } from '@/utils/dateUtils'
+import {pickerDateShortcuts} from "@/utils/dateUtils";
 
 export default {
   name: 'Agent',
@@ -91,29 +92,7 @@ export default {
   data() {
     return {
       //日期快捷
-      pickerOptions: {
-        disabledDate(time) {
-          return time.getTime() > Date.now();
-        },
-        shortcuts: [{
-          text: '今天',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime());
-            picker.$emit('pick', [start, end]);
-          }
-        }, {
-          text: '昨天',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24);
-            end.setTime(end.getTime() - 3600 * 1000 * 24);
-            picker.$emit('pick', [start, end]);
-          }
-        }]
-      },
+      pickerOptions: {shortcuts: pickerDateShortcuts},
       // 遮罩层
       loading: true,
       // 选中数组

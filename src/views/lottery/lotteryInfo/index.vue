@@ -75,7 +75,11 @@
 
     <el-table stripe v-loading="loading" :data="lotteryInfoList">
       <el-table-column label="彩票名称" align="center" prop="name"/>
-      <el-table-column label="所属彩种类型" align="center" prop="type"/>
+      <el-table-column label="所属彩种类型" align="center" prop="type">
+        <template v-slot="{row}">
+          <a @click="$router.push({path: '/lottery/lotteryMethod',query: { lotteryType: row.type}})" style="color: #00afff"> {{ row.type }}</a>
+        </template>
+      </el-table-column>
       <el-table-column label="图标" align="center" prop="icon">
         <template slot-scope="scope">
           <el-image

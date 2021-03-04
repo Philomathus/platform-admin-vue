@@ -145,6 +145,10 @@ export default {
     };
   },
   created() {
+    var type = this.$route.query.type;
+    if (type) {
+      this.queryParams.type=type
+    }
     this.getList();
   },
   methods: {

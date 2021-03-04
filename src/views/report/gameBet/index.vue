@@ -101,6 +101,7 @@ export default {
       total: 0,
       // 显示搜索条件
       showSearch: true,
+      isDestroyed: false,
       // countBetMoney:null,
       // countBetPeople:null,
       // 表格数据
@@ -118,9 +119,7 @@ export default {
     this.count()
   },
   destroyed(){
-    if (this.interval.listTime){
-      clearTimeout(this.interval.listTime)
-    }
+    this.isDestroyed = true
   },
   methods: {
 
@@ -138,11 +137,11 @@ export default {
             that.listLoading=true;
             that.$loading.show('报表正在生成',that);
           }
-
-            that.interval.listTime = setTimeout(() => {
+          if (!this.isDestroyed){
+            setTimeout(() => {
               that.getList();
             }, 5000);
-
+          }
         }
       }).finally(() => {
           this.loading = false

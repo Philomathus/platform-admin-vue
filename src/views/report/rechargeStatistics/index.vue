@@ -76,7 +76,7 @@ import { listReport, count, liststorage,exportReportMonwyInfo } from '@/api/plat
 import { get7beforeDay } from '@/utils/dateUtils'
 
 export default {
-  name: 'Report-moneyinfo',
+  name: 'Recharge',
   components: {},
   data() {
     return {

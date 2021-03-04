@@ -70,7 +70,7 @@ import { list, count, liststorage,exportReportPlamGames } from '@/api/platform-w
 import { getYesterDate } from '@/utils/dateUtils'
 
 export default {
-  name: 'Online',
+  name: 'GameBet',
   data() {
     return {
       //日期快捷
@@ -114,6 +114,7 @@ export default {
     }
   },
   created() {
+    console.log('创建了')
     this.getList()
     this.count()
   },

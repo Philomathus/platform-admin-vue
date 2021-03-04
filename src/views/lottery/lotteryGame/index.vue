@@ -144,7 +144,14 @@ export default {
       rules: {}
     };
   },
-  created() {
+/*  created() {
+    this.getList();
+  },*/
+  activated() {
+    var type = this.$route.query.type;
+    if (type) {
+      this.queryParams.type=type
+    }
     this.getList();
   },
   methods: {

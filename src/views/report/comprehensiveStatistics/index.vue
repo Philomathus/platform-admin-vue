@@ -58,7 +58,7 @@ import { list, listStorage,exportReportPlamCom } from '@/api/platform-web/report
 import { getYesterDate } from '@/utils/dateUtils'
 
 export default {
-  name: 'Online',
+  name: 'Report',
   data() {
     return {
       //日期快捷

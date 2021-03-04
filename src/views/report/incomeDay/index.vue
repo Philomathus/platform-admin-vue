@@ -52,7 +52,7 @@ import {listReport,count,exportReportIncomeDay} from "@/api/platform-web/report/
 import { getYesterDate } from '@/utils/dateUtils'
 
 export default {
-  name: "memberGame",
+  name: "IncomeDay",
   components: {
   },
   data() {

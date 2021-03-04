@@ -140,7 +140,7 @@ export default {
           if (!this.isDestroyed){
             setTimeout(() => {
               that.getList();
-            }, 5000);
+            }, 10000);
           }
         }
       }).finally(() => {

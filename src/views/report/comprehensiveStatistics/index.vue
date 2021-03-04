@@ -85,6 +85,7 @@ export default {
       interval: {listTime: null},
       // 遮罩层
       listLoading: false,
+      isDestroyed: false,
       // 遮罩层
       loading: true,
       // 总条数
@@ -105,9 +106,7 @@ export default {
 
   },
   destroyed(){
-    if (this.interval.listTime){
-      clearTimeout(this.interval.listTime)
-    }
+    this.isDestroyed = true
   },
   methods: {
     /** 查询登录日志列表 */
@@ -129,11 +128,11 @@ export default {
               that.listLoading=true;
               that.$loading.show('报表正在生成',that);
             }
-
-            that.interval.listTime = setTimeout(() => {
-              that.getList();
-            }, 5000);
-
+            if (!this.isDestroyed){
+              setTimeout(() => {
+                that.getList();
+              }, 10000);
+            }
           }
         }).finally(() => {
           this.loading = false

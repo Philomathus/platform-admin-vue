@@ -59,7 +59,7 @@
                        :formatter="totalChukuanjineMath" min-width="130"
       />
     </el-table>
-    </div>  
+    </div>
 
     <!--    <pagination-->
     <!--      v-show="total>0"-->
@@ -154,6 +154,7 @@ export default {
       interval: {listTime: null},
       // 遮罩层
       listLoading: false,
+      isDestroyed: false,
       // 遮罩层
       loading: true,
       // 选中数组
@@ -190,9 +191,7 @@ export default {
     this.count()
   },
   destroyed(){
-    if (this.interval.listTime){
-      clearTimeout(this.interval.listTime)
-    }
+    this.isDestroyed = true
   },
   methods: {
     /** 查询平台资金报，记录平台每日收入及支出总额，预估当前会员的积分余额列表 */
@@ -209,11 +208,11 @@ export default {
             that.listLoading=true;
             that.$loading.show('报表正在生成',that);
           }
-
-          that.interval.listTime = setTimeout(() => {
-            that.getList();
-          }, 5000);
-
+          if (!this.isDestroyed){
+            setTimeout(() => {
+              that.getList();
+            }, 10000);
+          }
         }
       }).finally(() => {
           this.loading = false

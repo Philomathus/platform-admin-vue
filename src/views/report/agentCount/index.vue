@@ -51,6 +51,28 @@
         >导出
         </el-button>
       </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="mini"
+          @click="handleAdd"
+          v-hasPermi="['pay:configBank:add']"
+        >新增推广码
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="danger"
+          plain
+          icon="el-icon-delete"
+          size="mini"
+          @click="handleDelete"
+          v-hasPermi="['pay:configBank:remove']"
+        >删除推广码
+        </el-button>
+      </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -67,8 +89,49 @@
       <el-table-column label="出款金额（首充）" min-width="130" align="center" prop="chukuanjine"/>
       <el-table-column label="人/笔/金额（出款日总）" min-width="170" align="center" prop="totalChukuanjine"/>
       <el-table-column label="送礼次数/金额" min-width="120" align="center" prop="totalGiveprop"/>
-      <el-table-column label="直播间次数/活跃安卓/活跃苹果" min-width="210" align="center" prop="ios" :formatter="ios" fixed="right"/>
+      <el-table-column label="直播间次数/活跃安卓/活跃苹果" min-width="210" align="center" prop="ios" :formatter="ios"
+                       fixed="right"/>
     </el-table>
+
+    <!-- 新增推广码弹框 -->
+    <el-dialog
+      v-dialogDrag
+      :close-on-click-modal="false"
+      title="新增推广码"
+      :visible.sync="addPromotionCode"
+      width="500px"
+      append-to-body
+    >
+      <el-form ref="formaddPromotionCode" :model="formaddPromotionCode" :rules="rules" label-width="80px">
+        <el-form-item label="推广码" prop="code">
+          <el-input placeholder="请输入推广码" v-model="formaddPromotionCode.code"
+          />
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitaddPromotionCode">立即提交</el-button>
+      </div>
+    </el-dialog>
+
+    <!-- 删除推广码弹框 -->
+    <el-dialog
+      v-dialogDrag
+      :close-on-click-modal="false"凑得
+      title="删除推广码"
+      :visible.sync="delPromotionCode"
+      width="500px"
+      append-to-body
+    >
+      <el-form ref="formdelPromotionCode" :model="formdelPromotionCode" :rules="rules" label-width="80px">
+        <el-form-item label="推广码" prop="code">
+          <el-input placeholder="请输入推广码" v-model="formdelPromotionCode.code"
+          />
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitdelPromotionCode">立即提交</el-button>
+      </div>
+    </el-dialog>
 
     <pagination
       v-show="total>0"
@@ -82,9 +145,10 @@
 </template>
 
 <script>
-import { listReport, liststorage,exportReportAgentCount} from '@/api/platform-web/report/agentCount'
-import { getYesterDate } from '@/utils/dateUtils'
+import {listReport, liststorage, exportReportAgentCount, addPromotionCode, delPromotionCode} from '@/api/platform-web/report/agentCount'
+import {getYesterDate} from '@/utils/dateUtils'
 import {pickerDateShortcuts} from "@/utils/dateUtils";
+import {proposed} from "@/api/platform-web/pay/payAgentRechargeRecord";
 
 export default {
   name: 'Agent',
@@ -101,6 +165,14 @@ export default {
       single: true,
       // 非多个禁用
       multiple: true,
+      //新增推广码弹框
+      addPromotionCode: false,
+      //删除推广码弹框
+      delPromotionCode: false,
+      //新增推广码参数
+      formaddPromotionCode: {},
+      //删除推广码参数
+      formdelPromotionCode: {},
       // 显示搜索条件
       showSearch: true,
       // 总条数
@@ -115,12 +187,17 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 20,
-        dateRange: [this.parseTime(getYesterDate(), '{y}-{m}-{d}'), this.parseTime(getYesterDate(), '{y}-{m}-{d}')]
+        dateRange: [this.parseTime(getYesterDate(), '{y}-{m}-{d}'), this.parseTime(getYesterDate(), '{y}-{m}-{d}')],
+        code: null
       },
       // 表单参数
       form: {},
       // 表单校验
-      rules: {}
+      rules: {
+        // code: [
+        //   {required: true, message: "推广码不能为空", trigger: "blur"}
+        // ]
+      }
     }
   },
   created() {
@@ -141,6 +218,30 @@ export default {
       liststorage(this.addDateRange(this.queryParams, this.queryParams.dateRange)).then(response => {
         this.getList()
       })
+    },
+    //新增推广码
+    handleAdd() {
+      this.resetformaddPromotionCode()
+      this.addPromotionCode = true
+    },
+    //删除推广码
+    handleDelete() {
+      this.resetformdelPromotionCode()
+      this.delPromotionCode = true
+    },
+    // 新增推广码表单重置
+    resetformaddPromotionCode() {
+      this.formaddPromotionCode = {
+        code: null
+      };
+      this.resetForm("formaddPromotionCode");
+    },
+    // 删除推广码表单重置
+    resetformdelPromotionCode() {
+      this.formdelPromotionCode = {
+        code: null
+      };
+      this.resetForm("formdelPromotionCode");
     },
     // 取消按钮
     cancel() {
@@ -163,6 +264,34 @@ export default {
       this.single = selection.length !== 1
       this.multiple = !selection.length
     },
+    /** 新增推广码提交按钮 */
+    submitaddPromotionCode() {
+      this.$refs["formaddPromotionCode"].validate(valid => {
+        addPromotionCode(this.formaddPromotionCode).then(response => {
+          if (response.data.code == 0) {
+            this.msg(response.data.message);
+          } else {
+            this.msgSuccess("新增成功");
+            this.open = false;
+            this.getList();
+          }
+        });
+      });
+    },
+    /** 删除推广码提交按钮 */
+    submitdelPromotionCode() {
+      this.$refs["formdelPromotionCode"].validate(valid => {
+        delPromotionCode(this.formdelPromotionCode).then(response => {
+          if (response.data.code == 0) {
+            this.msg(response.data.message);
+          } else {
+            this.msgSuccess("删除成功");
+            this.open = false;
+            this.getList();
+          }
+        });
+      });
+    },
     regisNumber(rows, column) {
       return rows.newmember + '/' + rows.totalmember
     },
@@ -175,7 +304,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportReportAgentCount(queryParams)
       }).then(response => {
         this.download(response.msg)

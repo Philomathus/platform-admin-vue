@@ -23,3 +23,20 @@ export function exportReportAgentCount(query) {
   })
 }
 
+export function addPromotionCode(data) {
+  console.info(data);
+  return request({
+    url: url.platformWeb + '/admin/reportAgentcount/add',
+    method: 'post',
+    data: data
+  })
+}
+
+export function delPromotionCode(data) {
+  return request({
+    url: url.platformWeb + '/admin/reportAgentcount/del',
+    method: 'delete',
+    data: data
+  })
+}
+

@@ -95,6 +95,8 @@ export default {
       interval: {listTime: null},
       // 遮罩层
       loading: true,
+      // 遮罩层
+      listLoading: false,
       // 总条数
       total: 0,
       // 显示搜索条件
@@ -126,17 +128,21 @@ export default {
       var that = this
       this.loading = true
       list(this.queryParams).then(response => {
-        this.list = response.rows
+        that.list = response.rows
         // this.total = response.total
-        this.$loading.hide();
+        that.listLoading=false;
+        that.$loading.hide();
       }).catch((err) => {
         if (err=='Error: 报表正在生成，请稍后...'){
-          that.$loading.show('报表正在生成',that);
-          if (!that.interval.listTime){
+          if (!that.listLoading) {
+            that.listLoading=true;
+            that.$loading.show('报表正在生成',that);
+          }
+
             that.interval.listTime = setTimeout(() => {
               that.getList();
             }, 5000);
-          }
+
         }
       }).finally(() => {
           this.loading = false

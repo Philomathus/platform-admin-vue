@@ -47,6 +47,7 @@
           range-separator="-"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
+          :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <!--      <el-form-item label="自开实际杀率" prop="killRate">-->
@@ -126,11 +127,15 @@
 
 <script>
 import {listLotteryHistory, historyName} from "@/api/platform-web/lottery/lotteryHistory";
+import {pickerDateShortcuts} from "@/utils/dateUtils";
+
+
 export default {
   name: "LotteryHistory",
   components: {},
   data() {
     return {
+      pickerOptions: {shortcuts: pickerDateShortcuts},
       //全部彩种
       historyNameOptions: [],
       // 日期范围

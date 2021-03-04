@@ -20,6 +20,7 @@
           range-separator="-"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
+          :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item>
@@ -118,7 +119,8 @@
     />
 
     <!-- 添加或修改站内信息对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="信息标题" prop="title">
           <el-input v-model="form.title" placeholder="请输入信息标题"/>
@@ -152,12 +154,14 @@ import {
   updateMessageOnSite,
   exportMessageOnSite
 } from '@/api/activity/messageOnSite'
+import {pickerDateShortcuts} from "@/utils/dateUtils";
 
 export default {
   name: 'MessageOnSite',
   components: {},
   data() {
     return {
+      pickerOptions: {shortcuts: pickerDateShortcuts},
       // 遮罩层
       loading: true,
       // 选中数组
@@ -196,19 +200,19 @@ export default {
       // 表单校验
       rules: {
         title: [
-          { required: true, message: '信息标题不能为空', trigger: 'blur' }
+          {required: true, message: '信息标题不能为空', trigger: 'blur'}
         ],
         content: [
-          { required: true, message: '内容不能为空', trigger: 'blur' }
+          {required: true, message: '内容不能为空', trigger: 'blur'}
         ],
         receiverType: [
-          { required: true, message: '接收者类型不能为空', trigger: 'change' }
+          {required: true, message: '接收者类型不能为空', trigger: 'change'}
         ],
         action: [
-          { required: true, message: '动作不能为空', trigger: 'blur' }
+          {required: true, message: '动作不能为空', trigger: 'blur'}
         ],
         pubdatetime: [
-          { required: true, message: '发布时间不能为空', trigger: 'blur' }
+          {required: true, message: '发布时间不能为空', trigger: 'blur'}
         ]
       }
     }
@@ -304,7 +308,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return delMessageOnSite(ids)
       }).then(() => {
         this.getList()
@@ -318,7 +322,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportMessageOnSite(queryParams)
       }).then(response => {
         this.download(response.msg)

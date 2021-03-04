@@ -5,7 +5,7 @@
         <el-date-picker type="daterange" v-model="queryParams.selectDate" format="yyyy-MM-dd"
                         value-format="yyyy-MM-dd" start-placeholder="开始日期"
                         end-placeholder="结束日期"
-                        range-separator="至" clearable></el-date-picker>
+                        range-separator="至" clearable :picker-options="pickerOptions"></el-date-picker>
       </el-form-item>
       <el-form-item label="散户结算率" prop="settlementRate" label-width="100px">
         <el-input
@@ -157,6 +157,7 @@ import more from './more'
 // 引入导出Excel表格依赖
 import FileSaver from 'file-saver';
 import XLSX from 'xlsx';
+import {pickerDateShortcuts} from "@/utils/dateUtils";
 export default {
   name: "LiveHostWageNote",
   components: {
@@ -164,6 +165,7 @@ export default {
   },
   data() {
     return {
+      pickerOptions: { shortcuts: pickerDateShortcuts },
       // 遮罩层
       loading: true,
       // 选中数组

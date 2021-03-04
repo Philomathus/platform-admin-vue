@@ -23,7 +23,7 @@
         <el-date-picker type="daterange" v-model="queryParams.selectDate" format="yyyy-MM-dd"
                         value-format="yyyy-MM-dd" :style="{width: '60%'}" start-placeholder="开始日期"
                         end-placeholder="结束日期"
-                        range-separator="至" clearable
+                        range-separator="至" clearable :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
 
@@ -57,12 +57,14 @@
 import {
   listAnchorAward
 } from '@/api/live-web/liveUser'
+import {pickerDateShortcuts} from "@/utils/dateUtils";
 
 export default {
   name: 'LiveUser',
   components: {},
   data() {
     return {
+      pickerOptions: { shortcuts: pickerDateShortcuts },
       //所选的用户id
       userId: 0,
       // 遮罩层

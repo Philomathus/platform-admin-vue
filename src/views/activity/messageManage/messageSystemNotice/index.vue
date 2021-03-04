@@ -20,6 +20,7 @@
           range-separator="-"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
+          :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item>
@@ -134,6 +135,8 @@
 
 <script>
 import { listMessageSystemNotice, getMessageSystemNotice, delMessageSystemNotice, addMessageSystemNotice, updateMessageSystemNotice, exportMessageSystemNotice } from "@/api/activity/messageSystemNotice";
+import {pickerDateShortcuts} from "@/utils/dateUtils";
+
 
 export default {
   name: "MessageSystemNotice",
@@ -141,6 +144,7 @@ export default {
   },
   data() {
     return {
+      pickerOptions: {shortcuts: pickerDateShortcuts},
       // 遮罩层
       loading: true,
       // 选中数组

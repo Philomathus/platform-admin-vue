@@ -123,6 +123,30 @@ export default {
             start.setTime(start.getTime() - 3600 * 1000 * 24 * 61);
             picker.$emit('pick', [start, end]);
           }
+        }, {
+          text: '最近三个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 92);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近半年',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 183);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近一年',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 365);
+            picker.$emit('pick', [start, end]);
+          }
         }]
       },
       // 遮罩层

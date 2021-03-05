@@ -102,7 +102,7 @@
       width="500px"
       append-to-body
     >
-      <el-form ref="formaddPromotionCode" :model="formaddPromotionCode" :rules="rules" label-width="80px">
+      <el-form ref="formaddPromotionCode" :model="formaddPromotionCode" :rules="rules" label-width="70px">
         <el-form-item label="推广码" prop="code">
           <el-input placeholder="请输入推广码" v-model="formaddPromotionCode.code"
           />
@@ -122,7 +122,7 @@
       width="500px"
       append-to-body
     >
-      <el-form ref="formdelPromotionCode" :model="formdelPromotionCode" :rules="rules" label-width="80px">
+      <el-form ref="formdelPromotionCode" :model="formdelPromotionCode" :rules="rules" label-width="70px">
         <el-form-item label="推广码" prop="code">
           <el-input placeholder="请输入推广码" v-model="formdelPromotionCode.code"
           />

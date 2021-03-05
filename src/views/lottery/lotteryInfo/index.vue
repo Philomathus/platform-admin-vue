@@ -94,7 +94,6 @@
       <el-table-column label="杀率" align="center" prop="killRate"/>
       <el-table-column label="周期" align="center" prop="cycle"/>
       <el-table-column label="最小投注金额" align="center" prop="minCost"/>
-      <el-table-column label="开奖形式" align="center" prop="official" :formatter="formatterofficial"/>
     </el-table>
 
     <pagination

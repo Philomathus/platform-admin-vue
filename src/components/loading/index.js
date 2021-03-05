@@ -4,7 +4,7 @@ export default {
     const LoadingVue = Vue.extend(loadingTemplate);
     let loading = null;
     function show (msg,that) {
-      if (!loading) {
+      // if (!loading) {
         loading = new LoadingVue();
         loading.$mount();
         if (that) {
@@ -12,7 +12,7 @@ export default {
         }else {
           document.querySelector('body').appendChild(loading.$el);
         }
-      }
+      // }
       loading.visible = true;
       loading.msg = msg;
     }

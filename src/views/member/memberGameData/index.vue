@@ -57,13 +57,13 @@
     </el-row>
 
     <el-table stripe v-loading="loading" :data="memberGameDataList">
-      <el-table-column label="会员ID" align="center" prop="account">
-        <template v-slot="{row}">
-          <a @click="lotteryBetData(row)" style="color: #00afff" v-if="row.agent==10000">{{ row.account }}</a>
-          <a @click="lotteryBetData(row)" style="color: #f38010" v-else-if="row.agent==80000">{{ row.account }}</a>
-          <div v-else>{{ row.account }}</div>
-        </template>
-      </el-table-column>
+      <el-table-column label="会员ID" align="center" prop="account"/>
+<!--        <template v-slot="{row}">-->
+<!--          <a @click="lotteryBetData(row)" style="color: #00afff" v-if="row.agent==10000">{{ row.account }}</a>-->
+<!--          <a @click="lotteryBetData(row)" style="color: #f38010" v-else-if="row.agent==80000">{{ row.account }}</a>-->
+<!--          <div v-else>{{ row.account }}</div>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
       <el-table-column label="子平台ID" align="center" prop="agent"/>
       <el-table-column label="平台名称" align="center" prop="platformName"/>
       <el-table-column label="子平台名称" align="center" prop="sonPlatformName"/>

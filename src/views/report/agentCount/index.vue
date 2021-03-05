@@ -200,7 +200,7 @@ export default {
       // 表单校验
       rules: {
         code: [
-          {required: true, message: "推广码不能为空", trigger: "blur"}
+          {required: true, message: "推广码不能为空", trigger: "blur"},
         ]
       }
     }
@@ -290,7 +290,7 @@ export default {
     /** 删除推广码提交按钮 */
     submitdelPromotionCode() {
       this.$refs["formdelPromotionCode"].validate(valid => {
-        if ((/^[0-9]+$/).test(this.formaddPromotionCode.code)) {
+        if ((/^[0-9]+$/).test(this.formdelPromotionCode.code)) {
           delPromotionCode(this.formdelPromotionCode).then(response => {
             if (response.code == 0) {
               this.$message.error(response.msg);

@@ -74,7 +74,7 @@
         >导出
         </el-button>
       </el-col>
-      <el-col :span="6" style="margin-left: 10px">
+      <el-col :span="10" style="margin-left: 10px">
           <span style="font-size: 16px;margin-right: 10px">记录刷新</span>
           <el-select v-model="refreshSec" clearable placeholder="时间间隔" style="width: 110px">
             <el-option value="5" label="5秒"></el-option>

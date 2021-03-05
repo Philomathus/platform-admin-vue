@@ -154,7 +154,6 @@ import {
 } from '@/api/platform-web/report/agentCount'
 import {getYesterDate} from '@/utils/dateUtils'
 import {pickerDateShortcuts} from "@/utils/dateUtils";
-import {proposed} from "@/api/platform-web/pay/payAgentRechargeRecord";
 
 export default {
   name: 'Agent',
@@ -273,7 +272,7 @@ export default {
     /** 新增推广码提交按钮 */
     submitaddPromotionCode() {
       this.$refs["formaddPromotionCode"].validate(valid => {
-        if ((/^[0-9]*$/).test(this.formaddPromotionCode.code)) {
+        if ((/^[0-9]+$/).test(this.formaddPromotionCode.code)) {
           addPromotionCode(this.formaddPromotionCode).then(response => {
             if (response.code == 0) {
               this.$message.error(response.msg);
@@ -291,7 +290,7 @@ export default {
     /** 删除推广码提交按钮 */
     submitdelPromotionCode() {
       this.$refs["formdelPromotionCode"].validate(valid => {
-        if ((/^[0-9]*$/).test(this.formaddPromotionCode.code)) {
+        if ((/^[0-9]+$/).test(this.formaddPromotionCode.code)) {
           delPromotionCode(this.formdelPromotionCode).then(response => {
             if (response.code == 0) {
               this.$message.error(response.msg);

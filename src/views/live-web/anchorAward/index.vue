@@ -35,7 +35,7 @@
 
 
     <el-table stripe v-loading="loading" :data="liveUserList" @selection-change="handleSelectionChange">
-      <el-table-column label="主播ID" align="center" prop="id"/>
+      <el-table-column label="主播ID" align="center" prop="anchor"/>
       <el-table-column label="主播昵称" align="center" prop="nickName"/>
       <el-table-column label="投注" align="center" prop="cost"/>
       <el-table-column label="派奖" align="center" prop="prize"/>
@@ -89,9 +89,11 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 20,
-        selectDate: [this.parseTime(new Date), this.parseTime(new Date)],
+        selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
         nickName: null,
-        id: null
+        id: null,
+        orderByColumn: 't.update_time',
+        isAsc: 'desc'
       },
       // 表单参数
       form: {},
@@ -101,17 +103,6 @@ export default {
   },
   created() {
     this.getList()
-  },
-  watch: {
-    selectDate: function(newVal, oldVal) {
-      if (newVal === null) {
-        this.queryParams.sendStartTime = undefined
-        this.queryParams.sendEndTime = undefined
-      } else {
-        this.queryParams.sendStartTime = this.selectDate[0] + ' 00:00:00'
-        this.queryParams.sendEndTime = this.selectDate[1] + ' 23:59:59'
-      }
-    }
   },
   methods: {
     /** 查询//用户信息列表 */

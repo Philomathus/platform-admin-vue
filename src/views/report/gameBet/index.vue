@@ -114,12 +114,12 @@
           that.list = response.rows
           // this.total = response.total
           that.listLoading = false;
-          that.$loading.hide();
+          that.$rjLoading.hide();
         }).catch((err) => {
           if (err == 'Error: 报表正在生成，请稍后...') {
             if (!that.listLoading) {
               that.listLoading = true;
-              that.$loading.show('报表正在生成', that);
+              that.$rjLoading.show('报表正在生成', that);
             }
             if (!this.isDestroyed) {
               setTimeout(() => {

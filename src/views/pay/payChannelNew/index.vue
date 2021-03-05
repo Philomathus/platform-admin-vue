@@ -174,7 +174,7 @@
     <el-dialog :title="title" :visible.sync="open" width="770px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="通道名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入通道名称" />
+          <el-input v-model="form.name" placeholder="请输入通道名称(前缀请加上支付平台)" />
         </el-form-item>
         <el-form-item label="支付方式编码" prop="payMethod">
           <el-input v-model="form.payMethod" placeholder="请输入支付方式编码" />

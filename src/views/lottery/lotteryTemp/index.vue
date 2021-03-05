@@ -81,30 +81,16 @@
 
 <script>
 import { listLotteryTemp } from '@/api/platform-web/lottery/lotteryTemp'
+import {toyesDayshortcuts} from "@/utils/dateUtils"
+
 
 export default {
   name: 'LotteryTemp',
   components: {},
   data() {
     return {
-      pickerOptions: {
-        disabledDate(time) {
-          return time.getTime() > Date.now();
-        },
-        shortcuts: [{
-          text: '今天',
-          onClick(picker) {
-            picker.$emit('pick', new Date());
-          }
-        }, {
-          text: '昨天',
-          onClick(picker) {
-            const date = new Date();
-            date.setTime(date.getTime() - 3600 * 1000 * 24);
-            picker.$emit('pick', date);
-          }
-        }]
-      },
+      //日期快捷
+      pickerOptions: {shortcuts: toyesDayshortcuts},
       //开启封盘选择栏
       su: [{
         value: '0',

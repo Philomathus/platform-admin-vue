@@ -102,7 +102,7 @@
       width="500px"
       append-to-body
     >
-      <el-form ref="formaddPromotionCode" :model="formaddPromotionCode" :rules="rules" label-width="80px">
+      <el-form ref="formaddPromotionCode" :model="formaddPromotionCode" :rules="rules" label-width="70px">
         <el-form-item label="推广码" prop="code">
           <el-input placeholder="请输入推广码" v-model="formaddPromotionCode.code"
           />
@@ -116,13 +116,13 @@
     <!-- 删除推广码弹框 -->
     <el-dialog
       v-dialogDrag
-      :close-on-click-modal="false"凑得
+      :close-on-click-modal="false"
       title="删除推广码"
       :visible.sync="delPromotionCode"
       width="500px"
       append-to-body
     >
-      <el-form ref="formdelPromotionCode" :model="formdelPromotionCode" :rules="rules" label-width="80px">
+      <el-form ref="formdelPromotionCode" :model="formdelPromotionCode" :rules="rules" label-width="70px">
         <el-form-item label="推广码" prop="code">
           <el-input placeholder="请输入推广码" v-model="formdelPromotionCode.code"
           />
@@ -145,10 +145,15 @@
 </template>
 
 <script>
-import {listReport, liststorage, exportReportAgentCount, addPromotionCode, delPromotionCode} from '@/api/platform-web/report/agentCount'
+import {
+  listReport,
+  liststorage,
+  exportReportAgentCount,
+  addPromotionCode,
+  delPromotionCode
+} from '@/api/platform-web/report/agentCount'
 import {getYesterDate} from '@/utils/dateUtils'
 import {pickerDateShortcuts} from "@/utils/dateUtils";
-import {proposed} from "@/api/platform-web/pay/payAgentRechargeRecord";
 
 export default {
   name: 'Agent',
@@ -194,9 +199,9 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        // code: [
-        //   {required: true, message: "推广码不能为空", trigger: "blur"}
-        // ]
+        code: [
+          {required: true, message: "推广码不能为空", trigger: "blur"}
+        ]
       }
     }
   },
@@ -267,29 +272,37 @@ export default {
     /** 新增推广码提交按钮 */
     submitaddPromotionCode() {
       this.$refs["formaddPromotionCode"].validate(valid => {
-        addPromotionCode(this.formaddPromotionCode).then(response => {
-          if (response.data.code == 0) {
-            this.msg(response.data.message);
-          } else {
-            this.msgSuccess("新增成功");
-            this.open = false;
-            this.getList();
-          }
-        });
+        if ((/^[0-9]+$/).test(this.formaddPromotionCode.code)) {
+          addPromotionCode(this.formaddPromotionCode).then(response => {
+            if (response.code == 0) {
+              this.$message.error(response.msg);
+            } else {
+              this.msgSuccess("新增成功");
+              this.addPromotionCode = false;
+              this.getList();
+            }
+          });
+        } else {
+          this.$message.error("推广码只能为纯数字");
+        }
       });
     },
     /** 删除推广码提交按钮 */
     submitdelPromotionCode() {
       this.$refs["formdelPromotionCode"].validate(valid => {
-        delPromotionCode(this.formdelPromotionCode).then(response => {
-          if (response.data.code == 0) {
-            this.msg(response.data.message);
-          } else {
-            this.msgSuccess("删除成功");
-            this.open = false;
-            this.getList();
-          }
-        });
+        if ((/^[0-9]+$/).test(this.formaddPromotionCode.code)) {
+          delPromotionCode(this.formdelPromotionCode).then(response => {
+            if (response.code == 0) {
+              this.$message.error(response.msg);
+            } else {
+              this.msgSuccess("删除成功");
+              this.delPromotionCode = false;
+              this.getList();
+            }
+          });
+        } else {
+          this.$message.error("推广码只能为纯数字");
+        }
       });
     },
     regisNumber(rows, column) {

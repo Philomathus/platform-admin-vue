@@ -85,7 +85,7 @@ export default {
       //日期快捷
       pickerOptions: {
         shortcuts: [{
-          text: '今天',
+          text: '今日',
           onClick(picker) {
             const end = new Date();
             const start = new Date();
@@ -93,7 +93,7 @@ export default {
             picker.$emit('pick', [start, end]);
           }
         }, {
-          text: '昨天',
+          text: '昨日',
           onClick(picker) {
             const end = new Date();
             const start = new Date();
@@ -102,11 +102,27 @@ export default {
             picker.$emit('pick', [start, end]);
           }
         }, {
+          text: '昨日到今日',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
           text: '最近一周',
           onClick(picker) {
             const end = new Date();
             const start = new Date();
             start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '最近半个月',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 15);
             picker.$emit('pick', [start, end]);
           }
         }, {
@@ -192,6 +208,7 @@ export default {
   },
   destroyed(){
     this.isDestroyed = true
+    this.listLoading = false;
   },
   methods: {
     /** 查询平台资金报，记录平台每日收入及支出总额，预估当前会员的积分余额列表 */

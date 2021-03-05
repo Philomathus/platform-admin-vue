@@ -2,12 +2,18 @@
   <div class="app-container">
     <el-button type="primary" @click="copy1">总收入 {{ this.totalData.totalIncome || 0 }}</el-button>
     <el-button type="success" @click="copy2">总支出 {{ this.totalData.totalPay || 0 }}</el-button>
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="88px">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="88px" style="margin-top: 10px">
 <!--      <el-form-item label="行为类型" prop="type" class="checkbox-type">-->
 <!--        <el-checkbox-group v-model="queryParams.types" size="medium">-->
 <!--          <el-checkbox v-for="item in typeOptions" :key="item.type" :label="item.type">{{ item.des }}</el-checkbox>-->
 <!--        </el-checkbox-group>-->
 <!--      </el-form-item>-->
+      <el-form-item label="创建时间" prop="selectDate" label-width="100px">
+        <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
+                        end-placeholder="结束时间" range-separator="至" clearable :picker-options="pickerOptions"
+        ></el-date-picker>
+      </el-form-item>
       <el-form-item label="会员ID/账号" prop="searchValue">
         <el-input
           v-model="queryParams.searchValue"
@@ -37,12 +43,6 @@
         >
         </el-date-picker>
       </el-form-item>-->
-      <el-form-item label="创建时间" prop="selectDate" label-width="100px">
-        <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
-                        end-placeholder="结束时间" range-separator="至" clearable :picker-options="pickerOptions"
-        ></el-date-picker>
-      </el-form-item>
       <el-form-item label="入款备注" prop="mark">
         <el-select v-model="queryParams.mark" placeholder="请选择入款备注" clearable size="small">
           <el-option

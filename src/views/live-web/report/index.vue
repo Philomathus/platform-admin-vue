@@ -88,6 +88,7 @@ import {
   updateReportAnchorhotDay,
   exportReportAnchorhotDay
 } from "@/api/live-web/report/reportAnchorhotDay";
+import {toyesDayshortcuts} from "@/utils/dateUtils"
 
 export default {
   name: "ReportAnchorhotDay",
@@ -95,24 +96,7 @@ export default {
   data() {
     return {
       //快捷日期
-      pickerOptions: {
-        disabledDate(time) {
-          return time.getTime() > Date.now();
-        },
-        shortcuts: [{
-          text: '今天',
-          onClick(picker) {
-            picker.$emit('pick', new Date());
-          }
-        }, {
-          text: '昨天',
-          onClick(picker) {
-            const date = new Date();
-            date.setTime(date.getTime() - 3600 * 1000 * 24);
-            picker.$emit('pick', date);
-          }
-        }]
-      },
+      pickerOptions: {shortcuts: toyesDayshortcuts},
       // 遮罩层
       loading: true,
       // 选中数组

@@ -100,14 +100,14 @@ import {
   exportMemberGameData,
   getCount, getLotteryBetData
 } from '@/api/platform-web/member/memberGameData'
-import {pickerDateShortcuts} from "@/utils/dateUtils";
+import {pickerDateTimeShortcuts} from "@/utils/dateUtils";
 
 export default {
   name: 'MemberGameData',
   components: {},
   data() {
     return {
-      pickerOptions: { shortcuts: pickerDateShortcuts },
+      pickerOptions: { shortcuts: pickerDateTimeShortcuts },
       //统计数据
       totalData: {
         totalSuccessBet: 0,

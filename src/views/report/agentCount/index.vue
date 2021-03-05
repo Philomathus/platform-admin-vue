@@ -116,7 +116,7 @@
     <!-- 删除推广码弹框 -->
     <el-dialog
       v-dialogDrag
-      :close-on-click-modal="false"凑得
+      :close-on-click-modal="false"
       title="删除推广码"
       :visible.sync="delPromotionCode"
       width="500px"
@@ -268,11 +268,11 @@ export default {
     submitaddPromotionCode() {
       this.$refs["formaddPromotionCode"].validate(valid => {
         addPromotionCode(this.formaddPromotionCode).then(response => {
-          if (response.data.code == 0) {
-            this.msg(response.data.message);
+          if (response.code == 0) {
+            this.$message.error(response.msg);
           } else {
             this.msgSuccess("新增成功");
-            this.open = false;
+            this.addPromotionCode = false;
             this.getList();
           }
         });
@@ -282,11 +282,11 @@ export default {
     submitdelPromotionCode() {
       this.$refs["formdelPromotionCode"].validate(valid => {
         delPromotionCode(this.formdelPromotionCode).then(response => {
-          if (response.data.code == 0) {
-            this.msg(response.data.message);
+          if (response.code == 0) {
+            this.$message.error(response.msg);
           } else {
             this.msgSuccess("删除成功");
-            this.open = false;
+            this.delPromotionCode = false;
             this.getList();
           }
         });

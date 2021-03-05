@@ -60,13 +60,13 @@ export function getDateEndTime(date) {
   return new Date(date.toLocaleDateString() + ' 23:59:59')
 }
 
-export function getYesterDate(){
+export function getYesterDate() {
   const date = new Date()
   date.setTime(date.getTime() - 3600 * 1000 * 24)
   return date;
 }
 
-export function get7beforeDay(){
+export function get7beforeDay() {
   const date = new Date()
   date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
   return date;
@@ -185,5 +185,19 @@ export const pickerDateShortcuts = [{
     const start = new Date()
     start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
     picker.$emit('pick', [start, end])
+  }
+}]
+
+export const toyesDayshortcuts = [{
+  text: '今天',
+  onClick(picker) {
+    picker.$emit('pick', new Date());
+  }
+}, {
+  text: '昨天',
+  onClick(picker) {
+    const date = new Date();
+    date.setTime(date.getTime() - 3600 * 1000 * 24);
+    picker.$emit('pick', date);
   }
 }]

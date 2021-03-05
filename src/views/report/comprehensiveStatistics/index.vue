@@ -58,30 +58,14 @@
 <script>
 import { list, listStorage,exportReportPlamCom } from '@/api/platform-web/report/comprehensiveStatistics'
 import { getYesterDate } from '@/utils/dateUtils'
+import {toyesDayshortcuts} from "@/utils/dateUtils"
 
 export default {
   name: 'Report',
   data() {
     return {
       //日期快捷
-      pickerOptions: {
-        disabledDate(time) {
-          return time.getTime() > Date.now();
-        },
-        shortcuts: [{
-          text: '今天',
-          onClick(picker) {
-            picker.$emit('pick', new Date());
-          }
-        }, {
-          text: '昨天',
-          onClick(picker) {
-            const date = new Date();
-            date.setTime(date.getTime() - 3600 * 1000 * 24);
-            picker.$emit('pick', date);
-          }
-        }]
-      },
+      pickerOptions: {shortcuts: toyesDayshortcuts},
       interval: {listTime: null},
       // 遮罩层
       listLoading: false,

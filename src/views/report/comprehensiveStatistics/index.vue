@@ -107,6 +107,7 @@ export default {
   },
   destroyed(){
     this.isDestroyed = true
+    this.listLoading = false;
   },
   methods: {
     /** 查询登录日志列表 */

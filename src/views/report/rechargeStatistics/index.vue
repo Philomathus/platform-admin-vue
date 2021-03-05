@@ -192,6 +192,7 @@ export default {
   },
   destroyed(){
     this.isDestroyed = true
+    this.listLoading = false;
   },
   methods: {
     /** 查询平台资金报，记录平台每日收入及支出总额，预估当前会员的积分余额列表 */

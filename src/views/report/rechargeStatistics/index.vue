@@ -85,7 +85,7 @@ export default {
       //日期快捷
       pickerOptions: {
         shortcuts: [{
-          text: '今天',
+          text: '今日',
           onClick(picker) {
             const end = new Date();
             const start = new Date();
@@ -93,12 +93,20 @@ export default {
             picker.$emit('pick', [start, end]);
           }
         }, {
-          text: '昨天',
+          text: '昨日',
           onClick(picker) {
             const end = new Date();
             const start = new Date();
             start.setTime(start.getTime() - 3600 * 1000 * 24);
             end.setTime(end.getTime() - 3600 * 1000 * 24);
+            picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '昨日到今日',
+          onClick(picker) {
+            const end = new Date();
+            const start = new Date();
+            start.setTime(start.getTime() - 3600 * 1000 * 24);
             picker.$emit('pick', [start, end]);
           }
         }, {

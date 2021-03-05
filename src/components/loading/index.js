@@ -26,6 +26,6 @@ export default {
       show,
       hide
     };
-    Vue.prototype.$loading = fn;
+    Vue.prototype.$rjLoading = fn;
   }
 };

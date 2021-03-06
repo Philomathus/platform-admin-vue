@@ -1,30 +1,28 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="主播昵称" prop="nickName">
-        <el-input
-          v-model="queryParams.nickName"
-          placeholder="请输入主播昵称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+      <el-form-item label="日期范围" prop="updateTime">
+        <el-date-picker v-model="queryParams.updateTime" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
+                        :style="{width: '100%'}" placeholder="请选择日期选择" clearable :picker-options="pickerOptions"
+        ></el-date-picker>
       </el-form-item>
-      <el-form-item label="主播ID" prop="id">
+      <el-form-item prop="id">
         <el-input
           v-model="queryParams.id"
-          placeholder="请输入主播ID"
+          placeholder="主播ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="日期范围" prop="selectDate">
-        <el-date-picker type="daterange" v-model="queryParams.selectDate" format="yyyy-MM-dd"
-                        value-format="yyyy-MM-dd" :style="{width: '60%'}" start-placeholder="开始日期"
-                        end-placeholder="结束日期"
-                        range-separator="至" clearable :picker-options="pickerOptions"
-        ></el-date-picker>
+      <el-form-item prop="nickName">
+        <el-input
+          v-model="queryParams.nickName"
+          placeholder="主播昵称"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
 
       <el-form-item>
@@ -35,7 +33,7 @@
 
 
     <el-table stripe v-loading="loading" :data="liveUserList" @selection-change="handleSelectionChange">
-      <el-table-column label="主播ID" align="center" prop="id"/>
+      <el-table-column label="主播ID" align="center" prop="anchor"/>
       <el-table-column label="主播昵称" align="center" prop="nickName"/>
       <el-table-column label="投注" align="center" prop="cost"/>
       <el-table-column label="派奖" align="center" prop="prize"/>
@@ -57,14 +55,14 @@
 import {
   listAnchorAward
 } from '@/api/live-web/liveUser'
-import {pickerDateShortcuts} from "@/utils/dateUtils";
+import { getYesterDate, toyesDayshortcuts } from '@/utils/dateUtils'
 
 export default {
   name: 'LiveUser',
   components: {},
   data() {
     return {
-      pickerOptions: { shortcuts: pickerDateShortcuts },
+      pickerOptions: { shortcuts: toyesDayshortcuts },
       //所选的用户id
       userId: 0,
       // 遮罩层
@@ -89,7 +87,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 20,
-        selectDate: [this.parseTime(new Date), this.parseTime(new Date)],
+        updateTime: this.parseTime(getYesterDate(), '{y}-{m}-{d}'),
         nickName: null,
         id: null
       },
@@ -101,17 +99,6 @@ export default {
   },
   created() {
     this.getList()
-  },
-  watch: {
-    selectDate: function(newVal, oldVal) {
-      if (newVal === null) {
-        this.queryParams.sendStartTime = undefined
-        this.queryParams.sendEndTime = undefined
-      } else {
-        this.queryParams.sendStartTime = this.selectDate[0] + ' 00:00:00'
-        this.queryParams.sendEndTime = this.selectDate[1] + ' 23:59:59'
-      }
-    }
   },
   methods: {
     /** 查询//用户信息列表 */

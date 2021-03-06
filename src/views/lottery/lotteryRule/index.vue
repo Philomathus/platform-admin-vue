@@ -109,18 +109,22 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="所属彩种类型" prop="kind">
-          <el-select v-model="form.kind" placeholder="请选择所属彩种类型" clearable size="small">
+          <el-select
+            filterable
+            v-model="form.kind"
+            placeholder="请选择存入类型"
+            clearable
+            size="small"
+            style="width: 240px"
+          >
             <el-option
-              v-for="item in kind"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
+              v-for="dict in kindOptions"
+              :key="dict.dictValue"
+              :label="dict.dictLabel"
+              :value="dict.dictValue"
+            />
           </el-select>
         </el-form-item>
-<!--        <el-form-item label="所属彩种类型" prop="kind">-->
-<!--          <el-input v-model="form.kind" placeholder="请输入所属彩种类型" />-->
-<!--        </el-form-item>-->
         <el-form-item label="彩票类型名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入彩票类型名称" />
         </el-form-item>
@@ -148,6 +152,8 @@ export default {
   },
   data() {
     return {
+      //所属彩种字典
+      kindOptions: [],
       //所属彩种类型下拉框
       kind: [{
         value: '0',
@@ -201,6 +207,10 @@ export default {
   },
   created() {
     this.getList();
+    this.getDicts('lotteryRule_kind').then(response => {
+      console.info(response.data)
+      this.kindOptions = response.data
+    })
   },
   methods: {
     /** 查询开奖规则说明列表 */

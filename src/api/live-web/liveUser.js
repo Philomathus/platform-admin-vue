@@ -1,7 +1,7 @@
 import request from '@/utils/request'
-import {url} from '@/utils/url'
+import { url } from '@/utils/url'
 
-// 查询//用户信息列表
+// 查询用户信息列表
 export function listLiveUser(query) {
   return request({
     url: url.platformWeb + '/admin/liveUser/list',
@@ -10,7 +10,7 @@ export function listLiveUser(query) {
   })
 }
 
-// 查询//用户信息详细
+// 查询用户信息详细
 export function getLiveUser(id) {
   return request({
     url: url.platformWeb + '/admin/liveUser/' + id,
@@ -36,7 +36,6 @@ export function receiveProplist(query) {
   })
 }
 
-
 // 账户日志
 export function logPage(query) {
   return request({
@@ -58,10 +57,11 @@ export function banDetail(query) {
 // 获取家族信息
 export function getFamiily(query) {
   return request({
-    url: url.platformWeb + '/admin/liveFamily/'+query,
-    method: 'get',
+    url: url.platformWeb + '/admin/liveFamily/' + query,
+    method: 'get'
   })
 }
+
 // 修改家族id
 export function goFamiily(query) {
   return request({
@@ -71,7 +71,7 @@ export function goFamiily(query) {
   })
 }
 
-// 新增//用户信息
+// 新增用户信息
 export function addLiveUser(data) {
   return request({
     url: url.platformWeb + '/admin/liveUser',
@@ -80,7 +80,7 @@ export function addLiveUser(data) {
   })
 }
 
-// 修改//用户信息
+// 修改用户信息
 export function updateLiveUser(data) {
   return request({
     url: url.platformWeb + '/admin/liveUser',
@@ -89,7 +89,7 @@ export function updateLiveUser(data) {
   })
 }
 
-// 删除//用户信息
+// 删除用户信息
 export function delLiveUser(id) {
   return request({
     url: url.platformWeb + '/admin/liveUser/' + id,
@@ -97,7 +97,7 @@ export function delLiveUser(id) {
   })
 }
 
-// 导出//用户信息
+// 导出用户信息
 export function exportLiveUser(query) {
   return request({
     url: url.platformWeb + '/admin/liveUser/export',
@@ -105,10 +105,20 @@ export function exportLiveUser(query) {
     params: query
   })
 }
-// 查询//用户信息列表
+
+// 查询主播派奖
 export function listAnchorAward(query) {
   return request({
     url: url.platformWeb + '/admin/liveUser/anchorAward',
+    method: 'get',
+    params: query
+  })
+}
+
+// 导出主播派奖
+export function exportAnchorAward(query) {
+  return request({
+    url: url.platformWeb + '/admin/liveUser/anchorAward/export',
     method: 'get',
     params: query
   })

@@ -31,6 +31,20 @@
       </el-form-item>
     </el-form>
 
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button
+          type="warning"
+          plain
+          icon="el-icon-download"
+          size="mini"
+          @click="handleExport"
+          v-hasPermi="['live:anchorAward:export']"
+        >导出
+        </el-button>
+      </el-col>
+      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+    </el-row>
 
     <el-table stripe v-loading="loading" :data="liveUserList" @selection-change="handleSelectionChange">
       <el-table-column label="主播ID" align="center" prop="anchor"/>
@@ -53,7 +67,8 @@
 
 <script>
 import {
-  listAnchorAward
+  listAnchorAward,
+  exportAnchorAward
 } from '@/api/live-web/liveUser'
 import { getYesterDate, toyesDayshortcuts } from '@/utils/dateUtils'
 
@@ -140,8 +155,20 @@ export default {
       this.ids = selection.map(item => item.id)
       this.single = selection.length !== 1
       this.multiple = !selection.length
+    },
+    /** 导出按钮操作 */
+    handleExport() {
+      const queryParams = this.queryParams
+      this.$confirm('是否确认导出所有主播派奖数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return exportAnchorAward(queryParams)
+      }).then(response => {
+        this.download(response.msg)
+      })
     }
-
   }
 }
 </script>

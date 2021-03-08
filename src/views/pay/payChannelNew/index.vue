@@ -312,9 +312,7 @@ export default {
         inputType: null,
         creator: null,
         updator: null,
-        payRate: null,
-        orderByColumn: 'createTime',
-        isAsc: 'desc'
+        payRate: null
       },
       // 表单参数
       form: {},

@@ -4,7 +4,8 @@
     <el-button type="success" @click="copy2">出款总额: {{ this.data.outMoney || 0 }}</el-button>
     <el-button type="primary" @click="copy3">金额合计: {{ this.data.countMoney || 0 }}</el-button>
     <el-button type="success" @click="copy4">送礼总额: {{ this.data.totalAccountGifts || 0 }}</el-button>
-    <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" v-show="showSearch"
+             label-width="68px">
       <el-form-item label="日期选择" prop="reptime">
         <el-date-picker
           v-model="dateRange"
@@ -37,28 +38,28 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
     <div ref="container" style="position: relative">
-    <el-table v-loading="loading" :stripe="true" :data="report" @selection-change="handleSelectionChange">
-      <el-table-column label="报表时间" align="center" prop="reptime" min-width="120"  fixed="left"/>
-      <el-table-column label="入款总人数" min-width="90" align="center" prop="totalRukuanrenshu"/>
-      <el-table-column label="公司入款人数" min-width="100" align="center" prop="gsRukuanrenshu"/>
-      <el-table-column label="公司入款金额" min-width="100" align="center" prop="gsRukuanjine"/>
-      <el-table-column label="公司出款总人数" min-width="120" align="center" prop="totalChukuanrenshu"/>
-      <el-table-column label="线上入款人数" min-width="100" align="center" prop="xsRukunanrenshu"/>
-      <el-table-column label="线上入款金额" min-width="100" align="center" prop="xsRukunanjine"/>
-      <el-table-column label="人工入款人数" min-width="100" align="center" prop="rgRukunanrenshu"/>
-      <el-table-column label="人工入款金额" min-width="100" align="center" prop="rgRukunanjine"/>
-      <el-table-column label="平台优惠人数" min-width="100" align="center" prop="palmYouhuirenshu"/>
-      <el-table-column label="平台优惠金额" min-width="100" align="center" prop="palmYouhuijine"/>
-      <el-table-column label="预估会员剩余积分" min-width="130" align="center" prop="totalAccount"/>
-      <el-table-column label="每日平台盈利" min-width="100" align="center" prop="totalProfile"/>
-      <el-table-column label="每日送礼金额" min-width="100" align="center" prop="totalGiveprop"/>
-      <el-table-column label="合计偏差" min-width="130" align="center" prop="totalLast"/>
-      <el-table-column label="入款总金额" min-width="90" align="center" prop="totalRukuanjine" fixed="right"/>
-      <el-table-column label="出款总金额" min-width="90" align="center" prop="totalChukuanjine"  fixed="right"/>
-      <el-table-column label="合计" align="center" prop="totalChukuanjineMath" fixed="right"
-                       :formatter="totalChukuanjineMath" min-width="130"
-      />
-    </el-table>
+      <el-table v-loading="loading" :stripe="true" :data="report" @selection-change="handleSelectionChange">
+        <el-table-column label="报表时间" align="center" prop="reptime" min-width="120" fixed="left"/>
+        <el-table-column label="入款总人数" min-width="90" align="center" prop="totalRukuanrenshu"/>
+        <el-table-column label="公司入款人数" min-width="100" align="center" prop="gsRukuanrenshu"/>
+        <el-table-column label="公司入款金额" min-width="100" align="center" prop="gsRukuanjine"/>
+        <el-table-column label="公司出款总人数" min-width="120" align="center" prop="totalChukuanrenshu"/>
+        <el-table-column label="线上入款人数" min-width="100" align="center" prop="xsRukunanrenshu"/>
+        <el-table-column label="线上入款金额" min-width="100" align="center" prop="xsRukunanjine"/>
+        <el-table-column label="人工入款人数" min-width="100" align="center" prop="rgRukunanrenshu"/>
+        <el-table-column label="人工入款金额" min-width="100" align="center" prop="rgRukunanjine"/>
+        <el-table-column label="平台优惠人数" min-width="100" align="center" prop="palmYouhuirenshu"/>
+        <el-table-column label="平台优惠金额" min-width="100" align="center" prop="palmYouhuijine"/>
+        <el-table-column label="预估会员剩余积分" min-width="130" align="center" prop="totalAccount"/>
+        <el-table-column label="每日平台盈利" min-width="100" align="center" prop="totalProfile"/>
+        <el-table-column label="每日送礼金额" min-width="100" align="center" prop="totalGiveprop"/>
+        <el-table-column label="合计偏差" min-width="130" align="center" prop="totalLast"/>
+        <el-table-column label="入款总金额" min-width="90" align="center" prop="totalRukuanjine" fixed="right"/>
+        <el-table-column label="出款总金额" min-width="90" align="center" prop="totalChukuanjine" fixed="right"/>
+        <el-table-column label="合计" align="center" prop="totalChukuanjineMath" fixed="right"
+                         :formatter="totalChukuanjineMath" min-width="130"
+        />
+      </el-table>
     </div>
 
     <!--    <pagination-->
@@ -74,8 +75,8 @@
 </template>
 
 <script>
-import { listReport, count, liststorage,exportReportMonwyInfo } from '@/api/platform-web/report/rechargeStatistics'
-import { get7beforeDay } from '@/utils/dateUtils'
+import {listReport, count, liststorage, exportReportMonwyInfo} from '@/api/platform-web/report/rechargeStatistics'
+import {get7beforeDay, getDateEndTime, getDateStartTime} from '@/utils/dateUtils'
 
 export default {
   name: 'Recharge',
@@ -110,12 +111,29 @@ export default {
             picker.$emit('pick', [start, end]);
           }
         }, {
+          text: '本周',
+          onClick(picker) {
+            const end = new Date()
+            const start = new Date()
+            const weekday = start.getDay() || 7;
+            start.setDate(start.getDate() - weekday + 1);
+            picker.$emit('pick', [start, end])
+          }
+        }, {
           text: '最近一周',
           onClick(picker) {
             const end = new Date();
             const start = new Date();
             start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
             picker.$emit('pick', [start, end]);
+          }
+        }, {
+          text: '本月',
+          onClick(picker) {
+            const end = new Date()
+            const start = new Date()
+            start.setDate(1);
+            picker.$emit('pick', [start, end])
           }
         }, {
           text: '最近半个月',
@@ -147,22 +165,6 @@ export default {
             const end = new Date();
             const start = new Date();
             start.setTime(start.getTime() - 3600 * 1000 * 24 * 92);
-            picker.$emit('pick', [start, end]);
-          }
-        }, {
-          text: '最近半年',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 183);
-            picker.$emit('pick', [start, end]);
-          }
-        }, {
-          text: '最近一年',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 365);
             picker.$emit('pick', [start, end]);
           }
         }]
@@ -206,7 +208,7 @@ export default {
     this.getList()
     this.count()
   },
-  destroyed(){
+  destroyed() {
     this.isDestroyed = true
     this.listLoading = false;
   },
@@ -217,15 +219,15 @@ export default {
       this.loading = true
       listReport(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
         this.report = response.rows
-        that.listLoading=false;
+        that.listLoading = false;
         that.$rjLoading.hide();
       }).catch((err) => {
-        if (err=='Error: 报表正在生成，请稍后...'){
+        if (err == 'Error: 报表正在生成，请稍后...') {
           if (!that.listLoading) {
-            that.listLoading=true;
-            that.$rjLoading.show('报表正在生成',that);
+            that.listLoading = true;
+            that.$rjLoading.show('报表正在生成', that);
           }
-          if (!this.isDestroyed){
+          if (!this.isDestroyed) {
             setTimeout(() => {
               that.getList();
             }, 10000);
@@ -294,7 +296,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportReportMonwyInfo(queryParams)
       }).then(response => {
         this.download(response.msg)

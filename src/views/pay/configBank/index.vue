@@ -148,6 +148,9 @@
         <el-form-item label="银行官网地址" prop="url">
           <el-input v-model="form.url" placeholder="请输入银行官网地址"/>
         </el-form-item>
+        <el-form-item label="排序号" prop="indexs">
+          <el-input v-model="form.indexs" placeholder="请输入排序号"/>
+        </el-form-item>
         <el-form-item label="银行账号" prop="bankAccount">
           <el-input v-model="form.bankAccount" placeholder="请输入银行账号"/>
         </el-form-item>

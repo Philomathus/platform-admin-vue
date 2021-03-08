@@ -191,6 +191,8 @@ export default {
         platWhiteIpList: null,
         creator: null,
         updator: null,
+        orderByColumn: 'createTime',
+        isAsc: 'desc'
       },
       // 表单参数
       form: {},

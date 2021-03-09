@@ -224,7 +224,7 @@ export default {
       this.loading = true
       listReport(this.addDateRange(this.queryParams, this.queryParams.dateRange)).then(response => {
         this.report = response.rows
-        this.total = response.total
+        // this.total = response.total
         // this.loading = false
         // that.$loading.hide();
         that.listLoading = false;

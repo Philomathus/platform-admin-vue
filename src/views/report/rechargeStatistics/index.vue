@@ -76,7 +76,7 @@
 
 <script>
 import {listReport, count, liststorage, exportReportMonwyInfo} from '@/api/platform-web/report/rechargeStatistics'
-import {get7beforeDay, getDateEndTime, getDateStartTime} from '@/utils/dateUtils'
+import {get7beforeDay, getDateEndTime, getDateStartTime, pickerDateShortcuts} from '@/utils/dateUtils'
 
 export default {
   name: 'Recharge',
@@ -84,91 +84,7 @@ export default {
   data() {
     return {
       //日期快捷
-      pickerOptions: {
-        shortcuts: [{
-          text: '今日',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime());
-            picker.$emit('pick', [start, end]);
-          }
-        }, {
-          text: '昨日',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24);
-            end.setTime(end.getTime() - 3600 * 1000 * 24);
-            picker.$emit('pick', [start, end]);
-          }
-        }, {
-          text: '本周',
-          onClick(picker) {
-            const end = new Date()
-            const start = new Date()
-            const weekday = start.getDay() || 7;
-            start.setDate(start.getDate() - weekday + 1);
-            picker.$emit('pick', [start, end])
-          }
-        }, {
-          text: '本月',
-          onClick(picker) {
-            const end = new Date()
-            const start = new Date()
-            start.setDate(1);
-            picker.$emit('pick', [start, end])
-          }
-        }, {
-          text: '昨日到今日',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24);
-            picker.$emit('pick', [start, end]);
-          }
-        }, {
-          text: '最近一周',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-            picker.$emit('pick', [start, end]);
-          }
-        }, {
-          text: '最近半个月',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 15);
-            picker.$emit('pick', [start, end]);
-          }
-        }, {
-          text: '最近一个月',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 31);
-            picker.$emit('pick', [start, end]);
-          }
-        }, {
-          text: '最近两个月',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 61);
-            picker.$emit('pick', [start, end]);
-          }
-        }, {
-          text: '最近三个月',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 92);
-            picker.$emit('pick', [start, end]);
-          }
-        }]
-      },
+      pickerOptions: { shortcuts: pickerDateShortcuts },
       interval: {listTime: null},
       // 遮罩层
       listLoading: false,

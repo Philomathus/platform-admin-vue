@@ -225,13 +225,15 @@ export default {
       listReport(this.addDateRange(this.queryParams, this.queryParams.dateRange)).then(response => {
         this.report = response.rows
         this.total = response.total
-        this.loading = false
-        that.$loading.hide();
+        // this.loading = false
+        // that.$loading.hide();
+        that.listLoading = false;
+        that.$rjLoading.hide();
       }).catch((err) => {
         if (err=='Error: 报表正在生成，请稍后...'){
           if (!that.listLoading) {
             that.listLoading=true;
-            that.$loading.show('报表正在生成',that);
+            that.$rjLoading.show('报表正在生成',that);
           }
           if (!this.isDestroyed){
             setTimeout(() => {

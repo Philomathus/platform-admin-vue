@@ -237,7 +237,7 @@ export const pickerDateShortcuts = [{
     picker.$emit('pick', [start, end])
   }
 }, {
-  text: '最近两个个月',
+  text: '最近两个月',
   onClick(picker) {
     const end = new Date()
     const start = new Date()

@@ -122,7 +122,6 @@ export default {
   },
   created() {
     this.getList()
-    this.count()
   },
   destroyed() {
     this.isDestroyed = true
@@ -137,6 +136,7 @@ export default {
         this.report = response.rows
         that.listLoading = false;
         that.$rjLoading.hide();
+        this.count();
       }).catch((err) => {
         if (err == 'Error: 报表正在生成，请稍后...') {
           if (!that.listLoading) {
@@ -189,7 +189,6 @@ export default {
     handleQuery() {
       this.queryParams.pageNum = 1
       this.getList()
-      this.count()
     },
     /** 重置按钮操作 */
     resetQuery() {

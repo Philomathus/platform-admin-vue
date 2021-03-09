@@ -105,14 +105,6 @@ export const pickerDateTimeShortcuts = [{
     picker.$emit('pick', [getDateStartTime(start), getDateEndTime(end)])
   }
 }, {
-  text: '昨日到今日',
-  onClick(picker) {
-    const end = new Date()
-    const start = new Date()
-    start.setTime(start.getTime() - 3600 * 1000 * 24)
-    picker.$emit('pick', [getDateStartTime(start), getDateEndTime(end)])
-  }
-}, {
   text: '本周',
   onClick(picker) {
     const end = new Date()
@@ -122,19 +114,27 @@ export const pickerDateTimeShortcuts = [{
     picker.$emit('pick', [getDateStartTime(start), getDateEndTime(end)])
   }
 }, {
-  text: '最近一周',
-  onClick(picker) {
-    const end = new Date()
-    const start = new Date()
-    start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-    picker.$emit('pick', [getDateStartTime(start), getDateEndTime(end)])
-  }
-}, {
   text: '本月',
   onClick(picker) {
     const end = new Date()
     const start = new Date()
     start.setDate(1);
+    picker.$emit('pick', [getDateStartTime(start), getDateEndTime(end)])
+  }
+}, {
+  text: '昨日到今日',
+  onClick(picker) {
+    const end = new Date()
+    const start = new Date()
+    start.setTime(start.getTime() - 3600 * 1000 * 24)
+    picker.$emit('pick', [getDateStartTime(start), getDateEndTime(end)])
+  }
+}, {
+  text: '最近一周',
+  onClick(picker) {
+    const end = new Date()
+    const start = new Date()
+    start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
     picker.$emit('pick', [getDateStartTime(start), getDateEndTime(end)])
   }
 }, {
@@ -172,14 +172,6 @@ export const pickerDateShortcuts = [{
     picker.$emit('pick', [start, end])
   }
 }, {
-  text: '昨日到今日',
-  onClick(picker) {
-    const end = new Date()
-    const start = new Date()
-    start.setTime(start.getTime() - 3600 * 1000 * 24)
-    picker.$emit('pick', [start, end])
-  }
-}, {
   text: '本周',
   onClick(picker) {
     const end = new Date()
@@ -189,19 +181,27 @@ export const pickerDateShortcuts = [{
     picker.$emit('pick', [start, end])
   }
 }, {
-  text: '最近一周',
-  onClick(picker) {
-    const end = new Date()
-    const start = new Date()
-    start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-    picker.$emit('pick', [start, end])
-  }
-}, {
   text: '本月',
   onClick(picker) {
     const end = new Date()
     const start = new Date()
     start.setDate(1);
+    picker.$emit('pick', [start, end])
+  }
+}, {
+  text: '昨日到今日',
+  onClick(picker) {
+    const end = new Date()
+    const start = new Date()
+    start.setTime(start.getTime() - 3600 * 1000 * 24)
+    picker.$emit('pick', [start, end])
+  }
+}, {
+  text: '最近一周',
+  onClick(picker) {
+    const end = new Date()
+    const start = new Date()
+    start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
     picker.$emit('pick', [start, end])
   }
 }, {

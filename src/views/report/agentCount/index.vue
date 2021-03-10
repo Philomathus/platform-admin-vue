@@ -75,7 +75,7 @@
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
-
+    <div ref="container" style="position: relative">
     <el-table v-loading="loading" :data="report" :stripe="true">
       <el-table-column label="渠道编码" align="center" prop="agentcode"/>
       <el-table-column label="邀请账号" min-width="150" align="center" prop="agentname"/>
@@ -92,6 +92,7 @@
       <el-table-column label="直播间次数/活跃安卓/活跃苹果" min-width="210" align="center" prop="ios" :formatter="ios"
                        fixed="right"/>
     </el-table>
+    </div>
 
     <!-- 新增推广码弹框 -->
     <el-dialog
@@ -162,6 +163,10 @@ export default {
     return {
       //日期快捷
       pickerOptions: {shortcuts: pickerDateShortcuts},
+      interval: {listTime: null},
+      // 遮罩层
+      listLoading: false,
+      isDestroyed: false,
       // 遮罩层
       loading: true,
       // 选中数组
@@ -208,15 +213,38 @@ export default {
   created() {
     this.getList()
   },
+  destroyed(){
+    this.isDestroyed = true
+    this.listLoading = false;
+  },
   methods: {
     /** 查询平台资金报，记录平台每日收入及支出总额，预估当前会员的积分余额列表 */
     getList() {
+      var that = this
       this.loading = true
       listReport(this.addDateRange(this.queryParams, this.queryParams.dateRange)).then(response => {
         this.report = response.rows
-        this.total = response.total
-        this.loading = false
-      })
+        // this.total = response.total
+        // this.loading = false
+        // that.$loading.hide();
+        that.listLoading = false;
+        that.$rjLoading.hide();
+      }).catch((err) => {
+        if (err=='Error: 报表正在生成，请稍后...'){
+          if (!that.listLoading) {
+            that.listLoading=true;
+            that.$rjLoading.show('报表正在生成',that);
+          }
+          if (!this.isDestroyed){
+            setTimeout(() => {
+              that.getList();
+            }, 10000);
+          }
+        }
+      }).finally(() => {
+          this.loading = false
+        }
+      );
     },
     getListstorage() {
       this.loading = true

@@ -7,7 +7,6 @@
       <el-form-item label="修改日期" prop="searchTime">
         <el-date-picker
           v-model="queryParams.searchTime"
-          size="small"
           style="width: 240px"
           value-format="yyyy-MM-dd"
           type="daterange"

@@ -115,6 +115,28 @@
       @pagination="getList"
     />
 
+    <!-- 添加h5插件对话框 -->
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="opene" width="500px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="编号" prop="id">
+          <el-input v-model="form.id" placeholder="请输入编号" />
+        </el-form-item>
+        <el-form-item label="插件名称" prop="name">
+          <el-input v-model="form.name" placeholder="请输入名称" />
+        </el-form-item>
+        <el-form-item label="内容地址" prop="conUrl">
+          <el-input v-model="form.conUrl" placeholder="请输入内容地址" />
+        </el-form-item>
+        <el-form-item label="图标地址" prop="iconUrl">
+          <imageUpload v-model="form.iconUrl" path="give"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
+
     <!-- 添加或修改h5插件对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
@@ -164,6 +186,8 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      // 是否显示弹出层
+      opene: false,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -184,6 +208,9 @@ export default {
         name: [
           { required: true, message: "名称不能为空", trigger: "blur" }
         ],
+        id: [
+          { required: true, message: "编号不能为空", trigger: "blur" }
+        ],
       }
     };
   },
@@ -203,6 +230,7 @@ export default {
     // 取消按钮
     cancel() {
       this.open = false;
+      this.opene = false;
       this.reset();
     },
     // 表单重置
@@ -235,7 +263,7 @@ export default {
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
-      this.open = true;
+      this.opene = true;
       this.title = "添加h5插件";
     },
     /** 修改按钮操作 */
@@ -261,7 +289,7 @@ export default {
           } else {
             addH5Plugin(this.form).then(response => {
               this.msgSuccess("新增成功");
-              this.open = false;
+              this.opene = false;
               this.getList();
             });
           }

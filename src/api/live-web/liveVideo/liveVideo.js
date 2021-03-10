@@ -18,6 +18,7 @@ export function getLiveVideo(id) {
   })
 }
 
+// 关播
 export function close(id) {
   return request({
     url: url.platformWeb + '/admin/liveVideo/close/' + id,
@@ -25,41 +26,27 @@ export function close(id) {
   })
 }
 
-// 新增直播
-export function addLiveVideo(data) {
+// 开启收费直播
+export function updateLivePay(id,liveFee) {
   return request({
-    url: url.platformWeb + '/admin/liveVideo',
-    method: 'post',
-    data: data
+    url: url.platformWeb + '/admin/liveVideo/livePay/' + id,
+    method: 'put',
+    params: {
+      liveFee : liveFee
+    }
   })
 }
 
-// 修改直播
-export function updateLiveVideo(data) {
+// 设置排序值
+export function updateVideoSort(data){
   return request({
-    url: url.platformWeb + '/admin/liveVideo',
+    url: url.platformWeb + '/admin/liveVideo/updateVideoSort',
     method: 'put',
     data: data
   })
 }
 
-// 修改直播
-export function updateLivePay(data) {
-  return request({
-    url: url.platformWeb + '/admin/liveVideo/livePay',
-    method: 'put',
-    data: data
-  })
-}
-// 删除直播
-export function delLiveVideo(id) {
-  return request({
-    url: url.platformWeb + '/admin/liveVideo/' + id,
-    method: 'delete'
-  })
-}
-
-// 导出直播
+// 导出直播数据
 export function exportLiveVideo(query) {
   return request({
     url: url.platformWeb + '/admin/liveVideo/export',

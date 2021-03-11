@@ -160,6 +160,65 @@
       @pagination="getList"
     />
 
+    <!-- 禁用备注弹框 -->
+    <el-dialog
+      v-dialogDrag
+      :close-on-click-modal="false"
+      title="备注禁用原因"
+      :visible.sync="muteRemark"
+      width="400px"
+      append-to-body
+    >
+      <el-input v-model="id" v-show="false"/>
+      <el-input v-model="status" v-show="false"/>
+      <el-select
+        v-model="remark"
+        placeholder="请选择禁言原因"
+        clearable
+        style="min-width: 360px"
+      >
+        <el-option
+          v-for="dict in muteRemarkOptions"
+          :key="dict.dictValue"
+          :label="dict.dictLabel"
+          :value="dict.dictValue"
+        />
+      </el-select>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitMuteRemark">立即提交</el-button>
+      </div>
+    </el-dialog>
+
+    <!-- 禁言备注弹框 -->
+    <el-dialog
+      v-dialogDrag
+      :close-on-click-modal="false"
+      title="备注禁言原因"
+      :visible.sync="muteRemarkSpeak"
+      width="400px"
+      append-to-body
+    >
+      <el-input v-model="id" v-show="false"/>
+      <el-input v-model="speak" v-show="false"/>
+      <el-select
+        v-model="remark"
+        placeholder="请选择禁言原因"
+        clearable
+        style="min-width: 360px"
+      >
+        <el-option
+          v-for="dict in muteRemarkOptions"
+          :key="dict.dictValue"
+          :label="dict.dictLabel"
+          :value="dict.dictValue"
+        />
+      </el-select>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitMuteRemarkSpeak">立即提交</el-button>
+      </div>
+    </el-dialog>
+
+
     <!-- 添加或修改用户信息对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
@@ -179,7 +238,8 @@
     <more ref="more" :member-id="memberId" :member-code="memberCode" @memberMore="handleQuery"></more>
 
     <!--查看封停ip-->
-    <el-dialog :close-on-click-modal="false" v-dialogDrag title="查看封停ip" :visible.sync="speakIpBlackListList" width="1200px" append-to-body>
+    <el-dialog :close-on-click-modal="false" v-dialogDrag title="查看封停ip" :visible.sync="speakIpBlackListList"
+               width="1200px" append-to-body>
       <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
         <el-form-item label="会员id" prop="userId">
           <el-input
@@ -243,10 +303,12 @@ import {
   updateMemberInfo,
   exportMemberInfo,
   changeSpeak,
-  changeStatus
+  changeStatus,
+  changeStatusBan
 } from '@/api/platform-web/member/memberInfo'
 import more from './more'
-import { listSpeakIpBlackList, updateSpeakIpBlackList } from '@/api/live-web/chat/speakIpBlackList'
+import {listSpeakIpBlackList, updateSpeakIpBlackList} from '@/api/live-web/chat/speakIpBlackList'
+import {bindGoogleAuth} from "@/api/platform-web/system/user";
 
 
 export default {
@@ -261,6 +323,11 @@ export default {
       // 传递到子组件的memberId/memberCode
       memberCode: 0,
       memberId: null,
+      //禁言禁用
+      id: '',
+      speak: '',
+      status: '',
+      remark: '',
       // 选中数组
       ids: [],
       // 非单个禁用
@@ -271,6 +338,12 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
+      //禁言备注弹框
+      muteRemark: false,
+      muteRemarkSpeak: false,
+      fromMuteRemark: {},
+      fromMuteRemarkSpeak: {},
+      muteRemarkOptions: [],
       //会员发言表格数据
       speakIpBlackData: [],
       speakIpBlackListList: false,
@@ -322,16 +395,40 @@ export default {
   },
   created() {
     this.getList()
+    this.getDicts('muteRemarkOptions').then(response => {
+      this.muteRemarkOptions = response.data
+    })
   },
   methods: {
     //修改用户状态
     changeType(row) {
-      changeStatus({
-        id: row.id,
-        status: row.status
-      }).then((res) => {
+      //打开备注禁用弹框
+      if (row.status === 0) {
+        this.reset()
+        this.id = row.id
+        this.status = row.status
+        this.muteRemark = true
+      } else {
+        changeStatus({
+          id: row.id,
+          status: row.status
+        }).then((res) => {
+          if (res.code === 0) {
+            this.$notify.success('状态修改成功')
+          } else {
+            this.$notify.error('状态修改失败')
+          }
+        }).catch(() => {
+          this.$notify.error('网络异常')
+        })
+      }
+    },
+    //禁用备注提交
+    submitMuteRemark(row) {
+      changeStatusBan(this.id, this.status, this.remark).then((res) => {
         if (res.code === 0) {
           this.$notify.success('状态修改成功')
+          this.muteRemark =false
         } else {
           this.$notify.error('状态修改失败')
         }
@@ -381,7 +478,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         var data = {}
         data.userIp = row.userIp
         data.userId = row.userId
@@ -403,7 +500,8 @@ export default {
       this.form = {
         id: null,
         userName: null,
-        password: null
+        password: null,
+        remark: null,
       }
       this.resetForm('form')
     },
@@ -482,34 +580,28 @@ export default {
         this.download(response.msg)
       })
     },
-    // handleStatusChange(row) {
-    //   let text = row.speak === "1" ? '禁言' : '解禁'
-    //   this.$confirm('确认要"' + text + '""' + row.userName + '"吗?', '警告', {
-    //     confirmButtonText: '确定',
-    //     cancelButtonText: '取消',
-    //     type: 'warning'
-    //   }).then(function () {
-    //     return changeSpeak(row.id, row.speak)
-    //   }).then(() => {
-    //     this.msgSuccess(text + '成功')
-    //   }).catch(function () {
-    //     row.speak = row.speak === '0' ? '1' : '0'
-    //   })
-    // }
+    //打开备注禁言弹框
     handleStatusChange(row) {
-      let text = row.speak === "1" ? '禁言' : '解禁'
-      this.$prompt('请输入'+text+'原因', '备注'+text+'原因', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
-      }).then(({value}) => {
-        return changeSpeak(row.id, row.speak)
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消输入'
-        });
-      });
+      if (row.speak === "0") {
+        this.reset()
+        changeSpeak(row.id, row.speak, null).then(response => {
+          this.msgSuccess('解禁成功')
+        })
+      } else {
+        this.reset()
+        this.id = row.id
+        this.speak = row.speak
+        this.muteRemarkSpeak = true
+      }
+    },
+    //禁言备注提交
+    submitMuteRemarkSpeak() {
+      changeSpeak(this.id, this.speak, this.remark).then(response => {
+        this.msgSuccess('禁言成功')
+        this.muteRemarkSpeak = false
+        this.getList()
+      })
     }
-  }
+  },
 }
 </script>

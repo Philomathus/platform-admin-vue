@@ -144,6 +144,35 @@
       </div>
     </el-dialog>
 
+    <!-- 禁言备注弹框 -->
+    <el-dialog
+      v-dialogDrag
+      :close-on-click-modal="false"
+      title="备注禁言原因"
+      :visible.sync="muteRemarkSpeak"
+      width="400px"
+      append-to-body
+    >
+      <el-input v-model="fromPlatform" v-show="false"/>
+      <el-input v-model="poscatId" v-show="false"/>
+      <el-select
+        v-model="remark"
+        placeholder="请选择禁言原因"
+        clearable
+        style="min-width: 360px"
+      >
+        <el-option
+          v-for="dict in muteRemarkOptions"
+          :key="dict.dictValue"
+          :label="dict.dictLabel"
+          :value="dict.dictValue"
+        />
+      </el-select>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitMuteRemarkSpeak">立即提交</el-button>
+      </div>
+    </el-dialog>
+
     <!--查看封停ip-->
     <el-dialog v-dialogDrag title="查看封停ip" :visible.sync="speakIpBlackListList" width="1200px" append-to-body>
       <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
@@ -214,6 +243,7 @@ import {
 import request from '@/utils/request'
 import { url } from '@/utils/url'
 import { listSpeakIpBlackList, updateSpeakIpBlackList } from '@/api/live-web/chat/speakIpBlackList'
+import {changeSpeak} from "@/api/platform-web/member/memberInfo";
 
 export default {
   name: 'LiveVideoChat',
@@ -227,6 +257,12 @@ export default {
       refreshDesc: '',
       // 遮罩层
       loading: true,
+      //禁言备注弹框
+      muteRemarkSpeak: false,
+      muteRemarkOptions: [],
+      fromPlatform: '',
+      poscatId: '',
+      remark: '',
       // 选中数组
       ids: [],
       // 非单个禁用
@@ -272,6 +308,9 @@ export default {
   },
   created() {
     this.getList()
+    this.getDicts('muteRemarkOptions').then(response => {
+      this.muteRemarkOptions = response.data
+    })
   },
   activated() {
     this.refreshType = 'primary'
@@ -317,7 +356,7 @@ export default {
         type: null,
         poscatNickName: null,
         userNickName: null,
-        fromPlatform: null
+        fromPlatform: null,
       }
       this.resetForm('form')
     },
@@ -390,28 +429,41 @@ export default {
       })
 
     },
+    // handleForbid(row) {
+    //   var that = this
+    //   this.$confirm('确定要' + row.fromPlatform + '禁言吗?', '警告', {
+    //     confirmButtonText: '确定',
+    //     cancelButtonText: '取消',
+    //     type: 'warning'
+    //   }).then(function() {
+    //     return that.Forbid(row.fromPlatform, row.poscatId)
+    //   }).then(() => {
+    //     that.msgSuccess('禁言成功')
+    //   })
+    // },
+    //打开备注禁言弹框
     handleForbid(row) {
-      var that = this
-      this.$confirm('确定要' + row.fromPlatform + '禁言吗?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(function() {
-        return that.Forbid(row.fromPlatform, row.poscatId)
-      }).then(() => {
-        that.msgSuccess('禁言成功')
-      })
+        this.remark = null;
+        this.fromPlatform = row.fromPlatform
+        this.poscatId = row.poscatId
+        this.muteRemarkSpeak = true
     },
-    Forbid(pUserId, videoId) {
+    //禁言备注提交
+    submitMuteRemarkSpeak() {
+      this.Forbid(this.fromPlatform, this.poscatId, this.remark)
+    },
+    Forbid(pUserId, videoId, remark) {
       var data = {}
       data.pUserId = pUserId
       data.videoId = videoId
+      data.remark = remark
       request({
         url: url.platformWeb + '/admin/liveVideoChat/forbidSendMsg',
         method: 'post',
         data: data
       })
-      this.open = false
+      this.msgSuccess('禁言成功')
+      this.muteRemarkSpeak = false
       this.getList()
     },
     suspendUser(pUserId, falg, num, userIp,msg) {

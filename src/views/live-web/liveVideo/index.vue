@@ -79,13 +79,31 @@
           <span v-else :style="{color: (status = liveStatusOption[parseInt(scope.row.liveStatus)]).color}">{{ status.dictLabel }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="彩种" min-width="120" align="center" prop="lotteryName"/>
-      <el-table-column label="收费" min-width="120" align="center" prop="isLivePay" :formatter="isLivePayFormat"/>
+      <el-table-column label="禁收费" min-width="120" align="center" prop="openPay">
+        <template slot-scope="scope">
+          <el-switch
+            active-value="0"
+            inactive-value="1"
+            active-color="#5B7BFA"
+            inactive-color="#dadde5"
+            v-model="scope.row.openPay"
+            @change="changeOpenPay(scope.row)"
+          >
+          </el-switch>
+        </template>
+      </el-table-column>
+      <el-table-column label="收费" min-width="120" align="center" prop="isLivePay">
+        <template slot-scope="scope">
+          <span v-if="scope.row.isLivePay" style="color: #FFB800">是</span>
+          <span v-else>否</span>
+        </template>
+      </el-table-column>
       <el-table-column label="开始时间" align="center" prop="beginTime" width="160">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.beginTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="彩种" min-width="120" align="center" prop="lotteryName"/>
       <el-table-column label="操作" min-width="355" align="left" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
@@ -156,7 +174,7 @@
           <el-button
             size="small"
             type="warning"
-            v-if="scope.row.openPay === 1 && !scope.row.isLivePay"
+            v-if="scope.row.openPay === '1' && !scope.row.isLivePay"
             @click="toLivePay(scope.row)"
             v-hasPermi="['admin:liveVideo:edit']"
           >收费
@@ -208,9 +226,11 @@ import {
   updateVideoSort,
   exportLiveVideo
 } from '@/api/live-web/liveVideo/liveVideo'
+import {
+  updateLiveUser
+} from '@/api/live-web/liveUser'
 import request from '@/utils/request'
 import { url } from '@/utils/url'
-import { resetWithdrawal } from '@/api/platform-web/member/memberInfo'
 
 export default {
   name: 'LiveVideo',
@@ -415,6 +435,27 @@ export default {
         return exportLiveVideo(queryParams)
       }).then(response => {
         this.download(response.msg)
+      })
+    },
+    changeOpenPay(row) {
+      this.$confirm('是否' + (row.openPay === '0' ? '禁' : '启') + '用主播收费权限?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return updateLiveUser({
+          id: row.id,
+          openPay: row.openPay
+        })
+      }).then(response => {
+        if (response.code === 200) {
+          this.msgSuccess(response.msg)
+        } else if (response.code === 500) {
+          this.msgError(response.msg)
+        }
+        this.getList()
+      }).catch(function(){
+        row.openPay = row.openPay === '0' ? '1' : '0'
       })
     },
     // 推荐

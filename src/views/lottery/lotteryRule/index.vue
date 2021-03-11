@@ -4,10 +4,10 @@
       <el-form-item label="所属彩种类型" prop="kind">
         <el-select v-model="queryParams.kind" placeholder="请选择所属彩种类型" clearable size="small">
           <el-option
-            v-for="item in kind"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            v-for="item in kindOptions"
+            :key="item.dictValue"
+            :label="item.dictLabel"
+            :value="item.dictValue">
           </el-option>
         </el-select>
       </el-form-item>

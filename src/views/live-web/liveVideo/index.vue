@@ -86,94 +86,78 @@
           <span>{{ parseTime(scope.row.beginTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" min-width="300" align="left" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column label="操作" min-width="355" align="left" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
-            size="mini"
-            type="text"
-            style="color: #ff5722"
+            size="small"
+            type="danger"
             @click="close(scope.row)"
-            icon="el-icon-circle-close"
             v-hasPermi="['admin:liveVideo:remove']"
           >关播
           </el-button>
           <el-button
-            size="mini"
-            type="text"
-            style="color: #5FB878"
+            size="small"
+            type="success"
             v-if="scope.row.isRecommend === 0 && scope.row.sort >= 9999000 && scope.row.stick === 0"
             @click="setSort(scope.row)"
-            icon="el-icon-location"
             v-hasPermi="['admin:liveVideo:edit']"
           >固定定位
           </el-button>
           <el-input
             v-model="scope.row.sort"
-            size="mini"
+            size="small"
             style="width: 50px;margin: 0 10px 0 10px"
             readonly
             v-if="scope.row.isRecommend === 0 && scope.row.sort < 9999000 && scope.row.stick === 0"
           />
           <el-button
-            :plain="true"
-            size="mini"
-            type="text"
-            style="color: #5FB878"
+            plain
+            size="small"
+            type="success"
             v-if="scope.row.isRecommend === 0 && scope.row.sort < 9999000 && scope.row.stick === 0"
             @click="closeSort(scope.row)"
-            icon="el-icon-location-outline"
             v-hasPermi="['admin:liveVideo:edit']"
           >取消固定定位
           </el-button>
           <el-button
-            size="mini"
-            type="text"
-            style="color: #0000FF"
+            size="small"
+            type="primary"
             v-if="scope.row.isRecommend === 0 && scope.row.sort >= 9999000 && scope.row.stick === 0"
             @click="recommend(scope.row)"
-            icon="el-icon-sunrise"
             v-hasPermi="['admin:liveVideo:edit']"
           >推荐
           </el-button>
           <el-button
             :plain="true"
-            size="mini"
-            type="text"
-            style="color: #0000FF"
+            size="small"
+            type="primary"
             v-if="scope.row.isRecommend === 1 && scope.row.sort >= 9999000 && scope.row.stick === 0"
             @click="closeRecommend(scope.row)"
-            icon="el-icon-moon"
             v-hasPermi="['admin:liveVideo:edit']"
           >取消推荐
           </el-button>
           <el-button
-            size="mini"
-            type="text"
-            style="color: #C0C0C0"
+            size="small"
+            type="info"
             v-if="scope.row.isRecommend === 0 && scope.row.sort >= 9999000 && scope.row.stick === 0"
             @click="stick(scope.row)"
-            icon="el-icon-sold-out"
             v-hasPermi="['admin:liveVideo:edit']"
           >置底
           </el-button>
           <el-button
             :plain="true"
-            size="mini"
-            type="text"
-            style="color: #C0C0C0"
+            size="small"
+            type="info"
             v-if="scope.row.isRecommend === 0 && scope.row.sort >= 9999000 && scope.row.stick === 1"
             @click="closeStick(scope.row)"
-            icon="el-icon-sell"
             v-hasPermi="['admin:liveVideo:edit']"
           >取消置底
           </el-button>
           <el-button
-            size="mini"
-            type="text"
-            style="color: #FFB800"
+            size="small"
+            type="warning"
             v-if="scope.row.openPay === 1 && !scope.row.isLivePay"
             @click="toLivePay(scope.row)"
-            icon="el-icon-money"
             v-hasPermi="['admin:liveVideo:edit']"
           >收费
           </el-button>

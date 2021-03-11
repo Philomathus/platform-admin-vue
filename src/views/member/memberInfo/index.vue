@@ -173,7 +173,7 @@
       <el-input v-model="status" v-show="false"/>
       <el-select
         v-model="remark"
-        placeholder="请选择禁言原因"
+        placeholder="请选择禁用原因"
         clearable
         style="min-width: 360px"
       >

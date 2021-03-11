@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
-    <el-button type="primary">有效下注 {{ numberUtil.toFixed(totalData.totalSuccessBet) }}</el-button>
-    <el-button type="success">总下注 {{ numberUtil.toFixed(totalData.totalBet) }}</el-button>
-    <el-button type="warning">盈利 {{ numberUtil.toFixed(totalData.totalIncome) }}</el-button>
+    <el-button type="primary">有效下注 {{ this.totalData.totalSuccessBet||0 }}</el-button>
+    <el-button type="success">总下注 {{this.totalData.totalBet||0 }}</el-button>
+    <el-button type="warning">盈利 {{ this.totalData.totalIncome||0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" style="margin-top: 20px">
       <el-form-item label="日期范围" prop="selectDate">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
@@ -194,6 +194,7 @@ export default {
         if (res.data) {
           this.totalData = res.data
         }
+        this.loading = false
       })
     },
     /** 查询会员注单数据列表 */

@@ -68,18 +68,18 @@
       <!--      <el-table-column label="推荐" min-width="120" align="center" prop="isRecommend" :formatter="isRecommendFormat"/>-->
       <!--      <el-table-column label="固定位置" min-width="120" align="center" prop="sort"/>-->
       <el-table-column label="线路名称" min-width="120" align="center" prop="lineName"/>
-      <el-table-column label="直播性质" align="center" prop="lineStatus" width="100px">
+      <el-table-column label="直播性质" align="center" prop="lineStatus" width="100">
         <template slot-scope="scope">
           <span :style="{color: (status = lineStatusOption[parseInt(scope.row.lineStatus)+1]).color}">{{ status.dictLabel }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="直播状态" min-width="120" align="center" prop="liveStatus">
+      <el-table-column label="直播状态" min-width="100" align="center" prop="liveStatus">
         <template slot-scope="scope">
           <span v-if="scope.row.liveStatus === ''">检测中...</span>
           <span v-else :style="{color: (status = liveStatusOption[parseInt(scope.row.liveStatus)]).color}">{{ status.dictLabel }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="禁收费" min-width="120" align="center" prop="openPay">
+      <el-table-column label="禁收费" min-width="65" align="center" prop="openPay">
         <template slot-scope="scope">
           <el-switch
             active-value="0"
@@ -92,7 +92,7 @@
           </el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="收费" min-width="120" align="center" prop="isLivePay">
+      <el-table-column label="收费" min-width="65" align="center" prop="isLivePay">
         <template slot-scope="scope">
           <span v-if="scope.row.isLivePay" style="color: #FFB800">是</span>
           <span v-else>否</span>

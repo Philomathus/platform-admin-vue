@@ -31,7 +31,7 @@
 <!--        </el-select>-->
 <!--      </el-form-item>-->
       <el-form-item label="所属彩种类型" prop="type">
-        <el-select v-model="queryParams.official" placeholder="请选择所属彩种类型" clearable size="small">
+        <el-select v-model="queryParams.type" placeholder="请选择所属彩种类型" clearable size="small">
           <el-option
             v-for="item in type"
             :key="item.value"

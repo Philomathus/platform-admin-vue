@@ -89,6 +89,16 @@
         >导出
         </el-button>
       </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="mini"
+          @click="openIpBlackList()"
+        >查看封停ip
+        </el-button>
+      </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -150,6 +160,65 @@
       @pagination="getList"
     />
 
+    <!-- 禁用备注弹框 -->
+    <el-dialog
+      v-dialogDrag
+      :close-on-click-modal="false"
+      title="备注禁用原因"
+      :visible.sync="muteRemark"
+      width="400px"
+      append-to-body
+    >
+      <el-input v-model="id" v-show="false"/>
+      <el-input v-model="status" v-show="false"/>
+      <el-select
+        v-model="remark"
+        placeholder="请选择禁言原因"
+        clearable
+        style="min-width: 360px"
+      >
+        <el-option
+          v-for="dict in muteRemarkOptions"
+          :key="dict.dictValue"
+          :label="dict.dictLabel"
+          :value="dict.dictValue"
+        />
+      </el-select>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitMuteRemark">立即提交</el-button>
+      </div>
+    </el-dialog>
+
+    <!-- 禁言备注弹框 -->
+    <el-dialog
+      v-dialogDrag
+      :close-on-click-modal="false"
+      title="备注禁言原因"
+      :visible.sync="muteRemarkSpeak"
+      width="400px"
+      append-to-body
+    >
+      <el-input v-model="id" v-show="false"/>
+      <el-input v-model="speak" v-show="false"/>
+      <el-select
+        v-model="remark"
+        placeholder="请选择禁言原因"
+        clearable
+        style="min-width: 360px"
+      >
+        <el-option
+          v-for="dict in muteRemarkOptions"
+          :key="dict.dictValue"
+          :label="dict.dictLabel"
+          :value="dict.dictValue"
+        />
+      </el-select>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitMuteRemarkSpeak">立即提交</el-button>
+      </div>
+    </el-dialog>
+
+
     <!-- 添加或修改用户信息对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
@@ -167,6 +236,62 @@
       </div>
     </el-dialog>
     <more ref="more" :member-id="memberId" :member-code="memberCode" @memberMore="handleQuery"></more>
+
+    <!--查看封停ip-->
+    <el-dialog :close-on-click-modal="false" v-dialogDrag title="查看封停ip" :visible.sync="speakIpBlackListList"
+               width="1200px" append-to-body>
+      <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+        <el-form-item label="会员id" prop="userId">
+          <el-input
+            v-model="queryParams.userId"
+            placeholder="会员id"
+            clearable
+            size="small"
+            @keyup.enter.native="handleQuery"
+          />
+        </el-form-item>
+        <el-form-item label="会员ip" prop="userIp">
+          <el-input
+            v-model="queryParams.userIp"
+            placeholder="会员ip"
+            clearable
+            size="small"
+            @keyup.enter.native="handleQuery"
+          />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQueryIpBlack">搜索</el-button>
+        </el-form-item>
+      </el-form>
+
+      <el-table :stripe="true" v-loading="loading" :data="speakIpBlackData">
+        <el-table-column type="selection" width="55" align="center"/>
+        <el-table-column label="会员ID" align="center" prop="userId"/>
+        <el-table-column label="会员ip" align="center" prop="userIp"/>
+        <el-table-column label="封停备注" align="center" prop="msg"/>
+        <el-table-column label="封停时间" align="center" prop="createTime"/>
+        <el-table-column label="操作" min-width="60" align="center" class-name="small-padding fixed-width" fixed="right">
+          <template slot-scope="scope">
+            <el-button
+              size="mini"
+              type="text"
+              icon="el-icon-edit"
+              @click="handleUpdateIpBlack(scope.row)"
+            >解封
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <pagination
+        v-show="total>0"
+        :total="total"
+        :page-sizes="[10,20,100]"
+        :page.sync="queryParams.pageNum"
+        :limit.sync="queryParams.pageSize"
+        @pagination="openIpBlackList"
+      />
+    </el-dialog>
+
   </div>
 </template>
 
@@ -178,9 +303,13 @@ import {
   updateMemberInfo,
   exportMemberInfo,
   changeSpeak,
-  changeStatus
+  changeStatus,
+  changeStatusBan
 } from '@/api/platform-web/member/memberInfo'
 import more from './more'
+import {listSpeakIpBlackList, updateSpeakIpBlackList} from '@/api/live-web/chat/speakIpBlackList'
+import {bindGoogleAuth} from "@/api/platform-web/system/user";
+
 
 export default {
   name: 'MemberInfo',
@@ -194,6 +323,11 @@ export default {
       // 传递到子组件的memberId/memberCode
       memberCode: 0,
       memberId: null,
+      //禁言禁用
+      id: '',
+      speak: '',
+      status: '',
+      remark: '',
       // 选中数组
       ids: [],
       // 非单个禁用
@@ -204,6 +338,15 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
+      //禁言备注弹框
+      muteRemark: false,
+      muteRemarkSpeak: false,
+      fromMuteRemark: {},
+      fromMuteRemarkSpeak: {},
+      muteRemarkOptions: [],
+      //会员发言表格数据
+      speakIpBlackData: [],
+      speakIpBlackListList: false,
       // 用户信息表格数据
       memberInfoList: [],
       // 弹出层标题
@@ -252,16 +395,40 @@ export default {
   },
   created() {
     this.getList()
+    this.getDicts('muteRemarkOptions').then(response => {
+      this.muteRemarkOptions = response.data
+    })
   },
   methods: {
     //修改用户状态
     changeType(row) {
-      changeStatus({
-        id: row.id,
-        status: row.status
-      }).then((res) => {
+      //打开备注禁用弹框
+      if (row.status === 0) {
+        this.reset()
+        this.id = row.id
+        this.status = row.status
+        this.muteRemark = true
+      } else {
+        changeStatus({
+          id: row.id,
+          status: row.status
+        }).then((res) => {
+          if (res.code === 0) {
+            this.$notify.success('状态修改成功')
+          } else {
+            this.$notify.error('状态修改失败')
+          }
+        }).catch(() => {
+          this.$notify.error('网络异常')
+        })
+      }
+    },
+    //禁用备注提交
+    submitMuteRemark(row) {
+      changeStatusBan(this.id, this.status, this.remark).then((res) => {
         if (res.code === 0) {
           this.$notify.success('状态修改成功')
+          this.muteRemark =false
         } else {
           this.$notify.error('状态修改失败')
         }
@@ -295,6 +462,34 @@ export default {
         this.loading = false
       })
     },
+    openIpBlackList() {
+      this.speakIpBlackListList = true
+      this.title = '查看已封停的ip'
+      listSpeakIpBlackList(this.queryParams).then(response => {
+        this.speakIpBlackData = response.rows
+        this.total = response.total
+        this.loading = false
+      })
+    },
+    /** 修改按钮操作 */
+    handleUpdateIpBlack(row) {
+      var that = this
+      this.$confirm('确定要' + row.userId + '解封吗?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        var data = {}
+        data.userIp = row.userIp
+        data.userId = row.userId
+        return updateSpeakIpBlackList(data)
+      }).then(() => {
+        that.msgSuccess('解封成功')
+        this.openIpBlackList()
+        that.getList()
+      })
+
+    },
     // 取消按钮
     cancel() {
       this.open = false
@@ -305,7 +500,8 @@ export default {
       this.form = {
         id: null,
         userName: null,
-        password: null
+        password: null,
+        remark: null,
       }
       this.resetForm('form')
     },
@@ -313,6 +509,10 @@ export default {
     handleQuery() {
       this.queryParams.pageNum = 1
       this.getList()
+    },
+    handleQueryIpBlack() {
+      this.queryParams.pageNum = 1
+      this.openIpBlackList()
     },
     /** 重置按钮操作 */
     resetQuery() {
@@ -380,20 +580,28 @@ export default {
         this.download(response.msg)
       })
     },
+    //打开备注禁言弹框
     handleStatusChange(row) {
-      let text = row.speak === "1" ? '禁言' : '解禁'
-      this.$confirm('确认要更改"' + text + '""' + row.userName + '"吗?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(function () {
-        return changeSpeak(row.id, row.speak)
-      }).then(() => {
-        this.msgSuccess(text + '成功')
-      }).catch(function () {
-        row.speak = row.speak === '0' ? '1' : '0'
+      if (row.speak === "0") {
+        this.reset()
+        changeSpeak(row.id, row.speak, null).then(response => {
+          this.msgSuccess('解禁成功')
+        })
+      } else {
+        this.reset()
+        this.id = row.id
+        this.speak = row.speak
+        this.muteRemarkSpeak = true
+      }
+    },
+    //禁言备注提交
+    submitMuteRemarkSpeak() {
+      changeSpeak(this.id, this.speak, this.remark).then(response => {
+        this.msgSuccess('禁言成功')
+        this.muteRemarkSpeak = false
+        this.getList()
       })
     }
-  }
+  },
 }
 </script>

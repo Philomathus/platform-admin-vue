@@ -9,6 +9,7 @@ export function listMemberInfo(query) {
     params: query
   })
 }
+
 // 查询资金明细列表
 export function memberWithdrawLog(query) {
   return request({
@@ -17,6 +18,7 @@ export function memberWithdrawLog(query) {
     params: query
   })
 }
+
 // 加分提交接口
 export function addScore(query) {
   return request({
@@ -25,13 +27,15 @@ export function addScore(query) {
     params: query
   })
 }
+
 // 重置密码接口
 export function resetPassword(query) {
   return request({
-    url: url.platformWeb + '/member/memberInfo/reset/'+query,
+    url: url.platformWeb + '/member/memberInfo/reset/' + query,
     method: 'delete',
   })
 }
+
 // 查询银行卡列表接口
 export function cardList(query) {
   return request({
@@ -40,6 +44,7 @@ export function cardList(query) {
     params: query
   })
 }
+
 // 修改用户状态
 export function changeStatus(query) {
   return request({
@@ -48,6 +53,21 @@ export function changeStatus(query) {
     params: query
   })
 }
+
+// 禁用用户
+export function changeStatusBan(id, status, remark) {
+  const data = {
+    id: id,
+    status: status,
+    remark: remark
+  }
+  return request({
+    url: url.platformWeb + '/member/memberInfo/change-statusBan/',
+    method: 'put',
+    data: data
+  })
+}
+
 // 重置保险箱
 export function resetSafe(query) {
   return request({
@@ -56,6 +76,7 @@ export function resetSafe(query) {
     params: query
   })
 }
+
 // 重置体现
 export function resetWithdrawal(query) {
   return request({
@@ -99,10 +120,12 @@ export function exportMemberInfo(query) {
     params: query
   })
 }
-export function changeSpeak(id,speak ) {
+
+export function changeSpeak(id, speak, remark) {
   const data = {
-    id,
-    speak
+    id: id,
+    speak: speak,
+    remark: remark
   }
   return request({
     url: url.platformWeb + '/member/memberInfo/changeSpeak',

@@ -4,10 +4,10 @@
       <el-form-item label="所属彩种类型" prop="kind">
         <el-select v-model="queryParams.kind" placeholder="请选择所属彩种类型" clearable size="small">
           <el-option
-            v-for="item in kind"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            v-for="item in kindOptions"
+            :key="item.dictValue"
+            :label="item.dictLabel"
+            :value="item.dictValue">
           </el-option>
         </el-select>
       </el-form-item>
@@ -112,7 +112,7 @@
           <el-select
             filterable
             v-model="form.kind"
-            placeholder="请选择存入类型"
+            placeholder="请选择所属彩种类型"
             clearable
             size="small"
             style="width: 240px"
@@ -154,23 +154,24 @@ export default {
     return {
       //所属彩种字典
       kindOptions: [],
+      kind: [],
       //所属彩种类型下拉框
-      kind: [{
-        value: '0',
-        label: '时时彩'
-      }, {
-        value: '1',
-        label: '11选5'
-      }, {
-        value: '2',
-        label: '快三'
-      }, {
-        value: '3',
-        label: '赛车'
-      }, {
-        value: '4',
-        label: '六合彩'
-      }],
+      // kind: [{
+      //   value: '0',
+      //   label: '时时彩'
+      // }, {
+      //   value: '1',
+      //   label: '11选5'
+      // }, {
+      //   value: '2',
+      //   label: '快三'
+      // }, {
+      //   value: '3',
+      //   label: '赛车'
+      // }, {
+      //   value: '4',
+      //   label: '六合彩'
+      // }],
       // 遮罩层
       loading: true,
       // 选中数组

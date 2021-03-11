@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="copy1">总收入 {{ this.totalData.totalIncome || 0 }}</el-button>
-    <el-button type="success" @click="copy2">总支出 {{ this.totalData.totalPay || 0 }}</el-button>
+<!--    <el-button type="primary" @click="copy1">总收入 {{ this.totalData.totalIncome || 0 }}</el-button>-->
+<!--    <el-button type="success" @click="copy2">总支出 {{ this.totalData.totalPay || 0 }}</el-button>-->
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="88px" style="margin-top: 10px">
 <!--      <el-form-item label="行为类型" prop="type" class="checkbox-type">-->
 <!--        <el-checkbox-group v-model="queryParams.types" size="medium">-->
@@ -157,18 +157,18 @@ export default {
   },
   created() {
     this.getList()
-    this.totalCount()
+    // this.totalCount()
     this.getDicts('log_money_mark').then(response => {
       this.markOptions = response.data
     })
     this.getTypeData()
   },
   methods: {
-    totalCount(){
-      totalCount(this.queryParams).then((res) => {
-              this.totalData = res.data;
-            })
-    },
+    // totalCount(){
+    //   totalCount(this.queryParams).then((res) => {
+    //           this.totalData = res.data;
+    //         })
+    // },
     //复制
     copy1() {
       this.copyCommand(this.totalData.totalIncome)
@@ -198,7 +198,7 @@ export default {
     handleQuery() {
       this.queryParams.pageNum = 1
       this.getList()
-      this.totalCount()
+      // this.totalCount()
     },
     /** 重置按钮操作 */
     resetQuery() {

@@ -222,7 +222,9 @@ export default {
         pageSize: 10,
         dictName: undefined,
         dictType: undefined,
-        status: undefined
+        status: undefined,
+        orderByColumn: 'createTime',
+        isAsc: 'desc',
       },
       // 表单参数
       form: {},

@@ -121,9 +121,6 @@
         <el-form-item label="内容">
           <el-input v-model="form.content" type="textarea" placeholder="请输入内容" rows="5" />
         </el-form-item>
-        <el-form-item label="设备" prop="device">
-          <el-input v-model="form.device" placeholder="请输入设备" />
-        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>

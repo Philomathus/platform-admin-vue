@@ -404,7 +404,7 @@ export default {
     changeType(row) {
       //打开备注禁用弹框
       if (row.status === 0) {
-        this.reset()
+        this.remark = null
         this.id = row.id
         this.status = row.status
         this.muteRemark = true

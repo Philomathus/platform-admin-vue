@@ -393,20 +393,6 @@ export default {
         this.getList()
       })
     },
-    isRecommendFormat(row) {
-      if (row.isRecommend == '1') {
-        return '是'
-      } else {
-        return '否'
-      }
-    },
-    isLivePayFormat(row) {
-      if (row.isLivePay == '1') {
-        return '是'
-      } else {
-        return '否'
-      }
-    },
     typeFormat(row) {
       if (row.cateId == '2') {
         return '性感主播'

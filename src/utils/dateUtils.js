@@ -169,6 +169,22 @@ export const pickerDateTimeShortcuts = [{
     start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
     picker.$emit('pick', [getDateStartTime(start), getDateEndTime(end)])
   }
+}, {
+  text: '最近半年',
+  onClick(picker) {
+    const end = new Date()
+    const start = new Date()
+    start.setTime(start.getTime() - 3600 * 1000 * 24 * 183)
+    picker.$emit('pick', [getDateStartTime(start), getDateEndTime(end)])
+  }
+}, {
+  text: '最近一年',
+  onClick(picker) {
+    const end = new Date()
+    const start = new Date()
+    start.setTime(start.getTime() - 3600 * 1000 * 24 * 365)
+    picker.$emit('pick', [getDateStartTime(start), getDateEndTime(end)])
+  }
 }]
 
 export const pickerDateShortcuts = [{

@@ -16,19 +16,19 @@
         ></el-date-picker>
       </el-form-item>
 
-      <el-form-item label="渠道编码" prop="agentcode">
+      <el-form-item prop="agentcode">
         <el-input
           v-model="queryParams.agentcode"
-          placeholder="请输入用户名称"
+          placeholder="渠道编码"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="邀请账号" prop="agentname">
+      <el-form-item prop="agentname">
         <el-input
           v-model="queryParams.agentname"
-          placeholder="请输入用户名称"
+          placeholder="邀请账号"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -58,7 +58,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['pay:configBank:add']"
+          v-hasPermi="['admin:reportAgentcount:add']"
         >新增推广码
         </el-button>
       </el-col>
@@ -69,7 +69,7 @@
           icon="el-icon-delete"
           size="mini"
           @click="handleDelete"
-          v-hasPermi="['pay:configBank:remove']"
+          v-hasPermi="['admin:reportAgentcount:remove']"
         >删除推广码
         </el-button>
       </el-col>

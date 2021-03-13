@@ -110,7 +110,12 @@
         </template>
       </el-table-column>
       <el-table-column label="会员账号" min-width="120" align="center" prop="account"/>
-      <el-table-column label="入款出款比" min-width="100" align="center" prop="rechargeWithdrawRate"/>
+      <el-table-column label="入款出款比" min-width="100" align="center" prop="rechargeWithdrawRate">
+        <template v-slot="{row}">
+          <span style="color: #FF5722" v-if="row.rechargeWithdrawRate > 10">{{ row.rechargeWithdrawRate }}</span>
+          <span v-else>{{ row.rechargeWithdrawRate }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="提现金额" min-width="100" align="center" prop="withdrawMoney">
         <template v-slot="{row}">
           <a style="color: #00afff" @click="copyColumn(row.withdrawMoney)">{{ row.withdrawMoney }}</a>

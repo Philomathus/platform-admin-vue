@@ -4,15 +4,10 @@
     <el-button type="warning" @click="copy2">总出款金额 {{ this.totalData.successTotal || 0 }}</el-button>
     <el-button type="info" @click="copy3">成功率 {{ numberUtil.toPercent(this.totalData.successRate) }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="100px" style="margin-top: 20px">
-      <el-form-item label="修改日期" prop="searchTime">
-        <el-date-picker
-          v-model="queryParams.searchTime"
-          style="width: 240px"
-          value-format="yyyy-MM-dd"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期" :picker-options="pickerOptions"
+      <el-form-item label="修改日期" prop="searchTime" label-width="70px">
+        <el-date-picker type="datetimerange" v-model="queryParams.searchTime" format="yyyy-MM-dd HH:mm:ss"
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
+                        end-placeholder="结束时间" range-separator="至" clearable :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="status" style="width: 150px">
@@ -307,7 +302,7 @@ import {
   getCountTotal
 } from '@/api/platform-web/pay/memberWithdrawLog'
 import { effectListPayAgentPlatform, payAgentOrder } from '@/api/platform-web/pay/payAgentPlatform'
-import { pickerDateShortcuts } from '@/utils/dateUtils'
+import { pickerDateTimeShortcuts } from '@/utils/dateUtils'
 
 export default {
   name: 'MemberWithdrawLog',
@@ -319,7 +314,7 @@ export default {
       refreshIcon: 'el-icon-refresh',
       refreshLabel: '开始刷新',
       refreshDesc: '',
-      pickerOptions: { shortcuts: pickerDateShortcuts },
+      pickerOptions: { shortcuts: pickerDateTimeShortcuts },
       // 头部数据
       totalData: {},
       // 遮罩层

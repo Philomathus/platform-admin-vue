@@ -49,6 +49,16 @@ export function download(fileName) {
   // window.location.href = url.platformWeb + "/common/download?fileName=" + encodeURI(fileName) + "&delete=" + true;
 }
 
+export function downloadExcel(response,filename) {
+  let blob = new Blob([response]);
+  const link = document.createElement('a')
+  let objectUrl = URL.createObjectURL(blob) // 创建URL
+  link.href = objectUrl
+  link.download = filename + '.xls' // 自定义文件名
+  link.click() // 下载文件
+  URL.revokeObjectURL(objectUrl); // 释放内存
+}
+
 // 字符串格式化(%s )
 export function sprintf(str) {
   var args = arguments, flag = true, i = 1

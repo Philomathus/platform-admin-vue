@@ -22,6 +22,7 @@ import {
   selectDictLabel,
   selectDictLabels,
   download,
+  downloadExcel,
   handleTree,
   copyCommand
 } from '@/utils/common'
@@ -48,6 +49,7 @@ Vue.prototype.resetForm = resetForm
 Vue.prototype.selectDictLabel = selectDictLabel
 Vue.prototype.selectDictLabels = selectDictLabels
 Vue.prototype.download = download
+Vue.prototype.downloadExcel = downloadExcel
 Vue.prototype.handleTree = handleTree
 Vue.prototype.copyCommand = copyCommand
 

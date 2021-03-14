@@ -32,6 +32,7 @@ export function exportMemberPayJour(query) {
   return request({
     url: url.platformWeb + '/pay/memberPayJour/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer'
   })
 }

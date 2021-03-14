@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px" :rules="queryRule">
       <el-form-item label="日期选择" prop="reptime">
         <el-date-picker
           v-model="queryParams.dateRange"
@@ -198,7 +198,12 @@ export default {
         pageNum: 1,
         pageSize: 20,
         dateRange: [this.parseTime(getYesterDate(), '{y}-{m}-{d}'), this.parseTime(getYesterDate(), '{y}-{m}-{d}')],
-        code: null
+        agentcode: null
+      },
+      queryRule:{
+        agentcode: [
+          {required: true, message: "推广码不能为空", trigger: "blur"},
+        ]
       },
       // 表单参数
       form: {},
@@ -226,7 +231,7 @@ export default {
         this.report = response.rows
         this.total = response.total
         this.loading = false
-        this.msgSuccess(response.msg)
+
 
         // that.$loading.hide();
         // that.listLoading = false;
@@ -287,7 +292,11 @@ export default {
     /** 搜索按钮操作 */
     handleQuery() {
       this.queryParams.pageNum = 1
-      this.getList()
+      this.$refs["queryForm"].validate(valid => {
+        if (valid) {
+          this.getList()
+        }
+      });
     },
     /** 重置按钮操作 */
     resetQuery() {

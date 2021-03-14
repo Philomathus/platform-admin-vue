@@ -14,10 +14,10 @@
                         end-placeholder="结束时间" range-separator="至" clearable :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item label="会员ID/账号" prop="searchValue">
+      <el-form-item label="会员账号" prop="searchValue">
         <el-input
           v-model="queryParams.searchValue"
-          placeholder="请输入会员ID/账号"
+          placeholder="请输入会员账号"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"

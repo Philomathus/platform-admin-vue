@@ -226,6 +226,8 @@ export default {
         this.report = response.rows
         this.total = response.total
         this.loading = false
+        this.msgSuccess(response.msg)
+
         // that.$loading.hide();
         // that.listLoading = false;
         // that.$rjLoading.hide();

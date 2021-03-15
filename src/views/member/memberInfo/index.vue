@@ -184,6 +184,7 @@
           :value="dict.dictValue"
         />
       </el-select>
+      <el-input v-model="remarked" v-if="this.remark == '其他'"/>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitMuteRemark">立即提交</el-button>
       </div>
@@ -213,6 +214,7 @@
           :value="dict.dictValue"
         />
       </el-select>
+      <el-input v-model="remarked" v-if="this.remark == '其他'"/>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitMuteRemarkSpeak">立即提交</el-button>
       </div>
@@ -328,6 +330,7 @@ export default {
       speak: '',
       status: '',
       remark: '',
+      remarked: '',
       // 选中数组
       ids: [],
       // 非单个禁用
@@ -425,6 +428,9 @@ export default {
     },
     //禁用备注提交
     submitMuteRemark(row) {
+      if(this.remarked != null){
+        this.remark = this.remarked;
+      }
       changeStatusBan(this.id, this.status, this.remark).then((res) => {
         if (res.code === 0) {
           this.$notify.success('状态修改成功')
@@ -588,7 +594,7 @@ export default {
           this.msgSuccess('解禁成功')
         })
       } else {
-        this.reset()
+        this.remark = null
         this.id = row.id
         this.speak = row.speak
         this.muteRemarkSpeak = true
@@ -596,6 +602,9 @@ export default {
     },
     //禁言备注提交
     submitMuteRemarkSpeak() {
+      if(this.remarked != null){
+        this.remark = this.remarked;
+      }
       changeSpeak(this.id, this.speak, this.remark).then(response => {
         this.msgSuccess('禁言成功')
         this.muteRemarkSpeak = false

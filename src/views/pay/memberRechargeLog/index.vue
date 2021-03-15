@@ -82,7 +82,7 @@
       </el-col>
       <el-col :span="10" style="margin-left: 10px">
         <span style="font-size: 16px;margin-right: 10px">记录刷新</span>
-          <el-select v-model="refreshSec" clearable placeholder="时间间隔" style="width: 110px">
+          <el-select v-model="refreshSec" placeholder="时间间隔" style="width: 110px">
             <el-option value="5" label="5秒"></el-option>
             <el-option value="10" label="10秒"></el-option>
             <el-option value="15" label="15秒"></el-option>
@@ -407,14 +407,15 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('是否确认导出所有公司入款信息数据项?', '警告', {
-        confirmButtonText: '确定',
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+        confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function() {
         return exportMemberRechargeLog(queryParams)
       }).then(response => {
-        this.download(response.msg)
+        this.downloadExcel(response, '公司入款')
+      }).catch(() => {
       })
     },
     handleFirstAudit(row) {

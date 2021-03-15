@@ -4,15 +4,10 @@
     <el-button type="warning" @click="copy2">总出款金额 {{ this.totalData.successTotal || 0 }}</el-button>
     <el-button type="info" @click="copy3">成功率 {{ numberUtil.toPercent(this.totalData.successRate) }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="100px" style="margin-top: 20px">
-      <el-form-item label="修改日期" prop="searchTime">
-        <el-date-picker
-          v-model="queryParams.searchTime"
-          style="width: 240px"
-          value-format="yyyy-MM-dd"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期" :picker-options="pickerOptions"
+      <el-form-item label="修改日期" prop="searchTime" label-width="70px">
+        <el-date-picker type="datetimerange" v-model="queryParams.searchTime" format="yyyy-MM-dd HH:mm:ss"
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
+                        end-placeholder="结束时间" range-separator="至" clearable :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="status" style="width: 150px">
@@ -77,7 +72,7 @@
       </el-col>
       <el-col :span="10" style="margin-left: 10px">
         <span style="font-size: 16px;margin-right: 10px">记录刷新</span>
-          <el-select v-model="refreshSec" clearable placeholder="时间间隔" style="width: 110px">
+          <el-select v-model="refreshSec" placeholder="时间间隔" style="width: 110px">
             <el-option value="5" label="5秒"></el-option>
             <el-option value="10" label="10秒"></el-option>
             <el-option value="15" label="15秒"></el-option>
@@ -110,7 +105,12 @@
         </template>
       </el-table-column>
       <el-table-column label="会员账号" min-width="120" align="center" prop="account"/>
-      <el-table-column label="入款出款比" min-width="100" align="center" prop="rechargeWithdrawRate"/>
+      <el-table-column label="入款出款比" min-width="100" align="center" prop="rechargeWithdrawRate">
+        <template v-slot="{row}">
+          <span style="color: #FF5722" v-if="row.rechargeWithdrawRate > 10">{{ row.rechargeWithdrawRate }}</span>
+          <span v-else>{{ row.rechargeWithdrawRate }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="提现金额" min-width="100" align="center" prop="withdrawMoney">
         <template v-slot="{row}">
           <a style="color: #00afff" @click="copyColumn(row.withdrawMoney)">{{ row.withdrawMoney }}</a>
@@ -302,7 +302,7 @@ import {
   getCountTotal
 } from '@/api/platform-web/pay/memberWithdrawLog'
 import { effectListPayAgentPlatform, payAgentOrder } from '@/api/platform-web/pay/payAgentPlatform'
-import { pickerDateShortcuts } from '@/utils/dateUtils'
+import { pickerDateTimeShortcuts } from '@/utils/dateUtils'
 
 export default {
   name: 'MemberWithdrawLog',
@@ -314,7 +314,7 @@ export default {
       refreshIcon: 'el-icon-refresh',
       refreshLabel: '开始刷新',
       refreshDesc: '',
-      pickerOptions: { shortcuts: pickerDateShortcuts },
+      pickerOptions: { shortcuts: pickerDateTimeShortcuts },
       // 头部数据
       totalData: {},
       // 遮罩层
@@ -520,14 +520,14 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('是否确认导出所有会员提现信息数据项?', '警告', {
-        confirmButtonText: '确定',
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+        confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function() {
         return exportMemberWithdrawLog(queryParams)
       }).then(response => {
-        this.download(response.msg)
+        this.downloadExcel(response, '会员提现')
       }).catch(() => {
       })
     },

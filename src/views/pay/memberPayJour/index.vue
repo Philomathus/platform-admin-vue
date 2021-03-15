@@ -75,18 +75,18 @@
         </el-button>
       </el-col>
       <el-col :span="10" style="margin-left: 10px">
-          <span style="font-size: 16px;margin-right: 10px">记录刷新</span>
-          <el-select v-model="refreshSec" clearable placeholder="时间间隔" style="width: 110px">
-            <el-option value="5" label="5秒"></el-option>
-            <el-option value="10" label="10秒"></el-option>
-            <el-option value="15" label="15秒"></el-option>
-            <el-option value="20" label="20秒"></el-option>
-            <el-option value="30" label="30秒"></el-option>
-          </el-select>
-          <div style="width: 120px;display: inline-block;text-align: center">
-            <span>{{ refreshDesc }}</span>
-          </div>
-          <el-button :type="refreshType" :icon="refreshIcon" size="mini" @click="refreshData">{{ refreshLabel }}</el-button>
+        <span style="font-size: 16px;margin-right: 10px">记录刷新</span>
+        <el-select v-model="refreshSec" placeholder="时间间隔" style="width: 110px">
+          <el-option value="5" label="5秒"></el-option>
+          <el-option value="10" label="10秒"></el-option>
+          <el-option value="15" label="15秒"></el-option>
+          <el-option value="20" label="20秒"></el-option>
+          <el-option value="30" label="30秒"></el-option>
+        </el-select>
+        <div style="width: 120px;display: inline-block;text-align: center">
+          <span>{{ refreshDesc }}</span>
+        </div>
+        <el-button :type="refreshType" :icon="refreshIcon" size="mini" @click="refreshData">{{ refreshLabel }}</el-button>
 
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -365,14 +365,15 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('是否确认导出所有线上充值信息数据项?', '警告', {
-        confirmButtonText: '确定',
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+        confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function() {
         return exportMemberPayJour(queryParams)
       }).then(response => {
-        this.download(response.msg)
+        this.downloadExcel(response, '线上充值')
+      }).catch(() => {
       })
     },
     handlePatchOrder(row) {

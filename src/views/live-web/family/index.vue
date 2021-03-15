@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="名称" prop="name">
+      <el-form-item prop="name">
         <el-input
           v-model="queryParams.name"
           placeholder="名称"
@@ -11,21 +11,22 @@
         />
       </el-form-item>
 
-      <el-form-item label="族长ID" prop="userId">
+      <el-form-item prop="userId">
         <el-input
           v-model="queryParams.userId"
-          placeholder="名称"
+          placeholder="族长ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
 
-      <el-form-item label="状态">
-        <el-select v-model="queryParams.status" placeholder="请选择状态">
+      <el-form-item >
+        <el-select v-model="queryParams.status" placeholder="全部状态" clearable>
           <el-option label="未审核" value="0"></el-option>
           <el-option label="审核通过" value="1"></el-option>
           <el-option label="审核拒绝" value="2"></el-option>
+          <el-option label="解散" value="4"></el-option>
         </el-select>
       </el-form-item>
 
@@ -62,20 +63,23 @@
           <span>{{ parseTime(scope.row.createTimes, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="备注" :show-overflow-tooltip="true" min-width="120" align="center" prop="memo"/>
-      <el-table-column label="状态" min-width="120" align="center" prop="status" :formatter="formatterStatus"/>
+      <el-table-column label="状态" min-width="120" align="center" prop="status">
+        <template slot-scope="scope">
+          <span v-if="scope.row.status === 0" style="color: #0000FF">未审核</span>
+          <span v-if="scope.row.status === 1" style="color: #5FB878">审核通过</span>
+          <span v-if="scope.row.status === 2" style="color: #FF5722">拒绝通过</span>
+          <span v-if="scope.row.status === 4" style="color: #C0C0C0">解散</span>
+        </template>
+      </el-table-column>
       <el-table-column label="家族成员的贡献" min-width="120" align="center" prop="contribution"/>
-      <el-table-column label="家族等级" min-width="120" align="center" prop="familyLevel"/>
       <el-table-column label="直播时间" min-width="120" align="center" prop="videoTime"/>
-      <el-table-column label="积分" min-width="120" align="center" prop="score"/>
-      <el-table-column label="家族等级" min-width="120" align="center" prop="liveLevel"/>
-      <el-table-column label="家族推荐号" min-width="120" align="center" prop="familyRecom"/>
-      <el-table-column label="操作" min-width="120" align="center" width="150px" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column label="备注" :show-overflow-tooltip="true" min-width="220" align="center" prop="memo"/>
+      <el-table-column label="操作" min-width="120" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="text"
-            icon="el-icon-edit"
+            icon="el-icon-check"
             v-if="scope.row.status ==0"
             @click="handleUpdate(scope.row,1)"
           >通过
@@ -83,7 +87,7 @@
           <el-button
             size="mini"
             type="text"
-            icon="el-icon-edit"
+            icon="el-icon-close"
             v-if="scope.row.status ==0"
             @click="handleUpdate(scope.row,0)"
           >不通过
@@ -166,54 +170,6 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        logo: [
-          { required: true, message: '头像', trigger: 'blur' }
-        ],
-        name: [
-          { required: true, message: '名称', trigger: 'blur' }
-        ],
-        notice: [
-          { required: true, message: '公告不能为空', trigger: 'blur' }
-        ],
-        manifesto: [
-          { required: true, message: '家族宣言不能为空', trigger: 'blur' }
-        ],
-        userId: [
-          { required: true, message: '族长ID', trigger: 'blur' }
-        ],
-        userCount: [
-          { required: true, message: '成员数量不能为空', trigger: 'blur' }
-        ],
-        createTime: [
-          { required: true, message: '创建时间不能为空', trigger: 'blur' }
-        ],
-        createDate: [
-          { required: true, message: '日期字段,按日期归档不能为空', trigger: 'blur' }
-        ],
-        memo: [
-          { required: true, message: '备注不能为空', trigger: 'blur' }
-        ],
-        status: [
-          { required: true, message: '状态，0未审核，1审核通过，2拒绝通过 4 解散不能为空', trigger: 'blur' }
-        ],
-        contribution: [
-          { required: true, message: '家族成员的贡献不能为空', trigger: 'blur' }
-        ],
-        familyLevel: [
-          { required: true, message: '家族等级;live_family_level.level不能为空', trigger: 'blur' }
-        ],
-        videoTime: [
-          { required: true, message: '家族总的直播时间，单位为秒不能为空', trigger: 'blur' }
-        ],
-        score: [
-          { required: true, message: '积分不能为空', trigger: 'blur' }
-        ],
-        liveLevel: [
-          { required: true, message: '家族等级;live_family_level.level不能为空', trigger: 'blur' }
-        ],
-        familyRecom: [
-          { required: true, message: '家族推荐号 创建家族后随机生成，用于主播审核时填写不能为空', trigger: 'blur' }
-        ]
       }
     }
   },
@@ -221,19 +177,6 @@ export default {
     this.getList()
   },
   methods: {
-    // 状态，0未审核，1审核通过，2拒绝通过 4 解散
-    formatterStatus(row) {
-      if (row.status == 0) {
-        return '未审核'
-      } else if (row.status == 1) {
-        return '审核通过'
-      } else if (row.status == 2) {
-        return '拒绝通过'
-      } else if (row.status == 4) {
-        return '解散'
-      }
-      return '未知'
-    },
     /** 查询家族列表 */
     getList() {
       this.loading = true

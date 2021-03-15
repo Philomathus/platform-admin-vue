@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px" :rules="queryRule">
       <el-form-item label="日期选择" prop="reptime">
         <el-date-picker
           v-model="queryParams.dateRange"
@@ -16,19 +16,19 @@
         ></el-date-picker>
       </el-form-item>
 
-      <el-form-item label="渠道编码" prop="agentcode">
+      <el-form-item prop="agentcode">
         <el-input
           v-model="queryParams.agentcode"
-          placeholder="请输入用户名称"
+          placeholder="渠道编码"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="邀请账号" prop="agentname">
+      <el-form-item prop="agentname">
         <el-input
           v-model="queryParams.agentname"
-          placeholder="请输入用户名称"
+          placeholder="邀请账号"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -58,7 +58,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['pay:configBank:add']"
+          v-hasPermi="['admin:reportAgentcount:add']"
         >新增推广码
         </el-button>
       </el-col>
@@ -69,7 +69,7 @@
           icon="el-icon-delete"
           size="mini"
           @click="handleDelete"
-          v-hasPermi="['pay:configBank:remove']"
+          v-hasPermi="['admin:reportAgentcount:remove']"
         >删除推广码
         </el-button>
       </el-col>
@@ -198,7 +198,12 @@ export default {
         pageNum: 1,
         pageSize: 20,
         dateRange: [this.parseTime(getYesterDate(), '{y}-{m}-{d}'), this.parseTime(getYesterDate(), '{y}-{m}-{d}')],
-        code: null
+        agentcode: null
+      },
+      queryRule:{
+        agentcode: [
+          {required: true, message: "推广码不能为空", trigger: "blur"},
+        ]
       },
       // 表单参数
       form: {},
@@ -224,27 +229,30 @@ export default {
       this.loading = true
       listReport(this.addDateRange(this.queryParams, this.queryParams.dateRange)).then(response => {
         this.report = response.rows
-        // this.total = response.total
-        // this.loading = false
+        this.total = response.total
+        this.loading = false
+
+
         // that.$loading.hide();
-        that.listLoading = false;
-        that.$rjLoading.hide();
-      }).catch((err) => {
-        if (err=='Error: 报表正在生成，请稍后...'){
-          if (!that.listLoading) {
-            that.listLoading=true;
-            that.$rjLoading.show('报表正在生成',that);
-          }
-          if (!this.isDestroyed){
-            setTimeout(() => {
-              that.getList();
-            }, 10000);
-          }
-        }
-      }).finally(() => {
-          this.loading = false
-        }
-      );
+        // that.listLoading = false;
+        // that.$rjLoading.hide();
+      })
+      //   .catch((err) => {
+      //   if (err=='Error: 报表正在生成，请稍后...'){
+      //     if (!that.listLoading) {
+      //       that.listLoading=true;
+      //       that.$rjLoading.show('报表正在生成',that);
+      //     }
+      //     if (!this.isDestroyed){
+      //       setTimeout(() => {
+      //         that.getList();
+      //       }, 10000);
+      //     }
+      //   }
+      // }).finally(() => {
+      //     this.loading = false
+      //   }
+      // );
     },
     getListstorage() {
       this.loading = true
@@ -284,7 +292,11 @@ export default {
     /** 搜索按钮操作 */
     handleQuery() {
       this.queryParams.pageNum = 1
-      this.getList()
+      this.$refs["queryForm"].validate(valid => {
+        if (valid) {
+          this.getList()
+        }
+      });
     },
     /** 重置按钮操作 */
     resetQuery() {

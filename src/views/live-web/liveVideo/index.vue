@@ -393,20 +393,6 @@ export default {
         this.getList()
       })
     },
-    isRecommendFormat(row) {
-      if (row.isRecommend == '1') {
-        return '是'
-      } else {
-        return '否'
-      }
-    },
-    isLivePayFormat(row) {
-      if (row.isLivePay == '1') {
-        return '是'
-      } else {
-        return '否'
-      }
-    },
     typeFormat(row) {
       if (row.cateId == '2') {
         return '性感主播'
@@ -520,7 +506,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         inputType: 'number',
-        inputPlaceholder: '请输入大于0小于200的整数值',
+        inputPlaceholder: '请输入大于0小于100的整数值',
         inputPattern: /^[1-9][0-9]?$/,
         inputErrorMessage: '固定位数据格式不正确，请输入大于0小于100的整数值'
       }).then(({ value }) => {

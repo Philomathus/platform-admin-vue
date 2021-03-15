@@ -168,7 +168,7 @@
           :value="dict.dictValue"
         />
       </el-select>
-      <el-input v-model="remarked" placeholder="请输入备注原因" v-if="this.remark == '其他'"/>
+      <el-input v-model="remarked" placeholder="请输入禁言原因" v-if="this.remark == '其他'"/>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitMuteRemarkSpeak">立即提交</el-button>
       </div>

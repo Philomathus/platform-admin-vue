@@ -168,6 +168,8 @@
       :visible.sync="muteRemark"
       width="400px"
       append-to-body
+      :show-close="false"
+      :close-on-press-escape="false"
     >
       <el-input v-model="id" v-show="false"/>
       <el-input v-model="status" v-show="false"/>
@@ -186,6 +188,7 @@
       </el-select>
       <el-input v-model="remarked" placeholder="请输入禁用原因" v-if="this.remark == '其他'"/>
       <div slot="footer" class="dialog-footer">
+        <el-button @click="cancelUser()">取消</el-button>
         <el-button type="primary" @click="submitMuteRemark">立即提交</el-button>
       </div>
     </el-dialog>
@@ -198,6 +201,8 @@
       :visible.sync="muteRemarkSpeak"
       width="400px"
       append-to-body
+      :show-close="false"
+      :close-on-press-escape="false"
     >
       <el-input v-model="id" v-show="false"/>
       <el-input v-model="speak" v-show="false"/>
@@ -216,6 +221,7 @@
       </el-select>
       <el-input v-model="remarked" placeholder="请输入禁言原因" v-if="this.remark == '其他'"/>
       <div slot="footer" class="dialog-footer">
+        <el-button @click="cancelSpeak()">取消</el-button>
         <el-button type="primary" @click="submitMuteRemarkSpeak">立即提交</el-button>
       </div>
     </el-dialog>
@@ -496,6 +502,16 @@ export default {
         that.getList()
       })
 
+    },
+    //禁用弹窗取消按钮
+    cancelUser(){
+      this.muteRemark = false
+      this.getList();
+    },
+    //禁言弹窗取消按钮
+    cancelSpeak(){
+      this.muteRemarkSpeak = false
+      this.getList();
     },
     // 取消按钮
     cancel() {

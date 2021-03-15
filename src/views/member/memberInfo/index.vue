@@ -408,6 +408,7 @@ export default {
       //打开备注禁用弹框
       if (row.status === 0) {
         this.remark = null
+        this.remarked = null
         this.id = row.id
         this.status = row.status
         this.muteRemark = true
@@ -595,6 +596,7 @@ export default {
         })
       } else {
         this.remark = null
+        this.remarked = null
         this.id = row.id
         this.speak = row.speak
         this.muteRemarkSpeak = true

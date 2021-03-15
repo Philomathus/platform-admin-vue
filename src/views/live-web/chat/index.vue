@@ -445,7 +445,8 @@ export default {
     // },
     //打开备注禁言弹框
     handleForbid(row) {
-        this.remark = null;
+        this.remark = null
+        this.remarked = null
         this.fromPlatform = row.fromPlatform
         this.poscatId = row.poscatId
         this.muteRemarkSpeak = true

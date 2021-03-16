@@ -314,6 +314,7 @@ export default {
       pic: '',
       secretKey: '',
       googleAuthCode: '',
+      googleAuthSecret: '',
       userName: '',
       // 遮罩层
       loading: true,

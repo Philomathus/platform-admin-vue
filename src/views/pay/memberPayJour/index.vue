@@ -382,7 +382,10 @@ export default {
         if (this.form.status == 0) {
           this.form.statusStr = '失败'
           this.open = true
-        } else {
+        } else if (this.form.status == -1) {
+          this.form.statusStr = '待确认'
+          this.open = true
+        }else {
           this.getList()
         }
       })

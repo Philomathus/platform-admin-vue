@@ -171,7 +171,7 @@
         <el-form-item label="请求金额" prop="money">
           <el-input v-model="form.money" readonly/>
         </el-form-item>
-        <el-form-item label="实际到账金额" prop="sub_money">
+        <el-form-item label="实际到账金额" prop="subMoney">
           <el-input v-model="form.subMoney" type="number" placeholder="请输入实际到账金额"/>
         </el-form-item>
         <el-form-item label="google验证码" prop="googleAuthCode">
@@ -249,7 +249,7 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        sub_money: [
+        subMoney: [
           { required: true, message: '实际到账金额不能为空', trigger: 'blur' }
         ],
         googleAuthCode: [

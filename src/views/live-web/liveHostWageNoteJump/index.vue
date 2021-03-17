@@ -151,6 +151,8 @@ export default {
     const selectDate = this.$route.query.selectDate
     if (familyId && familyId >= 0) {
       this.queryParams.familyId = familyId
+    } else {
+      this.queryParams.familyId = null
     }
     if (settlementRate != null) {
       this.queryParams.settlementRate = settlementRate

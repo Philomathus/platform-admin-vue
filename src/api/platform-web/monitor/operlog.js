@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import {url} from '@/utils/url'
+import { url } from '@/utils/url'
 
 // 查询操作日志列表
 export function list(query) {
@@ -31,6 +31,8 @@ export function exportOperlog(query) {
   return request({
     url: url.platformWeb + '/monitor/operlog/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }

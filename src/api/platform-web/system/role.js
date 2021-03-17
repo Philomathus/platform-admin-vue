@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import {url} from '@/utils/url'
+import { url } from '@/utils/url'
 
 // 查询角色列表
 export function listRole(query) {
@@ -71,6 +71,8 @@ export function exportRole(query) {
   return request({
     url: url.platformWeb + '/system/role/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }

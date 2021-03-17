@@ -49,7 +49,9 @@ export function exportSystemIpWhite(query) {
   return request({
     url: url.platformWeb + '/admin/systemIpWhite/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }
 

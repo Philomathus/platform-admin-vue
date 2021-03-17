@@ -128,7 +128,7 @@
             icon="el-icon-edit"
             @click="handlePatchOrder(scope.row)"
             style="color: #FF5722"
-            v-if="scope.row.status == 0"
+            v-if="scope.row.status == 0 || scope.row.status == -1"
             v-hasPermi="['pay:payPlatformNew:patchOrder']"
           >人工补单
           </el-button>
@@ -249,7 +249,7 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        subMoney: [
+        sub_money: [
           { required: true, message: '实际到账金额不能为空', trigger: 'blur' }
         ],
         googleAuthCode: [
@@ -382,7 +382,10 @@ export default {
         if (this.form.status == 0) {
           this.form.statusStr = '失败'
           this.open = true
-        } else {
+        } else if (this.form.status == -1) {
+          this.form.statusStr = '待确认'
+          this.open = true
+        }else {
           this.getList()
         }
       })

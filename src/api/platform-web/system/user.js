@@ -51,7 +51,9 @@ export function exportUser(query) {
   return request({
     url: url.platformWeb + '/system/user/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }
 
@@ -118,14 +120,6 @@ export function uploadAvatar(data) {
     url: url.platformWeb + '/upload/oss/adminAvatar',
     method: 'post',
     data: data
-  })
-}
-
-// 下载用户导入模板
-export function importTemplate() {
-  return request({
-    url: url.platformWeb + '/system/user/importTemplate',
-    method: 'get'
   })
 }
 

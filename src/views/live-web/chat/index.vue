@@ -168,6 +168,7 @@
           :value="dict.dictValue"
         />
       </el-select>
+      <el-input v-model="remarked" placeholder="请输入禁言原因" v-if="this.remark == '其他'"/>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitMuteRemarkSpeak">立即提交</el-button>
       </div>
@@ -263,6 +264,7 @@ export default {
       fromPlatform: '',
       poscatId: '',
       remark: '',
+      remarked: '',
       // 选中数组
       ids: [],
       // 非单个禁用
@@ -443,13 +445,17 @@ export default {
     // },
     //打开备注禁言弹框
     handleForbid(row) {
-        this.remark = null;
+        this.remark = null
+        this.remarked = null
         this.fromPlatform = row.fromPlatform
         this.poscatId = row.poscatId
         this.muteRemarkSpeak = true
     },
     //禁言备注提交
     submitMuteRemarkSpeak() {
+      if(this.remarked != null){
+        this.remark = this.remarked;
+      }
       this.Forbid(this.fromPlatform, this.poscatId, this.remark)
     },
     Forbid(pUserId, videoId, remark) {

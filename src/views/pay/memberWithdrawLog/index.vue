@@ -208,9 +208,9 @@
     />
 
     <!-- 添加或修改会员提现信息对话框 -->
-    <el-dialog v-dialogDrag title="资金明细" :visible.sync="fundsOpen" width="450px" style="max-height:600px; overflow-y: scroll;" append-to-body>
-      <el-table :stripe="true" v-loading="loading" :data="fundsData" @selection-change="handleSelectionChange">
-        <el-table-column label="项目名称" align="center" width="120px" prop="class_twoname"/>
+    <el-dialog title="资金明细" :visible.sync="fundsOpen" width="450px" style="max-height:600px;overflow-y: scroll;" append-to-body>
+      <el-table :stripe="true" v-loading="loading" :data="fundsData" :row-class-name="tableRowClassName">
+        <el-table-column label="项目名称" align="center" width="140" prop="class_twoname"/>
         <el-table-column label="项目值" align="center" prop="t_value"/>
       </el-table>
     </el-dialog>
@@ -286,7 +286,19 @@
     </el-dialog>
   </div>
 </template>
+<style>
+.el-table .warning-row {
+  background: oldlace;
+}
 
+.el-table .success-row {
+  background: #f0f9eb;
+}
+
+.el-table .danger-row {
+  background: #fef0f0;
+}
+</style>
 <script>
 import {
   listMemberWithdrawLog,
@@ -389,6 +401,13 @@ export default {
     this.stopRefresh()
   },
   methods: {
+    tableRowClassName({row, rowIndex}) {
+      console.info(row)
+      if (row.class_twoname === '彩票异常投注次数') {
+        return 'danger-row';
+      }
+      return '';
+    },
     funds(userId) {
       getMemberWithdrawReport(userId).then((res) => {
         this.fundsData = res.data

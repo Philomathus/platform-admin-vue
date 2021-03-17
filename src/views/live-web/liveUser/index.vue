@@ -95,6 +95,7 @@
       <el-table-column label="印票" min-width="120" align="center" prop="ticket"/>
       <el-table-column label="可用印票" min-width="120" align="center" prop="ticket"/>
       <el-table-column label="粉丝" min-width="120" align="center" prop="fansCount"/>
+      <el-table-column label="手机号" min-width="100" align="center" prop="mobile"/>
       <el-table-column label="禁播状态" min-width="120" align="center" prop="isBan">
         <template v-slot="{row}">
           <el-switch

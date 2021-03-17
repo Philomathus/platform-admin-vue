@@ -16,7 +16,8 @@
             v-for="item in ipStatus"
             :key="item.value"
             :label="item.label"
-            :value="item.value">
+            :value="item.value"
+          >
           </el-option>
         </el-select>
       </el-form-item>
@@ -35,7 +36,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:systemIpWhite:add']"
-        >新增</el-button>
+        >新增
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -46,7 +48,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:systemIpWhite:edit']"
-        >修改</el-button>
+        >修改
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -57,7 +60,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:systemIpWhite:remove']"
-        >删除</el-button>
+        >删除
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -67,14 +71,15 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:systemIpWhite:export']"
-        >导出</el-button>
+        >导出
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="systemIpWhiteList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="IP白名单" align="center" prop="ipAddress" />
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="IP白名单" align="center" prop="ipAddress"/>
       <el-table-column label="IP白名单启用状态" align="center" prop="ipStatus">
         <template slot-scope="scope">
           <el-switch
@@ -85,9 +90,9 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="添加管理员" align="center" prop="ipAdmin" />
-      <el-table-column label="备注" align="center" prop="mark" />
-      <el-table-column label="IP登录数量" align="center" prop="ipCount" />
+      <el-table-column label="添加管理员" align="center" prop="ipAdmin"/>
+      <el-table-column label="备注" align="center" prop="mark"/>
+      <el-table-column label="IP登录数量" align="center" prop="ipCount"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -96,14 +101,16 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:systemIpWhite:edit']"
-          >修改</el-button>
+          >修改
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:systemIpWhite:remove']"
-          >删除</el-button>
+          >删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -120,10 +127,10 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="IP白名单" prop="ipAddress">
-          <el-input v-model="form.ipAddress" placeholder="请输入IP白名单" />
+          <el-input v-model="form.ipAddress" placeholder="请输入IP白名单"/>
         </el-form-item>
         <el-form-item label="备注" prop="mark">
-          <el-input v-model="form.mark" placeholder="请输入备注" />
+          <el-input v-model="form.mark" placeholder="请输入备注"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -135,12 +142,19 @@
 </template>
 
 <script>
-import { listSystemIpWhite, getSystemIpWhite, delSystemIpWhite, addSystemIpWhite, updateSystemIpWhite, exportSystemIpWhite,changeStatus } from "@/api/activity/systemIpWhite";
+import {
+  listSystemIpWhite,
+  getSystemIpWhite,
+  delSystemIpWhite,
+  addSystemIpWhite,
+  updateSystemIpWhite,
+  exportSystemIpWhite,
+  changeStatus
+} from '@/api/activity/systemIpWhite'
 
 export default {
-  name: "SystemIpWhite",
-  components: {
-  },
+  name: 'SystemIpWhite',
+  components: {},
   data() {
     return {
       //状态选择栏
@@ -150,7 +164,7 @@ export default {
       }, {
         value: '0',
         label: '禁用'
-     }],
+      }],
       // 遮罩层
       loading: true,
       // 选中数组
@@ -166,7 +180,7 @@ export default {
       // IP白名单表格数据
       systemIpWhiteList: [],
       // 弹出层标题
-      title: "",
+      title: '',
       // 是否显示弹出层
       open: false,
       // 查询参数
@@ -182,22 +196,21 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {
-      }
-    };
+      rules: {}
+    }
   },
   created() {
-    this.getList();
+    this.getList()
   },
   methods: {
     /** 查询IP白名单列表 */
     getList() {
-      this.loading = true;
+      this.loading = true
       listSystemIpWhite(this.queryParams).then(response => {
-        this.systemIpWhiteList = response.rows;
-        this.total = response.total;
-        this.loading = false;
-      });
+        this.systemIpWhiteList = response.rows
+        this.total = response.total
+        this.loading = false
+      })
     },
     // IP白名单状态修改
     handleStatusChange(row) {
@@ -206,114 +219,115 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function () {
+      }).then(function() {
         return changeStatus(row.ipId, row.ipStatus)
       }).then(() => {
         this.msgSuccess(text + '成功')
-      }).catch(function () {
+      }).catch(function() {
         row.ipStatus = row.ipStatus === '0' ? '1' : '0'
       })
     },
     // 取消按钮
     cancel() {
-      this.open = false;
-      this.reset();
+      this.open = false
+      this.reset()
     },
     // 表单重置
     reset() {
       this.form = {
         ipId: null,
         ipAddress: null,
-        ipStatus: "0",
+        ipStatus: '0',
         ipAdmin: null,
         mark: null,
         ipCount: null
-      };
-      this.resetForm("form");
+      }
+      this.resetForm('form')
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNum = 1;
-      this.getList();
+      this.queryParams.pageNum = 1
+      this.getList()
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.resetForm("queryForm");
-      this.handleQuery();
+      this.resetForm('queryForm')
+      this.handleQuery()
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.ipId)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
     handleAdd() {
-      this.reset();
-      this.open = true;
-      this.title = "添加IP白名单";
+      this.reset()
+      this.open = true
+      this.title = '添加IP白名单'
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
-      this.reset();
+      this.reset()
       const ipId = row.ipId || this.ids
       getSystemIpWhite(ipId).then(response => {
-        this.form = response.data;
-        this.open = true;
-        this.title = "修改IP白名单";
-      });
+        this.form = response.data
+        this.open = true
+        this.title = '修改IP白名单'
+      })
     },
     /** 提交按钮 */
     submitForm() {
-      this.$refs["form"].validate(valid => {
+      this.$refs['form'].validate(valid => {
         if (valid) {
           if (this.form.ipId != null) {
             updateSystemIpWhite(this.form).then(response => {
-              this.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
-            });
+              this.msgSuccess('修改成功')
+              this.open = false
+              this.getList()
+            })
           } else {
             addSystemIpWhite(this.form).then(response => {
-              if(response.code == 0){
-                this.msgError(response.msg);
-              }else {
-                this.msgSuccess("新增成功");
-                this.open = false;
-                this.getList();
+              if (response.code == 0) {
+                this.msgError(response.msg)
+              } else {
+                this.msgSuccess('新增成功')
+                this.open = false
+                this.getList()
               }
-            });
+            })
           }
         }
-      });
+      })
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const ipIds = row.ipId || this.ids;
-      this.$confirm('是否确认删除IP白名单编号为"' + ipIds + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return delSystemIpWhite(ipIds);
-        }).then(() => {
-          this.getList();
-          this.msgSuccess("删除成功");
-        })
+      const ipIds = row.ipId || this.ids
+      this.$confirm('是否确认删除IP白名单编号为"' + ipIds + '"的数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return delSystemIpWhite(ipIds)
+      }).then(() => {
+        this.getList()
+        this.msgSuccess('删除成功')
+      })
     },
     /** 导出按钮操作 */
     handleExport() {
-      const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有IP白名单数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return exportSystemIpWhite(queryParams);
-        }).then(response => {
-          this.download(response.msg);
-        })
+      const queryParams = this.queryParams
+      this.$confirm('是否确认导出所有IP白名单数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return exportSystemIpWhite(queryParams)
+      }).then(response => {
+        this.downloadExcel(response, 'IP白名单')
+      }).catch(() => {
+      })
     }
   }
-};
+}
 </script>

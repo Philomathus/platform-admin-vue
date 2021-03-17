@@ -18,28 +18,19 @@
           style="width: 60px;"
         />
       </el-form-item>
-      <el-form-item prop="familyId" style="width: 150px">
+      <el-form-item prop="hostId" style="width: 150px">
         <el-input
-          v-model="queryParams.familyId"
-          placeholder="家族ID"
+          v-model="queryParams.hostId"
+          placeholder="主播ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="familyName" style="width: 150px">
+      <el-form-item prop="nickName" style="width: 150px">
         <el-input
-          v-model="queryParams.familyName"
-          placeholder="家族名称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item prop="familyNickName" style="width: 150px">
-        <el-input
-          v-model="queryParams.familyNickName"
-          placeholder="族长昵称"
+          v-model="queryParams.nickName"
+          placeholder="主播昵称"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -63,33 +54,31 @@
         >导出
         </el-button>
       </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-crop"
-          size="mini"
-          @click="familyShow()"
-        >所有主播
-        </el-button>
-      </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table id="out-table" stripe v-loading="loading" :data="liveHostWageNoteList"
     >
-      <el-table-column label="家族ID" align="center" prop="familyId" min-width="100">
-        <template v-slot="{row}">
-          <a style="color: #00afff" @click="familyShow(row.familyId)">{{ row.familyId }}</a>
+      <el-table-column label="主播ID" align="center" prop="hostId" min-width="100"/>
+      <el-table-column label="主播昵称" :show-overflow-tooltip="true" align="center" prop="nickName" min-width="120"/>
+      <el-table-column label="家族ID" align="center" prop="familyId" min-width="80">
+        <template slot-scope="scope">
+          <span v-if="scope.row.familyId === 0">{{ scope.row.familyId }}</span>
+          <el-popover
+            v-else
+            placement="top"
+            :title="scope.row.familyName"
+            width="200"
+            trigger="click"
+          >
+            <div>家族ID：{{ scope.row.familyId }}</div>
+            <div>家族长ID：{{ scope.row.familyUserId }}</div>
+            <div>家族长昵称：{{ scope.row.familyNickName }}</div>
+            <a slot="reference" style="color: #00afff">{{ scope.row.familyId }}</a>
+          </el-popover>
         </template>
       </el-table-column>
-      <el-table-column label="家族名称" align="center" prop="familyName" min-width="120">
-        <template v-slot="{row}">
-          <span v-if="row.familyId === 0">直播家族散户(未入家族)</span>
-          <span v-else>{{ row.familyName }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="族长昵称" align="center" prop="familyNickName" min-width="100"/>
+      <el-table-column label="家族名称" :show-overflow-tooltip="true" align="center" prop="familyName" min-width="150"/>
       <el-table-column label="直播总时长(小时)" align="center" prop="alltimeDes" min-width="100"/>
       <el-table-column label="直播礼物总结算" align="center" prop="allticket" min-width="100"/>
       <el-table-column label="直播礼物折扣结算" align="center" prop="allticketRes" min-width="100"/>
@@ -110,8 +99,8 @@
 
 <script>
 import {
-  listFamilyWageNotePage,
-  exportFamilyWageNote
+  listHostWageNotePage,
+  exportHostWageNote
 } from '@/api/live-web/liveHostWageNote'
 import { pickerDateShortcuts } from '@/utils/dateUtils'
 
@@ -142,9 +131,8 @@ export default {
       // 查询参数
       queryParams: {
         selectDate: [this.parseTime(new Date, '{y}-{m}-{d}'), this.parseTime(new Date, '{y}-{m}-{d}')],
-        familyName: null,
-        familyNickName: null,
-        familyId: null,
+        nickName: null,
+        hostId: null,
         settlementRate: 0.7,
         pageNum: 1,
         pageSize: 20
@@ -156,23 +144,27 @@ export default {
     }
   },
   created() {
+  },
+  activated() {
+    const familyId = this.$route.query.familyId
+    const settlementRate = this.$route.query.settlementRate
+    const selectDate = this.$route.query.selectDate
+    if (familyId && familyId >= 0) {
+      this.queryParams.familyId = familyId
+    }
+    if (settlementRate != null) {
+      this.queryParams.settlementRate = settlementRate
+    }
+    if (selectDate != null) {
+      this.queryParams.selectDate = selectDate
+    }
     this.getList()
   },
   methods: {
-    familyShow(familyId) {
-      this.$router.push({
-        path: '/live/live/liveHostWageNoteJump',
-        query: {
-          familyId: familyId,
-          settlementRate: this.queryParams.settlementRate,
-          selectDate: this.queryParams.selectDate
-        }
-      })
-    },
     /** 查询主播时长列表 */
     getList() {
       this.loading = true
-      listFamilyWageNotePage(this.queryParams).then(response => {
+      listHostWageNotePage(this.queryParams).then(response => {
         this.liveHostWageNoteList = response.rows
         this.total = response.total
         this.loading = false
@@ -186,10 +178,8 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        id: null,
-        familyName: null,
-        familyNickName: null,
-        familyId: null
+        nickName: null,
+        hostId: null
       }
       this.resetForm('form')
     },
@@ -211,9 +201,9 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function() {
-        return exportFamilyWageNote(queryParams)
+        return exportHostWageNote(queryParams)
       }).then(response => {
-        this.downloadExcel(response, '家族直播时长')
+        this.downloadExcel(response, '主播时长')
       }).catch(() => {
       })
     }

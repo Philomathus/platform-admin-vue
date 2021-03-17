@@ -168,6 +168,8 @@
       :visible.sync="muteRemark"
       width="400px"
       append-to-body
+      :show-close="false"
+      :close-on-press-escape="false"
     >
       <el-input v-model="id" v-show="false"/>
       <el-input v-model="status" v-show="false"/>
@@ -184,7 +186,9 @@
           :value="dict.dictValue"
         />
       </el-select>
+      <el-input v-model="remarked" placeholder="请输入禁用原因" v-if="this.remark == '其他'"/>
       <div slot="footer" class="dialog-footer">
+        <el-button @click="cancelUser()">取消</el-button>
         <el-button type="primary" @click="submitMuteRemark">立即提交</el-button>
       </div>
     </el-dialog>
@@ -197,6 +201,8 @@
       :visible.sync="muteRemarkSpeak"
       width="400px"
       append-to-body
+      :show-close="false"
+      :close-on-press-escape="false"
     >
       <el-input v-model="id" v-show="false"/>
       <el-input v-model="speak" v-show="false"/>
@@ -213,7 +219,9 @@
           :value="dict.dictValue"
         />
       </el-select>
+      <el-input v-model="remarked" placeholder="请输入禁言原因" v-if="this.remark == '其他'"/>
       <div slot="footer" class="dialog-footer">
+        <el-button @click="cancelSpeak()">取消</el-button>
         <el-button type="primary" @click="submitMuteRemarkSpeak">立即提交</el-button>
       </div>
     </el-dialog>
@@ -328,6 +336,7 @@ export default {
       speak: '',
       status: '',
       remark: '',
+      remarked: '',
       // 选中数组
       ids: [],
       // 非单个禁用
@@ -405,6 +414,7 @@ export default {
       //打开备注禁用弹框
       if (row.status === 0) {
         this.remark = null
+        this.remarked = null
         this.id = row.id
         this.status = row.status
         this.muteRemark = true
@@ -425,6 +435,9 @@ export default {
     },
     //禁用备注提交
     submitMuteRemark(row) {
+      if(this.remarked != null){
+        this.remark = this.remarked;
+      }
       changeStatusBan(this.id, this.status, this.remark).then((res) => {
         if (res.code === 0) {
           this.$notify.success('状态修改成功')
@@ -489,6 +502,16 @@ export default {
         that.getList()
       })
 
+    },
+    //禁用弹窗取消按钮
+    cancelUser(){
+      this.muteRemark = false
+      this.getList();
+    },
+    //禁言弹窗取消按钮
+    cancelSpeak(){
+      this.muteRemarkSpeak = false
+      this.getList();
     },
     // 取消按钮
     cancel() {
@@ -588,7 +611,8 @@ export default {
           this.msgSuccess('解禁成功')
         })
       } else {
-        this.reset()
+        this.remark = null
+        this.remarked = null
         this.id = row.id
         this.speak = row.speak
         this.muteRemarkSpeak = true
@@ -596,6 +620,9 @@ export default {
     },
     //禁言备注提交
     submitMuteRemarkSpeak() {
+      if(this.remarked != null){
+        this.remark = this.remarked;
+      }
       changeSpeak(this.id, this.speak, this.remark).then(response => {
         this.msgSuccess('禁言成功')
         this.muteRemarkSpeak = false

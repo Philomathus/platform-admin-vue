@@ -57,7 +57,9 @@ export function exportType(query) {
   return request({
     url: url.platformWeb + '/system/dict/type/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }
 

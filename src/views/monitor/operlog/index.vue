@@ -81,7 +81,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['monitor:operlog:remove']"
-        >删除</el-button>
+        >删除
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -91,7 +92,8 @@
           size="mini"
           @click="handleClean"
           v-hasPermi="['monitor:operlog:remove']"
-        >清空</el-button>
+        >清空
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -101,21 +103,22 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['system:config:export']"
-        >导出</el-button>
+        >导出
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="日志编号" align="center" prop="operId" />
-      <el-table-column label="系统模块" align="center" prop="title" />
-      <el-table-column label="操作类型" align="center" prop="businessType" :formatter="typeFormat" />
-      <el-table-column label="请求方式" align="center" prop="requestMethod" />
-      <el-table-column label="操作人员" align="center" prop="operName" />
-      <el-table-column label="主机" align="center" prop="operIp" width="130" :show-overflow-tooltip="true" />
-      <el-table-column label="操作地点" align="center" prop="operLocation" :show-overflow-tooltip="true" />
-      <el-table-column label="操作状态" align="center" prop="status" :formatter="statusFormat" />
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="日志编号" align="center" prop="operId"/>
+      <el-table-column label="系统模块" align="center" prop="title"/>
+      <el-table-column label="操作类型" align="center" prop="businessType" :formatter="typeFormat"/>
+      <el-table-column label="请求方式" align="center" prop="requestMethod"/>
+      <el-table-column label="操作人员" align="center" prop="operName"/>
+      <el-table-column label="主机" align="center" prop="operIp" width="130" :show-overflow-tooltip="true"/>
+      <el-table-column label="操作地点" align="center" prop="operLocation" :show-overflow-tooltip="true"/>
+      <el-table-column label="操作状态" align="center" prop="status" :formatter="statusFormat"/>
       <el-table-column label="操作日期" align="center" prop="operTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.operTime) }}</span>
@@ -129,7 +132,8 @@
             icon="el-icon-view"
             @click="handleView(scope.row,scope.index)"
             v-hasPermi="['monitor:operlog:query']"
-          >详细</el-button>
+          >详细
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -150,7 +154,8 @@
             <el-form-item label="操作模块：">{{ form.title }} / {{ typeFormat(form) }}</el-form-item>
             <el-form-item
               label="登录信息："
-            >{{ form.operName }} / {{ form.operIp }} / {{ form.operLocation }}</el-form-item>
+            >{{ form.operName }} / {{ form.operIp }} / {{ form.operLocation }}
+            </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="请求地址：">{{ form.operUrl }}</el-form-item>
@@ -187,10 +192,10 @@
 </template>
 
 <script>
-import { list, delOperlog, cleanOperlog, exportOperlog } from "@/api/platform-web/monitor/operlog";
+import { list, delOperlog, cleanOperlog, exportOperlog } from '@/api/platform-web/monitor/operlog'
 
 export default {
-  name: "Operlog",
+  name: 'Operlog',
   data() {
     return {
       // 遮罩层
@@ -224,46 +229,46 @@ export default {
         businessType: undefined,
         status: undefined
       }
-    };
+    }
   },
   created() {
-    this.getList();
-    this.getDicts("sys_oper_type").then(response => {
-      this.typeOptions = response.data;
-    });
-    this.getDicts("sys_common_status").then(response => {
-      this.statusOptions = response.data;
-    });
+    this.getList()
+    this.getDicts('sys_oper_type').then(response => {
+      this.typeOptions = response.data
+    })
+    this.getDicts('sys_common_status').then(response => {
+      this.statusOptions = response.data
+    })
   },
   methods: {
     /** 查询登录日志 */
     getList() {
-      this.loading = true;
-      list(this.addDateRange(this.queryParams, this.dateRange)).then( response => {
-          this.list = response.rows;
-          this.total = response.total;
-          this.loading = false;
+      this.loading = true
+      list(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
+          this.list = response.rows
+          this.total = response.total
+          this.loading = false
         }
-      );
+      )
     },
     // 操作日志状态字典翻译
     statusFormat(row, column) {
-      return this.selectDictLabel(this.statusOptions, row.status);
+      return this.selectDictLabel(this.statusOptions, row.status)
     },
     // 操作日志类型字典翻译
     typeFormat(row, column) {
-      return this.selectDictLabel(this.typeOptions, row.businessType);
+      return this.selectDictLabel(this.typeOptions, row.businessType)
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNum = 1;
-      this.getList();
+      this.queryParams.pageNum = 1
+      this.getList()
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.dateRange = [];
-      this.resetForm("queryForm");
-      this.handleQuery();
+      this.dateRange = []
+      this.resetForm('queryForm')
+      this.handleQuery()
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
@@ -272,50 +277,52 @@ export default {
     },
     /** 详细按钮操作 */
     handleView(row) {
-      this.open = true;
-      this.form = row;
+      this.open = true
+      this.form = row
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const operIds = row.operId || this.ids;
-      this.$confirm('是否确认删除日志编号为"' + operIds + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return delOperlog(operIds);
-        }).then(() => {
-          this.getList();
-          this.msgSuccess("删除成功");
-        })
+      const operIds = row.operId || this.ids
+      this.$confirm('是否确认删除日志编号为"' + operIds + '"的数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return delOperlog(operIds)
+      }).then(() => {
+        this.getList()
+        this.msgSuccess('删除成功')
+      })
     },
     /** 清空按钮操作 */
     handleClean() {
-        this.$confirm('是否确认清空所有操作日志数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return cleanOperlog();
-        }).then(() => {
-          this.getList();
-          this.msgSuccess("清空成功");
-        })
+      this.$confirm('是否确认清空所有操作日志数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return cleanOperlog()
+      }).then(() => {
+        this.getList()
+        this.msgSuccess('清空成功')
+      }).catch(() => {
+      })
     },
     /** 导出按钮操作 */
     handleExport() {
-      const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有操作日志数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return exportOperlog(queryParams);
-        }).then(response => {
-          this.download(response.msg);
-        })
+      const queryParams = this.queryParams
+      this.$confirm('是否确认导出所有操作日志数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return exportOperlog(queryParams)
+      }).then(response => {
+        this.downloadExcel(response, '操作日志')
+      }).catch(() => {
+      })
     }
   }
-};
+}
 </script>
 

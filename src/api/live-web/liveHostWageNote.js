@@ -19,6 +19,15 @@ export function listHostWageNotePage(query) {
   })
 }
 
+// 查询主播统计时长明细列表
+export function listHostWageNoteDetailsPage(query) {
+  return request({
+    url: url.platformWeb + '/admin/liveHostWageNote/list',
+    method: 'get',
+    params: query
+  })
+}
+
 // 导出家族直播时长
 export function exportFamilyWageNote(query) {
   return request({

@@ -92,7 +92,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table :stripe="true" v-loading="loading" :data="memberPayJourList">
+    <el-table :stripe="true" v-loading="loading" :data="memberPayJourList" :highlight-current-row="true">
       <el-table-column label="会员ID" min-width="120" align="center" prop="memberId"/>
       <el-table-column label="会员账号" min-width="120" align="center" prop="userName"/>
       <el-table-column label="订单号" min-width="190" align="center" prop="orderNo"/>
@@ -217,10 +217,6 @@ export default {
       },
       // 遮罩层
       loading: true,
-      // 非单个禁用
-      single: true,
-      // 非多个禁用
-      multiple: true,
       // 显示搜索条件
       showSearch: true,
       // 总条数
@@ -259,8 +255,6 @@ export default {
     }
   },
   created() {
-    this.getList()
-    this.listCount()
     //支付平台
     platforms().then(response => {
       this.payPlatformOptions = response.data
@@ -268,6 +262,8 @@ export default {
     this.getDicts('pay_jour_status').then(response => {
       this.statusOptions = response.data
     })
+    this.getList()
+    this.listCount()
   },
   activated() {
     this.refreshType = 'primary'
@@ -306,10 +302,6 @@ export default {
         this.loading = false
       })
 
-    },
-    // 状态(1 成功0失败 -1待确认)字典翻译
-    statusFormat(row, column) {
-      return this.selectDictLabel(this.statusOptions, row.status)
     },
     // 取消按钮
     cancel() {

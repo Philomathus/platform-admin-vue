@@ -97,7 +97,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table :stripe="true" v-loading="loading" :data="memberRechargeLogList">
+    <el-table :stripe="true" v-loading="loading" :data="memberRechargeLogList" :highlight-current-row="true">
       <el-table-column label="复制" align="center" >
         <template slot-scope="scope">
           <el-button

@@ -177,6 +177,17 @@ export default {
     this.getList()
     this.getCount()
   },
+  activated(){
+    var userId = this.$route.query.userId
+    var createTime = this.$route.query.createTime
+    if (createTime) {
+      this.queryParams.account = userId
+      this.queryParams.selectDate[0] = createTime
+      this.queryParams.selectDate[1] = this.parseTime(this.getTodayEndTime())
+    }
+    this.getList()
+    this.getCount()
+  },
   methods: {
     // 0:未洗码1已经洗码
     formatterStatus(row) {

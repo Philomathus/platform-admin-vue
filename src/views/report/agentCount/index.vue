@@ -1,21 +1,11 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px" :rules="queryRule">
-      <el-form-item label="日期选择" prop="reptime">
-        <el-date-picker
-          v-model="queryParams.dateRange"
-          size="small"
-          style="width: 240px"
-          value-format="yyyy-MM-dd"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-          placeholder="请选择日期选择"
-          :picker-options="pickerOptions"
+      <el-form-item label="日期选择" prop="agenttime">
+        <el-date-picker v-model="queryParams.agenttime" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
+                        :style="{width: '100%'}" placeholder="请选择日期选择" clearable :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
-
       <el-form-item prop="agentcode">
         <el-input
           v-model="queryParams.agentcode"
@@ -155,8 +145,8 @@ import {
   addPromotionCode,
   delPromotionCode
 } from '@/api/platform-web/report/agentCount'
-import {getYesterDate} from '@/utils/dateUtils'
-import {pickerDateShortcuts} from "@/utils/dateUtils";
+import { getYesterDate } from '@/utils/dateUtils'
+import {toyesDayshortcuts} from "@/utils/dateUtils";
 
 export default {
   name: 'Agent',
@@ -164,7 +154,7 @@ export default {
   data() {
     return {
       //日期快捷
-      pickerOptions: {shortcuts: pickerDateShortcuts},
+      pickerOptions: {shortcuts: toyesDayshortcuts},
       interval: {listTime: null},
       // 遮罩层
       listLoading: false,
@@ -199,7 +189,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 20,
-        dateRange: [this.parseTime(getYesterDate(), '{y}-{m}-{d}'), this.parseTime(getYesterDate(), '{y}-{m}-{d}')],
+        agenttime:this.parseTime(getYesterDate(), '{y}-{m}-{d}'),
         agentcode: null
       },
       queryRule:{

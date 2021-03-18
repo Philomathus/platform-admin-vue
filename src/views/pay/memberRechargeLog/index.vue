@@ -124,10 +124,10 @@
       <el-table-column label="用户下单时间" align="center" prop="createTime" width="160"/>
       <el-table-column label="最后修改时间" align="center" prop="updateTime" width="160"/>
       <el-table-column label="备注" :show-overflow-tooltip="true" align="center" prop="remark" width="160"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right" width="180">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right" width="240">
         <template slot-scope="scope">
           <el-button
-            size="mini"
+            size="small"
             type="primary"
             plain
             icon="el-icon-unlock"
@@ -137,33 +137,30 @@
           >初审
           </el-button>
           <el-button
-            size="mini"
+            size="small"
             type="success"
             plain
             icon="el-icon-check"
-            style="color: #5FB878"
             v-if="scope.row.status == 1"
             @click="handleFinalAudit(scope.row)"
             v-hasPermi="['pay:memberRechargeLog:finalAudit']"
           >终审通过
           </el-button>
           <el-button
-            size="mini"
+            size="small"
             type="danger"
             plain
             icon="el-icon-close"
-            style="color: #FF5722"
             v-if="scope.row.status == 0 || scope.row.status == 1"
             @click="handleRefusedAudit(scope.row)"
             v-hasPermi="['pay:memberRechargeLog:refusedAudit']"
           >审核不通过
           </el-button>
           <el-button
-            size="mini"
+            size="small"
             type="info"
             plain
             icon="el-icon-refresh-right"
-            style="color: #FFB800"
             v-if="scope.row.status == 2 || scope.row.status == 4"
             @click="handleRecoverAudit(scope.row)"
             v-hasPermi="['pay:memberRechargeLog:recoverAudit']"

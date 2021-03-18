@@ -14,36 +14,16 @@
                         end-placeholder="结束时间" range-separator="至" clearable :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item label="会员账号" prop="searchValue">
+      <el-form-item prop="searchValue">
         <el-input
           v-model="queryParams.searchValue"
-          placeholder="请输入会员账号"
+          placeholder="会员ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-<!--      <el-form-item label="行为类型" prop="types">-->
-<!--        <el-select v-model="queryParams.types" multiple placeholder="请选择行为类型(可多选)" clearable size="small">-->
-<!--          <el-option-->
-<!--            v-for="item in typeOptions"-->
-<!--            :key="item.type"-->
-<!--            :label="item.des"-->
-<!--            :value="item.type">-->
-<!--          </el-option>-->
-<!--        </el-select>-->
-<!--      </el-form-item>-->
-
-<!--      <el-form-item label="创建时间" prop="createTime">
-        <el-date-picker clearable size="small"
-                        v-model="queryParams.createTime"
-                        type="date"
-                        value-format="yyyy-MM-dd"
-                        placeholder="选择创建时间"
-        >
-        </el-date-picker>
-      </el-form-item>-->
-      <el-form-item label="入款备注" prop="mark">
+      <el-form-item prop="mark">
         <el-select v-model="queryParams.mark" placeholder="请选择入款备注" clearable size="small">
           <el-option
             v-for="dict in markOptions"
@@ -141,7 +121,7 @@ export default {
         selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
         pageNum: 1,
         pageSize: 20,
-        orderByColumn: 'create_time',
+        orderByColumn: 'a.create_time',
         isAsc: 'desc',
         userId: null,
         userName: null,

@@ -77,7 +77,7 @@ export default {
       }
     }
   },
-  created() {
+  activated() {
     var begindate = this.$route.query.begindate;
     var gameplame = this.$route.query.gameplame;
     if(gameplame!=null) {

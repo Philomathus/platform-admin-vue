@@ -39,6 +39,7 @@
           min="0"
           size="small"
           style="width: 80px"
+          oninput="value=value.replace(/[^\d]/g, '')"
           @keyup.enter.native="handleQuery"
         />
         -
@@ -50,6 +51,7 @@
           min="0"
           size="small"
           style="width: 80px"
+          oninput="value=value.replace(/[^\d]/g, '')"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>

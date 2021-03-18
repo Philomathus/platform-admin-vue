@@ -99,8 +99,9 @@
       }
     },
     created() {
+    },
+    activated(){
       this.getList()
-
     },
     destroyed() {
       this.isDestroyed = true

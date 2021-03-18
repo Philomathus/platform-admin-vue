@@ -140,9 +140,10 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
-            size="mini"
-            type="text"
+            type="primary"
+            plain
             icon="el-icon-menu"
+            size="small"
             @click="handleMore(scope.row)"
             v-hasPermi="['member:memberInfo:query']"
           >更多

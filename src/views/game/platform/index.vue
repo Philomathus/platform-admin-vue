@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="代理" prop="agent">
+      <el-form-item label="代理号" prop="agent">
         <el-input
           v-model="queryParams.agent"
-          placeholder="请输入代理"
+          placeholder="请输入代理号"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"

@@ -72,23 +72,23 @@
       </el-col>
       <el-col :span="10" style="margin-left: 10px">
         <span style="font-size: 16px;margin-right: 10px">记录刷新</span>
-          <el-select v-model="refreshSec" placeholder="时间间隔" style="width: 110px">
-            <el-option value="5" label="5秒"></el-option>
-            <el-option value="10" label="10秒"></el-option>
-            <el-option value="15" label="15秒"></el-option>
-            <el-option value="20" label="20秒"></el-option>
-            <el-option value="30" label="30秒"></el-option>
-          </el-select>
-          <div style="width: 120px;display: inline-block;text-align: center">
-            <span>{{ refreshDesc }}</span>
-          </div>
-          <el-button :type="refreshType" :icon="refreshIcon" size="mini" @click="refreshData">{{ refreshLabel }}</el-button>
+        <el-select v-model="refreshSec" placeholder="时间间隔" style="width: 110px">
+          <el-option value="5" label="5秒"></el-option>
+          <el-option value="10" label="10秒"></el-option>
+          <el-option value="15" label="15秒"></el-option>
+          <el-option value="20" label="20秒"></el-option>
+          <el-option value="30" label="30秒"></el-option>
+        </el-select>
+        <div style="width: 120px;display: inline-block;text-align: center">
+          <span>{{ refreshDesc }}</span>
+        </div>
+        <el-button :type="refreshType" :icon="refreshIcon" size="mini" @click="refreshData">{{ refreshLabel }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table :stripe="true" v-loading="loading" :data="memberWithdrawLogList"
-              @selection-change="handleSelectionChange"
+              :highlight-current-row="true"
     >
       <el-table-column label="复制" align="center">
         <template slot-scope="scope">
@@ -286,19 +286,6 @@
     </el-dialog>
   </div>
 </template>
-<style>
-.el-table .warning-row {
-  background: oldlace;
-}
-
-.el-table .success-row {
-  background: #f0f9eb;
-}
-
-.el-table .danger-row {
-  background: #fef0f0;
-}
-</style>
 <script>
 import {
   listMemberWithdrawLog,
@@ -331,12 +318,6 @@ export default {
       totalData: {},
       // 遮罩层
       loading: true,
-      // 选中数组
-      ids: [],
-      // 非单个禁用
-      single: true,
-      // 非多个禁用
-      multiple: true,
       // 显示搜索条件
       showSearch: true,
       // 总条数
@@ -383,14 +364,14 @@ export default {
     }
   },
   created() {
-    this.getList()
-    this.getCountTotal()
     this.getDicts('withdraw_log_status').then(response => {
       this.statusOptions = response.data
     })
     this.getDicts('first').then(response => {
       this.firstOptions = response.data
     })
+    this.getList()
+    this.getCountTotal()
   },
   activated() {
     this.refreshType = 'primary'
@@ -401,12 +382,11 @@ export default {
     this.stopRefresh()
   },
   methods: {
-    tableRowClassName({row, rowIndex}) {
-      console.info(row)
+    tableRowClassName({ row, rowIndex }) {
       if (row.class_twoname === '彩票异常投注次数') {
-        return 'danger-row';
+        return 'danger-row'
       }
-      return '';
+      return ''
     },
     funds(userId) {
       getMemberWithdrawReport(userId).then((res) => {
@@ -440,10 +420,6 @@ export default {
         this.total = response.total
         this.loading = false
       })
-    },
-    // 状态(0申请中1锁定2审核不通过3人工入款成功 4代付中5代付失败6代付成功)字典翻译
-    statusFormat(row, column) {
-      return this.selectDictLabel(this.statusOptions, row.status)
     },
     // 是否首次1是0否字典翻译
     firstFormat(row, column) {
@@ -509,12 +485,6 @@ export default {
         type: 'success'
       })
       oInput.remove()
-    },
-    // 多选框选中数据
-    handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
-      this.single = selection.length !== 1
-      this.multiple = !selection.length
     },
     /** 提交按钮 */
     submitForm() {

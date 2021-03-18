@@ -43,6 +43,15 @@
           <el-option label="审核不通过" value="3"></el-option>
         </el-select>
       </el-form-item>
+      <el-form-item prop="mobile" style="width: 150px">
+        <el-input
+          v-model="queryParams.familyId"
+          placeholder="家族ID"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -251,6 +260,7 @@ export default {
         nickName: null,
         isAuthentication: null,
         mobile: null,
+        familyId: null,
         orderByColumn: 'create_time',
         isAsc: 'desc'
       },
@@ -268,7 +278,10 @@ export default {
     }
   },
   created() {
-    this.getList()
+    this.init()
+  },
+  activated() {
+    this.init()
   },
   watch: {
     selectDate: function(newVal, oldVal) {
@@ -282,6 +295,15 @@ export default {
     }
   },
   methods: {
+    init(){
+      const familyId = this.$route.query.familyId
+      if (familyId && familyId >= 0) {
+        this.queryParams.familyId = familyId
+      } else {
+        this.queryParams.familyId = null
+      }
+      this.getList()
+    },
     //修改禁播状态
     displayCheck(row) {
       if (parseInt(row.isBan)) {

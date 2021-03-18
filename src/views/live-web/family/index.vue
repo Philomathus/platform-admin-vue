@@ -41,7 +41,11 @@
     </el-row>
 
     <el-table stripe v-loading="loading" :data="liveFamilyList">
-      <el-table-column label="ID" min-width="120" align="center" prop="id"/>
+      <el-table-column label="ID" min-width="120" align="center" prop="id">
+        <template v-slot="{row}">
+          <a style="color: #00afff" @click="familyShow(row.id)">{{ row.id }}</a>
+        </template>
+      </el-table-column>
       <!--      <el-table-column label="家族LOGO" align="center" prop="logo"/>
             <el-table-column label="图标" align="center" prop="logo">
               <template slot-scope="scope">
@@ -177,6 +181,14 @@ export default {
     this.getList()
   },
   methods: {
+    familyShow(familyId) {
+      this.$router.push({
+        path: '/live/live/liveUser',
+        query: {
+          familyId: familyId
+        }
+      })
+    },
     /** 查询家族列表 */
     getList() {
       this.loading = true

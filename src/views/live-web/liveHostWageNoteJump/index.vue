@@ -59,7 +59,11 @@
 
     <el-table id="out-table" stripe v-loading="loading" :data="liveHostWageNoteList"
     >
-      <el-table-column label="主播ID" align="center" prop="hostId" min-width="100"/>
+      <el-table-column label="主播ID" align="center" prop="hostId" min-width="100">
+        <template slot-scope="scope">
+          <a style="color: #00afff" @click="openQuerDetails(scope.row)">{{ scope.row.hostId }}</a>
+        </template>
+      </el-table-column>
       <el-table-column label="主播昵称" :show-overflow-tooltip="true" align="center" prop="nickName" min-width="120"/>
       <el-table-column label="家族ID" align="center" prop="familyId" min-width="80">
         <template slot-scope="scope">
@@ -71,9 +75,20 @@
             width="200"
             trigger="click"
           >
-            <div>家族ID：{{ scope.row.familyId }}</div>
-            <div>家族长ID：{{ scope.row.familyUserId }}</div>
-            <div>家族长昵称：{{ scope.row.familyNickName }}</div>
+            <table>
+              <tr>
+                <td style="text-align: right">家 族 ID：</td>
+                <td style="text-align: left">{{ scope.row.familyId }}</td>
+              </tr>
+              <tr>
+                <td style="text-align: right">家 族 长 ID：</td>
+                <td style="text-align: left">{{ scope.row.familyUserId }}</td>
+              </tr>
+              <tr>
+                <td style="text-align: right">家族长昵称：</td>
+                <td style="text-align: left">{{ scope.row.familyNickName }}</td>
+              </tr>
+            </table>
             <a slot="reference" style="color: #00afff">{{ scope.row.familyId }}</a>
           </el-popover>
         </template>
@@ -94,13 +109,53 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
+
+    <!--主播时长详情-->
+    <el-dialog :close-on-click-modal="false" title="主播时长详情" :visible.sync="open"
+               width="1250px" append-to-body
+    >
+      <el-form :model="queryDetailsParams" ref="queryDetailsParams" :inline="true" label-width="68px">
+        <el-form-item label="日期范围" prop="selectDate">
+          <el-date-picker type="daterange" v-model="queryDetailsParams.selectDate" format="yyyy-MM-dd"
+                          value-format="yyyy-MM-dd" start-placeholder="开始日期"
+                          end-placeholder="结束日期"
+                          range-separator="至" clearable :picker-options="pickerOptions"
+                          style="width: 250px"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuerDetails">搜索</el-button>
+        </el-form-item>
+      </el-form>
+
+      <el-table :stripe="true" v-loading="loading" :data="detailsList">
+        <el-table-column label="主播ID" align="center" prop="hostId" min-width="100"/>
+        <el-table-column label="主播昵称" show-overflow-tooltip align="center" prop="nickName" min-width="120"/>
+        <el-table-column label="直播开始时间" align="center" prop="startTime" width="160"/>
+        <el-table-column label="直播结束时间" align="center" prop="endTime" width="160"/>
+        <el-table-column label="直播时长（小时）" align="center" prop="liveTimeSec" width="130"/>
+        <el-table-column label="主播直播结算印票" align="center" prop="ticket" width="130"/>
+        <el-table-column label="彩票投注" align="center" prop="cpCost" min-width="120"/>
+        <el-table-column label="彩票派奖" align="center" prop="cpPrize" min-width="120"/>
+        <el-table-column label="创建日期" align="center" prop="createTimes" width="160"/>
+      </el-table>
+      <pagination
+        v-show="detailsTotal>0"
+        :total="detailsTotal"
+        :page-sizes="[10,20,100]"
+        :page.sync="queryDetailsParams.pageNum"
+        :limit.sync="queryDetailsParams.pageSize"
+        @pagination="getDetailsList"
+      />
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import {
   listHostWageNotePage,
-  exportHostWageNote
+  exportHostWageNote,
+  listHostWageNoteDetailsPage
 } from '@/api/live-web/liveHostWageNote'
 import { pickerDateShortcuts } from '@/utils/dateUtils'
 
@@ -137,6 +192,13 @@ export default {
         pageNum: 1,
         pageSize: 20
       },
+      detailsList: [],
+      detailsTotal: 0,
+      queryDetailsParams: {
+        selectDate: [this.parseTime(new Date, '{y}-{m}-{d}'), this.parseTime(new Date, '{y}-{m}-{d}')],
+        pageNum: 1,
+        pageSize: 20
+      },
       // 表单参数
       form: {},
       // 表单校验
@@ -144,31 +206,43 @@ export default {
     }
   },
   created() {
+    this.init()
   },
   activated() {
-    const familyId = this.$route.query.familyId
-    const settlementRate = this.$route.query.settlementRate
-    const selectDate = this.$route.query.selectDate
-    if (familyId && familyId >= 0) {
-      this.queryParams.familyId = familyId
-    } else {
-      this.queryParams.familyId = null
-    }
-    if (settlementRate != null) {
-      this.queryParams.settlementRate = settlementRate
-    }
-    if (selectDate != null) {
-      this.queryParams.selectDate = selectDate
-    }
-    this.getList()
+    this.init()
   },
   methods: {
+    init() {
+      const familyId = this.$route.query.familyId
+      const settlementRate = this.$route.query.settlementRate
+      const selectDate = this.$route.query.selectDate
+      if (familyId && familyId >= 0) {
+        this.queryParams.familyId = familyId
+      } else {
+        this.queryParams.familyId = null
+      }
+      if (settlementRate != null) {
+        this.queryParams.settlementRate = settlementRate
+      }
+      if (selectDate != null) {
+        this.queryParams.selectDate = selectDate
+      }
+      this.getList()
+    },
     /** 查询主播时长列表 */
     getList() {
       this.loading = true
       listHostWageNotePage(this.queryParams).then(response => {
         this.liveHostWageNoteList = response.rows
         this.total = response.total
+        this.loading = false
+      })
+    },
+    getDetailsList() {
+      this.loading = true
+      listHostWageNoteDetailsPage(this.queryDetailsParams).then(response => {
+        this.detailsList = response.rows
+        this.detailsTotal = response.total
         this.loading = false
       })
     },
@@ -184,6 +258,16 @@ export default {
         hostId: null
       }
       this.resetForm('form')
+    },
+    openQuerDetails(row) {
+      this.open = true
+      this.queryDetailsParams.hostId = row.hostId
+      this.queryDetailsParams.selectDate = row.timedata.split(' - ')
+      this.getDetailsList()
+    },
+    handleQuerDetails() {
+      this.queryDetailsParams.pageNum = 1
+      this.getDetailsList()
     },
     /** 搜索按钮操作 */
     handleQuery() {

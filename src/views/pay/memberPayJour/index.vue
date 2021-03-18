@@ -120,7 +120,7 @@
       <el-table-column label="更新时间" min-width="160" align="center" prop="updateTimes"/>
       <el-table-column label="上游订单号" min-width="220" align="center" prop="tradeSn" :show-overflow-tooltip="true"/>
       <el-table-column label="备注" min-width="180" align="center" prop="remark" :show-overflow-tooltip="true"/>
-      <el-table-column label="操作" min-width="100" align="center" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column label="操作" min-width="120" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             type="danger"
@@ -128,7 +128,6 @@
             icon="el-icon-edit"
             size="small"
             @click="handlePatchOrder(scope.row)"
-            style="color: #FF5722"
             v-if="scope.row.status == 0 || scope.row.status == -1"
             v-hasPermi="['pay:payPlatformNew:patchOrder']"
           >人工补单

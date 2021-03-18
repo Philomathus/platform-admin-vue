@@ -77,9 +77,11 @@
             width="200"
             trigger="click"
           >
-            <div>家族ID：{{ scope.row.familyId }}</div>
-            <div>家族长ID：{{ scope.row.familyUserId }}</div>
-            <div>家族长昵称：{{ scope.row.familyNickName }}</div>
+            <table>
+              <tr><td style="text-align: right">家  族  ID：</td><td style="text-align: left">{{ scope.row.familyId }}</td></tr>
+              <tr><td style="text-align: right">家 族 长 ID：</td><td style="text-align: left">{{ scope.row.familyUserId }}</td></tr>
+              <tr><td style="text-align: right">家族长昵称：</td><td style="text-align: left">{{ scope.row.familyNickName }}</td></tr>
+            </table>
             <a slot="reference" style="color: #00afff">{{ scope.row.familyName }}</a>
           </el-popover>
         </template>
@@ -112,11 +114,12 @@
       <el-table-column label="登陆IP" min-width="150" :show-overflow-tooltip="true" align="left" prop="loginIp"/>
       <el-table-column label="注册时间" min-width="160" :show-overflow-tooltip="true" align="center" prop="createTime"/>
       <el-table-column label="禁播备注" min-width="150" align="center" prop="banRemark"/>
-      <el-table-column label="操作" min-width="120" align="right" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column label="操作" min-width="180" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
-            size="mini"
-            type="text"
+            size="small"
+            plain
+            type="primary"
             icon="el-icon-s-check"
             @click="handleAuth(scope.row)"
             v-hasPermi="['admin:liveUser:edit']"
@@ -124,8 +127,9 @@
           >审核
           </el-button>
           <el-button
-            size="mini"
-            type="text"
+            size="small"
+            plain
+            type="success"
             icon="el-icon-menu"
             @click="handleMore(scope.row)"
           >更多

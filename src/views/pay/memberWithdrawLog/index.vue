@@ -146,12 +146,11 @@
       <el-table-column label="下单时间" min-width="150" align="center" prop="createTime"/>
       <el-table-column label="最后修改时间" min-width="150" align="center" prop="updateTime"/>
       <el-table-column label="订单号" min-width="200" align="center" prop="orderNo"/>
-      <el-table-column label="操作" min-width="300" align="center" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column label="操作" min-width="260" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="small"
             type="primary"
-            plain
             v-if="scope.row.status == 0"
             icon="el-icon-lock"
             @click="handleLock(scope.row)"
@@ -160,7 +159,7 @@
           </el-button>
           <el-button
             size="small"
-            type="success"
+            type="primary"
             plain
             v-if="scope.row.status == 1"
             icon="el-icon-unlock"
@@ -170,9 +169,8 @@
           </el-button>
           <el-button
             size="small"
-            type="info"
+            type="success"
             plain
-            style="color: #5FB878"
             v-if="scope.row.status == 1"
             icon="el-icon-circle-check"
             @click="handleWithdraw(scope.row)"
@@ -183,7 +181,6 @@
             size="small"
             type="danger"
             plain
-            style="color: #FF5722"
             v-if="scope.row.status < 2 || scope.row.status == 5"
             icon="el-icon-circle-close"
             @click="handleRefused(scope.row)"
@@ -194,7 +191,6 @@
             size="small"
             type="warning"
             plain
-            style="color: #FFB800"
             v-if="scope.row.status == 5"
             icon="el-icon-s-custom"
             @click="handleArtificialWithdraw(scope.row)"

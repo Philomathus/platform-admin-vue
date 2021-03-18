@@ -128,7 +128,8 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            type="text"
+            type="primary"
+            plain
             icon="el-icon-unlock"
             v-if="scope.row.status == 0"
             @click="handleFirstAudit(scope.row)"
@@ -137,7 +138,8 @@
           </el-button>
           <el-button
             size="mini"
-            type="text"
+            type="success"
+            plain
             icon="el-icon-check"
             style="color: #5FB878"
             v-if="scope.row.status == 1"
@@ -147,7 +149,8 @@
           </el-button>
           <el-button
             size="mini"
-            type="text"
+            type="danger"
+            plain
             icon="el-icon-close"
             style="color: #FF5722"
             v-if="scope.row.status == 0 || scope.row.status == 1"
@@ -157,7 +160,8 @@
           </el-button>
           <el-button
             size="mini"
-            type="text"
+            type="info"
+            plain
             icon="el-icon-refresh-right"
             style="color: #FFB800"
             v-if="scope.row.status == 2 || scope.row.status == 4"

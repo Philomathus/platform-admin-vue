@@ -123,9 +123,10 @@
       <el-table-column label="操作" min-width="100" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
-            size="mini"
-            type="text"
+            type="danger"
+            plain
             icon="el-icon-edit"
+            size="small"
             @click="handlePatchOrder(scope.row)"
             style="color: #FF5722"
             v-if="scope.row.status == 0 || scope.row.status == -1"

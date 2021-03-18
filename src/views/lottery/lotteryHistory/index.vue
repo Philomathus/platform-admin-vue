@@ -11,7 +11,7 @@
           style="width: 240px"
         >
           <el-option
-            v-for="dict in historyNameOptions"
+            v-for="dict in lotteryInfoNameOptions"
             :key="dict.name"
             :label="dict.name"
             :value="dict.name"
@@ -126,7 +126,7 @@
 </template>
 
 <script>
-import {listLotteryHistory, historyName} from "@/api/platform-web/lottery/lotteryHistory";
+import {listLotteryHistory, lotteryInfoName} from "@/api/platform-web/lottery/lotteryHistory";
 import {pickerDateShortcuts} from "@/utils/dateUtils";
 
 
@@ -137,7 +137,7 @@ export default {
     return {
       pickerOptions: {shortcuts: pickerDateShortcuts},
       //全部彩种
-      historyNameOptions: [],
+      lotteryInfoNameOptions: [],
       // 日期范围
       dateRange: [],
       // 遮罩层
@@ -189,7 +189,7 @@ export default {
   created() {
     this.getList();
     //全部彩种
-    historyName().then(response => {
+    lotteryInfoName().then(response => {
       this.historyNameOptions = response.data
     })
     this.getDicts('lottery_history_status').then(response => {

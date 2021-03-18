@@ -146,11 +146,12 @@
       <el-table-column label="下单时间" min-width="150" align="center" prop="createTime"/>
       <el-table-column label="最后修改时间" min-width="150" align="center" prop="updateTime"/>
       <el-table-column label="订单号" min-width="200" align="center" prop="orderNo"/>
-      <el-table-column label="操作" min-width="200" align="center" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column label="操作" min-width="300" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
-            size="mini"
-            type="text"
+            size="small"
+            type="primary"
+            plain
             v-if="scope.row.status == 0"
             icon="el-icon-lock"
             @click="handleLock(scope.row)"
@@ -158,8 +159,9 @@
           >锁定
           </el-button>
           <el-button
-            size="mini"
-            type="text"
+            size="small"
+            type="success"
+            plain
             v-if="scope.row.status == 1"
             icon="el-icon-unlock"
             @click="handleUnlock(scope.row)"
@@ -167,8 +169,9 @@
           >解锁
           </el-button>
           <el-button
-            size="mini"
-            type="text"
+            size="small"
+            type="info"
+            plain
             style="color: #5FB878"
             v-if="scope.row.status == 1"
             icon="el-icon-circle-check"
@@ -177,8 +180,9 @@
           >出款
           </el-button>
           <el-button
-            size="mini"
-            type="text"
+            size="small"
+            type="danger"
+            plain
             style="color: #FF5722"
             v-if="scope.row.status < 2 || scope.row.status == 5"
             icon="el-icon-circle-close"
@@ -187,8 +191,9 @@
           >拒绝
           </el-button>
           <el-button
-            size="mini"
-            type="text"
+            size="small"
+            type="warning"
+            plain
             style="color: #FFB800"
             v-if="scope.row.status == 5"
             icon="el-icon-s-custom"
@@ -257,14 +262,15 @@
         <el-button
           type="primary"
           plain
-          size="mini"
+          size="small"
           @click="handlePayAgent"
           v-has-permi="['pay:payAgentPlatform:order']"
         >代 付
         </el-button>
         <el-button
           type="success"
-          plain size="mini"
+          plain
+          size="small"
           @click="handleArtificialWithdraw"
           v-has-permi="['pay:memberWithdrawLog:artificial']"
         >出 款
@@ -272,7 +278,7 @@
         <el-button
           type="danger"
           plain
-          size="mini"
+          size="small"
           @click="handleDialogRefused"
           v-has-permi="['pay:memberWithdrawLog:refused']"
         >拒 绝
@@ -280,7 +286,7 @@
         <el-button
           type="info"
           plain
-          size="mini"
+          size="small"
           @click="cancel"
         >取 消
         </el-button>

@@ -11,7 +11,7 @@ export function listLotteryHistory(query) {
 }
 
 //全部彩种
-export function historyName() {
+export function lotteryInfoName() {
   return request({
     url: url.platformWeb + '/admin/lotteryHistory/lotteryName',
     method: 'get'

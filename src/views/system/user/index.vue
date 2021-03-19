@@ -87,6 +87,9 @@
       <el-table-column label="用户昵称" align="center" key="nickName" prop="nickName" v-if="columns[2].visible"
                        :show-overflow-tooltip="true"
       />
+      <el-table-column label="用户角色" align="center" key="roleNames" prop="roleNames" v-if="columns[2].visible"
+                       :show-overflow-tooltip="true"
+      />
       <el-table-column label="状态" align="center" key="status" v-if="columns[3].visible">
         <template slot-scope="scope">
           <el-switch
@@ -357,6 +360,9 @@ export default {
     this.getDicts('sys_user_sex').then(response => {
       this.sexOptions = response.data
     })
+    getUser().then(response => {
+      this.roleOptions = response.roles
+    })
     // this.getConfigKey("sys.user.initPassword").then(response => {
     //   this.initPassword = response.msg;
     // });
@@ -366,6 +372,15 @@ export default {
     getList() {
       this.loading = true
       listUser(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
+        response.rows.forEach(item=>{
+          item.roles.forEach(item2=>{
+            if (!item.roleNames){
+              item.roleNames =item2.roleName;
+            }else {
+              item.roleNames = item.roleNames +','+item2.roleName
+            }
+          })
+        })
           this.userList = response.rows
           this.total = response.total
           this.loading = false
@@ -436,12 +451,9 @@ export default {
     /** 新增按钮操作 */
     handleAdd() {
       this.reset()
-      getUser().then(response => {
-        this.roleOptions = response.roles
-        this.open = true
-        this.title = '添加用户'
-        this.form.password = this.initPassword
-      })
+      this.open = true
+      this.title = '添加用户'
+      this.form.password = this.initPassword
     },
     /** 修改按钮操作 */
     handleUpdate(row) {

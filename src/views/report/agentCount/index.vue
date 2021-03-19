@@ -77,8 +77,6 @@
       <el-table-column label="入款总（首充）" min-width="120" align="center" prop="totalfristRukuanjine"/>
       <el-table-column label="人/笔/金额（入款日总）" min-width="170" align="center" prop="rukuanjine" :formatter="rukuanjine"  fixed="right"/>
       <el-table-column label="出款金额（首充）" min-width="130" align="center" prop="chukuanjine"/>
-      <el-table-column label="人数" min-width="130" align="center" prop="totalRukuanbishu"/>
-      <el-table-column label="笔数" min-width="130" align="center" prop="totalRukuanrenshu"/>
       <el-table-column label="人/笔/金额（出款日总）" min-width="170" align="center" prop="totalChukuanjine"/>
       <el-table-column label="送礼次数/金额" min-width="120" align="center" prop="totalGiveprop"/>
       <el-table-column label="直播间次数/活跃安卓/活跃苹果" min-width="210" align="center" prop="ios" :formatter="ios"

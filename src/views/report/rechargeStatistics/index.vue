@@ -207,14 +207,15 @@ export default {
     },
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('是否确认导出所有列表数据项?', '警告', {
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function () {
         return exportReportMonwyInfo(queryParams)
       }).then(response => {
-        this.download(response.msg)
+        this.downloadExcel(response, '平台资金报表')
+      }).catch(() => {
       })
     }
 

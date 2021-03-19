@@ -10,6 +10,15 @@ export function listLotteryBet0(query) {
   })
 }
 
+// 查询用户投资行为统计
+export function getCount(query) {
+  return request({
+    url: url.platformWeb + '/admin/lotteryBet0/getCount',
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询用户投资行为详细
 export function getLotteryBet0(id) {
   return request({

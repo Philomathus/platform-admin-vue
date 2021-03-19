@@ -32,8 +32,8 @@
         <el-table-column prop="name" label="游戏名称" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="value" label="金额" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="createTime" label="操作">
-          <template v-slot="{row}">
-            <el-button @click="gameEsc(row)">下分</el-button>
+          <template v-slot="{row}" v-if="index===1">
+            <el-button  @click="gameEsc(row)">下分</el-button>
           </template>
         </el-table-column>
       </el-table>

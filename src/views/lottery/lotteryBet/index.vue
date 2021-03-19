@@ -1,6 +1,8 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+    <el-button type="primary">投注金额 {{ this.totalData.totalCost||0 }}</el-button>
+    <el-button type="success">中奖金额 {{this.totalData.totalPrize||0 }}</el-button>
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px" style="margin-top: 20px">
       <el-form-item label="下注时间" prop="betTime">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" style="width: 360px" start-placeholder="开始时间"
@@ -92,7 +94,7 @@
 </template>
 
 <script>
-import { listLotteryBet0 } from '@/api/platform-web/lottery/lotteryBet'
+import { listLotteryBet0, getCount } from '@/api/platform-web/lottery/lotteryBet'
 import { pickerDateTimeShortcuts } from '@/utils/dateUtils'
 
 export default {
@@ -100,6 +102,11 @@ export default {
   components: {},
   data() {
     return {
+      //统计数据
+      totalData: {
+        totalCost: 0,
+        totalPrize: 0,
+      },
       pickerOptions: { shortcuts: pickerDateTimeShortcuts },
       // 遮罩层
       loading: true,
@@ -149,6 +156,7 @@ export default {
     this.getDicts('lottery_bat_status').then(response => {
       this.statusOptions = response.data
     })
+    this.getCountTotal()
   },
   methods: {
     /** 查询用户投资行为列表 */
@@ -164,6 +172,15 @@ export default {
     cancel() {
       this.open = false
       this.reset()
+    },
+    //统计按钮
+    getCountTotal() {
+      getCount(this.queryParams).then((res) => {
+        if (res.data) {
+          this.totalData = res.data
+        }
+        this.loading = false
+      })
     },
     // 表单重置
     reset() {
@@ -195,6 +212,7 @@ export default {
         return
       }
       this.getList()
+      this.getCountTotal()
     },
     /** 重置按钮操作 */
     resetQuery() {

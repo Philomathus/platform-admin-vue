@@ -66,6 +66,18 @@ export function getYesterDate() {
   return date;
 }
 
+export function getYesterDateStart() {
+  const start = new Date()
+  start.setTime(start.getTime() - 3600 * 1000 * 24)
+  return  parseTime(getDateStartTime(start), '{y}-{m}-{d} {h}:{i}:{s}');
+}
+
+export function getYesterDateEnd() {
+  const end = new Date()
+  end.setTime(end.getTime() - 3600 * 1000 * 24)
+  return parseTime(getDateEndTime(end), '{y}-{m}-{d} {h}:{i}:{s}');
+}
+
 export function get7beforeDay() {
   const date = new Date()
   date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)

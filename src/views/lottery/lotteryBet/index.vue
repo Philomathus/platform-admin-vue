@@ -10,7 +10,7 @@
       <el-form-item prop="puserId">
         <el-input
           v-model="queryParams.puserId"
-          placeholder="请输入用户ID"
+          placeholder="会员ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -19,7 +19,7 @@
       <el-form-item prop="issue" style="width: 150px;">
         <el-input
           v-model="queryParams.issue"
-          placeholder="请输入下注期数"
+          placeholder="下注期数"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -38,11 +38,14 @@
       <el-form-item prop="lotteryName">
         <el-input
           v-model="queryParams.lotteryName"
-          placeholder="请输入彩票名称"
+          placeholder="彩票名称"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
+      </el-form-item>
+      <el-form-item prop="abnormal">
+        <el-checkbox v-model="queryParams.abnormal">异常投注</el-checkbox>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -126,6 +129,7 @@ export default {
         status: null,
         lotteryName: null,
         betTime: null,
+        abnormal: false,
         selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
         orderByColumn: 'a.bet_time',
         isAsc: 'desc'
@@ -155,18 +159,6 @@ export default {
         this.total = response.total
         this.loading = false
       })
-    },
-    // 0=投注中1=已开奖2=已派奖3=开奖失败
-    formatterStatus(row) {
-      if (row.status == 0) {
-        return '待开奖'
-      } else if (row.status == 1) {
-        return '已中奖'
-      } else if (row.status == 2) {
-        return '未中奖'
-      } else {
-        return ''
-      }
     },
     // 取消按钮
     cancel() {
@@ -198,6 +190,10 @@ export default {
     /** 搜索按钮操作 */
     handleQuery() {
       this.queryParams.pageNum = 1
+      if (this.queryParams.abnormal && !this.queryParams.puserId) {
+        this.$message.error(`查询异常投注核对记录必须传入会员ID`)
+        return
+      }
       this.getList()
     },
     /** 重置按钮操作 */

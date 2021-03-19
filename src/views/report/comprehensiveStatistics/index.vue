@@ -39,34 +39,34 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
     <div ref="container" style="position: relative">
-    <el-table
-      v-loading="loading"
-      :data="list"
-      style="width: 100%;"
-      :stripe="true"
-    >
-      <el-table-column label="名称" align="center" prop="classTwoname" :show-overflow-tooltip="true"/>
-      <el-table-column label="金额" align="center" prop="tValue" :show-overflow-tooltip="true"/>
-      <el-table-column label="类型" align="center" prop="type"/>
-      <el-table-column label="时间" align="center" prop="reporttime" width="180"/>
-    </el-table>
+      <el-table
+        v-loading="loading"
+        :data="list"
+        style="width: 100%;"
+        :stripe="true"
+      >
+        <el-table-column label="名称" align="center" prop="classTwoname" :show-overflow-tooltip="true"/>
+        <el-table-column label="金额" align="center" prop="tValue" :show-overflow-tooltip="true"/>
+        <el-table-column label="类型" align="center" prop="type"/>
+        <el-table-column label="时间" align="center" prop="reporttime" width="180"/>
+      </el-table>
     </div>
-<!--    <pagination v-show="total>0" :total="total" :page.sync="pageNum" :limit.sync="pageSize"/>-->
+    <!--    <pagination v-show="total>0" :total="total" :page.sync="pageNum" :limit.sync="pageSize"/>-->
   </div>
 </template>
 
 <script>
-import { list, listStorage,exportReportPlamCom } from '@/api/platform-web/report/comprehensiveStatistics'
+import { list, listStorage, exportReportPlamCom } from '@/api/platform-web/report/comprehensiveStatistics'
 import { getYesterDate } from '@/utils/dateUtils'
-import {toyesDayshortcuts} from "@/utils/dateUtils"
+import { toyesDayshortcuts } from '@/utils/dateUtils'
 
 export default {
   name: 'Report',
   data() {
     return {
       //日期快捷
-      pickerOptions: {shortcuts: toyesDayshortcuts},
-      interval: {listTime: null},
+      pickerOptions: { shortcuts: toyesDayshortcuts },
+      interval: { listTime: null },
       // 遮罩层
       listLoading: false,
       isDestroyed: false,
@@ -89,9 +89,9 @@ export default {
     this.getList()
 
   },
-  destroyed(){
+  destroyed() {
     this.isDestroyed = true
-    this.listLoading = false;
+    this.listLoading = false
   },
   methods: {
     /** 查询登录日志列表 */
@@ -105,24 +105,24 @@ export default {
       this.loading = true
       list(this.queryParams).then(response => {
         this.list = response.rows
-        that.listLoading=false;
-        that.$rjLoading.hide();
+        that.listLoading = false
+        that.$rjLoading.hide()
       }).catch((err) => {
-          if (err=='Error: 报表正在生成，请稍后...'){
-            if (!that.listLoading) {
-              that.listLoading=true;
-              that.$rjLoading.show('报表正在生成',that);
-            }
-            if (!this.isDestroyed){
-              setTimeout(() => {
-                that.getList();
-              }, 10000);
-            }
+        if (err == 'Error: 报表正在生成，请稍后...') {
+          if (!that.listLoading) {
+            that.listLoading = true
+            that.$rjLoading.show('报表正在生成', that)
           }
-        }).finally(() => {
+          if (!this.isDestroyed) {
+            setTimeout(() => {
+              that.getList()
+            }, 10000)
+          }
+        }
+      }).finally(() => {
           this.loading = false
         }
-      );
+      )
     },
 
     /** 搜索按钮操作 */
@@ -139,14 +139,15 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('是否确认导出所有列表数据项?', '警告', {
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function() {
         return exportReportPlamCom(queryParams)
       }).then(response => {
-        this.download(response.msg)
+        this.downloadExcel(response, '综合数据报表')
+      }).catch(() => {
       })
     }
   }

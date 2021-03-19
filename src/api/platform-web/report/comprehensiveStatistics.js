@@ -24,7 +24,9 @@ export function exportReportPlamCom(query) {
   return request({
     url: url.platformWeb + '/admin/report-plam-com/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }
 

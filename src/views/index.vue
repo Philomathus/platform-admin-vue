@@ -1,41 +1,36 @@
 <template>
 
-  <div class='border'>
-  <video autoplay loop muted width="100%">
+
+  <video id="v1" autoplay loop muted width="100%" >
     <source src="@/assets/新后台主页.mp4" type="video/mp4"  />
   </video>
-  </div>
+
 </template>
 
 <style scoped>
+  *{
+    margin: 0px;
+    padding: 0px;
+  }
   video{
     position: fixed;
-    top: 4.5%;
-    left: 0%;
-    height: 100%;
+    right: 0px;
+    bottom: 0px;
     width: 100%;
+    height: 91%;
+
+    object-fit: inherit;
     /*加滤镜*/
-    /*filter: blur(15px);*/
+    /*filter: blur(15px); //背景模糊设置 */
     /*-webkit-filter: grayscale(100%);*/
-    /*背景灰度设置*/
- /*   filter:grayscale(100%);*/
+    /*filter:grayscale(100%); //背景灰度设置*/
     z-index:-11
   }
-/*
-  .border{
-    position:relative;
-    width:100%;
-    height:0;
-  !*因为padding和margin等受width影响，父容器固定后，子标签可以进行填充。此处75%是3/4，其他比例可以依照此法。*!
-    padding-bottom:75%;
-  }
-*/
-
   source{
     min-width: 100%;
     min-height: 100%;
-    height: 100%;
-    width: 100%;
+    height: auto;
+    width: auto;
   }
 
 </style>

@@ -96,9 +96,18 @@
         <el-table-column prop="bankAddress" label="银行地址" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="createTime" label=" 绑定时间" :show-overflow-tooltip="true" min-width="160"
                          align="center"></el-table-column>
+        <el-table-column label="操作">
+          <template v-slot="{row}">
+            <el-button @click="unbind(row)" v-if="row.dv==1">主卡解绑</el-button>
+            <el-button @click="unbind(row)" v-if="row.dv==0" >副卡解绑</el-button>
+          </template>
+        </el-table-column>
       </el-table>
       <pagination
         v-show="total>0"
+
+
+        
         :total="total"
         :page.sync="queryParams.pageNum"
         :limit.sync="queryParams.pageSize"
@@ -122,6 +131,7 @@
     resetPassword,
     cardList,
     resetSafe,
+    unbindCard,
     resetWithdrawal
   } from '@/api/platform-web/member/memberInfo'
 
@@ -220,6 +230,20 @@
         }
         return '未知'
       },
+      unbind(row) {
+        this.loading = true
+        const id=row.id;
+        const  memberId=row.memberId;
+        unbindCard(id,memberId).then((res) => {
+          this.msgSuccess(res.msg);
+         this.cardList();
+        }).catch(() => {
+          this.$notify.error('网络异常')
+        }).finally(() => {
+          this.loading = false
+        })
+      },
+
       //切换页面
       change(index, title) {
         this.index = index

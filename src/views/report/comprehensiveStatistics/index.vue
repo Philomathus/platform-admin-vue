@@ -46,7 +46,7 @@
         :stripe="true"
       >
         <el-table-column label="名称" align="center" prop="classTwoname" :show-overflow-tooltip="true"/>
-        <el-table-column label="金额" align="center" prop="tValue" :show-overflow-tooltip="true"/>
+        <el-table-column label="金额" align="center" prop="tvalue" :show-overflow-tooltip="true"/>
         <el-table-column label="类型" align="center" prop="type"/>
         <el-table-column label="时间" align="center" prop="reporttime" width="180"/>
       </el-table>

@@ -10,6 +10,15 @@ export function listActivityMemberInfo(query) {
   })
 }
 
+// 查询会员ip重复
+export function ipList(query) {
+  return request({
+    url: url.platformWeb + '/activity/activityMemberInfo/ipList',
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询会员推广管理详细
 export function getActivityMemberInfo(id) {
   return request({

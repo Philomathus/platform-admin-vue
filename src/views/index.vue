@@ -2,7 +2,7 @@
 
 
   <video id="v1" autoplay loop muted width="100%" >
-    <source src="@/assets/新后台主页.mp4" type="video/mp4"  />
+    <source src="@/assets/新后台主页2.mp4" type="video/mp4"  />
   </video>
 
 </template>

@@ -88,8 +88,8 @@ export default {
       // 显示搜索条件
       showSearch: true,
       isDestroyed: false,
-      // countBetMoney:null,
-      // countBetPeople:null,
+      countBetMoney:null,
+      countBetPeople:null,
       // 表格数据
       list: [],
       data: {},
@@ -102,6 +102,7 @@ export default {
   },
   created() {
     this.getList()
+    this.count();
   },
   activated() {
   },
@@ -155,9 +156,7 @@ export default {
     count() {
       this.loading = true
       count(this.queryParams).then(response => {
-        if (response.data) {
           this.data = response.data
-        }
         this.loading = false
       })
     },
@@ -166,6 +165,7 @@ export default {
 
       this.pageNum = 1
       this.getList()
+      this.count();
 
     },
     /** 重置按钮操作 */

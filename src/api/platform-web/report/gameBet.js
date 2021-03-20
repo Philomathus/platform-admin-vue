@@ -21,9 +21,7 @@ export function count(query) {
   return request({
     url: url.platformWeb + '/admin/report-plam-games/count',
     method: 'get',
-    params: query,
-    responseType: 'arraybuffer',
-    timeout: 60000
+    params: query
   })
 }
 
@@ -31,6 +29,8 @@ export function exportReportPlamGames(query) {
   return request({
     url: url.platformWeb + '/admin/report-plam-games/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }

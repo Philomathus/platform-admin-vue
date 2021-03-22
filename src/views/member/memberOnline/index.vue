@@ -45,7 +45,11 @@
       <el-table-column label="会员ID" align="center" prop="id" />
       <el-table-column label="会员账号" align="center" prop="userName" />
       <el-table-column label="会员vip" align="center" prop="vip" />
-      <el-table-column label="最后活跃时间" align="center" prop="onlineTime" />
+      <el-table-column label="最后活跃时间" align="center" prop="online" >
+      <template slot-scope="scope">
+        <span>{{ parseTime(scope.row.online, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+      </template>
+      </el-table-column>
       <el-table-column label="昵称" align="center" prop="nickName" />
       <el-table-column label="登入IP" align="center" prop="loginIp" />
     </el-table>
@@ -94,7 +98,8 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        onlineTime: null
+        onlineTime: null,
+        online_time: null
       },
       // 表单参数
       form: {},

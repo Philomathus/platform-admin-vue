@@ -327,7 +327,7 @@
               message: '操作成功!'
             })
             if (this.index === 4) {
-              resetPassword(this.memberCode).then((res) => {
+              resetPassword(this.memberId).then((res) => {
                 if (res.code === 0) {
                   this.$notify.success('重置密码成功')
                 } else {
@@ -337,7 +337,7 @@
                 this.$notify.error('网络异常')
               })
             } else {
-              resetSafe({userId: this.memberCode}).then((res) => {
+              resetSafe({userId: this.memberId}).then((res) => {
                 if (res.code === 0) {
                   this.$notify.success('重置保险箱成功')
                 } else {
@@ -366,7 +366,7 @@
             })
             resetWithdrawal({
               googleAuthCode: value,
-              id: this.memberCode
+              id: this.memberId
             }).then((res) => {
               if (res.code === 0) {
                 this.$notify.success('重置提现成功')

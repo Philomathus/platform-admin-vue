@@ -66,22 +66,22 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
     <div ref="container" style="position: relative">
-    <el-table v-loading="loading" :data="report" :stripe="true">
-      <el-table-column label="渠道编码" align="center" prop="agentcode"/>
-      <el-table-column label="邀请账号" min-width="150" align="center" prop="agentname"/>
-      <el-table-column label="统计时间" align="center" prop="agenttime" min-width="120"/>
-      <el-table-column label="当日/总(注册人数)" min-width="130" align="center" prop="regisNumber" :formatter="regisNumber"/>
-      <el-table-column label="公司入款（首充）" min-width="130" align="center" prop="gsRukuanjine"/>
-      <el-table-column label="线上入款（首充）" min-width="130" align="center" prop="xsRukuanjine"/>
-      <el-table-column label="手工入款（首充）" min-width="130" align="center" prop="sgRukuanjine"/>
-      <el-table-column label="入款总（首充）" min-width="120" align="center" prop="totalfristRukuanjine"/>
-      <el-table-column label="人/笔/金额（入款日总）" min-width="170" align="center" prop="rukuanjine" :formatter="rukuanjine"  fixed="right"/>
-      <el-table-column label="出款金额（首充）" min-width="130" align="center" prop="chukuanjine"/>
-      <el-table-column label="人/笔/金额（出款日总）" min-width="170" align="center" prop="totalChukuanjine"/>
-      <el-table-column label="送礼次数/金额" min-width="120" align="center" prop="totalGiveprop"/>
-      <el-table-column label="直播间次数/活跃安卓/活跃苹果" min-width="210" align="center" prop="ios" :formatter="ios"
-                       fixed="right"/>
-    </el-table>
+      <el-table v-loading="loading" :data="report" :stripe="true">
+        <el-table-column label="渠道编码" align="center" prop="agentcode"/>
+        <el-table-column label="邀请账号" min-width="150" align="center" prop="agentname"/>
+        <el-table-column label="统计时间" align="center" prop="agenttime" min-width="120"/>
+        <el-table-column label="当日/总(注册人数)" min-width="130" align="center" prop="regisNumber" :formatter="regisNumber"/>
+        <el-table-column label="公司入款（首充）" min-width="130" align="center" prop="gsRukuanjine"/>
+        <el-table-column label="线上入款（首充）" min-width="130" align="center" prop="xsRukuanjine"/>
+        <el-table-column label="手工入款（首充）" min-width="130" align="center" prop="sgRukuanjine"/>
+        <el-table-column label="入款总（首充）" min-width="120" align="center" prop="totalfristRukuanjine"/>
+        <el-table-column label="人/笔/金额（出款日总）" min-width="170" align="center" prop="totalChukuanjine"/>
+        <el-table-column label="人/笔/金额（入款日总）" min-width="170" align="center" prop="rukuanjine" :formatter="rukuanjine" fixed="right"/>
+        <el-table-column label="送礼次数/金额" min-width="120" align="center" prop="totalGiveprop"/>
+        <el-table-column label="直播间次数/活跃安卓/活跃苹果" min-width="210" align="center" prop="ios" :formatter="ios"
+                         fixed="right"
+        />
+      </el-table>
     </div>
 
     <!-- 新增推广码弹框 -->
@@ -144,7 +144,7 @@ import {
   delPromotionCode
 } from '@/api/platform-web/report/agentCount'
 import { getYesterDate } from '@/utils/dateUtils'
-import {toyesDayshortcuts} from "@/utils/dateUtils";
+import { toyesDayshortcuts } from '@/utils/dateUtils'
 
 export default {
   name: 'Agent',
@@ -152,8 +152,8 @@ export default {
   data() {
     return {
       //日期快捷
-      pickerOptions: {shortcuts: toyesDayshortcuts},
-      interval: {listTime: null},
+      pickerOptions: { shortcuts: toyesDayshortcuts },
+      interval: { listTime: null },
       // 遮罩层
       listLoading: false,
       isDestroyed: false,
@@ -187,12 +187,12 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 20,
-        agenttime:this.parseTime(getYesterDate(), '{y}-{m}-{d}'),
+        agenttime: this.parseTime(getYesterDate(), '{y}-{m}-{d}'),
         agentcode: null
       },
-      queryRule:{
+      queryRule: {
         agentcode: [
-          {required: true, message: "推广码不能为空", trigger: "blur"},
+          { required: true, message: '推广码不能为空', trigger: 'blur' }
         ]
       },
       // 表单参数
@@ -200,7 +200,7 @@ export default {
       // 表单校验
       rules: {
         code: [
-          {required: true, message: "推广码不能为空", trigger: "blur"},
+          { required: true, message: '推广码不能为空', trigger: 'blur' }
         ]
       }
     }
@@ -208,22 +208,20 @@ export default {
   created() {
     this.getList()
   },
-  destroyed(){
+  destroyed() {
     this.isDestroyed = true
-    this.listLoading = false;
+    this.listLoading = false
   },
   methods: {
     /** 查询平台资金报，记录平台每日收入及支出总额，预估当前会员的积分余额列表 */
     getList() {
       var that = this
       this.loading = true
-      debugger;
       listReport(this.addDateRange(this.queryParams, this.queryParams.dateRange)).then(response => {
 
         this.report = response.rows
         this.total = response.total
         this.loading = false
-
 
         // that.$loading.hide();
         // that.listLoading = false;
@@ -266,15 +264,15 @@ export default {
     resetformaddPromotionCode() {
       this.formaddPromotionCode = {
         code: null
-      };
-      this.resetForm("formaddPromotionCode");
+      }
+      this.resetForm('formaddPromotionCode')
     },
     // 删除推广码表单重置
     resetformdelPromotionCode() {
       this.formdelPromotionCode = {
         code: null
-      };
-      this.resetForm("formdelPromotionCode");
+      }
+      this.resetForm('formdelPromotionCode')
     },
     // 取消按钮
     cancel() {
@@ -284,11 +282,11 @@ export default {
     /** 搜索按钮操作 */
     handleQuery() {
       this.queryParams.pageNum = 1
-      this.$refs["queryForm"].validate(valid => {
+      this.$refs['queryForm'].validate(valid => {
         if (valid) {
           this.getList()
         }
-      });
+      })
     },
     /** 重置按钮操作 */
     resetQuery() {
@@ -303,39 +301,39 @@ export default {
     },
     /** 新增推广码提交按钮 */
     submitaddPromotionCode() {
-      this.$refs["formaddPromotionCode"].validate(valid => {
+      this.$refs['formaddPromotionCode'].validate(valid => {
         if ((/^[0-9]+$/).test(this.formaddPromotionCode.code)) {
           addPromotionCode(this.formaddPromotionCode).then(response => {
             if (response.code == 0) {
-              this.$message.error(response.msg);
+              this.$message.error(response.msg)
             } else {
-              this.msgSuccess("新增成功");
-              this.addPromotionCode = false;
-              this.getList();
+              this.msgSuccess('新增成功')
+              this.addPromotionCode = false
+              this.getList()
             }
-          });
+          })
         } else {
-          this.$message.error("推广码只能为纯数字");
+          this.$message.error('推广码只能为纯数字')
         }
-      });
+      })
     },
     /** 删除推广码提交按钮 */
     submitdelPromotionCode() {
-      this.$refs["formdelPromotionCode"].validate(valid => {
+      this.$refs['formdelPromotionCode'].validate(valid => {
         if ((/^[0-9]+$/).test(this.formdelPromotionCode.code)) {
           delPromotionCode(this.formdelPromotionCode).then(response => {
             if (response.code == 0) {
-              this.$message.error(response.msg);
+              this.$message.error(response.msg)
             } else {
-              this.msgSuccess("删除成功");
-              this.delPromotionCode = false;
-              this.getList();
+              this.msgSuccess('删除成功')
+              this.delPromotionCode = false
+              this.getList()
             }
-          });
+          })
         } else {
-          this.$message.error("推广码只能为纯数字");
+          this.$message.error('推广码只能为纯数字')
         }
-      });
+      })
     },
     regisNumber(rows, column) {
       return rows.newmember + '/' + rows.totalmember
@@ -348,14 +346,15 @@ export default {
     },
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('是否确认导出所有列表数据项?', '警告', {
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function () {
+      }).then(function() {
         return exportReportAgentCount(queryParams)
       }).then(response => {
-        this.download(response.msg)
+        this.downloadExcel(response, '推广统计报表')
+      }).catch(() => {
       })
     }
 

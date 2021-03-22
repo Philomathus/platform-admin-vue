@@ -29,6 +29,8 @@ export function exportReportPlamGames(query) {
   return request({
     url: url.platformWeb + '/admin/report-plam-games/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }

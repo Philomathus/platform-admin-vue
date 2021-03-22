@@ -28,7 +28,9 @@ export function exportReportMonwyInfo(query) {
   return request({
     url: url.platformWeb + '/web/report-moneyinfo/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }
 

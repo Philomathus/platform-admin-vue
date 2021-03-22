@@ -117,7 +117,7 @@
         </template>
       </el-table-column>
       <el-table-column label="订单时间" min-width="160" align="center" prop="payTime"/>
-      <el-table-column label="更新时间" min-width="160" align="center" prop="updateTimes"/>
+      <el-table-column label="更新时间" min-width="160" align="center" prop="updateTime"/>
       <el-table-column label="上游订单号" min-width="220" align="center" prop="tradeSn" :show-overflow-tooltip="true"/>
       <el-table-column label="备注" min-width="180" align="center" prop="remark" :show-overflow-tooltip="true"/>
       <el-table-column label="操作" min-width="120" align="center" class-name="small-padding fixed-width" fixed="right">

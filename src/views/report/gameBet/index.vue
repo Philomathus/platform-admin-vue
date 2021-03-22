@@ -3,7 +3,8 @@
     <el-button type="primary" @click="copy1">总投注金额: {{ this.data.countBetMoney || 0 }}</el-button>
     <el-button type="success" @click="copy2">总投注人数: {{ this.data.countBetPeople || 0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" label-width="68px"
-             v-show="showSearch">
+             v-show="showSearch"
+    >
       <el-form-item label="日期选择" prop="begindate">
         <el-date-picker v-model="queryParams.begindate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
                         :style="{width: '100%'}" placeholder="请选择日期选择" clearable :picker-options="pickerOptions"
@@ -49,7 +50,7 @@
         <el-table-column label="平台编号" align="center" prop="gameagent" :show-overflow-tooltip="true"/>
         <el-table-column label="名称-详情" align="center" prop="gameplame">
           <template slot-scope="scope">
-            <a style="color: #00afff" @click="jump(scope.row.begindate,scope.row.gameplame)">{{scope.row.gameplame}}</a>
+            <a style="color: #00afff" @click="jump(scope.row.begindate,scope.row.gameplame)">{{ scope.row.gameplame }}</a>
           </template>
         </el-table-column>
         <el-table-column label="投注人数" align="center" prop="gamepepole"/>
@@ -67,124 +68,126 @@
 </template>
 
 <script>
-  import {list, count, liststorage, exportReportPlamGames} from '@/api/platform-web/report/gameBet'
-  import {getYesterDate} from '@/utils/dateUtils'
-  import {toyesDayshortcuts} from "@/utils/dateUtils"
-  export default {
-    name: 'GameBet',
-    data() {
-      return {
-        //日期快捷
-        pickerOptions: {shortcuts: toyesDayshortcuts},
-        interval: {listTime: null},
-        // 遮罩层
-        loading: true,
-        // 遮罩层
-        listLoading: false,
-        // 总条数
-        total: 0,
-        // 显示搜索条件
-        showSearch: true,
-        isDestroyed: false,
-        // countBetMoney:null,
-        // countBetPeople:null,
-        // 表格数据
-        list: [],
-        data: {},
-        // 查询参数
-        queryParams: {
-          begindate: this.parseTime(getYesterDate(), '{y}-{m}-{d}'),
-          gameplame: null
-        }
-      }
-    },
-    created() {
-      this.getList()
-    },
-    activated(){
-    },
-    destroyed() {
-      this.isDestroyed = true
-      this.listLoading = false;
-    },
-    methods: {
-      getList() {
-        var that = this
-        this.loading = true
-        list(this.queryParams).then(response => {
-          that.list = response.rows
-          // this.total = response.total
-          that.listLoading = false;
-          that.$rjLoading.hide();
-          this.count();
-        }).catch((err) => {
-          if (err == 'Error: 报表正在生成，请稍后...') {
-            if (!that.listLoading) {
-              that.listLoading = true;
-              that.$rjLoading.show('报表正在生成', that);
-            }
-            if (!this.isDestroyed) {
-              setTimeout(() => {
-                that.getList();
-              }, 10000);
-            }
-          }
-        }).finally(() => {
-            this.loading = false
-          }
-        );
-      },
-      getliststorage() {
-        this.loading = true
-        liststorage(this.queryParams).then(response => {
-        })
-      },
-      //复制
-      copy1() {
-        this.copyCommand(this.data.countBetMoney)
-      },
-      copy2() {
-        this.copyCommand(this.data.countBetPeople)
-      },
-      jump(begindate, gameplame) {
-        this.$router.push({path: '/report/gameBetJump', query: {begindate: begindate, gameplame: gameplame}})
-      },
-      //统计
-      count() {
-        this.loading = true
-        count(this.queryParams).then(response => {
-          if (response.data) {
-            this.data = response.data
-          }
-          this.loading = false
-        })
-      },
-      /** 搜索按钮操作 */
-      handleQuery() {
+import { list, count, liststorage, exportReportPlamGames } from '@/api/platform-web/report/gameBet'
+import { getYesterDate } from '@/utils/dateUtils'
+import { toyesDayshortcuts } from '@/utils/dateUtils'
 
-        this.pageNum = 1
-        this.getList()
-
-      },
-      /** 重置按钮操作 */
-      resetQuery() {
-        this.resetForm('queryForm')
-        this.handleQuery()
-      },
-      /** 导出按钮操作 */
-      handleExport() {
-        const queryParams = this.queryParams
-        this.$confirm('是否确认导出所有会员数据项?', '警告', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(function () {
-          return exportReportPlamGames(queryParams)
-        }).then(response => {
-          this.download(response.msg)
-        })
+export default {
+  name: 'GameBet',
+  data() {
+    return {
+      //日期快捷
+      pickerOptions: { shortcuts: toyesDayshortcuts },
+      interval: { listTime: null },
+      // 遮罩层
+      loading: true,
+      // 遮罩层
+      listLoading: false,
+      // 总条数
+      total: 0,
+      // 显示搜索条件
+      showSearch: true,
+      isDestroyed: false,
+      countBetMoney:null,
+      countBetPeople:null,
+      // 表格数据
+      list: [],
+      data: {},
+      // 查询参数
+      queryParams: {
+        begindate: this.parseTime(getYesterDate(), '{y}-{m}-{d}'),
+        gameplame: null
       }
     }
+  },
+  created() {
+    this.getList()
+    this.count();
+  },
+  activated() {
+  },
+  destroyed() {
+    this.isDestroyed = true
+    this.listLoading = false
+  },
+  methods: {
+    getList() {
+      var that = this
+      this.loading = true
+      list(this.queryParams).then(response => {
+        that.list = response.rows
+        // this.total = response.total
+        that.listLoading = false
+        that.$rjLoading.hide()
+        this.count()
+      }).catch((err) => {
+        if (err == 'Error: 报表正在生成，请稍后...') {
+          if (!that.listLoading) {
+            that.listLoading = true
+            that.$rjLoading.show('报表正在生成', that)
+          }
+          if (!this.isDestroyed) {
+            setTimeout(() => {
+              that.getList()
+            }, 10000)
+          }
+        }
+      }).finally(() => {
+          this.loading = false
+        }
+      )
+    },
+    getliststorage() {
+      this.loading = true
+      liststorage(this.queryParams).then(response => {
+      })
+    },
+    //复制
+    copy1() {
+      this.copyCommand(this.data.countBetMoney)
+    },
+    copy2() {
+      this.copyCommand(this.data.countBetPeople)
+    },
+    jump(begindate, gameplame) {
+      this.$router.push({ path: '/report/gameBetJump', query: { begindate: begindate, gameplame: gameplame } })
+    },
+    //统计
+    count() {
+      this.loading = true
+      count(this.queryParams).then(response => {
+          this.data = response.data
+        this.loading = false
+      })
+    },
+    /** 搜索按钮操作 */
+    handleQuery() {
+
+      this.pageNum = 1
+      this.getList()
+      this.count();
+
+    },
+    /** 重置按钮操作 */
+    resetQuery() {
+      this.resetForm('queryForm')
+      this.handleQuery()
+    },
+    /** 导出按钮操作 */
+    handleExport() {
+      const queryParams = this.queryParams
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return exportReportPlamGames(queryParams)
+      }).then(response => {
+        this.downloadExcel(response, '游戏投注报表')
+      }).catch(() => {
+      })
+    }
   }
+}
 </script>
 

@@ -133,3 +133,14 @@ export function changeSpeak(id, speak, remark) {
     data: data
   })
 }
+export function unbindCard(id,memberId) {
+  const data = {
+    id: id,
+    memberId:memberId
+  }
+  return request({
+    url: url.platformWeb + '/member/memberInfo/unbindCard',
+    method: 'put',
+    data: data
+  })
+}

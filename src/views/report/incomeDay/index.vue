@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="copy1">总成功金额: {{this.data.countSuccessMoney||0}}</el-button>
+    <el-button type="primary" @click="copy1">总成功金额: {{ this.data.countSuccessMoney || 0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="日期选择" prop="paydate">
         <el-date-picker v-model="queryParams.paydate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
@@ -36,30 +36,29 @@
       <el-table-column label="时间" align="center" prop="paydate">
       </el-table-column>
     </el-table>
-<!--    <pagination-->
-<!--      v-show="total>0"-->
-<!--      :total="total"-->
-<!--      :page.sync="queryParams.pageNum"-->
-<!--      :limit.sync="queryParams.pageSize"-->
-<!--      @pagination="getList"-->
-<!--    />-->
+    <!--    <pagination-->
+    <!--      v-show="total>0"-->
+    <!--      :total="total"-->
+    <!--      :page.sync="queryParams.pageNum"-->
+    <!--      :limit.sync="queryParams.pageSize"-->
+    <!--      @pagination="getList"-->
+    <!--    />-->
   </div>
 </template>
 
 <script>
 
-import {listReport,count,exportReportIncomeDay} from "@/api/platform-web/report/incomeDay";
+import { listReport, count, exportReportIncomeDay } from '@/api/platform-web/report/incomeDay'
 import { getYesterDate } from '@/utils/dateUtils'
-import {toyesDayshortcuts} from "@/utils/dateUtils"
+import { toyesDayshortcuts } from '@/utils/dateUtils'
 
 export default {
-  name: "IncomeDay",
-  components: {
-  },
+  name: 'IncomeDay',
+  components: {},
   data() {
     return {
       //日期快捷
-      pickerOptions: {shortcuts: toyesDayshortcuts},
+      pickerOptions: { shortcuts: toyesDayshortcuts },
       // 遮罩层
       loading: true,
       // 选中数组
@@ -76,7 +75,7 @@ export default {
       report: [],
       data: {},
       // 弹出层标题
-      title: "",
+      title: '',
       // 是否显示弹出层
       open: false,
       // 查询参数
@@ -87,58 +86,62 @@ export default {
       form: {},
       // 表单校验
       rules: {}
-    };
+    }
   },
   created() {
-    this.getList();
-    this.count();
+    this.getList()
+    this.count()
   },
   methods: {
     /** 查询平台资金报，记录平台每日收入及支出总额，预估当前会员的积分余额列表 */
     getList() {
-      this.loading = true;
+      this.loading = true
       listReport(this.queryParams).then(response => {
-        this.report = response.rows;
-        this.total = response.total;
-      }).finally(()=>{this.loading = false;});
+        this.report = response.rows
+        this.total = response.total
+      }).finally(() => {
+        this.loading = false
+      })
     },
     //复制
     copy1() {
       this.copyCommand(this.data.countSuccessMoney)
     },
     count() {
-      this.loading = true;
+      this.loading = true
       count(this.queryParams).then(response => {
-        if (response.data){
-          this.data = response.data;
+        if (response.data) {
+          this.data = response.data
         }
-      }).finally(()=>{this.loading = false;
-      });
+      }).finally(() => {
+        this.loading = false
+      })
     },
     // 取消按钮
     cancel() {
-      this.open = false;
-      this.reset();
+      this.open = false
+      this.reset()
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNum = 1;
-      this.getList();
-      this.count();
+      this.queryParams.pageNum = 1
+      this.getList()
+      this.count()
     },
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('是否确认导出所有列表数据项?', '警告', {
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function() {
         return exportReportIncomeDay(queryParams)
       }).then(response => {
-        this.download(response.msg)
+        this.downloadExcel(response, '平台充值报表')
+      }).catch(() => {
       })
     }
 
   }
-};
+}
 </script>

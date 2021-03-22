@@ -5,7 +5,7 @@
     :close-on-click-modal="false"
     :title="title"
     :visible.sync="visible"
-    width="800px"
+    width="1000px"
     top="5vh"
     append-to-body
   >
@@ -109,7 +109,7 @@
         </el-table-column>
         <el-table-column prop="createTime" label=" 绑定时间" :show-overflow-tooltip="true" min-width="160"
                          align="center"></el-table-column>
-        <el-table-column label="操作" min-width="100">
+        <el-table-column label="操作" min-width="140">
           <template v-slot="{row}">
             <el-button @click="unbind(row)" v-if="row.dv==1" disabled size="mini">主卡解绑</el-button>
             <el-button @click="unbind(row)" v-if="row.dv==0" >副卡解绑</el-button>

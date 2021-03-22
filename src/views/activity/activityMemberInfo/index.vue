@@ -349,7 +349,7 @@
     ipList
   } from "@/api/platform-web/activity/activityMemberInfo";
   import {pickerDateTimeShortcuts, getYesterDateStart, getYesterDateEnd} from "@/utils/dateUtils";
-  import {loginTwoPw} from "@/utils/permission";
+  import {checkTwoLogin} from "@/utils/permission";
 
   export default {
     name: "ActivityMemberInfo",
@@ -602,8 +602,7 @@
       },
       /** 导出按钮操作 */
       handleExport() {
-        var twoPw = this.$store.state.permission.twoPw;
-        if (twoPw) {
+        if (checkTwoLogin()) {
           const queryParams = this.queryParams;
           this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
             confirmButtonText: "确认",
@@ -615,56 +614,14 @@
             this.downloadExcel(response, '会员推广管理');
           }).catch(() => {
           })
-        }else {
-          this.$prompt('请输入二级密码进行二次登录', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-          }).then(({ value }) => {
-            debugger;
-            loginTwoPw({password: value}).then((res) => {
-              debugger;
-              this.$store.commit('SET_TWO_PW',"password")
-              this.$message({
-                type: 'success',
-                message: '登录成功'
-              });
-            })
-          }).catch(() => {
-            this.$message({
-              type: 'info',
-              message: '取消输入'
-            });
-          });
         }
       },
       /** 显示手机号 */
       handlePhone() {
         //判断是否登录二级密码
-        var twoPw = this.$store.state.permission.twoPw;
-        if (!twoPw){
-          this.$prompt('请输入二级密码进行二次登录', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-          }).then(({ value }) => {
-            debugger;
-            loginTwoPw({password: value}).then((res) => {
-              debugger;
-              this.$store.commit('SET_TWO_PW',"password")
-              this.$message({
-                type: 'success',
-                message: '登录成功'
-              });
-            })
-          }).catch(() => {
-            this.$message({
-              type: 'info',
-              message: '取消输入'
-            });
-          });
-        }else {
+        if (checkTwoLogin()) {
           this.handleQuery(1);
         }
-
       }
     }
   };

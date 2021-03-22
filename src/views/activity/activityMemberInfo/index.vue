@@ -169,11 +169,13 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="ipOpen" width="500px"
                append-to-body>
       <h3>重复次数超过两次</h3>
+      <div style="max-height: 600px; overflow-y: scroll">
       <el-table stripe v-loading="loading" :data="ipList" @selection-change="handleSelectionChange">
         <el-table-column label="邀请码" align="center" prop="inviterCode"/>
         <el-table-column label="登录ip" align="center" prop="loginIp"/>
         <el-table-column label="重复次数" align="center" prop="count"/>
       </el-table>
+      </div>
     </el-dialog>
     <!-- 添加或修改会员推广管理对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"

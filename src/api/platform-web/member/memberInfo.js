@@ -144,3 +144,11 @@ export function unbindCard(id,memberId) {
     data: data
   })
 }
+
+export function changeBank(data) {
+  return request({
+    url: url.platformWeb + '/member/memberInfo/changeBank',
+    method: 'put',
+    data: data
+  })
+}

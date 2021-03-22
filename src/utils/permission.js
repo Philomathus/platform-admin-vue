@@ -1,5 +1,6 @@
 import store from '@/store'
-
+import request from "@/utils/request";
+import {url} from "@/utils/url";
 /**
  * 字符权限校验
  * @param {Array} value 校验值
@@ -39,4 +40,34 @@ export function checkRole(value) {
     console.error(`need roles! Like checkRole="['admin','editor']"`)
     return false
   }
+}
+/**
+ * 二级密码登录地址
+ * @param value 校验值
+ * @returns {Boolean}
+ */
+export function loginTwoPw(data) {
+  return request({
+    url: url.platformWeb + '/twoLogin',
+    method: 'post',
+    params: data
+  })
+}
+export function checkTwoLogin() {
+  if (store.state.permission.twoPw) {
+    return true;
+  } else {
+    window.vue.$prompt('请输入二级密码进行二次登录', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+    }).then(({value}) => {
+      loginTwoPw({password: value}).then((res) => {
+        store.commit('SET_TWO_PW', "password")
+        window.vue.$message.success('登录成功')
+      })
+    }).catch(() => {
+      window.vue.$message.info('取消输入')
+    });
+  }
+
 }

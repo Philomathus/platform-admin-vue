@@ -111,17 +111,14 @@
                          align="center"></el-table-column>
         <el-table-column label="操作" min-width="140">
           <template v-slot="{row}">
-            <el-button @click="unbind(row)" v-if="row.dv==1" disabled size="mini">主卡解绑</el-button>
-            <el-button @click="unbind(row)" v-if="row.dv==0" >副卡解绑</el-button>
-            <el-button @click="changeBank(row)" size="mini" style="margin-left: 0">确认修改</el-button>
+            <el-button @click="unbind(row)" v-if="row.dv==1" type="primary" disabled size="mini">主卡解绑</el-button>
+            <el-button @click="unbind(row)" v-if="row.dv==0" type="primary" size="mini">副卡解绑</el-button>
+            <el-button @click="changeBank(row)" size="mini" type="warning" style="margin-left: 0">确认修改</el-button>
           </template>
         </el-table-column>
       </el-table>
       <pagination
         v-show="total>0"
-
-
-
         :total="total"
         :page.sync="queryParams.pageNum"
         :limit.sync="queryParams.pageSize"

@@ -77,6 +77,15 @@
           v-hasPermi="['activity:activityMemberInfo:export']"
         >导出
         </el-button>
+        <el-button
+          type="info"
+          plain
+          icon="el-icon-plus"
+          size="mini"
+          @click="handlePhone"
+          v-hasPermi="['activity:activityMemberInfo:export']"
+        >显示手机号
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -340,6 +349,7 @@
     ipList
   } from "@/api/platform-web/activity/activityMemberInfo";
   import {pickerDateTimeShortcuts, getYesterDateStart, getYesterDateEnd} from "@/utils/dateUtils";
+  import {checkTwoLogin} from "@/utils/permission";
 
   export default {
     name: "ActivityMemberInfo",
@@ -442,6 +452,11 @@
     methods: {
       /** 查询会员推广管理列表 */
       getList() {
+        if (this.$store.state.permission.twoPw) {
+          this.queryParams.isTwoPw = true
+        }else {
+          this.queryParams.isTwoPw = false
+        }
         this.loading = true;
         listActivityMemberInfo(this.queryParams).then(response => {
           this.activityMemberInfoList = response.rows;
@@ -587,17 +602,26 @@
       },
       /** 导出按钮操作 */
       handleExport() {
-        const queryParams = this.queryParams;
-        this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
-          confirmButtonText: "确认",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function () {
-          return exportActivityMemberInfo(queryParams);
-        }).then(response => {
-          this.downloadExcel(response, '会员推广管理');
-        }).catch(() => {
-        })
+        if (checkTwoLogin()) {
+          const queryParams = this.queryParams;
+          this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
+            confirmButtonText: "确认",
+            cancelButtonText: "取消",
+            type: "warning"
+          }).then(function () {
+            return exportActivityMemberInfo(queryParams);
+          }).then(response => {
+            this.downloadExcel(response, '会员推广管理');
+          }).catch(() => {
+          })
+        }
+      },
+      /** 显示手机号 */
+      handlePhone() {
+        //判断是否登录二级密码
+        if (checkTwoLogin()) {
+          this.handleQuery(1);
+        }
       }
     }
   };

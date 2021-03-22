@@ -89,17 +89,31 @@
         height="460px"
         v-loading="loading"
       >
-        <el-table-column prop="realName" label="真实姓名" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="bankName" label="银行名称" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="realName" label="真实姓名" :show-overflow-tooltip="true">
+        </el-table-column>
+        <el-table-column prop="bankName" label="银行名称" :show-overflow-tooltip="true" min-width="100">
+          <template v-slot="{row}">
+            <el-input  v-model="row.bankName"></el-input>
+          </template>
+        </el-table-column>
         <el-table-column prop="bankAccount" label="银行卡号" :show-overflow-tooltip="true" min-width="150"
-                         align="center"></el-table-column>
-        <el-table-column prop="bankAddress" label="银行地址" :show-overflow-tooltip="true"></el-table-column>
+                         align="center">
+          <template v-slot="{row}">
+            <el-input v-model="row.bankAccount"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column prop="bankAddress" label="银行地址" :show-overflow-tooltip="true" min-width="100">
+          <template v-slot="{row}">
+            <el-input v-model="row.bankAddress"></el-input>
+          </template>
+        </el-table-column>
         <el-table-column prop="createTime" label=" 绑定时间" :show-overflow-tooltip="true" min-width="160"
                          align="center"></el-table-column>
-        <el-table-column label="操作">
+        <el-table-column label="操作" min-width="100">
           <template v-slot="{row}">
-            <el-button @click="unbind(row)" v-if="row.dv==1">主卡解绑</el-button>
+            <el-button @click="unbind(row)" v-if="row.dv==1" disabled size="mini">主卡解绑</el-button>
             <el-button @click="unbind(row)" v-if="row.dv==0" >副卡解绑</el-button>
+            <el-button @click="changeBank(row)" size="mini" style="margin-left: 0">确认修改</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -132,6 +146,7 @@
     cardList,
     resetSafe,
     unbindCard,
+    changeBank,
     resetWithdrawal
   } from '@/api/platform-web/member/memberInfo'
 
@@ -242,6 +257,31 @@
         }).finally(() => {
           this.loading = false
         })
+      },
+      changeBank(row){
+
+          this.$confirm('是否修改银行卡信息?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.loading = true
+            changeBank(row).then((res) => {
+              this.msgSuccess(res.msg);
+              this.cardList();
+            }).catch(() => {
+              this.$notify.error('网络异常')
+            }).finally(() => {
+              this.loading = false
+            })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消'
+            });
+          });
+
+
       },
 
       //切换页面

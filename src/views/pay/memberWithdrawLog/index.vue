@@ -107,6 +107,7 @@
         </template>
       </el-table-column>
       <el-table-column label="会员账号" min-width="120" align="center" prop="account"/>
+      <el-table-column label="今日入款成功次数" min-width="130" align="center" prop="bankCharge"/>
       <el-table-column label="入款出款比" min-width="100" align="center" prop="rechargeWithdrawRate">
         <template v-slot="{row}">
           <span style="color: #FF5722" v-if="row.rechargeWithdrawRate > 10">{{ row.rechargeWithdrawRate }}</span>
@@ -352,7 +353,7 @@ export default {
         priceMin: null,
         priceMax: null,
         orderByColumn: 'create_time',
-        isAsc: 'desc'
+        isAsc: 'desc',
       },
       // 表单参数
       form: {},

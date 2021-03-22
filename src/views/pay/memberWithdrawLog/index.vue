@@ -92,13 +92,18 @@
     <el-table :stripe="true" v-loading="loading" :data="memberWithdrawLogList"
               :highlight-current-row="true"
     >
-      <el-table-column label="复制" align="center">
+      <el-table-column label="复制" align="center" width="100px">
         <template slot-scope="scope">
           <el-button
             type="primary" size="mini"
             @click="handleCopy(scope.row)"
           >复制
           </el-button>
+          <el-button
+            type="text" size="mini"
+            icon="el-icon-copy-document"
+            @click="handleCopy2(scope.row)"
+          />
         </template>
       </el-table-column>
       <el-table-column label="会员ID" min-width="150" align="center" prop="memberId">
@@ -478,9 +483,27 @@ export default {
       this.copyData = html
       this.copy(this.copyData)
     },
+    /** 复制按钮 */
+    handleCopy2(row) {
+      var status = this.statusOptions[parseInt(row.status)]
+      var textarea = document.createElement('textarea')
+      let html = row.memberId
+      + '\r\n' + row.account
+      + '\r\n' + row.withdrawMoney
+      + '\r\n' + row.bankUserName
+      + '\r\n' + row.bankAccount
+      + '\r\n' + row.bankName
+      + '\r\n' + status.dictLabel
+      + '\r\n' + row.opName
+      + '\r\n' + row.createTime
+      + '\r\n' + row.updateTime
+      textarea.value = html
+      this.copyData = html
+      this.copy(this.copyData)
+    },
     copy(data) {
       let url = data
-      let oInput = document.createElement('input')
+      let oInput = document.createElement('textarea')
       oInput.value = url
       document.body.appendChild(oInput)
       oInput.select() // 选择对象;

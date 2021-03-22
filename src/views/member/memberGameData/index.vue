@@ -167,28 +167,22 @@ export default {
     }
   },
   created() {
-    var userId = this.$route.query.userId
-    var createTime = this.$route.query.createTime
-    if (createTime) {
-      this.queryParams.account = userId
-      this.queryParams.selectDate[0] = createTime
-      this.queryParams.selectDate[1] = this.parseTime(this.getTodayEndTime())
-    }
-    this.getList()
-    this.getCount()
+    this.init()
   },
   activated(){
-    var userId = this.$route.query.userId
-    var createTime = this.$route.query.createTime
-    if (createTime) {
-      this.queryParams.account = userId
-      this.queryParams.selectDate[0] = createTime
-      this.queryParams.selectDate[1] = this.parseTime(this.getTodayEndTime())
-    }
-    this.getList()
-    this.getCount()
+    this.init()
   },
   methods: {
+    init(){
+      var userId = this.$route.query.userId
+      var createTime = this.$route.query.createTime
+      if (createTime) {
+        this.queryParams.account = userId
+        this.queryParams.selectDate = [createTime,this.parseTime(this.getTodayEndTime())]
+      }
+      this.getList()
+      this.getCount()
+    },
     // 0:未洗码1已经洗码
     formatterStatus(row) {
       if (row.status == 0) {

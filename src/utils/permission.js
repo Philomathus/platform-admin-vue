@@ -1,4 +1,6 @@
 import store from '@/store'
+import request from "@/utils/request";
+import {url} from "@/utils/url";
 
 /**
  * 字符权限校验
@@ -39,4 +41,16 @@ export function checkRole(value) {
     console.error(`need roles! Like checkRole="['admin','editor']"`)
     return false
   }
+}
+/**
+ * 二级密码登录地址
+ * @param value 校验值
+ * @returns {Boolean}
+ */
+export function loginTwoPw(data) {
+  return request({
+    url: url.platformWeb + '/twoLogin',
+    method: 'post',
+    params: data
+  })
 }

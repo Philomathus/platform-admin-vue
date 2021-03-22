@@ -7,7 +7,8 @@ const permission = {
   state: {
     routes: [],
     addRoutes: [],
-    sidebarRouters: []
+    sidebarRouters: [],
+    twoPw: null
   },
   mutations: {
     SET_ROUTES: (state, routes) => {
@@ -16,6 +17,9 @@ const permission = {
     },
     SET_SIDEBAR_ROUTERS: (state, routers) => {
       state.sidebarRouters = constantRoutes.concat(routers)
+    },
+    SET_TWO_PW: (state,twoToken) => {
+      state.twoPw = twoToken
     },
   },
   actions: {

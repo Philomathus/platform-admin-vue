@@ -190,7 +190,7 @@ export default {
     this.getList();
     //全部彩种
     lotteryInfoName().then(response => {
-      this.historyNameOptions = response.data
+      this.lotteryInfoNameOptions = response.data
     })
     this.getDicts('lottery_history_status').then(response => {
       this.statusOptions = response.data

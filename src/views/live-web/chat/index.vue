@@ -407,6 +407,7 @@ export default {
         this.form = response.data
         this.open = true
         this.title = '封停用户'
+        this.getList()
       })
     },
     handleUpdate(row) {
@@ -419,6 +420,7 @@ export default {
         return that.suspendUser(row.fromPlatform, false, 0, row.userIp, row.msg)
       }).then(() => {
         that.msgSuccess('解封成功')
+        this.getList()
       })
     },
     /** 修改按钮操作 */

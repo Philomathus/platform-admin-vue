@@ -49,16 +49,15 @@
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="id" prop="msg">
-          <el-input v-model="form.id" placeholder="请输入id" />
-        </el-form-item>
+<!--        <el-form-item label="id" prop="id">-->
+<!--          <el-input v-model="form.id" placeholder="请输入id" />-->
+<!--        </el-form-item>-->
         <el-form-item label="互动消息" prop="msg">
           <el-input v-model="form.msg" placeholder="请输入互动信息" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
 
@@ -70,7 +69,6 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
   </div>

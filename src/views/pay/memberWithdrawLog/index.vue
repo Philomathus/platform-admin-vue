@@ -166,7 +166,7 @@
           <el-button
             size="small"
             type="primary"
-            v-if="scope.row.status == 0"
+            v-show="scope.row.status == 0"
             icon="el-icon-lock"
             @click="handleLock(scope.row)"
             v-has-permi="['pay:memberWithdrawLog:lock']"
@@ -176,7 +176,7 @@
             size="small"
             type="primary"
             plain
-            v-if="scope.row.status == 1"
+            v-show="scope.row.status == 1"
             icon="el-icon-unlock"
             @click="handleUnlock(scope.row)"
             v-has-permi="['pay:memberWithdrawLog:unlock']"
@@ -186,7 +186,7 @@
             size="small"
             type="success"
             plain
-            v-if="scope.row.status == 1"
+            v-show="scope.row.status == 1"
             icon="el-icon-circle-check"
             @click="handleWithdraw(scope.row)"
             v-has-permi="['pay:memberWithdrawLog:artificial']"
@@ -196,7 +196,7 @@
             size="small"
             type="danger"
             plain
-            v-if="scope.row.status < 2 || scope.row.status == 5"
+            v-show="scope.row.status < 2 || scope.row.status == 5"
             icon="el-icon-circle-close"
             @click="handleRefused(scope.row)"
             v-has-permi="['pay:memberWithdrawLog:refused']"
@@ -206,7 +206,7 @@
             size="small"
             type="warning"
             plain
-            v-if="scope.row.status == 5"
+            v-show="scope.row.status == 5"
             icon="el-icon-s-custom"
             @click="handleArtificialWithdraw(scope.row)"
             v-has-permi="['pay:memberWithdrawLog:artificial']"

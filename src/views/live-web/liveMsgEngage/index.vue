@@ -183,7 +183,6 @@ export default {
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          debugger;
           if (this.form.id != null) {
             updateLiveMsgEngage(this.form).then(response => {
               this.msgSuccess(response.msg);
@@ -203,7 +202,8 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项?', "警告", {
+      const  msg=row.msg;
+      this.$confirm('是否确认删除消息为为"' + msg + '"的数据项?', "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"

@@ -1,6 +1,7 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+    <el-button type="primary">送礼金额 {{ this.totalData.totalPorp||0 }}</el-button>
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" style="margin-top: 20px" label-width="68px">
       <el-form-item label="日期范围" prop="selectDate">
         <el-date-picker
           type="daterange"
@@ -66,9 +67,11 @@
 <script>
 import {
   listLiveProplog,
-  exportLiveProplog
+  exportLiveProplog,
+  getCount
 } from '@/api/platform-web/member/liveProplog'
 import { pickerDateShortcuts } from '@/utils/dateUtils'
+
 
 export default {
   name: 'LiveProplog',
@@ -76,6 +79,10 @@ export default {
   data() {
     return {
       pickerOptions: { shortcuts: pickerDateShortcuts },
+      //统计数据
+      totalData: {
+        totalPorp: 0,
+      },
       // 遮罩层
       loading: true,
       // 选中数组
@@ -111,6 +118,7 @@ export default {
   },
   created() {
     this.getList()
+    this.count();
   },
   methods: {
     /** 查询用户送礼日志列表 */
@@ -125,6 +133,15 @@ export default {
         this.loading = false
       })
     },
+  count() {
+      getCount(this.queryParams).then((res) => {
+        console.info(res)
+        if (res.data) {
+          this.totalData = res.data
+        }
+        this.loading = false
+      })
+    },
     // 表单重置
     reset() {
       this.form = {
@@ -136,6 +153,7 @@ export default {
     handleQuery() {
       this.queryParams.pageNum = 1
       this.getList()
+      this.count();
     },
     /** 重置按钮操作 */
     resetQuery() {

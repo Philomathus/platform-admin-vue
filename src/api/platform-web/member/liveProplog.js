@@ -52,3 +52,12 @@ export function exportLiveProplog(query) {
     params: query
   })
 }
+
+// 查询会员注单数据统计
+export function getCount(query) {
+  return request({
+    url: url.platformWeb + '/admin/liveProplog/getCount',
+    method: 'get',
+    params: query
+  })
+}

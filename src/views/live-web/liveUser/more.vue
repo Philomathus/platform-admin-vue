@@ -405,7 +405,11 @@
             },
           //修改主播体现比例
             editRate() {
-              return updateLiveUser(this.liveUserRate)
+              return updateLiveUser(this.liveUserRate).then((res) => {
+                      this.$notify.success("修改成功")
+                    }).catch(() => {
+                      this.$notify.success("修改失败")
+                    });
             },
           //查询主播体现比例
           queryRate() {

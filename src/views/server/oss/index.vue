@@ -72,7 +72,7 @@
             size="mini"
             type="text"
             style="color: #5FB878"
-            v-if="scope.row.isEffect != 1"
+            v-show="scope.row.isEffect != 1"
             @click="handleEffect(scope.row)"
             v-hasPermi="['server:oss:effect']"
           >激活

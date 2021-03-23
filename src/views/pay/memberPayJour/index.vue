@@ -128,7 +128,7 @@
             icon="el-icon-edit"
             size="small"
             @click="handlePatchOrder(scope.row)"
-            v-if="scope.row.status == 0 || scope.row.status == -1"
+            v-show="scope.row.status == 0 || scope.row.status == -1"
             v-hasPermi="['pay:payPlatformNew:patchOrder']"
           >人工补单
           </el-button>

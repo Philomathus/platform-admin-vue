@@ -116,7 +116,7 @@
           <el-button
             size="small"
             type="success"
-            v-if="scope.row.isRecommend === 0 && scope.row.sort >= 9999000 && scope.row.stick === 0"
+            v-show="scope.row.isRecommend === 0 && scope.row.sort >= 9999000 && scope.row.stick === 0"
             @click="setSort(scope.row)"
             v-hasPermi="['admin:liveVideo:edit']"
           >固定定位
@@ -126,13 +126,13 @@
             size="small"
             style="width: 50px;margin: 0 10px 0 10px"
             readonly
-            v-if="scope.row.isRecommend === 0 && scope.row.sort < 9999000 && scope.row.stick === 0"
+            v-show="scope.row.isRecommend === 0 && scope.row.sort < 9999000 && scope.row.stick === 0"
           />
           <el-button
             plain
             size="small"
             type="success"
-            v-if="scope.row.isRecommend === 0 && scope.row.sort < 9999000 && scope.row.stick === 0"
+            v-show="scope.row.isRecommend === 0 && scope.row.sort < 9999000 && scope.row.stick === 0"
             @click="closeSort(scope.row)"
             v-hasPermi="['admin:liveVideo:edit']"
           >取消固定定位
@@ -140,7 +140,7 @@
           <el-button
             size="small"
             type="primary"
-            v-if="scope.row.isRecommend === 0 && scope.row.sort >= 9999000 && scope.row.stick === 0"
+            v-show="scope.row.isRecommend === 0 && scope.row.sort >= 9999000 && scope.row.stick === 0"
             @click="recommend(scope.row)"
             v-hasPermi="['admin:liveVideo:edit']"
           >推荐
@@ -149,7 +149,7 @@
             :plain="true"
             size="small"
             type="primary"
-            v-if="scope.row.isRecommend === 1 && scope.row.sort >= 9999000 && scope.row.stick === 0"
+            v-show="scope.row.isRecommend === 1 && scope.row.sort >= 9999000 && scope.row.stick === 0"
             @click="closeRecommend(scope.row)"
             v-hasPermi="['admin:liveVideo:edit']"
           >取消推荐
@@ -157,7 +157,7 @@
           <el-button
             size="small"
             type="info"
-            v-if="scope.row.isRecommend === 0 && scope.row.sort >= 9999000 && scope.row.stick === 0"
+            v-show="scope.row.isRecommend === 0 && scope.row.sort >= 9999000 && scope.row.stick === 0"
             @click="stick(scope.row)"
             v-hasPermi="['admin:liveVideo:edit']"
           >置底
@@ -166,7 +166,7 @@
             :plain="true"
             size="small"
             type="info"
-            v-if="scope.row.isRecommend === 0 && scope.row.sort >= 9999000 && scope.row.stick === 1"
+            v-show="scope.row.isRecommend === 0 && scope.row.sort >= 9999000 && scope.row.stick === 1"
             @click="closeStick(scope.row)"
             v-hasPermi="['admin:liveVideo:edit']"
           >取消置底
@@ -174,7 +174,7 @@
           <el-button
             size="small"
             type="warning"
-            v-if="scope.row.openPay === '1' && !scope.row.isLivePay"
+            v-show="scope.row.openPay === '1' && !scope.row.isLivePay"
             @click="toLivePay(scope.row)"
             v-hasPermi="['admin:liveVideo:edit']"
           >收费

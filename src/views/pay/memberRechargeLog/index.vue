@@ -141,7 +141,7 @@
             type="primary"
             plain
             icon="el-icon-unlock"
-            v-if="scope.row.status == 0"
+            v-show="scope.row.status == 0"
             @click="handleFirstAudit(scope.row)"
             v-hasPermi="['pay:memberRechargeLog:firstAudit']"
           >初审
@@ -151,7 +151,7 @@
             type="success"
             plain
             icon="el-icon-check"
-            v-if="scope.row.status == 1"
+            v-show="scope.row.status == 1"
             @click="handleFinalAudit(scope.row)"
             v-hasPermi="['pay:memberRechargeLog:finalAudit']"
           >终审通过
@@ -161,7 +161,7 @@
             type="danger"
             plain
             icon="el-icon-close"
-            v-if="scope.row.status == 0 || scope.row.status == 1"
+            v-show="scope.row.status == 0 || scope.row.status == 1"
             @click="handleRefusedAudit(scope.row)"
             v-hasPermi="['pay:memberRechargeLog:refusedAudit']"
           >审核不通过
@@ -171,7 +171,7 @@
             type="info"
             plain
             icon="el-icon-refresh-right"
-            v-if="scope.row.status == 2 || scope.row.status == 4"
+            v-show="scope.row.status == 2 || scope.row.status == 4"
             @click="handleRecoverAudit(scope.row)"
             v-hasPermi="['pay:memberRechargeLog:recoverAudit']"
           >恢复

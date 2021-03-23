@@ -102,7 +102,9 @@ export function exportLiveUser(query) {
   return request({
     url: url.platformWeb + '/admin/liveUser/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }
 

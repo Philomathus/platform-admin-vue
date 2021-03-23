@@ -82,7 +82,7 @@
           <el-button
             size="mini"
             type="text"
-            v-if="scope.row.status != 1"
+            v-show="scope.row.status != 1"
             style="color: #5FB878"
             @click="handleEffect(scope.row, 1)"
             v-hasPermi="['server:live:effect']"
@@ -92,7 +92,7 @@
           <el-button
             size="mini"
             type="text"
-            v-if="scope.row.status != 2"
+            v-show="scope.row.status != 2"
             style="color: #FFB800"
             @click="handleEffect(scope.row, 2)"
             v-hasPermi="['server:live:effect']"
@@ -102,7 +102,7 @@
           <el-button
             size="mini"
             type="text"
-            v-if="scope.row.status != -1"
+            v-show="scope.row.status != -1"
             style="color: #FF5722"
             @click="handleEffect(scope.row, -1)"
             v-hasPermi="['server:live:effect']"
@@ -112,7 +112,7 @@
           <el-button
             size="mini"
             type="text"
-            v-if="scope.row.status != 0"
+            v-show="scope.row.status != 0"
             style="color: #C0C0C0"
             @click="handleEffect(scope.row, 0)"
             v-hasPermi="['server:live:effect']"

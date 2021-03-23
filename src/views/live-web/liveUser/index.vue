@@ -132,7 +132,7 @@
             icon="el-icon-s-check"
             @click="handleAuth(scope.row)"
             v-hasPermi="['admin:liveUser:edit']"
-            v-if="scope.row.isAuthentication === 1"
+            v-show="scope.row.isAuthentication === 1"
           >审核
           </el-button>
           <el-button

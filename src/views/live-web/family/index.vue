@@ -84,7 +84,7 @@
             size="mini"
             type="text"
             icon="el-icon-check"
-            v-if="scope.row.status ==0"
+            v-show="scope.row.status ==0"
             @click="handleUpdate(scope.row,1)"
           >通过
           </el-button>
@@ -92,7 +92,7 @@
             size="mini"
             type="text"
             icon="el-icon-close"
-            v-if="scope.row.status ==0"
+            v-show="scope.row.status ==0"
             @click="handleUpdate(scope.row,0)"
           >不通过
           </el-button>

@@ -41,17 +41,20 @@
       </el-col>
       <el-col :span="10" style="margin-left: 10px">
         <span style="font-size: 16px;margin-right: 10px">记录刷新</span>
-          <el-select v-model="refreshSec" placeholder="时间间隔" style="width: 110px">
-            <el-option value="5" label="5秒"></el-option>
-            <el-option value="10" label="10秒"></el-option>
-            <el-option value="15" label="15秒"></el-option>
-            <el-option value="20" label="20秒"></el-option>
-            <el-option value="30" label="30秒"></el-option>
-          </el-select>
-          <div style="width: 120px;display: inline-block;text-align: center">
-            <span>{{ refreshDesc }}</span>
-          </div>
-          <el-button :type="refreshType" :icon="refreshIcon" size="mini" @click="refreshData">{{ refreshLabel }}</el-button>
+        <el-select v-model="refreshSec" placeholder="时间间隔" style="width: 110px">
+          <el-option value="5" label="5秒"></el-option>
+          <el-option value="10" label="10秒"></el-option>
+          <el-option value="15" label="15秒"></el-option>
+          <el-option value="20" label="20秒"></el-option>
+          <el-option value="30" label="30秒"></el-option>
+        </el-select>
+        <div style="width: 120px;display: inline-block;text-align: center">
+          <span>{{ refreshDesc }}</span>
+        </div>
+        <el-button :type="refreshType" :icon="refreshIcon" size="mini" @click="refreshData">{{
+            refreshLabel
+          }}
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -89,20 +92,27 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" min-width="150" align="center" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column label="操作" min-width="130" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
+            v-show="scope.row.noSpeaking == false"
+            size="small"
+            type="danger"
+            @click="handleUpdateStop(scope.row)"
             v-hasPermi="['admin:liveVideoChat:edit']"
-          >封停/解封
+          >封停
           </el-button>
           <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
+            v-show="scope.row.noSpeaking == true"
+            size="small"
+            type="success"
+            @click="handleUpdate(scope.row)"
+            v-hasPermi="['admin:liveVideoChat:edit']"
+          >解封
+          </el-button>
+          <el-button
+            size="small"
+            type="warning"
             @click="handleForbid(scope.row)"
             v-hasPermi="['admin:liveVideoChat:edit']"
           >禁言
@@ -242,15 +252,16 @@ import {
   exportLiveVideoChat
 } from '@/api/live-web/chat/liveVideoChat'
 import request from '@/utils/request'
-import { url } from '@/utils/url'
-import { listSpeakIpBlackList, updateSpeakIpBlackList } from '@/api/live-web/chat/speakIpBlackList'
-import {changeSpeak} from "@/api/platform-web/member/memberInfo";
+import {url} from '@/utils/url'
+import {listSpeakIpBlackList, updateSpeakIpBlackList} from '@/api/live-web/chat/speakIpBlackList'
 
 export default {
   name: 'LiveVideoChat',
   components: {},
   data() {
     return {
+      //是否封停
+      noSpeaking: null,
       refreshSec: '5',
       refreshType: 'primary',
       refreshIcon: 'el-icon-refresh',
@@ -303,7 +314,7 @@ export default {
       // 表单校验
       rules: {
         poscatId: [
-          { required: true, message: '主播ID不能为空', trigger: 'blur' }
+          {required: true, message: '主播ID不能为空', trigger: 'blur'}
         ]
       }
     }
@@ -389,28 +400,26 @@ export default {
       this.title = '添加会员发言'
     },
     /** 修改按钮操作 */
+    handleUpdateStop(row) {
+      this.reset()
+      const id = row.id || this.ids
+      getLiveVideoChat(id).then(response => {
+        this.form = response.data
+        this.open = true
+        this.title = '封停用户'
+      })
+    },
     handleUpdate(row) {
       var that = this
-      if (row.noSpeaking == false) {
-        //  alert("封停")
-        this.reset()
-        const id = row.id || this.ids
-        getLiveVideoChat(id).then(response => {
-          this.form = response.data
-          this.open = true
-          this.title = '封停用户'
-        })
-      } else {
-        this.$confirm('确定要' + row.fromPlatform + '解封吗?', '警告', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(function() {
-          return that.suspendUser(row.fromPlatform, false, 0, row.userIp,row.msg)
-        }).then(() => {
-          that.msgSuccess('解封成功')
-        })
-      }
+      this.$confirm('确定要' + row.fromPlatform + '解封吗?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        return that.suspendUser(row.fromPlatform, false, 0, row.userIp, row.msg)
+      }).then(() => {
+        that.msgSuccess('解封成功')
+      })
     },
     /** 修改按钮操作 */
     handleUpdateIpBlack(row) {
@@ -419,7 +428,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         var data = {}
         data.userIp = row.userIp
         data.userId = row.userId
@@ -445,15 +454,15 @@ export default {
     // },
     //打开备注禁言弹框
     handleForbid(row) {
-        this.remark = null
-        this.remarked = null
-        this.fromPlatform = row.fromPlatform
-        this.poscatId = row.poscatId
-        this.muteRemarkSpeak = true
+      this.remark = null
+      this.remarked = null
+      this.fromPlatform = row.fromPlatform
+      this.poscatId = row.poscatId
+      this.muteRemarkSpeak = true
     },
     //禁言备注提交
     submitMuteRemarkSpeak() {
-      if(this.remarked != null){
+      if (this.remarked != null) {
         this.remark = this.remarked;
       }
       this.Forbid(this.fromPlatform, this.poscatId, this.remark)
@@ -472,7 +481,7 @@ export default {
       this.muteRemarkSpeak = false
       this.getList()
     },
-    suspendUser(pUserId, falg, num, userIp,msg) {
+    suspendUser(pUserId, falg, num, userIp, msg) {
       var data = {}
       if (num == 1) {
         data.pUserId = this.form.fromPlatform
@@ -521,7 +530,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return delLiveVideoChat(ids)
       }).then(() => {
         this.getList()
@@ -556,7 +565,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportLiveVideoChat(queryParams)
       }).then(response => {
         this.download(response.msg)
@@ -584,7 +593,7 @@ export default {
     startRefresh() {
       const thet = this
       let secs = thet.refreshSec
-      window.refreshInterval = setInterval(function() {
+      window.refreshInterval = setInterval(function () {
         if (secs === 0) {
           thet.getList()
           secs = thet.refreshSec

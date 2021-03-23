@@ -169,6 +169,15 @@
         <el-form-item label="身份证号码" prop="identifyNumber">
           <el-input v-model="form.identifyNumber" readonly/>
         </el-form-item>
+        <el-form-item label="时薪" prop="coin">
+          <el-input v-model="form.coin" type="number"/>
+        </el-form-item>
+        <el-form-item label="彩票抽成" prop="xpoint">
+        <el-input v-model="form.xpoint" type="number"/>
+      </el-form-item>
+        <el-form-item label="礼物抽成" prop="ypoint">
+        <el-input v-model="form.ypoint" type="number"/>
+      </el-form-item>
         <el-form-item label="手持身份证照片">
           <img :src="form.identifyHoldImage" style="width: 300px;height: 300px"/>
         </el-form-item>
@@ -370,7 +379,10 @@ export default {
         identifyNagativeImage: null,
         investorSendInfo: null,
         vExplain: null,
-        identifyNumber: null
+        identifyNumber: null,
+        coin: null,
+        xpoint: null,
+        ypoint: null
       }
       this.resetForm('form')
     },

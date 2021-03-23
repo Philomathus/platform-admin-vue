@@ -344,8 +344,16 @@ export default {
       })
     },
     openIpBlackList() {
+      this.reset()
       this.speakIpBlackListList = true
       this.title = '查看已封停的ip'
+      listSpeakIpBlackList(this.queryParams).then(response => {
+        this.speakIpBlackData = response.rows
+        this.total = response.total
+        this.loading = false
+      })
+    },
+    searchIpBlackList(){
       listSpeakIpBlackList(this.queryParams).then(response => {
         this.speakIpBlackData = response.rows
         this.total = response.total
@@ -371,7 +379,12 @@ export default {
         userNickName: null,
         fromPlatform: null,
       }
+      this.queryParams ={
+        userId: null,
+        userIp: null
+      }
       this.resetForm('form')
+      this.resetForm('queryParams')
     },
     /** 搜索按钮操作 */
     handleQuery() {
@@ -380,7 +393,7 @@ export default {
     },
     handleQueryIpBlack() {
       this.queryParams.pageNum = 1
-      this.openIpBlackList()
+      this.searchIpBlackList()
     },
     /** 重置按钮操作 */
     resetQuery() {

@@ -119,8 +119,8 @@
       <el-table-column label="禁播状态" min-width="120" align="center" prop="isBan">
         <template v-slot="{row}">
           <el-switch
-            active-value="0"
-            inactive-value="1"
+            :active-value="0"
+            :inactive-value="1"
             active-color="#5B7BFA"
             inactive-color="#dadde5"
             v-model="row.isBan"
@@ -324,7 +324,7 @@ export default {
     },
     //修改禁播状态
     displayCheck(row) {
-      if (parseInt(row.isBan)) {
+      if (row.isBan) {
         this.opens('主播禁播备注', row, row.isBan)
       } else {
         this.banDetail(row, row.isBan)
@@ -340,7 +340,7 @@ export default {
       }).then(({ value }) => {
         that.banDetail(row, type, value)
       }).catch(() => {
-        row.isBan = row.isBan === '0' ? '1' : '0'
+        row.isBan = row.isBan === 0 ? 1 : 0
       })
 
     },

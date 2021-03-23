@@ -317,7 +317,6 @@ import {
 } from '@/api/platform-web/member/memberInfo'
 import more from './more'
 import {listSpeakIpBlackList, updateSpeakIpBlackList} from '@/api/live-web/chat/speakIpBlackList'
-import {bindGoogleAuth} from "@/api/platform-web/system/user";
 
 
 export default {
@@ -381,8 +380,8 @@ export default {
         nickName: null,
         inviterCode: null,
         channelcode: null,
-        orderByColumn: 'reg_time',
-        isAsc: 'desc'
+        // orderByColumn: 'reg_time',
+        // isAsc: 'desc'
       },
       // 表单参数
       form: {},
@@ -469,7 +468,6 @@ export default {
     /** 查询用户信息列表 */
     getList() {
       this.loading = true
-
       listMemberInfo(this.queryParams).then(response => {
         this.memberInfoList = response.rows
         this.total = response.total
@@ -477,12 +475,20 @@ export default {
       })
     },
     openIpBlackList() {
+      this.reset()
       this.speakIpBlackListList = true
       this.title = '查看已封停的ip'
       listSpeakIpBlackList(this.queryParams).then(response => {
         this.speakIpBlackData = response.rows
         this.total = response.total
         this.loading = false
+      })
+    },
+    searchIpBlackList(){
+      listSpeakIpBlackList(this.queryParams).then(response => {
+          this.speakIpBlackData = response.rows
+          this.total = response.total
+          this.loading = false
       })
     },
     /** 修改按钮操作 */
@@ -526,7 +532,12 @@ export default {
         userName: null,
         password: null,
         remark: null,
+      },
+      this.queryParams ={
+        userId : null,
+        userIp : null
       }
+      this.resetForm('queryParams')
       this.resetForm('form')
     },
     /** 搜索按钮操作 */
@@ -536,7 +547,7 @@ export default {
     },
     handleQueryIpBlack() {
       this.queryParams.pageNum = 1
-      this.openIpBlackList()
+      this.searchIpBlackList()
     },
     /** 重置按钮操作 */
     resetQuery() {

@@ -87,9 +87,18 @@
             trigger="click"
           >
             <table>
-              <tr><td style="text-align: right">家  族  ID：</td><td style="text-align: left">{{ scope.row.familyId }}</td></tr>
-              <tr><td style="text-align: right">家 族 长 ID：</td><td style="text-align: left">{{ scope.row.familyUserId }}</td></tr>
-              <tr><td style="text-align: right">家族长昵称：</td><td style="text-align: left">{{ scope.row.familyNickName }}</td></tr>
+              <tr>
+                <td style="text-align: right">家 族 ID：</td>
+                <td style="text-align: left">{{ scope.row.familyId }}</td>
+              </tr>
+              <tr>
+                <td style="text-align: right">家 族 长 ID：</td>
+                <td style="text-align: left">{{ scope.row.familyUserId }}</td>
+              </tr>
+              <tr>
+                <td style="text-align: right">家族长昵称：</td>
+                <td style="text-align: left">{{ scope.row.familyNickName }}</td>
+              </tr>
             </table>
             <a slot="reference" style="color: #00afff">{{ scope.row.familyName }}</a>
           </el-popover>
@@ -110,8 +119,8 @@
       <el-table-column label="禁播状态" min-width="120" align="center" prop="isBan">
         <template v-slot="{row}">
           <el-switch
-            active-value="0"
-            inactive-value="1"
+            :active-value="0"
+            :inactive-value="1"
             active-color="#5B7BFA"
             inactive-color="#dadde5"
             v-model="row.isBan"
@@ -158,7 +167,7 @@
     />
 
     <!-- 添加或修改主播信息对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="真实姓名" prop="authenticationName">
           <el-input v-model="form.authenticationName" readonly/>
@@ -168,6 +177,15 @@
         </el-form-item>
         <el-form-item label="身份证号码" prop="identifyNumber">
           <el-input v-model="form.identifyNumber" readonly/>
+        </el-form-item>
+        <el-form-item label="时薪" prop="coin">
+          <el-input v-model="form.coin" type="number"/>
+        </el-form-item>
+        <el-form-item label="彩票抽成" prop="xpoint">
+          <el-input v-model="form.xpoint" type="number"/>
+        </el-form-item>
+        <el-form-item label="礼物抽成" prop="ypoint">
+          <el-input v-model="form.ypoint" type="number"/>
         </el-form-item>
         <el-form-item label="手持身份证照片">
           <img :src="form.identifyHoldImage" style="width: 300px;height: 300px"/>
@@ -261,7 +279,7 @@ export default {
         isAuthentication: null,
         mobile: null,
         familyId: null,
-        orderByColumn: 'create_time',
+        orderByColumn: 'u.create_time',
         isAsc: 'desc'
       },
       // 表单参数
@@ -295,7 +313,7 @@ export default {
     }
   },
   methods: {
-    init(){
+    init() {
       const familyId = this.$route.query.familyId
       if (familyId && familyId >= 0) {
         this.queryParams.familyId = familyId
@@ -306,7 +324,7 @@ export default {
     },
     //修改禁播状态
     displayCheck(row) {
-      if (parseInt(row.isBan)) {
+      if (row.isBan) {
         this.opens('主播禁播备注', row, row.isBan)
       } else {
         this.banDetail(row, row.isBan)
@@ -322,7 +340,7 @@ export default {
       }).then(({ value }) => {
         that.banDetail(row, type, value)
       }).catch(() => {
-        row.isBan = row.isBan === '0' ? '1' : '0'
+        row.isBan = row.isBan === 0 ? 1 : 0
       })
 
     },
@@ -370,7 +388,10 @@ export default {
         identifyNagativeImage: null,
         investorSendInfo: null,
         vExplain: null,
-        identifyNumber: null
+        identifyNumber: null,
+        coin: null,
+        xpoint: null,
+        ypoint: null
       }
       this.resetForm('form')
     },
@@ -421,7 +442,7 @@ export default {
             }
             this.open = false
             that.getList()
-          }).catch(function(){
+          }).catch(function() {
           })
         }
       })
@@ -429,14 +450,15 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('是否确认导出所有主播信息数据项?', '警告', {
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function() {
         return exportLiveUser(queryParams)
       }).then(response => {
-        this.download(response.msg)
+        this.downloadExcel(response, '主播列表')
+      }).catch(() => {
       })
     },
     handleAuth(row) {

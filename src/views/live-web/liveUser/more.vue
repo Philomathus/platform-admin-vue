@@ -10,6 +10,8 @@
       </button>
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(3,'收礼物日志')">
         <span>收礼物日志</span></button>
+      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(5,'体现比例')">
+        <span>体现比例</span></button>
       <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(4,'加入家族')">
         <span>加入家族</span></button>
     </div>
@@ -132,7 +134,25 @@
       />
     </el-row>
 
-    <div slot="footer" class="dialog-footer">
+    <!--提现比例-->
+    <el-row v-if="index===5">
+      <el-form :model="liveUserRate" ref="liveUserRate" :inline="false">
+        <el-form-item label="时薪" prop="coin">
+          <el-input v-model="liveUserRate.coin" type="number"/>
+        </el-form-item>
+        <el-form-item label="彩票抽成" prop="xpoint">
+          <el-input v-model="liveUserRate.xpoint" type="number"/>
+        </el-form-item>
+        <el-form-item label="礼物抽成" prop="ypoint">
+          <el-input v-model="liveUserRate.ypoint" type="number"/>
+        </el-form-item>
+        <el-form-item style="float: right">
+          <el-button type="primary" icon="el-icon-edit" size="mini" @click="editRate">确定修改</el-button>
+        </el-form-item>
+      </el-form>
+    </el-row>
+
+    <div slot="footer" class="dialog-footer" v-if="index!==5">
       <el-button type="primary" @click="handleImportTable">确 定</el-button>
       <el-button @click="visible = false">取 消</el-button>
     </div>
@@ -142,8 +162,8 @@
 <script>
     import {listDbTable, importTable} from "@/api/platform-web/tool/gen";
     import {
-        goFamiily,
-        chatPage, receiveProplist,logPage
+      goFamiily,
+      chatPage, receiveProplist, logPage, updateLiveUser, getLiveUser
     } from "@/api/live-web/liveUser";
 
     export default {
@@ -157,6 +177,8 @@
             return {
                 //弹出框标题
                 title: '积分明细',
+              // 提现比例
+              liveUserRate: {coin: null,xpoint: null,ypoint: null},
                 //页面编码
                 index: 1,
 /*                //用户id
@@ -331,6 +353,9 @@
                     case 3:
                         this.receiveProplist()
                         break;
+                    case 5:
+                        this.queryRate()
+                        break;
                 }
             },
             //获取聊天记录列表
@@ -377,6 +402,20 @@
                 }).catch(() => {
                     this.$notify.error('获取聊天记录列表失败')
                 });
+            },
+          //修改主播体现比例
+            editRate() {
+              return updateLiveUser(this.liveUserRate).then((res) => {
+                      this.$notify.success("修改成功")
+                    }).catch(() => {
+                      this.$notify.success("修改失败")
+                    });
+            },
+          //查询主播体现比例
+          queryRate() {
+            getLiveUser(this.userId).then(response => {
+              this.liveUserRate = response.data
+            })
             },
             //获取账户日志
             logPage(){

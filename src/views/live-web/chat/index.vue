@@ -92,10 +92,10 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" min-width="130" align="center" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column label="操作" width="145" align="left" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
-            v-show="scope.row.noSpeaking == false"
+            v-show="!scope.row.noSpeaking"
             size="small"
             type="danger"
             @click="handleUpdateStop(scope.row)"
@@ -103,11 +103,12 @@
           >封停
           </el-button>
           <el-button
-            v-show="scope.row.noSpeaking == true"
+            v-show="scope.row.noSpeaking"
             size="small"
             type="success"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:liveVideoChat:edit']"
+            style="margin-left: 0px"
           >解封
           </el-button>
           <el-button

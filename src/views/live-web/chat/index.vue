@@ -186,10 +186,10 @@
 
     <!--查看封停ip-->
     <el-dialog v-dialogDrag title="查看封停ip" :visible.sync="speakIpBlackListList" width="1200px" append-to-body>
-      <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+      <el-form :model="queryParam" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
         <el-form-item label="会员id" prop="userId">
           <el-input
-            v-model="queryParams.userId"
+            v-model="queryParam.userId"
             placeholder="会员id"
             clearable
             size="small"
@@ -198,7 +198,7 @@
         </el-form-item>
         <el-form-item label="会员ip" prop="userIp">
           <el-input
-            v-model="queryParams.userIp"
+            v-model="queryParam.userIp"
             placeholder="会员ip"
             clearable
             size="small"
@@ -232,8 +232,8 @@
         v-show="total>0"
         :total="total"
         :page-sizes="[10,20,100]"
-        :page.sync="queryParams.pageNum"
-        :limit.sync="queryParams.pageSize"
+        :page.sync="queryParam.pageNum"
+        :limit.sync="queryParam.pageSize"
         @pagination="openIpBlackList"
       />
     </el-dialog>
@@ -309,6 +309,10 @@ export default {
         orderByColumn: 'create_time',
         isAsc: 'desc'
       },
+      queryParam: {
+        pageNum: 1,
+        pageSize: 20
+      },
       // 表单参数
       form: {},
       // 表单校验
@@ -347,14 +351,14 @@ export default {
       this.reset()
       this.speakIpBlackListList = true
       this.title = '查看已封停的ip'
-      listSpeakIpBlackList(this.queryParams).then(response => {
+      listSpeakIpBlackList(this.queryParam).then(response => {
         this.speakIpBlackData = response.rows
         this.total = response.total
         this.loading = false
       })
     },
     searchIpBlackList(){
-      listSpeakIpBlackList(this.queryParams).then(response => {
+      listSpeakIpBlackList(this.queryParam).then(response => {
         this.speakIpBlackData = response.rows
         this.total = response.total
         this.loading = false
@@ -392,7 +396,7 @@ export default {
       this.getList()
     },
     handleQueryIpBlack() {
-      this.queryParams.pageNum = 1
+      this.queryParam.pageNum = 1
       this.searchIpBlackList()
     },
     /** 重置按钮操作 */

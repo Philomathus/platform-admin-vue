@@ -311,7 +311,9 @@ export default {
       },
       queryParam: {
         pageNum: 1,
-        pageSize: 20
+        pageSize: 20,
+        orderByColumn: 'create_time',
+        isAsc: 'desc'
       },
       // 表单参数
       form: {},

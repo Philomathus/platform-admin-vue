@@ -385,12 +385,12 @@ export default {
         userNickName: null,
         fromPlatform: null,
       }
-      this.queryParams ={
+      this.queryParam ={
         userId: null,
         userIp: null
       }
       this.resetForm('form')
-      this.resetForm('queryParams')
+      this.resetForm('queryParam')
     },
     /** 搜索按钮操作 */
     handleQuery() {

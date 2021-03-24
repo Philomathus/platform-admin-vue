@@ -348,7 +348,6 @@ export default {
       })
     },
     openIpBlackList() {
-      this.reset()
       this.speakIpBlackListList = true
       this.title = '查看已封停的ip'
       listSpeakIpBlackList(this.queryParam).then(response => {

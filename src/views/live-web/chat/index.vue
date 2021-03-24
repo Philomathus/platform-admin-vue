@@ -418,7 +418,6 @@ export default {
     },
     /** 修改按钮操作 */
     handleUpdateStop(row) {
-      this.reset()
       const id = row.id || this.ids
       getLiveVideoChat(id).then(response => {
         this.form = response.data

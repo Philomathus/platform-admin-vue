@@ -420,7 +420,6 @@ export default {
         this.form = response.data
         this.open = true
         this.title = '封停用户'
-        this.getList()
       })
     },
     handleUpdate(row) {

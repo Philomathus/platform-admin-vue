@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-button type="primary">送礼金额 {{ this.totalData.totalPorp||0 }}</el-button>
+    <el-button type="primary">送礼金额 {{ this.totalData.countTotal||0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" style="margin-top: 20px" label-width="68px">
       <el-form-item label="日期范围" prop="selectDate">
         <el-date-picker
@@ -38,7 +38,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['admin:liveProplog:export']"
+          v-hasPermi="['admin:liveVideoProp:export']"
         >导出
         </el-button>
       </el-col>
@@ -50,7 +50,7 @@
       <el-table-column label="礼物名" align="center" prop="propName"/>
       <el-table-column label="礼物金额" align="center" prop="totalDiamonds"/>
       <el-table-column label="主播ID" align="center" prop="toUserId"/>
-      <el-table-column label="送礼日期" align="center" prop="createtime" min-width="160"/>
+      <el-table-column label="送礼日期" align="center" prop="createTime" min-width="160"/>
     </el-table>
 
     <pagination
@@ -69,7 +69,7 @@ import {
   listLiveProplog,
   exportLiveProplog,
   getCount
-} from '@/api/platform-web/member/liveProplog'
+} from '@/api/platform-web/member/liveVideoProp'
 import { pickerDateShortcuts } from '@/utils/dateUtils'
 
 
@@ -81,7 +81,7 @@ export default {
       pickerOptions: { shortcuts: pickerDateShortcuts },
       //统计数据
       totalData: {
-        totalPorp: 0,
+        countTotal: 0
       },
       // 遮罩层
       loading: true,
@@ -107,7 +107,7 @@ export default {
         pageSize: 20,
         searchValue: null,
         selectDate: [this.parseTime(new Date,'{y}-{m}-{d}'), this.parseTime(new Date,'{y}-{m}-{d}')],
-        orderByColumn: 'createtime',
+        orderByColumn: 'createTime',
         isAsc: 'desc'
       },
       // 表单参数
@@ -135,7 +135,7 @@ export default {
     },
   count() {
       getCount(this.queryParams).then((res) => {
-        console.info(res)
+        console.info(res.data)
         if (res.data) {
           this.totalData = res.data
         }

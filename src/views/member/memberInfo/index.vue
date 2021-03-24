@@ -528,22 +528,6 @@ export default {
     // 取消按钮
     cancel() {
       this.open = false
-      this.reset()
-    },
-    // 表单重置
-    reset() {
-      this.form = {
-        id: null,
-        userName: null,
-        password: null,
-        remark: null,
-      },
-      this.queryParams ={
-        userId : null,
-        userIp : null
-      }
-      this.resetForm('queryParams')
-      this.resetForm('form')
     },
     /** 搜索按钮操作 */
     handleQuery() {
@@ -567,13 +551,11 @@ export default {
     },
     /** 新增按钮操作 */
     handleAdd() {
-      this.reset()
       this.open = true
       this.title = '添加用户信息'
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
-      this.reset()
       const id = row.id || this.ids
       getMemberInfo(id).then(response => {
         this.form = response.data
@@ -623,7 +605,6 @@ export default {
     //打开备注禁言弹框
     handleStatusChange(row) {
       if (row.speak === "0") {
-        this.reset()
         changeSpeak(row.id, row.speak, null).then(response => {
           this.msgSuccess('解禁成功')
         })

@@ -92,7 +92,7 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="145" align="left" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column label="操作" width="145" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             v-show="!scope.row.noSpeaking"
@@ -213,11 +213,11 @@
 
       <el-table :stripe="true" v-loading="loading" :data="speakIpBlackData">
         <el-table-column type="selection" width="55" align="center"/>
-        <el-table-column label="会员ID" align="center" prop="userId"/>
-        <el-table-column label="会员ip" align="center" prop="userIp"/>
-        <el-table-column label="封停备注" align="center" prop="msg"/>
-        <el-table-column label="封停时间" align="center" prop="createTime"/>
-        <el-table-column label="操作" min-width="60" align="center" class-name="small-padding fixed-width" fixed="right">
+        <el-table-column label="会员ID" align="center" prop="userId" width="130"/>
+        <el-table-column label="封停ip" show-overflow-tooltip align="center" prop="userIp" width="150"/>
+        <el-table-column label="封停备注" show-overflow-tooltip align="center" prop="msg"/>
+        <el-table-column label="封停时间" align="center" prop="createTime" width="160"/>
+        <el-table-column label="操作" width="80" align="center" class-name="small-padding fixed-width" fixed="right">
           <template slot-scope="scope">
             <el-button
               size="mini"
@@ -253,8 +253,8 @@ import {
   exportLiveVideoChat
 } from '@/api/live-web/chat/liveVideoChat'
 import request from '@/utils/request'
-import {url} from '@/utils/url'
-import {listSpeakIpBlackList, updateSpeakIpBlackList} from '@/api/live-web/chat/speakIpBlackList'
+import { url } from '@/utils/url'
+import { listSpeakIpBlackList, updateSpeakIpBlackList } from '@/api/live-web/chat/speakIpBlackList'
 
 export default {
   name: 'LiveVideoChat',
@@ -321,7 +321,7 @@ export default {
       // 表单校验
       rules: {
         poscatId: [
-          {required: true, message: '主播ID不能为空', trigger: 'blur'}
+          { required: true, message: '主播ID不能为空', trigger: 'blur' }
         ]
       }
     }
@@ -359,7 +359,7 @@ export default {
         this.loading = false
       })
     },
-    searchIpBlackList(){
+    searchIpBlackList() {
       listSpeakIpBlackList(this.queryParam).then(response => {
         this.speakIpBlackData = response.rows
         this.total = response.total
@@ -383,9 +383,9 @@ export default {
         type: null,
         poscatNickName: null,
         userNickName: null,
-        fromPlatform: null,
+        fromPlatform: null
       }
-      this.queryParam ={
+      this.queryParam = {
         userId: null,
         userIp: null
       }
@@ -433,7 +433,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function () {
+      }).then(function() {
         return that.suspendUser(row.fromPlatform, false, 0, row.userIp, row.msg)
       }).then(() => {
         that.msgSuccess('解封成功')
@@ -447,7 +447,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function () {
+      }).then(function() {
         var data = {}
         data.userIp = row.userIp
         data.userId = row.userId
@@ -482,7 +482,7 @@ export default {
     //禁言备注提交
     submitMuteRemarkSpeak() {
       if (this.remarked != null) {
-        this.remark = this.remarked;
+        this.remark = this.remarked
       }
       this.Forbid(this.fromPlatform, this.poscatId, this.remark)
     },
@@ -549,7 +549,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function () {
+      }).then(function() {
         return delLiveVideoChat(ids)
       }).then(() => {
         this.getList()
@@ -584,7 +584,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function () {
+      }).then(function() {
         return exportLiveVideoChat(queryParams)
       }).then(response => {
         this.download(response.msg)
@@ -612,7 +612,7 @@ export default {
     startRefresh() {
       const thet = this
       let secs = thet.refreshSec
-      window.refreshInterval = setInterval(function () {
+      window.refreshInterval = setInterval(function() {
         if (secs === 0) {
           thet.getList()
           secs = thet.refreshSec

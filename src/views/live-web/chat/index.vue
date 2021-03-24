@@ -384,7 +384,7 @@ export default {
         userNickName: null,
         fromPlatform: null,
       }
-      this.queryParams ={
+      this.queryParam ={
         userId: null,
         userIp: null
       }

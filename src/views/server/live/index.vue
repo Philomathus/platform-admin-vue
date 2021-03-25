@@ -187,7 +187,7 @@
 </template>
 
 <script>
-import { listLive, getLive, delLive, addLive, updateLive } from '@/api/platform-web/server/live'
+import { listLive, getLive, delLive, addLive, updateLive, effectLive } from '@/api/platform-web/server/live'
 
 export default {
   name: 'Live',

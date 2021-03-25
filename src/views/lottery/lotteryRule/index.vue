@@ -281,6 +281,7 @@ export default {
       const id = row.id || this.ids
       getLotteryRule(id).then(response => {
         this.form = response.data;
+        this.form.kind = this.form.kind +''
         this.open = true;
         this.title = "修改开奖规则说明";
       });

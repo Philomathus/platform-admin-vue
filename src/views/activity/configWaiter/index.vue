@@ -315,6 +315,7 @@ export default {
       const id = row.id || this.ids
       getConfigWaiter(id).then(response => {
         this.form = response.data;
+        this.form.type = this.form.type + ''
         this.open = true;
         this.title = "修改客服管理";
       });

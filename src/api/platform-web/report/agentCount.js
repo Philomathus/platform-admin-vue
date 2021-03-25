@@ -42,3 +42,11 @@ export function delPromotionCode(data) {
   })
 }
 
+// 查询【请填写功能名称】列表
+export function list(query) {
+  return request({
+    url: url.platformWeb + '/admin/reportAgentcount/memberAgentList',
+    method: 'get',
+    params: query
+  })
+}

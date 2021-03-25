@@ -135,8 +135,9 @@
         <el-table-column label="直播结束时间" align="center" prop="endTime" width="160"/>
         <el-table-column label="直播时长（小时）" align="center" prop="liveTimeSec" width="130"/>
         <el-table-column label="主播直播结算印票" align="center" prop="ticket" width="130"/>
-        <el-table-column label="彩票投注" align="center" prop="cpCost" min-width="120"/>
-        <el-table-column label="彩票派奖" align="center" prop="cpPrize" min-width="120"/>
+<!--        <el-table-column label="彩票投注" align="center" prop="cpCost" min-width="120"/>
+        <el-table-column label="彩票派奖" align="center" prop="cpPrize" min-width="120"/>-->
+        <el-table-column label="备注" align="center" prop="remark" min-width="120"/>
         <el-table-column label="创建日期" align="center" prop="createTimes" width="160"/>
       </el-table>
       <pagination
@@ -190,14 +191,17 @@ export default {
         hostId: null,
         settlementRate: 0.7,
         pageNum: 1,
-        pageSize: 20
+        pageSize: 20,
+
       },
       detailsList: [],
       detailsTotal: 0,
       queryDetailsParams: {
         selectDate: [this.parseTime(new Date, '{y}-{m}-{d}'), this.parseTime(new Date, '{y}-{m}-{d}')],
         pageNum: 1,
-        pageSize: 20
+        pageSize: 20,
+        orderByColumn: 'create_time',
+        isAsc: 'desc'
       },
       // 表单参数
       form: {},

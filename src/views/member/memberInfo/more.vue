@@ -90,30 +90,30 @@
         v-loading="loading"
       >
         <el-table-column prop="realName" label="真实姓名" :show-overflow-tooltip="true" min-width="80">
-          <template v-slot="{row}">
+          <template v-slot="{row}" v-if="index===5">
             <el-input  v-model="row.realName"></el-input>
           </template>
         </el-table-column>
         <el-table-column prop="bankName" label="银行名称" :show-overflow-tooltip="true" min-width="100">
-          <template v-slot="{row}">
+          <template v-slot="{row}" v-if="index===5">
             <el-input  v-model="row.bankName"></el-input>
           </template>
         </el-table-column>
         <el-table-column prop="bankAccount" label="银行卡号" :show-overflow-tooltip="true" min-width="150"
                          align="center">
-          <template v-slot="{row}">
+          <template v-slot="{row}" v-if="index===5">
             <el-input v-model="row.bankAccount"></el-input>
           </template>
         </el-table-column>
         <el-table-column prop="bankAddress" label="银行地址" :show-overflow-tooltip="true" min-width="100">
-          <template v-slot="{row}">
+          <template v-slot="{row}" v-if="index===5">
             <el-input v-model="row.bankAddress"></el-input>
           </template>
         </el-table-column>
         <el-table-column prop="createTime" label=" 绑定时间" :show-overflow-tooltip="true" min-width="160"
                          align="center"></el-table-column>
         <el-table-column label="操作" min-width="140">
-          <template v-slot="{row}">
+          <template v-slot="{row}" v-if="index===5">
             <el-button @click="unbind(row)" v-if="row.dv==1" type="primary" disabled size="mini">主卡解绑</el-button>
             <el-button @click="unbind(row)" v-if="row.dv==0" type="primary" size="mini">副卡解绑</el-button>
             <el-button @click="changeBank(row)" size="mini" type="warning" style="margin-left: 0">确认修改</el-button>

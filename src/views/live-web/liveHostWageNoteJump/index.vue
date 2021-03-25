@@ -133,7 +133,11 @@
         <el-table-column label="主播昵称" show-overflow-tooltip align="center" prop="nickName" min-width="120"/>
         <el-table-column label="直播开始时间" align="center" prop="startTime" width="160"/>
         <el-table-column label="直播结束时间" align="center" prop="endTime" width="160"/>
-        <el-table-column label="直播时长（小时）" align="center" prop="liveTimeSec" width="130"/>
+        <el-table-column label="直播时长（小时）" align="center" prop="liveTimeSec" width="130">
+          <template v-slot="{row}">
+            {{(row.liveTimeSec/3600).toFixed(2)}}
+          </template>
+        </el-table-column>
         <el-table-column label="主播直播结算印票" align="center" prop="ticket" width="130"/>
 <!--        <el-table-column label="彩票投注" align="center" prop="cpCost" min-width="120"/>
         <el-table-column label="彩票派奖" align="center" prop="cpPrize" min-width="120"/>-->

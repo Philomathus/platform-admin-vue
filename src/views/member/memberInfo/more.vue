@@ -89,7 +89,10 @@
         height="460px"
         v-loading="loading"
       >
-        <el-table-column prop="realName" label="真实姓名" :show-overflow-tooltip="true">
+        <el-table-column prop="realName" label="真实姓名" :show-overflow-tooltip="true" min-width="80">
+          <template v-slot="{row}">
+            <el-input  v-model="row.realName"></el-input>
+          </template>
         </el-table-column>
         <el-table-column prop="bankName" label="银行名称" :show-overflow-tooltip="true" min-width="100">
           <template v-slot="{row}">

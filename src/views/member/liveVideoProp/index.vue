@@ -1,7 +1,8 @@
 <template>
   <div class="app-container">
-    <el-button type="primary">送礼金额 {{ this.totalData.countTotal||0 }}</el-button>
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" style="margin-top: 20px" label-width="68px">
+    <el-button type="primary" @click="copy">送礼金额 {{ this.totalData.countTotal || 0 }}</el-button>
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" style="margin-top: 20px"
+             label-width="68px">
       <el-form-item label="日期范围" prop="selectDate">
         <el-date-picker
           type="daterange"
@@ -70,7 +71,7 @@ import {
   exportLiveProplog,
   getCount
 } from '@/api/platform-web/member/liveVideoProp'
-import { pickerDateShortcuts } from '@/utils/dateUtils'
+import {pickerDateShortcuts} from '@/utils/dateUtils'
 
 
 export default {
@@ -78,7 +79,7 @@ export default {
   components: {},
   data() {
     return {
-      pickerOptions: { shortcuts: pickerDateShortcuts },
+      pickerOptions: {shortcuts: pickerDateShortcuts},
       //统计数据
       totalData: {
         countTotal: 0
@@ -106,7 +107,7 @@ export default {
         pageNum: 1,
         pageSize: 20,
         searchValue: null,
-        selectDate: [this.parseTime(new Date,'{y}-{m}-{d}'), this.parseTime(new Date,'{y}-{m}-{d}')],
+        selectDate: [this.parseTime(new Date, '{y}-{m}-{d}'), this.parseTime(new Date, '{y}-{m}-{d}')],
         orderByColumn: 'createTime',
         isAsc: 'desc'
       },
@@ -133,7 +134,11 @@ export default {
         this.loading = false
       })
     },
-  count() {
+    //复制
+    copy() {
+      this.copyCommand(this.totalData.countTotal)
+    },
+    count() {
       getCount(this.queryParams).then((res) => {
         console.info(res.data)
         if (res.data) {
@@ -167,7 +172,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportLiveProplog(queryParams)
       }).then(response => {
         this.download(response.msg)

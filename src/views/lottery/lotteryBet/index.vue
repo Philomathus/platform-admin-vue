@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
-    <el-button type="primary">投注金额 {{ this.totalData.totalCost||0 }}</el-button>
-    <el-button type="success">中奖金额 {{this.totalData.totalPrize||0 }}</el-button>
+    <el-button type="primary" @click="copy1">投注金额 {{ this.totalData.totalCost||0 }}</el-button>
+    <el-button type="success" @click="copy2">中奖金额 {{this.totalData.totalPrize||0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px" style="margin-top: 20px">
       <el-form-item label="下注时间" prop="betTime">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
@@ -172,6 +172,13 @@ export default {
     cancel() {
       this.open = false
       this.reset()
+    },
+    //复制
+    copy1() {
+      this.copyCommand(this.totalData.totalCost)
+    },
+    copy2() {
+      this.copyCommand(this.totalData.totalPrize)
     },
     //统计按钮
     getCountTotal() {

@@ -15,7 +15,7 @@
       <el-form-item label="名称" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入用户名称"
+          placeholder="请输入游戏名称"
           clearable
           size="small"
           style="width: 240px"
@@ -137,16 +137,6 @@
         <el-form-item label="新版图标" prop="editionIcon">
           <imageUpload v-model="form.editionIcon" path="gameInfo"/>
         </el-form-item>
-        <el-form-item label="横竖屏" prop="screen" :formatter="myScreen">
-          <el-select v-model="form.screen" placeholder="请选择">
-            <el-option
-              v-for="dict in screenList"
-              :key="dict.dictValue"
-              :label="dict.dictLabel"
-              :value="dict.dictValue"
-            ></el-option>
-          </el-select>
-        </el-form-item>
         <el-form-item label="高宽比" prop="highWide">
           <el-input v-model="form.highWide" placeholder="请输入高宽比" style="width: 240px"/>
         </el-form-item>
@@ -154,6 +144,16 @@
           <el-select v-model="form.isFull" placeholder="请选择">
             <el-option
               v-for="dict in isFullList"
+              :key="dict.dictValue"
+              :label="dict.dictLabel"
+              :value="dict.dictValue"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="横竖屏" prop="screen">
+          <el-select v-model="form.screen" placeholder="请选择">
+            <el-option
+              v-for="dict in screenList"
               :key="dict.dictValue"
               :label="dict.dictLabel"
               :value="dict.dictValue"
@@ -236,9 +236,7 @@ export default {
       // 是否显示弹出层
       open: false,
       // 类型数据字典
-      isFull: [],
       report: [],
-      screen: [],
       screenList: [],
       isFullList: [],
       // 游戏名称
@@ -307,11 +305,11 @@ export default {
       if (row.screen == 0) {
         return '横屏'
       }
-      if (row.isFull == 1) {
+      if (row.screen == 1) {
         return '竖屏'
       }
     },
-    // 是否填充
+    //是否填充
     statusFormat(row, column) {
       if (row.isFull == 0) {
         return '不填充'
@@ -389,6 +387,7 @@ export default {
       const id = row.id || this.ids
       getInfo(id).then(response => {
         this.form = response.data
+        this.form.screen = this.form.screen + ''
         this.open = true
         this.title = '修改游戏信息'
       })

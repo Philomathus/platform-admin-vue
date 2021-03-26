@@ -7,6 +7,8 @@
           placeholder="VIP等级"
           clearable
           size="small"
+          type="number"
+          class="no-number"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>

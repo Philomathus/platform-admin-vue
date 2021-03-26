@@ -13,6 +13,8 @@
 
       <el-form-item prop="userId">
         <el-input
+          type="number"
+          class="no-number"
           v-model="queryParams.userId"
           placeholder="族长ID"
           clearable

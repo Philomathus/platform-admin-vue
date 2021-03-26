@@ -12,6 +12,8 @@
           placeholder="主播ID"
           clearable
           size="small"
+          type="number"
+          class="no-number"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>

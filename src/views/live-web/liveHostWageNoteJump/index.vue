@@ -14,6 +14,8 @@
           v-model="queryParams.settlementRate"
           placeholder="请输入散户结算率"
           size="small"
+          type="number"
+          class="no-number"
           @keyup.enter.native="handleQuery"
           style="width: 60px;"
         />
@@ -24,6 +26,8 @@
           placeholder="主播ID"
           clearable
           size="small"
+          type="number"
+          class="no-number"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>

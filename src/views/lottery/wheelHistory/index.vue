@@ -25,6 +25,8 @@
           placeholder="请输入奖励"
           clearable
           size="small"
+          type="number"
+          class="no-number"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>

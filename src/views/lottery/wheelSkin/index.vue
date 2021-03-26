@@ -7,6 +7,8 @@
           placeholder="请输入价格"
           clearable
           size="small"
+          type="number"
+          class="no-number"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>

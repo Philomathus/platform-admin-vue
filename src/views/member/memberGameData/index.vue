@@ -181,7 +181,6 @@ export default {
         this.queryParams.selectDate = [createTime,this.parseTime(this.getTodayEndTime())]
       }
       this.getList()
-      // this.getCount()
     },
     // 0:未洗码1已经洗码
     formatterStatus(row) {
@@ -195,7 +194,6 @@ export default {
     },
     getCount() {
       getCount(this.queryParams).then((res) => {
-        console.info(res)
         if (res.data) {
           this.totalData = res.data
         }
@@ -240,7 +238,9 @@ export default {
     handleQuery() {
       this.queryParams.pageNum = 1
       this.getList()
-      // this.getCount()
+      if(this.queryParams.account){
+        this.getCount()
+      }
     },
     /** 重置按钮操作 */
     resetQuery() {

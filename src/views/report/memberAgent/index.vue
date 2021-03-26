@@ -15,9 +15,16 @@
       <el-table-column label="进入直播间次数" align="center" prop="times"/>
 
     </el-table>
+    <pagination
+      v-show="total>0"
+      :total="total"
+      :page-sizes="[20,50,100,200]"
+      :page.sync="queryParams.pageNum"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+    />
   </div>
 </template>
-
 <script>
 import { list } from '@/api/platform-web/report/agentCount'
 
@@ -30,11 +37,15 @@ export default {
 
       // 显示搜索条件
       showSearch: true,
+      // 总条数
+      total: 0,
       // 表格数据
       list: [],
       data: {},
       // 查询参数
       queryParams: {
+        pageNum: 1,
+        pageSize: 20,
         agentcode: null,
         agenttime: null
       }
@@ -52,6 +63,7 @@ export default {
       this.loading = true
       list(this.queryParams).then(response => {
         this.list = response.rows
+        this.total = response.total
         this.loading = false
       })
     },

@@ -60,19 +60,17 @@
     </el-row>
 
     <el-table stripe v-loading="loading" :data="liveVideoChatList">
-      <el-table-column label="平台会员ID" min-width="120" align="center" prop="fromPlatform"/>
-      <el-table-column label="用户昵称" min-width="120" align="center" prop="userNickName"/>
-      <el-table-column label="消息类型" min-width="120" align="center" prop="type" :formatter="msgFormat"/>
-      <el-table-column label="消息内容" :show-overflow-tooltip="true" min-width="220" align="center" prop="msg"/>
+      <el-table-column label="平台会员ID" min-width="130" align="center" prop="fromPlatform"/>
+      <el-table-column label="用户昵称" :show-overflow-tooltip="true" width="120" align="center" prop="userNickName"/>
+      <el-table-column label="消息类型" width="80" align="center" prop="type" :formatter="msgFormat"/>
+      <el-table-column label="消息内容" :show-overflow-tooltip="true" min-width="350" align="center" prop="msg"/>
       <!--      <el-table-column label="会员ID" align="center" prop="id" />-->
       <el-table-column label="主播ID" min-width="120" align="center" prop="poscatId"/>
       <!--      <el-table-column label="消息所在聊天组" align="center" prop="group" />-->
       <!--      <el-table-column label="发送者id" align="center" prop="userId" />-->
 
-      <el-table-column label="主播昵称" min-width="120" align="center" prop="poscatNickName"/>
-      <el-table-column label="发送时间" width="160" align="center" prop="createTimes"/>
-      <el-table-column label="发言ip" width="160" align="center" prop="userIp"/>
-      <el-table-column label="是否封停" min-width="120" align="center" prop="noSpeaking">
+      <el-table-column label="主播昵称" :show-overflow-tooltip="true" width="120" align="center" prop="poscatNickName"/>
+      <el-table-column label="是否封停" width="80" align="center" prop="noSpeaking">
         <template slot-scope="scope">
           <span v-if="scope.row.noSpeaking" style="color: #FF5722">
             已封停
@@ -82,7 +80,7 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="是否禁言" min-width="120" align="center" prop="forbid">
+      <el-table-column label="是否禁言" width="80" align="center" prop="forbid">
         <template slot-scope="scope">
           <span v-if="scope.row.forbid" style="color: #FF5722">
             禁言
@@ -92,6 +90,8 @@
           </span>
         </template>
       </el-table-column>
+      <el-table-column label="发言ip" width="160" align="center" prop="userIp"/>
+      <el-table-column label="发送时间" width="160" align="center" prop="createTimes"/>
       <el-table-column label="操作" width="145" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button

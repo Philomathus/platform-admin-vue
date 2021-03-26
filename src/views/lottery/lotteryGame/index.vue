@@ -28,15 +28,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="赔率" prop="odds">
-        <el-input
-          v-model="queryParams.odds"
-          placeholder="请输入赔率"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item label="获奖规则" prop="victoryRule">
         <el-input
           v-model="queryParams.victoryRule"

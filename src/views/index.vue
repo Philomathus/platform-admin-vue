@@ -3,7 +3,7 @@
 
   <div class="page">
     <div class="content">
-      welcome !
+      Welcome !
     </div>
   </div>
 

@@ -240,6 +240,10 @@ export default {
       this.getList()
       if(this.queryParams.account){
         this.getCount()
+      } else {
+        this.totalData.totalSuccessBet = 0
+        this.totalData.totalBet = 0
+        this.totalData.totalIncome = 0
       }
     },
     /** 重置按钮操作 */

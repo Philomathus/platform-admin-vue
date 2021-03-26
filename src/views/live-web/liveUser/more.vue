@@ -10,8 +10,8 @@
       </button>
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(3,'收礼物日志')">
         <span>收礼物日志</span></button>
-      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(5,'体现比例')">
-        <span>体现比例</span></button>
+      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(5,'提现比例')">
+        <span>提现比例</span></button>
       <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(4,'加入家族')">
         <span>加入家族</span></button>
     </div>
@@ -240,7 +240,7 @@
                 //切换页面重置数据
                 this.reset()
                 var hint = '';
-                //如果是重置密码,保险箱,体现
+                //如果是重置密码,保险箱,提现
                 switch (index) {
                     case 4 :
                         hint = '请輸入家族D家族ID'
@@ -403,7 +403,7 @@
                     this.$notify.error('获取聊天记录列表失败')
                 });
             },
-          //修改主播体现比例
+          //修改主播提现比例
             editRate() {
               return updateLiveUser(this.liveUserRate).then((res) => {
                       this.$notify.success("修改成功")
@@ -411,7 +411,7 @@
                       this.$notify.success("修改失败")
                     });
             },
-          //查询主播体现比例
+          //查询主播提现比例
           queryRate() {
             getLiveUser(this.userId).then(response => {
               this.liveUserRate = response.data

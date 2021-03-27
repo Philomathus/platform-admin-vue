@@ -2,7 +2,8 @@
   <div class="app-container">
     <el-button type="primary" @click="copy">送礼金额 {{ this.totalData.countTotal || 0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" style="margin-top: 20px"
-             label-width="68px">
+             label-width="68px"
+    >
       <el-form-item label="日期范围" prop="selectDate">
         <el-date-picker
           type="daterange"
@@ -14,12 +15,22 @@
           range-separator="至"
           clearable
           :picker-options="pickerOptions"
+          style="width: 280px"
         />
       </el-form-item>
-      <el-form-item prop="searchValue">
+      <el-form-item prop="pUserId">
         <el-input
-          v-model="queryParams.searchValue"
-          placeholder="会员ID/主播ID"
+          v-model="queryParams.pUserId"
+          placeholder="会员ID"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item prop="toUserId">
+        <el-input
+          v-model="queryParams.toUserId"
+          placeholder="主播ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -71,15 +82,14 @@ import {
   exportLiveProplog,
   getCount
 } from '@/api/platform-web/member/liveVideoProp'
-import {pickerDateShortcuts} from '@/utils/dateUtils'
-
+import { pickerDateShortcuts } from '@/utils/dateUtils'
 
 export default {
   name: 'LiveProplog',
   components: {},
   data() {
     return {
-      pickerOptions: {shortcuts: pickerDateShortcuts},
+      pickerOptions: { shortcuts: pickerDateShortcuts },
       //统计数据
       totalData: {
         countTotal: 0
@@ -106,7 +116,8 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 20,
-        searchValue: null,
+        pUserId: null,
+        toUserId: null,
         selectDate: [this.parseTime(new Date, '{y}-{m}-{d}'), this.parseTime(new Date, '{y}-{m}-{d}')],
         orderByColumn: 'createTime',
         isAsc: 'desc'
@@ -119,7 +130,7 @@ export default {
   },
   created() {
     this.getList()
-    this.count();
+    this.count()
   },
   methods: {
     /** 查询用户送礼日志列表 */
@@ -158,7 +169,7 @@ export default {
     handleQuery() {
       this.queryParams.pageNum = 1
       this.getList()
-      this.count();
+      this.count()
     },
     /** 重置按钮操作 */
     resetQuery() {
@@ -172,7 +183,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function () {
+      }).then(function() {
         return exportLiveProplog(queryParams)
       }).then(response => {
         this.download(response.msg)

@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="app-container" @refMemeberData="getList()">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch">
       <el-form-item prop="status" style="width: 110px;">
         <el-select v-model="queryParams.status" placeholder="全部状态" clearable size="small">

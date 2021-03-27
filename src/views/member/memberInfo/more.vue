@@ -415,7 +415,6 @@
       },
       //获取积分列表
       gameBalance() {
-        console.log(this)
         this.dbTableList = []
         this.loading = true
         gameBalance(this.memberId).then((res) => {
@@ -461,11 +460,13 @@
           score: this.form.score
         }).then((res) => {
           if (res.code === 0) {
-            that.form.googleAuthCode = ''
+            this.resetForm('form')
+            this.visible = false
             this.$notify.success(res.msg)
+            this.$emit('refMemeberData');
           }
         }).catch((error) => {
-          // this.$notify.warning('网络异常')
+          this.$notify.error(error)
         }).finally(() => {
           this.loading = false
         })

@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container" @refMemeberData="getList()">
+  <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch">
       <el-form-item prop="status" style="width: 110px;">
         <el-select v-model="queryParams.status" placeholder="全部状态" clearable size="small">
@@ -244,7 +244,7 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
-    <more ref="more" :member-id="memberId" :member-code="memberCode" @memberMore="handleQuery"></more>
+    <more ref="more" @refMemeberData="getList()" :member-id="memberId" :member-code="memberCode" @memberMore="handleQuery"></more>
 
     <!--查看封停ip-->
     <el-dialog :close-on-click-modal="false" v-dialogDrag title="查看封停ip" :visible.sync="speakIpBlackListList"
@@ -473,6 +473,7 @@ export default {
     },
     /** 查询用户信息列表 */
     getList() {
+      console.log('触发事件了')
       this.loading = true
       listMemberInfo(this.queryParams).then(response => {
         this.memberInfoList = response.rows

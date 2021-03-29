@@ -79,6 +79,7 @@
           plain
           icon="el-icon-download"
           size="mini"
+          :disabled="disabled"
           @click="handleExport"
           v-hasPermi="['pay:memberWithdrawLog:export']"
         >导出
@@ -358,6 +359,8 @@
         pickerOptions: {shortcuts: pickerDateTimeShortcuts},
         // 头部数据
         totalData: {},
+        //点击导出后不可点击
+        disabled: false,
         // 遮罩层
         loading: true,
         // 显示搜索条件
@@ -568,6 +571,7 @@
       },
       /** 导出按钮操作 */
       handleExport() {
+        this.disabled = true
         const queryParams = this.queryParams
         this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
           confirmButtonText: '确认',
@@ -577,7 +581,9 @@
           return exportMemberWithdrawLog(queryParams)
         }).then(response => {
           this.downloadExcel(response, '会员提现')
+          this.disabled = false
         }).catch(() => {
+          this.disabled =false
         })
       },
       handleLock(row) {

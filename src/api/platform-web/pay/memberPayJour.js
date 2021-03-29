@@ -34,6 +34,6 @@ export function exportMemberPayJour(query) {
     method: 'get',
     params: query,
     responseType: 'arraybuffer',
-    timeout: 60000
+    timeout: 120000
   })
 }

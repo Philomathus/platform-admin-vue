@@ -69,6 +69,7 @@
           plain
           icon="el-icon-download"
           size="mini"
+          :disabled="disabled"
           @click="handleExport"
           v-hasPermi="['pay:memberPayJour:export']"
         >导出
@@ -217,6 +218,8 @@ export default {
       },
       // 遮罩层
       loading: true,
+      //点击导出后不可点击
+      disabled: false,
       // 显示搜索条件
       showSearch: true,
       // 总条数
@@ -356,6 +359,7 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
+      this.disabled = true
       const queryParams = this.queryParams
       this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
         confirmButtonText: '确认',
@@ -365,7 +369,9 @@ export default {
         return exportMemberPayJour(queryParams)
       }).then(response => {
         this.downloadExcel(response, '线上充值')
+        this.disabled = false
       }).catch(() => {
+        this.disabled = false
       })
     },
     handlePatchOrder(row) {

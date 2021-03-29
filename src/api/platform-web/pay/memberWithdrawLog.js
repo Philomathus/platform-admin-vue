@@ -99,3 +99,21 @@ export function artificialMemberWithdrawLog(data) {
     data: data
   })
 }
+
+// 会员出款异常
+export function abnormalWithdrawal(data) {
+  return request({
+    url: url.platformWeb + '/pay/memberWithdrawLog/abnormalWithdrawal',
+    method: 'put',
+    data: data
+  })
+}
+
+// 会员人工出款中
+export function manualWithdrawal(data) {
+  return request({
+    url: url.platformWeb + '/pay/memberWithdrawLog/manualWithdrawal',
+    method: 'put',
+    data: data
+  })
+}

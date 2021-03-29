@@ -137,7 +137,7 @@ import {
   exportLiveProplog,
   getCount,testAccountPorpList,exportTestAccountProplog
 } from '@/api/platform-web/member/liveVideoProp'
-import { pickerDateShortcuts } from '@/utils/dateUtils'
+import {getYesterDate, pickerDateShortcuts, toyesDayshortcuts} from '@/utils/dateUtils'
 
 export default {
   name: 'LiveProplog',
@@ -145,6 +145,7 @@ export default {
   data() {
     return {
       pickerOptions: { shortcuts: pickerDateShortcuts },
+      pickerOptionsTestAccount: {  shortcuts: toyesDayshortcuts  },
       //统计数据
       totalData: {
         countTotal: 0
@@ -163,6 +164,8 @@ export default {
       total: 0,
       // 用户送礼日志表格数据
       liveProplogList: [],
+      testAccountPorpData:[],
+      testAccountPorpList:false,
       // 弹出层标题
       title: '',
       // 是否显示弹出层
@@ -176,6 +179,11 @@ export default {
         selectDate: [this.parseTime(new Date, '{y}-{m}-{d}'), this.parseTime(new Date, '{y}-{m}-{d}')],
         orderByColumn: 'createTime',
         isAsc: 'desc'
+      },
+      queryParam: {
+        pageNum: 1,
+        pageSize: 20,
+        testAccountCreateTime: this.parseTime(getYesterDate(), '{y}-{m}-{d}')
       },
       // 表单参数
       form: {},
@@ -197,6 +205,15 @@ export default {
       }).catch(() => {
         this.$notify.error('网络异常')
       }).finally(() => {
+        this.loading = false
+      })
+    },
+    testAccountPorp() {
+      this.testAccountPorpList = true
+      this.title = '测试号送礼明细'
+      testAccountPorpList(this.queryParam).then(response => {
+        this.testAccountPorpData = response.rows
+        this.total = response.total
         this.loading = false
       })
     },

@@ -49,7 +49,7 @@
         <el-table-column label="人工入款人数" min-width="100" align="center" prop="rgRukunanrenshu"/>
         <el-table-column label="人工入款金额" min-width="100" align="center" prop="rgRukunanjine"/>
         <el-table-column label="平台优惠人数" min-width="100" align="center" prop="palmYouhuirenshu"/>
-        <el-table-column label="平台优惠金额" min-width="100" align="center" prop="palmYouhuijine"/>
+        <el-table-column label="水军上分" min-width="100" align="center" prop="palmYouhuijine"/>
         <el-table-column label="预估会员剩余积分" min-width="130" align="center" prop="totalAccount"/>
         <el-table-column label="每日平台盈利" min-width="100" align="center" prop="totalProfile"/>
         <el-table-column label="每日送礼金额" min-width="100" align="center" prop="totalGiveprop"/>

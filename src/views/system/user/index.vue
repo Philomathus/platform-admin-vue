@@ -486,18 +486,22 @@ export default {
     submitForm: function() {
       this.$refs['form'].validate(valid => {
         if (valid) {
-          if (this.form.userId != undefined) {
-            updateUser(this.form).then(response => {
-              this.msgSuccess('修改成功')
-              this.open = false
-              this.getList()
-            })
-          } else {
-            addUser(this.form).then(response => {
-              this.msgSuccess('新增成功')
-              this.open = false
-              this.getList()
-            })
+          if(!(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,10}$/.test(this.form.userName))) {
+            this.$message.warning("用户名必须且只包含数字、字母")
+          }else{
+            if (this.form.userId != undefined) {
+              updateUser(this.form).then(response => {
+                this.msgSuccess('修改成功')
+                this.open = false
+                this.getList()
+              })
+            } else {
+              addUser(this.form).then(response => {
+                this.msgSuccess('新增成功')
+                this.open = false
+                this.getList()
+              })
+            }
           }
         }
       })

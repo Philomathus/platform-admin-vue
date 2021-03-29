@@ -367,14 +367,8 @@ export default {
       })
       this.disabled = true
       const queryParams = this.queryParams
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(function() {
-        return exportMemberPayJour(queryParams)
-      }).then(response => {
-        this.downloadExcel(response, '线上充值')
+      exportMemberPayJour(queryParams).then(response => {
+      this.downloadExcel(response, '线上充值')
         loading.close()
         this.disabled = false
       }).catch(() => {

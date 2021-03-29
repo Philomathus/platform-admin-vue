@@ -27,3 +27,20 @@ export function getCount(query) {
     params: query
   })
 }
+// 查询用户送礼日志列表
+export function testAccountPorpList(query) {
+  return request({
+    url: url.platformWeb + '/admin/liveVideoProp/testAccountPorpList',
+    method: 'get',
+    params: query
+  })
+}
+// 查询用户送礼日志列表
+export function exportTestAccountProplog(query) {
+  return request({
+    url: url.platformWeb + '/admin/liveVideoProp/exportTestAccountProplog',
+    method: 'get',
+    params: query
+  })
+
+}

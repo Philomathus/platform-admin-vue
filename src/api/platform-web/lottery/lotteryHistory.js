@@ -13,7 +13,7 @@ export function listLotteryHistory(query) {
 //重新派奖
 export function changeStatus(id) {
   return request({
-    url: url.platformWeb + '/admin/lotteryHistory/changeStatus' + id,
+    url: url.platformWeb + '/admin/lotteryHistory/' + id,
     method: 'post',
   })
 }

@@ -240,10 +240,11 @@ export default {
     handleAward(row) {
       const id = row.id
       changeStatus(id).then(response => {
-        if(response.data.code == 0){
-          this.$message.warning(response.data.msg)
+        if(response.code == 0){
+          this.$message.error(response.msg)
         }else{
           this.msgSuccess("重新派奖成功")
+          this.getList()
         }
       });
     },

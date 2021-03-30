@@ -54,6 +54,17 @@
         >导出
         </el-button>
       </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="warning"
+          plain
+          icon="el-icon-download"
+          size="mini"
+          @click="testAccountPorp()"
+          v-hasPermi="['admin:liveVideoProp:list']"
+        >测试号送礼明细
+        </el-button>
+      </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -65,6 +76,49 @@
       <el-table-column label="送礼日期" align="center" prop="createTime" min-width="160"/>
     </el-table>
 
+    <el-dialog v-dialogDrag title="查看封停ip" :visible.sync="testAccountPorpList" width="1200px" append-to-body>
+      <el-form :model="queryParam" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+        <el-form-item label="日期选择" prop="testAccountCreateTime">
+          <el-date-picker v-model="queryParam.testAccountCreateTime" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
+                          :style="{width: '100%'}" placeholder="请选择日期选择" clearable :picker-options="pickerOptionsTestAccount"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" icon="el-icon-search" size="mini" @click="testAccountPorp()">搜索</el-button>
+        </el-form-item>
+      </el-form>
+      <el-row :gutter="10" class="mb8">
+        <el-col :span="1.5">
+          <el-button
+            type="warning"
+            plain
+            icon="el-icon-download"
+            size="mini"
+            @click="handleExportTestAccount"
+            v-hasPermi="['admin:liveVideoProp:export']"
+          >导出
+          </el-button>
+        </el-col>
+        <right-toolbar :showSearch.sync="showSearch" @queryTable="testAccountPorp"></right-toolbar>
+      </el-row>
+      <!--查看封停ip-->
+      <el-table :stripe="true" v-loading="loading" :data="testAccountPorpData">
+        <el-table-column type="selection" align="center"/>
+        <el-table-column label="会员ID" align="center" prop="puserId" />
+        <el-table-column label="会员昵称" show-overflow-tooltip align="center" prop="puserName"/>
+        <el-table-column label="送礼金额" show-overflow-tooltip align="center" prop="totalDiamonds"/>
+        <el-table-column label="主播ID" align="center" prop="toUserId"/>
+      </el-table>
+      <pagination
+        v-show="total>0"
+        :total="total"
+        :page-sizes="[10,20,100]"
+        :page.sync="queryParam.pageNum"
+        :limit.sync="queryParam.pageSize"
+        @pagination="testAccountPorp"
+      />
+    </el-dialog>
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -73,6 +127,7 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
+
   </div>
 </template>
 
@@ -80,9 +135,9 @@
 import {
   listLiveProplog,
   exportLiveProplog,
-  getCount
+  getCount,testAccountPorpList,exportTestAccountProplog
 } from '@/api/platform-web/member/liveVideoProp'
-import { pickerDateShortcuts } from '@/utils/dateUtils'
+import {getYesterDate, pickerDateShortcuts, toyesDayshortcuts} from '@/utils/dateUtils'
 
 export default {
   name: 'LiveProplog',
@@ -90,6 +145,7 @@ export default {
   data() {
     return {
       pickerOptions: { shortcuts: pickerDateShortcuts },
+      pickerOptionsTestAccount: {  shortcuts: toyesDayshortcuts  },
       //统计数据
       totalData: {
         countTotal: 0
@@ -108,6 +164,8 @@ export default {
       total: 0,
       // 用户送礼日志表格数据
       liveProplogList: [],
+      testAccountPorpData:[],
+      testAccountPorpList:false,
       // 弹出层标题
       title: '',
       // 是否显示弹出层
@@ -121,6 +179,11 @@ export default {
         selectDate: [this.parseTime(new Date, '{y}-{m}-{d}'), this.parseTime(new Date, '{y}-{m}-{d}')],
         orderByColumn: 'createTime',
         isAsc: 'desc'
+      },
+      queryParam: {
+        pageNum: 1,
+        pageSize: 20,
+        testAccountCreateTime: this.parseTime(getYesterDate(), '{y}-{m}-{d}')
       },
       // 表单参数
       form: {},
@@ -142,6 +205,15 @@ export default {
       }).catch(() => {
         this.$notify.error('网络异常')
       }).finally(() => {
+        this.loading = false
+      })
+    },
+    testAccountPorp() {
+      this.testAccountPorpList = true
+      this.title = '测试号送礼明细'
+      testAccountPorpList(this.queryParam).then(response => {
+        this.testAccountPorpData = response.rows
+        this.total = response.total
         this.loading = false
       })
     },
@@ -185,6 +257,19 @@ export default {
         type: 'warning'
       }).then(function() {
         return exportLiveProplog(queryParams)
+      }).then(response => {
+        this.download(response.msg)
+      })
+    },
+    /** 导出按钮操作 */
+    handleExportTestAccount() {
+      const queryParams = this.queryParam
+      this.$confirm('是否确认导出所有用户送礼日志数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        return exportTestAccountProplog(queryParams)
       }).then(response => {
         this.download(response.msg)
       })

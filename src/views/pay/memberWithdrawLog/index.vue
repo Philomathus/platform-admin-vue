@@ -4,7 +4,8 @@
     <el-button type="warning" @click="copy2">总出款金额 {{ this.totalData.successTotal || 0 }}</el-button>
     <el-button type="info" @click="copy3">成功率 {{ numberUtil.toPercent(this.totalData.successRate) }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="100px"
-             style="margin-top: 20px">
+             style="margin-top: 20px"
+    >
       <el-form-item label="修改日期" prop="searchTime" label-width="70px">
         <el-date-picker type="datetimerange" v-model="queryParams.searchTime" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
@@ -181,7 +182,7 @@
             size="small"
             type="primary"
             plain
-            v-show="scope.row.status == 1 || scope.row.status == 7 || scope.row.status == 8"
+            v-show="scope.row.status == 1"
             icon="el-icon-unlock"
             @click="handleUnlock(scope.row)"
             v-has-permi="['pay:memberWithdrawLog:unlock']"
@@ -232,7 +233,8 @@
 
     <!-- 添加或修改会员提现信息对话框 -->
     <el-dialog title="资金明细" :visible.sync="fundsOpen" width="450px" style="max-height:600px;overflow-y: scroll;"
-               append-to-body>
+               append-to-body
+    >
       <el-table :stripe="true" v-loading="loading" :data="fundsData" :row-class-name="tableRowClassName">
         <el-table-column label="项目名称" align="center" width="140" prop="class_twoname"/>
         <el-table-column label="项目值" align="center" prop="t_value"/>
@@ -275,7 +277,6 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-
         <el-button
           type="primary"
           plain
@@ -285,12 +286,12 @@
         >代 付
         </el-button>
         <el-button
-          type="success"
           plain
           size="small"
           @click="handleManualWithdrawal"
+          v-show="form.status !== 7 && form.status !== 8"
           v-has-permi="['pay:memberWithdrawLog:manualWithdrawal']"
-        >人工代付中
+        >人工代付
         </el-button>
         <el-button
           type="success"
@@ -301,10 +302,11 @@
         >出 款
         </el-button>
         <el-button
-          type="danger"
+          type="warning"
           plain
           size="small"
           @click="handleAbnormalWithdrawal"
+          v-show="form.status !== 7 && form.status !== 8"
           v-has-permi="['pay:memberWithdrawLog:abnormalWithdrawal']"
         >出款异常
         </el-button>
@@ -328,301 +330,316 @@
   </div>
 </template>
 <script>
-  import {
-    listMemberWithdrawLog,
-    getMemberWithdrawLog,
-    addMemberWithdrawLog,
-    updateMemberWithdrawLog,
-    exportMemberWithdrawLog,
-    refusedMemberWithdrawLog,
-    lockMemberWithdrawLog,
-    unlockMemberWithdrawLog,
-    artificialMemberWithdrawLog,
-    abnormalWithdrawal,
-    manualWithdrawal,
-    getMemberWithdrawReport,
-    getCountTotal
-  } from '@/api/platform-web/pay/memberWithdrawLog'
-  import {effectListPayAgentPlatform, payAgentOrder} from '@/api/platform-web/pay/payAgentPlatform'
-  import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
+import {
+  listMemberWithdrawLog,
+  getMemberWithdrawLog,
+  addMemberWithdrawLog,
+  updateMemberWithdrawLog,
+  exportMemberWithdrawLog,
+  refusedMemberWithdrawLog,
+  lockMemberWithdrawLog,
+  unlockMemberWithdrawLog,
+  artificialMemberWithdrawLog,
+  abnormalWithdrawal,
+  manualWithdrawal,
+  getMemberWithdrawReport,
+  getCountTotal
+} from '@/api/platform-web/pay/memberWithdrawLog'
+import { effectListPayAgentPlatform, payAgentOrder } from '@/api/platform-web/pay/payAgentPlatform'
+import { pickerDateTimeShortcuts } from '@/utils/dateUtils'
 
-  export default {
-    name: 'MemberWithdrawLog',
-    components: {},
-    data() {
-      return {
-        refreshSec: '5',
-        refreshType: 'primary',
-        refreshIcon: 'el-icon-refresh',
-        refreshLabel: '开始刷新',
-        refreshDesc: '',
-        pickerOptions: {shortcuts: pickerDateTimeShortcuts},
-        // 头部数据
-        totalData: {},
-        //点击导出后不可点击
-        disabled: false,
-        // 遮罩层
-        loading: true,
-        // 显示搜索条件
-        showSearch: true,
-        // 总条数
-        total: 0,
-        // 会员提现信息表格数据
-        memberWithdrawLogList: [],
-        // 弹出层标题
-        title: '',
-        //资金明细
-        fundsOpen: false,
-        //资金明细数据
-        fundsData: [],
-        // 是否显示弹出层
-        open: false,
-        // 状态(0申请中1锁定2审核不通过3人工入款成功 4代付中5代付失败6代付成功)字典
-        statusOptions: [],
-        // 是否首次1是0否字典
-        firstOptions: [],
-        // 代付平台
-        payAgentPlatformOptions: [],
-        // 查询参数
-        queryParams: {
-          pageNum: 1,
-          pageSize: 100,
-          searchValue: null,
-          status: null,
-          searchTime: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
-          priceMin: null,
-          priceMax: null,
-          orderByColumn: 'create_time',
-          isAsc: 'desc',
-        },
-        // 表单参数
-        form: {},
-        // 表单校验
-        rules: {
-          googleAuthCode: [
-            {required: true, message: 'google验证码不能为空', trigger: 'blur'}
-          ],
-          payAgentPlatId: [
-            {required: true, message: '请选择代付平台', trigger: 'blur'}
-          ]
-        }
+export default {
+  name: 'MemberWithdrawLog',
+  components: {},
+  data() {
+    return {
+      refreshSec: '5',
+      refreshType: 'primary',
+      refreshIcon: 'el-icon-refresh',
+      refreshLabel: '开始刷新',
+      refreshDesc: '',
+      pickerOptions: { shortcuts: pickerDateTimeShortcuts },
+      // 头部数据
+      totalData: {},
+      //点击导出后不可点击
+      disabled: false,
+      // 遮罩层
+      loading: true,
+      // 显示搜索条件
+      showSearch: true,
+      // 总条数
+      total: 0,
+      // 会员提现信息表格数据
+      memberWithdrawLogList: [],
+      // 弹出层标题
+      title: '',
+      //资金明细
+      fundsOpen: false,
+      //资金明细数据
+      fundsData: [],
+      // 是否显示弹出层
+      open: false,
+      // 状态(0申请中1锁定2审核不通过3人工入款成功 4代付中5代付失败6代付成功)字典
+      statusOptions: [],
+      // 是否首次1是0否字典
+      firstOptions: [],
+      // 代付平台
+      payAgentPlatformOptions: [],
+      // 查询参数
+      queryParams: {
+        pageNum: 1,
+        pageSize: 100,
+        searchValue: null,
+        status: null,
+        searchTime: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
+        priceMin: null,
+        priceMax: null,
+        orderByColumn: 'create_time',
+        isAsc: 'desc'
+      },
+      // 表单参数
+      form: {},
+      // 表单校验
+      rules: {
+        googleAuthCode: [
+          { required: true, message: 'google验证码不能为空', trigger: 'blur' }
+        ],
+        payAgentPlatId: [
+          { required: true, message: '请选择代付平台', trigger: 'blur' }
+        ]
       }
+    }
+  },
+  created() {
+    this.getDicts('withdraw_log_status').then(response => {
+      this.statusOptions = response.data
+    })
+    this.getDicts('first').then(response => {
+      this.firstOptions = response.data
+    })
+    this.getList()
+    this.getCountTotal()
+  },
+  activated() {
+    this.refreshType = 'primary'
+    this.refreshIcon = 'el-icon-refresh'
+    this.refreshLabel = '开始刷新'
+    this.refreshDesc = ''
+
+    this.stopRefresh()
+  },
+  methods: {
+    tableRowClassName({ row, rowIndex }) {
+      if (row.class_twoname === '彩票异常投注次数') {
+        return 'danger-row'
+      }
+      return ''
     },
-    created() {
-      this.getDicts('withdraw_log_status').then(response => {
-        this.statusOptions = response.data
+    funds(userId) {
+      getMemberWithdrawReport(userId).then((res) => {
+        this.fundsData = res.data
+        this.fundsOpen = true
       })
-      this.getDicts('first').then(response => {
-        this.firstOptions = response.data
+    },
+    //复制
+    copy1() {
+      this.copyCommand(this.totalData.total)
+    },
+    copy2() {
+      this.copyCommand(this.totalData.successTotal)
+    },
+    copy3() {
+      this.copyCommand(this.numberUtil.toPercent(this.totalData.successRate))
+    },
+    copyColumn(value) {
+      this.copyCommand(value)
+    },
+    getCountTotal() {
+      getCountTotal(this.queryParams).then((res) => {
+        this.totalData = res.data
       })
+    },
+    /** 查询会员提现信息列表 */
+    getList() {
+      this.loading = true
+      listMemberWithdrawLog(this.queryParams).then(response => {
+        this.memberWithdrawLogList = response.rows
+        this.total = response.total
+        this.loading = false
+      })
+    },
+    // 是否首次1是0否字典翻译
+    firstFormat(row, column) {
+      return this.selectDictLabel(this.firstOptions, row.first)
+    },
+    // 取消按钮
+    cancel() {
+      this.open = false
+      this.reset()
+    },
+    // 表单重置
+    reset() {
+      this.form = {
+        searchValue: null,
+        withdrawMoney: null,
+        status: null,
+        updateTime: []
+      }
+      this.resetForm('form')
+    },
+    /** 搜索按钮操作 */
+    handleQuery() {
+      this.queryParams.pageNum = 1
       this.getList()
       this.getCountTotal()
     },
-    activated() {
-      this.refreshType = 'primary'
-      this.refreshIcon = 'el-icon-refresh'
-      this.refreshLabel = '开始刷新'
-      this.refreshDesc = ''
-
-      this.stopRefresh()
+    /** 重置按钮操作 */
+    resetQuery() {
+      this.resetForm('queryForm')
+      this.handleQuery()
     },
-    methods: {
-      tableRowClassName({row, rowIndex}) {
-        if (row.class_twoname === '彩票异常投注次数') {
-          return 'danger-row'
-        }
-        return ''
-      },
-      funds(userId) {
-        getMemberWithdrawReport(userId).then((res) => {
-          this.fundsData = res.data
-          this.fundsOpen = true
-        })
-      },
-      //复制
-      copy1() {
-        this.copyCommand(this.totalData.total)
-      },
-      copy2() {
-        this.copyCommand(this.totalData.successTotal)
-      },
-      copy3() {
-        this.copyCommand(this.numberUtil.toPercent(this.totalData.successRate))
-      },
-      copyColumn(value) {
-        this.copyCommand(value)
-      },
-      getCountTotal() {
-        getCountTotal(this.queryParams).then((res) => {
-          this.totalData = res.data
-        })
-      },
-      /** 查询会员提现信息列表 */
-      getList() {
-        this.loading = true
-        listMemberWithdrawLog(this.queryParams).then(response => {
-          this.memberWithdrawLogList = response.rows
-          this.total = response.total
-          this.loading = false
-        })
-      },
-      // 是否首次1是0否字典翻译
-      firstFormat(row, column) {
-        return this.selectDictLabel(this.firstOptions, row.first)
-      },
-      // 取消按钮
-      cancel() {
-        this.open = false
-        this.reset()
-      },
-      // 表单重置
-      reset() {
-        this.form = {
-          searchValue: null,
-          withdrawMoney: null,
-          status: null,
-          updateTime: []
-        }
-        this.resetForm('form')
-      },
-      /** 搜索按钮操作 */
-      handleQuery() {
-        this.queryParams.pageNum = 1
-        this.getList()
-        this.getCountTotal()
-      },
-      /** 重置按钮操作 */
-      resetQuery() {
-        this.resetForm('queryForm')
-        this.handleQuery()
-      },
-      /** 复制按钮 */
-      handleCopy(row) {
-        var status = this.statusOptions[parseInt(row.status)]
-        var textarea = document.createElement('textarea')
-        let html = '<table><tr>'
-        html += '<td>' + row.memberId + '</td>'
-        html += '<td>' + row.account + '</td>'
-        //html += '<td>' + row.rechargeWithdrawRate + '</td>'
-        html += '<td>' + row.withdrawMoney + '</td>'
-        html += '<td>' + row.bankUserName + '</td>'
-        html += '<td>' + '\'' + row.bankAccount + '\'' + '</td>'
-        html += '<td>' + row.bankName + '</td>'
-        html += '<td>' + status.dictLabel + '</td>'
-        //html += '<td>' + row.first + '</td>'
-        html += '<td>' + row.opName + '</td>'
-        html += '<td>' + row.createTime + '</td>'
-        html += '<td>' + row.updateTime + '</td>'
-        html += '</tr></table>'
-        textarea.value = html
-        this.copyData = html
-        this.copy(this.copyData)
-      },
-      /** 复制按钮 */
-      handleCopy2(row) {
-        var status = this.statusOptions[parseInt(row.status)]
-        var textarea = document.createElement('textarea')
-        let html = row.memberId
-          + '\r\n' + row.account
-          + '\r\n' + row.withdrawMoney
-          + '\r\n' + row.bankUserName
-          + '\r\n' + row.bankAccount
-          + '\r\n' + row.bankName
-          + '\r\n' + status.dictLabel
-          + '\r\n' + row.opName
-          + '\r\n' + row.createTime
-          + '\r\n' + row.updateTime
-          + '\r\n' + row.orderNo
-        textarea.value = html
-        this.copyData = html
-        this.copy(this.copyData)
-      },
-      copy(data) {
-        let url = data
-        let oInput = document.createElement('textarea')
-        oInput.value = url
-        document.body.appendChild(oInput)
-        oInput.select() // 选择对象;
-        document.execCommand('Copy') // 执行浏览器复制命令
-        this.$message({
-          message: '复制成功',
-          type: 'success'
-        })
-        oInput.remove()
-      },
-      /** 提交按钮 */
-      submitForm() {
-        this.$refs['form'].validate(valid => {
-          if (valid) {
-            if (this.form.id != null) {
-              updateMemberWithdrawLog(this.form).then(response => {
-                this.msgSuccess('修改成功')
-                this.open = false
-                this.getList()
-              })
-            } else {
-              addMemberWithdrawLog(this.form).then(response => {
-                this.msgSuccess('新增成功')
-                this.open = false
-                this.getList()
-              })
-            }
-          }
-        })
-      },
-      /** 导出按钮操作 */
-      handleExport() {
-        const loading = this.$loading({
-          lock: true,
-          text: '正在导出中',
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.7)'
-        })
-        this.disabled = true
-        const queryParams = this.queryParams
-        return exportMemberWithdrawLog(queryParams).then(response => {
-        this.downloadExcel(response, '会员提现')
-          loading.close();
-          this.disabled = false
-        }).catch(() => {
-          this.disabled =false
-        })
-      },
-      handleLock(row) {
-        lockMemberWithdrawLog({
-          id: row.id
-        }).then(response => {
-          this.msgSuccess(response.msg)
-          this.getList()
-        })
-      },
-      handleUnlock(row) {
-        unlockMemberWithdrawLog({
-          id: row.id
-        }).then(response => {
-          this.msgSuccess(response.msg)
-          this.getList()
-        })
-      },
-      handleWithdraw(row) {
-        this.reset()
-        const id = row.id
-        getMemberWithdrawLog(id)
-          .then(response => {
-            this.form = response.data
-            this.open = true
-          })
-          .then(() => {
-            //代付平台
-            effectListPayAgentPlatform().then(response => {
-              this.payAgentPlatformOptions = response.data
+    /** 复制按钮 */
+    handleCopy(row) {
+      var status = this.statusOptions[parseInt(row.status)]
+      var textarea = document.createElement('textarea')
+      let html = '<table><tr>'
+      html += '<td>' + row.memberId + '</td>'
+      html += '<td>' + row.account + '</td>'
+      //html += '<td>' + row.rechargeWithdrawRate + '</td>'
+      html += '<td>' + row.withdrawMoney + '</td>'
+      html += '<td>' + row.bankUserName + '</td>'
+      html += '<td>' + '\'' + row.bankAccount + '\'' + '</td>'
+      html += '<td>' + row.bankName + '</td>'
+      html += '<td>' + status.dictLabel + '</td>'
+      //html += '<td>' + row.first + '</td>'
+      html += '<td>' + row.opName + '</td>'
+      html += '<td>' + row.createTime + '</td>'
+      html += '<td>' + row.updateTime + '</td>'
+      html += '</tr></table>'
+      textarea.value = html
+      this.copyData = html
+      this.copy(this.copyData)
+    },
+    /** 复制按钮 */
+    handleCopy2(row) {
+      var status = this.statusOptions[parseInt(row.status)]
+      var textarea = document.createElement('textarea')
+      let html = row.memberId
+        + '\r\n' + row.account
+        + '\r\n' + row.withdrawMoney
+        + '\r\n' + row.bankUserName
+        + '\r\n' + row.bankAccount
+        + '\r\n' + row.bankName
+        + '\r\n' + status.dictLabel
+        + '\r\n' + row.opName
+        + '\r\n' + row.createTime
+        + '\r\n' + row.updateTime
+      textarea.value = html
+      this.copyData = html
+      this.copy(this.copyData)
+    },
+    copy(data) {
+      let url = data
+      let oInput = document.createElement('textarea')
+      oInput.value = url
+      document.body.appendChild(oInput)
+      oInput.select() // 选择对象;
+      document.execCommand('Copy') // 执行浏览器复制命令
+      this.$message({
+        message: '复制成功',
+        type: 'success'
+      })
+      oInput.remove()
+    },
+    /** 提交按钮 */
+    submitForm() {
+      this.$refs['form'].validate(valid => {
+        if (valid) {
+          if (this.form.id != null) {
+            updateMemberWithdrawLog(this.form).then(response => {
+              this.msgSuccess('修改成功')
+              this.open = false
+              this.getList()
             })
+          } else {
+            addMemberWithdrawLog(this.form).then(response => {
+              this.msgSuccess('新增成功')
+              this.open = false
+              this.getList()
+            })
+          }
+        }
+      })
+    },
+    /** 导出按钮操作 */
+    handleExport() {
+      const loading = this.$loading({
+        lock: true,
+        text: '正在导出中',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
+      this.disabled = true
+      const queryParams = this.queryParams
+      return exportMemberWithdrawLog(queryParams).then(response => {
+        this.downloadExcel(response, '会员提现')
+        loading.close()
+        this.disabled = false
+      }).catch(() => {
+        this.disabled = false
+      })
+    },
+    handleLock(row) {
+      lockMemberWithdrawLog({
+        id: row.id
+      }).then(response => {
+        this.msgSuccess(response.msg)
+        this.getList()
+      })
+    },
+    handleUnlock(row) {
+      unlockMemberWithdrawLog({
+        id: row.id
+      }).then(response => {
+        this.msgSuccess(response.msg)
+        this.getList()
+      })
+    },
+    handleWithdraw(row) {
+      this.reset()
+      const id = row.id
+      getMemberWithdrawLog(id)
+        .then(response => {
+          this.form = response.data
+          this.open = true
+        })
+        .then(() => {
+          //代付平台
+          effectListPayAgentPlatform().then(response => {
+            this.payAgentPlatformOptions = response.data
           })
-      },
-      handleArtificialWithdraw() {
+        })
+    },
+    handleArtificialWithdraw() {
 
-        artificialMemberWithdrawLog({
-          id: this.form.id
+      artificialMemberWithdrawLog({
+        id: this.form.id
+      }).then(response => {
+        this.msgSuccess(response.msg)
+        if (response.code == 200) {
+          this.open = false
+          this.getList()
+        }
+      })
+    },
+    handleAbnormalWithdrawal() {
+      this.$prompt(null, '请输入出款异常原因', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      }).then(({ value }) => {
+        abnormalWithdrawal({
+          id: this.form.id,
+          remark: value
         }).then(response => {
           this.msgSuccess(response.msg)
           if (response.code == 200) {
@@ -630,14 +647,50 @@
             this.getList()
           }
         })
-      },
-      handleAbnormalWithdrawal() {
-        this.$prompt(null, '请输入出款异常原因', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消'
-        }).then(({value}) => {
-          abnormalWithdrawal({
-            id: this.form.id
+      }).catch(() => {
+      })
+    },
+    handleManualWithdrawal() {
+      manualWithdrawal({
+        id: this.form.id
+      }).then(response => {
+        this.msgSuccess(response.msg)
+        if (response.code == 200) {
+          this.open = false
+          this.getList()
+        }
+      })
+    },
+
+    promptRefused(id) {
+      this.$prompt(null, '请输入拒绝出款原因', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      }).then(({ value }) => {
+        refusedMemberWithdrawLog({
+          id: id,
+          remark: value
+        }).then(response => {
+          this.msgSuccess(response.msg)
+          this.open = false
+          this.getList()
+        })
+      }).catch(() => {
+      })
+    },
+    handleRefused(row) {
+      this.promptRefused(row.id)
+    },
+    handleDialogRefused() {
+      this.promptRefused(this.form.id)
+    },
+    handlePayAgent() {
+      this.$refs['form'].validate(valid => {
+        if (valid) {
+          payAgentOrder({
+            payAgentPlatId: this.form.payAgentPlatId,
+            withdrawOrderNo: this.form.orderNo,
+            googleAuthCode: this.form.googleAuthCode
           }).then(response => {
             this.msgSuccess(response.msg)
             if (response.code == 200) {
@@ -645,94 +698,43 @@
               this.getList()
             }
           })
-        }).catch(() => {
-        })
-      },
-      handleManualWithdrawal() {
-        manualWithdrawal({
-          id: this.form.id
-        }).then(response => {
-          this.msgSuccess(response.msg)
-          if (response.code == 200) {
-            this.open = false
-            this.getList()
-          }
-        })
-      },
-
-      promptRefused(id) {
-        this.$prompt(null, '请输入拒绝出款原因', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消'
-        }).then(({value}) => {
-          refusedMemberWithdrawLog({
-            id: id,
-            remark: value
-          }).then(response => {
-            this.msgSuccess(response.msg)
-            this.open = false
-            this.getList()
-          })
-        }).catch(() => {
-        })
-      },
-      handleRefused(row) {
-        this.promptRefused(row.id)
-      },
-      handleDialogRefused() {
-        this.promptRefused(this.form.id)
-      },
-      handlePayAgent() {
-        this.$refs['form'].validate(valid => {
-          if (valid) {
-            payAgentOrder({
-              payAgentPlatId: this.form.payAgentPlatId,
-              withdrawOrderNo: this.form.orderNo,
-              googleAuthCode: this.form.googleAuthCode
-            }).then(response => {
-              this.msgSuccess(response.msg)
-              if (response.code == 200) {
-                this.open = false
-                this.getList()
-              }
-            })
-          }
-        })
-      },
-      refreshData() {
-        if (this.refreshType === 'primary') {
-          this.refreshType = 'danger'
-          this.refreshIcon = 'el-icon-circle-close'
-          this.refreshLabel = '停止刷新'
-          this.refreshDesc = ''
-
-          this.stopRefresh()
-          this.getList()
-          this.startRefresh()
-        } else {
-          this.refreshType = 'primary'
-          this.refreshIcon = 'el-icon-refresh'
-          this.refreshLabel = '开始刷新'
-          this.refreshDesc = ''
-
-          this.stopRefresh()
         }
-      },
-      startRefresh() {
-        const thet = this
-        let secs = thet.refreshSec
-        window.refreshInterval = setInterval(function () {
-          if (secs === 0) {
-            thet.getList()
-            secs = thet.refreshSec
-          }
-          thet.refreshDesc = secs + '秒后开始刷新'
-          secs--
-        }, 1000)
-      },
-      stopRefresh() {
-        clearInterval(window.refreshInterval)
+      })
+    },
+    refreshData() {
+      if (this.refreshType === 'primary') {
+        this.refreshType = 'danger'
+        this.refreshIcon = 'el-icon-circle-close'
+        this.refreshLabel = '停止刷新'
+        this.refreshDesc = ''
+
+        this.stopRefresh()
+        this.getList()
+        this.startRefresh()
+      } else {
+        this.refreshType = 'primary'
+        this.refreshIcon = 'el-icon-refresh'
+        this.refreshLabel = '开始刷新'
+        this.refreshDesc = ''
+
+        this.stopRefresh()
       }
+    },
+    startRefresh() {
+      const thet = this
+      let secs = thet.refreshSec
+      window.refreshInterval = setInterval(function() {
+        if (secs === 0) {
+          thet.getList()
+          secs = thet.refreshSec
+        }
+        thet.refreshDesc = secs + '秒后开始刷新'
+        secs--
+      }, 1000)
+    },
+    stopRefresh() {
+      clearInterval(window.refreshInterval)
     }
   }
+}
 </script>

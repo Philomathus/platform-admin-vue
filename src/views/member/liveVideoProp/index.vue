@@ -76,7 +76,7 @@
       <el-table-column label="送礼日期" align="center" prop="createTime" min-width="160"/>
     </el-table>
 
-    <el-dialog v-dialogDrag title="查看封停ip" :visible.sync="testAccountPorpList" width="1200px" append-to-body>
+    <el-dialog v-dialogDrag title="测试号送礼明细" :visible.sync="testAccountPorpList" width="1200px" append-to-body>
       <el-form :model="queryParam" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
         <el-form-item label="日期选择" prop="testAccountCreateTime">
           <el-date-picker v-model="queryParam.testAccountCreateTime" format="yyyy-MM-dd" value-format="yyyy-MM-dd"

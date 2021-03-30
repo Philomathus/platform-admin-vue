@@ -534,6 +534,7 @@ export default {
         + '\r\n' + row.opName
         + '\r\n' + row.createTime
         + '\r\n' + row.updateTime
+        + '\r\n' + row.orderNo
       textarea.value = html
       this.copyData = html
       this.copy(this.copyData)

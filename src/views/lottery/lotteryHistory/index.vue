@@ -112,6 +112,17 @@
           </span>
         </template>
       </el-table-column>
+      <el-table-column label="操作" align="center" min-width="100px" class-name="small-padding fixed-width">
+        <template slot-scope="scope" v-if="scope.row.status >= 2">
+          <el-button
+            size="small"
+            type="primary"
+            icon="el-icon-refresh-right"
+            plain
+            @click="handleAward(scope.row)"
+          >重新派奖</el-button>
+        </template>
+      </el-table-column>
     </el-table>
 
     <pagination
@@ -126,7 +137,7 @@
 </template>
 
 <script>
-import {listLotteryHistory, lotteryInfoName} from "@/api/platform-web/lottery/lotteryHistory";
+import {listLotteryHistory, lotteryInfoName, changeStatus} from "@/api/platform-web/lottery/lotteryHistory";
 import {pickerDateShortcuts} from "@/utils/dateUtils";
 
 
@@ -224,6 +235,17 @@ export default {
     cancel() {
       this.open = false;
       this.reset();
+    },
+    /** 重新派奖按钮操作 */
+    handleAward(row) {
+      const id = row.id
+      changeStatus(id).then(response => {
+        if(response.data.code == 0){
+          this.$message.warning(response.data.msg)
+        }else{
+          this.msgSuccess("重新派奖成功")
+        }
+      });
     },
     // 表单重置
     reset() {

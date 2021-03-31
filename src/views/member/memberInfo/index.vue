@@ -233,8 +233,7 @@
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="手机号 1377701" prop="phone1" label-width="150px">
-
-          <el-input v-model="form.phone1" placeholder="请输入手机号" @blur="changetPhone(form.phone1)"/>
+          <el-input v-model="form.phone1" placeholder="请输入手机号" maxlength="4" @blur="changetPhone(form.phone1)"/>
         </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input v-model="form.password" placeholder="请输入密码"/>

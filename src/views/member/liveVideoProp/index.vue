@@ -83,11 +83,21 @@
                           :style="{width: '100%'}" placeholder="请选择日期选择" clearable :picker-options="pickerOptionsTestAccount"
           ></el-date-picker>
         </el-form-item>
+        <el-form-item prop="toUserId">
+          <el-input
+            v-model="queryParam.toUserId"
+            placeholder="主播ID"
+            clearable
+            size="small"
+            type="number"
+            @keyup.enter.native="handleQuery" />
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" size="mini" @click="testAccountPorp()">搜索</el-button>
         </el-form-item>
       </el-form>
       <el-row :gutter="10" class="mb8">
+        <el-button type="primary" @click="copy">送礼金额 {{ this.totalData.testAccountPorpTotal || 0 }}</el-button>
         <el-col :span="1.5">
           <el-button
             type="warning"
@@ -101,7 +111,7 @@
         </el-col>
         <right-toolbar :showSearch.sync="showSearch" @queryTable="testAccountPorp"></right-toolbar>
       </el-row>
-      <!--查看封停ip-->
+
       <el-table :stripe="true" v-loading="loading" :data="testAccountPorpData">
         <el-table-column type="selection" align="center"/>
         <el-table-column label="会员ID" align="center" prop="puserId" />
@@ -135,7 +145,7 @@
 import {
   listLiveProplog,
   exportLiveProplog,
-  getCount,testAccountPorpList,exportTestAccountProplog
+  getCount,testAccountPorpList,exportTestAccountProplog,testAccountCount
 } from '@/api/platform-web/member/liveVideoProp'
 import {getYesterDate, pickerDateShortcuts, toyesDayshortcuts} from '@/utils/dateUtils'
 
@@ -148,7 +158,8 @@ export default {
       pickerOptionsTestAccount: {  shortcuts: toyesDayshortcuts  },
       //统计数据
       totalData: {
-        countTotal: 0
+        countTotal: 0,
+        testAccountPorpTotal:0
       },
       // 遮罩层
       loading: true,
@@ -183,6 +194,7 @@ export default {
       queryParam: {
         pageNum: 1,
         pageSize: 20,
+        toUserId: null,
         testAccountCreateTime: this.parseTime(getYesterDate(), '{y}-{m}-{d}')
       },
       // 表单参数
@@ -194,6 +206,7 @@ export default {
   created() {
     this.getList()
     this.count()
+    testAccountCount()
   },
   methods: {
     /** 查询用户送礼日志列表 */
@@ -215,6 +228,7 @@ export default {
         this.testAccountPorpData = response.rows
         this.total = response.total
         this.loading = false
+        this.testAccountCount()
       })
     },
     //复制
@@ -223,6 +237,16 @@ export default {
     },
     count() {
       getCount(this.queryParams).then((res) => {
+        console.info(res.data)
+        if (res.data) {
+          this.totalData = res.data
+        }
+        this.loading = false
+      })
+    },
+
+    testAccountCount() {
+        testAccountCount(this.queryParam).then((res) => {
         console.info(res.data)
         if (res.data) {
           this.totalData = res.data

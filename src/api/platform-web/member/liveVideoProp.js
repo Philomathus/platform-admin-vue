@@ -27,7 +27,7 @@ export function getCount(query) {
     params: query
   })
 }
-// 查询用户送礼日志列表
+// 查询测试号用户送礼日志列表
 export function testAccountPorpList(query) {
   return request({
     url: url.platformWeb + '/admin/liveVideoProp/testAccountPorpList',
@@ -35,7 +35,7 @@ export function testAccountPorpList(query) {
     params: query
   })
 }
-// 查询用户送礼日志列表
+// 导出测试号送礼日志列表
 export function exportTestAccountProplog(query) {
   return request({
     url: url.platformWeb + '/admin/liveVideoProp/exportTestAccountProplog',
@@ -43,4 +43,12 @@ export function exportTestAccountProplog(query) {
     params: query
   })
 
+}
+// 查询用户送礼数据统计
+export function testAccountCount(query) {
+  return request({
+    url: url.platformWeb + '/admin/liveVideoProp/testAccountCount',
+    method: 'get',
+    params: query
+  })
 }

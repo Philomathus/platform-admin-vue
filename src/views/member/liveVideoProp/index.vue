@@ -97,7 +97,7 @@
         </el-form-item>
       </el-form>
       <el-row :gutter="10" class="mb8">
-        <el-button type="primary" @click="copy">送礼金额 {{ this.totalData.testAccountPorpTotal || 0 }}</el-button>
+        <el-button type="primary" @click="copy1">送礼金额 {{ this.totalData.testAccountPorpTotal || 0 }}</el-button>
         <el-col :span="1.5">
           <el-button
             type="warning"
@@ -234,6 +234,10 @@ export default {
     //复制
     copy() {
       this.copyCommand(this.totalData.countTotal)
+    },
+    //复制
+    copy1() {
+      this.copyCommand(this.totalData.testAccountPorpTotal)
     },
     count() {
       getCount(this.queryParams).then((res) => {

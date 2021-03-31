@@ -73,6 +73,15 @@ export function refusedMemberWithdrawLog(data) {
   })
 }
 
+// 会员提现拒绝
+export function refusedsMemberWithdrawLog(data) {
+  return request({
+    url: url.platformWeb + '/pay/memberWithdrawLog/refuseds',
+    method: 'put',
+    data: data
+  })
+}
+
 // 会员提现锁定
 export function lockMemberWithdrawLog(data) {
   return request({

@@ -86,6 +86,17 @@
         >导出
         </el-button>
       </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="danger"
+          plain
+          icon="el-icon-circle-close"
+          size="mini"
+          @click="handleBatchRefused"
+          v-hasPermi="['pay:memberWithdrawLog:refused']"
+        >批量拒绝
+        </el-button>
+      </el-col>
       <el-col :span="10" style="margin-left: 10px">
         <span style="font-size: 16px;margin-right: 10px">记录刷新</span>
         <el-select v-model="refreshSec" placeholder="时间间隔" style="width: 110px">
@@ -105,8 +116,9 @@
     </el-row>
 
     <el-table :stripe="true" v-loading="loading" :data="memberWithdrawLogList"
-              :highlight-current-row="true"
+              :highlight-current-row="true" @selection-change="handleSelectionChange"
     >
+      <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="复制" align="center" width="100px">
         <template slot-scope="scope">
           <el-button
@@ -337,6 +349,7 @@ import {
   updateMemberWithdrawLog,
   exportMemberWithdrawLog,
   refusedMemberWithdrawLog,
+  refusedsMemberWithdrawLog,
   lockMemberWithdrawLog,
   unlockMemberWithdrawLog,
   artificialMemberWithdrawLog,
@@ -353,6 +366,12 @@ export default {
   components: {},
   data() {
     return {
+      // 选中数组
+      ids: [],
+      // 非单个禁用
+      single: true,
+      // 非多个禁用
+      multiple: true,
       refreshSec: '5',
       refreshType: 'primary',
       refreshIcon: 'el-icon-refresh',
@@ -429,6 +448,11 @@ export default {
     this.stopRefresh()
   },
   methods: {
+    handleSelectionChange(selection) {
+      this.ids = selection.map(item => item.id)
+      this.single = selection.length !== 1
+      this.multiple = !selection.length
+    },
     tableRowClassName({ row, rowIndex }) {
       if (row.class_twoname === '彩票异常投注次数') {
         return 'danger-row'
@@ -661,7 +685,6 @@ export default {
         }
       })
     },
-
     promptRefused(id) {
       this.$prompt(null, '请输入拒绝出款原因', {
         confirmButtonText: '确定',
@@ -683,6 +706,26 @@ export default {
     },
     handleDialogRefused() {
       this.promptRefused(this.form.id)
+    },
+    handleBatchRefused() {
+      if( this.ids.length <= 0){
+        this.msgWarning('请选择需要拒绝出款选项')
+        return
+      }
+      this.$prompt(null, '请输入拒绝出款原因', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      }).then(({ value }) => {
+        refusedsMemberWithdrawLog({
+          ids: this.ids,
+          remark: value
+        }).then(response => {
+          this.msgSuccess(response.msg)
+          this.open = false
+          this.getList()
+        })
+      }).catch(() => {
+      })
     },
     handlePayAgent() {
       this.$refs['form'].validate(valid => {

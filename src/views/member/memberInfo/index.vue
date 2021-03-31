@@ -232,8 +232,9 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="账号" prop="userName">
-          <el-input v-model="form.userName" placeholder="请输入账号"/>
+        <el-form-item label="手机号 1377701" prop="phone1" label-width="150px">
+
+          <el-input v-model="form.phone1" placeholder="请输入手机号" @blur="changetPhone(form.phone1)"/>
         </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input v-model="form.password" placeholder="请输入密码"/>
@@ -244,7 +245,8 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
-    <more ref="more" @refMemeberData="getList()" :member-id="memberId" :member-code="memberCode" @memberMore="handleQuery"></more>
+    <more ref="more" @refMemeberData="getList()" :member-id="memberId" :member-code="memberCode"
+          @memberMore="handleQuery"></more>
 
     <!--查看封停ip-->
     <el-dialog :close-on-click-modal="false" v-dialogDrag title="查看封停ip" :visible.sync="speakIpBlackListList"
@@ -305,329 +307,335 @@
 </template>
 
 <script>
-import {
-  listMemberInfo,
-  getMemberInfo,
-  addMemberInfo,
-  updateMemberInfo,
-  exportMemberInfo,
-  changeSpeak,
-  changeStatus,
-  changeStatusBan
-} from '@/api/platform-web/member/memberInfo'
-import more from './more'
-import {listSpeakIpBlackList, updateSpeakIpBlackList} from '@/api/live-web/chat/speakIpBlackList'
+  import {
+    listMemberInfo,
+    getMemberInfo,
+    addMemberInfo,
+    updateMemberInfo,
+    exportMemberInfo,
+    changeSpeak,
+    changeStatus,
+    changeStatusBan
+  } from '@/api/platform-web/member/memberInfo'
+  import more from './more'
+  import {listSpeakIpBlackList, updateSpeakIpBlackList} from '@/api/live-web/chat/speakIpBlackList'
 
 
-export default {
-  name: 'MemberInfo',
-  components: {
-    more: more
-  },
-  data() {
-    return {
-      // 遮罩层
-      loading: true,
-      // 传递到子组件的memberId/memberCode
-      memberCode: 0,
-      memberId: null,
-      //禁言禁用
-      id: '',
-      speak: '',
-      status: '',
-      remark: '',
-      remarked: '',
-      // 选中数组
-      ids: [],
-      // 非单个禁用
-      single: true,
-      // 非多个禁用
-      multiple: true,
-      // 显示搜索条件
-      showSearch: true,
-      // 总条数
-      total: 0,
-      //禁言备注弹框
-      muteRemark: false,
-      muteRemarkSpeak: false,
-      fromMuteRemark: {},
-      fromMuteRemarkSpeak: {},
-      muteRemarkOptions: [],
-      //会员发言表格数据
-      speakIpBlackData: [],
-      speakIpBlackListList: false,
-      // 用户信息表格数据
-      memberInfoList: [],
-      // 弹出层标题
-      title: '',
-      // 是否显示弹出层
-      open: false,
-      // 状态列表0= 禁用 1=正常 2=测试号3=超管号
-      typeList: [
-        {label: '禁用', value: 0},
-        {label: '正常', value: 1},
-        {label: '测试号', value: 2},
-        {label: '超管号', value: 3}
-      ],
-      // 查询参数
-      queryParams: {
-        pageNum: 1,
-        pageSize: 20,
-        bankAccount: null,
-        searchValue: null, //会员Id,账号,手机号
-        status: null,
-        loginIp: null,
-        nickName: null,
-        inviterCode: null,
-        channelcode: null,
-        // orderByColumn: 'reg_time',
-        // isAsc: 'desc'
-      },
-      queryParam: {
-        pageNum: 1,
-        pageSize: 20,
-        orderByColumn: 'create_time',
-        isAsc: 'desc'
-      },
-      // 表单参数
-      form: {},
-      // 表单校验
-      rules: {
-        memberCode: [
-          {required: true, message: '会员ID不能为空', trigger: 'blur'}
+  export default {
+    name: 'MemberInfo',
+    components: {
+      more: more
+    },
+    data() {
+      return {
+        // 遮罩层
+        loading: true,
+        // 传递到子组件的memberId/memberCode
+        memberCode: 0,
+        memberId: null,
+        //禁言禁用
+        id: '',
+        speak: '',
+        status: '',
+        remark: '',
+        remarked: '',
+        // 选中数组
+        ids: [],
+        // 非单个禁用
+        single: true,
+        // 非多个禁用
+        multiple: true,
+        // 显示搜索条件
+        showSearch: true,
+        // 总条数
+        total: 0,
+        //禁言备注弹框
+        muteRemark: false,
+        muteRemarkSpeak: false,
+        fromMuteRemark: {},
+        fromMuteRemarkSpeak: {},
+        muteRemarkOptions: [],
+        //会员发言表格数据
+        speakIpBlackData: [],
+        speakIpBlackListList: false,
+        // 用户信息表格数据
+        memberInfoList: [],
+        // 弹出层标题
+        title: '',
+        // 是否显示弹出层
+        open: false,
+        // 状态列表0= 禁用 1=正常 2=测试号3=超管号
+        typeList: [
+          {label: '禁用', value: 0},
+          {label: '正常', value: 1},
+          {label: '测试号', value: 2},
+          {label: '超管号', value: 3}
         ],
-        cxAgent: [
-          {required: true, message: '代理编号不能为空', trigger: 'blur'}
-        ],
-        userName: [
-          {required: true, message: '账号不能为空', trigger: 'blur'}
-        ],
-        loginNum: [
-          {required: true, message: '登陆次数不能为空', trigger: 'blur'}
-        ]
+        // 查询参数
+        queryParams: {
+          pageNum: 1,
+          pageSize: 20,
+          bankAccount: null,
+          searchValue: null, //会员Id,账号,手机号
+          status: null,
+          loginIp: null,
+          nickName: null,
+          inviterCode: null,
+          channelcode: null,
+          // orderByColumn: 'reg_time',
+          // isAsc: 'desc'
+        },
+        queryParam: {
+          pageNum: 1,
+          pageSize: 20,
+          orderByColumn: 'create_time',
+          isAsc: 'desc'
+        },
+        // 表单参数
+        form: {},
+        // 表单校验
+        rules: {
+          memberCode: [
+            {required: true, message: '会员ID不能为空', trigger: 'blur'}
+          ],
+          cxAgent: [
+            {required: true, message: '代理编号不能为空', trigger: 'blur'}
+          ],
+          userName: [
+            {required: true, message: '账号不能为空', trigger: 'blur'}
+          ],
+          loginNum: [
+            {required: true, message: '登陆次数不能为空', trigger: 'blur'}
+          ]
+        }
       }
-    }
-  },
-  created() {
-    this.getList()
-    this.getDicts('muteRemarkOptions').then(response => {
-      this.muteRemarkOptions = response.data
-    })
-  },
-  methods: {
-    //修改用户状态
-    changeType(row) {
-      //打开备注禁用弹框
-      if (row.status === 0) {
-        this.remark = null
-        this.remarked = null
-        this.id = row.id
-        this.status = row.status
-        this.muteRemark = true
-      } else {
-        changeStatus({
-          id: row.id,
-          status: row.status
-        }).then((res) => {
+    },
+    created() {
+      this.getList()
+      this.getDicts('muteRemarkOptions').then(response => {
+        this.muteRemarkOptions = response.data
+      })
+    },
+    methods: {
+      changetPhone(phone1) {
+        if (phone1){
+          this.form.password = '01'+phone1
+          this.$forceUpdate()
+        }
+      },
+      //修改用户状态
+      changeType(row) {
+        //打开备注禁用弹框
+        if (row.status === 0) {
+          this.remark = null
+          this.remarked = null
+          this.id = row.id
+          this.status = row.status
+          this.muteRemark = true
+        } else {
+          changeStatus({
+            id: row.id,
+            status: row.status
+          }).then((res) => {
+            if (res.code === 0) {
+              this.$notify.success('状态修改成功')
+            } else {
+              this.$notify.error('状态修改失败')
+            }
+          }).catch(() => {
+            this.$notify.error('网络异常')
+          })
+        }
+      },
+      //禁用备注提交
+      submitMuteRemark(row) {
+        if (this.remarked != null) {
+          this.remark = this.remarked;
+        }
+        changeStatusBan(this.id, this.status, this.remark).then((res) => {
           if (res.code === 0) {
             this.$notify.success('状态修改成功')
+            this.muteRemark = false
           } else {
             this.$notify.error('状态修改失败')
           }
         }).catch(() => {
           this.$notify.error('网络异常')
         })
-      }
-    },
-    //禁用备注提交
-    submitMuteRemark(row) {
-      if(this.remarked != null){
-        this.remark = this.remarked;
-      }
-      changeStatusBan(this.id, this.status, this.remark).then((res) => {
-        if (res.code === 0) {
-          this.$notify.success('状态修改成功')
-          this.muteRemark =false
+      },
+      //格式化列表状态
+      formatterStatus(row, column) {
+        var status = row.status
+        if (status === 0) {
+          return '禁用'
+        } else if (status === 1) {
+          return '正常'
+        } else if (status === 2) {
+          return '测试号'
+        } else if (status === 3) {
+          return '超管号'
         } else {
-          this.$notify.error('状态修改失败')
+          return '未知'
         }
-      }).catch(() => {
-        this.$notify.error('网络异常')
-      })
-    },
-    //格式化列表状态
-    formatterStatus(row, column) {
-      var status = row.status
-      if (status === 0) {
-        return '禁用'
-      } else if (status === 1) {
-        return '正常'
-      } else if (status === 2) {
-        return '测试号'
-      } else if (status === 3) {
-        return '超管号'
-      } else {
-        return '未知'
-      }
 
-    },
-    /** 查询用户信息列表 */
-    getList() {
-      console.log('触发事件了')
-      this.loading = true
-      listMemberInfo(this.queryParams).then(response => {
-        this.memberInfoList = response.rows
-        this.total = response.total
-        this.loading = false
-      })
-    },
-    openIpBlackList() {
-      this.speakIpBlackListList = true
-      this.title = '查看已封停的ip'
-      listSpeakIpBlackList(this.queryParam).then(response => {
-        this.speakIpBlackData = response.rows
-        this.total = response.total
-        this.loading = false
-      })
-    },
-    searchIpBlackList(){
-      listSpeakIpBlackList(this.queryParam).then(response => {
+      },
+      /** 查询用户信息列表 */
+      getList() {
+        this.loading = true
+        listMemberInfo(this.queryParams).then(response => {
+          this.memberInfoList = response.rows
+          this.total = response.total
+          this.loading = false
+        })
+      },
+      openIpBlackList() {
+        this.speakIpBlackListList = true
+        this.title = '查看已封停的ip'
+        listSpeakIpBlackList(this.queryParam).then(response => {
           this.speakIpBlackData = response.rows
           this.total = response.total
           this.loading = false
-      })
-    },
-    /** 修改按钮操作 */
-    handleUpdateIpBlack(row) {
-      var that = this
-      this.$confirm('确定要' + row.userId + '解封吗?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(function () {
-        var data = {}
-        data.userIp = row.userIp
-        data.userId = row.userId
-        return updateSpeakIpBlackList(data)
-      }).then(() => {
-        that.msgSuccess('解封成功')
-        this.openIpBlackList()
-        that.getList()
-      })
-
-    },
-    //禁用弹窗取消按钮
-    cancelUser(){
-      this.muteRemark = false
-      this.getList();
-    },
-    //禁言弹窗取消按钮
-    cancelSpeak(){
-      this.muteRemarkSpeak = false
-      this.getList();
-    },
-    // 取消按钮
-    cancel() {
-      this.open = false
-    },
-    /** 搜索按钮操作 */
-    handleQuery() {
-      this.queryParams.pageNum = 1
-      this.getList()
-    },
-    handleQueryIpBlack() {
-      this.queryParam.pageNum = 1
-      this.searchIpBlackList()
-    },
-    /** 重置按钮操作 */
-    resetQuery() {
-      this.resetForm('queryForm')
-      this.handleQuery()
-    },
-    // 多选框选中数据
-    handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
-      this.single = selection.length !== 1
-      this.multiple = !selection.length
-    },
-    /** 新增按钮操作 */
-    handleAdd() {
-      this.open = true
-      this.title = '添加用户信息'
-    },
-    /** 修改按钮操作 */
-    handleUpdate(row) {
-      const id = row.id || this.ids
-      getMemberInfo(id).then(response => {
-        this.form = response.data
-        this.open = true
-        this.title = '修改用户信息'
-      })
-    },
-    /** 提交按钮 */
-    submitForm() {
-      this.$refs['form'].validate(valid => {
-        if (valid) {
-          if (this.form.id != null) {
-            updateMemberInfo(this.form).then(response => {
-              this.msgSuccess('修改成功')
-              this.open = false
-              this.getList()
-            })
-          } else {
-            addMemberInfo(this.form).then(response => {
-              this.msgSuccess('新增成功')
-              this.open = false
-              this.getList()
-            })
-          }
-        }
-      })
-    },
-    /** 更多按钮操作 */
-    handleMore(row) {
-      this.memberCode = row.memberCode
-      this.memberId = row.id
-      this.$refs.more.show(this.memberId, this.memberCode)
-    },
-    /** 导出按钮操作 */
-    handleExport() {
-      const queryParams = this.queryParams
-      this.$confirm('是否确认导出所有会员列表数据项?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(function () {
-        return exportMemberInfo(queryParams)
-      }).then(response => {
-        this.download(response.msg)
-      })
-    },
-    //打开备注禁言弹框
-    handleStatusChange(row) {
-      if (row.speak === "0") {
-        changeSpeak(row.id, row.speak, null).then(response => {
-          this.msgSuccess('解禁成功')
         })
-      } else {
-        this.remark = null
-        this.remarked = null
-        this.id = row.id
-        this.speak = row.speak
-        this.muteRemarkSpeak = true
+      },
+      searchIpBlackList() {
+        listSpeakIpBlackList(this.queryParam).then(response => {
+          this.speakIpBlackData = response.rows
+          this.total = response.total
+          this.loading = false
+        })
+      },
+      /** 修改按钮操作 */
+      handleUpdateIpBlack(row) {
+        var that = this
+        this.$confirm('确定要' + row.userId + '解封吗?', '警告', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(function () {
+          var data = {}
+          data.userIp = row.userIp
+          data.userId = row.userId
+          return updateSpeakIpBlackList(data)
+        }).then(() => {
+          that.msgSuccess('解封成功')
+          this.openIpBlackList()
+          that.getList()
+        })
+
+      },
+      //禁用弹窗取消按钮
+      cancelUser() {
+        this.muteRemark = false
+        this.getList();
+      },
+      //禁言弹窗取消按钮
+      cancelSpeak() {
+        this.muteRemarkSpeak = false
+        this.getList();
+      },
+      // 取消按钮
+      cancel() {
+        this.open = false
+      },
+      /** 搜索按钮操作 */
+      handleQuery() {
+        this.queryParams.pageNum = 1
+        this.getList()
+      },
+      handleQueryIpBlack() {
+        this.queryParam.pageNum = 1
+        this.searchIpBlackList()
+      },
+      /** 重置按钮操作 */
+      resetQuery() {
+        this.resetForm('queryForm')
+        this.handleQuery()
+      },
+      // 多选框选中数据
+      handleSelectionChange(selection) {
+        this.ids = selection.map(item => item.id)
+        this.single = selection.length !== 1
+        this.multiple = !selection.length
+      },
+      /** 新增按钮操作 */
+      handleAdd() {
+        this.open = true
+        this.title = '添加用户信息'
+      },
+      /** 修改按钮操作 */
+      handleUpdate(row) {
+        const id = row.id || this.ids
+        getMemberInfo(id).then(response => {
+          this.form = response.data
+          this.open = true
+          this.title = '修改用户信息'
+        })
+      },
+      /** 提交按钮 */
+      submitForm() {
+        this.$refs['form'].validate(valid => {
+          if (valid) {
+            if (this.form.id != null) {
+              updateMemberInfo(this.form).then(response => {
+                this.msgSuccess('修改成功')
+                this.open = false
+                this.getList()
+              })
+            } else {
+              this.form.phone = '1377701' + this.form.phone1
+              addMemberInfo(this.form).then(response => {
+                this.msgSuccess('新增成功')
+                this.open = false
+                this.getList()
+              })
+            }
+          }
+        })
+      },
+      /** 更多按钮操作 */
+      handleMore(row) {
+        this.memberCode = row.memberCode
+        this.memberId = row.id
+        this.$refs.more.show(this.memberId, this.memberCode)
+      },
+      /** 导出按钮操作 */
+      handleExport() {
+        const queryParams = this.queryParams
+        this.$confirm('是否确认导出所有会员列表数据项?', '警告', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(function () {
+          return exportMemberInfo(queryParams)
+        }).then(response => {
+          this.download(response.msg)
+        })
+      },
+      //打开备注禁言弹框
+      handleStatusChange(row) {
+        if (row.speak === "0") {
+          changeSpeak(row.id, row.speak, null).then(response => {
+            this.msgSuccess('解禁成功')
+          })
+        } else {
+          this.remark = null
+          this.remarked = null
+          this.id = row.id
+          this.speak = row.speak
+          this.muteRemarkSpeak = true
+        }
+      },
+      //禁言备注提交
+      submitMuteRemarkSpeak() {
+        if (this.remarked != null) {
+          this.remark = this.remarked;
+        }
+        changeSpeak(this.id, this.speak, this.remark).then(response => {
+          this.msgSuccess('禁言成功')
+          this.muteRemarkSpeak = false
+          this.getList()
+        })
       }
     },
-    //禁言备注提交
-    submitMuteRemarkSpeak() {
-      if(this.remarked != null){
-        this.remark = this.remarked;
-      }
-      changeSpeak(this.id, this.speak, this.remark).then(response => {
-        this.msgSuccess('禁言成功')
-        this.muteRemarkSpeak = false
-        this.getList()
-      })
-    }
-  },
-}
+  }
 </script>

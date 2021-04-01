@@ -5,7 +5,7 @@
         <el-date-picker
           v-model="dateRange"
           size="small"
-          style="width: 240px"
+          style="width: 220px"
           value-format="yyyy-MM-dd"
           type="daterange"
           range-separator="-"
@@ -41,6 +41,7 @@
           v-model="queryParams.channelcode"
           placeholder="渠道号"
           clearable
+          style="width: 180px"
           size="small"
           @keyup.enter.native="handleQuery"
         />
@@ -59,6 +60,7 @@
           v-model="queryParams.loginIp"
           placeholder="登录IP"
           clearable
+          style="width: 150px"
           size="small"
           @keyup.enter.native="handleQuery"
         />
@@ -497,7 +499,7 @@
       /** 查询用户信息列表 */
       getList() {
         this.loading = true
-        listMemberInfo(this.queryParams).then(response => {
+        listMemberInfo(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
           this.memberInfoList = response.rows
           this.total = response.total
           this.loading = false

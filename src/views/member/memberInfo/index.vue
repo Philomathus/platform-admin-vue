@@ -1,6 +1,18 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch">
+      <el-form-item prop="regTime">
+        <el-date-picker
+          v-model="dateRange"
+          size="small"
+          style="width: 240px"
+          value-format="yyyy-MM-dd"
+          type="daterange"
+          range-separator="-"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期" :picker-options="pickerOptions"
+        ></el-date-picker>
+      </el-form-item>
       <el-form-item prop="status" style="width: 110px;">
         <el-select v-model="queryParams.status" placeholder="全部状态" clearable size="small">
           <el-option v-for="(item,index) in typeList" :key="index" :label="item.label" :value="item.value"/>
@@ -24,7 +36,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="channelcode">
+      <el-form-item prop="channelcode" style="width: 110px;">
         <el-input
           v-model="queryParams.channelcode"
           placeholder="渠道号"
@@ -33,7 +45,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="nickName">
+      <el-form-item prop="nickName" style="width: 110px;">
         <el-input
           v-model="queryParams.nickName"
           placeholder="昵称"
@@ -42,7 +54,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="loginIp">
+      <el-form-item prop="loginIp" style="width: 110px;">
         <el-input
           v-model="queryParams.loginIp"
           placeholder="登录IP"
@@ -51,7 +63,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="loginIp">
+      <el-form-item prop="loginIp" style="width: 110px;">
         <el-input
           v-model="queryParams.bankAccount"
           placeholder="银行卡号"
@@ -318,6 +330,7 @@
   } from '@/api/platform-web/member/memberInfo'
   import more from './more'
   import {listSpeakIpBlackList, updateSpeakIpBlackList} from '@/api/live-web/chat/speakIpBlackList'
+  import { pickerDateShortcuts } from '@/utils/dateUtils'
 
 
   export default {
@@ -327,11 +340,14 @@
     },
     data() {
       return {
+        pickerOptions: { shortcuts: pickerDateShortcuts },
         // 遮罩层
         loading: true,
         // 传递到子组件的memberId/memberCode
         memberCode: 0,
         memberId: null,
+        // 日期范围
+        dateRange: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
         //禁言禁用
         id: '',
         speak: '',
@@ -481,7 +497,7 @@
       /** 查询用户信息列表 */
       getList() {
         this.loading = true
-        listMemberInfo(this.queryParams).then(response => {
+        listMemberInfo(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
           this.memberInfoList = response.rows
           this.total = response.total
           this.loading = false

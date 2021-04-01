@@ -11,12 +11,12 @@
   >
     <!--顶部按钮-->
     <div class="page-tab" style="margin-bottom: 20px">
-      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(1,'积分明细')">
-        <span>积分明细</span></button>
-      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(2,'资金明细')">
-        <span>资金明细</span></button>
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(3,'加分')"><span>加分</span>
       </button>
+      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(1,'三方游戏')">
+        <span>三方游戏</span></button>
+      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(2,'资金明细')">
+        <span>资金明细</span></button>
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(5,'银行卡')">
         <span>银行卡</span></button>
       <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(4,'重置密码')">
@@ -33,7 +33,7 @@
         <el-table-column prop="value" label="金额" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="createTime" label="操作">
           <template v-slot="{row}" v-if="index===1">
-            <el-button  @click="gameEsc(row)">下分</el-button>
+            <el-button @click="gameEsc(row)">下分</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -91,12 +91,12 @@
       >
         <el-table-column prop="realName" label="真实姓名" :show-overflow-tooltip="true" min-width="80">
           <template v-slot="{row}" v-if="index===5">
-            <el-input  v-model="row.realName"></el-input>
+            <el-input v-model="row.realName"></el-input>
           </template>
         </el-table-column>
         <el-table-column prop="bankName" label="银行名称" :show-overflow-tooltip="true" min-width="100">
           <template v-slot="{row}" v-if="index===5">
-            <el-input  v-model="row.bankName"></el-input>
+            <el-input v-model="row.bankName"></el-input>
           </template>
         </el-table-column>
         <el-table-column prop="bankAccount" label="银行卡号" :show-overflow-tooltip="true" min-width="150"
@@ -168,9 +168,9 @@
         memberId: null,
         memberCode: null,
         //弹出框标题
-        title: '积分明细',
+        title: '加分',
         //页面编码
-        index: 1,
+        index: 3,
         // 遮罩层
         visible: false,
         // 选中数组值
@@ -247,39 +247,39 @@
       },
       unbind(row) {
         this.loading = true
-        const id=row.id;
-        const  memberId=row.memberId;
-        unbindCard(id,memberId).then((res) => {
+        const id = row.id;
+        const memberId = row.memberId;
+        unbindCard(id, memberId).then((res) => {
           this.msgSuccess(res.msg);
-         this.cardList();
+          this.cardList();
         }).catch(() => {
           this.$notify.error('网络异常')
         }).finally(() => {
           this.loading = false
         })
       },
-      changeBank(row){
+      changeBank(row) {
 
-          this.$confirm('是否修改银行卡信息?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            this.loading = true
-            changeBank(row).then((res) => {
-              this.msgSuccess(res.msg);
-              this.cardList();
-            }).catch(() => {
-              this.$notify.error('网络异常')
-            }).finally(() => {
-              this.loading = false
-            })
+        this.$confirm('是否修改银行卡信息?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.loading = true
+          changeBank(row).then((res) => {
+            this.msgSuccess(res.msg);
+            this.cardList();
           }).catch(() => {
-            this.$message({
-              type: 'info',
-              message: '已取消'
-            });
+            this.$notify.error('网络异常')
+          }).finally(() => {
+            this.loading = false
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
           });
+        });
 
 
       },
@@ -424,7 +424,7 @@
             }
           }
         ).catch(() => {
-          this.$notify.warning('获取积分列表失败')
+          this.$notify.warning('获取三方游戏列表失败')
           this.loading = false
         })
       },

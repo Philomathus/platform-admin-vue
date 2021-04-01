@@ -5,9 +5,9 @@
         <el-date-picker
           v-model="dateRange"
           size="small"
-          style="width: 240px"
-          value-format="yyyy-MM-dd"
-          type="daterange"
+          style="width: 350px"
+          value-format="yyyy-MM-dd HH:mm:ss"
+          type="datetimerange"
           range-separator="-"
           start-placeholder="开始日期"
           end-placeholder="结束日期" :picker-options="pickerOptions"
@@ -36,7 +36,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="channelcode">
+      <el-form-item prop="channelcode" style="width: 110px;">
         <el-input
           v-model="queryParams.channelcode"
           placeholder="渠道号"
@@ -45,7 +45,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="nickName">
+      <el-form-item prop="nickName" style="width: 110px;">
         <el-input
           v-model="queryParams.nickName"
           placeholder="昵称"
@@ -54,7 +54,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="loginIp">
+      <el-form-item prop="loginIp" style="width: 110px;">
         <el-input
           v-model="queryParams.loginIp"
           placeholder="登录IP"
@@ -63,7 +63,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="loginIp">
+      <el-form-item prop="loginIp" style="width: 110px;">
         <el-input
           v-model="queryParams.bankAccount"
           placeholder="银行卡号"

@@ -64,6 +64,20 @@ export function exportMemberWithdrawLog(query) {
   })
 }
 
+// 顺为格式导出会员提现信息
+export function exportShunWeiMemberWithdrawLog(ids) {
+  const data = {
+    ids: ids
+  }
+  return request({
+    url: url.platformWeb + '/pay/memberWithdrawLog/exportShunWei',
+    method: 'post',
+    data: data,
+    responseType: 'arraybuffer',
+    timeout: 120000
+  })
+}
+
 // 会员提现拒绝
 export function refusedMemberWithdrawLog(data) {
   return request({
@@ -73,10 +87,19 @@ export function refusedMemberWithdrawLog(data) {
   })
 }
 
-// 会员提现拒绝
+// 会员提现批量拒绝
 export function refusedsMemberWithdrawLog(data) {
   return request({
     url: url.platformWeb + '/pay/memberWithdrawLog/refuseds',
+    method: 'put',
+    data: data
+  })
+}
+
+// 会员提现批量锁定
+export function locksMemberWithdrawLog(data) {
+  return request({
+    url: url.platformWeb + '/pay/memberWithdrawLog/locks',
     method: 'put',
     data: data
   })

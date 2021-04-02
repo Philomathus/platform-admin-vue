@@ -175,7 +175,7 @@
         <el-form-item label="实际到账金额" prop="subMoney">
           <el-input v-model="form.subMoney" type="number" placeholder="请输入实际到账金额"/>
         </el-form-item>
-        <el-form-item label="google验证码" prop="googleAuthCode">
+        <el-form-item label="谷歌验证码" prop="googleAuthCode">
           <el-input v-model="form.googleAuthCode" type="number" placeholder="请输入google验证码"/>
         </el-form-item>
       </el-form>

@@ -88,6 +88,18 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
+          type="warning"
+          plain
+          icon="el-icon-download"
+          size="mini"
+          :disabled="disabled"
+          @click="handleShunWeiExport"
+          v-hasPermi="['pay:memberWithdrawLog:export']"
+        >顺为代付格式导出
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
           type="danger"
           plain
           icon="el-icon-circle-close"
@@ -95,6 +107,17 @@
           @click="handleBatchRefused"
           v-hasPermi="['pay:memberWithdrawLog:refused']"
         >批量拒绝
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-lock"
+          size="mini"
+          @click="handleBatchLock"
+          v-has-permi="['pay:memberWithdrawLog:lock']"
+        >批量锁定
         </el-button>
       </el-col>
       <el-col :span="10" style="margin-left: 10px">
@@ -348,9 +371,11 @@ import {
   addMemberWithdrawLog,
   updateMemberWithdrawLog,
   exportMemberWithdrawLog,
+  exportShunWeiMemberWithdrawLog,
   refusedMemberWithdrawLog,
   refusedsMemberWithdrawLog,
   lockMemberWithdrawLog,
+  locksMemberWithdrawLog,
   unlockMemberWithdrawLog,
   artificialMemberWithdrawLog,
   abnormalWithdrawal,
@@ -358,8 +383,8 @@ import {
   getMemberWithdrawReport,
   getCountTotal
 } from '@/api/platform-web/pay/memberWithdrawLog'
-import { effectListPayAgentPlatform, payAgentOrder } from '@/api/platform-web/pay/payAgentPlatform'
-import { pickerDateTimeShortcuts } from '@/utils/dateUtils'
+import {effectListPayAgentPlatform, payAgentOrder} from '@/api/platform-web/pay/payAgentPlatform'
+import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
 
 export default {
   name: 'MemberWithdrawLog',
@@ -377,7 +402,7 @@ export default {
       refreshIcon: 'el-icon-refresh',
       refreshLabel: '开始刷新',
       refreshDesc: '',
-      pickerOptions: { shortcuts: pickerDateTimeShortcuts },
+      pickerOptions: {shortcuts: pickerDateTimeShortcuts},
       // 头部数据
       totalData: {},
       //点击导出后不可点击
@@ -421,10 +446,10 @@ export default {
       // 表单校验
       rules: {
         googleAuthCode: [
-          { required: true, message: 'google验证码不能为空', trigger: 'blur' }
+          {required: true, message: 'google验证码不能为空', trigger: 'blur'}
         ],
         payAgentPlatId: [
-          { required: true, message: '请选择代付平台', trigger: 'blur' }
+          {required: true, message: '请选择代付平台', trigger: 'blur'}
         ]
       }
     }
@@ -453,7 +478,7 @@ export default {
       this.single = selection.length !== 1
       this.multiple = !selection.length
     },
-    tableRowClassName({ row, rowIndex }) {
+    tableRowClassName({row, rowIndex}) {
       if (row.class_twoname === '彩票异常投注次数') {
         return 'danger-row'
       }
@@ -604,10 +629,31 @@ export default {
         confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportMemberWithdrawLog(queryParams)
       }).then(response => {
         this.downloadExcel(response, '会员提现')
+        this.disabled = false
+      }).catch(() => {
+        this.disabled = false
+      })
+    },
+    /** 顺为代付格式导出按钮操作 */
+    handleShunWeiExport() {
+      if (this.ids.length <= 0) {
+        this.msgError('请勾选需要导出的记录,不勾选无法导出')
+        return
+      }
+      const that = this
+      this.disabled = true
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        return exportShunWeiMemberWithdrawLog(that.ids)
+      }).then(response => {
+        this.downloadExcel(response, '顺为代付提现')
         this.disabled = false
       }).catch(() => {
         this.disabled = false
@@ -660,7 +706,7 @@ export default {
       this.$prompt(null, '请输入出款异常原因', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
-      }).then(({ value }) => {
+      }).then(({value}) => {
         abnormalWithdrawal({
           id: this.form.id,
           remark: value
@@ -689,7 +735,7 @@ export default {
       this.$prompt(null, '请输入拒绝出款原因', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
-      }).then(({ value }) => {
+      }).then(({value}) => {
         refusedMemberWithdrawLog({
           id: id,
           remark: value
@@ -708,14 +754,14 @@ export default {
       this.promptRefused(this.form.id)
     },
     handleBatchRefused() {
-      if( this.ids.length <= 0){
+      if (this.ids.length <= 0) {
         this.msgWarning('请选择需要拒绝出款选项')
         return
       }
       this.$prompt(null, '请输入拒绝出款原因', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
-      }).then(({ value }) => {
+      }).then(({value}) => {
         refusedsMemberWithdrawLog({
           ids: this.ids,
           remark: value
@@ -725,6 +771,18 @@ export default {
           this.getList()
         })
       }).catch(() => {
+      })
+    },
+    handleBatchLock() {
+      if (this.ids.length <= 0) {
+        this.msgWarning('请选择需要锁定出款选项')
+        return
+      }
+      locksMemberWithdrawLog({
+        ids: this.ids
+      }).then(response => {
+        this.msgSuccess(response.msg)
+        this.getList()
       })
     },
     handlePayAgent() {
@@ -766,7 +824,7 @@ export default {
     startRefresh() {
       const thet = this
       let secs = thet.refreshSec
-      window.refreshInterval = setInterval(function() {
+      window.refreshInterval = setInterval(function () {
         if (secs === 0) {
           thet.getList()
           secs = thet.refreshSec

@@ -31,8 +31,9 @@ export function addScore(query) {
 // 重置密码接口
 export function resetPassword(query) {
   return request({
-    url: url.platformWeb + '/member/memberInfo/reset/' + query,
-    method: 'delete',
+    url: url.platformWeb + '/member/memberInfo/reset',
+    method: 'post',
+    params: query
   })
 }
 

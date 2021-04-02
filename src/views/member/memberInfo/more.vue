@@ -19,7 +19,7 @@
         <span>资金明细</span></button>
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(5,'银行卡')">
         <span>银行卡</span></button>
-      <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(4,'重置密码')">
+      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(4,'重置密码')">
         <span>重置密码</span></button>
       <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(6,'重置保险箱')">
         <span>重置保险箱</span></button>
@@ -73,6 +73,17 @@
         </el-form-item>
         <el-form-item label="打码倍数" prop="beatNum">
           <el-input v-model="form.beatNum" placeholder="请输入打码倍数，默认请填写1,如未打算打码可填写为0"/>
+        </el-form-item>
+        <el-form-item label="google验证码" prop="googleAuthCode">
+          <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>
+        </el-form-item>
+      </el-form>
+    </el-row>
+    <!--重置密码-->
+    <el-row v-if="index===4">
+      <el-form ref="form" :model="form" :rules="rules" label-width="110px">
+        <el-form-item label="重置密码" prop="password">
+          <el-input v-model="form.password" placeholder="请输入新密码"/>
         </el-form-item>
         <el-form-item label="google验证码" prop="googleAuthCode">
           <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>
@@ -133,6 +144,7 @@
 
 
     <div slot="footer" class="dialog-footer">
+      <el-button type="primary" @click="handlePassword" v-if="index===4">确 定</el-button>
       <el-button type="primary" @click="handleImportTable" v-if="index===3">确 定</el-button>
       <el-button @click="visible = false">取 消</el-button>
     </div>
@@ -202,6 +214,9 @@
         },
         // 加分表单校验
         rules: {
+          password: [
+            {required: true, message: '重置密码不能为空', trigger: 'blur'}
+          ],
           score: [
             {required: true, message: '加分金额不能为空', trigger: 'blur'}
           ],
@@ -294,10 +309,6 @@
         var hint = ''
         //如果是重置密码,保险箱,体现
         switch (index) {
-          case 4 :
-            hint = '确定重置码123456?'
-            this.open(hint, 1)
-            break
           case 6 :
             hint = '确定重置保险箱?'
             this.open(hint, 1)
@@ -332,17 +343,6 @@
               type: 'success',
               message: '操作成功!'
             })
-            if (this.index === 4) {
-              resetPassword(this.memberId).then((res) => {
-                if (res.code === 0) {
-                  this.$notify.success('重置密码成功')
-                } else {
-                  this.$notify.error('重置密码失败')
-                }
-              }).catch(() => {
-                this.$notify.error('网络异常')
-              })
-            } else {
               resetSafe({userId: this.memberId}).then((res) => {
                 if (res.code === 0) {
                   this.$notify.success('重置保险箱成功')
@@ -352,14 +352,13 @@
               }).catch(() => {
                 this.$notify.error('网络异常')
               })
-            }
           }).catch(() => {
             this.$message({
               type: 'info',
               message: '已取消'
             })
           })
-        }  else if(type==2) {
+        } else if(type==2) {
           this.$prompt(hint, '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消'
@@ -504,6 +503,26 @@
           this.loading = false
         })
       },
+      //重置密码提交接口
+      resetPassword() {
+        this.loading = true
+        resetPassword({
+          password: this.form.password,
+          googleAuthCode: this.form.googleAuthCode,
+          id: this.memberId
+        }).then((res) => {
+          if (res.code === 0) {
+            this.resetForm('form')
+            this.visible = false
+            this.$notify.success(res.msg)
+            this.$emit('refMemeberData');
+          }
+        }).catch((error) => {
+          this.$notify.error(error)
+        }).finally(() => {
+          this.loading = false
+        })
+      },
       //银行卡列表接口
       cardList() {
         this.dbTableList = []
@@ -548,6 +567,21 @@
         this.$refs['form'].validate(valid => {
           if (valid) {
             this.addScore()
+          }
+        })
+      },
+      /** 重置密码操作 */
+      handlePassword() {
+        /*importTable({tables: this.tables.join(",")}).then(res => {
+            this.msgSuccess(res.msg);
+            if (res.code === 200) {
+                this.visible = false;
+                this.$emit("ok");
+            }
+        });*/
+        this.$refs['form'].validate(valid => {
+          if (valid) {
+            this.resetPassword()
           }
         })
 

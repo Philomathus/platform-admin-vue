@@ -217,16 +217,22 @@
           </el-select>
         </el-form-item>
         <el-form-item label="充值最低" prop="rechargeMin">
-          <el-input type="number" v-model="form.rechargeMin" placeholder="请输入充值最低" :min="0"/>
+          <el-input type="number" class="no-number" v-model="form.rechargeMin" placeholder="请输入充值最低" :min="0"/>
         </el-form-item>
         <el-form-item label="充值最高" prop="rechargeMax">
-          <el-input type="number" v-model="form.rechargeMax" placeholder="请输入充值最高" :min="0" />
+          <el-input type="number" class="no-number" v-model="form.rechargeMax" placeholder="请输入充值最高" :min="0" />
         </el-form-item>
         <el-form-item label="通道费率" prop="payRate">
-          <el-input v-model="form.payRate" placeholder="请输入通道费率" />
+          <el-input type="number" class="no-number" v-model="form.payRate" placeholder="请输入通道费率" />
         </el-form-item>
         <el-form-item label="开放层级" prop="openLevel">
-          <el-input type="number" v-model="form.openLevel" placeholder="请输入开放层级"  />
+          <el-col :span="11">
+            <el-input type="number" class="no-number" v-model="form.openLevel" placeholder="请输入最小开放层级"/>
+          </el-col>
+          <el-col :span="2" style="text-align: center;">-</el-col>
+          <el-col :span="11">
+            <el-input type="number" class="no-number" v-model="form.openLevelMax" placeholder="请输入最大开放层级"/>
+          </el-col>
         </el-form-item>
         <el-form-item label="支付属性" prop="payAttr">
           <el-radio-group v-model="form.payAttr">
@@ -305,6 +311,7 @@ export default {
         isCanCallback: null,
         indexes: null,
         openLevel: null,
+        openLevelMax: null,
         payPlatformId: null,
         payTypeId: null,
         discountBill: null,
@@ -419,6 +426,7 @@ export default {
         isCanCallback: null,
         indexes: null,
         openLevel: null,
+        openLevelMax: null,
         payPlatformId: null,
         payTypeId: null,
         discountBill: null,

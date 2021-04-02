@@ -25,6 +25,8 @@
         <span>重置保险箱</span></button>
       <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(7,'重置提现')">
         <span>重置提现</span></button>
+      <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(8,'打码修复')">
+        <span>打码修复</span></button>
     </div>
     <!--积分明细-->
     <el-row v-if="index===1">
@@ -147,7 +149,7 @@
     resetSafe,
     unbindCard,
     changeBank,
-    resetWithdrawal
+    resetWithdrawal,memberBcodeRepair
   } from '@/api/platform-web/member/memberInfo'
 
   export default {
@@ -304,6 +306,10 @@
             hint = '请输入您的谷歌验证码'
             this.open(hint, 2)
             break
+          case 8 :
+            hint = '请输入您的谷歌验证码'
+            this.open(hint, 3)
+            break
         }
         //其他的就是获取列表
         this.getList()
@@ -353,7 +359,7 @@
               message: '已取消'
             })
           })
-        } else {
+        }  else if(type==2) {
           this.$prompt(hint, '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消'
@@ -372,6 +378,33 @@
                 this.$notify.success('重置提现成功')
               } else {
                 this.$notify.error('重置提现失败')
+              }
+            }).catch(() => {
+              this.$notify.error('网络异常')
+            })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '取消输入'
+            })
+          })
+        }else if (type==3){
+          this.$prompt(hint, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消'
+          }).then(({value}) => {
+            this.$message({
+              type: 'success',
+              message: '你的谷歌验证码是: ' + value
+            })
+            memberBcodeRepair({
+              googleAuthCode: value,
+              id: this.memberId
+            }).then((res) => {
+              if (res.code === 0) {
+                this.$notify.success('修复打码数据成功')
+              } else {
+                this.$notify.error('修复打码数据失败')
               }
             }).catch(() => {
               this.$notify.error('网络异常')

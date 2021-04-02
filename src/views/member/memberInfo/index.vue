@@ -243,12 +243,22 @@
     <!-- 添加或修改用户信息对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="手机号">
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px" >
+        <el-form-item label="手机号" style="margin-bottom: 0px">
           <el-input v-model="phone" placeholder="请输入手机号" maxlength="11" minlength="11" @blur="changetPhone(phone)"/>
         </el-form-item>
-        <el-form-item label="密码" prop="password">
+        <el-form-item label="建议:" >
+          <span style="color: #00afff">
+          请统一测试账号格式,默认格式已生成,请只输入后四位
+            </span>
+        </el-form-item>
+        <el-form-item label="密码" prop="password" style="margin-bottom: 0px">
           <el-input v-model="form.password" placeholder="请输入密码"/>
+        </el-form-item>
+        <el-form-item label="提示:">
+          <span style="color: #00afff">
+          密码自动分配,为电话号码后六位
+          </span>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -594,7 +604,7 @@
       /** 新增按钮操作 */
       handleAdd() {
         this.open = true
-        this.title = '添加用户信息'
+        this.title = '添加测试用户信息'
       },
       /** 修改按钮操作 */
       handleUpdate(row) {

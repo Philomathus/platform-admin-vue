@@ -152,3 +152,11 @@ export function changeBank(data) {
     data: data
   })
 }
+// 打码修复
+export function memberBcodeRepair(query) {
+  return request({
+    url: url.platformWeb + '/member/memberInfo/memberBcodeRepair',
+    method: 'post',
+    params: query
+  })
+}

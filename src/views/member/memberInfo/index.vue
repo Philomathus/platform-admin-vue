@@ -244,8 +244,8 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="手机号" >
-          <el-input v-model="phone" placeholder="请输入手机号" maxlength="11" minlength="11" @blur="changetPhone(phone)" />
+        <el-form-item label="手机号">
+          <el-input v-model="phone" placeholder="请输入手机号" maxlength="11" minlength="11" @blur="changetPhone(phone)"/>
         </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input v-model="form.password" placeholder="请输入密码"/>
@@ -330,7 +330,7 @@
   } from '@/api/platform-web/member/memberInfo'
   import more from './more'
   import {listSpeakIpBlackList, updateSpeakIpBlackList} from '@/api/live-web/chat/speakIpBlackList'
-  import { pickerDateShortcuts } from '@/utils/dateUtils'
+  import {pickerDateShortcuts} from '@/utils/dateUtils'
   import {getConfigEnvironment} from "@/api/platform-web/config/configEnvironment";
 
 
@@ -345,7 +345,7 @@
         phone: null,
         //代理号
         agent: null,
-        pickerOptions: { shortcuts: pickerDateShortcuts },
+        pickerOptions: {shortcuts: pickerDateShortcuts},
         // 遮罩层
         loading: true,
         // 传递到子组件的memberId/memberCode
@@ -395,13 +395,13 @@
         queryParams: {
           pageNum: 1,
           pageSize: 20,
-          bankAccount: null,
-          searchValue: null, //会员Id,账号,手机号
-          status: null,
-          loginIp: null,
-          nickName: null,
-          inviterCode: null,
-          channelcode: null,
+          bankAccount: '',
+          searchValue: '', //会员Id,账号,手机号
+          status: '',
+          loginIp: '',
+          nickName: '',
+          inviterCode: '',
+          channelcode: '',
           // orderByColumn: 'reg_time',
           // isAsc: 'desc'
         },
@@ -415,25 +415,25 @@
         form: {},
         // 表单校验
         rules: {
-/*          phone: [
-            {required: true, message: '手机号不能为空', trigger: 'blur'}
-          ],*/
+          /*          phone: [
+                      {required: true, message: '手机号不能为空', trigger: 'blur'}
+                    ],*/
           // password: [
           //   {required: true, message: '密码不能为空', trigger: 'blur'}
           // ],
-/*          userName: [
-            {required: true, message: '账号不能为空', trigger: 'blur'}
-          ],
-          loginNum: [
-            {required: true, message: '登陆次数不能为空', trigger: 'blur'}
-          ]*/
+          /*          userName: [
+                      {required: true, message: '账号不能为空', trigger: 'blur'}
+                    ],
+                    loginNum: [
+                      {required: true, message: '登陆次数不能为空', trigger: 'blur'}
+                    ]*/
         }
       }
     },
     created() {
       this.getList()
       getConfigEnvironment('agent_id').then(response => {
-        this.phone='137'+response.data.envValue
+        this.phone = '137' + response.data.envValue
       })
       this.getDicts('muteRemarkOptions').then(response => {
         this.muteRemarkOptions = response.data
@@ -441,8 +441,8 @@
     },
     methods: {
       changetPhone(phone) {
-        if (phone){
-          this.form.password = phone.substr(5,6)
+        if (phone) {
+          this.form.password = phone.substr(5, 6)
           this.$forceUpdate()
         }
       },
@@ -505,7 +505,18 @@
       /** 查询用户信息列表 */
       getList() {
         this.loading = true
-        listMemberInfo(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
+        if (this.queryParams.bankAccount===''  &&
+            this.queryParams.searchValue===''  &&
+            this.queryParams.status===''  &&
+            this.queryParams.loginIp===''  &&
+            this.queryParams.nickName===''  &&
+            this.queryParams.inviterCode===''  &&
+            this.queryParams.channelcode==='' ) {
+          this.queryParams = this.addDateRange(this.queryParams, this.dateRange);
+        }else {
+          this.queryParams.params = []
+        }
+        listMemberInfo(this.queryParams).then(response => {
           this.memberInfoList = response.rows
           this.total = response.total
           this.loading = false
@@ -605,7 +616,7 @@
                 this.getList()
               })
             } else {
-              this.form.phone=this.phone;
+              this.form.phone = this.phone;
               addMemberInfo(this.form).then(response => {
                 this.msgSuccess('新增成功')
                 this.open = false

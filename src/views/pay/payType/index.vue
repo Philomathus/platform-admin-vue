@@ -145,6 +145,9 @@
         <el-form-item label="名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入名称"/>
         </el-form-item>
+        <el-form-item label="编码" prop="code">
+          <el-input v-model="form.code" placeholder="请输入编码" type="number" :disabled="form.id"/>
+        </el-form-item>
         <el-form-item label="图标">
           <imageUpload v-model="form.iconUrl" path="PayType"/>
         </el-form-item>
@@ -159,6 +162,7 @@
             clearable
             size="small"
             style="width: 240px"
+            :disabled="form.id"
           >
             <el-option
               v-for="dict in paytypeOptions"
@@ -250,11 +254,8 @@ export default {
         indexes: [
           { required: true, message: '排序不能为空', trigger: 'blur' }
         ],
-        isRecommend: [
-          { required: true, message: '是否推荐(1是0否)不能为空', trigger: 'blur' }
-        ],
-        status: [
-          { required: true, message: '状态(1启用0停用)不能为空', trigger: 'blur' }
+        type: [
+          { required: true, message: '存入类型不能为空', trigger: 'blur' }
         ]
       }
     }

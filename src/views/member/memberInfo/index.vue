@@ -253,7 +253,7 @@
             </span>
         </el-form-item>
         <el-form-item label="密码" prop="password" style="margin-bottom: 0px">
-          <el-input v-model="form.password" placeholder="请输入密码"/>
+          <el-input v-model="password" placeholder="请输入密码"/>
         </el-form-item>
         <el-form-item label="提示:">
           <span style="color: #00afff">
@@ -353,6 +353,8 @@
       return {
         //phone 手机号前四位
         phone: null,
+        //password 密码
+        password: null,
         //代理号
         agent: null,
         pickerOptions: {shortcuts: pickerDateShortcuts},
@@ -452,7 +454,7 @@
     methods: {
       changetPhone(phone) {
         if (phone) {
-          this.form.password = phone.substr(5, 6)
+          this.password = phone.substr(5, 6)
           this.$forceUpdate()
         }
       },
@@ -627,6 +629,7 @@
               })
             } else {
               this.form.phone = this.phone;
+              this.form.password = this.password;
               addMemberInfo(this.form).then(response => {
                 this.msgSuccess('新增成功')
                 this.open = false

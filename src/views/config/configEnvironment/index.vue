@@ -97,7 +97,7 @@
                 </el-select>
               </template>
             </el-table-column>
-            <el-table-column label="备注" min-width="150" align="center">
+            <el-table-column label="备注" min-width="100" align="center">
               <template v-slot="{row}">
                 <el-input
                   :class="row.envStatus === 0  ? 'ban' : ''"
@@ -106,10 +106,22 @@
                 />
               </template>
             </el-table-column>
+            <el-table-column label="操作" min-width="50" align="center">
+              <template v-slot="{row}">
+<!--                <el-input
+                  :class="row.envStatus === 0  ? 'ban' : ''"
+                  v-model="row.envDes"
+                  size="small"
+                />-->
+                <el-button type="primary"
+                           @click="handleConfirm">确认修改
+                </el-button>
+              </template>
+            </el-table-column>
           </el-table>
-          <el-button type="primary" v-show="configEnvironmentList.length>0" style="float: right;margin-top: 20px"
+<!--          <el-button type="primary" v-show="configEnvironmentList.length>0" style="float: right;margin-top: 20px"
                      @click="handleConfirm">确定
-          </el-button>
+          </el-button>-->
         </el-tab-pane>
 
       </el-tabs>
@@ -381,11 +393,20 @@
         this.single = selection.length !== 1
         this.multiple = !selection.length
       },
+      updateConfigEnvironment(data){
+        this.loading=true
+        updateConfigEnvironment(data).then(response => {
+          this.msgSuccess('修改成功')
+          this.getList()
+          this.loading=false
+        })
+      },
       handleConfirm() {
+        this.loading=true
         updateConfigEnvironmentList(this.configEnvironmentList).then(response => {
           this.msgSuccess('修改成功')
-          this.open = false
           this.getList()
+          this.loading=false
         })
       },
       /** 新增按钮操作 */

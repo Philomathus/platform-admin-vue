@@ -114,7 +114,7 @@
                   size="small"
                 />-->
                 <el-button type="primary"
-                           @click="handleConfirm">确认修改
+                           @click="updateConfigEnvironment(row)">确认修改
                 </el-button>
               </template>
             </el-table-column>
@@ -211,6 +211,7 @@
     getConfigEnvironment,
     delConfigEnvironment,
     addConfigEnvironment,
+    updateConfigEnvironment,
     updateConfigEnvironmentList,
     exportConfigEnvironment,
     getTitleIndex

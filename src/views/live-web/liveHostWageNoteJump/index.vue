@@ -1,12 +1,14 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item>
+      <el-form-item prop="dateDay">
         <el-date-picker clearable size="small"
                         v-model="queryParams.dateDay"
                         type="date"
+                        format="yyyy-MM-dd"
                         value-format="yyyy-MM-dd"
                         placeholder="选择日期"
+                        :style="{width: '100%'}"
                         :picker-options="pickerOptions">
         </el-date-picker>
       </el-form-item>
@@ -120,12 +122,14 @@
                width="1250px" append-to-body
     >
       <el-form :model="queryDetailsParams" ref="queryDetailsParams" :inline="true" label-width="68px">
-        <el-form-item>
+        <el-form-item prop="dateDay">
           <el-date-picker clearable size="small"
                           v-model="queryDetailsParams.dateDay"
                           type="date"
+                          format="yyyy-MM-dd"
                           value-format="yyyy-MM-dd"
                           placeholder="选择日期"
+                          :style="{width: '100%'}"
                           :picker-options="pickerOptions">
           </el-date-picker>
         </el-form-item>
@@ -197,7 +201,7 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
-        dateDay: new Date(),
+        dateDay: this.parseTime(new Date(), '{y}-{m}-{d}'),
         nickName: null,
         hostId: null,
         settlementRate: 0.7,
@@ -208,7 +212,7 @@ export default {
       detailsList: [],
       detailsTotal: 0,
       queryDetailsParams: {
-        dateDay: new Date(),
+        dateDay: this.parseTime(new Date(), '{y}-{m}-{d}'),
         pageNum: 1,
         pageSize: 20,
         orderByColumn: 'create_time',

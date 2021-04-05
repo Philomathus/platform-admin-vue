@@ -48,12 +48,12 @@
         <el-table-column label="线上入款金额" min-width="100" align="center" prop="xsRukunanjine"/>
         <el-table-column label="人工入款人数" min-width="100" align="center" prop="rgRukunanrenshu"/>
         <el-table-column label="人工入款金额" min-width="100" align="center" prop="rgRukunanjine"/>
+        <el-table-column label="代充人数" min-width="100" align="center" prop="totalAccount"/>
+        <el-table-column label="代充金额" min-width="100" align="center" prop="totalLast"/>
         <el-table-column label="水军上分" min-width="100" align="center" prop="palmYouhuirenshu"/>
         <el-table-column label="每日平台盈利" min-width="100" align="center" prop="totalProfile"/>
         <el-table-column label="平台优惠" min-width="100" align="center" prop="palmYouhuijine"/>
-        <el-table-column label="预估会员剩余积分" min-width="130" align="center" prop="totalAccount"/>
         <el-table-column label="每日送礼金额" min-width="100" align="center" prop="totalGiveprop"/>
-        <el-table-column label="合计偏差" min-width="130" align="center" prop="totalLast"/>
         <el-table-column label="入款总金额" min-width="130" align="center" prop="totalRukuanjine" fixed="right"/>
         <el-table-column label="出款总金额" min-width="130" align="center" prop="totalChukuanjine" fixed="right"/>
         <el-table-column label="合计" align="center" prop="totalChukuanjineMath" fixed="right"

@@ -1,13 +1,14 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="日期范围" prop="selectDate">
-        <el-date-picker type="daterange" v-model="queryParams.selectDate" format="yyyy-MM-dd"
-                        value-format="yyyy-MM-dd" start-placeholder="开始日期"
-                        end-placeholder="结束日期"
-                        range-separator="至" clearable :picker-options="pickerOptions"
-                        style="width: 250px"
-        ></el-date-picker>
+      <el-form-item>
+        <el-date-picker clearable size="small"
+                        v-model="queryParams.dateDay"
+                        type="date"
+                        value-format="yyyy-MM-dd"
+                        placeholder="选择日期"
+                        :picker-options="pickerOptions">
+        </el-date-picker>
       </el-form-item>
       <el-form-item label="散户结算率" prop="settlementRate" label-width="85px">
         <el-input
@@ -119,13 +120,14 @@
                width="1250px" append-to-body
     >
       <el-form :model="queryDetailsParams" ref="queryDetailsParams" :inline="true" label-width="68px">
-        <el-form-item label="日期范围" prop="selectDate">
-          <el-date-picker type="daterange" v-model="queryDetailsParams.selectDate" format="yyyy-MM-dd"
-                          value-format="yyyy-MM-dd" start-placeholder="开始日期"
-                          end-placeholder="结束日期"
-                          range-separator="至" clearable :picker-options="pickerOptions"
-                          style="width: 250px"
-          ></el-date-picker>
+        <el-form-item>
+          <el-date-picker clearable size="small"
+                          v-model="queryDetailsParams.dateDay"
+                          type="date"
+                          value-format="yyyy-MM-dd"
+                          placeholder="选择日期"
+                          :picker-options="pickerOptions">
+          </el-date-picker>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuerDetails">搜索</el-button>
@@ -166,14 +168,15 @@ import {
   exportHostWageNote,
   listHostWageNoteDetailsPage
 } from '@/api/live-web/liveHostWageNote'
-import { pickerDateShortcuts } from '@/utils/dateUtils'
+import { toyesDayshortcuts } from '@/utils/dateUtils'
 
 export default {
   name: 'LiveHostWageNote',
   components: {},
   data() {
     return {
-      pickerOptions: { shortcuts: pickerDateShortcuts },
+      //快捷日期
+      pickerOptions: {shortcuts: toyesDayshortcuts},
       // 遮罩层
       loading: true,
       // 选中数组
@@ -194,7 +197,7 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
-        selectDate: [this.parseTime(new Date, '{y}-{m}-{d}'), this.parseTime(new Date, '{y}-{m}-{d}')],
+        dateDay: new Date(),
         nickName: null,
         hostId: null,
         settlementRate: 0.7,
@@ -205,7 +208,7 @@ export default {
       detailsList: [],
       detailsTotal: 0,
       queryDetailsParams: {
-        selectDate: [this.parseTime(new Date, '{y}-{m}-{d}'), this.parseTime(new Date, '{y}-{m}-{d}')],
+        dateDay: new Date(),
         pageNum: 1,
         pageSize: 20,
         orderByColumn: 'create_time',
@@ -274,7 +277,7 @@ export default {
     openQuerDetails(row) {
       this.open = true
       this.queryDetailsParams.hostId = row.hostId
-      this.queryDetailsParams.selectDate = row.timedata.split(' - ')
+      // this.queryDetailsParams.dateDay = row.dateDay
       this.getDetailsList()
     },
     handleQuerDetails() {

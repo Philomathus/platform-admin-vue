@@ -146,7 +146,7 @@
           <el-input v-model="form.name" placeholder="请输入名称"/>
         </el-form-item>
         <el-form-item label="编码" prop="code">
-          <el-input v-model="form.code" placeholder="请输入编码" type="number" :disabled="form.id"/>
+          <el-input v-model="form.code" placeholder="请输入负整数编码" type="number" class="no-number" :disabled="form.id"/>
         </el-form-item>
         <el-form-item label="图标">
           <imageUpload v-model="form.iconUrl" path="PayType"/>
@@ -173,7 +173,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="开放层级" prop="openLevel">
-          <el-input type="number" v-model="form.openLevel" placeholder="请输入开放层级"/>
+          <el-input type="number" class="no-number" v-model="form.openLevel" placeholder="请输入开放层级"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -246,16 +246,16 @@ export default {
       // 表单校验
       rules: {
         name: [
-          { required: true, message: '名称不能为空', trigger: 'blur' }
+          {required: true, message: '名称不能为空', trigger: 'blur'}
         ],
         code: [
-          { required: true, message: '编码不能为空', trigger: 'blur' }
+          {required: true, message: '编码不能为空', trigger: 'blur'}
         ],
         indexes: [
-          { required: true, message: '排序不能为空', trigger: 'blur' }
+          {required: true, message: '排序不能为空', trigger: 'blur'}
         ],
         type: [
-          { required: true, message: '存入类型不能为空', trigger: 'blur' }
+          {required: true, message: '存入类型不能为空', trigger: 'blur'}
         ]
       }
     }
@@ -283,11 +283,11 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return changePayTypeStatus(row.id, row.status)
       }).then(() => {
         this.msgSuccess(text + '成功')
-      }).catch(function() {
+      }).catch(function () {
         row.status = row.status === '0' ? '1' : '0'
       })
     },
@@ -298,11 +298,11 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return changeRecommendStatus(row.id, row.isRecommend)
       }).then(() => {
         this.msgSuccess('操作成功')
-      }).catch(function() {
+      }).catch(function () {
         row.isRecommend = row.isRecommend === '0' ? '1' : '0'
       })
     },
@@ -370,18 +370,22 @@ export default {
     submitForm() {
       this.$refs['form'].validate(valid => {
         if (valid) {
-          if (this.form.id != null) {
-            updatePayType(this.form).then(response => {
-              this.msgSuccess('修改成功')
-              this.open = false
-              this.getList()
-            })
+          if (!(/^-[1-9]\d*$/).test(this.form.code)) {
+            this.msgWarning('编码必须为负整数')
           } else {
-            addPayType(this.form).then(response => {
-              this.msgSuccess('新增成功')
-              this.open = false
-              this.getList()
-            })
+            if (this.form.id != null) {
+              updatePayType(this.form).then(response => {
+                this.msgSuccess('修改成功')
+                this.open = false
+                this.getList()
+              })
+            } else {
+              addPayType(this.form).then(response => {
+                this.msgSuccess('新增成功')
+                this.open = false
+                this.getList()
+              })
+            }
           }
         }
       })
@@ -393,7 +397,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return delPayType(ids)
       }).then(() => {
         this.getList()
@@ -407,7 +411,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportPayType(queryParams)
       }).then(response => {
         this.download(response.msg)

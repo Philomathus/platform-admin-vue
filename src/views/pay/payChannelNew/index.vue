@@ -223,7 +223,7 @@
           <el-input type="number" class="no-number" v-model="form.rechargeMax" placeholder="请输入充值最高" :min="0" />
         </el-form-item>
         <el-form-item label="通道费率" prop="payRate">
-          <el-input type="number" class="no-number" v-model="form.payRate" placeholder="请输入通道费率" />
+          <el-input type="number" class="no-number" v-model="form.payRate" placeholder="请输入通道费率(最高0.4最低0.02)" />
         </el-form-item>
         <el-form-item label="开放层级" prop="openLevel">
           <el-col :span="11">
@@ -325,14 +325,17 @@ export default {
       form: {},
       // 表单校验
       rules: {
+        payRate: [
+          { required: true, message: "通道费率不能为空", trigger: "blur" }
+        ],
         name: [
           { required: true, message: "通道名称不能为空", trigger: "blur" }
         ],
         payAttr: [
-          { required: true, message: "支付属性  0http 1支付宝sdk 2第三方app不能为空", trigger: "blur" }
+          { required: true, message: "支付属性不能为空", trigger: "blur" }
         ],
         status: [
-          { required: true, message: "状态(1启用0停用)不能为空", trigger: "blur" }
+          { required: true, message: "状态不能为空", trigger: "blur" }
         ],
         payPlatformId: [
           { required: true, message: "支付平台编号不能为空", trigger: "blur" }
@@ -344,7 +347,7 @@ export default {
           { required: true, message: "快捷金额不能为空", trigger: "blur" }
         ],
         inputType: [
-          { required: true, message: "输入类型 (自定义金额+快捷金额1 仅快捷金额0)不能为空", trigger: "change" }
+          { required: true, message: "输入类型不能为空", trigger: "change" }
         ],
       }
     };

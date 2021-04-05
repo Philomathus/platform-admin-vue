@@ -1,46 +1,36 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="订单号" prop="orderNo">
+    <el-button type="success" @click="copy1">交易笔数: {{this.data.countNumber}}</el-button>
+    <el-button type="warning" @click="copy2">总上分金额: {{this.data.countMoney || 0 }}</el-button>
+    <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 10px" v-show="showSearch" label-width="68px">
+      <el-form-item label="创建时间" prop="selectDate" label-width="70px">
+        <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
+                        end-placeholder="结束时间" range-separator="至" :default-time="['00:00:00', '23:59:59']" clearable :picker-options="pickerOptions"
+        ></el-date-picker>
+      </el-form-item>
+      <el-form-item  prop="orderNo">
         <el-input
           v-model="queryParams.orderNo"
-          placeholder="请输入订单号主键"
+          placeholder="订单号"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="代充账号" prop="rechargeAcount">
+      <el-form-item  prop="rechargeAcount">
         <el-input
           v-model="queryParams.rechargeAcount"
-          placeholder="请输入代充账号"
+          placeholder="代充账号"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="代充昵称" prop="rechargeNickName">
+      <el-form-item  prop="memberId">
         <el-input
-          v-model="queryParams.rechargeNickName"
-          placeholder="请输入代充昵称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="会员ID" prop="memberId">
-        <el-input
-          v-model="queryParams.memberId"
-          placeholder="请输入会员ID"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="会员账号" prop="userName">
-        <el-input
-          v-model="queryParams.userName"
-          placeholder="请输入会员账号"
+          v-model="queryParams.searchValue"
+          placeholder="会员ID/会员账号"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -52,8 +42,7 @@
       </el-form-item>
     </el-form>
 
-    <el-button type="primary" @click="copy1">交易笔数: {{this.data.countNumber}}</el-button>
-    <el-button type="success" @click="copy2">总上分金额: {{this.data.countMoney}}</el-button>
+
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
@@ -142,6 +131,7 @@
 
 <script>
 import { listPayAgentRechargeLog, getPayAgentRechargeLog, delPayAgentRechargeLog, addPayAgentRechargeLog, updatePayAgentRechargeLog, exportPayAgentRechargeLog, countMoney } from "@/api/platform-web/pay/payAgentRechargeLog";
+import {pickerDateTimeShortcuts} from "@/utils/dateUtils";
 
 export default {
   name: "PayAgentRechargeLog",
@@ -149,6 +139,7 @@ export default {
   },
   data() {
     return {
+      pickerOptions: { shortcuts: pickerDateTimeShortcuts },
       // 遮罩层
       loading: true,
       // 选中数组
@@ -170,13 +161,13 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
+        selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 20,
         orderNo: null,
         rechargeAcount: null,
         rechargeNickName: null,
-        memberId: null,
-        userName: null,
+        searchValue: null,
         orderByColumn: 'create_time',
         isAsc: 'desc'
       },

@@ -34,3 +34,11 @@ export function exportReportPlamGames(query) {
     timeout: 60000
   })
 }
+// 查询【请填写功能名称】列表
+export function listMonth(query) {
+  return request({
+    url: url.platformWeb + '/admin/report-plam-games/listMonth',
+    method: 'get',
+    params: query
+  })
+}

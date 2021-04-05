@@ -10,6 +10,14 @@ export function listPayType(query) {
   })
 }
 
+// 编码失去焦点验证是否已存在
+export function existCode(code) {
+  return request({
+    url: url.platformWeb + '/pay/payType/existCode/' + code,
+    method: 'get'
+  })
+}
+
 // 查询【支付类型】详细
 export function getPayType(id) {
   return request({

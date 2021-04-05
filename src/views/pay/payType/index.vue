@@ -146,7 +146,7 @@
           <el-input v-model="form.name" placeholder="请输入名称"/>
         </el-form-item>
         <el-form-item label="编码" prop="code">
-          <el-input v-model="form.code" placeholder="请输入负整数编码" type="number" class="no-number" :disabled="form.id"/>
+          <el-input v-model="form.code" placeholder="请输入负整数编码" type="number" @blur="existCode(form.code)" class="no-number" :disabled="form.id"/>
         </el-form-item>
         <el-form-item label="图标">
           <imageUpload v-model="form.iconUrl" path="PayType"/>
@@ -193,7 +193,8 @@ import {
   updatePayType,
   exportPayType,
   changePayTypeStatus,
-  changeRecommendStatus
+  changeRecommendStatus,
+  existCode
 } from '@/api/platform-web/pay/payType'
 import ImageUpload from '@/components/ImageUpload'
 
@@ -304,6 +305,14 @@ export default {
         this.msgSuccess('操作成功')
       }).catch(function () {
         row.isRecommend = row.isRecommend === '0' ? '1' : '0'
+      })
+    },
+    //编码失去焦点验证是否已存在
+    existCode(value) {
+      existCode(value).then(response => {
+        if(response.code == 0){
+          this.msgError(response.msg);
+        }
       })
     },
     // 支付类型

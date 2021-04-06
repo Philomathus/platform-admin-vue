@@ -90,8 +90,8 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table :stripe="true" v-loading="loading" :data="payAgentRechargeLogList" @selection-change="handleSelectionChange">
-      <el-table-column label="复制" align="center" width="70">
+    <el-table :stripe="true" v-loading="loading" :data="payAgentRechargeLogList" @selection-change="handleSelectionChange"  >
+      <el-table-column label="复制" align="center" >
         <template slot-scope="scope">
           <el-button
             type="primary" size="mini"
@@ -100,13 +100,13 @@
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="订单号" align="center" prop="orderNo" />
-      <el-table-column label="代充账号" align="center" prop="rechargeAcount" />
-      <el-table-column label="代充昵称" align="center" prop="rechargeNickName" />
-      <el-table-column label="会员ID" align="center" prop="memberId" />
-      <el-table-column label="会员账号" align="center" prop="userName" />
-      <el-table-column label="上分金额" align="center" prop="money" />
-      <el-table-column label="创建时间" align="center" prop="createTime" />
+      <el-table-column label="订单号" align="center" prop="orderNo" min-width="170"/>
+      <el-table-column label="代充账号" align="center" prop="rechargeAcount" min-width="160"/>
+      <el-table-column label="代充昵称" align="center" prop="rechargeNickName" min-width="120" />
+      <el-table-column label="会员ID" align="center" prop="memberId" min-width="120"/>
+      <el-table-column label="会员账号" align="center" prop="userName" min-width="120" />
+      <el-table-column label="上分金额" align="center" prop="money" min-width="100" />
+      <el-table-column label="创建时间" align="center" fixed="right" prop="createTime" width="160"/>
     </el-table>
 
     <pagination

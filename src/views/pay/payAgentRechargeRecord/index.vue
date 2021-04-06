@@ -1,15 +1,9 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="70px">
-      <el-form-item label="订单号" prop="orderNo">
-        <el-input
-          v-model="queryParams.orderNo"
-          placeholder="请输入订单号"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+    <el-button type="primary" @click="copy1">存入金额统计 {{ this.totalData.depositTotal || 0 }}</el-button>
+    <el-button type="warning" @click="copy2">提出金额统计 {{ this.totalData.proposedTotal || 0 }}</el-button>
+    <el-button type="info" @click="copy3">实际存入金额统计 {{ this.totalData.realDepositTotal || 0 }}</el-button>
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="70px" style="margin-top:20px">
       <el-form-item label="代充账号" prop="rechargeAcount">
         <el-input
           v-model="queryParams.rechargeAcount"
@@ -110,7 +104,7 @@
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="订单号" align="center" prop="orderNo" :show-overflow-tooltip="true" width="190"/>
+      <el-table-column label="订单号" align="center" prop="orderNo" :show-overflow-tooltip="true" min-width="200"/>
       <el-table-column label="代充账号" align="center" prop="rechargeAcount"/>
       <el-table-column label="代充昵称" align="center" prop="rechargeNickName"/>
       <el-table-column label="存入(提出)类型" align="center" prop="type"/>
@@ -226,7 +220,8 @@ import {
   updatePayAgentRechargeRecord,
   exportPayAgentRechargeRecord,
   deposit,
-  proposed
+  proposed,
+  getCount
 } from "@/api/platform-web/pay/payAgentRechargeRecord";
 import { pickerDateShortcuts } from '@/utils/dateUtils'
 
@@ -255,6 +250,12 @@ export default {
         value: '其他',
         label: '其他'
       }],
+      //统计数据
+      totalData: {
+        depositTotal: 0,
+        proposedTotal: 0,
+        realDepositTotal: 0
+      },
       // 遮罩层
       loading: true,
       // 选中数组
@@ -282,11 +283,13 @@ export default {
       // 查询参数
       queryParams: {
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 20,
         orderNo: null,
         rechargeAcount: null,
         rechargeNickName: null,
         createTime: null,
+        orderByColumn: 'createTime',
+        isAsc: 'desc'
       },
       // 表单参数
       form: {},
@@ -316,6 +319,7 @@ export default {
   },
   created() {
     this.getList();
+    this.count()
   },
   methods: {
     /** 查询代充存提列表 */
@@ -369,6 +373,27 @@ export default {
       };
       this.resetForm("formdeposit");
     },
+    //复制
+    copy1() {
+      this.copyCommand(this.totalData.depositTotal)
+    },
+    copy2() {
+      this.copyCommand(this.totalData.proposedTotal)
+    },
+    copy3() {
+      this.copyCommand(this.totalData.realDepositTotal)
+    },
+    //统计
+    count() {
+      getCount(this.queryParams).then((res) => {
+        console.info(res.data)
+        if (res.data) {
+          this.totalData = res.data
+          this.totalData.realDepositTotal = res.data.depositTotal * 0.97
+        }
+        this.loading = false
+      })
+    },
     // 表单重置
     reset() {
       this.form = {
@@ -387,6 +412,7 @@ export default {
     handleQuery() {
       this.queryParams.pageNum = 1;
       this.getList();
+      this.count()
     },
     /** 重置按钮操作 */
     resetQuery() {

@@ -42,3 +42,11 @@ export function listMonth(query) {
     params: query
   })
 }
+// 查询【请填写功能名称】列表
+export function countBet(query) {
+  return request({
+    url: url.platformWeb + '/admin/report-plam-games/countBet',
+    method: 'get',
+    params: query
+  })
+}

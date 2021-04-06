@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <el-button type="primary">总盈利: {{ this.countData.countBetMoney || 0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" label-width="68px"
              v-show="showSearch"
     >
@@ -49,7 +50,7 @@
 </template>
 
 <script>
-import { listMonth,  exportReportPlamGames } from '@/api/platform-web/report/gameBet'
+import { listMonth,  exportReportPlamGames,countBet} from '@/api/platform-web/report/gameBet'
 export default {
   name: 'PlamGamesMonth',
   data() {
@@ -69,7 +70,7 @@ export default {
       countBetPeople:null,
       // 表格数据
       listData: [],
-      data: {},
+      countData: {},
       // 查询参数
       queryParams: {
         begindate: null,
@@ -79,6 +80,7 @@ export default {
   },
   created() {
     this.getList()
+    this.countBet()
   },
   activated() {
   },
@@ -93,11 +95,18 @@ export default {
       })
     },
 
-
+    countBet() {
+      this.loading = true
+      countBet(this.queryParams).then(response => {
+        this.countData = response.data
+        this.loading = false
+      })
+    },
     /** 搜索按钮操作 */
     handleQuery() {
       this.pageNum = 1
       this.getList()
+      this.countBet()
 
     },
     /** 重置按钮操作 */

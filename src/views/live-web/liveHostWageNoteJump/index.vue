@@ -66,11 +66,11 @@
 
     <el-table id="out-table" stripe v-loading="loading" :data="liveHostWageNoteList"
     >
-      <el-table-column label="主播ID" align="center" prop="hostId" min-width="100">
-        <template slot-scope="scope">
-          <a style="color: #00afff" @click="openQuerDetails(scope.row)">{{ scope.row.hostId }}</a>
-        </template>
-      </el-table-column>
+      <el-table-column label="主播ID" align="center" prop="hostId" min-width="100"/>
+<!--        <template slot-scope="scope">-->
+<!--          <a style="color: #00afff" @click="openQuerDetails(scope.row)">{{ scope.row.hostId }}</a>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
       <el-table-column label="主播昵称" :show-overflow-tooltip="true" align="center" prop="nickName" min-width="120"/>
       <el-table-column label="家族ID" align="center" prop="familyId" min-width="80">
         <template slot-scope="scope">

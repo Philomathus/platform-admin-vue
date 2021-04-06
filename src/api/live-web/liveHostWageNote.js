@@ -4,7 +4,7 @@ import {url} from '@/utils/url'
 // 查询家族直播时长列表
 export function listFamilyWageNotePage(query) {
   return request({
-    url: url.platformWeb + '/admin/liveHostWageNote/familyPage',
+    url: url.platformWeb + '/admin/liveHostWageDay/familyPage',
     method: 'get',
     params: query
   })
@@ -13,7 +13,7 @@ export function listFamilyWageNotePage(query) {
 // 查询主播统计时长列表
 export function listHostWageNotePage(query) {
   return request({
-    url: url.platformWeb + '/admin/liveHostWageNote/hostPage',
+    url: url.platformWeb + '/admin/liveHostWageDay/hostPage',
     method: 'get',
     params: query
   })
@@ -22,7 +22,7 @@ export function listHostWageNotePage(query) {
 // 查询主播统计时长明细列表
 export function listHostWageNoteDetailsPage(query) {
   return request({
-    url: url.platformWeb + '/admin/liveHostWageNote/list',
+    url: url.platformWeb + '/admin/liveHostWageDay/list',
     method: 'get',
     params: query
   })
@@ -31,7 +31,7 @@ export function listHostWageNoteDetailsPage(query) {
 // 导出家族直播时长
 export function exportFamilyWageNote(query) {
   return request({
-    url: url.platformWeb + '/admin/liveHostWageNote/exportFamily',
+    url: url.platformWeb + '/admin/liveHostWageDay/exportFamily',
     method: 'get',
     params: query,
     responseType: 'arraybuffer',
@@ -42,7 +42,7 @@ export function exportFamilyWageNote(query) {
 // 导出主播统计时长
 export function exportHostWageNote(query) {
   return request({
-    url: url.platformWeb + '/admin/liveHostWageNote/exportHost',
+    url: url.platformWeb + '/admin/liveHostWageDay/exportHost',
     method: 'get',
     params: query,
     responseType: 'arraybuffer',

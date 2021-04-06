@@ -308,13 +308,17 @@ export default {
         row.isRecommend = row.isRecommend === '0' ? '1' : '0'
       })
     },
-    //编码失去焦点验证是否已存在
+    //编码失去焦点验证
     existCode(value) {
-      existCode(value).then(response => {
-        if (response.code == 0) {
-          this.msgError(response.msg);
-        }
-      })
+      if (!(/^-[1-9]\d*$/).test(value)) {
+        this.msgWarning('编码必须为负整数')
+      } else {
+        existCode(value).then(response => {
+          if (response.code == 0) {
+            this.msgError(response.msg);
+          }
+        })
+      }
     },
     // 支付类型
     successFormat(row, column) {
@@ -390,7 +394,7 @@ export default {
                 this.getList()
               })
             } else {
-              existCode(value).then(response => {
+              existCode(this.form.code).then(response => {
                 if (response.code == 0) {
                   this.msgError(response.msg);
                 } else {

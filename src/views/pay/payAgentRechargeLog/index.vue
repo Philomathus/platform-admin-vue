@@ -90,8 +90,8 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table :stripe="true" v-loading="loading" :data="payAgentRechargeLogList" @selection-change="handleSelectionChange" >
-      <el-table-column label="复制" align="center" width="70">
+    <el-table :stripe="true" v-loading="loading" :data="payAgentRechargeLogList" @selection-change="handleSelectionChange"  >
+      <el-table-column label="复制" align="center" >
         <template slot-scope="scope">
           <el-button
             type="primary" size="mini"

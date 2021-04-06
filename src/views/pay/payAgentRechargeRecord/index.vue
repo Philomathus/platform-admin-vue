@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
     <el-button type="primary" @click="copy1">总存入金额 {{ this.totalData.depositTotal || 0 }}</el-button>
-    <el-button type="warning" @click="copy2">总提出金额 {{ this.totalData.proposedTotal || 0 }}</el-button>
-    <el-button type="info" @click="copy3">实际总存入金额 {{ this.totalData.realDepositTotal || 0 }}</el-button>
+    <el-button type="info" @click="copy2">总提出金额 {{ this.totalData.proposedTotal || 0 }}</el-button>
+    <el-button type="success" @click="copy3">实际总存入金额 {{ this.totalData.realDepositTotal || 0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="70px" style="margin-top:20px">
       <el-form-item label="代充账号" prop="rechargeAcount">
         <el-input

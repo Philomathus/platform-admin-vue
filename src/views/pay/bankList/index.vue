@@ -128,13 +128,16 @@
     <!-- 添加或修改出款银行列表对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+        <el-form-item label="ID" prop="id">
+          <el-input v-model="form.id" placeholder="请输入ID" />
+        </el-form-item>
         <el-form-item label="银行名称" prop="bankName">
           <el-input v-model="form.bankName" placeholder="请输入银行名称" />
         </el-form-item>
-        <el-form-item label="银行英文编码" prop="bankCode">
+        <el-form-item label="银行编码" prop="bankCode">
           <el-input v-model="form.bankCode" placeholder="请输入银行英文编码" />
         </el-form-item>
-        <el-form-item label="银行图标地址" prop="bankIcon">
+        <el-form-item label="图标" prop="bankIcon">
           <imageUpload v-model="form.bankIcon" path="bankList"/>
         </el-form-item>
         <el-form-item label="排序" prop="sort">
@@ -151,10 +154,12 @@
 
 <script>
 import { listBankList, getBankList, delBankList, addBankList, updateBankList, exportBankList,changeConfigBankStatus } from "@/api/platform-web/pay/bankList";
+import ImageUpload from '@/components/ImageUpload'
 
 export default {
   name: "BankList",
   components: {
+    ImageUpload
   },
   data() {
     return {
@@ -189,6 +194,9 @@ export default {
       form: {},
       // 表单校验
       rules: {
+        id: [
+          { required: true, message: "ID不能为空", trigger: "blur" }
+        ],
         bankName: [
           { required: true, message: "银行名称不能为空", trigger: "blur" }
         ],

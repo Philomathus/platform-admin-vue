@@ -146,7 +146,8 @@
           <el-input v-model="form.name" placeholder="请输入名称"/>
         </el-form-item>
         <el-form-item label="编码" prop="code">
-          <el-input v-model="form.code" placeholder="请输入负整数编码" type="number" @blur="existCode(form.code)" class="no-number" :disabled="form.id"/>
+          <el-input v-model="form.code" placeholder="请输入负整数编码" type="number" @blur="existCode(form.code)"
+                    class="no-number" :disabled="form.id"/>
         </el-form-item>
         <el-form-item label="图标">
           <imageUpload v-model="form.iconUrl" path="PayType"/>
@@ -310,7 +311,7 @@ export default {
     //编码失去焦点验证是否已存在
     existCode(value) {
       existCode(value).then(response => {
-        if(response.code == 0){
+        if (response.code == 0) {
           this.msgError(response.msg);
         }
       })
@@ -389,10 +390,16 @@ export default {
                 this.getList()
               })
             } else {
-              addPayType(this.form).then(response => {
-                this.msgSuccess('新增成功')
-                this.open = false
-                this.getList()
+              existCode(value).then(response => {
+                if (response.code == 0) {
+                  this.msgError(response.msg);
+                } else {
+                  addPayType(this.form).then(response => {
+                    this.msgSuccess('新增成功')
+                    this.open = false
+                    this.getList()
+                  })
+                }
               })
             }
           }

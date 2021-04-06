@@ -34,7 +34,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:bankList:add']"
-        >新增</el-button>
+        >新增
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -45,7 +46,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:bankList:edit']"
-        >修改</el-button>
+        >修改
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -56,7 +58,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:bankList:remove']"
-        >删除</el-button>
+        >删除
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -66,37 +69,38 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:bankList:export']"
-        >导出</el-button>
+        >导出
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="bankListList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键" align="center" prop="id" />
-      <el-table-column label="银行名称" align="center" prop="bankName" />
-      <el-table-column label="银行编码" align="center" prop="bankCode" />
-      <el-table-column label="图标" align="center" prop="bankIcon" >
-      <template slot-scope="scope">
-        <el-image
-          style="height: 50px"
-          :src="scope.row.bankIcon"
-          fit="contain"
-        >
-        </el-image>
-      </template>
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="主键" align="center" prop="id"/>
+      <el-table-column label="银行名称" align="center" prop="bankName"/>
+      <el-table-column label="银行编码" align="center" prop="bankCode"/>
+      <el-table-column label="图标" align="center" prop="bankIcon">
+        <template slot-scope="scope">
+          <el-image
+            style="height: 50px"
+            :src="scope.row.bankIcon"
+            fit="contain"
+          >
+          </el-image>
+        </template>
       </el-table-column>
-      <el-table-column label="状态" align="center" prop="status" >
-      <template slot-scope="scope">
-        <el-switch
-          v-model="scope.row.status"
-          active-value="1"
-          inactive-value="0"
-          @change="handleStatusChange(scope.row)"
-        ></el-switch>
-      </template>
+      <el-table-column label="状态" align="center" prop="status">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.status"
+            active-value="1"
+            inactive-value="0"
+            @change="handleStatusChange(scope.row)"
+          ></el-switch>
+        </template>
       </el-table-column>
-      <el-table-column label="排序 从小到大顺序" align="center" prop="sort" />
+      <el-table-column label="排序 从小到大顺序" align="center" prop="sort"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -105,14 +109,16 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:bankList:edit']"
-          >修改</el-button>
+          >修改
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:bankList:remove']"
-          >删除</el-button>
+          >删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -125,23 +131,50 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改出款银行列表对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <!-- 添加出款银行列表对话框 -->
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="opene" width="500px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="ID" prop="id">
-          <el-input v-model="form.id" placeholder="请输入ID" />
+          <el-input v-model="form.id" placeholder="请输入ID"/>
         </el-form-item>
         <el-form-item label="银行名称" prop="bankName">
-          <el-input v-model="form.bankName" placeholder="请输入银行名称" />
+          <el-input v-model="form.bankName" placeholder="请输入银行名称"/>
         </el-form-item>
         <el-form-item label="银行编码" prop="bankCode">
-          <el-input v-model="form.bankCode" placeholder="请输入银行英文编码" />
+          <el-input v-model="form.bankCode" placeholder="请输入银行英文编码"/>
         </el-form-item>
         <el-form-item label="图标" prop="bankIcon">
           <imageUpload v-model="form.bankIcon" path="bankList"/>
         </el-form-item>
         <el-form-item label="排序" prop="sort">
-          <el-input v-model="form.sort" placeholder="请输入排序" />
+          <el-input v-model="form.sort" placeholder="请输入排序"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="addsubmitForm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
+
+    <!-- 修改出款银行列表对话框 -->
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
+               append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+        <el-form-item label="ID" prop="id">
+          <el-input v-model="form.id" placeholder="请输入ID"/>
+        </el-form-item>
+        <el-form-item label="银行名称" prop="bankName">
+          <el-input v-model="form.bankName" placeholder="请输入银行名称"/>
+        </el-form-item>
+        <el-form-item label="银行编码" prop="bankCode">
+          <el-input v-model="form.bankCode" placeholder="请输入银行英文编码"/>
+        </el-form-item>
+        <el-form-item label="图标" prop="bankIcon">
+          <imageUpload v-model="form.bankIcon" path="bankList"/>
+        </el-form-item>
+        <el-form-item label="排序" prop="sort">
+          <el-input v-model="form.sort" placeholder="请输入排序"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -153,7 +186,15 @@
 </template>
 
 <script>
-import { listBankList, getBankList, delBankList, addBankList, updateBankList, exportBankList,changeConfigBankStatus } from "@/api/platform-web/pay/bankList";
+import {
+  listBankList,
+  getBankList,
+  delBankList,
+  addBankList,
+  updateBankList,
+  exportBankList,
+  changeConfigBankStatus
+} from "@/api/platform-web/pay/bankList";
 import ImageUpload from '@/components/ImageUpload'
 
 export default {
@@ -181,6 +222,7 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      opene: false,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -195,19 +237,19 @@ export default {
       // 表单校验
       rules: {
         id: [
-          { required: true, message: "ID不能为空", trigger: "blur" }
+          {required: true, message: "ID不能为空", trigger: "blur"}
         ],
         bankName: [
-          { required: true, message: "银行名称不能为空", trigger: "blur" }
+          {required: true, message: "银行名称不能为空", trigger: "blur"}
         ],
         bankCode: [
-          { required: true, message: "银行英文编码不能为空", trigger: "blur" }
+          {required: true, message: "银行英文编码不能为空", trigger: "blur"}
         ],
         bankIcon: [
-          { required: true, message: "银行图标不能为空", trigger: "blur" }
+          {required: true, message: "银行图标不能为空", trigger: "blur"}
         ],
         sort: [
-          { required: true, message: "排序不能为空", trigger: "blur" }
+          {required: true, message: "排序不能为空", trigger: "blur"}
         ]
       }
     };
@@ -228,6 +270,7 @@ export default {
     // 取消按钮
     cancel() {
       this.open = false;
+      this.opene = false;
       this.reset();
     },
     // 表单重置
@@ -237,7 +280,7 @@ export default {
         bankName: null,
         bankCode: null,
         bankIcon: null,
-        status: 0,
+        status: null,
         sort: null
       };
       this.resetForm("form");
@@ -248,11 +291,11 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return changeConfigBankStatus(row.id, row.status)
       }).then(() => {
         this.msgSuccess(text + '成功')
-      }).catch(function() {
+      }).catch(function () {
         row.status = row.status === '0' ? '1' : '0'
       })
     },
@@ -269,13 +312,13 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
-      this.open = true;
+      this.opene = true;
       this.title = "添加出款银行列表";
     },
     /** 修改按钮操作 */
@@ -288,23 +331,27 @@ export default {
         this.title = "修改出款银行列表";
       });
     },
-    /** 提交按钮 */
+    /** 新增提交按钮 */
+    addsubmitForm() {
+      this.$refs["form"].validate(valid => {
+        if (valid) {
+          addBankList(this.form).then(response => {
+            this.msgSuccess("新增成功");
+            this.opene = false;
+            this.getList();
+          });
+        }
+      });
+    },
+    /** 修改提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.form.id != null) {
-            updateBankList(this.form).then(response => {
-              this.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
-            });
-          } else {
-            addBankList(this.form).then(response => {
-              this.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
-            });
-          }
+          updateBankList(this.form).then(response => {
+            this.msgSuccess("修改成功");
+            this.open = false;
+            this.getList();
+          });
         }
       });
     },
@@ -315,13 +362,13 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
-      }).then(function() {
+      }).then(function () {
         return delBankList(ids);
       }).then(() => {
         this.getList();
         this.msgSuccess("删除成功");
       }).catch(() => {
-	  })
+      })
     },
     /** 导出按钮操作 */
     handleExport() {
@@ -330,7 +377,7 @@ export default {
         confirmButtonText: "确认",
         cancelButtonText: "取消",
         type: "warning"
-      }).then(function() {
+      }).then(function () {
         return exportBankList(queryParams);
       }).then(response => {
         this.downloadExcel(response, '出款银行列表');

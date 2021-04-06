@@ -87,18 +87,20 @@
           <a style="color: #00afff" @click="familyShow(row.familyId)">{{ row.familyId }}</a>
         </template>
       </el-table-column>
-      <el-table-column label="家族名称" align="center" prop="familyName" min-width="120">
+      <el-table-column label="家族名称" align="center" prop="familyName">
         <template v-slot="{row}">
-          <span v-if="row.familyId === 0">直播家族散户(未入家族)</span>
+          <span v-if="row.familyId === 0">散户</span>
           <span v-else>{{ row.familyName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="族长昵称" align="center" prop="familyNickName" min-width="100"/>
-      <el-table-column label="直播总时长(小时)" align="center" prop="alltimeDes" min-width="100"/>
-      <el-table-column label="直播礼物总结算" align="center" prop="allticket" min-width="100"/>
-      <el-table-column label="直播礼物折扣结算" align="center" prop="allticketRes" min-width="100"/>
-      <el-table-column label="结算率" align="center" prop="settlementRate" min-width="80"/>
-      <el-table-column label="统计日期" align="center" prop="timedata" width="180"/>
+      <el-table-column label="族长昵称" align="center" prop="familyNickName" />
+      <el-table-column label="直播总时长(小时)" align="center" prop="alltimeDes" />
+      <el-table-column label="直播礼物总结算" align="center" prop="allticket" />
+      <el-table-column label="直播礼物折扣结算" align="center" prop="allticketRes" />
+      <el-table-column label="结算率" align="center" prop="settlementRate" />
+      <el-table-column label="彩票投注" align="center" prop="lotteryCost" />
+      <el-table-column label="上播次数" align="center" prop="times" />
+      <el-table-column label="统计日期" align="center" prop="timedata" />
     </el-table>
 
     <pagination

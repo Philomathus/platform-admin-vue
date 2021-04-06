@@ -66,12 +66,12 @@
 
     <el-table id="out-table" stripe v-loading="loading" :data="liveHostWageNoteList"
     >
-      <el-table-column label="主播ID" align="center" prop="hostId" min-width="100"/>
+      <el-table-column label="主播ID" align="center" prop="hostId"/>
 <!--        <template slot-scope="scope">-->
 <!--          <a style="color: #00afff" @click="openQuerDetails(scope.row)">{{ scope.row.hostId }}</a>-->
 <!--        </template>-->
 <!--      </el-table-column>-->
-      <el-table-column label="主播昵称" :show-overflow-tooltip="true" align="center" prop="nickName" min-width="120"/>
+      <el-table-column label="主播昵称" :show-overflow-tooltip="true" align="center" prop="nickName"/>
       <el-table-column label="家族ID" align="center" prop="familyId" min-width="80">
         <template slot-scope="scope">
           <span v-if="scope.row.familyId === 0">{{ scope.row.familyId }}</span>
@@ -100,11 +100,13 @@
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column label="家族名称" :show-overflow-tooltip="true" align="center" prop="familyName" min-width="150"/>
-      <el-table-column label="直播总时长(小时)" align="center" prop="alltimeDes" min-width="100"/>
-      <el-table-column label="直播礼物总结算" align="center" prop="allticket" min-width="100"/>
-      <el-table-column label="直播礼物折扣结算" align="center" prop="allticketRes" min-width="100"/>
+      <el-table-column label="家族名称" :show-overflow-tooltip="true" align="center" prop="familyName"/>
+      <el-table-column label="直播总时长(小时)" align="center" prop="alltimeDes"/>
+      <el-table-column label="直播礼物总结算" align="center" prop="allticket" />
+      <el-table-column label="直播礼物折扣结算" align="center" prop="allticketRes" />
       <el-table-column label="结算率" align="center" prop="settlementRate" min-width="80"/>
+      <el-table-column label="彩票投注" align="center" prop="lotteryCost" min-width="80"/>
+      <el-table-column label="上播次数" align="center" prop="times" min-width="80"/>
       <el-table-column label="统计日期" align="center" prop="timedata" width="180"/>
     </el-table>
 

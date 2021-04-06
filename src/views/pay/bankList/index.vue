@@ -138,7 +138,7 @@
           <imageUpload v-model="form.bankIcon" path="bankList"/>
         </el-form-item>
         <el-form-item label="排序" prop="sort">
-          <el-input v-model="form.sort" placeholder="请输入排序 从小到大顺序" />
+          <el-input v-model="form.sort" placeholder="请输入排序" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

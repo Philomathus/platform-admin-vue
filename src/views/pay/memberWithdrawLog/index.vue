@@ -891,9 +891,13 @@ export default {
         this.msgSuccess(response.msg)
         if (response.code == 200) {
           this.batchPayAgentOpen = false
+          this.getList()
           const successNum = response.data.sucess
           const failData = response.data.fail
-          this.getList()
+          this.$alert('成功数量：' + successNum, '批量代付信息', {
+            confirmButtonText: '确定',
+            dangerouslyUseHTMLString: true
+          })
         }
       })
     },

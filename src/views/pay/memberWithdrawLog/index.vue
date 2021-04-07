@@ -120,6 +120,17 @@
         >批量锁定
         </el-button>
       </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="success"
+          plain
+          icon="el-icon-finished"
+          size="mini"
+          @click="handleBatchPayAgent"
+          v-has-permi="['pay:payAgentPlatform:order']"
+        >联付宝批量代付
+        </el-button>
+      </el-col>
       <el-col :span="10" style="margin-left: 10px">
         <span style="font-size: 16px;margin-right: 10px">记录刷新</span>
         <el-select v-model="refreshSec" placeholder="时间间隔" style="width: 110px">
@@ -362,6 +373,37 @@
         </el-button>
       </div>
     </el-dialog>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" title="批量代付" :visible.sync="batchPayAgentOpen" width="500px"
+               append-to-body
+    >
+      <el-form ref="form" :model="batchPayAgentForm" :rules="rules" label-width="120px">
+        <el-form-item label="Google验证码" prop="googleAuthCode">
+          <el-input v-model="batchPayAgentForm.googleAuthCode" placeholder="代付需输入Google验证码"/>
+        </el-form-item>
+        <el-form-item label="代付平台" prop="payAgentPlatId">
+          <el-select v-model="batchPayAgentForm.payAgentPlatId" placeholder="代付需选择代付平台" clearable size="small">
+            <el-option v-for="plat in payAgentPlatformOptions" :key="plat.id" :label="plat.name" :value="plat.id"/>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button
+          type="primary"
+          plain
+          size="small"
+          @click="handleBatchPayAgentOk"
+          v-has-permi="['pay:payAgentPlatform:order']"
+        >代 付
+        </el-button>
+        <el-button
+          type="info"
+          plain
+          size="small"
+          @click="cancel"
+        >取 消
+        </el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -383,8 +425,12 @@ import {
   getMemberWithdrawReport,
   getCountTotal
 } from '@/api/platform-web/pay/memberWithdrawLog'
-import {effectListPayAgentPlatform, payAgentOrder} from '@/api/platform-web/pay/payAgentPlatform'
-import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
+import {
+  effectListPayAgentPlatform,
+  payAgentOrder,
+  payAgentOrders
+} from '@/api/platform-web/pay/payAgentPlatform'
+import { pickerDateTimeShortcuts } from '@/utils/dateUtils'
 
 export default {
   name: 'MemberWithdrawLog',
@@ -402,7 +448,7 @@ export default {
       refreshIcon: 'el-icon-refresh',
       refreshLabel: '开始刷新',
       refreshDesc: '',
-      pickerOptions: {shortcuts: pickerDateTimeShortcuts},
+      pickerOptions: { shortcuts: pickerDateTimeShortcuts },
       // 头部数据
       totalData: {},
       //点击导出后不可点击
@@ -421,6 +467,7 @@ export default {
       fundsOpen: false,
       //资金明细数据
       fundsData: [],
+      batchPayAgentOpen: false,
       // 是否显示弹出层
       open: false,
       // 状态(0申请中1锁定2审核不通过3人工入款成功 4代付中5代付失败6代付成功)字典
@@ -443,13 +490,14 @@ export default {
       },
       // 表单参数
       form: {},
+      batchPayAgentForm: {},
       // 表单校验
       rules: {
         googleAuthCode: [
-          {required: true, message: 'google验证码不能为空', trigger: 'blur'}
+          { required: true, message: 'google验证码不能为空', trigger: 'blur' }
         ],
         payAgentPlatId: [
-          {required: true, message: '请选择代付平台', trigger: 'blur'}
+          { required: true, message: '请选择代付平台', trigger: 'blur' }
         ]
       }
     }
@@ -478,7 +526,7 @@ export default {
       this.single = selection.length !== 1
       this.multiple = !selection.length
     },
-    tableRowClassName({row, rowIndex}) {
+    tableRowClassName({ row, rowIndex }) {
       if (row.class_twoname === '彩票异常投注次数') {
         return 'danger-row'
       }
@@ -524,6 +572,7 @@ export default {
     // 取消按钮
     cancel() {
       this.open = false
+      this.batchPayAgentOpen = false
       this.reset()
     },
     // 表单重置
@@ -629,7 +678,7 @@ export default {
         confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function () {
+      }).then(function() {
         return exportMemberWithdrawLog(queryParams)
       }).then(response => {
         this.downloadExcel(response, '会员提现')
@@ -650,7 +699,7 @@ export default {
         confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function () {
+      }).then(function() {
         return exportShunWeiMemberWithdrawLog(that.ids)
       }).then(response => {
         this.downloadExcel(response, '顺为代付提现')
@@ -718,7 +767,7 @@ export default {
       this.$prompt(null, '请输入出款异常原因', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
-      }).then(({value}) => {
+      }).then(({ value }) => {
         abnormalWithdrawal({
           id: this.form.id,
           remark: value
@@ -747,7 +796,7 @@ export default {
       this.$prompt(null, '请输入拒绝出款原因', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
-      }).then(({value}) => {
+      }).then(({ value }) => {
         refusedMemberWithdrawLog({
           id: id,
           remark: value
@@ -773,7 +822,7 @@ export default {
       this.$prompt(null, '请输入拒绝出款原因', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
-      }).then(({value}) => {
+      }).then(({ value }) => {
         refusedsMemberWithdrawLog({
           ids: this.ids,
           remark: value
@@ -814,6 +863,44 @@ export default {
         }
       })
     },
+    handleBatchPayAgent() {
+      if (this.ids.length <= 0) {
+        this.msgWarning('请选择需要代付出款选项')
+        return
+      }
+      this.batchPayAgentOpen = true
+      //代付平台
+      effectListPayAgentPlatform().then(response => {
+        this.payAgentPlatformOptions = response.data
+      })
+    },
+    handleBatchPayAgentOk() {
+      let orderNos = []
+      for (const row of this.memberWithdrawLogList) {
+        for (const id of this.ids) {
+          if (id == row.id) {
+            orderNos.push(row.orderNo)
+          }
+        }
+      }
+      payAgentOrders({
+        payAgentPlatId: this.batchPayAgentForm.payAgentPlatId,
+        withdrawOrderNos: orderNos,
+        googleAuthCode: this.batchPayAgentForm.googleAuthCode
+      }).then(response => {
+        this.msgSuccess(response.msg)
+        if (response.code == 200) {
+          this.batchPayAgentOpen = false
+          this.getList()
+          const successNum = response.data.sucess
+          const failData = response.data.fail
+          this.$alert('成功数量：' + successNum, '批量代付信息', {
+            confirmButtonText: '确定',
+            dangerouslyUseHTMLString: true
+          })
+        }
+      })
+    },
     refreshData() {
       if (this.refreshType === 'primary') {
         this.refreshType = 'danger'
@@ -836,7 +923,7 @@ export default {
     startRefresh() {
       const thet = this
       let secs = thet.refreshSec
-      window.refreshInterval = setInterval(function () {
+      window.refreshInterval = setInterval(function() {
         if (secs === 0) {
           thet.getList()
           secs = thet.refreshSec

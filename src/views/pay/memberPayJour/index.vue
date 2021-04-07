@@ -8,7 +8,7 @@
       <el-form-item label="回调时间" prop="selectDate" label-width="100px">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
-                        end-placeholder="结束时间" range-separator="至" clearable :picker-options="pickerOptions"
+                        end-placeholder="结束时间" range-separator="至" :default-time="['00:00:00', '23:59:59']" clearable :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="status" style="width: 100px">
@@ -100,11 +100,6 @@
       <el-table-column label="支付平台" min-width="120" align="center" prop="platformName"/>
       <el-table-column label="支付通道" min-width="150" align="center" prop="channelName" :show-overflow-tooltip="true"/>
       <el-table-column label="费率" min-width="80" align="center" prop="payRateStr"/>
-      <el-table-column label="成功率" min-width="80" align="center" prop="currentSuccessRate">
-        <template v-slot="{row}">
-          <span style="color: #5fb878">{{ row.currentSuccessRateStr }}</span>
-        </template>
-      </el-table-column>
       <el-table-column label="请求金额" min-width="80" align="center" prop="money"/>
       <el-table-column label="实际金额" min-width="80" align="center" prop="subMoney"/>
       <el-table-column label="订单状态" min-width="80" align="center" prop="status">
@@ -175,7 +170,7 @@
         <el-form-item label="实际到账金额" prop="subMoney">
           <el-input v-model="form.subMoney" type="number" placeholder="请输入实际到账金额"/>
         </el-form-item>
-        <el-form-item label="google验证码" prop="googleAuthCode">
+        <el-form-item label="谷歌验证码" prop="googleAuthCode">
           <el-input v-model="form.googleAuthCode" type="number" placeholder="请输入google验证码"/>
         </el-form-item>
       </el-form>

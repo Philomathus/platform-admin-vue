@@ -10,6 +10,15 @@ export function listPayAgentRechargeRecord(query) {
   })
 }
 
+// 查询【代充存提】统计
+export function getCount(query) {
+  return request({
+    url: url.platformWeb + '/pay/payAgentRechargeRecord/getCount',
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询【代充存提】详细
 export function getPayAgentRechargeRecord(orderNo) {
   return request({

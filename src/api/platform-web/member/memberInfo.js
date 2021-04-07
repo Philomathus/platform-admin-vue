@@ -31,8 +31,9 @@ export function addScore(query) {
 // 重置密码接口
 export function resetPassword(query) {
   return request({
-    url: url.platformWeb + '/member/memberInfo/reset/' + query,
-    method: 'delete',
+    url: url.platformWeb + '/member/memberInfo/reset',
+    method: 'post',
+    params: query
   })
 }
 
@@ -150,5 +151,13 @@ export function changeBank(data) {
     url: url.platformWeb + '/member/memberInfo/changeBank',
     method: 'put',
     data: data
+  })
+}
+// 打码修复
+export function memberBcodeRepair(query) {
+  return request({
+    url: url.platformWeb + '/member/memberInfo/memberBcodeRepair',
+    method: 'post',
+    params: query
   })
 }

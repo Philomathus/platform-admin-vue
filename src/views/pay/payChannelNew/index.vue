@@ -140,7 +140,7 @@
       <el-table-column label="支付平台名称" align="center" prop="payPlatformName" />
       <el-table-column label="支付类型名称" align="center" prop="payTypeName" />
       <el-table-column label="通道费率" align="center" prop="payRateStr" />
-      <el-table-column label="排序" align="center" prop="indexes" />
+      <el-table-column label="成功率" align="center" prop="successRate" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -217,16 +217,22 @@
           </el-select>
         </el-form-item>
         <el-form-item label="充值最低" prop="rechargeMin">
-          <el-input type="number" v-model="form.rechargeMin" placeholder="请输入充值最低" :min="0"/>
+          <el-input type="number" class="no-number" v-model="form.rechargeMin" placeholder="请输入充值最低" :min="0"/>
         </el-form-item>
         <el-form-item label="充值最高" prop="rechargeMax">
-          <el-input type="number" v-model="form.rechargeMax" placeholder="请输入充值最高" :min="0" />
+          <el-input type="number" class="no-number" v-model="form.rechargeMax" placeholder="请输入充值最高" :min="0" />
         </el-form-item>
         <el-form-item label="通道费率" prop="payRate">
-          <el-input v-model="form.payRate" placeholder="请输入通道费率" />
+          <el-input type="number" class="no-number" v-model="form.payRate" placeholder="请输入通道费率(最高0.4最低0.02)" />
         </el-form-item>
         <el-form-item label="开放层级" prop="openLevel">
-          <el-input type="number" v-model="form.openLevel" placeholder="请输入开放层级"  />
+          <el-col :span="11">
+            <el-input type="number" class="no-number" v-model="form.openLevel" placeholder="请输入最小开放层级"/>
+          </el-col>
+          <el-col :span="2" style="text-align: center;">-</el-col>
+          <el-col :span="11">
+            <el-input type="number" class="no-number" v-model="form.openLevelMax" placeholder="请输入最大开放层级"/>
+          </el-col>
         </el-form-item>
         <el-form-item label="支付属性" prop="payAttr">
           <el-radio-group v-model="form.payAttr">
@@ -305,6 +311,7 @@ export default {
         isCanCallback: null,
         indexes: null,
         openLevel: null,
+        openLevelMax: null,
         payPlatformId: null,
         payTypeId: null,
         discountBill: null,
@@ -318,14 +325,17 @@ export default {
       form: {},
       // 表单校验
       rules: {
+        payRate: [
+          { required: true, message: "通道费率不能为空", trigger: "blur" }
+        ],
         name: [
           { required: true, message: "通道名称不能为空", trigger: "blur" }
         ],
         payAttr: [
-          { required: true, message: "支付属性  0http 1支付宝sdk 2第三方app不能为空", trigger: "blur" }
+          { required: true, message: "支付属性不能为空", trigger: "blur" }
         ],
         status: [
-          { required: true, message: "状态(1启用0停用)不能为空", trigger: "blur" }
+          { required: true, message: "状态不能为空", trigger: "blur" }
         ],
         payPlatformId: [
           { required: true, message: "支付平台编号不能为空", trigger: "blur" }
@@ -337,7 +347,7 @@ export default {
           { required: true, message: "快捷金额不能为空", trigger: "blur" }
         ],
         inputType: [
-          { required: true, message: "输入类型 (自定义金额+快捷金额1 仅快捷金额0)不能为空", trigger: "change" }
+          { required: true, message: "输入类型不能为空", trigger: "change" }
         ],
       }
     };
@@ -419,6 +429,7 @@ export default {
         isCanCallback: null,
         indexes: null,
         openLevel: null,
+        openLevelMax: null,
         payPlatformId: null,
         payTypeId: null,
         discountBill: null,

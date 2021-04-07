@@ -100,7 +100,6 @@
       <el-table-column label="支付平台" min-width="120" align="center" prop="platformName"/>
       <el-table-column label="支付通道" min-width="150" align="center" prop="channelName" :show-overflow-tooltip="true"/>
       <el-table-column label="费率" min-width="80" align="center" prop="payRateStr"/>
-   
       <el-table-column label="请求金额" min-width="80" align="center" prop="money"/>
       <el-table-column label="实际金额" min-width="80" align="center" prop="subMoney"/>
       <el-table-column label="订单状态" min-width="80" align="center" prop="status">

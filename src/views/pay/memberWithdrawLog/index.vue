@@ -373,9 +373,35 @@
         </el-button>
       </div>
     </el-dialog>
-    <el-dialog v-dialogDrag :close-on-click-modal="false" title="出款明细" :visible.sync="open" width="500px"
+    <el-dialog v-dialogDrag :close-on-click-modal="false" title="批量代付" :visible.sync="batchPayAgentOpen" width="500px"
                append-to-body
-    ></el-dialog>
+    >
+      <el-form-item label="Google验证码" prop="googleAuthCode">
+        <el-input v-model="form.googleAuthCode" placeholder="代付需输入Google验证码"/>
+      </el-form-item>
+      <el-form-item label="代付平台" prop="payAgentPlatId">
+        <el-select v-model="form.payAgentPlatId" placeholder="代付需选择代付平台" clearable size="small">
+          <el-option v-for="plat in payAgentPlatformOptions" :key="plat.id" :label="plat.name" :value="plat.id"/>
+        </el-select>
+      </el-form-item>
+      <div slot="footer" class="dialog-footer">
+        <el-button
+          type="primary"
+          plain
+          size="small"
+          @click="handleBatchPayAgentOk"
+          v-has-permi="['pay:payAgentPlatform:order']"
+        >代 付
+        </el-button>
+        <el-button
+          type="info"
+          plain
+          size="small"
+          @click="cancel"
+        >取 消
+        </el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -439,6 +465,7 @@ export default {
       fundsOpen: false,
       //资金明细数据
       fundsData: [],
+      batchPayAgentOpen: false,
       // 是否显示弹出层
       open: false,
       // 状态(0申请中1锁定2审核不通过3人工入款成功 4代付中5代付失败6代付成功)字典
@@ -542,6 +569,7 @@ export default {
     // 取消按钮
     cancel() {
       this.open = false
+      this.batchPayAgentOpen = false
       this.reset()
     },
     // 表单重置
@@ -825,6 +853,9 @@ export default {
         this.msgWarning('请选择需要代付出款选项')
         return
       }
+      this.batchPayAgentOpen = true
+    },
+    handleBatchPayAgentOk(){
       payAgentOrders({
         payAgentPlatId: this.form.payAgentPlatId,
         withdrawOrderNos: this.form.orderNo,

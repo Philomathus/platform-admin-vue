@@ -389,7 +389,7 @@ export default {
         console.info(res.data)
         if (res.data) {
           this.totalData = res.data
-          this.totalData.realDepositTotal = res.data.depositTotal * 0.97
+          this.totalData.realDepositTotal = (res.data.depositTotal * 0.97).toFixed(2)
         }
         this.loading = false
       })

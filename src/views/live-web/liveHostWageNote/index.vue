@@ -85,7 +85,7 @@
 
     <el-table id="out-table" stripe v-loading="loading" :data="liveHostWageNoteList"
     >
-      <el-table-column label="家族ID" align="center" prop="familyId" min-width="100">
+      <el-table-column label="家族ID" align="center" prop="familyId">
         <template v-slot="{row}">
           <a style="color: #00afff" @click="familyShow(row.familyId)">{{ row.familyId }}</a>
         </template>

@@ -106,7 +106,7 @@
       <el-table-column label="直播礼物折扣结算" align="center" prop="allticketRes" />
       <el-table-column label="结算率" align="center" prop="settlementRate" min-width="80"/>
       <el-table-column label="彩票投注" align="center" prop="lotteryCost" min-width="80"/>
-      <el-table-column label="上播次数" align="center" prop="times" min-width="80"/>
+      <el-table-column label="开播次数" align="center" prop="times" min-width="80"/>
       <el-table-column label="统计日期" align="center" prop="timedata" width="180"/>
     </el-table>
 
@@ -150,10 +150,14 @@
             {{(row.liveTimeSec/3600).toFixed(2)}}
           </template>
         </el-table-column>
-        <el-table-column label="主播直播结算印票" align="center" prop="ticket" width="130"/>
+        <el-table-column label="主播结算印票" align="center" prop="ticket" width="130"/>
+        <el-table-column label="主播折扣结算印票" align="center" prop="ticketRes" width="130"/>
+        <el-table-column label="派奖千六" align="center" prop="costQianliu" width="130"/>
+        <el-table-column label="彩票比例" align="center" prop="lotteryBili" width="130"/>
+        <el-table-column label="礼物结算比例" align="center" prop="liwujiesuanbili" width="130"/>
 <!--        <el-table-column label="彩票投注" align="center" prop="cpCost" min-width="120"/>
         <el-table-column label="彩票派奖" align="center" prop="cpPrize" min-width="120"/>-->
-        <el-table-column label="备注" align="center" prop="remark" min-width="120"/>
+<!--        <el-table-column label="备注" align="center" prop="remark" min-width="120"/>-->
         <el-table-column label="创建日期" align="center" prop="createTimes" width="160"/>
       </el-table>
       <pagination
@@ -235,16 +239,16 @@ export default {
   methods: {
     init() {
       const familyId = this.$route.query.familyId
-      const settlementRate = this.$route.query.settlementRate
+      // const settlementRate = this.$route.query.settlementRate
       const selectDate = this.$route.query.selectDate
       if (familyId && familyId >= 0) {
         this.queryParams.familyId = familyId
       } else {
         this.queryParams.familyId = null
       }
-      if (settlementRate != null) {
-        this.queryParams.settlementRate = settlementRate
-      }
+      // if (settlementRate != null) {
+      //   this.queryParams.settlementRate = settlementRate
+      // }
       if (selectDate != null) {
         this.queryParams.selectDate = selectDate
       }

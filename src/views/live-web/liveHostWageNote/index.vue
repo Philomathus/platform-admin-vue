@@ -97,7 +97,8 @@
       <el-table-column label="直播总时长(小时)" align="center" prop="alltimeDes" />
       <el-table-column label="直播礼物总结算" align="center" prop="allticket" />
       <el-table-column label="直播礼物折扣结算" align="center" prop="allticketRes" />
-      <el-table-column label="结算率" align="center" prop="settlementRate" />
+<!--      <el-table-column label="结算率" align="center" prop="settlementRate" />-->
+      <el-table-column label="派奖千六" align="center" prop="costQianliu" />
       <el-table-column label="彩票投注" align="center" prop="lotteryCost" />
       <el-table-column label="上播次数" align="center" prop="times" />
       <el-table-column label="统计日期" align="center" prop="timedata" />
@@ -170,7 +171,7 @@ export default {
         path: '/live/live/liveHostWageNoteJump',
         query: {
           familyId: familyId,
-          settlementRate: this.queryParams.settlementRate,
+          // settlementRate: this.queryParams.settlementRate,
           selectDate: this.queryParams.selectDate
         }
       })
@@ -178,7 +179,7 @@ export default {
     /** 查询主播时长列表 */
     getList() {
       this.loading = true
-      listFamilyWageNotePage(this.queryParams).then(response => {
+      listFamilyWageNotePage(this.addDateRange(this.queryParams, this.selectDate)).then(response => {
         this.liveHostWageNoteList = response.rows
         this.total = response.total
         this.loading = false

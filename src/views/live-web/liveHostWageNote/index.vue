@@ -1,13 +1,16 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="日期范围" prop="selectDate">
-        <el-date-picker type="daterange" v-model="queryParams.selectDate" format="yyyy-MM-dd"
-                        value-format="yyyy-MM-dd" start-placeholder="开始日期"
-                        end-placeholder="结束日期"
-                        range-separator="至" clearable :picker-options="pickerOptions"
-                        style="width: 250px"
-        ></el-date-picker>
+      <el-form-item label="日期范围" prop="dateDay">
+        <el-date-picker clearable size="small"
+                        v-model="queryParams.dateDay"
+                        type="date"
+                        format="yyyy-MM-dd"
+                        value-format="yyyy-MM-dd"
+                        placeholder="选择日期"
+                        :style="{width: '100%'}"
+                        :picker-options="pickerOptions">
+        </el-date-picker>
       </el-form-item>
       <el-form-item label="散户结算率" prop="settlementRate" label-width="85px">
         <el-input
@@ -101,7 +104,7 @@
       <el-table-column label="派奖千六" align="center" prop="costQianliu" />
       <el-table-column label="彩票投注" align="center" prop="lotteryCost" />
       <el-table-column label="上播次数" align="center" prop="times" />
-      <el-table-column label="统计日期" align="center" prop="timedata" />
+<!--      <el-table-column label="统计日期" align="center" prop="timedata" />-->
     </el-table>
 
     <pagination
@@ -148,7 +151,7 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
-        selectDate: [this.parseTime(new Date, '{y}-{m}-{d}'), this.parseTime(new Date, '{y}-{m}-{d}')],
+        dateDay: this.parseTime(new Date(), '{y}-{m}-{d}'),
         familyName: null,
         familyNickName: null,
         familyId: null,
@@ -172,14 +175,14 @@ export default {
         query: {
           familyId: familyId,
           // settlementRate: this.queryParams.settlementRate,
-          selectDate: this.queryParams.selectDate
+          // selectDate: this.queryParams.selectDate
         }
       })
     },
     /** 查询主播时长列表 */
     getList() {
       this.loading = true
-      listFamilyWageNotePage(this.addDateRange(this.queryParams, this.selectDate)).then(response => {
+      listFamilyWageNotePage(this.queryParams).then(response => {
         this.liveHostWageNoteList = response.rows
         this.total = response.total
         this.loading = false

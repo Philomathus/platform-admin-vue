@@ -123,14 +123,14 @@ import {
   listFamilyWageNotePage,
   exportFamilyWageNote
 } from '@/api/live-web/liveHostWageNote'
-import { pickerDateShortcuts } from '@/utils/dateUtils'
+import { toyesDayshortcuts } from '@/utils/dateUtils'
 
 export default {
   name: 'LiveHostWageNote',
   components: {},
   data() {
     return {
-      pickerOptions: { shortcuts: pickerDateShortcuts },
+      pickerOptions: {shortcuts: toyesDayshortcuts},
       // 遮罩层
       loading: true,
       // 选中数组

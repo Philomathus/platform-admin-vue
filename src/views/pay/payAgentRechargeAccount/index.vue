@@ -111,6 +111,16 @@
           ></el-switch>
         </template>
       </el-table-column>
+      <el-table-column label="显示状态" align="center" prop="showStatus"  >
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.showStatus"
+            active-value="1"
+            inactive-value="0"
+            @change="handleShowStatusChange(scope.row)"
+          ></el-switch>
+        </template>
+      </el-table-column>
       <el-table-column label="注册时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
@@ -211,7 +221,9 @@
 </template>
 
 <script>
-import { listPayAgentRechargeAccount, getPayAgentRechargeAccount, delPayAgentRechargeAccount, addPayAgentRechargeAccount, updatePayAgentRechargeAccount, exportPayAgentRechargeAccount ,changeStatus} from "@/api/platform-web/pay/payAgentRechargeAccount";
+import { listPayAgentRechargeAccount, getPayAgentRechargeAccount,
+  delPayAgentRechargeAccount, addPayAgentRechargeAccount, updatePayAgentRechargeAccount,
+  exportPayAgentRechargeAccount ,changeStatus ,changeShowStatus} from "@/api/platform-web/pay/payAgentRechargeAccount";
 
 
 export default {
@@ -313,6 +325,21 @@ export default {
         this.msgSuccess(text + "成功");
       }).catch(function() {
         row.status = row.status === "0" ? "1" : "0";
+      });
+    },
+    //显示状态修改
+    handleShowStatusChange(row) {
+      let text = row.showStatus === "1" ? "显示" : "隐藏";
+      this.$confirm('确认要"' + text + '""' + row.account + '"吗?', "警告", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function() {
+        return changeShowStatus(row.id, row.showStatus);
+      }).then(() => {
+        this.msgSuccess(text + "成功");
+      }).catch(function() {
+        row.showStatus = row.showStatus === "0" ? "1" : "0";
       });
     },
 

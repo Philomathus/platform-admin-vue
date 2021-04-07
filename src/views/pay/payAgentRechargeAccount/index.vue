@@ -83,12 +83,12 @@
     <el-table :stripe="true" v-loading="loading" :data="payAgentRechargeAccountList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="代充账号" align="center" prop="account" width="130" />
-      <el-table-column label="代充昵称" align="center" prop="nickName" width="120" />
+      <el-table-column label="代充昵称" align="center" prop="nickName" :show-overflow-tooltip="true" width="120" />
       <el-table-column label="当前余额额度" align="center" prop="balanceAmount" width="100" />
       <el-table-column label="代充次数" align="center" prop="rechargeNum" />
       <el-table-column label="QQ号" align="center" prop="qqAccount" width="100" />
       <el-table-column label="微信号" align="center" prop="wechatAccount" width="120" />
-      <el-table-column label="支付宝账号" align="center" prop="alipayAccount" :show-overflow-tooltip="true"  width="160"/>
+      <el-table-column label="支付宝账号" align="center" prop="alipayAccount" :show-overflow-tooltip="true" width="160"/>
       <el-table-column label="手机号" align="center" prop="mobile" width="110" />
       <el-table-column label="开店时间" align="center" prop="businessBeginTime" width="110">
 <!--        <template slot-scope="scope">
@@ -108,6 +108,16 @@
             active-value="1"
             inactive-value="0"
             @change="handleStatusChange(scope.row)"
+          ></el-switch>
+        </template>
+      </el-table-column>
+      <el-table-column label="显示状态" align="center" prop="showStatus"  >
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.showStatus"
+            active-value="1"
+            inactive-value="0"
+            @change="handleShowStatusChange(scope.row)"
           ></el-switch>
         </template>
       </el-table-column>
@@ -211,7 +221,9 @@
 </template>
 
 <script>
-import { listPayAgentRechargeAccount, getPayAgentRechargeAccount, delPayAgentRechargeAccount, addPayAgentRechargeAccount, updatePayAgentRechargeAccount, exportPayAgentRechargeAccount ,changeStatus} from "@/api/platform-web/pay/payAgentRechargeAccount";
+import { listPayAgentRechargeAccount, getPayAgentRechargeAccount,
+  delPayAgentRechargeAccount, addPayAgentRechargeAccount, updatePayAgentRechargeAccount,
+  exportPayAgentRechargeAccount ,changeStatus ,changeShowStatus} from "@/api/platform-web/pay/payAgentRechargeAccount";
 
 
 export default {
@@ -313,6 +325,21 @@ export default {
         this.msgSuccess(text + "成功");
       }).catch(function() {
         row.status = row.status === "0" ? "1" : "0";
+      });
+    },
+    //显示状态修改
+    handleShowStatusChange(row) {
+      let text = row.showStatus === "1" ? "显示" : "隐藏";
+      this.$confirm('确认要"' + text + '""' + row.account + '"吗?', "警告", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function() {
+        return changeShowStatus(row.id, row.showStatus);
+      }).then(() => {
+        this.msgSuccess(text + "成功");
+      }).catch(function() {
+        row.showStatus = row.showStatus === "0" ? "1" : "0";
       });
     },
 

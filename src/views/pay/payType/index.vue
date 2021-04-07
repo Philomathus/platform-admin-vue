@@ -147,7 +147,7 @@
         </el-form-item>
         <el-form-item label="编码" prop="code">
           <el-input v-model="form.code" placeholder="请输入负整数编码" type="number" @blur="existCode(form.code)"
-                    class="no-number" :disabled="form.id"/>
+                    class="no-number" :disabled="form.id != null || form.id !== ''"/>
         </el-form-item>
         <el-form-item label="图标">
           <imageUpload v-model="form.iconUrl" path="PayType"/>
@@ -163,7 +163,7 @@
             clearable
             size="small"
             style="width: 240px"
-            :disabled="form.id"
+            :disabled="form.id != null || form.id !== ''"
           >
             <el-option
               v-for="dict in paytypeOptions"
@@ -310,7 +310,8 @@ export default {
     },
     //编码失去焦点验证
     existCode(value) {
-      if (!(/^-[1-9]\d*$/).test(value)) {
+      console.info(value)
+      if (!(/^-[1-9]\d*$/).test(value) && value != 0) {
         this.msgWarning('编码必须为负整数')
       } else {
         existCode(value).then(response => {
@@ -384,7 +385,7 @@ export default {
     submitForm() {
       this.$refs['form'].validate(valid => {
         if (valid) {
-          if (!(/^-[1-9]\d*$/).test(this.form.code)) {
+          if (!(/^-[1-9]\d*$/).test(this.form.code) && this.form.code != 0) {
             this.msgWarning('编码必须为负整数')
           } else {
             if (this.form.id != null) {

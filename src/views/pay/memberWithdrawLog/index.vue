@@ -260,7 +260,7 @@
             plain
             v-show="scope.row.status == 5"
             icon="el-icon-s-custom"
-            @click="handleArtificialWithdraw(scope.row)"
+            @click="handleArtificialWithdraw2(scope.row)"
             v-has-permi="['pay:memberWithdrawLog:artificial']"
           >人工出款
           </el-button>
@@ -735,6 +735,18 @@ export default {
             this.payAgentPlatformOptions = response.data
           })
         })
+    },
+    handleArtificialWithdraw2(row) {
+
+      artificialMemberWithdrawLog({
+        id: row.id
+      }).then(response => {
+        this.msgSuccess(response.msg)
+        if (response.code == 200) {
+          this.open = false
+          this.getList()
+        }
+      })
     },
     handleArtificialWithdraw() {
 

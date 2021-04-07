@@ -96,6 +96,7 @@
           <span v-else>{{ row.familyName }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="族长ID" align="center" prop="familyUserId" />
       <el-table-column label="族长昵称" align="center" prop="familyNickName" />
       <el-table-column label="直播总时长(小时)" align="center" prop="alltimeDes" />
       <el-table-column label="直播礼物总结算" align="center" prop="allticket" />

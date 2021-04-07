@@ -46,6 +46,17 @@ export function changeStatus(id, status) {
     data: data
   })
 }
+export function changeShowStatus(id, showStatus) {
+  const data = {
+    id,
+    showStatus
+  }
+  return request({
+    url: url.platformWeb + '/pay/payAgentRechargeAccount/changeShowStatus',
+    method: 'put',
+    data: data
+  })
+}
 // 删除【代充人管理】
 export function delPayAgentRechargeAccount(id) {
   return request({

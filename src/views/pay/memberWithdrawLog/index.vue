@@ -376,14 +376,16 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" title="批量代付" :visible.sync="batchPayAgentOpen" width="500px"
                append-to-body
     >
-      <el-form-item label="Google验证码" prop="googleAuthCode">
-        <el-input v-model="form.googleAuthCode" placeholder="代付需输入Google验证码"/>
-      </el-form-item>
-      <el-form-item label="代付平台" prop="payAgentPlatId">
-        <el-select v-model="form.payAgentPlatId" placeholder="代付需选择代付平台" clearable size="small">
-          <el-option v-for="plat in payAgentPlatformOptions" :key="plat.id" :label="plat.name" :value="plat.id"/>
-        </el-select>
-      </el-form-item>
+      <el-form ref="form" :model="batchPayAgentForm" :rules="rules" label-width="120px">
+        <el-form-item label="Google验证码" prop="googleAuthCode">
+          <el-input v-model="batchPayAgentForm.googleAuthCode" placeholder="代付需输入Google验证码"/>
+        </el-form-item>
+        <el-form-item label="代付平台" prop="payAgentPlatId">
+          <el-select v-model="batchPayAgentForm.payAgentPlatId" placeholder="代付需选择代付平台" clearable size="small">
+            <el-option v-for="plat in payAgentPlatformOptions" :key="plat.id" :label="plat.name" :value="plat.id"/>
+          </el-select>
+        </el-form-item>
+      </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button
           type="primary"
@@ -488,6 +490,7 @@ export default {
       },
       // 表单参数
       form: {},
+      batchPayAgentForm: {},
       // 表单校验
       rules: {
         googleAuthCode: [
@@ -866,16 +869,30 @@ export default {
         return
       }
       this.batchPayAgentOpen = true
+      //代付平台
+      effectListPayAgentPlatform().then(response => {
+        this.payAgentPlatformOptions = response.data
+      })
     },
-    handleBatchPayAgentOk(){
+    handleBatchPayAgentOk() {
+      let orderNos = []
+      for (const row of this.memberWithdrawLogList) {
+        for (const id of this.ids) {
+          if (id == row.id) {
+            orderNos.push(row.orderNo)
+          }
+        }
+      }
       payAgentOrders({
-        payAgentPlatId: this.form.payAgentPlatId,
-        withdrawOrderNos: this.form.orderNo,
-        googleAuthCode: this.form.googleAuthCode
+        payAgentPlatId: this.batchPayAgentForm.payAgentPlatId,
+        withdrawOrderNos: orderNos,
+        googleAuthCode: this.batchPayAgentForm.googleAuthCode
       }).then(response => {
         this.msgSuccess(response.msg)
         if (response.code == 200) {
-          this.open = false
+          this.batchPayAgentOpen = false
+          const successNum = response.data.sucess
+          const failData = response.data.fail
           this.getList()
         }
       })

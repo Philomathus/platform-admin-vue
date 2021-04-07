@@ -1,14 +1,14 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="日期范围" prop="dateDay">
+      <el-form-item prop="dateDay">
         <el-date-picker clearable size="small"
                         v-model="queryParams.dateDay"
                         type="date"
                         format="yyyy-MM-dd"
                         value-format="yyyy-MM-dd"
                         placeholder="选择日期"
-                        :style="{width: '100%'}"
+                        style="width: 140px"
                         :picker-options="pickerOptions">
         </el-date-picker>
       </el-form-item>

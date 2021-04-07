@@ -8,7 +8,7 @@
                         format="yyyy-MM-dd"
                         value-format="yyyy-MM-dd"
                         placeholder="选择日期"
-                        :style="{width: '100%'}"
+                        style="width: 140px"
                         :picker-options="pickerOptions">
         </el-date-picker>
       </el-form-item>

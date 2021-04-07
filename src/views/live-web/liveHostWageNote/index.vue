@@ -101,7 +101,6 @@
       <el-table-column label="直播时长" align="center" prop="alltimeDes" min-width="130px"/>
       <el-table-column label="收礼金额" align="center" prop="allticket" />
       <el-table-column label="收礼结算" align="center" prop="allticketRes" />
-<!--      <el-table-column label="结算率" align="center" prop="settlementRate" />-->
       <el-table-column label="彩票投注" align="center" prop="lotteryCost" />
       <el-table-column label="彩票结算" align="center" prop="costQianliu" />
       <el-table-column label="开播次数" align="center" prop="times" />

@@ -108,9 +108,7 @@
       <el-table-column label="彩票投注" align="center" prop="lotteryCost" />
       <el-table-column label="彩票提成" align="center" prop="lotteryBili" />
       <el-table-column label="彩票结算" align="center" prop="costQianliu" />
-<!--      <el-table-column label="结算率" align="center" prop="settlementRate" min-width="80"/>-->
       <el-table-column label="开播次数" align="center" prop="times" />
-<!--      <el-table-column label="统计日期" align="center" prop="timedata" width="180"/>-->
     </el-table>
 
     <pagination

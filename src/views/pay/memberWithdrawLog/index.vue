@@ -120,6 +120,17 @@
         >批量锁定
         </el-button>
       </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-lock"
+          size="mini"
+          @click="handleBatchLock"
+          v-has-permi="['pay:memberWithdrawLog:lock']"
+        >批量锁定
+        </el-button>
+      </el-col>
       <el-col :span="10" style="margin-left: 10px">
         <span style="font-size: 16px;margin-right: 10px">记录刷新</span>
         <el-select v-model="refreshSec" placeholder="时间间隔" style="width: 110px">

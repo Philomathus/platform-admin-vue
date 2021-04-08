@@ -103,6 +103,7 @@
       <el-table-column label="家族名称" :show-overflow-tooltip="true" align="center" prop="familyName" />
       <el-table-column label="直播时长" align="center" prop="timeDes" />
       <el-table-column label="时薪" align="center" prop="coin" />
+      <el-table-column label="时长结算" align="center" prop="livetimejiesuan" />
       <el-table-column label="收礼金额" align="center" prop="ticket" />
       <el-table-column label="礼物提成" align="center" prop="liwujiesuanbili" />
       <el-table-column label="礼物结算" align="center" prop="ticketRes" />

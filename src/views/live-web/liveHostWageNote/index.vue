@@ -98,13 +98,14 @@
       </el-table-column>
       <el-table-column label="族长ID" align="center" prop="familyUserId" />
       <el-table-column label="族长昵称" align="center" prop="familyNickName" />
-      <el-table-column label="直播时长" align="center" prop="alltimeDes" min-width="130px"/>
-      <el-table-column label="收礼金额" align="center" prop="allticket" />
-      <el-table-column label="收礼结算" align="center" prop="allticketRes" />
+      <el-table-column label="直播时长" align="center" prop="livetime"/>
+      <el-table-column label="时长结算" align="center" prop="livetimejiesuan"/>
+      <el-table-column label="礼物金额" align="center" prop="liwu" />
+      <el-table-column label="礼物结算" align="center" prop="liwujiesuan" />
       <el-table-column label="彩票投注" align="center" prop="lotteryCost" />
       <el-table-column label="彩票结算" align="center" prop="costQianliu" />
       <el-table-column label="开播次数" align="center" prop="times" />
-<!--      <el-table-column label="统计日期" align="center" prop="timedata" />-->
+      <el-table-column label="结算总计" align="center" prop="totalsettle" />
     </el-table>
 
     <pagination
@@ -184,6 +185,10 @@ export default {
       this.loading = true
       listFamilyWageNotePage(this.queryParams).then(response => {
         this.liveHostWageNoteList = response.rows
+        this.liveHostWageNoteList.forEach(value => {
+          value.totalsettle = parseFloat(value.livetimejiesuan)  + parseFloat(value.liwujiesuan) + parseFloat(value.costQianliu)
+        })
+        // this.liveHostWageNoteList.totalsettle = this.liveHostWageNoteList.livetimejiesuan + response.rows.liwujiesuan + response.rows.costQianliu
         this.total = response.total
         this.loading = false
       })

@@ -111,6 +111,14 @@
       <el-table-column label="修改人" align="center" prop="updator"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
+            <el-button
+              size="mini"
+              type="text"
+              icon="el-icon-edit"
+              @click="handleUpdateText(scope.row)"
+              v-hasPermi="['pay:payType:edit']"
+            >文本
+            </el-button>
           <el-button
             size="mini"
             type="text"
@@ -182,6 +190,29 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+
+    <el-dialog :title="title" :visible.sync="openText" width="500px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="文本1" prop="tex1">
+          <el-input v-model="form.tex1" placeholder="请输入文本1"/>
+        </el-form-item>
+        <el-form-item label="文本2" prop="tex2">
+          <el-input v-model="form.tex2" placeholder="请输入文本2"/>
+        </el-form-item>
+        <el-form-item label="文本3">
+          <el-input v-model="form.tex3" placeholder="请输入文本3"/>
+        </el-form-item>
+        <el-form-item label="文本4" prop="tex4">
+          <el-input v-model="form.tex4" placeholder="请输入文本4"/>
+        </el-form-item>
+        <el-form-item label="文本5" prop="tex5">
+          <el-input  v-model="form.tex5" placeholder="请输入文本5"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitFormText">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -226,6 +257,7 @@ export default {
       title: '',
       // 是否显示弹出层
       open: false,
+      openText:false,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -381,6 +413,15 @@ export default {
         this.title = '修改支付类型'
       })
     },
+    handleUpdateText(row) {
+      this.reset()
+      const id = row.id || this.ids
+      getPayType(id).then(response => {
+        this.form = response.data
+        this.openText = true
+        this.title = '文本编辑'
+      })
+    },
     /** 提交按钮 */
     submitForm() {
       this.$refs['form'].validate(valid => {
@@ -411,6 +452,14 @@ export default {
         }
       })
     },
+    submitFormText() {
+      updatePayType(this.form).then(response => {
+        this.msgSuccess('修改成功')
+        this.openText = false
+        this.getList()
+      })
+    }
+    },
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids
@@ -438,6 +487,5 @@ export default {
         this.download(response.msg)
       })
     }
-  }
 }
 </script>

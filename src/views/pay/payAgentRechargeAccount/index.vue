@@ -136,7 +136,7 @@
           <span>{{ parseTime(scope.row.loginTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right" width="120px">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right" width="220px">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -145,6 +145,13 @@
             @click="handleUpdate(scope.row)"
             v-hasPermi="['pay:payAgentRechargeAccount:edit']"
           >修改</el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            @click="updateGoogleAuth(scope.row)"
+            v-hasPermi="['pay:payAgentRechargeAccount:edit']"
+          >重置秘钥</el-button>
           <el-button
             size="mini"
             type="text"
@@ -163,6 +170,26 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
+
+    <!-- 未绑定谷歌验证码弹框 -->
+    <el-dialog
+      v-dialogDrag
+      :close-on-click-modal="false"
+      title="重置谷歌验证码"
+      :visible.sync="dialogVisible"
+      width="15%"
+      @keyup.enter.native="getGoogleAuth"
+    >
+      <img :src="pic" width="100%" alt="绑定谷歌验证码"/>
+<!--      <el-input v-model="userName" v-show="false"/>-->
+      <el-input v-model="secretKey" v-show="false"/>
+      <el-input
+        placeholder="请输入谷歌验证码"
+        v-model="googleAuthCode"
+        style="width: 70%"
+      />
+      <el-button type="primary" @click="bind">绑定</el-button>
+    </el-dialog>
 
     <!-- 添加或修改代充人管理对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px" append-to-body>
@@ -224,6 +251,7 @@
 import { listPayAgentRechargeAccount, getPayAgentRechargeAccount,
   delPayAgentRechargeAccount, addPayAgentRechargeAccount, updatePayAgentRechargeAccount,
   exportPayAgentRechargeAccount ,changeStatus ,changeShowStatus} from "@/api/platform-web/pay/payAgentRechargeAccount";
+import {bindGoogleAuth2, getGoogleAuth2, updateGoogleAuth} from "@/api/platform-web/system/user";
 
 
 export default {
@@ -234,6 +262,12 @@ export default {
     return {
       // 遮罩层
       loading: true,
+      //显示弹窗
+      dialogVisible: false,
+      //秘钥
+      secretKey: null,
+      //谷歌验证码
+      googleAuthCode: null,
       // 选中数组
       ids: [],
       // 非单个禁用
@@ -303,6 +337,34 @@ export default {
     });
   },
   methods: {
+    updateGoogleAuth(row){
+      updateGoogleAuth(row.id).then((res) => {
+              this.$notify.success("重置成功")
+            })
+    },
+    //获取谷歌验证码二维码
+    showOrder(row) {
+      this.userName = row.id
+      this.dialogVisible = true
+      const name = row.id
+      getGoogleAuth2(name).then(response => {
+        this.pic = 'data:image/png;base64,' + response.data.qrBarcodeBase
+        this.secretKey = response.data.secretKey
+      })
+    },
+    /** 谷歌验证码绑定按钮 */
+    bind() {
+      bindGoogleAuth2(this.userName, this.secretKey, this.googleAuthCode).then(response => {
+        if (response.code === 200) {
+          this.msgSuccess('绑定成功')
+          this.dialogVisible = false
+          this.getList()
+        } else {
+          this.msgError(response.msg)
+        }
+      })
+    },
+
     /** 查询代充人管理列表 */
     getList() {
       this.loading = true;
@@ -394,6 +456,16 @@ export default {
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
+      this.reset();
+      const id = row.id || this.ids
+      getPayAgentRechargeAccount(id).then(response => {
+        this.form = response.data;
+        this.open = true;
+        this.title = "修改代充人管理";
+      });
+    },
+    /** 修改按钮操作 */
+    resetGooglePassword(row) {
       this.reset();
       const id = row.id || this.ids
       getPayAgentRechargeAccount(id).then(response => {

@@ -1,7 +1,7 @@
 import request from '@/utils/request'
-import { url } from '@/utils/url'
-import { praseStrEmpty } from '@/utils/common'
-import { encrypt } from '@/utils/jsencrypt'
+import {url} from '@/utils/url'
+import {praseStrEmpty} from '@/utils/common'
+import {encrypt} from '@/utils/jsencrypt'
 
 // 查询用户列表
 export function listUser(query) {
@@ -136,6 +136,33 @@ export function getGoogleAuth(name) {
 
 }
 
+//获取谷歌验证码-代充人重置谷歌验证码
+export function getGoogleAuth2(name) {
+  const data = {
+    name: name,
+    type: 1
+  }
+  return request({
+    url: url.platformWeb + '/system/user/getGoogleAuth',
+    method: 'get',
+    params: data
+  })
+
+}
+
+//获取谷歌验证码-重置秘钥
+export function updateGoogleAuth(id) {
+  const data = {
+    id
+  }
+  return request({
+    url: url.platformWeb + '/system/user/updateGoogleAuth',
+    method: 'get',
+    params: data
+  })
+
+}
+
 //绑定谷歌验证码
 export function bindGoogleAuth(googleAuthName, googleAuthKey, googleAuthCode) {
   const data = {
@@ -148,4 +175,20 @@ export function bindGoogleAuth(googleAuthName, googleAuthKey, googleAuthCode) {
     method: 'post',
     data: data
   })
+}
+
+//绑定谷歌验证码
+export function bindGoogleAuth2(googleAuthName, googleAuthKey, googleAuthCode) {
+  const data = {
+    googleAuthCode: googleAuthCode,
+    googleAuthKey: googleAuthKey,
+    googleAuthName: googleAuthName,
+    type: 1,
+  }
+  return request({
+    url: url.platformWeb + '/system/user/bindGoogleAuth',
+    method: 'post',
+    data: data
+  })
+
 }

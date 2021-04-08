@@ -81,3 +81,12 @@ export function payAgentOrder(data) {
     data: data
   })
 }
+
+// 代付下单
+export function payAgentOrders(data) {
+  return request({
+    url: url.platformWeb + '/pay/payAgentPlatform/payAgentOrders',
+    method: 'post',
+    data: data
+  })
+}

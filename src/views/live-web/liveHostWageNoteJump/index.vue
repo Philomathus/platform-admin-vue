@@ -71,7 +71,7 @@
 <!--          <a style="color: #00afff" @click="openQuerDetails(scope.row)">{{ scope.row.hostId }}</a>-->
 <!--        </template>-->
 <!--      </el-table-column>-->
-      <el-table-column label="主播昵称" :show-overflow-tooltip="true" align="center" prop="nickName"/>
+      <el-table-column label="主播昵称" :show-overflow-tooltip="true" align="center" prop="nickName" min-width="100"/>
       <el-table-column label="家族ID" align="center" prop="familyId" >
         <template slot-scope="scope">
           <span v-if="scope.row.familyId === 0">{{ scope.row.familyId }}</span>
@@ -100,8 +100,10 @@
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column label="家族名称" :show-overflow-tooltip="true" align="center" prop="familyName" />
+      <el-table-column label="家族名称" :show-overflow-tooltip="true" align="center" prop="familyName" min-width="100"/>
       <el-table-column label="直播时长" align="center" prop="livetime" />
+      <el-table-column label="礼物任务" align="center" prop="lwrenwu" />
+      <el-table-column label="时长任务" align="center" prop="screnwu" />
       <el-table-column label="时薪" align="center" prop="coin" />
       <el-table-column label="时长结算" align="center" prop="livetimejiesuan" />
       <el-table-column label="收礼金额" align="center" prop="liwu" />
@@ -259,7 +261,7 @@ export default {
       listHostWageNotePage(this.queryParams).then(response => {
         this.liveHostWageNoteList = response.rows
         this.liveHostWageNoteList.forEach(value => {
-          value.totalsettle = parseFloat(value.livetimejiesuan)  + parseFloat(value.ticket) + parseFloat(value.costQianliu)
+          value.totalsettle = (parseFloat(value.livetimejiesuan)  + parseFloat(value.ticket) + parseFloat(value.costQianliu)).toFixed(2)
         })
         this.total = response.total
         this.loading = false

@@ -186,9 +186,8 @@ export default {
       listFamilyWageNotePage(this.queryParams).then(response => {
         this.liveHostWageNoteList = response.rows
         this.liveHostWageNoteList.forEach(value => {
-          value.totalsettle = parseFloat(value.livetimejiesuan)  + parseFloat(value.liwujiesuan) + parseFloat(value.costQianliu)
+          value.totalsettle = (parseFloat(value.livetimejiesuan)  + parseFloat(value.liwujiesuan) + parseFloat(value.costQianliu)).toFixed(2)
         })
-        // this.liveHostWageNoteList.totalsettle = this.liveHostWageNoteList.livetimejiesuan + response.rows.liwujiesuan + response.rows.costQianliu
         this.total = response.total
         this.loading = false
       })

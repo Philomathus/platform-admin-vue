@@ -1,14 +1,14 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="日期范围" prop="dateDay">
+      <el-form-item prop="dateDay">
         <el-date-picker clearable size="small"
                         v-model="queryParams.dateDay"
                         type="date"
                         format="yyyy-MM-dd"
                         value-format="yyyy-MM-dd"
                         placeholder="选择日期"
-                        :style="{width: '100%'}"
+                        style="width: 140px"
                         :picker-options="pickerOptions">
         </el-date-picker>
       </el-form-item>
@@ -98,13 +98,12 @@
       </el-table-column>
       <el-table-column label="族长ID" align="center" prop="familyUserId" />
       <el-table-column label="族长昵称" align="center" prop="familyNickName" />
-      <el-table-column label="直播总时长(小时)" align="center" prop="alltimeDes" />
-      <el-table-column label="直播礼物总结算" align="center" prop="allticket" />
-      <el-table-column label="直播礼物折扣结算" align="center" prop="allticketRes" />
-<!--      <el-table-column label="结算率" align="center" prop="settlementRate" />-->
-      <el-table-column label="派奖千六" align="center" prop="costQianliu" />
+      <el-table-column label="直播时长" align="center" prop="alltimeDes" min-width="130px"/>
+      <el-table-column label="收礼金额" align="center" prop="allticket" />
+      <el-table-column label="收礼结算" align="center" prop="allticketRes" />
       <el-table-column label="彩票投注" align="center" prop="lotteryCost" />
-      <el-table-column label="上播次数" align="center" prop="times" />
+      <el-table-column label="彩票结算" align="center" prop="costQianliu" />
+      <el-table-column label="开播次数" align="center" prop="times" />
 <!--      <el-table-column label="统计日期" align="center" prop="timedata" />-->
     </el-table>
 

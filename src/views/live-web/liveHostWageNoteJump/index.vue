@@ -8,7 +8,7 @@
                         format="yyyy-MM-dd"
                         value-format="yyyy-MM-dd"
                         placeholder="选择日期"
-                        :style="{width: '100%'}"
+                        style="width: 140px"
                         :picker-options="pickerOptions">
         </el-date-picker>
       </el-form-item>
@@ -100,17 +100,15 @@
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column label="家族名称" :show-overflow-tooltip="true" align="center" prop="familyName"/>
-      <el-table-column label="直播总时长(小时)" align="center" prop="timeDes"/>
-      <el-table-column label="主播礼物总结算" align="center" prop="ticket" />
-      <el-table-column label="主播折扣结算" align="center" prop="ticketRes" />
-      <el-table-column label="派奖千六" align="center" prop="costQianliu" />
-      <el-table-column label="彩票比例" align="center" prop="lotteryBili" />
-      <el-table-column label="礼物结算比例" align="center" prop="liwujiesuanbili" />
-<!--      <el-table-column label="结算率" align="center" prop="settlementRate" min-width="80"/>-->
+      <el-table-column label="家族名称" :show-overflow-tooltip="true" align="center" prop="familyName" />
+      <el-table-column label="直播时长" align="center" prop="timeDes" />
+      <el-table-column label="收礼金额" align="center" prop="ticket" />
+      <el-table-column label="礼物提成" align="center" prop="liwujiesuanbili" />
+      <el-table-column label="礼物结算" align="center" prop="ticketRes" />
       <el-table-column label="彩票投注" align="center" prop="lotteryCost" />
+      <el-table-column label="彩票提成" align="center" prop="lotteryBili" />
+      <el-table-column label="彩票结算" align="center" prop="costQianliu" />
       <el-table-column label="开播次数" align="center" prop="times" />
-<!--      <el-table-column label="统计日期" align="center" prop="timedata" width="180"/>-->
     </el-table>
 
     <pagination

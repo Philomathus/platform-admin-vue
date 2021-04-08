@@ -140,17 +140,17 @@
         <el-form-item label="时薪" prop="coin">
           <el-input v-model="liveUserRate.coin" type="number"/>
         </el-form-item>
-        <el-form-item label="开播任务" prop="weiboMoney">
-          <el-input v-model="liveUserRate.weiboMoney" type="number" />
+        <el-form-item label="开播时长任务" prop="weixinPrice">
+          <el-input v-model="liveUserRate.weixinPrice" type="number" />
+        </el-form-item>
+        <el-form-item label="收礼任务" prop="weiboMoney">
+          <el-input v-model="liveUserRate.weiboMoney" type="number"/>
         </el-form-item>
         <el-form-item label="彩票抽成" prop="xpoint">
           <el-input v-model="liveUserRate.xpoint" type="number"/>
         </el-form-item>
         <el-form-item label="礼物抽成" prop="ypoint">
           <el-input v-model="liveUserRate.ypoint" type="number"/>
-        </el-form-item>
-        <el-form-item label="礼物任务" prop="weixinPrice">
-          <el-input v-model="liveUserRate.weixinPrice" type="number"/>
         </el-form-item>
         <el-form-item style="float: right">
           <el-button type="primary" icon="el-icon-edit" size="mini" @click="editRate">确定修改</el-button>

@@ -185,11 +185,17 @@
         <el-form-item label="时薪" prop="coin">
           <el-input v-model="form.coin" type="number"/>
         </el-form-item>
+        <el-form-item label="开播任务" prop="weiboMoney">
+          <el-input v-model="form.weiboMoney" type="number"/>
+        </el-form-item>
         <el-form-item label="彩票抽成" prop="xpoint">
           <el-input v-model="form.xpoint" type="number"/>
         </el-form-item>
         <el-form-item label="礼物抽成" prop="ypoint">
           <el-input v-model="form.ypoint" type="number"/>
+        </el-form-item>
+        <el-form-item label="礼物任务" prop="weixinPrice">
+          <el-input v-model="form.weixinPrice" type="number"/>
         </el-form-item>
         <el-form-item label="手持身份证照片">
           <img :src="form.identifyHoldImage" style="width: 300px;height: 300px"/>

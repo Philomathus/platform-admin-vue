@@ -259,7 +259,7 @@ export default {
       listHostWageNotePage(this.queryParams).then(response => {
         this.liveHostWageNoteList = response.rows
         this.liveHostWageNoteList.forEach(value => {
-          value.totalsettle = parseFloat(value.livetimejiesuan)  + parseFloat(value.ticket) + parseFloat(value.costQianliu)
+          value.totalsettle = (parseFloat(value.livetimejiesuan)  + parseFloat(value.ticket) + parseFloat(value.costQianliu)).toFixed(2)
         })
         this.total = response.total
         this.loading = false

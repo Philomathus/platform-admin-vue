@@ -37,6 +37,16 @@
           />
         </el-select>
       </el-form-item>
+      <el-form-item prop="channelName">
+        <el-input
+          v-model="queryParams.channelName"
+          placeholder="支付通道"
+          clearable
+          size="small"
+          style="width: 160px"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item prop="searchValue">
         <el-input
           v-model="queryParams.searchValue"
@@ -237,6 +247,7 @@ export default {
         searchValue: null,
         platformId: null,
         searchOrderNo: null,
+        channelName: null,
         status: null
       },
       // 表单参数

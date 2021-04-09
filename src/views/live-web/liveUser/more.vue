@@ -336,7 +336,8 @@
 
             },
             // 显示弹框
-            show() {
+            show(userId) {
+                this.userId=userId
                 this.getList();
                 this.visible = true;
             },

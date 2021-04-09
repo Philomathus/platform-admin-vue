@@ -52,6 +52,14 @@ export function effectSms(id) {
   })
 }
 
+// 取消激活SMS短信服务配置
+export function noEffectSms(id) {
+  return request({
+    url: url.platformWeb + '/server/sms/noEffect/' + id,
+    method: 'put'
+  })
+}
+
 // 测试SMS短信服务配置
 export function smsTest(id, mobile) {
   return request({

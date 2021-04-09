@@ -39,6 +39,16 @@
     </el-form>
 
     <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="mini"
+          @click="handleAdd"
+          v-hasPermi="['admin:liveFamily:add']"
+        >新增</el-button>
+      </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -110,6 +120,36 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="800px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="家族LOGO" prop="logo">
+          <el-input v-model="form.logo" placeholder="请输入家族LOGO" />
+        </el-form-item>
+        <el-form-item label="家族名称" prop="name">
+          <el-input v-model="form.name" placeholder="请输入家族名称" />
+        </el-form-item>
+        <el-form-item label="公告" prop="notice">
+          <el-input v-model="form.notice" type="textarea" placeholder="请输入内容" />
+        </el-form-item>
+        <el-form-item label="家族宣言" prop="manifesto">
+          <el-input v-model="form.manifesto" placeholder="请输入家族宣言" />
+        </el-form-item>
+        <el-form-item label="家族长昵称" prop="nickName">
+          <el-input v-model="form.nickName" placeholder="请输入家族长昵称" />
+        </el-form-item>
+        <el-form-item label="家族长ID" prop="userId">
+          <el-input v-model="form.userId" placeholder="请输入家族长ID" />
+        </el-form-item>
+        <el-form-item label="备注" prop="memo">
+          <el-input v-model="form.memo" type="textarea" placeholder="请输入内容" />
+        </el-form-item>
+
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
 
   </div>
 </template>

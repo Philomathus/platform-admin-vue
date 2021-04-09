@@ -185,6 +185,12 @@
         <el-form-item label="时薪" prop="coin">
           <el-input v-model="form.coin" type="number"/>
         </el-form-item>
+        <el-form-item label="开播时长任务" prop="weixinPrice">
+          <el-input v-model="form.weixinPrice" type="number"/>
+        </el-form-item>
+        <el-form-item label="收礼礼物" prop="weiboMoney">
+          <el-input v-model="form.weiboMoney" type="number"/>
+        </el-form-item>
         <el-form-item label="彩票抽成" prop="xpoint">
           <el-input v-model="form.xpoint" type="number"/>
         </el-form-item>
@@ -373,7 +379,7 @@ export default {
     /** 更多按钮操作 */
     handleMore(row) {
       this.userId = row.id
-      this.$refs.more.show()
+      this.$refs.more.show(this.userId)
     },
     // 取消按钮
     cancel() {

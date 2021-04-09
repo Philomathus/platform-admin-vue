@@ -140,6 +140,12 @@
         <el-form-item label="时薪" prop="coin">
           <el-input v-model="liveUserRate.coin" type="number"/>
         </el-form-item>
+        <el-form-item label="开播时长任务" prop="weixinPrice">
+          <el-input v-model="liveUserRate.weixinPrice" type="number" />
+        </el-form-item>
+        <el-form-item label="收礼任务" prop="weiboMoney">
+          <el-input v-model="liveUserRate.weiboMoney" type="number"/>
+        </el-form-item>
         <el-form-item label="彩票抽成" prop="xpoint">
           <el-input v-model="liveUserRate.xpoint" type="number"/>
         </el-form-item>
@@ -178,7 +184,7 @@
                 //弹出框标题
                 title: '积分明细',
               // 提现比例
-              liveUserRate: {coin: null,xpoint: null,ypoint: null},
+              liveUserRate: {coin: null,xpoint: null,ypoint: null,weixinPrice:null,weiboMoney:null},
                 //页面编码
                 index: 1,
 /*                //用户id
@@ -330,7 +336,8 @@
 
             },
             // 显示弹框
-            show() {
+            show(userId) {
+                this.userId=userId
                 this.getList();
                 this.visible = true;
             },

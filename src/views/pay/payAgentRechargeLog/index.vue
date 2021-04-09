@@ -107,6 +107,7 @@
       <el-table-column label="会员账号" align="center" prop="userName" min-width="120" />
       <el-table-column label="上分金额" align="center" prop="money" min-width="100" />
       <el-table-column label="创建时间" align="center" fixed="right" prop="createTime" width="160"/>
+      <el-table-column label="操作IP" align="center" fixed="right" prop="opIp" width="160"/>
     </el-table>
 
     <pagination

@@ -136,22 +136,23 @@ export default {
         that.listLoading = false;
         that.$rjLoading.hide();
         this.count();
-      }).catch((err) => {
-        if (err == 'Error: 报表正在生成，请稍后...') {
-          if (!that.listLoading) {
-            that.listLoading = true;
-            that.$rjLoading.show('报表正在生成', that);
-          }
-          if (!this.isDestroyed) {
-            setTimeout(() => {
-              that.getList();
-            }, 10000);
-          }
-        }
-      }).finally(() => {
-          this.loading = false
-        }
-      );
+      })
+      //   .catch((err) => {
+      //   if (err == 'Error: 报表正在生成，请稍后...') {
+      //     if (!that.listLoading) {
+      //       that.listLoading = true;
+      //       that.$rjLoading.show('报表正在生成', that);
+      //     }
+      //     if (!this.isDestroyed) {
+      //       setTimeout(() => {
+      //         that.getList();
+      //       }, 10000);
+      //     }
+      //   }
+      // }).finally(() => {
+      //     this.loading = false
+      //   }
+      // );
     },
     getliststorage() {
       this.loading = true

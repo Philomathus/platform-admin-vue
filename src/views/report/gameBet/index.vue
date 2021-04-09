@@ -2,6 +2,7 @@
   <div class="app-container">
     <el-button type="primary" @click="copy1">总投注金额: {{ this.data.countBetMoney || 0 }}</el-button>
     <el-button type="success" @click="copy2">总投注人数: {{ this.data.countBetPeople || 0 }}</el-button>
+    <el-button type="success">会员盈利: {{ this.data.memberProfit || 0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" label-width="68px"
              v-show="showSearch"
     >
@@ -90,6 +91,7 @@ export default {
       isDestroyed: false,
       countBetMoney:null,
       countBetPeople:null,
+      memberProfit:null,
       // 表格数据
       list: [],
       data: {},

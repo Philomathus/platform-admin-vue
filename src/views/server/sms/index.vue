@@ -93,10 +93,19 @@
             size="mini"
             type="text"
             style="color: #5FB878"
-            v-show="scope.row.isEffect != 1"
+            v-show="scope.row.isEffect == 0"
             @click="handleEffect(scope.row)"
             v-hasPermi="['server:sms:effect']"
           >激活
+          </el-button>
+          <el-button
+            size="mini"
+            type="text"
+            style="color: #C0C0C0"
+            v-show="scope.row.isEffect == 1"
+            @click="handleNoEffect(scope.row)"
+            v-hasPermi="['server:sms:effect']"
+          >休眠
           </el-button>
           <el-button
             size="mini"
@@ -162,7 +171,7 @@
 </template>
 
 <script>
-import { listSms, getSms, delSms, addSms, updateSms, effectSms, smsTest } from '@/api/platform-web/server/sms'
+import { listSms, getSms, delSms, addSms, updateSms, effectSms, noEffectSms, smsTest } from '@/api/platform-web/server/sms'
 
 export default {
   name: 'Sms',
@@ -198,8 +207,8 @@ export default {
         name: null,
         provider: null,
         isEffect: null,
-        orderByColumn: 'is_effect',
-        isAsc: 'desc'
+        orderByColumn: 'is_effect desc, id',
+        isAsc: 'asc'
       },
       // 表单参数
       form: {},
@@ -358,6 +367,19 @@ export default {
         type: 'warning'
       }).then(function() {
         return effectSms(row.id)
+      }).then(() => {
+        this.getList()
+        this.msgSuccess('修改状态成功')
+      }).catch(() => {
+      })
+    },
+    handleNoEffect(row) {
+      this.$confirm('确定要取消激活SMS短信服务配置编号为"' + row.id + '"的状态吗?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return noEffectSms(row.id)
       }).then(() => {
         this.getList()
         this.msgSuccess('修改状态成功')

@@ -101,7 +101,7 @@
           <el-button
             size="mini"
             type="text"
-            style="color: #C0C0C0"
+            style="color: #C0C0C0;margin-left: 0px"
             v-show="scope.row.isEffect == 1"
             @click="handleNoEffect(scope.row)"
             v-hasPermi="['server:sms:effect']"

@@ -23,7 +23,7 @@
         />
       </el-form-item>
 
-      <el-form-item >
+      <el-form-item>
         <el-select v-model="queryParams.status" placeholder="全部状态" clearable>
           <el-option label="未审核" value="0"></el-option>
           <el-option label="审核通过" value="1"></el-option>
@@ -47,7 +47,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:liveFamily:add']"
-        >新增</el-button>
+        >新增家族
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -90,8 +91,24 @@
       <el-table-column label="家族成员的贡献" min-width="120" align="center" prop="contribution"/>
       <el-table-column label="直播时间" min-width="120" align="center" prop="videoTime"/>
       <el-table-column label="备注" :show-overflow-tooltip="true" min-width="220" align="center" prop="memo"/>
-      <el-table-column label="操作" min-width="120" align="center" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column label="操作" min-width="250" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            @click="handleUpdateFamily(scope.row)"
+            v-hasPermi="['admin:liveFamily:edit']"
+          >修改
+          </el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-delete"
+            @click="handleDelete(scope.row)"
+            v-hasPermi="['admin:liveFamily:remove']"
+          >删除
+          </el-button>
           <el-button
             size="mini"
             type="text"
@@ -120,30 +137,30 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="800px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="家族LOGO" prop="logo">
-          <el-input v-model="form.logo" placeholder="请输入家族LOGO" />
-        </el-form-item>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="800px"
+               append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="家族名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入家族名称" />
-        </el-form-item>
-        <el-form-item label="公告" prop="notice">
-          <el-input v-model="form.notice" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="家族宣言" prop="manifesto">
-          <el-input v-model="form.manifesto" placeholder="请输入家族宣言" />
-        </el-form-item>
-        <el-form-item label="家族长昵称" prop="nickName">
-          <el-input v-model="form.nickName" placeholder="请输入家族长昵称" />
+          <el-input v-model="form.name" placeholder="请输入家族名称"/>
         </el-form-item>
         <el-form-item label="家族长ID" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入家族长ID" />
+          <el-input v-model="form.userId" placeholder="请输入家族长ID"/>
+        </el-form-item>
+        <el-form-item label="家族长昵称" prop="nickName">
+          <el-input v-model="form.nickName" placeholder="请输入家族长昵称"/>
+        </el-form-item>
+        <el-form-item label="家族LOGO" prop="logo">
+          <imageUpload v-model="form.logo" path="liveFamily"/>
+        </el-form-item>
+        <el-form-item label="家族宣言" prop="manifesto">
+          <el-input v-model="form.manifesto" placeholder="请输入家族宣言"/>
+        </el-form-item>
+        <el-form-item label="公告" prop="notice">
+          <el-input v-model="form.notice" type="textarea" placeholder="请输入内容"/>
         </el-form-item>
         <el-form-item label="备注" prop="memo">
-          <el-input v-model="form.memo" type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.memo" type="textarea" placeholder="请输入内容"/>
         </el-form-item>
-
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -163,10 +180,13 @@ import {
   updateLiveFamily,
   exportLiveFamily
 } from '@/api/live-web/family/liveFamily'
+import ImageUpload from "@/components/ImageUpload";
 
 export default {
   name: 'LiveFamily',
-  components: {},
+  components: {
+    ImageUpload
+  },
   data() {
     return {
       // 遮罩层
@@ -216,6 +236,27 @@ export default {
       form: {},
       // 表单校验
       rules: {
+        logo: [
+          {required: true, message: '请上传家族LOGO', trigger: 'change'}
+        ],
+        name: [
+          {required: true, message: "请输入家族名称", trigger: "blur"}
+        ],
+        userId: [
+          {required: true, message: "请输入家族长ID", trigger: "blur"}
+        ],
+        nickName: [
+          {required: true, message: "请输入家族长昵称", trigger: "blur"}
+        ],
+        manifesto: [
+          {required: true, message: "请输入家族宣言", trigger: "blur"}
+        ],
+        notice: [
+          {required: true, message: "请输入公告", trigger: "blur"}
+        ],
+        memo: [
+          {required: true, message: "请输入备注", trigger: "blur"}
+        ]
       }
     }
   },
@@ -300,6 +341,16 @@ export default {
       this.title = '添加家族'
     },
     /** 修改按钮操作 */
+    handleUpdateFamily(row) {
+      this.reset();
+      const id = row.id || this.ids
+      getLiveFamily(id).then(response => {
+        this.form = response.data;
+        this.open = true;
+        this.title = "修改家族";
+      });
+    },
+    /** 通过按钮操作 */
     handleUpdate(row, flag) {
       var data = {}
       data.id = row.id
@@ -309,7 +360,7 @@ export default {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
-        }).then(function() {
+        }).then(function () {
           return updateLiveFamily(data)
         }).then(() => {
           this.getList()
@@ -321,7 +372,7 @@ export default {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
-        }).then(function() {
+        }).then(function () {
           return updateLiveFamily(data)
         }).then(() => {
           this.getList()
@@ -341,9 +392,14 @@ export default {
             })
           } else {
             addLiveFamily(this.form).then(response => {
-              this.msgSuccess('新增成功')
-              this.open = false
-              this.getList()
+              console.info(response.data)
+              if (response.data.code == 0) {
+                this.msgError(response.data.msg)
+              } else {
+                this.msgSuccess(response.data.msg)
+                this.open = false
+                this.getList()
+              }
             })
           }
         }
@@ -356,7 +412,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return delLiveFamily(ids)
       }).then(() => {
         this.getList()
@@ -370,7 +426,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportLiveFamily(queryParams)
       }).then(response => {
         this.download(response.msg)

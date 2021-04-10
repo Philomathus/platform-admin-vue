@@ -1,18 +1,31 @@
 <template>
   <div class="app-container">
-
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="日期范围" prop="selectDate">
-        <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
+    <el-button type="success" @click="copy1">成功出款笔数 {{ this.totalData.countNumber || 0 }}</el-button>
+    <el-button type="warning" @click="copy2">总出款金额 {{ this.totalData.countWithdrawMoney || 0 }}</el-button>
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px"  style="margin-top: 20px">
+<!--      <el-form-item label="日期范围" prop="searchTime">
+        <el-date-picker type="datetimerange" v-model="queryParams.searchTime" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}" start-placeholder="开始时间"
                         end-placeholder="开始时间"
                         range-separator="至" clearable :default-time="['00:00:00', '23:59:59']" :picker-options="pickerOptions"
         ></el-date-picker>
+      </el-form-item>-->
+      <el-form-item prop="regTime">
+        <el-date-picker
+          v-model="queryParams.searchTime"
+          size="small"
+          style="width: 240px"
+          value-format="yyyy-MM-dd"
+          type="daterange"
+          range-separator="-"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期" :picker-options="pickerOptions"
+        ></el-date-picker>
       </el-form-item>
-      <el-form-item label="主播ID" prop="userId">
+      <el-form-item  prop="userId">
         <el-input
           v-model="queryParams.userId"
-          placeholder="请输入主播ID"
+          placeholder="主播ID"
           clearable
           size="small"
           type="number"
@@ -20,19 +33,19 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="主播昵称" prop="nickName">
+      <el-form-item  prop="nickName">
         <el-input
           v-model="queryParams.nickName"
-          placeholder="请输入主播昵称"
+          placeholder="主播昵称"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="订单号" prop="orderNo">
+      <el-form-item  prop="orderNo">
         <el-input
           v-model="queryParams.orderNo"
-          placeholder="请输入订单号"
+          placeholder="订单号"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -65,10 +78,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>-->
-      <el-form-item label="提现银行账号" prop="bankAccount" label-width="120px">
+      <el-form-item  prop="bankAccount" label-width="120px">
         <el-input
           v-model="queryParams.bankAccount"
-          placeholder="请输入提现银行账号"
+          placeholder="提现银行账号"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -92,16 +105,16 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>-->
-      <el-form-item label="申请状态" prop="wstatus">
-        <el-select v-model="queryParams.wstatus" placeholder="请选择状态" clearable size="small">
+      <el-form-item  prop="wstatus">
+        <el-select v-model="queryParams.wstatus" placeholder="全部状态" clearable size="small">
           <el-option :label="item.labelName" :value="item.labelValue" v-for="item in withdrawTypes" />
         </el-select>
       </el-form-item>
-<!--      <el-form-item label="提现类型(1提现到银行卡,2提现到支付宝)" prop="type">
-        <el-select v-model="queryParams.type" placeholder="请选择提现类型(1提现到银行卡,2提现到支付宝)" clearable size="small">
-          <el-option label="请选择字典生成" value="" />
-        </el-select>
-      </el-form-item>-->
+     <el-form-item  prop="type">
+       <el-select v-model="queryParams.type" placeholder="提现类型" clearable size="small">
+         <el-option :label="item.labelName" :value="item.labelValue" v-for="item in liveWithdrawType" />
+       </el-select>
+      </el-form-item>
 <!--      <el-form-item label="审核员" prop="opName">
         <el-input
           v-model="queryParams.opName"
@@ -193,41 +206,110 @@
     <el-table stripe v-loading="loading" :data="liveUserWithdrawNewlogList" @selection-change="handleSelectionChange">
 <!--      <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="主键" align="center" prop="id" />-->
-      <el-table-column label="主播ID" align="center" prop="userId" width="80px" />
-      <el-table-column label="主播昵称" align="center" prop="nickName" width="160px" />
-      <el-table-column label="订单号" align="center" prop="orderNo" />
-      <el-table-column label="订单表达式" align="center" prop="orderExpression" />
-      <el-table-column label="提现金额" align="center" prop="withdrawMoney" width="80px" />
-      <el-table-column label="提现真实姓名" align="center" prop="bankUserName" width="120px" />
-      <el-table-column label="提现银行账号" align="center" prop="bankAccount" />
-      <el-table-column label="状态" align="center" prop="wstatus" :formatter="formatterType" />
-
-<!--      <el-table-column label="提现银行账号开户行" align="center" prop="bankAddress" />
-      <el-table-column label="提现银行类型ID" align="center" prop="bankTypeId" />
-      <el-table-column label="提现类型(1提现到银行卡,2提现到支付宝)" align="center" prop="type" />
+      <el-table-column label="主播ID" align="center" prop="userId" min-width="80px" />
+      <el-table-column label="家族ID" align="center" prop="familyId" />
+      <el-table-column label="主播昵称" align="center" prop="nickName" min-width="120px" />
+      <el-table-column label="订单号" align="center" prop="orderNo"  min-width="180px"/>
+      <el-table-column label="提现金额" align="center" prop="withdrawMoney" min-width="80px" />
+      <el-table-column label="提现真实姓名" align="center" prop="bankUserName" min-width="120px" />
+      <el-table-column label="提现银行账号" align="center" prop="bankAccount" min-width="150px" />
+      <el-table-column label="提现类型" align="center" prop="type" :formatter="formatterLiveType" min-width="80px" />
+<!--      <el-table-column label="状态" align="center" prop="wstatus" :formatter="formatterType" min-width="100px" />-->
+      <el-table-column label="状态" min-width="120" align="center" prop="wstatus">
+        <template slot-scope="scope">
+          <span
+            :style="{color: (wstatus = statusOptions[parseInt(scope.row.wstatus)]).color}"
+          >{{ wstatus.dictLabel }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="创建时间" min-width="150" align="center" prop="createTime"/>
+      <el-table-column label="最后修改时间" min-width="150" align="center" prop="updateTime"/>
       <el-table-column label="审核员" align="center" prop="opName" />
       <el-table-column label="审核备注" align="center" prop="remark" />
-      <el-table-column label="主播时长" align="center" prop="livetime" />
-      <el-table-column label="主播礼物" align="center" prop="liveticket" />
-      <el-table-column label="主播派奖" align="center" prop="livepaijiang" />-->
-<!--      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" min-width="350" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['live-web:liveUserWithdrawNewlog:edit']"
-          >修改</el-button>
+            size="small"
+            type="success"
+            plain
+            icon="el-icon-check"
+            v-show="scope.row.wstatus == 1"
+            @click="handleFinalAudit(scope.row)"
+            v-hasPermi="['live-web:liveUserWithdrawNewlog:finalAudit']"
+          >审核通过
+          </el-button>
           <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['live-web:liveUserWithdrawNewlog:remove']"
-          >删除</el-button>
+            size="small"
+            type="info"
+            plain
+            icon="el-icon-refresh-right"
+            v-show="scope.row.wstatus == 3 || scope.row.wstatus == 2"
+            @click="handleRecoverAudit(scope.row)"
+            v-hasPermi="['live-web:liveUserWithdrawNewlog:recoverAudit']"
+          >恢复
+          </el-button>
+          <el-button
+            size="small"
+            type="primary"
+            plain
+            v-show="scope.row.wstatus == 4"
+            icon="el-icon-unlock"
+            @click="handleUnlock(scope.row)"
+            v-has-permi="['live-web:liveUserWithdrawNewlog:unlock']"
+          >解锁
+          </el-button>
+          <el-button
+            size="small"
+            type="success"
+            plain
+            v-show="scope.row.wstatus == 3 "
+            icon="el-icon-circle-check"
+            @click="handleArtificialWithdraw(scope.row)"
+            v-has-permi="['live-web:liveUserWithdrawNewlog:artificial']"
+          >出款
+          </el-button>
+          <el-button
+            size="small"
+            type="danger"
+            plain
+            v-show="scope.row.wstatus == 1 "
+            icon="el-icon-circle-close"
+            @click="handleRefused(scope.row)"
+            v-has-permi="['live-web:liveUserWithdrawNewlog:refused']"
+          >拒绝
+          </el-button>
+          <el-button
+            size="small"
+            type="success"
+            plain
+            v-show="scope.row.wstatus == 4 "
+            iicon="el-icon-circle-close"
+            @click="handleWithdrawSucc(scope.row)"
+            v-has-permi="['live-web:liveUserWithdrawNewlog:withdrawSucc']"
+          >出款成功
+          </el-button>
+          <el-button
+            size="small"
+            type="primary"
+            plain
+            v-show="scope.row.wstatus == 1 "
+            icon="el-icon-refresh-right"
+            @click="handleUpdateOrder(scope.row)"
+            v-has-permi="['live-web:liveUserWithdrawNewlog:updateOrder']"
+          >重置订单
+          </el-button>
+          <el-button
+            size="small"
+            type="danger"
+            plain
+            v-show="scope.row.wstatus == 4 "
+            icon="el-icon-refresh-right"
+            @click="handleWithdrawRefused(scope.row)"
+            v-has-permi="['live-web:liveUserWithdrawNewlog:withdrawRefused']"
+          >出款拒绝
+          </el-button>
         </template>
-      </el-table-column>-->
+      </el-table-column>
     </el-table>
 
     <pagination
@@ -303,8 +385,10 @@
 </template>
 
 <script>
-import { listLiveUserWithdrawNewlog, getLiveUserWithdrawNewlog, delLiveUserWithdrawNewlog, addLiveUserWithdrawNewlog, updateLiveUserWithdrawNewlog, exportLiveUserWithdrawNewlog } from "@/api/platform-web/live-web/liveUserWithdrawNewlog";
+import { listLiveUserWithdrawNewlog,updateOrder,withdrawSucc,withdrawRefused,getCountTotal,unlockMemberWithdrawLog,refusedMemberWithdrawLog,artificialMemberWithdrawLog,finalAuditMemberRechargeLog,recoverAuditMemberRechargeLog, getLiveUserWithdrawNewlog, delLiveUserWithdrawNewlog, addLiveUserWithdrawNewlog, updateLiveUserWithdrawNewlog, exportLiveUserWithdrawNewlog } from "@/api/platform-web/live-web/liveUserWithdrawNewlog";
 import {getYesterDateEnd, getYesterDateStart, pickerDateTimeShortcuts} from "@/utils/dateUtils";
+
+
 
 export default {
   name: "LiveUserWithdrawNewlog",
@@ -315,9 +399,13 @@ export default {
       pickerOptions: {shortcuts: pickerDateTimeShortcuts},
       // 遮罩层
       loading: true,
+      //统计
+      totalData: {},
       // 选中数组
       ids: [],
-      withdrawTypes: [{labelName: '申请中',labelValue: 0},{labelName: '初级审核通过',labelValue: 1},{labelName: '审核不通过',labelValue: 2},{labelName: '终极审核通过',labelValue: 3}],
+      statusOptions: [],
+      withdrawTypes: [{labelName: '申请中',labelValue: 0},{labelName: '提交申请',labelValue: 1},{labelName: '审核不通过',labelValue: 2},{labelName: '终极审核通过',labelValue: 3},{labelName: '出款中',labelValue: 4},{labelName: '出款成功',labelValue: 5}],
+      liveWithdrawType: [{labelName: '家族',labelValue: 1},{labelName: '个人',labelValue: 2}],
       // 非单个禁用
       single: true,
       // 非多个禁用
@@ -334,7 +422,7 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
-        selectDate: [getYesterDateStart(), getYesterDateEnd()],
+        searchTime: [this.parseTime(this.getTodayStartTime(), '{y}-{m}-{d}'), this.parseTime(this.getTodayEndTime(), '{y}-{m}-{d}')],
         pageNum: 1,
         pageSize: 10,
         userId: null,
@@ -352,7 +440,7 @@ export default {
         livetime: null,
         liveticket: null,
         livepaijiang: null,
-        orderByColumn: 'wstatus',
+        orderByColumn: 'update_time',
         isAsc: 'desc'
       },
       // 表单参数
@@ -381,7 +469,7 @@ export default {
           { required: true, message: "提现银行类型ID不能为空", trigger: "blur" }
         ],
         wstatus: [
-          { required: true, message: "状态(0申请中1初级审核通过2审核不通过3终极审核通过)不能为空", trigger: "blur" }
+          { required: true, message: "状态不能为空", trigger: "blur" }
         ],
         type: [
           { required: true, message: "提现类型(1提现到银行卡,2提现到支付宝)不能为空", trigger: "change" }
@@ -390,6 +478,9 @@ export default {
     };
   },
   created() {
+    this.getDicts('withdraw_status').then(response => {
+      this.statusOptions = response.data
+    })
     this.getList();
   },
   methods: {
@@ -397,6 +488,15 @@ export default {
       var string = '';
       this.withdrawTypes.forEach((value, index, array) => {
         if (value.labelValue === row.wstatus) {
+          string = value.labelName
+        }
+      });
+      return string;
+    },
+    formatterLiveType(row){
+      var string = '';
+      this.liveWithdrawType.forEach((value, index, array) => {
+        if (value.labelValue === row.type) {
           string = value.labelName
         }
       });
@@ -410,6 +510,13 @@ export default {
         this.total = response.total;
         this.loading = false;
       });
+    },
+    //复制
+    copy1() {
+      this.copyCommand(this.totalData.countNumber)
+    },
+    copy2() {
+      this.copyCommand(this.totalData.countWithdrawMoney)
     },
     // 取消按钮
     cancel() {
@@ -445,6 +552,7 @@ export default {
     handleQuery() {
       this.queryParams.pageNum = 1;
       this.getList();
+      this.getCountTotal()
     },
     /** 重置按钮操作 */
     resetQuery() {
@@ -456,6 +564,11 @@ export default {
       this.ids = selection.map(item => item.id)
       this.single = selection.length!==1
       this.multiple = !selection.length
+    },
+    getCountTotal() {
+      getCountTotal(this.queryParams).then((res) => {
+        this.totalData = res.data
+      })
     },
     /** 新增按钮操作 */
     handleAdd() {
@@ -473,6 +586,139 @@ export default {
         this.title = "修改主播提现管理";
       });
     },
+
+    handleArtificialWithdraw2(row) {
+
+      artificialMemberWithdrawLog({
+        id: row.id
+      }).then(response => {
+        this.msgSuccess(response.msg)
+        if (response.code == 200) {
+          this.open = false
+          this.getList()
+        }
+      })
+    },
+
+    //审核
+    handleFinalAudit(row) {
+      finalAuditMemberRechargeLog({
+        id: row.id
+      }).then(response => {
+        this.msgSuccess(response.msg)
+        if (response.code == 200) {
+          this.open = false
+          this.getList()
+        }
+      })
+    },
+
+    //重新生成订单
+    handleUpdateOrder(row) {
+      updateOrder({
+        id: row.id
+      }).then(response => {
+        this.msgSuccess(response.msg)
+        if (response.code == 200) {
+          this.open = false
+          this.getList()
+        }
+      })
+    },
+
+    //拒绝
+    handleRefused(row) {
+      this.promptRefused(row.id)
+    },
+    promptRefused(id) {
+      this.$prompt(null, '请输入拒绝出款原因', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      }).then(({ value }) => {
+        refusedMemberWithdrawLog({
+          id: id,
+          remark: value
+        }).then(response => {
+          this.msgSuccess(response.msg)
+          this.open = false
+          this.getList()
+        })
+      }).catch(() => {
+      })
+    },
+
+    //拒绝出款
+    handleWithdrawRefused(row) {
+      this.promptWithdrawRefused(row.id)
+    },
+    promptWithdrawRefused(id) {
+      this.$prompt(null, '请输入拒绝出款原因', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      }).then(({ value }) => {
+        withdrawRefused({
+          id: id,
+          remark: value
+        }).then(response => {
+          this.msgSuccess(response.msg)
+          this.open = false
+          this.getList()
+        })
+      }).catch(() => {
+      })
+    },
+
+    //出款
+    handleArtificialWithdraw(row) {
+
+      artificialMemberWithdrawLog({
+        id: row.id
+      }).then(response => {
+        this.msgSuccess(response.msg)
+        if (response.code == 200) {
+          this.open = false
+          this.getList()
+        }
+      })
+    },
+    //出款成功
+    handleWithdrawSucc(row) {
+
+      withdrawSucc({
+        id: row.id
+      }).then(response => {
+        this.msgSuccess(response.msg)
+        if (response.code == 200) {
+          this.open = false
+          this.getList()
+        }
+      })
+    },
+
+    //解锁
+    handleUnlock(row) {
+      unlockMemberWithdrawLog({
+        id: row.id
+      }).then(response => {
+        this.msgSuccess(response.msg)
+        this.getList()
+      })
+    },
+
+    //恢复提交审核状态
+    handleRecoverAudit(row) {
+      recoverAuditMemberRechargeLog({
+        id: row.id
+      }).then(response => {
+        this.msgSuccess(response.msg)
+        if (response.code == 200) {
+          this.open = false
+          this.getList()
+        }
+      })
+    },
+
+
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {

@@ -137,6 +137,9 @@
         <el-form-item label="新版图标" prop="editionIcon">
           <imageUpload v-model="form.editionIcon" path="gameInfo"/>
         </el-form-item>
+        <el-form-item label="游戏码" prop="kindId">
+          <el-input v-model="form.kindId" placeholder="请输入游戏码" style="width: 240px"/>
+        </el-form-item>
         <el-form-item label="高宽比" prop="highWide">
           <el-input v-model="form.highWide" placeholder="请输入高宽比" style="width: 240px"/>
         </el-form-item>

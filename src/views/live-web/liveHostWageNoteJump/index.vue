@@ -43,6 +43,17 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item prop="familyId" style="width: 150px">
+        <el-input
+          v-model="queryParams.familyId"
+          placeholder="家族ID"
+          clearable
+          size="small"
+          type="number"
+          class="no-number"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -239,14 +250,14 @@ export default {
   },
   methods: {
     init() {
-      const familyId = this.$route.query.familyId
+      // const familyId = this.$route.query.familyId
       // const settlementRate = this.$route.query.settlementRate
       const selectDate = this.$route.query.selectDate
-      if (familyId && familyId >= 0) {
-        this.queryParams.familyId = familyId
-      } else {
-        this.queryParams.familyId = null
-      }
+      // if (familyId && familyId >= 0) {
+      //   this.queryParams.familyId = familyId
+      // } else {
+      //   this.queryParams.familyId = null
+      // }
       // if (settlementRate != null) {
       //   this.queryParams.settlementRate = settlementRate
       // }

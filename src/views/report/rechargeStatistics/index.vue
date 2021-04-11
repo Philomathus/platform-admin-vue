@@ -100,11 +100,6 @@
           <span style="color: #FF5722">{{ row.palmYouhuirenshu}}</span>
         </template>
         </el-table-column>
-        <el-table-column  label="入款总人数" min-width="90" align="center" prop="totalRukuanrenshu">
-          <template v-slot="{row}">
-            <span style="color: #5FB878">{{ row.totalRukuanrenshu}}</span>
-          </template>
-        </el-table-column>
         <el-table-column label="平台优惠" min-width="100" align="center" prop="palmYouhuijine">
         <template v-slot="{row}">
           <span style="color: #FF5722">{{ row.palmYouhuijine}}</span>

@@ -3,7 +3,7 @@
     <el-button type="primary" @click="copy1">入款总额: {{ this.data.paymentAmount || 0 }}</el-button>
     <el-button type="success" @click="copy2">出款总额: {{ this.data.outMoney || 0 }}</el-button>
     <el-button type="primary" @click="copy3">金额合计: {{ this.data.countMoney || 0 }}</el-button>
-    <el-button type="success" @click="copy4">送礼总额: {{ this.data.totalAccountGifts || 0 }}</el-button>
+    <el-button type="success" @click="copy4">主播工资: {{ this.data.totalAccountGifts || 0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" v-show="showSearch"
              label-width="68px">
       <el-form-item label="日期选择" prop="reptime">
@@ -39,22 +39,87 @@
     </el-row>
     <div ref="container" style="position: relative">
       <el-table v-loading="loading" :stripe="true" :data="report" @selection-change="handleSelectionChange">
-        <el-table-column label="报表时间" align="center" prop="reptime" min-width="120" fixed="left"/>
-        <el-table-column label="入款总人数" min-width="90" align="center" prop="totalRukuanrenshu"/>
-        <el-table-column label="出款总人数" min-width="120" align="center" prop="totalChukuanrenshu"/>
-        <el-table-column label="公司入款人数" min-width="100" align="center" prop="gsRukuanrenshu"/>
-        <el-table-column label="公司入款金额" min-width="100" align="center" prop="gsRukuanjine"/>
-        <el-table-column label="线上入款人数" min-width="100" align="center" prop="xsRukunanrenshu"/>
-        <el-table-column label="线上入款金额" min-width="100" align="center" prop="xsRukunanjine"/>
-        <el-table-column label="人工入款人数" min-width="100" align="center" prop="rgRukunanrenshu"/>
-        <el-table-column label="人工入款金额" min-width="100" align="center" prop="rgRukunanjine"/>
-        <el-table-column label="代充人数" min-width="100" align="center" prop="totalAccount"/>
-        <el-table-column label="代充金额" min-width="100" align="center" prop="totalLast"/>
-        <el-table-column label="优惠人数" min-width="100" align="center" prop="palmYouhuirenshu"/>
-        <el-table-column label="平台优惠" min-width="100" align="center" prop="palmYouhuijine"/>
-        <el-table-column label="主播工资" min-width="100" align="center" prop="totalGiveprop"/>
-        <el-table-column label="入款总金额" min-width="130" align="center" prop="totalRukuanjine" fixed="right"/>
-        <el-table-column label="出款总金额" min-width="130" align="center" prop="totalChukuanjine" fixed="right"/>
+        <el-table-column  label="报表时间" align="center" prop="reptime" min-width="120" fixed="left"/>
+        <el-table-column  label="入款总人数" min-width="90" align="center" prop="totalRukuanrenshu">
+          <template v-slot="{row}">
+            <span style="color: #5FB878">{{ row.totalRukuanrenshu}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column  label="出款总人数" min-width="120" align="center" prop="totalChukuanrenshu" >
+        <template v-slot="{row}">
+          <span style="color: #FF5722">{{ row.totalChukuanrenshu}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column label="公司入款人数" min-width="100" align="center" prop="gsRukuanrenshu">
+        <template v-slot="{row}">
+          <span style="color: #5FB878">{{ row.gsRukuanrenshu}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column label="公司入款金额" min-width="100" align="center" prop="gsRukuanjine">
+        <template v-slot="{row}">
+          <span style="color: #5FB878">{{ row.gsRukuanjine}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column label="线上入款人数" min-width="100" align="center" prop="xsRukunanrenshu">
+        <template v-slot="{row}">
+          <span style="color: #5FB878">{{ row.xsRukunanrenshu}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column label="线上入款金额" min-width="100" align="center" prop="xsRukunanjine">
+        <template v-slot="{row}">
+          <span style="color: #5FB878">{{ row.xsRukunanjine}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column label="人工入款人数" min-width="100" align="center" prop="rgRukunanrenshu">
+        <template v-slot="{row}">
+          <span style="color: #5FB878">{{ row.rgRukunanrenshu}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column label="人工入款金额" min-width="100" align="center" prop="rgRukunanjine">
+        <template v-slot="{row}">
+          <span style="color: #5FB878">{{ row.rgRukunanjine}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column label="代充人数" min-width="100" align="center" prop="totalAccount">
+        <template v-slot="{row}">
+          <span style="color: #5FB878">{{ row.totalAccount}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column label="代充金额" min-width="100" align="center" prop="totalLast">
+        <template v-slot="{row}">
+          <span style="color: #5FB878">{{ row.totalLast}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column label="主播工资" min-width="100" align="center" prop="totalGiveprop">
+          <template v-slot="{row}">
+            <span style="color: #FF5722">{{ row.totalGiveprop}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="优惠人数" min-width="100" align="center" prop="palmYouhuirenshu">
+        <template v-slot="{row}">
+          <span style="color: #FF5722">{{ row.palmYouhuirenshu}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column  label="入款总人数" min-width="90" align="center" prop="totalRukuanrenshu">
+          <template v-slot="{row}">
+            <span style="color: #5FB878">{{ row.totalRukuanrenshu}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="平台优惠" min-width="100" align="center" prop="palmYouhuijine">
+        <template v-slot="{row}">
+          <span style="color: #FF5722">{{ row.palmYouhuijine}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column label="入款总金额" min-width="130" align="center" prop="totalRukuanjine" fixed="right">
+        <template v-slot="{row}">
+          <span style="color: #5FB878">{{ row.totalRukuanjine}}</span>
+        </template>
+        </el-table-column>
+        <el-table-column label="出款总金额" min-width="130" align="center" prop="totalChukuanjine" fixed="right">
+        <template v-slot="{row}">
+          <span style="color: #FF5722">{{ row.totalChukuanjine}}</span>
+        </template>
+        </el-table-column>
         <el-table-column label="合计" align="center" prop="totalChukuanjineMath" fixed="right"
                          :formatter="totalChukuanjineMath" min-width="130"
         />

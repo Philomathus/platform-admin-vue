@@ -40,7 +40,7 @@
           autocomplete="on"
           min="0"
           size="small"
-          style="width: 80px"
+          style="width: 86px"
           type="number"
           class="no-number"
           @keyup.enter.native="handleQuery"
@@ -53,7 +53,7 @@
           autocomplete="on"
           min="0"
           size="small"
-          style="width: 80px"
+          style="width: 86px"
           type="number"
           class="no-number"
           @keyup.enter.native="handleQuery"
@@ -271,7 +271,7 @@
     <pagination
       v-show="total>0"
       :total="total"
-      :page-sizes="[100,200,500,1000]"
+      :page-sizes="[10,30,50,100]"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
@@ -479,7 +479,7 @@ export default {
       // 查询参数
       queryParams: {
         pageNum: 1,
-        pageSize: 100,
+        pageSize: 10,
         searchValue: null,
         status: null,
         searchTime: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],

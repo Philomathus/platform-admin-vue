@@ -390,6 +390,7 @@ export default {
     //获取谷歌验证码二维码
     showOrder(row) {
       this.userName = row.userName
+      this.googleAuthCode = null
       this.dialogVisible = true
       const name = row.userName
       getGoogleAuth(name).then(response => {

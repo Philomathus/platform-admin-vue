@@ -10,7 +10,7 @@
                         range-separator="至" clearable :default-time="['00:00:00', '23:59:59']" :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>-->
-      <el-form-item prop="regTime">
+      <el-form-item prop="searchTime">
         <el-date-picker
           v-model="queryParams.searchTime"
           size="small"
@@ -217,9 +217,7 @@
 <!--      <el-table-column label="状态" align="center" prop="wstatus" :formatter="formatterType" min-width="100px" />-->
       <el-table-column label="状态" min-width="120" align="center" prop="wstatus">
         <template slot-scope="scope">
-          <span
-            :style="{color: (wstatus = statusOptions[parseInt(scope.row.wstatus)]).color}"
-          >{{ wstatus.dictLabel }}</span>
+          <span :style="{color: (wstatus = statusOptions[parseInt(scope.row.wstatus)]).color}">{{ wstatus.dictLabel }}</span>
         </template>
       </el-table-column>
       <el-table-column label="创建时间" min-width="150" align="center" prop="createTime"/>
@@ -386,7 +384,7 @@
 
 <script>
 import { listLiveUserWithdrawNewlog,updateOrder,withdrawSucc,withdrawRefused,getCountTotal,unlockMemberWithdrawLog,refusedMemberWithdrawLog,artificialMemberWithdrawLog,finalAuditMemberRechargeLog,recoverAuditMemberRechargeLog, getLiveUserWithdrawNewlog, delLiveUserWithdrawNewlog, addLiveUserWithdrawNewlog, updateLiveUserWithdrawNewlog, exportLiveUserWithdrawNewlog } from "@/api/platform-web/live-web/liveUserWithdrawNewlog";
-import {getYesterDateEnd, getYesterDateStart, pickerDateTimeShortcuts} from "@/utils/dateUtils";
+import {getYesterDate, pickerDateTimeShortcuts} from "@/utils/dateUtils";
 
 
 
@@ -422,7 +420,7 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
-        searchTime: [this.parseTime(this.getTodayStartTime(), '{y}-{m}-{d}'), this.parseTime(this.getTodayEndTime(), '{y}-{m}-{d}')],
+        searchTime: [this.parseTime(getYesterDate(), '{y}-{m}-{d}'), this.parseTime(getYesterDate(), '{y}-{m}-{d}')],
         pageNum: 1,
         pageSize: 10,
         userId: null,

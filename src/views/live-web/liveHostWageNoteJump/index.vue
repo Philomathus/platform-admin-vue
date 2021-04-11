@@ -75,7 +75,7 @@
       <el-col :span="1.5" style="width: 140px">
         <el-input
           v-model="this.totalsettleTotal"
-          placeholder="本页结算总计"
+          placeholder="结算总计统计"
           readonly
           clearable
           size="small"

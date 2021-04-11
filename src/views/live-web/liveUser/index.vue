@@ -117,10 +117,12 @@
         </template>
       </el-table-column>
       <el-table-column label="印票" min-width="120" align="center" prop="ticket"/>
-      <el-table-column label="可用印票" min-width="120" align="center" prop="ticket"/>
-      <el-table-column label="粉丝" min-width="120" align="center" prop="fansCount"/>
-      <el-table-column label="手机号" min-width="100" align="center" prop="mobile"/>
-      <el-table-column label="禁播状态" min-width="120" align="center" prop="isBan">
+      <el-table-column label="时薪" min-width="120" align="center" prop="coin"/>
+      <el-table-column label="时薪任务" min-width="120" align="center" prop="weixinPrice"/>
+      <el-table-column label="礼物任务" min-width="120" align="center" prop="weiboMoney"/>
+      <el-table-column label="彩票抽成" min-width="120" align="center" prop="xpoint"/>
+      <el-table-column label="礼物抽成" min-width="120" align="center" prop="ypoint"/>
+      <el-table-column label="是否禁播" min-width="120" align="center" prop="isBan">
         <template v-slot="{row}">
           <el-switch
             :active-value="0"
@@ -133,9 +135,9 @@
           </el-switch>
         </template>
       </el-table-column>
+      <el-table-column label="手机号" min-width="100" align="center" prop="mobile"/>
       <el-table-column label="登陆IP" min-width="150" :show-overflow-tooltip="true" align="left" prop="loginIp"/>
-      <el-table-column label="注册时间" min-width="160" :show-overflow-tooltip="true" align="center" prop="createTime"/>
-      <el-table-column label="禁播备注" min-width="150" align="center" prop="banRemark"/>
+      <el-table-column label="禁播原因" min-width="150" align="center" prop="banRemark"/>
       <el-table-column label="操作" min-width="180" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
@@ -158,7 +160,13 @@
             <!-- v-hasPermi="['admin:memberInfo:remove']"-->
           </el-button>
         </template>
+
       </el-table-column>
+
+<!--      <el-table-column label="可用印票" min-width="120" align="center" prop="ticket"/>
+
+      <el-table-column label="粉丝" min-width="120" align="center" prop="fansCount"/>
+      <el-table-column label="注册时间" min-width="160" :show-overflow-tooltip="true" align="center" prop="createTime"/>-->
     </el-table>
 
     <pagination

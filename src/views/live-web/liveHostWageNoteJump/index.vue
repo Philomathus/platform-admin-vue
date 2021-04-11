@@ -72,18 +72,29 @@
         >导出
         </el-button>
       </el-col>
+      <el-col :span="1.5" style="width: 140px">
+        <el-input
+          v-model="this.totalsettleTotal"
+          placeholder="本页结算总计"
+          readonly
+          clearable
+          size="small"
+        >
+          {{ this.totalsettleTotal || 0 }}}
+        </el-input>
+      </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table id="out-table" stripe v-loading="loading" :data="liveHostWageNoteList"
     >
       <el-table-column label="主播ID" align="center" prop="hostId"/>
-<!--        <template slot-scope="scope">-->
-<!--          <a style="color: #00afff" @click="openQuerDetails(scope.row)">{{ scope.row.hostId }}</a>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
+      <!--        <template slot-scope="scope">-->
+      <!--          <a style="color: #00afff" @click="openQuerDetails(scope.row)">{{ scope.row.hostId }}</a>-->
+      <!--        </template>-->
+      <!--      </el-table-column>-->
       <el-table-column label="主播昵称" :show-overflow-tooltip="true" align="center" prop="nickName" min-width="100"/>
-      <el-table-column label="家族ID" align="center" prop="familyId" >
+      <el-table-column label="家族ID" align="center" prop="familyId">
         <template slot-scope="scope">
           <span v-if="scope.row.familyId === 0">{{ scope.row.familyId }}</span>
           <el-popover
@@ -112,19 +123,19 @@
         </template>
       </el-table-column>
       <el-table-column label="家族名称" :show-overflow-tooltip="true" align="center" prop="familyName" min-width="100"/>
-      <el-table-column label="直播时长" align="center" prop="livetime" />
-      <el-table-column label="礼物任务" align="center" prop="lwrenwu" />
-      <el-table-column label="时长任务" align="center" prop="screnwu" />
-      <el-table-column label="时薪" align="center" prop="coin" />
-      <el-table-column label="时长结算" align="center" prop="livetimejiesuan" />
-      <el-table-column label="收礼金额" align="center" prop="liwu" />
-      <el-table-column label="礼物提成" align="center" prop="liwujiesuanbili" />
-      <el-table-column label="礼物结算" align="center" prop="ticket" />
-      <el-table-column label="彩票投注" align="center" prop="lotteryCost" />
-      <el-table-column label="彩票提成" align="center" prop="lotteryBili" />
-      <el-table-column label="彩票结算" align="center" prop="costQianliu" />
-      <el-table-column label="开播次数" align="center" prop="times" />
-      <el-table-column label="结算总计" align="center" prop="totalsettle" />
+      <el-table-column label="直播时长" align="center" prop="livetime"/>
+      <el-table-column label="礼物任务" align="center" prop="lwrenwu"/>
+      <el-table-column label="时长任务" align="center" prop="screnwu"/>
+      <el-table-column label="时薪" align="center" prop="coin"/>
+      <el-table-column label="时长结算" align="center" prop="livetimejiesuan"/>
+      <el-table-column label="收礼金额" align="center" prop="liwu"/>
+      <el-table-column label="礼物提成" align="center" prop="liwujiesuanbili"/>
+      <el-table-column label="礼物结算" align="center" prop="ticket"/>
+      <el-table-column label="彩票投注" align="center" prop="lotteryCost"/>
+      <el-table-column label="彩票提成" align="center" prop="lotteryBili"/>
+      <el-table-column label="彩票结算" align="center" prop="costQianliu"/>
+      <el-table-column label="开播次数" align="center" prop="times"/>
+      <el-table-column label="结算总计" align="center" prop="totalsettle"/>
     </el-table>
 
     <pagination
@@ -137,51 +148,51 @@
     />
 
     <!--主播时长详情-->
-<!--    <el-dialog :close-on-click-modal="false" title="主播时长详情" :visible.sync="open"-->
-<!--               width="1250px" append-to-body-->
-<!--    >-->
-<!--      <el-form :model="queryDetailsParams" ref="queryDetailsParams" :inline="true" label-width="68px">-->
-<!--        <el-form-item prop="dateDay">-->
-<!--          <el-date-picker clearable size="small"-->
-<!--                          v-model="queryDetailsParams.dateDay"-->
-<!--                          type="date"-->
-<!--                          format="yyyy-MM-dd"-->
-<!--                          value-format="yyyy-MM-dd"-->
-<!--                          placeholder="选择日期"-->
-<!--                          :style="{width: '100%'}"-->
-<!--                          :picker-options="pickerOptions">-->
-<!--          </el-date-picker>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item>-->
-<!--          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuerDetails">搜索</el-button>-->
-<!--        </el-form-item>-->
-<!--      </el-form>-->
+    <!--    <el-dialog :close-on-click-modal="false" title="主播时长详情" :visible.sync="open"-->
+    <!--               width="1250px" append-to-body-->
+    <!--    >-->
+    <!--      <el-form :model="queryDetailsParams" ref="queryDetailsParams" :inline="true" label-width="68px">-->
+    <!--        <el-form-item prop="dateDay">-->
+    <!--          <el-date-picker clearable size="small"-->
+    <!--                          v-model="queryDetailsParams.dateDay"-->
+    <!--                          type="date"-->
+    <!--                          format="yyyy-MM-dd"-->
+    <!--                          value-format="yyyy-MM-dd"-->
+    <!--                          placeholder="选择日期"-->
+    <!--                          :style="{width: '100%'}"-->
+    <!--                          :picker-options="pickerOptions">-->
+    <!--          </el-date-picker>-->
+    <!--        </el-form-item>-->
+    <!--        <el-form-item>-->
+    <!--          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuerDetails">搜索</el-button>-->
+    <!--        </el-form-item>-->
+    <!--      </el-form>-->
 
-<!--      <el-table :stripe="true" v-loading="loading" :data="detailsList">-->
-<!--        <el-table-column label="主播ID" align="center" prop="hostId" min-width="100"/>-->
-<!--        <el-table-column label="主播昵称" show-overflow-tooltip align="center" prop="nickName" min-width="120"/>-->
-<!--        <el-table-column label="直播开始时间" align="center" prop="startTime" width="160"/>-->
-<!--        <el-table-column label="直播结束时间" align="center" prop="endTime" width="160"/>-->
-<!--        <el-table-column label="直播时长（小时）" align="center" prop="liveTimeSec" width="130">-->
-<!--          <template v-slot="{row}">-->
-<!--            {{(row.liveTimeSec/3600).toFixed(2)}}-->
-<!--          </template>-->
-<!--        </el-table-column>-->
-<!--        <el-table-column label="主播结算印票" align="center" prop="ticket" width="130"/>-->
-<!--        <el-table-column label="彩票投注" align="center" prop="cpCost" min-width="120"/>-->
-<!--       <el-table-column label="彩票派奖" align="center" prop="cpPrize" min-width="120"/>-->
-<!--        <el-table-column label="备注" align="center" prop="remark" min-width="120"/>-->
-<!--        <el-table-column label="创建日期" align="center" prop="createTimes" width="160"/>-->
-<!--      </el-table>-->
-<!--      <pagination-->
-<!--        v-show="detailsTotal>0"-->
-<!--        :total="detailsTotal"-->
-<!--        :page-sizes="[10,20,100]"-->
-<!--        :page.sync="queryDetailsParams.pageNum"-->
-<!--        :limit.sync="queryDetailsParams.pageSize"-->
-<!--        @pagination="getDetailsList"-->
-<!--      />-->
-<!--    </el-dialog>-->
+    <!--      <el-table :stripe="true" v-loading="loading" :data="detailsList">-->
+    <!--        <el-table-column label="主播ID" align="center" prop="hostId" min-width="100"/>-->
+    <!--        <el-table-column label="主播昵称" show-overflow-tooltip align="center" prop="nickName" min-width="120"/>-->
+    <!--        <el-table-column label="直播开始时间" align="center" prop="startTime" width="160"/>-->
+    <!--        <el-table-column label="直播结束时间" align="center" prop="endTime" width="160"/>-->
+    <!--        <el-table-column label="直播时长（小时）" align="center" prop="liveTimeSec" width="130">-->
+    <!--          <template v-slot="{row}">-->
+    <!--            {{(row.liveTimeSec/3600).toFixed(2)}}-->
+    <!--          </template>-->
+    <!--        </el-table-column>-->
+    <!--        <el-table-column label="主播结算印票" align="center" prop="ticket" width="130"/>-->
+    <!--        <el-table-column label="彩票投注" align="center" prop="cpCost" min-width="120"/>-->
+    <!--       <el-table-column label="彩票派奖" align="center" prop="cpPrize" min-width="120"/>-->
+    <!--        <el-table-column label="备注" align="center" prop="remark" min-width="120"/>-->
+    <!--        <el-table-column label="创建日期" align="center" prop="createTimes" width="160"/>-->
+    <!--      </el-table>-->
+    <!--      <pagination-->
+    <!--        v-show="detailsTotal>0"-->
+    <!--        :total="detailsTotal"-->
+    <!--        :page-sizes="[10,20,100]"-->
+    <!--        :page.sync="queryDetailsParams.pageNum"-->
+    <!--        :limit.sync="queryDetailsParams.pageSize"-->
+    <!--        @pagination="getDetailsList"-->
+    <!--      />-->
+    <!--    </el-dialog>-->
   </div>
 </template>
 
@@ -191,7 +202,7 @@ import {
   exportHostWageNote,
   listHostWageNoteDetailsPage
 } from '@/api/live-web/liveHostWageNote'
-import { toyesDayshortcuts } from '@/utils/dateUtils'
+import {toyesDayshortcuts} from '@/utils/dateUtils'
 
 export default {
   name: 'LiveHostWageNote',
@@ -204,6 +215,9 @@ export default {
       loading: true,
       // 选中数组
       ids: [],
+      //结算总计统计
+      totalsettleTotalList: [],
+      totalsettleTotal: null,
       // 非单个禁用
       single: true,
       // 非多个禁用
@@ -271,9 +285,16 @@ export default {
       this.loading = true
       listHostWageNotePage(this.queryParams).then(response => {
         this.liveHostWageNoteList = response.rows
-        this.liveHostWageNoteList.forEach(value => {
-          value.totalsettle = (parseFloat(value.livetimejiesuan)  + parseFloat(value.ticket) + parseFloat(value.costQianliu)).toFixed(2)
-        })
+        if(this.liveHostWageNoteList.length != 0) {
+          this.liveHostWageNoteList.forEach(value => {
+            value.totalsettle = (parseFloat(value.livetimejiesuan) + parseFloat(value.ticket) + parseFloat(value.costQianliu)).toFixed(2)
+            this.totalsettleTotalList.push(value.totalsettle)
+          })
+          for (var i = 0; i < this.totalsettleTotalList.length; i++) {
+            this.totalsettleTotal += parseFloat(this.totalsettleTotalList[i]);
+          }
+          this.totalsettleTotal = parseFloat(this.totalsettleTotal).toFixed(2)
+        }
         this.total = response.total
         this.loading = false
       })
@@ -311,6 +332,8 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
+      this.totalsettleTotalList = []
+      this.totalsettleTotal = null
       this.queryParams.pageNum = 1
       this.getList()
     },
@@ -326,7 +349,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportHostWageNote(queryParams)
       }).then(response => {
         this.downloadExcel(response, '主播时长')

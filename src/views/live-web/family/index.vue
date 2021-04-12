@@ -389,7 +389,6 @@ export default {
             })
           } else {
             addLiveFamily(this.form).then(response => {
-              console.info(response.data)
               if (response.data.code == 0) {
                 this.msgError(response.data.msg)
               } else {

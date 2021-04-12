@@ -140,7 +140,7 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="800px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-        <el-form-item label="家族名称" prop="name">
+        <el-form-item label="家族名称" prop="name" v-if="form.id == null">
           <el-input v-model="form.name" placeholder="请输入家族名称"/>
         </el-form-item>
         <el-form-item label="家族长ID" prop="userId">
@@ -379,9 +379,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateLiveFamily(this.form).then(response => {
-              this.msgSuccess('修改成功')
-              this.open = false
-              this.getList()
+              if (response.data.code == 0) {
+                this.msgError(response.data.msg)
+              } else {
+                this.msgSuccess(response.data.msg)
+                this.open = false
+                this.getList()
+              }
             })
           } else {
             addLiveFamily(this.form).then(response => {

@@ -1,4 +1,5 @@
 <template>
+  <div>
   <!-- 导入表 -->
   <el-dialog
     v-dialogDrag
@@ -151,6 +152,26 @@
       <el-button @click="visible = false">取 消</el-button>
     </div>
   </el-dialog>
+  <!-- 禁用备注弹框 -->
+  <el-dialog
+    v-dialogDrag
+    :close-on-click-modal="false"
+    title="修改vip等级和昵称"
+    :visible.sync="showVip"
+    width="400px"
+    append-to-body
+    :show-close="false"
+    :close-on-press-escape="false"
+  >
+
+    Vip等级<el-input v-model="vip"/>
+    昵称<el-input v-model="nickName"/>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="showVip = !showVip">取消</el-button>
+      <el-button type="primary" :disabled="showVipDisabled" @click="updateVip">立即提交</el-button>
+    </div>
+  </el-dialog>
+  </div>
 </template>
 
 <script>
@@ -179,11 +200,15 @@
     },
     data() {
       return {
+        showVip: false,
+        showVipDisabled: false,
         // 遮罩层
         loading: true,
         memberId: null,
         memberCode: null,
         vip: null,
+        oldVip: null,
+        nickName: null,
         //弹出框标题
         title: '加分',
         //页面编码
@@ -238,6 +263,17 @@
           googleAuthCode: [
             {required: true, message: 'google验证码不能为空', trigger: 'blur'}
           ]
+        }
+      }
+    },
+    /*监听器,监听单个变量,param就是data的变量*/
+    watch: {
+      vip: function (newVal, oldVal) {
+        if (newVal < this.oldVip) {
+          this.$notify.error('vip等级只能大于之前的等级')
+          this.showVipDisabled = true
+        }else {
+          this.showVipDisabled = false
         }
       }
     },
@@ -422,44 +458,36 @@
             })
           })
         }else if (type==4){
-          var that = this
-          this.$prompt(hint, '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消'
-          }).then(({value}) => {
-            debugger;
-            var number = parseInt(value);
-            if (number < that.vip) {
-              that.$notify.error('vip等级只能大于之前的等级')
-              return
-            }
-            updateVip({
-              vip: number,
-              id: that.memberId
-            }).then((res) => {
-              if (res.code === 0) {
-                that.$notify.success('vip等级修改成功')
-              } else {
-                that.$notify.error('vip等级修改失败')
-              }
-            }).catch(() => {
-              that.$notify.error('网络异常')
-            })
-          }).catch(() => {
-            that.$message({
-              type: 'info',
-              message: '取消输入'
-            })
-          })
+          this.showVip = !this.showVip
         }
 
       },
+      updateVip(){
+        var that = this
+        updateVip({
+          nickName: that.nickName,
+          vip: that.vip,
+          id: that.memberId
+        }).then((res) => {
+          if (res.code === 0) {
+            that.oldVip = that.vip
+            that.$notify.success('vip等级修改成功')
+            that.showVip = false
+            that.$emit('refMemeberData');
+          } else {
+            that.$notify.error('vip等级修改失败')
+          }
+        }).catch(() => {
+          that.$notify.error('网络异常')
+        })
+      },
       // 显示弹框
-      show(memberId, memberCode,vip) {
-        debugger;
+      show(memberId, memberCode,vip,nickName) {
         this.memberId = memberId
         this.memberCode = memberCode
-        this.vip = vip
+        this.vip = vip;
+        this.oldVip = vip;
+        this.nickName = nickName
         this.getList()
         this.visible = true
       },

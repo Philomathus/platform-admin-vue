@@ -170,11 +170,12 @@ export default {
     this.getList()
   },
   methods: {
-    familyShow(familyId) {
+    familyShow(familyId,createTime) {
       this.$router.push({
         path: '/live/live/liveHostWageNoteJump',
         query: {
           familyId: familyId,
+          createTime:this.queryParams.dateDay,
           // settlementRate: this.queryParams.settlementRate,
           // selectDate: this.queryParams.selectDate
         }

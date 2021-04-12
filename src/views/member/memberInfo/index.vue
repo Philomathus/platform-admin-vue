@@ -643,7 +643,7 @@
       handleMore(row) {
         this.memberCode = row.memberCode
         this.memberId = row.id
-        this.$refs.more.show(this.memberId, this.memberCode,row.vip)
+        this.$refs.more.show(this.memberId, this.memberCode,row.vip,row.nickName)
       },
       /** 导出按钮操作 */
       handleExport() {

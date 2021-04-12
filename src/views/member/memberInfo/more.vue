@@ -408,10 +408,6 @@
             /*inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
             inputErrorMessage: '验证码格式不正确'*/
           }).then(({value}) => {
-            this.$message({
-              type: 'success',
-              message: '你的谷歌验证码是: ' + value
-            })
             resetWithdrawal({
               googleAuthCode: value,
               id: this.memberId
@@ -435,10 +431,6 @@
             confirmButtonText: '确定',
             cancelButtonText: '取消'
           }).then(({value}) => {
-            this.$message({
-              type: 'success',
-              message: '你的谷歌验证码是: ' + value
-            })
             memberBcodeRepair({
               googleAuthCode: value,
               id: this.memberId

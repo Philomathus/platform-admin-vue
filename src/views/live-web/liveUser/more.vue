@@ -24,15 +24,6 @@
                           end-placeholder="结束日期"
                           range-separator="至" clearable></el-date-picker>
         </el-form-item>
-        <!--<el-form-item label="礼物名称" prop="giftName">
-          <el-input
-            v-model="queryParams.giftName"
-            placeholder="请输入表描述"
-            clearable
-            size="small"
-            @keyup.enter.native="handleQuery"
-          />
-        </el-form-item>-->
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
           <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -40,7 +31,6 @@
       </el-form>
       <el-table @row-click="clickRow" ref="table" :data="dbTableList" @selection-change="handleSelectionChange"
                 height="260px">
-<!--        <el-table-column type="selection" width="55"></el-table-column>-->
         <el-table-column prop="poscatId" label="主播ID" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="poscatNickName" label="主播昵称" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="fromPlatform" label="发送者" :show-overflow-tooltip="true"></el-table-column>
@@ -158,10 +148,10 @@
       </el-form>
     </el-row>
 
-    <div slot="footer" class="dialog-footer" v-if="index!==5">
+<!--    <div slot="footer" class="dialog-footer" v-if="index!==5">
       <el-button type="primary" @click="handleImportTable">确 定</el-button>
       <el-button @click="visible = false">取 消</el-button>
-    </div>
+    </div>-->
   </el-dialog>
 </template>
 
@@ -307,10 +297,6 @@
                         /*inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
                         inputErrorMessage: '验证码格式不正确'*/
                     }).then(({value}) => {
-                        this.$message({
-                            type: 'success',
-                            message: '你的家族ID是: ' + value
-                        });
                         if (this.index === 4) {
                             goFamiily({
                                 familyId: value,

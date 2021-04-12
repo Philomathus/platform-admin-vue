@@ -266,12 +266,16 @@ export default {
     init() {
        const familyId = this.$route.query.familyId
       const createTime = this.$route.query.createTime
+      const hostId = this.$route.query.hostId
       // const settlementRate = this.$route.query.settlementRate
       //const selectDate = this.$route.query.selectDate
        if (familyId && familyId >= 0) {
          this.queryParams.familyId = familyId
        } else {
         this.queryParams.familyId = null
+       }
+       if (hostId!=null){
+         this.queryParams.hostId=hostId
        }
       this.queryParams.dateDay = createTime
      /* if (settlementRate != null) {

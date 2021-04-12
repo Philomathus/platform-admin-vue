@@ -27,6 +27,8 @@
         <span>重置提现</span></button>
       <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(8,'打码修复')">
         <span>打码修复</span></button>
+      <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(9,'修改Vip')">
+        <span>修改Vip</span></button>
     </div>
     <!--积分明细-->
     <el-row v-if="index===1">
@@ -161,7 +163,7 @@
     resetSafe,
     unbindCard,
     changeBank,
-    resetWithdrawal,memberBcodeRepair
+    resetWithdrawal,memberBcodeRepair,updateVip
   } from '@/api/platform-web/member/memberInfo'
 
   export default {
@@ -181,6 +183,7 @@
         loading: true,
         memberId: null,
         memberCode: null,
+        vip: null,
         //弹出框标题
         title: '加分',
         //页面编码
@@ -321,6 +324,10 @@
             hint = '请输入您的谷歌验证码'
             this.open(hint, 3)
             break
+          case 9 :
+            hint = '请输入Vip等级'
+            this.open(hint, 4)
+            break
         }
         //其他的就是获取列表
         this.getList()
@@ -414,13 +421,45 @@
               message: '取消输入'
             })
           })
+        }else if (type==4){
+          var that = this
+          this.$prompt(hint, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消'
+          }).then(({value}) => {
+            debugger;
+            var number = parseInt(value);
+            if (number < that.vip) {
+              that.$notify.error('vip等级只能大于之前的等级')
+              return
+            }
+            updateVip({
+              vip: number,
+              id: that.memberId
+            }).then((res) => {
+              if (res.code === 0) {
+                that.$notify.success('vip等级修改成功')
+              } else {
+                that.$notify.error('vip等级修改失败')
+              }
+            }).catch(() => {
+              that.$notify.error('网络异常')
+            })
+          }).catch(() => {
+            that.$message({
+              type: 'info',
+              message: '取消输入'
+            })
+          })
         }
 
       },
       // 显示弹框
-      show(memberId, memberCode) {
+      show(memberId, memberCode,vip) {
+        debugger;
         this.memberId = memberId
         this.memberCode = memberCode
+        this.vip = vip
         this.getList()
         this.visible = true
       },

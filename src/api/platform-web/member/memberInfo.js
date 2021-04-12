@@ -161,3 +161,11 @@ export function memberBcodeRepair(query) {
     params: query
   })
 }
+  // 打码修复
+  export function updateVip(query) {
+    return request({
+      url: url.platformWeb + '/member/memberInfo/updateVip',
+      method: 'post',
+      params: query
+    })
+}

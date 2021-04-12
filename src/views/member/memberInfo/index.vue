@@ -445,7 +445,7 @@
     created() {
       this.getList()
       getConfigEnvironment('agent_id').then(response => {
-        this.phone = '137' + response.data.envValue
+        this.phone = '100' + response.data.envValue
       })
       this.getDicts('muteRemarkOptions').then(response => {
         this.muteRemarkOptions = response.data
@@ -643,7 +643,7 @@
       handleMore(row) {
         this.memberCode = row.memberCode
         this.memberId = row.id
-        this.$refs.more.show(this.memberId, this.memberCode)
+        this.$refs.more.show(this.memberId, this.memberCode,row.vip)
       },
       /** 导出按钮操作 */
       handleExport() {

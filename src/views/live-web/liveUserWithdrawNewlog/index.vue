@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
-    <el-button type="success" @click="copy1">成功出款笔数 {{ this.totalData.countNumber || 0 }}</el-button>
-    <el-button type="warning" @click="copy2">总出款金额 {{ this.totalData.countWithdrawMoney || 0 }}</el-button>
+    <el-button type="success" @click="copy1">交易笔数 {{ this.totalData.countNumber || 0 }}</el-button>
+    <el-button type="warning" @click="copy2">总金额 {{ this.totalData.countWithdrawMoney || 0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px"  style="margin-top: 20px">
 <!--      <el-form-item label="日期范围" prop="searchTime">
         <el-date-picker type="datetimerange" v-model="queryParams.searchTime" format="yyyy-MM-dd HH:mm:ss"
@@ -22,7 +22,7 @@
           end-placeholder="结束日期" :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item  prop="userId">
+      <el-form-item  prop="userId" style="width: 130px">
         <el-input
           v-model="queryParams.userId"
           placeholder="主播ID"
@@ -105,13 +105,13 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>-->
-      <el-form-item  prop="wstatus">
+      <el-form-item  prop="wstatus" style="width: 160px">
         <el-select v-model="queryParams.wstatus" placeholder="全部状态" clearable size="small">
           <el-option :label="item.labelName" :value="item.labelValue" v-for="item in withdrawTypes" />
         </el-select>
       </el-form-item>
      <el-form-item  prop="type">
-       <el-select v-model="queryParams.type" placeholder="提现类型" clearable size="small">
+       <el-select v-model="queryParams.type" placeholder="提现类型" clearable size="small" style="width: 130px">
          <el-option :label="item.labelName" :value="item.labelValue" v-for="item in liveWithdrawType" />
        </el-select>
       </el-form-item>
@@ -204,16 +204,43 @@
     </el-row>
 
     <el-table stripe v-loading="loading" :data="liveUserWithdrawNewlogList" @selection-change="handleSelectionChange">
-<!--      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键" align="center" prop="id" />-->
+      <el-table-column label="复制" align="center" width="100px">
+        <template slot-scope="scope">
+          <el-button
+            type="primary" size="mini"
+            @click="handleCopy(scope.row)"
+          >复制
+          </el-button>
+          <el-button
+            type="text" size="mini"
+            icon="el-icon-copy-document"
+            @click="handleCopy2(scope.row)"
+          />
+        </template>
+      </el-table-column>
       <el-table-column label="主播ID" align="center" prop="userId" min-width="80px" />
-      <el-table-column label="家族ID" align="center" prop="familyId" />
+      <el-table-column label="家族ID" align="center" prop="familyId">
+        <template v-slot="{row}">
+          <a style="color: #00afff" @click="familyShow(row.familyId)">{{ row.familyId }}</a>
+        </template>
+      </el-table-column>
       <el-table-column label="主播昵称" align="center" prop="nickName" min-width="120px" />
-      <el-table-column label="订单号" align="center" prop="orderNo"  min-width="180px"/>
-      <el-table-column label="提现金额" align="center" prop="withdrawMoney" min-width="80px" />
-      <el-table-column label="提现真实姓名" align="center" prop="bankUserName" min-width="120px" />
-      <el-table-column label="提现银行账号" align="center" prop="bankAccount" min-width="150px" />
-      <el-table-column label="提现类型" align="center" prop="type" :formatter="formatterLiveType" min-width="80px" />
+      <el-table-column label="提现金额" align="center" prop="withdrawMoney" min-width="80px" >
+        <template v-slot="{row}">
+          <a style="color: #00afff" @click="copyColumn(row.withdrawMoney)">{{ row.withdrawMoney }}</a>
+        </template>
+      </el-table-column>
+      <el-table-column label="提现真实姓名" align="center" prop="bankUserName" min-width="120px" >
+        <template v-slot="{row}">
+          <a style="color: #00afff" @click="copyColumn(row.bankUserName)">{{ row.bankUserName }}</a>
+        </template>
+      </el-table-column>
+      <el-table-column label="提现银行账号" align="center" prop="bankAccount" min-width="180px" >
+        <template v-slot="{row}">
+          <a style="color: #00afff" @click="copyColumn(row.bankAccount)">{{ row.bankAccount }}</a>
+        </template>
+      </el-table-column>
+
 <!--      <el-table-column label="状态" align="center" prop="wstatus" :formatter="formatterType" min-width="100px" />-->
       <el-table-column label="状态" min-width="120" align="center" prop="wstatus">
         <template slot-scope="scope">
@@ -223,7 +250,9 @@
       <el-table-column label="创建时间" min-width="150" align="center" prop="createTime"/>
       <el-table-column label="最后修改时间" min-width="150" align="center" prop="updateTime"/>
       <el-table-column label="审核员" align="center" prop="opName" />
-      <el-table-column label="审核备注" align="center" prop="remark" />
+      <el-table-column label="审核备注" align="center" min-width="200px" prop="remark" />
+      <el-table-column label="订单号" align="center" prop="orderNo"  min-width="180px"/>
+      <el-table-column label="提现类型" align="center" prop="type" :formatter="formatterLiveType" min-width="80px" />
       <el-table-column label="操作" min-width="350" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
@@ -289,8 +318,6 @@
           <el-button
             size="small"
             type="primary"
-            plain
-            v-show="scope.row.wstatus == 1 "
             icon="el-icon-refresh-right"
             @click="handleUpdateOrder(scope.row)"
             v-has-permi="['live-web:liveUserWithdrawNewlog:updateOrder']"
@@ -480,6 +507,7 @@ export default {
       this.statusOptions = response.data
     })
     this.getList();
+    this.getCountTotal()
   },
   methods: {
     formatterType(row){
@@ -490,6 +518,16 @@ export default {
         }
       });
       return string;
+    },
+    familyShow(familyId) {
+      this.$router.push({
+        path: '/live/live/liveHostWageNoteJump',
+        query: {
+          familyId: familyId,
+          // settlementRate: this.queryParams.settlementRate,
+          // selectDate: this.queryParams.selectDate
+        }
+      })
     },
     formatterLiveType(row){
       var string = '';
@@ -515,6 +553,75 @@ export default {
     },
     copy2() {
       this.copyCommand(this.totalData.countWithdrawMoney)
+    },
+    copyColumn(value) {
+      this.copyCommand(value)
+    },
+    /** 复制按钮 */
+    handleCopy(row) {
+      var status = this.statusOptions[parseInt(row.wstatus)]
+      console.info(row.type)
+      var typeind=row.type-1
+      var wdtype=this.liveWithdrawType[parseInt(typeind)]
+      console.info(wdtype)
+      var textarea = document.createElement('textarea')
+      let html = '<table><tr>'
+      html += '<td>' + row.userId + '</td>'
+      html += '<td>' + row.familyId + '</td>'
+      //html += '<td>' + row.rechargeWithdrawRate + '</td>'
+      html += '<td>' + row.nickName + '</td>'
+      html += '<td>' + row.withdrawMoney + '</td>'
+      html += '<td>' + row.bankUserName + '</td>'
+      html += '<td>' + '\'' + row.bankAccount + '\'' + '</td>'
+      html += '<td>' + status.dictLabel + '</td>'
+      html += '<td>' + row.createTime + '</td>'
+      html += '<td>' + row.updateTime + '</td>'
+      html += '<td>' + row.opName + '</td>'
+      html += '<td>' + row.remark + '</td>'
+      html += '<td>' + row.orderNo + '</td>'
+      html += '<td>' + wdtype.labelName + '</td>'
+      html += '</tr></table>'
+      textarea.value = html
+      this.copyData = html
+      this.copy(this.copyData)
+    },
+    /** 复制按钮 */
+    handleCopy2(row) {
+      var status = this.statusOptions[parseInt(row.wstatus)]
+      console.info(row.type)
+      var typeind=row.type-1
+      var wdtype=this.liveWithdrawType[parseInt(typeind)]
+      var textarea = document.createElement('textarea')
+      let html = row.userId
+        + '\r\n' + row.account
+        + '\r\n' + row.familyId
+        + '\r\n' + row.nickName
+        + '\r\n' + row.withdrawMoney
+        + '\r\n' + row.bankUserName
+        + '\r\n' + row.bankAccount
+        + '\r\n' + status.dictLabel
+        + '\r\n' + row.createTime
+        + '\r\n' + row.updateTime
+        + '\r\n' + row.opName
+        + '\r\n' + row.remark
+        + '\r\n' + row.orderNo
+        + '\r\n' + wdtype.labelName
+      textarea.value = html
+      this.copyData = html
+      this.copy(this.copyData)
+    },
+    copy(data) {
+      let url = data
+      let oInput = document.createElement('textarea')
+      oInput.value = url
+      document.body.appendChild(oInput)
+      oInput.select() // 选择对象;
+      document.execCommand('Copy') // 执行浏览器复制命令
+      this.$message({
+        message: '复制成功',
+        type: 'success'
+      })
+      oInput.remove()
     },
     // 取消按钮
     cancel() {

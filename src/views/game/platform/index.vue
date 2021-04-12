@@ -252,6 +252,7 @@
         this.loading = true;
         listGamePlatform(this.queryParams).then(response => {
           this.gamePlatformList = response.rows;
+          this.gamePlatformList.forEach(value => value.status= value.status + '')
           this.total = response.total;
           this.loading = false;
         });
@@ -317,11 +318,13 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(function () {
-          return changeUserStatus(row.id, row.status)
-        }).then(() => {
-          this.msgSuccess(text + '成功')
+          return changeUserStatus(row.id, row.status).then(() => {
+            this.msgSuccess(text + '成功').catch(() => {
+              row.status = row.status === '0' ? '1' : '0'
+            })
+          })
         }).catch(function () {
-          row.status = row.status === '0' ? '1' : '0'
+          this.msgSuccess(已取消)
         })
       },
       /** 修改按钮操作 */

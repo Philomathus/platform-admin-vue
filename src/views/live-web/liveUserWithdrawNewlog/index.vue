@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
-    <el-button type="success" @click="copy1">成功出款笔数 {{ this.totalData.countNumber || 0 }}</el-button>
-    <el-button type="warning" @click="copy2">总出款金额 {{ this.totalData.countWithdrawMoney || 0 }}</el-button>
+    <el-button type="success" @click="copy1">交易笔数 {{ this.totalData.countNumber || 0 }}</el-button>
+    <el-button type="warning" @click="copy2">总金额 {{ this.totalData.countWithdrawMoney || 0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px"  style="margin-top: 20px">
 <!--      <el-form-item label="日期范围" prop="searchTime">
         <el-date-picker type="datetimerange" v-model="queryParams.searchTime" format="yyyy-MM-dd HH:mm:ss"
@@ -22,7 +22,7 @@
           end-placeholder="结束日期" :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item  prop="userId">
+      <el-form-item  prop="userId" style="width: 130px">
         <el-input
           v-model="queryParams.userId"
           placeholder="主播ID"
@@ -105,13 +105,13 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>-->
-      <el-form-item  prop="wstatus">
+      <el-form-item  prop="wstatus" style="width: 160px">
         <el-select v-model="queryParams.wstatus" placeholder="全部状态" clearable size="small">
           <el-option :label="item.labelName" :value="item.labelValue" v-for="item in withdrawTypes" />
         </el-select>
       </el-form-item>
      <el-form-item  prop="type">
-       <el-select v-model="queryParams.type" placeholder="提现类型" clearable size="small">
+       <el-select v-model="queryParams.type" placeholder="提现类型" clearable size="small" style="width: 130px">
          <el-option :label="item.labelName" :value="item.labelValue" v-for="item in liveWithdrawType" />
        </el-select>
       </el-form-item>
@@ -209,11 +209,10 @@
       <el-table-column label="主播ID" align="center" prop="userId" min-width="80px" />
       <el-table-column label="家族ID" align="center" prop="familyId" />
       <el-table-column label="主播昵称" align="center" prop="nickName" min-width="120px" />
-      <el-table-column label="订单号" align="center" prop="orderNo"  min-width="180px"/>
       <el-table-column label="提现金额" align="center" prop="withdrawMoney" min-width="80px" />
       <el-table-column label="提现真实姓名" align="center" prop="bankUserName" min-width="120px" />
-      <el-table-column label="提现银行账号" align="center" prop="bankAccount" min-width="150px" />
-      <el-table-column label="提现类型" align="center" prop="type" :formatter="formatterLiveType" min-width="80px" />
+      <el-table-column label="提现银行账号" align="center" prop="bankAccount" min-width="180px" />
+
 <!--      <el-table-column label="状态" align="center" prop="wstatus" :formatter="formatterType" min-width="100px" />-->
       <el-table-column label="状态" min-width="120" align="center" prop="wstatus">
         <template slot-scope="scope">
@@ -222,6 +221,8 @@
       </el-table-column>
       <el-table-column label="创建时间" min-width="150" align="center" prop="createTime"/>
       <el-table-column label="最后修改时间" min-width="150" align="center" prop="updateTime"/>
+      <el-table-column label="订单号" align="center" prop="orderNo"  min-width="180px"/>
+      <el-table-column label="提现类型" align="center" prop="type" :formatter="formatterLiveType" min-width="80px" />
       <el-table-column label="审核员" align="center" prop="opName" />
       <el-table-column label="审核备注" align="center" prop="remark" />
       <el-table-column label="操作" min-width="350" align="center" class-name="small-padding fixed-width" fixed="right">
@@ -480,6 +481,7 @@ export default {
       this.statusOptions = response.data
     })
     this.getList();
+    this.getCountTotal()
   },
   methods: {
     formatterType(row){

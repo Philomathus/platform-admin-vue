@@ -143,7 +143,7 @@
         <el-form-item label="高宽比" prop="highWide">
           <el-input v-model="form.highWide" placeholder="请输入高宽比" style="width: 240px"/>
         </el-form-item>
-        <el-form-item label="是否填充" prop="isFull">
+<!--        <el-form-item label="是否填充" prop="isFull">
           <el-select v-model="form.isFull" placeholder="请选择">
             <el-option
               v-for="dict in isFullList"
@@ -152,7 +152,7 @@
               :value="dict.dictValue"
             ></el-option>
           </el-select>
-        </el-form-item>
+        </el-form-item>-->
         <el-form-item label="横竖屏" prop="screen">
           <el-select v-model="form.screen" placeholder="请选择">
             <el-option

@@ -140,7 +140,7 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="800px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-        <el-form-item label="家族名称" prop="name">
+        <el-form-item label="家族名称" prop="name" v-if="form.id == null">
           <el-input v-model="form.name" placeholder="请输入家族名称"/>
         </el-form-item>
         <el-form-item label="家族长ID" prop="userId">
@@ -191,8 +191,7 @@ export default {
     return {
       // 遮罩层
       loading: true,
-      // 选中数组
-      ids: [],
+      id: null,
       // 非单个禁用
       single: true,
       // 非多个禁用
@@ -328,12 +327,6 @@ export default {
       this.resetForm('queryForm')
       this.handleQuery()
     },
-    // 多选框选中数据
-    handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
-      this.single = selection.length !== 1
-      this.multiple = !selection.length
-    },
     /** 新增按钮操作 */
     handleAdd() {
       this.reset()
@@ -343,7 +336,7 @@ export default {
     /** 修改按钮操作 */
     handleUpdateFamily(row) {
       this.reset();
-      const id = row.id || this.ids
+      const id = row.id
       getLiveFamily(id).then(response => {
         this.form = response.data;
         this.open = true;
@@ -386,13 +379,16 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateLiveFamily(this.form).then(response => {
-              this.msgSuccess('修改成功')
-              this.open = false
-              this.getList()
+              if (response.data.code == 0) {
+                this.msgError(response.data.msg)
+              } else {
+                this.msgSuccess(response.data.msg)
+                this.open = false
+                this.getList()
+              }
             })
           } else {
             addLiveFamily(this.form).then(response => {
-              console.info(response.data)
               if (response.data.code == 0) {
                 this.msgError(response.data.msg)
               } else {
@@ -407,13 +403,13 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const ids = row.id || this.ids
-      this.$confirm('是否确认删除家族编号为"' + ids + '"的数据项?', '警告', {
+      const id = row.id
+      this.$confirm('是否确认删除家族编号为"' + id + '"的数据项?', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function () {
-        return delLiveFamily(ids)
+        return delLiveFamily(id)
       }).then(() => {
         this.getList()
         this.msgSuccess('删除成功')

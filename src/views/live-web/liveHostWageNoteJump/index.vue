@@ -274,7 +274,7 @@ export default {
        } else {
         this.queryParams.familyId = null
        }
-       if (hostId!=null){
+       if (hostId!=null && familyId==0){
          this.queryParams.hostId=hostId
        }
       this.queryParams.dateDay = createTime

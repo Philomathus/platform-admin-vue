@@ -221,7 +221,7 @@
       <el-table-column label="主播ID" align="center" prop="userId" min-width="80px" />
       <el-table-column label="家族ID" align="center" prop="familyId">
         <template v-slot="{row}">
-          <a style="color: #00afff" @click="familyShow(row.familyId,row.createTime)">{{ row.familyId }}</a>
+          <a style="color: #00afff" @click="familyShow(row.familyId,row.createTime,row.type,row.userId)">{{ row.familyId }}</a>
         </template>
       </el-table-column>
       <el-table-column label="主播昵称" align="center" prop="nickName" min-width="120px" />
@@ -247,9 +247,9 @@
           <span :style="{color: (wstatus = statusOptions[parseInt(scope.row.wstatus)]).color}">{{ wstatus.dictLabel }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="创建时间" min-width="150" align="center" prop="createTime"/>
+      <el-table-column label="创建时间" min-width="120" align="center" prop="createTime"/>
       <el-table-column label="最后修改时间" min-width="150" align="center" prop="updateTime"/>
-      <el-table-column label="审核员" align="center" prop="opName" />
+      <el-table-column label="审核员" align="center" prop="opName" min-width="100"/>
       <el-table-column label="审核备注" align="center" min-width="200px" prop="remark" />
       <el-table-column label="订单号" align="center" prop="orderNo"  min-width="180px"/>
       <el-table-column label="提现类型" align="center" prop="type" :formatter="formatterLiveType" min-width="80px" />
@@ -310,7 +310,7 @@
             type="success"
             plain
             v-show="scope.row.wstatus == 4 "
-            iicon="el-icon-circle-close"
+            icon="el-icon-check"
             @click="handleWithdrawSucc(scope.row)"
             v-has-permi="['live-web:liveUserWithdrawNewlog:withdrawSucc']"
           >出款成功
@@ -318,6 +318,8 @@
           <el-button
             size="small"
             type="primary"
+            plain
+            v-show="scope.row.wstatus !=5 "
             icon="el-icon-refresh-right"
             @click="handleUpdateOrder(scope.row)"
             v-has-permi="['live-web:liveUserWithdrawNewlog:updateOrder']"
@@ -519,12 +521,14 @@ export default {
       });
       return string;
     },
-    familyShow(familyId,createTime) {
+    familyShow(familyId,createTime,type,userId) {
       this.$router.push({
         path: '/live/live/liveHostWageNoteJump',
         query: {
           familyId: familyId,
           createTime:createTime,
+          hostId:userId,
+          //type:type,
           // settlementRate: this.queryParams.settlementRate,
           //selectDate: this.queryParams.selectDate
         }

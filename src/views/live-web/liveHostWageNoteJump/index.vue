@@ -264,20 +264,26 @@ export default {
   },
   methods: {
     init() {
-      // const familyId = this.$route.query.familyId
+       const familyId = this.$route.query.familyId
+      const createTime = this.$route.query.createTime
+      const hostId = this.$route.query.hostId
       // const settlementRate = this.$route.query.settlementRate
-      const selectDate = this.$route.query.selectDate
-      // if (familyId && familyId >= 0) {
-      //   this.queryParams.familyId = familyId
-      // } else {
-      //   this.queryParams.familyId = null
-      // }
-      // if (settlementRate != null) {
-      //   this.queryParams.settlementRate = settlementRate
-      // }
-      if (selectDate != null) {
+      //const selectDate = this.$route.query.selectDate
+       if (familyId && familyId >= 0) {
+         this.queryParams.familyId = familyId
+       } else {
+        this.queryParams.familyId = null
+       }
+       if (hostId!=null && familyId==0){
+         this.queryParams.hostId=hostId
+       }
+      this.queryParams.dateDay = createTime
+     /* if (settlementRate != null) {
+        this.queryParams.settlementRate = settlementRate
+      }*/
+      /*if (selectDate != null) {
         this.queryParams.selectDate = selectDate
-      }
+      }*/
       this.getList()
     },
     /** 查询主播时长列表 */

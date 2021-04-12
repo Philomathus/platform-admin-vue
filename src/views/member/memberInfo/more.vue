@@ -1,4 +1,5 @@
 <template>
+  <div>
   <!-- 导入表 -->
   <el-dialog
     v-dialogDrag
@@ -27,6 +28,8 @@
         <span>重置提现</span></button>
       <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(8,'打码修复')">
         <span>打码修复</span></button>
+      <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(9,'修改Vip')">
+        <span>修改Vip</span></button>
     </div>
     <!--积分明细-->
     <el-row v-if="index===1">
@@ -149,6 +152,26 @@
       <el-button @click="visible = false">取 消</el-button>
     </div>
   </el-dialog>
+  <!-- 禁用备注弹框 -->
+  <el-dialog
+    v-dialogDrag
+    :close-on-click-modal="false"
+    title="修改vip等级和昵称"
+    :visible.sync="showVip"
+    width="400px"
+    append-to-body
+    :show-close="false"
+    :close-on-press-escape="false"
+  >
+
+    Vip等级<el-input v-model="vip"/>
+    昵称<el-input v-model="nickName"/>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="showVip = !showVip">取消</el-button>
+      <el-button type="primary" :disabled="showVipDisabled" @click="updateVip">立即提交</el-button>
+    </div>
+  </el-dialog>
+  </div>
 </template>
 
 <script>
@@ -161,7 +184,7 @@
     resetSafe,
     unbindCard,
     changeBank,
-    resetWithdrawal,memberBcodeRepair
+    resetWithdrawal,memberBcodeRepair,updateVip
   } from '@/api/platform-web/member/memberInfo'
 
   export default {
@@ -177,10 +200,15 @@
     },
     data() {
       return {
+        showVip: false,
+        showVipDisabled: false,
         // 遮罩层
         loading: true,
         memberId: null,
         memberCode: null,
+        vip: null,
+        oldVip: null,
+        nickName: null,
         //弹出框标题
         title: '加分',
         //页面编码
@@ -235,6 +263,17 @@
           googleAuthCode: [
             {required: true, message: 'google验证码不能为空', trigger: 'blur'}
           ]
+        }
+      }
+    },
+    /*监听器,监听单个变量,param就是data的变量*/
+    watch: {
+      vip: function (newVal, oldVal) {
+        if (newVal < this.oldVip) {
+          this.$notify.error('vip等级只能大于之前的等级')
+          this.showVipDisabled = true
+        }else {
+          this.showVipDisabled = false
         }
       }
     },
@@ -321,6 +360,10 @@
             hint = '请输入您的谷歌验证码'
             this.open(hint, 3)
             break
+          case 9 :
+            hint = '请输入Vip等级'
+            this.open(hint, 4)
+            break
         }
         //其他的就是获取列表
         this.getList()
@@ -365,10 +408,6 @@
             /*inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
             inputErrorMessage: '验证码格式不正确'*/
           }).then(({value}) => {
-            this.$message({
-              type: 'success',
-              message: '你的谷歌验证码是: ' + value
-            })
             resetWithdrawal({
               googleAuthCode: value,
               id: this.memberId
@@ -392,10 +431,6 @@
             confirmButtonText: '确定',
             cancelButtonText: '取消'
           }).then(({value}) => {
-            this.$message({
-              type: 'success',
-              message: '你的谷歌验证码是: ' + value
-            })
             memberBcodeRepair({
               googleAuthCode: value,
               id: this.memberId
@@ -414,13 +449,37 @@
               message: '取消输入'
             })
           })
+        }else if (type==4){
+          this.showVip = !this.showVip
         }
 
       },
+      updateVip(){
+        var that = this
+        updateVip({
+          nickName: that.nickName,
+          vip: that.vip,
+          id: that.memberId
+        }).then((res) => {
+          if (res.code === 0) {
+            that.oldVip = that.vip
+            that.$notify.success('vip等级修改成功')
+            that.showVip = false
+            that.$emit('refMemeberData');
+          } else {
+            that.$notify.error('vip等级修改失败')
+          }
+        }).catch(() => {
+          that.$notify.error('网络异常')
+        })
+      },
       // 显示弹框
-      show(memberId, memberCode) {
+      show(memberId, memberCode,vip,nickName) {
         this.memberId = memberId
         this.memberCode = memberCode
+        this.vip = vip;
+        this.oldVip = vip;
+        this.nickName = nickName
         this.getList()
         this.visible = true
       },

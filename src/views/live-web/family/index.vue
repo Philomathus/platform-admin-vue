@@ -191,8 +191,7 @@ export default {
     return {
       // 遮罩层
       loading: true,
-      // 选中数组
-      ids: [],
+      id: null,
       // 非单个禁用
       single: true,
       // 非多个禁用
@@ -328,12 +327,6 @@ export default {
       this.resetForm('queryForm')
       this.handleQuery()
     },
-    // 多选框选中数据
-    handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
-      this.single = selection.length !== 1
-      this.multiple = !selection.length
-    },
     /** 新增按钮操作 */
     handleAdd() {
       this.reset()
@@ -343,7 +336,7 @@ export default {
     /** 修改按钮操作 */
     handleUpdateFamily(row) {
       this.reset();
-      const id = row.id || this.ids
+      const id = row.id
       getLiveFamily(id).then(response => {
         this.form = response.data;
         this.open = true;
@@ -407,13 +400,13 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const ids = row.id || this.ids
-      this.$confirm('是否确认删除家族编号为"' + ids + '"的数据项?', '警告', {
+      const id = row.id
+      this.$confirm('是否确认删除家族编号为"' + id + '"的数据项?', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function () {
-        return delLiveFamily(ids)
+        return delLiveFamily(id)
       }).then(() => {
         this.getList()
         this.msgSuccess('删除成功')

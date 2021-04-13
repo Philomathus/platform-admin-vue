@@ -384,7 +384,7 @@ export default {
           this.msgSuccess('审核拒绝成功')
         })
       } else if (flag == 2) {
-        data.status = 3
+        data.status = 8
         this.$prompt('请输入封停原因', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -393,9 +393,10 @@ export default {
           type: 'warning'
         }).then(({value}) => {
             data.memo = value
-            updateLiveFamily(data)
-            this.getList()
-            this.msgSuccess('封停成功')
+            updateLiveFamily(data).then(response => {
+              this.msgSuccess('封停成功')
+              this.getList()
+            })
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -403,7 +404,7 @@ export default {
           });
         })
       } else if (flag == 3) {
-        data.status = 1
+        data.status = 9
         this.$prompt('请输入解封原因', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -412,9 +413,10 @@ export default {
           type: 'warning'
         }).then(({value}) => {
             data.memo = value
-            updateLiveFamily(data)
-            this.getList()
+          updateLiveFamily(data).then(response => {
             this.msgSuccess('解封成功')
+            this.getList()
+          })
         }).catch(() => {
           this.$message({
             type: 'info',

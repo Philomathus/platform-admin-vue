@@ -28,6 +28,7 @@
           <el-option label="未审核" value="0"></el-option>
           <el-option label="审核通过" value="1"></el-option>
           <el-option label="审核拒绝" value="2"></el-option>
+          <el-option label="封停中" value="3"></el-option>
           <el-option label="解散" value="4"></el-option>
         </el-select>
       </el-form-item>
@@ -85,6 +86,7 @@
           <span v-if="scope.row.status === 0" style="color: #0000FF">未审核</span>
           <span v-if="scope.row.status === 1" style="color: #5FB878">审核通过</span>
           <span v-if="scope.row.status === 2" style="color: #FF5722">拒绝通过</span>
+          <span v-if="scope.row.status === 3" style="color: #FF5722">封停中</span>
           <span v-if="scope.row.status === 4" style="color: #C0C0C0">解散</span>
         </template>
       </el-table-column>
@@ -105,7 +107,7 @@
             type="info"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:liveFamily:remove']"
-          >删除
+          >解散
           </el-button>
           <el-button
             size="small"
@@ -456,7 +458,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const id = row.id
-      this.$confirm('是否确认删除家族编号为"' + id + '"的数据项?', '警告', {
+      this.$confirm('是否确认解散"' + row.name + '"家族?', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'

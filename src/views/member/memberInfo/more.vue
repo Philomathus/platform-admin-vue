@@ -20,6 +20,8 @@
         <span>资金明细</span></button>
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(5,'银行卡')">
         <span>银行卡</span></button>
+      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(10,'发送短信')">
+        <span>发送短信</span></button>
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(4,'重置密码')">
         <span>重置密码</span></button>
       <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(6,'重置保险箱')">
@@ -93,7 +95,31 @@
         </el-form-item>
       </el-form>
     </el-row>
-
+    <!--发送短信-->
+    <el-row v-if="index===10">
+      <el-form  label-width="110px">
+        <el-form-item label="短信信息" >
+          <el-select
+            filterable
+            v-model="msg"
+            placeholder="请选择发送的信息"
+            clearable
+            size="small"
+            style="width: 240px"
+          >
+            <el-option
+              v-for="dict in msgList "
+              :key="dict.dictValue"
+              :value="dict.dictLabel"
+              :label="dict.dictLabel"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+        <el-button type="primary" @click="sendMsg()" >确 定</el-button>
+        </el-form-item>
+      </el-form>
+    </el-row>
 
     <!--银行卡-->
     <el-row v-if="index===5">
@@ -184,7 +210,7 @@
     resetSafe,
     unbindCard,
     changeBank,
-    resetWithdrawal,memberBcodeRepair,updateVip
+    resetWithdrawal,memberBcodeRepair,updateVip,sendMsg
   } from '@/api/platform-web/member/memberInfo'
 
   export default {
@@ -202,6 +228,7 @@
       return {
         showVip: false,
         showVipDisabled: false,
+        msg: '',
         // 遮罩层
         loading: true,
         memberId: null,
@@ -209,6 +236,7 @@
         vip: null,
         oldVip: null,
         nickName: null,
+        msgList: [],
         //弹出框标题
         title: '加分',
         //页面编码
@@ -277,7 +305,21 @@
         }
       }
     },
+    created() {
+      this.getDicts('member_msg').then(response => {
+        this.msgList = response.data;
+      })
+    },
     methods: {
+      sendMsg(){
+        sendMsg(this.msg,this.memberId).then((res) => {
+
+              }).catch((err) => {
+
+              }).finally(() => {
+
+              });
+      },
       gameEsc(row) {
         this.loading = true
         gameEsc(row.type, this.memberId).then((res) => {
@@ -315,7 +357,6 @@
         })
       },
       changeBank(row) {
-
         this.$confirm('是否修改银行卡信息?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',

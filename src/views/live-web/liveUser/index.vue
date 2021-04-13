@@ -65,6 +65,17 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="mini"
+          @click="handleAdd"
+          v-hasPermi="['admin:liveUser:add']"
+        >新增
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
           type="warning"
           plain
           icon="el-icon-download"
@@ -153,6 +164,28 @@
           <el-button
             size="small"
             plain
+            type="primary"
+            icon="el-icon-s-check"
+            @click="() => {openLiveStatus = !openLiveStatus ;
+
+            openLiveForm.id = scope.row.id}"
+            v-hasPermi="['admin:liveUser:edit']"
+            v-show="scope.row.roboter == 1 && scope.row.liveIn != 1"
+          >开播
+          </el-button>
+          <el-button
+            size="small"
+            plain
+            type="primary"
+            icon="el-icon-s-check"
+            @click="closeLive(scope.row)"
+            v-hasPermi="['admin:liveUser:edit']"
+            v-show="scope.row.roboter == 1 && scope.row.liveIn == 1"
+          >关播
+          </el-button>
+          <el-button
+            size="small"
+            plain
             type="success"
             icon="el-icon-menu"
             @click="handleMore(scope.row)"
@@ -177,6 +210,51 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
+
+    <!-- 添加或修改主播信息对话框 -->
+    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="addopen" width="500px" append-to-body>
+      <el-form ref="form" :model="form"  label-width="120px">
+        <el-form-item label="手机号" prop="mobile">
+          <el-input v-model="form.mobile" />
+        </el-form-item>
+        <el-form-item label="昵称" prop="nickName">
+          <el-input v-model="form.nickName" />
+        </el-form-item>
+        <el-form-item label="用户头像">
+          <imageUpload v-model="form.headImage" path="liveVideo"/>
+        </el-form-item>
+        <el-form-item label="类型" prop="isAuthentication">
+          <el-radio-group v-model="form.isAuthentication">
+            <el-radio
+              v-for="dict in attestList"
+              :key="dict.value"
+              :label="dict.value"
+            >{{ dict.label }}
+            </el-radio>
+          </el-radio-group>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm(1)">确 定</el-button>
+      </div>
+    </el-dialog>
+
+
+    <!-- 开播内容对话框 -->
+    <el-dialog :close-on-click-modal="false" title="开播信息" :visible.sync="openLiveStatus" width="500px" append-to-body>
+      <el-form ref="form" :model="openLiveForm"  label-width="120px">
+        <el-form-item label="标题" prop="title">
+          <el-input v-model="openLiveForm.title" />
+        </el-form-item>
+        <el-form-item label="视频流地址" prop="flv">
+          <el-input v-model="openLiveForm.flv" />
+        </el-form-item>
+
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="openLive()">确 定</el-button>
+      </div>
+    </el-dialog>
 
     <!-- 添加或修改主播信息对话框 -->
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
@@ -249,7 +327,9 @@ import {
   updateLiveUser,
   exportLiveUser,
   banDetail,
-  getFamiily
+  getFamiily,
+  openLive,
+  closeLive
 } from '@/api/live-web/liveUser'
 import ImageUpload from '@/components/ImageUpload/index'
 import more from './more'
@@ -264,6 +344,8 @@ export default {
   },
   data() {
     return {
+      openLiveForm: {},
+      openLiveStatus: false,
       pickerOptions: { shortcuts: pickerDateShortcuts },
       // 0指未认证  1指待审核 2指认证 3指审核不通过
       attestList: [{ label: '待审核', value: 1 }, { label: '认证', value: 2 }, { label: '审核不通过', value: 3 }],
@@ -271,6 +353,7 @@ export default {
       userId: 0,
       // 遮罩层
       loading: true,
+      addopen: false,
       // 选中数组
       ids: [],
       // 非单个禁用
@@ -426,8 +509,8 @@ export default {
     /** 新增按钮操作 */
     handleAdd() {
       this.reset()
-      this.open = true
-      this.title = '添加主播信息'
+      this.addopen = true
+      this.title = '添加虚拟主播'
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -440,8 +523,19 @@ export default {
       })
     },
     /** 提交按钮 */
-    submitForm() {
+    submitForm(type) {
       const that = this
+      if (type) {
+        addLiveUser(this.form).then(res => {
+          if (res.code === 200) {
+            that.msgSuccess(res.msg);
+            that.showopen = false;
+            that.getList();
+          }else {
+            that.msgError(res.msg);
+          }
+        });
+      }else {
       that.$refs['form'].validate(valid => {
         if (valid) {
           that.$confirm('是否确认' + (that.form.isAuthentication === 3 ? '不' : '') + '通过审核此主播?',
@@ -464,6 +558,7 @@ export default {
           })
         }
       })
+      }
     },
     /** 导出按钮操作 */
     handleExport() {
@@ -486,6 +581,22 @@ export default {
         this.open = true
         this.title = '修改主播信息'
       })
+    },
+    //开播
+    openLive() {
+      var that = this;
+        openLive({id: this.openLiveForm.id,title: this.openLiveForm.title,flv: this.openLiveForm.flv}).then(response => {
+          that.openLiveStatus = false;
+          that.$notify.success("开播成功")
+        }).catch((err)=>{that.$notify.error("开播失败")})
+    },
+    //关播
+    closeLive(row) {
+      this.reset()
+      closeLive({id: row.id}).then(response => {
+        that.$notify.success("关播成功")
+        that.openLiveStatus = false;
+      }).catch((err)=>{that.$notify.error("关播失败")})
     }
   }
 }

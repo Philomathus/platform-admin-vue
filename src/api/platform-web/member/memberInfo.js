@@ -18,7 +18,15 @@ export function memberWithdrawLog(query) {
     params: query
   })
 }
-
+// 会员信息发送
+export function sendMsg(msg,memberId) {
+  var data = {msg,memberId}
+  return request({
+    url: url.platformWeb + '/member/memberInfo/sendMsg',
+    method: 'post',
+    data: data
+  })
+}
 // 加分提交接口
 export function addScore(query) {
   return request({

@@ -18,6 +18,24 @@ export function getLiveUser(id) {
   })
 }
 
+// 开播
+export function openLive(data) {
+  return request({
+    url: url.platformWeb + '/admin/liveUser/openLive',
+    method: 'post',
+    data: data
+  })
+}
+
+// 关播
+export function closeLive(data) {
+  return request({
+    url: url.platformWeb + '/admin/liveUser/closeLive',
+    method: 'post',
+    data: data
+  })
+}
+
 // 聊天室记录列表
 export function chatPage(query) {
   return request({

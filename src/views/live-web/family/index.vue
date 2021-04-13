@@ -98,6 +98,7 @@
           <el-button
             size="small"
             type="primary"
+            v-show="scope.row.status != 4"
             @click="handleUpdateFamily(scope.row)"
             v-hasPermi="['admin:liveFamily:edit']"
           >修改
@@ -105,6 +106,7 @@
           <el-button
             size="small"
             type="info"
+            v-show="scope.row.status != 4"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:liveFamily:remove']"
           >解散

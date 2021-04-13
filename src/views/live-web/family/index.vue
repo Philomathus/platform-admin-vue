@@ -107,7 +107,7 @@
             type="info"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:liveFamily:remove']"
-          >删除
+          >解散
           </el-button>
           <el-button
             size="small"

@@ -115,7 +115,7 @@
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="250px">
         <template slot-scope="scope" v-if="scope.row.userId !== 1">
           <el-button
             size="mini"
@@ -136,10 +136,18 @@
           <el-button
             size="mini"
             type="text"
+            icon="el-icon-edit"
+            @click="updateUserGoogleAuth(scope.row)"
+            v-hasPermi="['system:user:edit']"
+          >重置秘钥
+          </el-button>
+          <el-button
+            size="mini"
+            type="text"
             icon="el-icon-key"
             @click="handleResetPwd(scope.row)"
             v-hasPermi="['system:user:resetPwd']"
-          >重置
+          >重置密码
           </el-button>
           <!--          <span type="text" v-else>不允许操作admin用户</span>-->
         </template>
@@ -268,7 +276,8 @@ import {
   changeUserStatus,
   importTemplate,
   getGoogleAuth,
-  bindGoogleAuth
+  bindGoogleAuth,
+  updateUserGoogleAuth
 } from '@/api/platform-web/system/user'
 import { getToken } from '@/utils/auth'
 import Treeselect from '@riophae/vue-treeselect'
@@ -368,6 +377,24 @@ export default {
     // });
   },
   methods: {
+    updateUserGoogleAuth(row) {
+      console.info(row.userId);
+      this.$prompt('请输入谷歌验证码', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /^[0-9]*$/,
+        inputErrorMessage: '谷歌验证码必须为6位数字'
+      }).then(({value}) => {
+        updateUserGoogleAuth(row.userId, value).then(response => {
+          if(response.code == 0 ){
+            this.msgError(response.msg)
+          }else {
+            this.msgSuccess("重置成功")
+            this.getList()
+          }
+        })
+      })
+    },
     /** 查询用户列表 */
     getList() {
       this.loading = true

@@ -150,17 +150,30 @@ export function getGoogleAuth2(name) {
 
 }
 
-//获取谷歌验证码-重置秘钥
-export function updateGoogleAuth(id) {
+//重置代充人谷歌秘钥
+export function updateGoogleAuth(id,googleAuthCode) {
   const data = {
-    id
+    id,
+    googleAuthCode
   }
   return request({
     url: url.platformWeb + '/system/user/updateGoogleAuth',
     method: 'get',
     params: data
   })
+}
 
+//重置用户谷歌秘钥
+export function updateUserGoogleAuth(id,googleAuthCode) {
+  const data = {
+    id,
+    googleAuthCode
+  }
+  return request({
+    url: url.platformWeb + '/system/user/updateUserGoogleAuth',
+    method: 'get',
+    params: data
+  })
 }
 
 //绑定谷歌验证码

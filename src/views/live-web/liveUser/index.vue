@@ -249,7 +249,9 @@
         <el-form-item label="视频流地址" prop="flv">
           <el-input v-model="openLiveForm.flv" />
         </el-form-item>
-
+        <el-form-item label="开播背景" prop="liveImage">
+          <imageUpload v-model="openLiveForm.liveImage" path="liveVideo"/>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="openLive()">确 定</el-button>
@@ -585,7 +587,8 @@ export default {
     //开播
     openLive() {
       var that = this;
-        openLive({id: this.openLiveForm.id,title: this.openLiveForm.title,flv: this.openLiveForm.flv}).then(response => {
+      this.loading = true
+        openLive({id: this.openLiveForm.id,title: this.openLiveForm.title,flv: this.openLiveForm.flv,liveImage: this.openLiveForm.liveImage}).then(response => {
           that.openLiveStatus = false;
           that.$notify.success("开播成功")
           that.getList();
@@ -594,6 +597,7 @@ export default {
     //关播
     closeLive(row) {
       var that = this;
+      this.loading = true
       closeLive({id: row.id}).then(response => {
         that.$notify.success("关播成功")
         that.getList();

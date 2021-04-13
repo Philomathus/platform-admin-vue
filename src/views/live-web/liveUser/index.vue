@@ -310,7 +310,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer" v-if="form.isAuthentication > 1">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button type="primary" @click="submitForm(0)">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
@@ -588,14 +588,15 @@ export default {
         openLive({id: this.openLiveForm.id,title: this.openLiveForm.title,flv: this.openLiveForm.flv}).then(response => {
           that.openLiveStatus = false;
           that.$notify.success("开播成功")
+          that.getList();
         }).catch((err)=>{that.$notify.error("开播失败")})
     },
     //关播
     closeLive(row) {
-      this.reset()
+      var that = this;
       closeLive({id: row.id}).then(response => {
         that.$notify.success("关播成功")
-        that.openLiveStatus = false;
+        that.getList();
       }).catch((err)=>{that.$notify.error("关播失败")})
     }
   }

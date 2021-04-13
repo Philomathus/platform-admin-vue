@@ -240,6 +240,11 @@
           <a style="color: #00afff" @click="copyColumn(row.bankAccount)">{{ row.bankAccount }}</a>
         </template>
       </el-table-column>
+      <el-table-column label="银行" min-width="120" align="center" prop="bankName">
+        <template v-slot="{row}">
+          <a style="color: #00afff" @click="copyColumn(row.bankAddress)">{{ row.bankAddress }}</a>
+        </template>
+      </el-table-column>
 
 <!--      <el-table-column label="状态" align="center" prop="wstatus" :formatter="formatterType" min-width="100px" />-->
       <el-table-column label="状态" min-width="120" align="center" prop="wstatus">

@@ -91,36 +91,48 @@
       <el-table-column label="家族成员的贡献" min-width="120" align="center" prop="contribution"/>
       <el-table-column label="直播时间" min-width="120" align="center" prop="videoTime"/>
       <el-table-column label="备注" :show-overflow-tooltip="true" min-width="220" align="center" prop="memo"/>
-      <el-table-column label="操作" min-width="250" align="center" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column label="操作" min-width="280" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
+            size="small"
+            type="primary"
             @click="handleUpdateFamily(scope.row)"
             v-hasPermi="['admin:liveFamily:edit']"
           >修改
           </el-button>
           <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
+            size="small"
+            type="info"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:liveFamily:remove']"
           >删除
           </el-button>
           <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-check"
+            size="small"
+            type="danger"
+            v-show="scope.row.status == 1"
+            @click="handleUpdate(scope.row,2)"
+            v-hasPermi="['admin:liveFamily:edit']"
+          >封停
+          </el-button>
+          <el-button
+            size="small"
+            type="success"
+            v-show="scope.row.status == 3"
+            @click="handleUpdate(scope.row,3)"
+            v-hasPermi="['admin:liveFamily:edit']"
+          >解封
+          </el-button>
+          <el-button
+            size="small"
+            type="success"
             v-show="scope.row.status ==0"
             @click="handleUpdate(scope.row,1)"
           >通过
           </el-button>
           <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-close"
+            size="small"
+            type="danger"
             v-show="scope.row.status ==0"
             @click="handleUpdate(scope.row,0)"
           >不通过
@@ -359,7 +371,7 @@ export default {
           this.getList()
           this.msgSuccess('审核通过')
         })
-      } else {
+      } else if (flag == 0) {
         data.status = 2
         this.$confirm('是否确认拒绝家族名称"' + row.name + '"的数据项?', '警告', {
           confirmButtonText: '确定',
@@ -370,6 +382,46 @@ export default {
         }).then(() => {
           this.getList()
           this.msgSuccess('审核拒绝成功')
+        })
+      } else if (flag == 2) {
+        data.status = 8
+        this.$prompt('请输入封停原因', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          inputPattern: /\S/,
+          inputErrorMessage: '封停原因不能为空',
+          type: 'warning'
+        }).then(({value}) => {
+            data.memo = value
+            updateLiveFamily(data).then(response => {
+              this.msgSuccess('封停成功')
+              this.getList()
+            })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消输入'
+          });
+        })
+      } else if (flag == 3) {
+        data.status = 9
+        this.$prompt('请输入解封原因', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          inputPattern: /\S/,
+          inputErrorMessage: '解封原因不能为空',
+          type: 'warning'
+        }).then(({value}) => {
+            data.memo = value
+          updateLiveFamily(data).then(response => {
+            this.msgSuccess('解封成功')
+            this.getList()
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消输入'
+          });
         })
       }
     },

@@ -136,9 +136,9 @@
           <el-button
             size="mini"
             type="text"
-            icon="el-icon-edit"
+            icon="el-icon-refresh-right"
             @click="updateUserGoogleAuth(scope.row)"
-            v-hasPermi="['system:user:edit']"
+            v-hasPermi="['system:user:reset']"
           >重置秘钥
           </el-button>
           <el-button
@@ -292,7 +292,7 @@ export default {
       dialogVisible: false,
       googleAuthDialogTitle: '绑定谷歌验证码',
       //谷歌二维码
-      pic: '',
+      pic: null,
       secretKey: '',
       googleAuthCode: '',
       googleAuthSecret: '',

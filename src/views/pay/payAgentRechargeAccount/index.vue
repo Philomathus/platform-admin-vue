@@ -154,9 +154,9 @@
           <el-button
             size="mini"
             type="text"
-            icon="el-icon-edit"
+            icon="el-icon-refresh-right"
             @click="updateGoogleAuth(scope.row)"
-            v-hasPermi="['pay:payAgentRechargeAccount:edit']"
+            v-hasPermi="['pay:payAgentRechargeAccount:reset']"
           >重置秘钥
           </el-button>
           <el-button
@@ -296,6 +296,8 @@ export default {
       open: false,
       // 状态字典
       statusOptions: [],
+      //图片
+      pic: null,
       // 查询参数
       queryParams: {
         pageNum: 1,

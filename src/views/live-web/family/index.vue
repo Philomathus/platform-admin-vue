@@ -86,6 +86,7 @@
           <span v-if="scope.row.status === 0" style="color: #0000FF">未审核</span>
           <span v-if="scope.row.status === 1" style="color: #5FB878">审核通过</span>
           <span v-if="scope.row.status === 2" style="color: #FF5722">拒绝通过</span>
+          <span v-if="scope.row.status === 3" style="color: #FF5722">封停中</span>
           <span v-if="scope.row.status === 4" style="color: #C0C0C0">解散</span>
         </template>
       </el-table-column>

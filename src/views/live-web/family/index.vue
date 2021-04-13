@@ -98,6 +98,7 @@
           <el-button
             size="small"
             type="primary"
+            v-show="scope.row.status != 4"
             @click="handleUpdateFamily(scope.row)"
             v-hasPermi="['admin:liveFamily:edit']"
           >修改

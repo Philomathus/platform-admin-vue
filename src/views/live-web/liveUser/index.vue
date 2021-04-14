@@ -472,7 +472,7 @@ export default {
     /** 更多按钮操作 */
     handleMore(row) {
       this.userId = row.id
-      this.$refs.more.show(this.userId)
+      this.$refs.more.show(this.userId,row.mobile)
     },
     // 取消按钮
     cancel() {

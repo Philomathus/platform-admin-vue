@@ -185,7 +185,8 @@
     </el-dialog>
 
     <!-- 添加或修改参数配置对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="600px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="600px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
@@ -279,13 +280,13 @@ import {
   bindGoogleAuth,
   updateUserGoogleAuth
 } from '@/api/platform-web/system/user'
-import { getToken } from '@/utils/auth'
+import {getToken} from '@/utils/auth'
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 
 export default {
   name: 'User',
-  components: { Treeselect },
+  components: {Treeselect},
   data() {
     return {
       //谷歌验证码点击关闭
@@ -340,23 +341,23 @@ export default {
       },
       // 列信息
       columns: [
-        { key: 0, label: `用户编号`, visible: true },
-        { key: 1, label: `用户名称`, visible: true },
-        { key: 2, label: `用户昵称`, visible: true },
-        { key: 4, label: `状态`, visible: true },
-        { key: 5, label: `google验证码`, visible: true },
-        { key: 6, label: `创建时间`, visible: true }
+        {key: 0, label: `用户编号`, visible: true},
+        {key: 1, label: `用户名称`, visible: true},
+        {key: 2, label: `用户昵称`, visible: true},
+        {key: 4, label: `状态`, visible: true},
+        {key: 5, label: `google验证码`, visible: true},
+        {key: 6, label: `创建时间`, visible: true}
       ],
       // 表单校验
       rules: {
         userName: [
-          { required: true, message: '用户名称不能为空', trigger: 'blur' }
+          {required: true, message: '用户名称不能为空', trigger: 'blur'}
         ],
         nickName: [
-          { required: true, message: '用户昵称不能为空', trigger: 'blur' }
+          {required: true, message: '用户昵称不能为空', trigger: 'blur'}
         ],
         password: [
-          { required: true, message: '用户密码不能为空', trigger: 'blur' }
+          {required: true, message: '用户密码不能为空', trigger: 'blur'}
         ]
       }
     }
@@ -386,9 +387,9 @@ export default {
         inputErrorMessage: '谷歌验证码必须为6位数字'
       }).then(({value}) => {
         updateUserGoogleAuth(row.userId, value).then(response => {
-          if(response.code == 0 ){
+          if (response.code == 0) {
             this.msgError(response.msg)
-          }else {
+          } else {
             this.msgSuccess("重置成功")
             this.getList()
           }
@@ -399,15 +400,15 @@ export default {
     getList() {
       this.loading = true
       listUser(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-        response.rows.forEach(item=>{
-          item.roles.forEach(item2=>{
-            if (!item.roleNames){
-              item.roleNames =item2.roleName;
-            }else {
-              item.roleNames = item.roleNames +','+item2.roleName
-            }
+          response.rows.forEach(item => {
+            item.roles.forEach(item2 => {
+              if (!item.roleNames) {
+                item.roleNames = item2.roleName;
+              } else {
+                item.roleNames = item.roleNames + ',' + item2.roleName
+              }
+            })
           })
-        })
           this.userList = response.rows
           this.total = response.total
           this.loading = false
@@ -432,11 +433,11 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return changeUserStatus(row.userId, row.status)
       }).then(() => {
         this.msgSuccess(text + '成功')
-      }).catch(function() {
+      }).catch(function () {
         row.status = row.status === '0' ? '1' : '0'
       })
     },
@@ -503,7 +504,7 @@ export default {
         cancelButtonText: '取消',
         inputPattern: /^(?![\d]+$)(?![a-zA-Z]+$)(?![!#$%^&*]+$)[\da-zA-Z!#$%^&*]{6,20}$/,
         inputErrorMessage: '密码格式为6-20位字母和数字组合，特殊字符的范围为!#$%^&*'
-      }).then(({ value }) => {
+      }).then(({value}) => {
         resetUserPwd(row.userId, value).then(response => {
           this.msgSuccess('修改成功，新密码是：' + value)
         })
@@ -511,18 +512,18 @@ export default {
       })
     },
     /** 提交按钮 */
-    submitForm: function() {
+    submitForm: function () {
       this.$refs['form'].validate(valid => {
         if (valid) {
-          if(!(/^(?!\d+$)[\da-zA-Z]+$/.test(this.form.userName))) {
-            this.$message.warning("用户名只能是\"字母\"或者\"数字和字母组合\"")
-          }else{
-            if (this.form.userId != undefined) {
-              updateUser(this.form).then(response => {
-                this.msgSuccess('修改成功')
-                this.open = false
-                this.getList()
-              })
+          if (this.form.userId != undefined) {
+            updateUser(this.form).then(response => {
+              this.msgSuccess('修改成功')
+              this.open = false
+              this.getList()
+            })
+          } else {
+            if (!(/^(?!\d+$)[\da-zA-Z]+$/.test(this.form.userName))) {
+              this.$message.warning("用户名只能是\"字母\"或者\"数字和字母组合\"")
             } else {
               addUser(this.form).then(response => {
                 this.msgSuccess('新增成功')
@@ -556,7 +557,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return delUser(userIds)
       }).then(() => {
         this.getList()
@@ -570,7 +571,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportUser(queryParams)
       }).then(response => {
         this.downloadExcel(response, '用户信息')

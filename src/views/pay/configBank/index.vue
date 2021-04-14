@@ -102,7 +102,8 @@
         </template>
       </el-table-column>
       <el-table-column label="开户人" align="center" prop="accountName"/>
-      <el-table-column label="开放层级" align="center" prop="openLevel"/>
+      <el-table-column label="最小开放层级" align="center" prop="openLevel"/>
+      <el-table-column label="最大开放层级" align="center" prop="openLevelMax"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -166,8 +167,11 @@
         <el-form-item label="优惠比例" prop="discountBill">
           <el-input v-model="form.discountBill" placeholder="请输入优惠比例"/>
         </el-form-item>
-        <el-form-item label="开放层级" prop="openLevel">
+        <el-form-item label="最小开放层级" prop="openLevel">
           <el-input v-model="form.openLevel" type="number" placeholder="请输入开放层级"/>
+        </el-form-item>
+        <el-form-item label="最大开放层级" prop="openLevelMax">
+          <el-input v-model="form.openLevelMax" type="number" placeholder="请输入开放层级"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

@@ -354,7 +354,7 @@ export default {
   data() {
     return {
       openLoading: false,
-      openLiveForm: {},
+      openLiveForm: {title: null,flv: null,liveImage: null},
       openLiveStatus: false,
       pickerOptions: { shortcuts: pickerDateShortcuts },
       // 0指未认证  1指待审核 2指认证 3指审核不通过

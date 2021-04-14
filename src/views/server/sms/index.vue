@@ -207,7 +207,7 @@ export default {
         name: null,
         provider: null,
         isEffect: null,
-        orderByColumn: 'is_effect desc, id',
+        orderByColumn: 'is_effect desc, update_time',
         isAsc: 'asc'
       },
       // 表单参数

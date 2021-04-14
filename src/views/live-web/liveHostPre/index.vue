@@ -325,6 +325,8 @@
           </span>
         </template>
       </el-table-column>
+      <el-table-column label="备注" align="center" prop="remark" min-width="120"/>
+      <el-table-column label="创建时间" align="center" prop="createTime" min-width="200"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right" width="200">
         <template slot-scope="scope">
           <el-button

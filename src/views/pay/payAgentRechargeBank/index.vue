@@ -94,15 +94,15 @@
       <el-table-column label="收款账号名称" align="center" prop="name" />
       <el-table-column label="收款账号" :show-overflow-tooltip="true" align="center" prop="bankAccount" />
       <el-table-column label="银行名称" align="center" prop="bankName" />
-      <el-table-column label="银行图标" align="center" prop="icon" >
-        <template slot-scope="scope">
-          <el-image
-            style="width: 50px; height: 50px"
-            :src="scope.row.icon"
-          >
-          </el-image>
-        </template>
-      </el-table-column>
+<!--      <el-table-column label="银行图标" align="center" prop="icon" >-->
+<!--        <template slot-scope="scope">-->
+<!--          <el-image-->
+<!--            style="width: 50px; height: 50px"-->
+<!--            :src="scope.row.icon"-->
+<!--          >-->
+<!--          </el-image>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
       <el-table-column label="收款人" align="center" prop="accountName" />
       <el-table-column label="状态" align="center" prop="status" >
         <template slot-scope="scope">
@@ -157,9 +157,9 @@
         <el-form-item label="银行名称" prop="bankName">
           <el-input v-model="form.bankName" placeholder="请输入银行名称" />
         </el-form-item>
-        <el-form-item label="银行图标" prop="icon">
-          <imageUpload v-model="form.icon" path="PayAgentRechargeBank"/>
-        </el-form-item>
+<!--        <el-form-item label="银行图标" prop="icon">-->
+<!--          <imageUpload v-model="form.icon" path="PayAgentRechargeBank"/>-->
+<!--        </el-form-item>-->
         <el-form-item label="收款人" prop="accountName">
           <el-input v-model="form.accountName" placeholder="请输入收款人" />
         </el-form-item>

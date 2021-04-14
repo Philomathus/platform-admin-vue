@@ -795,7 +795,9 @@ export default {
     promptRefused(id) {
       this.$prompt(null, '请输入拒绝出款原因', {
         confirmButtonText: '确定',
-        cancelButtonText: '取消'
+        cancelButtonText: '取消',
+        inputPattern: /\S/,
+        inputErrorMessage: '拒绝原因不可为空'
       }).then(({ value }) => {
         refusedMemberWithdrawLog({
           id: id,

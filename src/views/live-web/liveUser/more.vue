@@ -12,6 +12,8 @@
         <span>收礼物日志</span></button>
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(5,'提现比例')">
         <span>提现比例</span></button>
+      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(6,'重置手机号')">
+        <span>重置手机号</span></button>
       <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(4,'加入家族')">
         <span>加入家族</span></button>
     </div>
@@ -148,6 +150,23 @@
       </el-form>
     </el-row>
 
+    <!--重置手机号-->
+    <el-row v-if="index===6">
+      <el-form ref="mobileForm"  label-width="110px" :model="mobileForm" :rules="mobileRules">
+        <el-form-item label="旧手机号"  prop="oldMobile">
+          <el-input v-model="mobileForm.oldMobile" placeholder="请输入旧手机号" readonly/>
+        </el-form-item>
+        <el-form-item label="新手机号" prop="newMobile">
+          <el-input v-model="mobileForm.newMobile" placeholder="请输入新手机号"/>
+        </el-form-item>
+        <el-form-item label="google验证码" prop="googleAuthCode">
+          <el-input v-model="mobileForm.googleAuthCode" placeholder="请输入google验证码"/>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="updateMobile()" >确 定</el-button>
+        </el-form-item>
+      </el-form>
+    </el-row>
 <!--    <div slot="footer" class="dialog-footer" v-if="index!==5">
       <el-button type="primary" @click="handleImportTable">确 定</el-button>
       <el-button @click="visible = false">取 消</el-button>
@@ -159,20 +178,21 @@
     import {listDbTable, importTable} from "@/api/platform-web/tool/gen";
     import {
       goFamiily,
-      chatPage, receiveProplist, logPage, updateLiveUser, getLiveUser
+      chatPage, receiveProplist, logPage, updateLiveUser, getLiveUser,updateMobile
     } from "@/api/live-web/liveUser";
 
     export default {
         props: {
-            userId: {
+/*            userId: {
                 required: false,
                 default: 0,
-            },
+            },*/
         },
         data() {
             return {
-                //弹出框标题
-                title: '积分明细',
+              userId : null,
+              //弹出框标题
+              title: '积分明细',
               // 提现比例
               liveUserRate: {coin: null,xpoint: null,ypoint: null,weixinPrice:null,weiboMoney:null},
                 //页面编码
@@ -181,6 +201,19 @@
                 userId: undefined,*/
                 // 遮罩层
                 visible: false,
+              mobileForm: {},
+              //手机号校验规则
+              mobileRules: {
+                oldMobile: [
+                  {required: true, message: '旧手机号码不能为空', trigger: 'blur'}
+                ],
+                newMobile: [
+                  {required: true, message: '新手机号码不能为空', trigger: 'blur'}
+                ],
+                googleAuthCode: [
+                  {required: true, message: '谷歌验证码不能为空', trigger: 'blur'}
+                ],
+              },
                 // 选中数组值
                 tables: [],
                 //账户类型
@@ -212,6 +245,20 @@
             };
         },
         methods: {
+          updateMobile(){
+            var that = this;
+            this.$refs['mobileForm'].validate(valid => {
+              if (valid) {
+                this.mobileForm.userId = this.userId + ''
+                updateMobile(this.mobileForm).then((res) => {
+                  that.$notify.success("手机号修改成功")
+                  that.visible = false
+                  that.$emit('liveUserMore');
+                })
+              }
+            })
+
+          },
             formatterMsg(row, column) {
                 var type = row.type;
                 if (type === 0) {
@@ -322,8 +369,9 @@
 
             },
             // 显示弹框
-            show(userId) {
-                this.userId=userId
+            show(userId,phone) {
+                this.userId = userId
+                this.mobileForm.oldMobile = phone
                 this.getList();
                 this.visible = true;
             },

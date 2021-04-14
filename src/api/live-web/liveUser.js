@@ -36,6 +36,15 @@ export function closeLive(data) {
   })
 }
 
+// 关播
+export function updateMobile(data) {
+  return request({
+    url: url.platformWeb + '/admin/liveUser/updateMobile',
+    method: 'post',
+    data: data
+  })
+}
+
 // 聊天室记录列表
 export function chatPage(query) {
   return request({

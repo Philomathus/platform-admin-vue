@@ -27,6 +27,14 @@ export function sendMsg(msg,memberId) {
     data: data
   })
 }
+// 会员手机号码修改
+export function updateMobile(data) {
+  return request({
+    url: url.platformWeb + '/member/memberInfo/updateMobile',
+    method: 'post',
+    data: data
+  })
+}
 // 加分提交接口
 export function addScore(query) {
   return request({

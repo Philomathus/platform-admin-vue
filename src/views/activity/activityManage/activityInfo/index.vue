@@ -23,6 +23,16 @@
           :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
+      <el-form-item prop="status">
+        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small">
+          <el-option
+            v-for="dict in statusOptions"
+            :key="dict.dictValue"
+            :label="dict.dictLabel"
+            :value="dict.dictValue"
+          />
+        </el-select>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -102,6 +112,18 @@
           <span>{{ parseTime(scope.row.ctime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="状态" align="center" prop="status">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.status"
+            active-value="1"
+            inactive-value="0"
+            @change="handleStatusChange(scope.row)"
+          ></el-switch>
+        </template>
+      </el-table-column>
+      <el-table-column label="跳转类型" align="center" prop="type" :formatter="formatterType"/>
+      <el-table-column label="图标跳转链接" align="center" prop="url"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -158,8 +180,28 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="活动详情">
+        <el-form-item label="跳转类型" prop="type">
+          <el-select
+            filterable
+            v-model="form.type"
+            placeholder="请选择类型"
+            clearable
+            size="small"
+            style="width: 240px"
+          >
+            <el-option
+              v-for="dict in activityTypeUrlOptions"
+              :key="dict.dictValue"
+              :label="dict.dictLabel"
+              :value="dict.dictValue"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="活动详情" v-if="form.type == 0">
           <editor v-model="form.content" path="ActivityInfo"/>
+        </el-form-item>
+        <el-form-item label="跳转链接" prop="url" v-if="form.type == 1">
+          <el-input v-model="form.url" placeholder="请输入图标跳转链接"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -178,7 +220,8 @@ import {
   addActivityInfo,
   updateActivityInfo,
   exportActivityInfo,
-  activityTypes
+  activityTypes,
+  changeActivityInfoStatus
 } from "@/api/activity/activityInfo";
 import ImageUpload from "@/components/ImageUpload";
 import Editor from "@/components/WangEditor";
@@ -192,6 +235,16 @@ export default {
   },
   data() {
     return {
+      // 1=qq,2=微信
+      formatterType(row) {
+        if (row.type == 0) {
+          return '活动详情'
+        } else if (row.type == 1) {
+          return '跳转链接'
+        } else {
+          return ''
+        }
+      },
       pickerOptions: { shortcuts: pickerDateShortcuts },
       // 遮罩层
       loading: true,
@@ -203,6 +256,8 @@ export default {
       dateRange: [],
       //活动类型
       activityTypeOptions: [],
+      activityTypeUrlOptions: [],
+      statusOptions: [],
       // 非多个禁用
       multiple: true,
       // 显示搜索条件
@@ -215,12 +270,14 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      type: "",
       // 查询参数
       queryParams: {
         pageNum: 1,
         pageSize: 10,
         title: null,
         ctime: null,
+        status: null,
         orderByColumn: 'ctime',
         isAsc: 'desc'
       },
@@ -235,6 +292,14 @@ export default {
     //活动类型
     activityTypes().then(response => {
       this.activityTypeOptions = response.data
+    })
+    //跳转类型
+    this.getDicts('activityInfo_typeUrl').then(response => {
+      this.activityTypeUrlOptions = response.data
+    })
+    //状态字典
+    this.getDicts('activityInfo_status').then(response => {
+      this.statusOptions = response.data
     })
   },
   methods: {
@@ -292,6 +357,8 @@ export default {
       this.reset();
       const id = row.id || this.ids
       getActivityInfo(id).then(response => {
+        console.info(response.data)
+        response.data.type = response.data.type + ""
         this.form = response.data;
         this.open = true;
         this.title = "修改活动信息";
@@ -329,6 +396,21 @@ export default {
       }).then(() => {
         this.getList();
         this.msgSuccess("删除成功");
+      })
+    },
+    //修改状态
+    handleStatusChange(row) {
+      let text = row.status === '1' ? '启用' : '停用'
+      this.$confirm('确认要"' + text + '""' + row.title + '"吗?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return changeActivityInfoStatus(row.id, row.status)
+      }).then(() => {
+        this.msgSuccess(text + '成功')
+      }).catch(function() {
+        row.status = row.status === '0' ? '1' : '0'
       })
     },
     /** 导出按钮操作 */

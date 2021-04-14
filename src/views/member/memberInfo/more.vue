@@ -6,14 +6,14 @@
     :close-on-click-modal="false"
     :title="title"
     :visible.sync="visible"
-    width="1000px"
+    width="1500px"
     top="5vh"
     append-to-body
   >
     <!--顶部按钮-->
     <div class="page-tab" style="margin-bottom: 20px">
-      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(3,'加分')"><span>加分</span>
-      </button>
+      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(3,'加分')">
+        <span>加分</span></button>
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(1,'三方游戏')">
         <span>三方游戏</span></button>
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(2,'资金明细')">
@@ -24,6 +24,8 @@
         <span>发送短信</span></button>
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(4,'重置密码')">
         <span>重置密码</span></button>
+      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(11,'重置手机号')">
+        <span>重置手机号</span></button>
       <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(6,'重置保险箱')">
         <span>重置保险箱</span></button>
       <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(7,'重置提现')">
@@ -120,6 +122,23 @@
         </el-form-item>
       </el-form>
     </el-row>
+    <!--重置手机号-->
+    <el-row v-if="index===11">
+      <el-form ref="mobileForm"  label-width="110px" :model="mobileForm" :rules="mobileRules">
+        <el-form-item label="旧手机号"  prop="oldMobile">
+          <el-input v-model="mobileForm.oldMobile" placeholder="请输入旧手机号" readonly/>
+        </el-form-item>
+        <el-form-item label="新手机号" prop="newMobile">
+          <el-input v-model="mobileForm.newMobile" placeholder="请输入新手机号"/>
+        </el-form-item>
+        <el-form-item label="google验证码" prop="googleAuthCode">
+          <el-input v-model="mobileForm.googleAuthCode" placeholder="请输入google验证码"/>
+        </el-form-item>
+        <el-form-item>
+        <el-button type="primary" @click="updateMobile()" >确 定</el-button>
+        </el-form-item>
+      </el-form>
+    </el-row>
 
     <!--银行卡-->
     <el-row v-if="index===5">
@@ -210,9 +229,9 @@
     resetSafe,
     unbindCard,
     changeBank,
-    resetWithdrawal,memberBcodeRepair,updateVip,sendMsg
+    resetWithdrawal,memberBcodeRepair,updateVip,sendMsg,updateMobile
   } from '@/api/platform-web/member/memberInfo'
-
+  import {hideKMobile} from '@/utils/mobile.js';
   export default {
     props: {
       /*    memberId: {
@@ -237,6 +256,7 @@
         oldVip: null,
         nickName: null,
         msgList: [],
+        mobileForm: {},
         //弹出框标题
         title: '加分',
         //页面编码
@@ -268,6 +288,18 @@
           tableName: undefined,
           tableComment: undefined
         },
+        //手机号校验规则
+        mobileRules: {
+          oldMobile: [
+            {required: true, message: '旧手机号码不能为空', trigger: 'blur'}
+          ],
+          newMobile: [
+            {required: true, message: '新手机号码不能为空', trigger: 'blur'}
+          ],
+          googleAuthCode: [
+            {required: true, message: '谷歌验证码不能为空', trigger: 'blur'}
+          ],
+      },
         // 加分表单校验
         rules: {
           password: [
@@ -311,6 +343,20 @@
       })
     },
     methods: {
+      updateMobile(){
+        var that = this;
+        this.$refs['mobileForm'].validate(valid => {
+          if (valid) {
+            this.mobileForm.memberId = this.memberId
+            updateMobile(this.mobileForm).then((res) => {
+              that.$notify.success("手机号修改成功")
+              that.visible = false
+              that.$emit('refMemeberData');
+            })
+          }
+        })
+
+      },
       sendMsg(){
         sendMsg(this.msg,this.memberId).then((res) => {
 
@@ -515,9 +561,10 @@
         })
       },
       // 显示弹框
-      show(memberId, memberCode,vip,nickName) {
+      show(memberId, memberCode,vip,nickName,phone) {
         this.memberId = memberId
         this.memberCode = memberCode
+        this.mobileForm.oldMobile = hideKMobile(phone)
         this.vip = vip;
         this.oldVip = vip;
         this.nickName = nickName

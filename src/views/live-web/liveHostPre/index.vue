@@ -13,7 +13,7 @@
         </el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="queryParams.live" placeholder="预约时间" style="width: 100px" size="small" clearable>
+        <el-select v-model="queryParams.live" placeholder="预约时间(可多选)" style="width: 150px" size="small" clearable multiple collapse-tags>
           <el-option label="0点" value="0"></el-option>
           <el-option label="1点" value="1"></el-option>
           <el-option label="2点" value="2"></el-option>

@@ -5,9 +5,9 @@
     <div class="page-tab" style="margin-bottom: 10px">
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(1,'聊天室记录')">
         <span>聊天室记录</span></button>
-      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(2,'账户日志')">
+<!--      <button type="button" class="el-button el-button&#45;&#45;primary el-button&#45;&#45;mini is-plain" @click="change(2,'账户日志')">
         <span>账户日志</span>
-      </button>
+      </button>-->
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(3,'收礼物日志')">
         <span>收礼物日志</span></button>
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(5,'提现比例')">

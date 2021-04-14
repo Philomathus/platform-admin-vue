@@ -13,7 +13,7 @@
         </el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-select v-model="queryParams.live" placeholder="直播时间" style="width: 100px" size="small" clearable>
+        <el-select v-model="queryParams.live" placeholder="预约时间" style="width: 100px" size="small" clearable>
           <el-option label="0点" value="0"></el-option>
           <el-option label="1点" value="1"></el-option>
           <el-option label="2点" value="2"></el-option>
@@ -450,14 +450,14 @@ import {
   exportLiveHostPre
 } from "@/api/live-web/liveHostPre/liveHostPre";
 import {concat} from "lodash";
-import {pickerDateTimeShortcuts} from "@/utils/dateUtils";
+import {toyesDayshortcuts} from "@/utils/dateUtils";
 
 export default {
   name: "LiveHostPre",
   components: {},
   data() {
     return {
-      pickerOptions: {shortcuts: pickerDateTimeShortcuts},
+      pickerOptions: {shortcuts: toyesDayshortcuts},
       // 遮罩层
       loading: true,
       // 状态字典

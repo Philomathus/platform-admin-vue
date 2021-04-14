@@ -53,6 +53,18 @@ export function exportActivityInfo(query) {
   })
 }
 
+export function changeActivityInfoStatus(id, status) {
+  const data = {
+    id,
+    status
+  }
+  return request({
+    url: url.platformWeb + '/admin/activityInfo/changeStatus',
+    method: 'put',
+    data: data
+  })
+}
+
 //活动类型
 export function activityTypes() {
   return request({

@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="活动标题" prop="title">
+      <el-form-item prop="title">
         <el-input
           v-model="queryParams.title"
           placeholder="请输入活动标题"
@@ -10,7 +10,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="发布时间" prop="ctime">
+      <el-form-item prop="ctime">
         <el-date-picker
           v-model="dateRange"
           size="small"
@@ -112,6 +112,8 @@
           <span>{{ parseTime(scope.row.ctime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="跳转类型" align="center" prop="type" :formatter="formatterType"/>
+      <el-table-column label="图标跳转链接" align="center" prop="url"/>
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
           <el-switch
@@ -122,8 +124,6 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="跳转类型" align="center" prop="type" :formatter="formatterType"/>
-      <el-table-column label="图标跳转链接" align="center" prop="url"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button

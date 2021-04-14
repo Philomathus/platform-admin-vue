@@ -166,9 +166,11 @@
             plain
             type="primary"
             icon="el-icon-s-check"
-            @click="() => {openLiveStatus = !openLiveStatus ;
-
-            openLiveForm.id = scope.row.id}"
+            @click="() => {openLiveStatus = !openLiveStatus
+                           openLiveForm.id = scope.row.id
+                           //查询之前的开播信息
+                            getLiveVideo(scope.row.id);
+            }"
             v-hasPermi="['admin:liveUser:edit']"
             v-show="scope.row.roboter == 1 && scope.row.liveIn != 1"
           >开播
@@ -241,13 +243,18 @@
 
 
     <!-- 开播内容对话框 -->
-    <el-dialog :close-on-click-modal="false" title="开播信息" :visible.sync="openLiveStatus" width="500px" append-to-body>
+    <el-dialog :close-on-click-modal="false" v-loading="openLoading" title="开播信息" :visible.sync="openLiveStatus" width="500px" append-to-body>
       <el-form ref="form" :model="openLiveForm"  label-width="120px">
         <el-form-item label="标题" prop="title">
           <el-input v-model="openLiveForm.title" />
         </el-form-item>
         <el-form-item label="视频流地址" prop="flv">
-          <el-input v-model="openLiveForm.flv" />
+          <el-input type="textarea" v-model="openLiveForm.flv" @input="() =>{
+            if(openLiveForm.flv.length>250){
+              openLiveForm.flv = openLiveForm.flv.slice(0,250)
+              this.$notify.warning('视频流地址长度不能超过250个字符')
+            }
+          }" />
         </el-form-item>
         <el-form-item label="开播背景" prop="liveImage">
           <imageUpload v-model="openLiveForm.liveImage" path="liveVideo"/>
@@ -337,7 +344,7 @@ import ImageUpload from '@/components/ImageUpload/index'
 import more from './more'
 import { pickerDateShortcuts } from '@/utils/dateUtils'
 import { addH5Plugin, updateH5Plugin } from '@/api/live-web/h5/h5Plugin'
-
+import {getLiveVideo} from '@/api/live-web/liveVideo/liveVideo'
 export default {
   name: 'LiveUser',
   components: {
@@ -346,6 +353,7 @@ export default {
   },
   data() {
     return {
+      openLoading: false,
       openLiveForm: {},
       openLiveStatus: false,
       pickerOptions: { shortcuts: pickerDateShortcuts },
@@ -416,6 +424,20 @@ export default {
     }
   },
   methods: {
+    //查询主播的直播状态
+    getLiveVideo(id){
+      this.openLoading = true
+      var that = this
+      getLiveVideo(id).then((res) => {
+        if (res.data) {
+          that.openLiveForm.title = res.data.title
+          that.openLiveForm.flv = res.data.playUrl
+          that.openLiveForm.liveImage = res.data.liveImage
+        }
+      }).finally(() => {
+        this.openLoading = false
+      });
+    },
     init() {
       const familyId = this.$route.query.familyId
       if (familyId && familyId >= 0) {

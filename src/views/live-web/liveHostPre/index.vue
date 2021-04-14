@@ -142,7 +142,6 @@
     </el-row>
 
     <el-table stripe v-loading="loading" :data="liveHostPreList" @selection-change="handleSelectionChange">
-      <el-table-column width="55" align="center"/>
       <el-table-column label="日期+主播ID" align="center" prop="id" min-width="160"/>
       <el-table-column label="家族ID" align="center" prop="familyId">
         <template slot-scope="scope">

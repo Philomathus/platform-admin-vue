@@ -402,7 +402,8 @@
           {label: '正常', value: 1},
           {label: '测试号', value: 2},
           {label: '超管号', value: 3},
-          {label: '套利号', value: 4}
+          {label: '套利号', value: 4},
+          {label: '稀有号', value: 5}
         ],
         // 查询参数
         queryParams: {

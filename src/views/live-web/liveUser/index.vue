@@ -246,10 +246,10 @@
     <el-dialog :close-on-click-modal="false" v-loading="openLoading" title="开播信息" :visible.sync="openLiveStatus" width="500px" append-to-body>
       <el-form ref="form" :model="openLiveForm"  label-width="120px">
         <el-form-item label="标题" prop="title">
-          <el-input v-model="openLiveForm.title" />
+          <el-input v-model.trim="openLiveForm.title" />
         </el-form-item>
         <el-form-item label="视频流地址" prop="flv">
-          <el-input type="textarea" v-model="openLiveForm.flv" @input="() =>{
+          <el-input type="textarea" v-model.trim="openLiveForm.flv" @input="() =>{
             if(openLiveForm.flv.length>250){
               openLiveForm.flv = openLiveForm.flv.slice(0,250)
               this.$notify.warning('视频流地址长度不能超过250个字符')

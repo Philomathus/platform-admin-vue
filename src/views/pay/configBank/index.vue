@@ -137,9 +137,6 @@
     <!-- 添加或修改公司入款银行列表对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-        <el-form-item label="银行编码" prop="code">
-          <el-input v-model="form.code" placeholder="请输入银行编码"/>
-        </el-form-item>
         <el-form-item label="银行名称" prop="name">
           <el-select
             filterable
@@ -154,26 +151,6 @@
               :key="dict.id"
               :label="dict.bankName"
               :value="dict.bankName"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="图标">
-          <imageUpload v-model="form.icon" path="ConfigBank"/>
-        </el-form-item>
-        <el-form-item label="官网地址" prop="url">
-          <el-select
-            filterable
-            v-model="form.url"
-            placeholder="请选择官网地址"
-            clearable
-            size="small"
-            style="width: 240px"
-          >
-            <el-option
-              v-for="dict in bankListOptions"
-              :key="dict.id"
-              :label="dict.url"
-              :value="dict.url"
             />
           </el-select>
         </el-form-item>

@@ -102,10 +102,10 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="活动详情" align="center" prop="content" >
-      <template v-slot="{row}">
-        <div v-html="row.content" style="max-height: 80px"></div>
-      </template>
+      <el-table-column label="活动详情" align="center" prop="content">
+        <template v-slot="{row}">
+          <div v-html="row.content" style="max-height: 80px"></div>
+        </template>
       </el-table-column>
       <el-table-column label="发布时间" align="center" prop="ctime" width="180">
         <template slot-scope="scope">
@@ -181,21 +181,10 @@
           </el-select>
         </el-form-item>
         <el-form-item label="跳转类型" prop="type">
-          <el-select
-            filterable
-            v-model="form.type"
-            placeholder="请选择类型"
-            clearable
-            size="small"
-            style="width: 240px"
-          >
-            <el-option
-              v-for="dict in activityTypeUrlOptions"
-              :key="dict.dictValue"
-              :label="dict.dictLabel"
-              :value="dict.dictValue"
-            />
-          </el-select>
+          <el-radio-group v-model="form.type">
+            <el-radio label="0">活动详情</el-radio>
+            <el-radio label="1">跳转链接</el-radio>
+          </el-radio-group>
         </el-form-item>
         <el-form-item label="活动详情" v-if="form.type == 0">
           <editor v-model="form.content" path="ActivityInfo"/>
@@ -245,7 +234,7 @@ export default {
           return ''
         }
       },
-      pickerOptions: { shortcuts: pickerDateShortcuts },
+      pickerOptions: {shortcuts: pickerDateShortcuts},
       // 遮罩层
       loading: true,
       // 选中数组
@@ -292,10 +281,6 @@ export default {
     //活动类型
     activityTypes().then(response => {
       this.activityTypeOptions = response.data
-    })
-    //跳转类型
-    this.getDicts('activityInfo_typeUrl').then(response => {
-      this.activityTypeUrlOptions = response.data
     })
     //状态字典
     this.getDicts('activityInfo_status').then(response => {
@@ -357,7 +342,6 @@ export default {
       this.reset();
       const id = row.id || this.ids
       getActivityInfo(id).then(response => {
-        console.info(response.data)
         response.data.type = response.data.type + ""
         this.form = response.data;
         this.open = true;
@@ -405,11 +389,11 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return changeActivityInfoStatus(row.id, row.status)
       }).then(() => {
         this.msgSuccess(text + '成功')
-      }).catch(function() {
+      }).catch(function () {
         row.status = row.status === '0' ? '1' : '0'
       })
     },

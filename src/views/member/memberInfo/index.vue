@@ -126,7 +126,13 @@
           <el-select v-model="row.status" placeholder="请选择状态" size="small"
                      @change="changeType(row)"
           >
-            <el-option v-for="(item,index) in typeList" :key="index" :label="item.label" :value="item.value"/>
+            <!--<el-option v-for="(item,index) in typeList" :key="index" :label="item.label" :value="item.value"/>-->
+            <el-option
+              v-for="dict in typeList"
+              :key="dict.dictValue"
+              :label="dict.dictLabel"
+              :value="parseInt(dict.dictValue)"
+            ></el-option>
           </el-select>
         </template>
       </el-table-column>
@@ -397,14 +403,7 @@
         // 是否显示弹出层
         open: false,
         // 状态列表0= 禁用 1=正常 2=测试号3=超管号
-        typeList: [
-          {label: '禁用', value: 0},
-          {label: '正常', value: 1},
-          {label: '测试号', value: 2},
-          {label: '超管号', value: 3},
-          {label: '套利号', value: 4},
-          {label: '稀有号', value: 5}
-        ],
+        typeList: [],
         // 查询参数
         queryParams: {
           pageNum: 1,
@@ -451,6 +450,9 @@
       })
       this.getDicts('muteRemarkOptions').then(response => {
         this.muteRemarkOptions = response.data
+      })
+      this.getDicts('member_type').then(response => {
+        this.typeList = response.data
       })
     },
     methods: {
@@ -499,22 +501,6 @@
         }).catch(() => {
           this.$notify.error('网络异常')
         })
-      },
-      //格式化列表状态
-      formatterStatus(row, column) {
-        var status = row.status
-        if (status === 0) {
-          return '禁用'
-        } else if (status === 1) {
-          return '正常'
-        } else if (status === 2) {
-          return '测试号'
-        } else if (status === 3) {
-          return '超管号'
-        } else {
-          return '未知'
-        }
-
       },
       /** 查询用户信息列表 */
       getList() {

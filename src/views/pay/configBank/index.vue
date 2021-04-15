@@ -195,11 +195,14 @@
         <el-form-item label="优惠比例" prop="discountBill">
           <el-input v-model="form.discountBill" placeholder="请输入优惠比例"/>
         </el-form-item>
-        <el-form-item label="最小开放层级" prop="openLevel">
-          <el-input v-model="form.openLevel" type="number" placeholder="请输入开放层级"/>
-        </el-form-item>
-        <el-form-item label="最大开放层级" prop="openLevelMax">
-          <el-input v-model="form.openLevelMax" type="number" placeholder="请输入开放层级"/>
+        <el-form-item label="开放层级" prop="openLevel">
+          <el-col :span="11">
+            <el-input type="number" class="no-number" v-model="form.openLevel" placeholder="请输入最小开放层级"/>
+          </el-col>
+          <el-col :span="2" style="text-align: center;">-</el-col>
+          <el-col :span="11">
+            <el-input type="number" class="no-number" v-model="form.openLevelMax" placeholder="请输入最大开放层级"/>
+          </el-col>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

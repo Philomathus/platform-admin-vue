@@ -55,6 +55,14 @@ export function delConfigBank(id) {
   })
 }
 
+//银行列表
+export function bankLists() {
+  return request({
+    url: url.platformWeb + '/pay/configBank/bankLists',
+    method: 'get'
+  })
+}
+
 // 导出【公司入款银行】
 export function exportConfigBank(query) {
   return request({

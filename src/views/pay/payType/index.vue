@@ -155,7 +155,7 @@
         </el-form-item>
         <el-form-item label="编码" prop="code">
           <el-input v-model="form.code" placeholder="请输入负整数编码" type="number" @blur="existCode(form.code)"
-                    class="no-number" :disabled="form.id != null || form.id !== ''"/>
+                    class="no-number" :disabled="form.id != null"/>
         </el-form-item>
         <el-form-item label="图标">
           <imageUpload v-model="form.iconUrl" path="PayType"/>
@@ -458,7 +458,6 @@ export default {
         this.openText = false
         this.getList()
       })
-    }
     },
     /** 删除按钮操作 */
     handleDelete(row) {
@@ -487,5 +486,6 @@ export default {
         this.download(response.msg)
       })
     }
+  }
 }
 </script>

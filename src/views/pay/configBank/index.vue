@@ -78,16 +78,16 @@
     <el-table :stripe="true" v-loading="loading" :data="configBankList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="银行名称" align="center" prop="name"/>
-      <el-table-column label="图标" align="center" prop="icon">
-        <template slot-scope="scope">
-          <el-image
-            style="height: 50px"
-            :src="scope.row.icon"
-            fit="contain"
-          >
-          </el-image>
-        </template>
-      </el-table-column>
+<!--      <el-table-column label="图标" align="center" prop="icon">-->
+<!--        <template slot-scope="scope">-->
+<!--          <el-image-->
+<!--            style="height: 50px"-->
+<!--            :src="scope.row.icon"-->
+<!--            fit="contain"-->
+<!--          >-->
+<!--          </el-image>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
       <el-table-column label="银行官网地址" :show-overflow-tooltip="true" align="center" prop="url"/>
       <el-table-column label="排序" align="center" prop="indexs"/>
       <el-table-column label="银行账号" :show-overflow-tooltip="true" align="center" prop="bankAccount"/>
@@ -137,23 +137,28 @@
     <!-- 添加或修改公司入款银行列表对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-        <el-form-item label="银行编码" prop="code">
-          <el-input v-model="form.code" placeholder="请输入银行编码"/>
-        </el-form-item>
         <el-form-item label="银行名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入银行名称"/>
-        </el-form-item>
-        <el-form-item label="图标">
-          <imageUpload v-model="form.icon" path="ConfigBank"/>
-        </el-form-item>
-        <el-form-item label="银行官网地址" prop="url">
-          <el-input v-model="form.url" placeholder="请输入银行官网地址"/>
-        </el-form-item>
-        <el-form-item label="排序号" prop="indexs">
-          <el-input v-model="form.indexs" placeholder="请输入排序号"/>
+          <el-select
+            filterable
+            v-model="form.name"
+            placeholder="请选择银行名称"
+            clearable
+            size="small"
+            style="width: 240px"
+          >
+            <el-option
+              v-for="dict in bankListOptions"
+              :key="dict.id"
+              :label="dict.bankName"
+              :value="dict.bankName"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item label="银行账号" prop="bankAccount">
           <el-input v-model="form.bankAccount" placeholder="请输入银行账号"/>
+        </el-form-item>
+        <el-form-item label="排序号" prop="indexs">
+          <el-input v-model="form.indexs" placeholder="请输入排序号"/>
         </el-form-item>
         <el-form-item label="备注信息" prop="remark">
           <el-input v-model="form.remark" placeholder="请输入备注信息"/>
@@ -193,7 +198,8 @@ import {
   addConfigBank,
   updateConfigBank,
   exportConfigBank,
-  changeConfigBankStatus
+  changeConfigBankStatus,
+  bankLists
 } from '@/api/platform-web/pay/configBank'
 import ImageUpload from '@/components/ImageUpload'
 
@@ -224,6 +230,8 @@ export default {
       open: false,
       // 状态字典
       statusOptions: [],
+      //银行列表
+      bankListOptions: [],
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -235,13 +243,27 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {}
+      rules: {
+        name: [
+          { required: true, message: '银行名称不能为空', trigger: 'blur' }
+        ],
+        url: [
+          { required: true, message: '官网地址不能为空', trigger: 'blur' }
+        ],
+        bankAccount: [
+          { required: true, message: '银行账号地址不能为空', trigger: 'blur' }
+        ],
+      }
     }
   },
   created() {
     this.getList()
     this.getDicts('sys_common_status').then(response => {
       this.statusOptions = response.data
+    })
+    //银行列表
+    bankLists().then(response => {
+      this.bankListOptions = response.data
     })
   },
   methods: {

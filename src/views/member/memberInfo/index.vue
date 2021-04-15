@@ -15,7 +15,13 @@
       </el-form-item>
       <el-form-item prop="status" style="width: 110px;">
         <el-select v-model="queryParams.status" placeholder="全部状态" clearable size="small">
-          <el-option v-for="(item,index) in typeList" :key="index" :label="item.label" :value="item.value"/>
+<!--          <el-option v-for="(item,index) in typeList" :key="index" :label="item.label" :value="item.value"/>-->
+          <el-option
+            v-for="dict in typeList"
+            :key="dict.dictValue"
+            :label="dict.dictLabel"
+            :value="parseInt(dict.dictValue)"
+          ></el-option>
         </el-select>
       </el-form-item>
       <el-form-item prop="code">

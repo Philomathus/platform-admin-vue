@@ -47,16 +47,6 @@
           v-hasPermi="['admin:activityQuestType:remove']"
         >删除</el-button>
       </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['admin:activityQuestType:export']"
-        >导出</el-button>
-      </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -241,16 +231,18 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有任务类型数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return exportActivityQuestType(queryParams);
-        }).then(response => {
-          this.download(response.msg);
-        })
+      const queryParams = this.queryParams
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return exportActivityQuestType(queryParams)
+      }).then(response => {
+        console.info(response);
+        this.downloadExcel(response, "任务类型")
+      }).catch(() => {
+      })
     }
   }
 };

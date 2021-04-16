@@ -3,7 +3,8 @@
     <el-button type="primary" @click="copy1">总存入金额 {{ this.totalData.depositTotal || 0 }}</el-button>
     <el-button type="info" @click="copy2">总提出金额 {{ this.totalData.proposedTotal || 0 }}</el-button>
     <el-button type="success" @click="copy3">实际总存入金额 {{ this.totalData.realDepositTotal || 0 }}</el-button>
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="70px" style="margin-top:20px">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="70px"
+             style="margin-top:20px">
       <el-form-item label="代充账号" prop="rechargeAcount">
         <el-input
           v-model="queryParams.rechargeAcount"
@@ -39,8 +40,8 @@
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
       <el-form-item>
-      <el-button type="primary" size="medium" @click="deposit" round>人工存入</el-button>
-      <el-button type="primary" size="medium" @click="proposed" round>人工提出</el-button>
+        <el-button type="primary" size="medium" @click="deposit" round>人工存入</el-button>
+        <el-button type="primary" size="medium" @click="proposed" round>人工提出</el-button>
       </el-form-item>
     </el-form>
 
@@ -94,8 +95,9 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table :stripe="true" v-loading="loading" :data="payAgentRechargeRecordList" @selection-change="handleSelectionChange">
-      <el-table-column label="复制" align="center" >
+    <el-table :stripe="true" v-loading="loading" :data="payAgentRechargeRecordList"
+              @selection-change="handleSelectionChange">
+      <el-table-column label="复制" align="center">
         <template slot-scope="scope">
           <el-button
             type="primary" size="mini"
@@ -223,14 +225,14 @@ import {
   proposed,
   getCount
 } from "@/api/platform-web/pay/payAgentRechargeRecord";
-import { pickerDateShortcuts } from '@/utils/dateUtils'
+import {pickerDateShortcuts} from '@/utils/dateUtils'
 
 export default {
   name: "PayAgentRechargeRecord",
   components: {},
   data() {
     return {
-      pickerOptions: { shortcuts: pickerDateShortcuts },
+      pickerOptions: {shortcuts: pickerDateShortcuts},
       //存入类型选择栏
       deposittype: [{
         value: '人工存入',
@@ -443,7 +445,7 @@ export default {
       });
     },
     /** 复制按钮 */
-    handleCopy(row){
+    handleCopy(row) {
       var textarea = document.createElement("textarea");
       let html = '<table><tr>'
       html += '<td>' + row.orderNo + '</td>'
@@ -459,7 +461,7 @@ export default {
       this.copyData = html
       this.copy(this.copyData)
     },
-    copy(data){
+    copy(data) {
       let url = data;
       let oInput = document.createElement('input');
       oInput.value = url;
@@ -476,13 +478,13 @@ export default {
     /** 人工存入按钮 */
     submitDeposit() {
       this.$refs["formdeposit"].validate(valid => {
-          if (this.formdeposit.rechargeAcount != null) {
-            deposit(this.formdeposit).then(response => {
-              this.msgSuccess("提交成功");
-              this.open = false;
-              this.getList();
-            });
-          }
+        if (this.formdeposit.rechargeAcount != null) {
+          deposit(this.formdeposit).then(response => {
+            this.msgSuccess("提交成功");
+            this.open = false;
+            this.getList();
+          });
+        }
       });
     },
     /** 人工提出按钮 */
@@ -534,14 +536,15 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有代充存提数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning'
       }).then(function () {
         return exportPayAgentRechargeRecord(queryParams);
       }).then(response => {
-        this.download(response.msg);
+        this.downloadExcel(response, '代充存提')
+      }).catch(() => {
       })
     }
   }

@@ -72,14 +72,14 @@ import {
   listAnchorAward,
   exportAnchorAward
 } from '@/api/live-web/liveUser'
-import { getYesterDate, toyesDayshortcuts } from '@/utils/dateUtils'
+import {getYesterDate, toyesDayshortcuts} from '@/utils/dateUtils'
 
 export default {
   name: 'LiveUser',
   components: {},
   data() {
     return {
-      pickerOptions: { shortcuts: toyesDayshortcuts },
+      pickerOptions: {shortcuts: toyesDayshortcuts},
       //所选的用户id
       userId: 0,
       // 遮罩层
@@ -161,14 +161,15 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('是否确认导出所有主播派奖数据项?', '警告', {
-        confirmButtonText: '确定',
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+        confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportAnchorAward(queryParams)
       }).then(response => {
-        this.download(response.msg)
+        this.downloadExcel(response, '主播派奖')
+      }).catch(() => {
       })
     }
   }

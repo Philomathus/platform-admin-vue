@@ -10,15 +10,16 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:configRecommend:add']"
-        >新增</el-button>
+        >新增
+        </el-button>
       </el-col>
     </el-row>
 
     <el-table v-loading="loading" :data="configRecommendList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="级别(1 一级 2 二级)" align="center" prop="level" />
-      <el-table-column label="名称" align="center" prop="name" />
-      <el-table-column label="比例" align="center" prop="bill" />
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="级别(1 一级 2 二级)" align="center" prop="level"/>
+      <el-table-column label="名称" align="center" prop="name"/>
+      <el-table-column label="比例" align="center" prop="bill"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -27,7 +28,8 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:configRecommend:edit']"
-          >修改</el-button>
+          >修改
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -41,16 +43,17 @@
     />
 
     <!-- 添加或修改推广设置对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="级别" prop="level">
-          <el-input v-model="form.level" placeholder="请输入级别(1 一级 2 二级)" />
+          <el-input v-model="form.level" placeholder="请输入级别(1 一级 2 二级)"/>
         </el-form-item>
         <el-form-item label="名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入名称" />
+          <el-input v-model="form.name" placeholder="请输入名称"/>
         </el-form-item>
         <el-form-item label="比例" prop="bill">
-          <el-input v-model="form.bill" placeholder="请输入比例" />
+          <el-input v-model="form.bill" placeholder="请输入比例"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -62,12 +65,18 @@
 </template>
 
 <script>
-import { listConfigRecommend, getConfigRecommend, delConfigRecommend, addConfigRecommend, updateConfigRecommend, exportConfigRecommend } from "@/api/activity/configRecommend";
+import {
+  listConfigRecommend,
+  getConfigRecommend,
+  delConfigRecommend,
+  addConfigRecommend,
+  updateConfigRecommend,
+  exportConfigRecommend
+} from "@/api/activity/configRecommend";
 
 export default {
   name: "ConfigRecommend",
-  components: {
-  },
+  components: {},
   data() {
     return {
       // 遮罩层
@@ -99,8 +108,7 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {
-      }
+      rules: {}
     };
   },
   created() {
@@ -144,7 +152,7 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
@@ -187,28 +195,29 @@ export default {
     handleDelete(row) {
       const ids = row.id || this.ids;
       this.$confirm('是否确认删除推广设置编号为"' + ids + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return delConfigRecommend(ids);
-        }).then(() => {
-          this.getList();
-          this.msgSuccess("删除成功");
-        })
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function () {
+        return delConfigRecommend(ids);
+      }).then(() => {
+        this.getList();
+        this.msgSuccess("删除成功");
+      })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有推广设置数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return exportConfigRecommend(queryParams);
-        }).then(response => {
-          this.download(response.msg);
-        })
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        return exportConfigRecommend(queryParams);
+      }).then(response => {
+        this.downloadExcel(response, '推广设置')
+      }).catch(() => {
+      })
     }
   }
 };

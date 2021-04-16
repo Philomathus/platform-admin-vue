@@ -25,7 +25,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:liveGuardConfig:add']"
-        >新增</el-button>
+        >新增
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -36,7 +37,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:liveGuardConfig:edit']"
-        >修改</el-button>
+        >修改
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -47,31 +49,32 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:liveGuardConfig:remove']"
-        >删除</el-button>
+        >删除
+        </el-button>
       </el-col>
-<!--      <el-col :span="1.5">-->
-<!--        <el-button-->
-<!--          type="warning"-->
-<!--          plain-->
-<!--          icon="el-icon-download"-->
-<!--          size="mini"-->
-<!--          @click="handleExport"-->
-<!--          v-hasPermi="['admin:liveGuardConfig:export']"-->
-<!--        >导出</el-button>-->
-<!--      </el-col>-->
+      <!--      <el-col :span="1.5">-->
+      <!--        <el-button-->
+      <!--          type="warning"-->
+      <!--          plain-->
+      <!--          icon="el-icon-download"-->
+      <!--          size="mini"-->
+      <!--          @click="handleExport"-->
+      <!--          v-hasPermi="['admin:liveGuardConfig:export']"-->
+      <!--        >导出</el-button>-->
+      <!--      </el-col>-->
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="liveGuardConfigList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="id" align="center" prop="id" />
-      <el-table-column label="规格" align="center" prop="specifications" />
-      <el-table-column label="守护月数" align="center" prop="month" />
-      <el-table-column label="价格" align="center" prop="price" />
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="id" align="center" prop="id"/>
+      <el-table-column label="规格" align="center" prop="specifications"/>
+      <el-table-column label="守护月数" align="center" prop="month"/>
+      <el-table-column label="价格" align="center" prop="price"/>
       <el-table-column label="守护类型" align="center" prop="type" :formatter="typeFormat"/>
-      <el-table-column label="礼物id" align="center" prop="propId" />
-      <el-table-column label="优惠价格" align="center" prop="discountPrice" />
-      <el-table-column label="赠送天数" align="center" prop="giveday" />
+      <el-table-column label="礼物id" align="center" prop="propId"/>
+      <el-table-column label="优惠价格" align="center" prop="discountPrice"/>
+      <el-table-column label="赠送天数" align="center" prop="giveday"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -80,14 +83,16 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:liveGuardConfig:edit']"
-          >修改</el-button>
+          >修改
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:liveGuardConfig:remove']"
-          >删除</el-button>
+          >删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -101,16 +106,17 @@
     />
 
     <!-- 添加或修改对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="规格" prop="specifications">
-          <el-input v-model="form.specifications" placeholder="请选择规格" />
+          <el-input v-model="form.specifications" placeholder="请选择规格"/>
         </el-form-item>
         <el-form-item label="守护月数" prop="month">
-          <el-input v-model="form.month" placeholder="请输入守护月数" />
+          <el-input v-model="form.month" placeholder="请输入守护月数"/>
         </el-form-item>
         <el-form-item label="价格" prop="price">
-          <el-input v-model="form.price" placeholder="请输入价格" />
+          <el-input v-model="form.price" placeholder="请输入价格"/>
         </el-form-item>
         <el-form-item label="守护类型">
           <el-select v-model="form.type" placeholder="请选择">
@@ -122,9 +128,9 @@
             ></el-option>
           </el-select>
         </el-form-item>
-<!--        <el-form-item label="礼物id" prop="propId">-->
-<!--          <el-input v-model="form.propId" placeholder="请输入礼物id" />-->
-<!--        </el-form-item>-->
+        <!--        <el-form-item label="礼物id" prop="propId">-->
+        <!--          <el-input v-model="form.propId" placeholder="请输入礼物id" />-->
+        <!--        </el-form-item>-->
         <el-form-item label="关联礼物">
           <el-select v-model="form.propId" placeholder="请选择">
             <el-option
@@ -136,10 +142,10 @@
           </el-select>
         </el-form-item>
         <el-form-item label="优惠价格" prop="discountPrice">
-          <el-input v-model="form.discountPrice" placeholder="请输入优惠价格" />
+          <el-input v-model="form.discountPrice" placeholder="请输入优惠价格"/>
         </el-form-item>
         <el-form-item label="赠送天数" prop="giveday">
-          <el-input v-model="form.giveday" placeholder="请输入赠送天数" />
+          <el-input v-model="form.giveday" placeholder="请输入赠送天数"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -151,12 +157,19 @@
 </template>
 
 <script>
-import { getProp,listLiveGuardConfig, getLiveGuardConfig, delLiveGuardConfig, addLiveGuardConfig, updateLiveGuardConfig, exportLiveGuardConfig } from "@/api/live-web/guard/liveGuardConfig";
+import {
+  getProp,
+  listLiveGuardConfig,
+  getLiveGuardConfig,
+  delLiveGuardConfig,
+  addLiveGuardConfig,
+  updateLiveGuardConfig,
+  exportLiveGuardConfig
+} from "@/api/live-web/guard/liveGuardConfig";
 
 export default {
   name: "LiveGuardConfig",
-  components: {
-  },
+  components: {},
   data() {
     return {
       // 遮罩层
@@ -173,8 +186,8 @@ export default {
       total: 0,
       // 表格数据
       liveGuardConfigList: [],
-      guardOptions:[],
-      propIdOptions:[],
+      guardOptions: [],
+      propIdOptions: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -194,8 +207,7 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {
-      }
+      rules: {}
     };
   },
   created() {
@@ -250,7 +262,7 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
@@ -265,7 +277,7 @@ export default {
       const id = row.id || this.ids
       getLiveGuardConfig(id).then(response => {
         this.form = response.data;
-        this.form.type=""+this.form.type
+        this.form.type = "" + this.form.type
         this.open = true;
         this.title = "修改";
       });
@@ -294,20 +306,20 @@ export default {
     handleDelete(row) {
       const ids = row.id || this.ids;
       this.$confirm('是否确认删除编号为"' + ids + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return delLiveGuardConfig(ids);
-        }).then(() => {
-          this.getList();
-          this.msgSuccess("删除成功");
-        })
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function () {
+        return delLiveGuardConfig(ids);
+      }).then(() => {
+        this.getList();
+        this.msgSuccess("删除成功");
+      })
     },
     typeFormat(row, column) {
       if (row.type == "1") {
         return "银之守护";
-      }else{
+      } else {
         return "星之守护";
       }
     },
@@ -315,14 +327,15 @@ export default {
     handleExport() {
       const queryParams = this.queryParams;
       this.$confirm('是否确认导出所有数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return exportLiveGuardConfig(queryParams);
-        }).then(response => {
-          this.download(response.msg);
-        })
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function () {
+        return exportLiveGuardConfig(queryParams);
+      }).then(response => {
+        this.downloadExcel(response, '守护')
+      }).catch(() => {
+      })
     }
   }
 };

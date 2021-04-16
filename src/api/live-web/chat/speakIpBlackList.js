@@ -49,6 +49,8 @@ export function exportSpeakIpBlackList(query) {
   return request({
     url: url.platformWeb + '/admin/speakIpBlackList/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }

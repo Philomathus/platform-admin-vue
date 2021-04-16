@@ -649,7 +649,7 @@
         }).then(function () {
           return exportMemberInfo(queryParams)
         }).then(response => {
-          this.download(response.msg)
+          this.downloadExcel(response, '会员列表')
         })
       },
       //打开备注禁言弹框

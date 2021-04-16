@@ -473,7 +473,7 @@
         }).then(function () {
           return exportWheelLottery(queryParams);
         }).then(response => {
-          this.download(response.msg);
+          this.downloadExcel(response, '转盘彩票')
         }).catch(() => {
         })
       }

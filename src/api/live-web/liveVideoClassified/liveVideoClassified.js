@@ -49,6 +49,8 @@ export function exportLiveVideoClassified(query) {
   return request({
     url: url.platformWeb + '/admin/liveVideoClassified/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }

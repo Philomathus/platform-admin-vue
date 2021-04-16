@@ -80,7 +80,8 @@
       <el-form :model="queryParam" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
         <el-form-item label="日期选择" prop="testAccountCreateTime">
           <el-date-picker v-model="queryParam.testAccountCreateTime" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
-                          :style="{width: '100%'}" placeholder="请选择日期选择" clearable :picker-options="pickerOptionsTestAccount"
+                          :style="{width: '100%'}" placeholder="请选择日期选择" clearable
+                          :picker-options="pickerOptionsTestAccount"
           ></el-date-picker>
         </el-form-item>
         <el-form-item prop="toUserId">
@@ -90,7 +91,7 @@
             clearable
             size="small"
             type="number"
-            @keyup.enter.native="handleQuery" />
+            @keyup.enter.native="handleQuery"/>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" size="mini" @click="testAccountPorp()">搜索</el-button>
@@ -114,7 +115,7 @@
 
       <el-table :stripe="true" v-loading="loading" :data="testAccountPorpData">
         <el-table-column type="selection" align="center"/>
-        <el-table-column label="会员ID" align="center" prop="puserId" />
+        <el-table-column label="会员ID" align="center" prop="puserId"/>
         <el-table-column label="会员昵称" show-overflow-tooltip align="center" prop="puserName"/>
         <el-table-column label="送礼金额" show-overflow-tooltip align="center" prop="totalDiamonds"/>
         <el-table-column label="主播ID" align="center" prop="toUserId"/>
@@ -145,7 +146,7 @@
 import {
   listLiveProplog,
   exportLiveProplog,
-  getCount,testAccountPorpList,exportTestAccountProplog,testAccountCount
+  getCount, testAccountPorpList, exportTestAccountProplog, testAccountCount
 } from '@/api/platform-web/member/liveVideoProp'
 import {getYesterDate, pickerDateShortcuts, toyesDayshortcuts} from '@/utils/dateUtils'
 
@@ -154,12 +155,12 @@ export default {
   components: {},
   data() {
     return {
-      pickerOptions: { shortcuts: pickerDateShortcuts },
-      pickerOptionsTestAccount: {  shortcuts: toyesDayshortcuts  },
+      pickerOptions: {shortcuts: pickerDateShortcuts},
+      pickerOptionsTestAccount: {shortcuts: toyesDayshortcuts},
       //统计数据
       totalData: {
         countTotal: 0,
-        testAccountPorpTotal:0
+        testAccountPorpTotal: 0
       },
       // 遮罩层
       loading: true,
@@ -175,8 +176,8 @@ export default {
       total: 0,
       // 用户送礼日志表格数据
       liveProplogList: [],
-      testAccountPorpData:[],
-      testAccountPorpList:false,
+      testAccountPorpData: [],
+      testAccountPorpList: false,
       // 弹出层标题
       title: '',
       // 是否显示弹出层
@@ -250,7 +251,7 @@ export default {
     },
 
     testAccountCount() {
-        testAccountCount(this.queryParam).then((res) => {
+      testAccountCount(this.queryParam).then((res) => {
         console.info(res.data)
         if (res.data) {
           this.totalData = res.data
@@ -279,27 +280,29 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('是否确认导出所有用户送礼日志数据项?', '警告', {
-        confirmButtonText: '确定',
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+        confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportLiveProplog(queryParams)
       }).then(response => {
-        this.download(response.msg)
+        this.downloadExcel(response, '用户送礼日志')
+      }).catch(() => {
       })
     },
     /** 导出按钮操作 */
     handleExportTestAccount() {
       const queryParams = this.queryParam
-      this.$confirm('是否确认导出所有用户送礼日志数据项?', '警告', {
-        confirmButtonText: '确定',
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+        confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function () {
         return exportTestAccountProplog(queryParams)
       }).then(response => {
-        this.download(response.msg)
+        this.downloadExcel(response, '用户送礼日志')
+      }).catch(() => {
       })
     }
   }

@@ -61,11 +61,13 @@ export function exportType(query) {
   return request({
     url: url.platformWeb + '/game/type/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }
 
-// 导出游戏类型
+// 游戏类型
 export function getRelationGame(id) {
   return request({
     url: url.platformWeb + '/game/type/getRelationGame/'+id,

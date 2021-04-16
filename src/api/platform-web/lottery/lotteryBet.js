@@ -58,6 +58,8 @@ export function exportLotteryBet0(query) {
   return request({
     url: url.platformWeb + '/admin/lotteryBet0/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }

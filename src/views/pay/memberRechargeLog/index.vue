@@ -2,12 +2,17 @@
   <div class="app-container">
     <el-button type="success" @click="copy1">交易笔数 {{ this.totalData.total }}</el-button>
     <el-button type="warning" @click="copy2">总成功金额 {{ this.totalData.successMoney || 0 }}</el-button>
-    <el-button type="info" id="copy3" @click="copy3">成功率 {{ numberUtil.toPercent(this.totalData.successRate) }}</el-button>
-    <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 10px" v-show="showSearch" label-width="100px">
+    <el-button type="info" id="copy3" @click="copy3">成功率 {{
+        numberUtil.toPercent(this.totalData.successRate)
+      }}
+    </el-button>
+    <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 10px" v-show="showSearch"
+             label-width="100px">
       <el-form-item label="审核时间" prop="selectDate" label-width="70px">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
-                        end-placeholder="结束时间" range-separator="至" :default-time="['00:00:00', '23:59:59']" clearable :picker-options="pickerOptions"
+                        end-placeholder="结束时间" range-separator="至" :default-time="['00:00:00', '23:59:59']" clearable
+                        :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="status">
@@ -91,23 +96,26 @@
       </el-col>
       <el-col :span="10" style="margin-left: 10px">
         <span style="font-size: 16px;margin-right: 10px">记录刷新</span>
-          <el-select v-model="refreshSec" placeholder="时间间隔" style="width: 110px">
-            <el-option value="5" label="5秒"></el-option>
-            <el-option value="10" label="10秒"></el-option>
-            <el-option value="15" label="15秒"></el-option>
-            <el-option value="20" label="20秒"></el-option>
-            <el-option value="30" label="30秒"></el-option>
-          </el-select>
-          <div style="width: 120px;display: inline-block;text-align: center">
-            <span>{{ refreshDesc }}</span>
-          </div>
-          <el-button :type="refreshType" :icon="refreshIcon" size="mini" @click="refreshData">{{ refreshLabel }}</el-button>
+        <el-select v-model="refreshSec" placeholder="时间间隔" style="width: 110px">
+          <el-option value="5" label="5秒"></el-option>
+          <el-option value="10" label="10秒"></el-option>
+          <el-option value="15" label="15秒"></el-option>
+          <el-option value="20" label="20秒"></el-option>
+          <el-option value="30" label="30秒"></el-option>
+        </el-select>
+        <div style="width: 120px;display: inline-block;text-align: center">
+          <span>{{ refreshDesc }}</span>
+        </div>
+        <el-button :type="refreshType" :icon="refreshIcon" size="mini" @click="refreshData">{{
+            refreshLabel
+          }}
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table :stripe="true" v-loading="loading" :data="memberRechargeLogList" :highlight-current-row="true">
-      <el-table-column label="复制" align="center" >
+      <el-table-column label="复制" align="center">
         <template slot-scope="scope">
           <el-button
             type="primary" size="mini"
@@ -118,14 +126,17 @@
       </el-table-column>
       <el-table-column label="会员ID" :show-overflow-tooltip="true" align="center" prop="memberId" min-width="120"/>
       <el-table-column label="会员账号" align="center" prop="userName" min-width="90" show-overflow-tooltip/>
-      <el-table-column label="充值人姓名" :show-overflow-tooltip="true" align="center" prop="rechargeUserName" min-width="90"/>
+      <el-table-column label="充值人姓名" :show-overflow-tooltip="true" align="center" prop="rechargeUserName"
+                       min-width="90"/>
       <el-table-column label="充值金额" align="center" prop="rechargeMoney" min-width="90"/>
       <el-table-column label="收款人" :show-overflow-tooltip="true" align="center" prop="bankUserName" min-width="90"/>
       <el-table-column label="银行名称" :show-overflow-tooltip="true" align="center" prop="bankName" min-width="120"/>
       <el-table-column label="订单号" :show-overflow-tooltip="true" align="center" prop="orderNo" min-width="220"/>
       <el-table-column label="状态" align="center" prop="status" min-width="120">
         <template slot-scope="scope">
-          <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">{{ status.dictLabel }}</span>
+          <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">{{
+              status.dictLabel
+            }}</span>
         </template>
       </el-table-column>
       <el-table-column label="是否首次" align="center" prop="first" :formatter="firstStatusFormat" min-width="75"/>
@@ -190,7 +201,8 @@
     />
 
     <!-- 添加或修改公司入款信息对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" title="审核不通过原因" :visible.sync="open" width="260px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" title="审核不通过原因" :visible.sync="open" width="260px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules">
         <el-select
           v-model="form.refusedAuditReason"
@@ -225,7 +237,7 @@ import {
   refusedAuditMemberRechargeLog,
   recoverAuditMemberRechargeLog
 } from '@/api/platform-web/pay/memberRechargeLog'
-import { pickerDateTimeShortcuts } from '@/utils/dateUtils'
+import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
 
 export default {
   name: 'MemberRechargeLog',
@@ -237,7 +249,7 @@ export default {
       refreshIcon: 'el-icon-refresh',
       refreshLabel: '开始刷新',
       refreshDesc: '',
-      pickerOptions: { shortcuts: pickerDateTimeShortcuts },
+      pickerOptions: {shortcuts: pickerDateTimeShortcuts},
       totalData: {},
       // 遮罩层
       loading: true,
@@ -279,7 +291,7 @@ export default {
       // 表单校验
       rules: {
         refusedAuditReason: [
-          { required: true, message: '审核不通过原因不能为空', trigger: 'blur' }
+          {required: true, message: '审核不通过原因不能为空', trigger: 'blur'}
         ]
       }
     }
@@ -367,8 +379,8 @@ export default {
       this.listCount()
     },
     /** 复制按钮 */
-    handleCopy(row){
-      var status=this.statusOptions[parseInt(row.status)];
+    handleCopy(row) {
+      var status = this.statusOptions[parseInt(row.status)];
       var textarea = document.createElement("textarea");
       let html = '<table><tr>'
       html += '<td>' + row.memberId + '</td>'
@@ -381,13 +393,13 @@ export default {
       html += '<td>' + row.opName + '</td>'
       html += '<td>' + status.dictLabel + '</td>'
       html += '<td>' + row.createTime + '</td>'
-      html += '<td>' + row.updateTime  + '</td>'
+      html += '<td>' + row.updateTime + '</td>'
       html += '</tr></table>'
       textarea.value = html;
       this.copyData = html
       this.copy(this.copyData)
     },
-    copy(data){
+    copy(data) {
       let url = data;
       let oInput = document.createElement('input');
       oInput.value = url;
@@ -422,7 +434,7 @@ export default {
         confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportMemberRechargeLog(queryParams)
       }).then(response => {
         this.downloadExcel(response, '公司入款')
@@ -507,7 +519,7 @@ export default {
     startRefresh() {
       const thet = this
       let secs = thet.refreshSec
-      window.refreshInterval = setInterval(function() {
+      window.refreshInterval = setInterval(function () {
         if (secs === 0) {
           thet.getList()
           secs = thet.refreshSec

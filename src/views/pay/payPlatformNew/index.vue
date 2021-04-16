@@ -35,7 +35,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['pay:payPlatformNew:add']"
-        >新增</el-button>
+        >新增
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -46,7 +47,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['pay:payPlatformNew:edit']"
-        >修改</el-button>
+        >修改
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -57,7 +59,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['pay:payPlatformNew:remove']"
-        >删除</el-button>
+        >删除
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -67,17 +70,18 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['pay:payPlatformNew:export']"
-        >导出</el-button>
+        >导出
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table  :stripe="true" v-loading="loading" :data="payPlatformNewList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="平台名称" align="center" prop="name" width="150" />
+    <el-table :stripe="true" v-loading="loading" :data="payPlatformNewList" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="平台名称" align="center" prop="name" width="150"/>
       <el-table-column label="平台编码" align="center" prop="code" width="130"/>
-      <el-table-column label="平台下单接口地址" :show-overflow-tooltip="true" align="center" prop="platPayUrl" />
-      <el-table-column label="平台订单查询地址" :show-overflow-tooltip="true" align="center" prop="platQueryUrl" />
+      <el-table-column label="平台下单接口地址" :show-overflow-tooltip="true" align="center" prop="platPayUrl"/>
+      <el-table-column label="平台订单查询地址" :show-overflow-tooltip="true" align="center" prop="platQueryUrl"/>
       <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -86,14 +90,16 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['pay:payPlatformNew:edit']"
-          >修改</el-button>
+          >修改
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['pay:payPlatformNew:remove']"
-          >删除</el-button>
+          >删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -110,34 +116,34 @@
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="770px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="135px">
         <el-form-item label="名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入平台名称" />
+          <el-input v-model="form.name" placeholder="请输入平台名称"/>
         </el-form-item>
         <el-form-item label="编码" prop="code">
-          <el-input v-model="form.code" placeholder="请输入平台编码" />
+          <el-input v-model="form.code" placeholder="请输入平台编码"/>
         </el-form-item>
         <el-form-item label="商户ID" prop="merId">
-          <el-input v-model="form.merId" placeholder="请输入商户ID" />
+          <el-input v-model="form.merId" placeholder="请输入商户ID"/>
         </el-form-item>
         <el-form-item label="机构号" prop="orgId">
-          <el-input v-model="form.orgId" placeholder="请输入机构号" />
+          <el-input v-model="form.orgId" placeholder="请输入机构号"/>
         </el-form-item>
         <el-form-item label="平台下单接口地址" prop="platPayUrl">
-          <el-input v-model="form.platPayUrl" placeholder="请输入平台下单接口地址" />
+          <el-input v-model="form.platPayUrl" placeholder="请输入平台下单接口地址"/>
         </el-form-item>
         <el-form-item label="平台订单查询地址" prop="platQueryUrl">
-          <el-input v-model="form.platQueryUrl" placeholder="请输入平台订单查询地址" />
+          <el-input v-model="form.platQueryUrl" placeholder="请输入平台订单查询地址"/>
         </el-form-item>
         <el-form-item label="MD5_key" prop="signMd5">
-          <el-input v-model="form.signMd5" placeholder="请输入MD5_key" />
+          <el-input v-model="form.signMd5" placeholder="请输入MD5_key"/>
         </el-form-item>
         <el-form-item label="加密公钥" prop="signPublicKey">
-          <el-input v-model="form.signPublicKey" type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.signPublicKey" type="textarea" placeholder="请输入内容"/>
         </el-form-item>
         <el-form-item label="解密私钥" prop="signPrivateKey">
-          <el-input v-model="form.signPrivateKey" type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.signPrivateKey" type="textarea" placeholder="请输入内容"/>
         </el-form-item>
         <el-form-item label="平台IP白名单" prop="platWhiteIpList">
-          <el-input v-model="form.platWhiteIpList"  type="textarea" placeholder="请输入平台IP白名单" />
+          <el-input v-model="form.platWhiteIpList" type="textarea" placeholder="请输入平台IP白名单"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -149,12 +155,18 @@
 </template>
 
 <script>
-import { listPayPlatformNew, getPayPlatformNew, delPayPlatformNew, addPayPlatformNew, updatePayPlatformNew, exportPayPlatformNew } from "@/api/platform-web/pay/payPlatformNew";
+import {
+  listPayPlatformNew,
+  getPayPlatformNew,
+  delPayPlatformNew,
+  addPayPlatformNew,
+  updatePayPlatformNew,
+  exportPayPlatformNew
+} from "@/api/platform-web/pay/payPlatformNew";
 
 export default {
   name: "PayPlatformNew",
-  components: {
-  },
+  components: {},
   data() {
     return {
       // 遮罩层
@@ -199,16 +211,16 @@ export default {
       // 表单校验
       rules: {
         name: [
-          { required: true, message: "平台名称不能为空", trigger: "blur" }
+          {required: true, message: "平台名称不能为空", trigger: "blur"}
         ],
         code: [
-          { required: true, message: "平台编码不能为空", trigger: "blur" }
+          {required: true, message: "平台编码不能为空", trigger: "blur"}
         ],
         merId: [
-          { required: true, message: "商户ID不能为空", trigger: "blur" }
+          {required: true, message: "商户ID不能为空", trigger: "blur"}
         ],
         platPayUrl: [
-          { required: true, message: "平台下单接口地址不能为空", trigger: "blur" }
+          {required: true, message: "平台下单接口地址不能为空", trigger: "blur"}
         ],
       }
     };
@@ -265,7 +277,7 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
@@ -308,28 +320,29 @@ export default {
     handleDelete(row) {
       const ids = row.id || this.ids;
       this.$confirm('是否确认删除【支付平台】编号为"' + ids + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return delPayPlatformNew(ids);
-        }).then(() => {
-          this.getList();
-          this.msgSuccess("删除成功");
-        })
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function () {
+        return delPayPlatformNew(ids);
+      }).then(() => {
+        this.getList();
+        this.msgSuccess("删除成功");
+      })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有【支付平台】数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return exportPayPlatformNew(queryParams);
-        }).then(response => {
-          this.download(response.msg);
-        })
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        return exportPayPlatformNew(queryParams);
+      }).then(response => {
+        this.downloadExcel(response, '支付平台')
+      }).catch(() => {
+      })
     }
   }
 };

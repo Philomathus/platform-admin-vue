@@ -49,6 +49,8 @@ export function exportLiveMount(query) {
   return request({
     url: url.platformWeb + '/admin/liveMount/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }

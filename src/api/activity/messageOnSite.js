@@ -49,6 +49,8 @@ export function exportMessageOnSite(query) {
   return request({
     url: url.platformWeb + '/admin/messageOnSite/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }

@@ -49,6 +49,8 @@ export function exportHomeBanner(query) {
   return request({
     url: url.platformWeb + '/activity/homeBanner/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }

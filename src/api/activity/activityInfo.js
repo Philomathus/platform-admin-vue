@@ -49,7 +49,9 @@ export function exportActivityInfo(query) {
   return request({
     url: url.platformWeb + '/admin/activityInfo/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }
 

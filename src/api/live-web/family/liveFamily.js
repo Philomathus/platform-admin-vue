@@ -49,6 +49,8 @@ export function exportLiveFamily(query) {
   return request({
     url: url.platformWeb + '/admin/liveFamily/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }

@@ -587,7 +587,7 @@ export default {
       }).then(function() {
         return exportLiveVideoChat(queryParams)
       }).then(response => {
-        this.download(response.msg)
+        (response.msg)
       })
     },
     refreshData() {

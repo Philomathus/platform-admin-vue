@@ -541,7 +541,7 @@ export default {
       }).then(function () {
         return exportPayAgentRechargeAccount(queryParams);
       }).then(response => {
-        this.download(response.msg);
+        this.downloadExcel(response, '代充人管理')
       })
     }
   }

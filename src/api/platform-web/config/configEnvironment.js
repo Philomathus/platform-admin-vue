@@ -67,6 +67,8 @@ export function exportConfigEnvironment(query) {
   return request({
     url: url.platformWeb + '/admin/configEnvironment/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }

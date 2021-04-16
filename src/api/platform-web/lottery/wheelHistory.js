@@ -49,6 +49,8 @@ export function exportWheelHistory(query) {
   return request({
     url: url.platformWeb + '/lottery/wheelHistory/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }

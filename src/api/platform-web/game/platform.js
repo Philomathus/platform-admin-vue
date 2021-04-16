@@ -48,7 +48,9 @@ export function exportGamePlatform(query) {
   return request({
     url: url.platformWeb + '/game/platform/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }
 // 用户状态修改

@@ -331,7 +331,7 @@ export default {
       }).then(function() {
         return exportLotteryRule(queryParams);
       }).then(response => {
-        this.download(response.msg);
+        (response.msg);
       }).catch(() => {
       })
     }

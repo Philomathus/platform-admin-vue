@@ -40,7 +40,9 @@ export function exportTestAccountProplog(query) {
   return request({
     url: url.platformWeb + '/admin/liveVideoProp/exportTestAccountProplog',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 
 }

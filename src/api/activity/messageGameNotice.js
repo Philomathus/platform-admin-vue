@@ -49,6 +49,8 @@ export function exportMessageGameNotice(query) {
   return request({
     url: url.platformWeb + '/admin/messageGameNotice/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }

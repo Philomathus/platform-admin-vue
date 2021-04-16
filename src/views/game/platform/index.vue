@@ -382,7 +382,7 @@
         }).then(function () {
           return exportGamePlatform(queryParams);
         }).then(response => {
-          this.download(response.msg);
+          (response.msg);
         })
       }
     }

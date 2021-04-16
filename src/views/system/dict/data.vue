@@ -135,7 +135,8 @@
     />
 
     <!-- 添加或修改参数配置对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="字典类型">
           <el-input v-model="form.dictType" :disabled="true"/>
@@ -175,8 +176,8 @@
 </template>
 
 <script>
-import { listData, getData, delData, addData, updateData, exportData } from '@/api/platform-web/system/dict/data'
-import { listType, getType } from '@/api/platform-web/system/dict/type'
+import {listData, getData, delData, addData, updateData, exportData} from '@/api/platform-web/system/dict/data'
+import {listType, getType} from '@/api/platform-web/system/dict/type'
 
 export default {
   name: 'Data',
@@ -227,13 +228,13 @@ export default {
       // 表单校验
       rules: {
         dictLabel: [
-          { required: true, message: '数据标签不能为空', trigger: 'blur' }
+          {required: true, message: '数据标签不能为空', trigger: 'blur'}
         ],
         dictValue: [
-          { required: true, message: '数据键值不能为空', trigger: 'blur' }
+          {required: true, message: '数据键值不能为空', trigger: 'blur'}
         ],
         dictSort: [
-          { required: true, message: '数据顺序不能为空', trigger: 'blur' }
+          {required: true, message: '数据顺序不能为空', trigger: 'blur'}
         ]
       }
     }
@@ -326,7 +327,7 @@ export default {
       })
     },
     /** 提交按钮 */
-    submitForm: function() {
+    submitForm: function () {
       this.$refs['form'].validate(valid => {
         if (valid) {
           if (this.form.dictCode != undefined) {
@@ -352,7 +353,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return delData(dictCodes)
       }).then(() => {
         this.getList()
@@ -362,11 +363,11 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('是否确认导出所有数据项?', '警告', {
-        confirmButtonText: '确定',
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+        confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportData(queryParams)
       }).then(response => {
         this.downloadExcel(response, '字典数据')

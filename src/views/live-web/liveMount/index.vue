@@ -227,34 +227,34 @@ export default {
       },
       // 列信息
       columns: [
-        { key: 0, label: `状态`, visible: true }
+        {key: 0, label: `状态`, visible: true}
       ],
       // 表单参数
       form: {},
       // 表单校验
       rules: {
         id: [
-          { required: true, message: 'ID不能为空', trigger: 'blur' }
+          {required: true, message: 'ID不能为空', trigger: 'blur'}
         ],
         name: [
-          { required: true, message: '坐骑名不能为空', trigger: 'blur' }
+          {required: true, message: '坐骑名不能为空', trigger: 'blur'}
         ],
         status: [
-          { required: true, message: '状态不能为空', trigger: 'blur' }
+          {required: true, message: '状态不能为空', trigger: 'blur'}
         ],
         iconUrl: [
-          { required: true, message: 'PC端图标不能为空', trigger: 'blur' }
+          {required: true, message: 'PC端图标不能为空', trigger: 'blur'}
         ],
         gvip: [
-          { required: true, message: 'vip等级不能为空', trigger: 'blur' }
+          {required: true, message: 'vip等级不能为空', trigger: 'blur'}
         ], svgUrl: [
-          { required: true, message: 'svgUrl动画不能为空', trigger: 'blur' }
+          {required: true, message: 'svgUrl动画不能为空', trigger: 'blur'}
         ], price: [
-          { required: true, message: '价格不能为空', trigger: 'blur' }
+          {required: true, message: '价格不能为空', trigger: 'blur'}
         ], disPrice: [
-          { required: true, message: '折扣价格不能为空', trigger: 'blur' }
+          {required: true, message: '折扣价格不能为空', trigger: 'blur'}
         ], vday: [
-          { required: true, message: '赠送天数不能为空', trigger: 'blur' }
+          {required: true, message: '赠送天数不能为空', trigger: 'blur'}
         ]
 
       }
@@ -352,7 +352,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return delLiveMount(ids)
       }).then(() => {
         this.getList()
@@ -366,14 +366,14 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         var data = {}
         data.id = row.id
         data.status = row.status
         return updateLiveMount(data)
       }).then(() => {
         this.msgSuccess(text + '成功')
-      }).catch(function() {
+      }).catch(function () {
         row.status = row.status === '0' ? '1' : '0'
       })
     },
@@ -384,10 +384,11 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportLiveMount(queryParams)
       }).then(response => {
-        this.download(response.msg)
+        this.downloadExcel(response, '坐骑')
+      }).catch(() => {
       })
     }
   }

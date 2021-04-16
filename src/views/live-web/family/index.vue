@@ -481,7 +481,7 @@ export default {
       }).then(function () {
         return exportLiveFamily(queryParams)
       }).then(response => {
-        this.download(response.msg)
+        (response.msg)
       })
     }
   }

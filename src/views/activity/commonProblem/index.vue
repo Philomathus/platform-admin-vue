@@ -316,7 +316,7 @@ export default {
       }).then(function() {
         return exportCommonProblem(queryParams)
       }).then(response => {
-        this.download(response.msg)
+        (response.msg)
       }).catch(() => {
       })
     }

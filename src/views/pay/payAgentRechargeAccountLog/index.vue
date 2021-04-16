@@ -487,15 +487,16 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有代充人入款数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+      const queryParams = this.queryParams
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning'
       }).then(function() {
-        return exportPayAgentRechargeAccountLog(queryParams);
+        return exportPayAgentRechargeAccountLog(queryParams)
       }).then(response => {
-        this.download(response.msg);
+        this.downloadExcel(response, '代充人入款')
+      }).catch(() => {
       })
     },
     handleWithdraw(row) {

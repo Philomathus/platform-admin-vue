@@ -107,7 +107,7 @@
     />
 
     <!-- 添加或修改【支付平台】对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="770px" append-to-body>
+    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="770px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="135px">
         <el-form-item label="名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入平台名称" />

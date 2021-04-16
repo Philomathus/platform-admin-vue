@@ -49,6 +49,8 @@ export function exportPayAgentLog(query) {
   return request({
     url: url.platformWeb + '/pay/payAgentLog/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }

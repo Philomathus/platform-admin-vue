@@ -51,6 +51,8 @@ export function exportLiveVideo(query) {
   return request({
     url: url.platformWeb + '/admin/liveVideo/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }

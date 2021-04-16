@@ -31,6 +31,8 @@ export function exportJobLog(query) {
   return request({
     url: url.platformWeb + '/monitor/jobLog/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }

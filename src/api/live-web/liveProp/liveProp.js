@@ -49,6 +49,8 @@ export function exportLiveProp(query) {
   return request({
     url: url.platformWeb + '/admin/liveProp/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }

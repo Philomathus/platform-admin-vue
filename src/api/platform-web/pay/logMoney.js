@@ -24,6 +24,8 @@ export function exportLogMoney(query) {
   return request({
     url: url.platformWeb + '/pay/logMoney/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }

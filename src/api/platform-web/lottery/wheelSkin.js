@@ -49,6 +49,8 @@ export function exportWheelSkin(query) {
   return request({
     url: url.platformWeb + '/lottery/wheelSkin/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }

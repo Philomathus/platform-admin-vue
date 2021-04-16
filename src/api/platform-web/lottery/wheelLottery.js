@@ -49,6 +49,8 @@ export function exportWheelLottery(query) {
   return request({
     url: url.platformWeb + '/lottery/wheelLottery/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }

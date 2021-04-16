@@ -68,6 +68,8 @@ export function exportConfigBank(query) {
   return request({
     url: url.platformWeb + '/pay/configBank/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }

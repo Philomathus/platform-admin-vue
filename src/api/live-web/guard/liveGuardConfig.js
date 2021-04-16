@@ -57,6 +57,8 @@ export function exportLiveGuardConfig(query) {
   return request({
     url: url.platformWeb + '/admin/liveGuardConfig/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }

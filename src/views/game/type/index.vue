@@ -397,7 +397,7 @@ export default {
       }).then(function () {
         return exportType(queryParams);
       }).then(response => {
-        this.download(response.msg);
+        (response.msg);
       }).catch(() => {
       });
     },

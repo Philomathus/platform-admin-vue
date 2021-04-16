@@ -34,7 +34,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['wheel:wheelUser:add']"
-        >新增</el-button>
+        >新增
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -45,7 +46,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['wheel:wheelUser:edit']"
-        >修改</el-button>
+        >修改
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -56,7 +58,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['wheel:wheelUser:remove']"
-        >删除</el-button>
+        >删除
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -66,16 +69,17 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['wheel:wheelUser:export']"
-        >导出</el-button>
+        >导出
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="wheelUserList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="平台会员ID" align="center" prop="id" />
-      <el-table-column label="剩余次数" align="center" prop="times" />
-      <el-table-column label="皮肤转盘剩余次数" align="center" prop="skinTimes" />
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="平台会员ID" align="center" prop="id"/>
+      <el-table-column label="剩余次数" align="center" prop="times"/>
+      <el-table-column label="皮肤转盘剩余次数" align="center" prop="skinTimes"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -84,14 +88,16 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['wheel:wheelUser:edit']"
-          >修改</el-button>
+          >修改
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['wheel:wheelUser:remove']"
-          >删除</el-button>
+          >删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -105,13 +111,14 @@
     />
 
     <!-- 添加或修改转盘用户对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="剩余次数" prop="times">
-          <el-input v-model="form.times" placeholder="请输入剩余次数" />
+          <el-input v-model="form.times" placeholder="请输入剩余次数"/>
         </el-form-item>
         <el-form-item label="皮肤转盘剩余次数" prop="skinTimes">
-          <el-input v-model="form.skinTimes" placeholder="请输入皮肤转盘剩余次数" />
+          <el-input v-model="form.skinTimes" placeholder="请输入皮肤转盘剩余次数"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -123,12 +130,18 @@
 </template>
 
 <script>
-import { listWheelUser, getWheelUser, delWheelUser, addWheelUser, updateWheelUser, exportWheelUser } from "@/api/platform-web/wheel/wheelUser";
+import {
+  listWheelUser,
+  getWheelUser,
+  delWheelUser,
+  addWheelUser,
+  updateWheelUser,
+  exportWheelUser
+} from "@/api/platform-web/wheel/wheelUser";
 
 export default {
   name: "WheelUser",
-  components: {
-  },
+  components: {},
   data() {
     return {
       // 遮罩层
@@ -159,8 +172,7 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {
-      }
+      rules: {}
     };
   },
   created() {
@@ -203,7 +215,7 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
@@ -249,25 +261,25 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
-      }).then(function() {
+      }).then(function () {
         return delWheelUser(ids);
       }).then(() => {
         this.getList();
         this.msgSuccess("删除成功");
       }).catch(() => {
-	  })
+      })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有转盘用户数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(function() {
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
         return exportWheelUser(queryParams);
       }).then(response => {
-        this.download(response.msg);
+        this.downloadExcel(response, '转盘用户')
       }).catch(() => {
       })
     }

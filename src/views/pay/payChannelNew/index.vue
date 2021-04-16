@@ -75,7 +75,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['pay:payChannelNew:add']"
-        >新增</el-button>
+        >新增
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -86,7 +87,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['pay:payChannelNew:edit']"
-        >修改</el-button>
+        >修改
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -97,7 +99,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['pay:payChannelNew:remove']"
-        >删除</el-button>
+        >删除
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -107,17 +110,18 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['pay:payChannelNew:export']"
-        >导出</el-button>
+        >导出
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table :stripe="true" v-loading="loading" :data="payChannelNewList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="ID" align="center" prop="id" />
-      <el-table-column label="通道名称" align="center" prop="name" />
-      <el-table-column label="支付方式编码" align="center" prop="payMethod" />
-      <el-table-column label="状态" align="center" prop="status" >
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="ID" align="center" prop="id"/>
+      <el-table-column label="通道名称" align="center" prop="name"/>
+      <el-table-column label="支付方式编码" align="center" prop="payMethod"/>
+      <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -137,10 +141,10 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="支付平台名称" align="center" prop="payPlatformName" />
-      <el-table-column label="支付类型名称" align="center" prop="payTypeName" />
-      <el-table-column label="通道费率" align="center" prop="payRateStr" />
-      <el-table-column label="成功率" align="center" prop="successRate" />
+      <el-table-column label="支付平台名称" align="center" prop="payPlatformName"/>
+      <el-table-column label="支付类型名称" align="center" prop="payTypeName"/>
+      <el-table-column label="通道费率" align="center" prop="payRateStr"/>
+      <el-table-column label="成功率" align="center" prop="successRate"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -149,14 +153,16 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['pay:payChannelNew:edit']"
-          >修改</el-button>
+          >修改
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['pay:payChannelNew:remove']"
-          >删除</el-button>
+          >删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -174,13 +180,13 @@
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="770px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="通道名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入通道名称(前缀请加上支付平台)" />
+          <el-input v-model="form.name" placeholder="请输入通道名称(前缀请加上支付平台)"/>
         </el-form-item>
         <el-form-item label="支付方式编码" prop="payMethod">
-          <el-input v-model="form.payMethod" placeholder="请输入支付方式编码" />
+          <el-input v-model="form.payMethod" placeholder="请输入支付方式编码"/>
         </el-form-item>
         <el-form-item label="排序号" prop="indexes">
-          <el-input type="number" v-model="form.indexes" placeholder="请输入排序号" :min="0" />
+          <el-input type="number" v-model="form.indexes" placeholder="请输入排序号" :min="0"/>
         </el-form-item>
         <el-form-item label="支付平台" prop="payPlatformId">
           <el-select
@@ -220,10 +226,10 @@
           <el-input type="number" class="no-number" v-model="form.rechargeMin" placeholder="请输入充值最低" :min="0"/>
         </el-form-item>
         <el-form-item label="充值最高" prop="rechargeMax">
-          <el-input type="number" class="no-number" v-model="form.rechargeMax" placeholder="请输入充值最高" :min="0" />
+          <el-input type="number" class="no-number" v-model="form.rechargeMax" placeholder="请输入充值最高" :min="0"/>
         </el-form-item>
         <el-form-item label="通道费率" prop="payRate">
-          <el-input type="number" class="no-number" v-model="form.payRate" placeholder="请输入通道费率(最高0.4最低0.02)" />
+          <el-input type="number" class="no-number" v-model="form.payRate" placeholder="请输入通道费率(最高0.4最低0.02)"/>
         </el-form-item>
         <el-form-item label="开放层级" prop="openLevel">
           <el-col :span="11">
@@ -247,10 +253,10 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="快捷金额" prop="quickAmount">
-          <el-input v-model="form.quickAmount"  type="textarea" placeholder="请输入快捷金额,用','分割(英文逗号)" />
+          <el-input v-model="form.quickAmount" type="textarea" placeholder="请输入快捷金额,用','分割(英文逗号)"/>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" placeholder="请输入备注提示" />
+          <el-input v-model="form.remark" placeholder="请输入备注提示"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -262,13 +268,23 @@
 </template>
 
 <script>
-import { listPayChannelNew, getPayChannelNew, delPayChannelNew, addPayChannelNew, updatePayChannelNew, exportPayChannelNew,platforms,payTypes,changePayTypeStatus,callbackStatusChange} from "@/api/platform-web/pay/payChannelNew";
+import {
+  listPayChannelNew,
+  getPayChannelNew,
+  delPayChannelNew,
+  addPayChannelNew,
+  updatePayChannelNew,
+  exportPayChannelNew,
+  platforms,
+  payTypes,
+  changePayTypeStatus,
+  callbackStatusChange
+} from "@/api/platform-web/pay/payChannelNew";
 
 
 export default {
   name: "PayChannelNew",
-  components: {
-  },
+  components: {},
   data() {
     return {
       // 遮罩层
@@ -326,28 +342,28 @@ export default {
       // 表单校验
       rules: {
         payRate: [
-          { required: true, message: "通道费率不能为空", trigger: "blur" }
+          {required: true, message: "通道费率不能为空", trigger: "blur"}
         ],
         name: [
-          { required: true, message: "通道名称不能为空", trigger: "blur" }
+          {required: true, message: "通道名称不能为空", trigger: "blur"}
         ],
         payAttr: [
-          { required: true, message: "支付属性不能为空", trigger: "blur" }
+          {required: true, message: "支付属性不能为空", trigger: "blur"}
         ],
         status: [
-          { required: true, message: "状态不能为空", trigger: "blur" }
+          {required: true, message: "状态不能为空", trigger: "blur"}
         ],
         payPlatformId: [
-          { required: true, message: "支付平台编号不能为空", trigger: "blur" }
+          {required: true, message: "支付平台编号不能为空", trigger: "blur"}
         ],
         payTypeId: [
-          { required: true, message: "支付类型编号不能为空", trigger: "blur" }
+          {required: true, message: "支付类型编号不能为空", trigger: "blur"}
         ],
         quickAmount: [
-          { required: true, message: "快捷金额不能为空", trigger: "blur" }
+          {required: true, message: "快捷金额不能为空", trigger: "blur"}
         ],
         inputType: [
-          { required: true, message: "输入类型不能为空", trigger: "change" }
+          {required: true, message: "输入类型不能为空", trigger: "change"}
         ],
       }
     };
@@ -385,11 +401,11 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
-      }).then(function() {
+      }).then(function () {
         return changePayTypeStatus(row.id, row.status);
       }).then(() => {
         this.msgSuccess(text + "成功");
-      }).catch(function() {
+      }).catch(function () {
         row.status = row.status === "0" ? "1" : "0";
       });
     },
@@ -400,11 +416,11 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
-      }).then(function() {
+      }).then(function () {
         return callbackStatusChange(row.id, row.isCanCallback);
       }).then(() => {
         this.msgSuccess(text + "成功");
-      }).catch(function() {
+      }).catch(function () {
         row.isCanCallback = row.isCanCallback === "0" ? "1" : "0";
       });
     },
@@ -457,7 +473,7 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
@@ -500,28 +516,29 @@ export default {
     handleDelete(row) {
       const ids = row.id || this.ids;
       this.$confirm('是否确认删除【支付通道】编号为"' + ids + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return delPayChannelNew(ids);
-        }).then(() => {
-          this.getList();
-          this.msgSuccess("删除成功");
-        })
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function () {
+        return delPayChannelNew(ids);
+      }).then(() => {
+        this.getList();
+        this.msgSuccess("删除成功");
+      })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有【支付通道】数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return exportPayChannelNew(queryParams);
-        }).then(response => {
-          this.download(response.msg);
-        })
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        return exportPayChannelNew(queryParams);
+      }).then(response => {
+        this.downloadExcel(response, '支付通道')
+      }).catch(() => {
+      })
     }
   }
 };

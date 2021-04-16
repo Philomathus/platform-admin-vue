@@ -474,7 +474,7 @@
         }).then(function () {
           return exportConfigEnvironment(queryParams)
         }).then(response => {
-          this.download(response.msg)
+          (response.msg)
         })
       }
     }

@@ -4,7 +4,7 @@
 
       <el-form-item label="主播排行榜">
         <el-select v-model="queryParams.type" placeholder="请选择榜类型">
-          <el-option label="日榜" value="0" ></el-option>
+          <el-option label="日榜" value="0"></el-option>
           <el-option label="周榜" value="1"></el-option>
           <el-option label="月榜" value="2"></el-option>
         </el-select>
@@ -42,7 +42,7 @@
     </el-row>
 
     <el-table stripe v-loading="loading" :data="reportAnchorhotDayList">
-<!--      <el-table-column label="id" align="center" prop="repId"/>-->
+      <!--      <el-table-column label="id" align="center" prop="repId"/>-->
       <el-table-column label="主播ID" align="center" prop="anchorid"/>
       <el-table-column label="主播昵称" align="center" prop="nickname"/>
       <el-table-column label="每日热度" align="center" prop="dayTicket"/>
@@ -226,19 +226,20 @@ export default {
       }).then(() => {
         this.getList();
         this.msgSuccess("删除成功");
+      }).catch(() => {
       })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有贡献榜数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning'
       }).then(function () {
         return exportReportAnchorhotDay(queryParams);
       }).then(response => {
-        this.download(response.msg);
+        this.downloadExcel(response, '贡献榜')
       })
     }
   }

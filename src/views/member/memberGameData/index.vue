@@ -255,14 +255,15 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('是否确认导出所有会员注单数据数据项?', '警告', {
-        confirmButtonText: '确定',
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+        confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function() {
         return exportMemberGameData(queryParams)
       }).then(response => {
-        this.download(response.msg)
+        this.downloadExcel(response, '会员注单数据')
+      }).catch(() => {
       })
     },
     lotteryBetData(row) {

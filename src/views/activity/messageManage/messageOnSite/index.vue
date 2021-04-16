@@ -325,7 +325,7 @@ export default {
       }).then(function () {
         return exportMessageOnSite(queryParams)
       }).then(response => {
-        this.download(response.msg)
+        (response.msg)
       })
     }
   }

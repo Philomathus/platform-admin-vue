@@ -245,6 +245,7 @@ export default {
         return exportActivityType(queryParams);
       }).then(response => {
         this.downloadExcel(response, '活动类型')
+      }).catch(() => {
       })
     }
   }

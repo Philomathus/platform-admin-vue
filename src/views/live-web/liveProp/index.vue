@@ -125,7 +125,8 @@
     />
 
     <!-- 添加或修改礼物列对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="800px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="800px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入道具名"/>
@@ -185,7 +186,14 @@
 </template>
 
 <script>
-import { listLiveProp, getLiveProp, delLiveProp, addLiveProp, updateLiveProp, exportLiveProp } from '@/api/live-web/liveProp/liveProp'
+import {
+  listLiveProp,
+  getLiveProp,
+  delLiveProp,
+  addLiveProp,
+  updateLiveProp,
+  exportLiveProp
+} from '@/api/live-web/liveProp/liveProp'
 import ImageUpload from '@/components/ImageUpload'
 import FileUpload from '@/components/FileUpload'
 
@@ -239,7 +247,7 @@ export default {
       },
       // 列信息
       columns: [
-        { key: 0, label: `状态`, visible: true }
+        {key: 0, label: `状态`, visible: true}
       ],
       // 表单参数
       form: {},
@@ -355,7 +363,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return delLiveProp(ids)
       }).then(() => {
         this.getList()
@@ -394,28 +402,29 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         var data = {}
         data.id = row.id
         data.isEffect = row.isEffect
         return updateLiveProp(data)
       }).then(() => {
         this.msgSuccess(text + '成功')
-      }).catch(function() {
+      }).catch(function () {
         row.isEffect = row.isEffect === '0' ? '1' : '0'
       })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('是否确认导出所有礼物列数据项?', '警告', {
-        confirmButtonText: '确定',
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+        confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportLiveProp(queryParams)
       }).then(response => {
-        this.download(response.msg)
+        this.downloadExcel(response, '礼物')
+      }).catch(() => {
       })
     }
   }

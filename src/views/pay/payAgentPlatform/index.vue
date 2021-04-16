@@ -347,7 +347,8 @@ export default {
       }).then(function() {
         return exportPayAgentPlatform(queryParams);
       }).then(response => {
-        this.download(response.msg);
+        this.downloadExcel(response, '代付平台')
+      }).catch(() => {
       })
     }
   }

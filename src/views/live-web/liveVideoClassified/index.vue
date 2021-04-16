@@ -52,17 +52,17 @@
         >删除
         </el-button>
       </el-col>
-<!--      <el-col :span="1.5">-->
-<!--        <el-button-->
-<!--          type="warning"-->
-<!--          plain-->
-<!--          icon="el-icon-download"-->
-<!--          size="mini"-->
-<!--          @click="handleExport"-->
-<!--          v-hasPermi="['admin:liveVideoClassified:export']"-->
-<!--        >导出-->
-<!--        </el-button>-->
-<!--      </el-col>-->
+      <!--      <el-col :span="1.5">-->
+      <!--        <el-button-->
+      <!--          type="warning"-->
+      <!--          plain-->
+      <!--          icon="el-icon-download"-->
+      <!--          size="mini"-->
+      <!--          @click="handleExport"-->
+      <!--          v-hasPermi="['admin:liveVideoClassified:export']"-->
+      <!--        >导出-->
+      <!--        </el-button>-->
+      <!--      </el-col>-->
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -81,7 +81,7 @@
         </template>
       </el-table-column>
       <el-table-column label="排序(客服端倒序)" align="center" prop="sort"/>
-<!--      <el-table-column label="分类图标" align="center" prop="img"/>-->
+      <!--      <el-table-column label="分类图标" align="center" prop="img"/>-->
       <el-table-column label="分类代号" align="center" prop="classfy"/>
       <el-table-column label="主播端显示" align="center" key="isHostShow" v-if="columns[0].visible">
         <template slot-scope="scope">
@@ -93,7 +93,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-<!--      <el-table-column label="查询主播列表分页逻辑" align="center" prop="sortDesc"/>-->
+      <!--      <el-table-column label="查询主播列表分页逻辑" align="center" prop="sortDesc"/>-->
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -125,7 +125,8 @@
     />
 
     <!-- 添加或修改分类对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="600px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="600px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="分类名称" prop="title">
           <el-input v-model="form.title" placeholder="请输入分类名称"/>
@@ -170,9 +171,10 @@ import {
   exportLiveVideoClassified
 } from "@/api/live-web/liveVideoClassified/liveVideoClassified";
 import ImageUpload from '@/components/ImageUpload';
+
 export default {
   name: "LiveVideoClassified",
-  components: {    ImageUpload},
+  components: {ImageUpload},
   data() {
     return {
       // 遮罩层
@@ -338,9 +340,9 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function () {
-        var data={};
-        data.id=row.id;
-        data.isEffect=row.isEffect;
+        var data = {};
+        data.id = row.id;
+        data.isEffect = row.isEffect;
         return updateLiveVideoClassified(data)
       }).then(() => {
         this.msgSuccess(text + '成功')
@@ -355,9 +357,9 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function () {
-        var data={};
-        data.id=row.id;
-        data.isHostShow=row.isHostShow;
+        var data = {};
+        data.id = row.id;
+        data.isHostShow = row.isHostShow;
         return updateLiveVideoClassified(data)
       }).then(() => {
         this.msgSuccess(text + '成功')
@@ -368,14 +370,15 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有分类数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning'
       }).then(function () {
         return exportLiveVideoClassified(queryParams);
       }).then(response => {
-        this.download(response.msg);
+        this.downloadExcel(response, '分类')
+      }).catch(() => {
       })
     }
   }

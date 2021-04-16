@@ -92,7 +92,9 @@
       <el-table-column label="排序号" align="center" prop="indexs"/>
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
-          <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">{{ status.dictLabel }}</span>
+          <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">{{
+              status.dictLabel
+            }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -126,7 +128,8 @@
     />
 
     <!-- 添加或修改首页轮播图对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入名称"/>
@@ -208,13 +211,13 @@ export default {
       // 表单校验
       rules: {
         name: [
-          { required: true, message: '名称不能为空', trigger: 'blur' }
+          {required: true, message: '名称不能为空', trigger: 'blur'}
         ],
         indexs: [
-          { required: true, message: '排序号不能为空', trigger: 'blur' }
+          {required: true, message: '排序号不能为空', trigger: 'blur'}
         ],
         coverImg: [
-          { required: true, message: '图片不能为空', trigger: 'blur' }
+          {required: true, message: '图片不能为空', trigger: 'blur'}
         ]
       }
     }
@@ -315,7 +318,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return delHomeBanner(ids)
       }).then(() => {
         this.getList()
@@ -326,14 +329,14 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('是否确认导出所有首页轮播图数据项?', '警告', {
-        confirmButtonText: '确定',
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+        confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportHomeBanner(queryParams)
       }).then(response => {
-        this.download(response.msg)
+        this.downloadExcel(response, '首页轮播图')
       }).catch(() => {
       })
     }

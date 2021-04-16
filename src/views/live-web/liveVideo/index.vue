@@ -72,13 +72,17 @@
       <el-table-column label="线路名称" min-width="120" align="center" prop="lineName"/>
       <el-table-column label="直播性质" align="center" prop="lineStatus" width="100">
         <template slot-scope="scope">
-          <span :style="{color: (status = lineStatusOption[parseInt(scope.row.lineStatus)+1]).color}">{{ status.dictLabel }}</span>
+          <span :style="{color: (status = lineStatusOption[parseInt(scope.row.lineStatus)+1]).color}">{{
+              status.dictLabel
+            }}</span>
         </template>
       </el-table-column>
       <el-table-column label="直播状态" min-width="100" align="center" prop="liveStatus">
         <template slot-scope="scope">
           <span v-if="scope.row.liveStatus === ''">检测中...</span>
-          <span v-else :style="{color: (status = liveStatusOption[parseInt(scope.row.liveStatus)]).color}">{{ status.dictLabel }}</span>
+          <span v-else :style="{color: (status = liveStatusOption[parseInt(scope.row.liveStatus)]).color}">{{
+              status.dictLabel
+            }}</span>
         </template>
       </el-table-column>
       <el-table-column label="禁收费" min-width="65" align="center" prop="openPay">
@@ -232,7 +236,7 @@ import {
   updateLiveUser
 } from '@/api/live-web/liveUser'
 import request from '@/utils/request'
-import { url } from '@/utils/url'
+import {url} from '@/utils/url'
 
 export default {
   name: 'LiveVideo',
@@ -364,7 +368,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return close(ids)
       }).then(() => {
         this.getList()
@@ -376,7 +380,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return close(row.id)
       }).then(() => {
         this.getList()
@@ -419,10 +423,11 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportLiveVideo(queryParams)
       }).then(response => {
-        this.download(response.msg)
+        this.downloadExcel(response, '直播数据')
+      }).catch(() => {
       })
     },
     changeOpenPay(row) {
@@ -430,7 +435,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return updateLiveUser({
           id: row.id,
           openPay: row.openPay
@@ -442,7 +447,7 @@ export default {
           this.msgError(response.msg)
         }
         this.getList()
-      }).catch(function(){
+      }).catch(function () {
         row.openPay = row.openPay === '0' ? '1' : '0'
       })
     },
@@ -511,7 +516,7 @@ export default {
         inputPlaceholder: '请输入大于0小于100的整数值',
         inputPattern: /^[1-9][0-9]?$/,
         inputErrorMessage: '固定位数据格式不正确，请输入大于0小于100的整数值'
-      }).then(({ value }) => {
+      }).then(({value}) => {
         updateVideoSort({
           id: row.id,
           sort: value

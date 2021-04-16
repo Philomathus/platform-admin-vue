@@ -18,13 +18,13 @@
 
 
     <el-table v-loading="loading" :data="logCommissionList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="会员ID" align="center" prop="memberId" />
-      <el-table-column label="佣金" align="center" prop="commission" />
-      <el-table-column label="创建时间" align="center" prop="createTime" >
-      <template slot-scope="scope">
-        <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
-      </template>
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="会员ID" align="center" prop="memberId"/>
+      <el-table-column label="佣金" align="center" prop="commission"/>
+      <el-table-column label="创建时间" align="center" prop="createTime">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+        </template>
       </el-table-column>
     </el-table>
 
@@ -37,13 +37,14 @@
     />
 
     <!-- 添加或修改佣金领取日志对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="会员ID" prop="memberId">
-          <el-input v-model="form.memberId" placeholder="请输入会员ID" />
+          <el-input v-model="form.memberId" placeholder="请输入会员ID"/>
         </el-form-item>
         <el-form-item label="佣金" prop="commission">
-          <el-input v-model="form.commission" placeholder="请输入佣金" />
+          <el-input v-model="form.commission" placeholder="请输入佣金"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -55,12 +56,18 @@
 </template>
 
 <script>
-import { listLogCommission, getLogCommission, delLogCommission, addLogCommission, updateLogCommission, exportLogCommission } from "@/api/activity/logCommission";
+import {
+  listLogCommission,
+  getLogCommission,
+  delLogCommission,
+  addLogCommission,
+  updateLogCommission,
+  exportLogCommission
+} from "@/api/activity/logCommission";
 
 export default {
   name: "LogCommission",
-  components: {
-  },
+  components: {},
   data() {
     return {
       // 遮罩层
@@ -93,8 +100,7 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {
-      }
+      rules: {}
     };
   },
   created() {
@@ -138,7 +144,7 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
@@ -181,28 +187,29 @@ export default {
     handleDelete(row) {
       const ids = row.id || this.ids;
       this.$confirm('是否确认删除佣金领取日志编号为"' + ids + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return delLogCommission(ids);
-        }).then(() => {
-          this.getList();
-          this.msgSuccess("删除成功");
-        })
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function () {
+        return delLogCommission(ids);
+      }).then(() => {
+        this.getList();
+        this.msgSuccess("删除成功");
+      })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有佣金领取日志数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return exportLogCommission(queryParams);
-        }).then(response => {
-          this.download(response.msg);
-        })
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        return exportLogCommission(queryParams);
+      }).then(response => {
+        this.downloadExcel(response, '佣金领取日志')
+      }).catch(() => {
+      })
     }
   }
 };

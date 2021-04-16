@@ -1,25 +1,26 @@
 <template>
   <div class="app-container">
     <el-button type="primary">皮肤总支出 {{ numberUtil.toFixed(totalData.totalPay) }}</el-button>
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px" style="margin-top: 20px">
-<!--      <el-form-item label="抽奖历史id" prop="wheelHistoryId">
-        <el-input
-          v-model="queryParams.wheelHistoryId"
-          placeholder="请输入抽奖历史id"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>-->
-<!--      <el-form-item label="用户id" prop="pUserId">
-        <el-input
-          v-model="queryParams.pUserId"
-          placeholder="请输入用户id"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />-->
-        <el-form-item label="用户昵称" prop="pUserName">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px"
+             style="margin-top: 20px">
+      <!--      <el-form-item label="抽奖历史id" prop="wheelHistoryId">
+              <el-input
+                v-model="queryParams.wheelHistoryId"
+                placeholder="请输入抽奖历史id"
+                clearable
+                size="small"
+                @keyup.enter.native="handleQuery"
+              />
+            </el-form-item>-->
+      <!--      <el-form-item label="用户id" prop="pUserId">
+              <el-input
+                v-model="queryParams.pUserId"
+                placeholder="请输入用户id"
+                clearable
+                size="small"
+                @keyup.enter.native="handleQuery"
+              />-->
+      <el-form-item label="用户昵称" prop="pUserName">
         <el-input
           v-model="queryParams.nickName"
           placeholder="请输入用户昵称"
@@ -73,38 +74,38 @@
     </el-form>
 
     <el-row :gutter="10" class="mb8">
-<!--      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['lottery:wheelSkinReceived:add']"
-        >新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['lottery:wheelSkinReceived:edit']"
-        >修改</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['lottery:wheelSkinReceived:remove']"
-        >删除</el-button>
-      </el-col>-->
+      <!--      <el-col :span="1.5">
+              <el-button
+                type="primary"
+                plain
+                icon="el-icon-plus"
+                size="mini"
+                @click="handleAdd"
+                v-hasPermi="['lottery:wheelSkinReceived:add']"
+              >新增</el-button>
+            </el-col>
+            <el-col :span="1.5">
+              <el-button
+                type="success"
+                plain
+                icon="el-icon-edit"
+                size="mini"
+                :disabled="single"
+                @click="handleUpdate"
+                v-hasPermi="['lottery:wheelSkinReceived:edit']"
+              >修改</el-button>
+            </el-col>
+            <el-col :span="1.5">
+              <el-button
+                type="danger"
+                plain
+                icon="el-icon-delete"
+                size="mini"
+                :disabled="multiple"
+                @click="handleDelete"
+                v-hasPermi="['lottery:wheelSkinReceived:remove']"
+              >删除</el-button>
+            </el-col>-->
       <el-col :span="1.5">
         <el-button
           type="warning"
@@ -113,22 +114,23 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['lottery:wheelSkinReceived:export']"
-        >导出</el-button>
+        >导出
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="wheelSkinReceivedList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="id" align="center" prop="id" />
-      <el-table-column label="抽奖历史id" align="center" prop="wheelHistoryId" />
-      <el-table-column label="用户id" align="center" prop="puserId" />
-      <el-table-column label="用户昵称" align="center" prop="nickName" />
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="id" align="center" prop="id"/>
+      <el-table-column label="抽奖历史id" align="center" prop="wheelHistoryId"/>
+      <el-table-column label="用户id" align="center" prop="puserId"/>
+      <el-table-column label="用户昵称" align="center" prop="nickName"/>
       <el-table-column label="中奖金额" align="center" prop="prize" :formatter="formatterPrize"/>
-      <el-table-column label="游戏大区" align="center" prop="daQu" />
-      <el-table-column label="游戏昵称" align="center" prop="name" />
-      <el-table-column label="皮肤名称" align="center" prop="skin" />
-      <el-table-column label="领取状态" align="center" prop="receiveType" :formatter="formatterType" >
+      <el-table-column label="游戏大区" align="center" prop="daQu"/>
+      <el-table-column label="游戏昵称" align="center" prop="name"/>
+      <el-table-column label="皮肤名称" align="center" prop="skin"/>
+      <el-table-column label="领取状态" align="center" prop="receiveType" :formatter="formatterType">
         <template v-slot="{row}">
           <el-select v-model="row.receiveType" placeholder="请选择领取状态" size="small" @change="changeReceivedType(row)">
             <el-option
@@ -140,7 +142,7 @@
           </el-select>
         </template>
       </el-table-column>
-      <el-table-column label="失败信息" align="center" prop="errorRemark" >
+      <el-table-column label="失败信息" align="center" prop="errorRemark">
         <template v-slot="{row}">
           <el-input placeholder="" v-model="row.errorRemark" @blur="changeReceivedType(row)"/>
         </template>
@@ -174,26 +176,27 @@
     />
 
     <!-- 添加或修改转盘皮肤领取对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="抽奖历史id" prop="wheelHistoryId">
-          <el-input v-model="form.wheelHistoryId" placeholder="请输入抽奖历史id" />
+          <el-input v-model="form.wheelHistoryId" placeholder="请输入抽奖历史id"/>
         </el-form-item>
         <el-form-item label="用户id" prop="pUserId">
-          <el-input v-model="form.pUserId" placeholder="请输入用户id" />
+          <el-input v-model="form.pUserId" placeholder="请输入用户id"/>
         </el-form-item>
         <el-form-item label="游戏大区" prop="daQu">
-          <el-input v-model="form.daQu" placeholder="请输入游戏大区" />
+          <el-input v-model="form.daQu" placeholder="请输入游戏大区"/>
         </el-form-item>
         <el-form-item label="游戏昵称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入游戏昵称" />
+          <el-input v-model="form.name" placeholder="请输入游戏昵称"/>
         </el-form-item>
         <el-form-item label="皮肤名称" prop="skin">
-          <el-input v-model="form.skin" placeholder="请输入皮肤名称" />
+          <el-input v-model="form.skin" placeholder="请输入皮肤名称"/>
         </el-form-item>
         <el-form-item label="领取状态 0未领取1领取中2已领取" prop="receiveType">
           <el-select v-model="form.receiveType" placeholder="请选择领取状态 0未领取1领取中2已领取">
-            <el-option label="请选择字典生成" value="" />
+            <el-option label="请选择字典生成" value=""/>
           </el-select>
         </el-form-item>
       </el-form>
@@ -206,12 +209,19 @@
 </template>
 
 <script>
-import { listWheelSkinReceived, listTotalWheelSkinReceived, getWheelSkinReceived, delWheelSkinReceived, addWheelSkinReceived, updateWheelSkinReceived, exportWheelSkinReceived } from "@/api/platform-web/lottery/wheelSkinReceived";
+import {
+  listWheelSkinReceived,
+  listTotalWheelSkinReceived,
+  getWheelSkinReceived,
+  delWheelSkinReceived,
+  addWheelSkinReceived,
+  updateWheelSkinReceived,
+  exportWheelSkinReceived
+} from "@/api/platform-web/lottery/wheelSkinReceived";
 
 export default {
   name: "WheelSkinReceived",
-  components: {
-  },
+  components: {},
   data() {
     return {
       totalData: {},
@@ -252,8 +262,7 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {
-      }
+      rules: {}
     };
   },
   created() {
@@ -264,13 +273,13 @@ export default {
     this.listTotalWheelSkinReceived();
   },
   methods: {
-    listTotalWheelSkinReceived(){
+    listTotalWheelSkinReceived() {
       listTotalWheelSkinReceived(this.queryParams).then((res) => {
         console.log(res)
         this.totalData.totalPay = res.data.totalPay
-            });
+      });
     },
-    changeReceivedType(row){
+    changeReceivedType(row) {
       console.log(row)
       updateWheelSkinReceived(row).then(response => {
         this.msgSuccess("修改成功");
@@ -278,8 +287,8 @@ export default {
         this.getList();
       });
     },
-    formatterType(row){
-      var msg ;
+    formatterType(row) {
+      var msg;
       this.typeList.forEach((value, index, array) => {
         if (value.dictValue == row.receiveType) {
           msg = value.dictLabel
@@ -287,7 +296,7 @@ export default {
       });
       return msg;
     },
-    formatterPrize(row){
+    formatterPrize(row) {
       return row.prize + '元';
     },
     /** 查询转盘皮肤领取列表 */
@@ -333,7 +342,7 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
@@ -379,25 +388,25 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
-      }).then(function() {
+      }).then(function () {
         return delWheelSkinReceived(ids);
       }).then(() => {
         this.getList();
         this.msgSuccess("删除成功");
       }).catch(() => {
-	  })
+      })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有转盘皮肤领取数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(function() {
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
         return exportWheelSkinReceived(queryParams);
       }).then(response => {
-        this.download(response.msg);
+        this.downloadExcel(response, '所有转盘皮肤')
       }).catch(() => {
       })
     }

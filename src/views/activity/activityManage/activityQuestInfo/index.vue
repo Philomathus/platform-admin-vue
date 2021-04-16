@@ -133,7 +133,8 @@
     />
 
     <!-- 添加或修改任务信息对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="110px">
         <el-form-item label="标题" prop="title">
           <el-input v-model="form.title" placeholder="请输入标题"/>
@@ -217,7 +218,7 @@ export default {
   },
   data() {
     return {
-      pickerOptions: { shortcuts: pickerDateShortcuts },
+      pickerOptions: {shortcuts: pickerDateShortcuts},
       // 遮罩层
       loading: true,
       // 选中数组
@@ -372,7 +373,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return delActivityQuestInfo(ids)
       }).then(() => {
         this.getList()
@@ -382,14 +383,15 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('是否确认导出所有任务信息数据项?', '警告', {
-        confirmButtonText: '确定',
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+        confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportActivityQuestInfo(queryParams)
       }).then(response => {
-        this.download(response.msg)
+        this.downloadExcel(response, '任务信息')
+      }).catch(() => {
       })
     }
   }

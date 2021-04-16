@@ -347,7 +347,7 @@ export default {
       }).then(function() {
         return exportHomeNotice(queryParams)
       }).then(response => {
-        this.download(response.msg)
+        (response.msg)
       }).catch(() => {
       })
     }

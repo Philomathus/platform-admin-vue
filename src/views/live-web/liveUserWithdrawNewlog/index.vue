@@ -202,8 +202,23 @@
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="mini"
+          @click="fixIds"
+          v-hasPermi="['live-web:liveUserWithdrawNewlog:fixOrder']"
+        >合并订单
+        </el-button>
+      </el-col>
+      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+    </el-row>
 
     <el-table stripe v-loading="loading" :data="liveUserWithdrawNewlogList" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="复制" align="center" width="100px">
         <template slot-scope="scope">
           <el-button
@@ -324,7 +339,7 @@
             size="small"
             type="primary"
             plain
-            v-show="scope.row.wstatus !=5 "
+            v-show="scope.row.wstatus !=5  && scope.row.wstatus != 6"
             icon="el-icon-refresh-right"
             @click="handleUpdateOrder(scope.row)"
             v-has-permi="['live-web:liveUserWithdrawNewlog:updateOrder']"
@@ -417,8 +432,9 @@
 </template>
 
 <script>
-import { listLiveUserWithdrawNewlog,updateOrder,withdrawSucc,withdrawRefused,getCountTotal,unlockMemberWithdrawLog,refusedMemberWithdrawLog,artificialMemberWithdrawLog,finalAuditMemberRechargeLog,recoverAuditMemberRechargeLog, getLiveUserWithdrawNewlog, delLiveUserWithdrawNewlog, addLiveUserWithdrawNewlog, updateLiveUserWithdrawNewlog, exportLiveUserWithdrawNewlog } from "@/api/platform-web/live-web/liveUserWithdrawNewlog";
+import { listLiveUserWithdrawNewlog,fixOrder,updateOrder,withdrawSucc,withdrawRefused,getCountTotal,unlockMemberWithdrawLog,refusedMemberWithdrawLog,artificialMemberWithdrawLog,finalAuditMemberRechargeLog,recoverAuditMemberRechargeLog, getLiveUserWithdrawNewlog, delLiveUserWithdrawNewlog, addLiveUserWithdrawNewlog, updateLiveUserWithdrawNewlog, exportLiveUserWithdrawNewlog } from "@/api/platform-web/live-web/liveUserWithdrawNewlog";
 import {getYesterDate, pickerDateTimeShortcuts} from "@/utils/dateUtils";
+
 
 
 
@@ -620,6 +636,25 @@ export default {
       this.copyData = html
       this.copy(this.copyData)
     },
+    //合并订单
+    fixIds() {
+      const ids = this.ids
+      if (ids == null || ids == '') {
+        this.msgError('请选择要合并的订单')
+        return
+      }
+      this.$confirm('是否确认合并的订单?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return fixOrder(ids)
+      }).then(() => {
+        this.getList()
+        this.msgSuccess('合并订单成功')
+      })
+    },
+
     copy(data) {
       let url = data
       let oInput = document.createElement('textarea')

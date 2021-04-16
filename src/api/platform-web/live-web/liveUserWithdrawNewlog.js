@@ -25,6 +25,14 @@ export function getCountTotal(query) {
     params: query
   })
 }
+// 合并订单
+export function fixOrder(id) {
+  return request({
+    url: url.platformWeb + '/live-web/liveUserWithdrawNewlog/fixOrder/' + id,
+    method: 'get'
+  })
+}
+
 
 // 新增主播提现管理
 export function addLiveUserWithdrawNewlog(data) {

@@ -137,7 +137,7 @@
       width="500px"
       append-to-body
     >
-      <el-form ref="formdeposit" :model="formdeposit" :rules="rules" label-width="80px">
+      <el-form ref="formdeposit" :model="formdeposit" :rules="rules" label-width="120px">
         <el-form-item label="代充账号" prop="rechargeAcount">
           <el-input placeholder="请输入代充账号" v-model="formdeposit.rechargeAcount"
           />
@@ -158,6 +158,9 @@
         <el-form-item label="备注" prop="remark">
           <el-input placeholder="请输入备注" v-model="formdeposit.remark"/>
         </el-form-item>
+        <el-form-item label="谷歌验证码" prop="googleAuthCode">
+          <el-input v-model="formdeposit.googleAuthCode" type="number" placeholder="请输入google验证码"/>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitDeposit">立即提交</el-button>
@@ -173,7 +176,7 @@
       width="500px"
       append-to-body
     >
-      <el-form ref="formproposed" :model="formproposed" :rules="rules" label-width="80px">
+      <el-form ref="formproposed" :model="formproposed" :rules="rules" label-width="120px">
         <el-form-item label="代充账号" prop="rechargeAcount">
           <el-input placeholder="请输入代充账号" v-model="formproposed.rechargeAcount"
           />
@@ -193,6 +196,9 @@
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input placeholder="请输入备注" v-model="formproposed.remark"/>
+        </el-form-item>
+        <el-form-item label="谷歌验证码" prop="googleAuthCode">
+          <el-input v-model="formproposed.googleAuthCode" type="number" placeholder="请输入google验证码"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -315,6 +321,9 @@ export default {
         ],
         opName: [
           {required: true, message: "操作人不能为空", trigger: "blur"}
+        ],
+        googleAuthCode: [
+          { required: true, message: 'google验证码不能为空', trigger: 'blur' }
         ]
       }
     };
@@ -361,7 +370,8 @@ export default {
         rechargeAcount: null,
         type: null,
         money: null,
-        remark: null
+        remark: null,
+        googleAuthCode:null
       };
       this.resetForm("formproposed");
     },
@@ -371,7 +381,8 @@ export default {
         rechargeAcount: null,
         type: null,
         money: null,
-        remark: null
+        remark: null,
+        googleAuthCode:null
       };
       this.resetForm("formdeposit");
     },
@@ -493,7 +504,8 @@ export default {
         if (this.formproposed.rechargeAcount != null) {
           proposed(this.formproposed).then(response => {
             this.msgSuccess("提交成功");
-            this.open = false;
+            this.peopleproposed = false;
+            console.info(this.peopleproposed)
             this.getList();
           });
         }
@@ -512,7 +524,7 @@ export default {
           } else {
             addPayAgentRechargeRecord(this.form).then(response => {
               this.msgSuccess("新增成功");
-              this.open = false;
+              this.peopledeposit = false;
               this.getList();
             });
           }

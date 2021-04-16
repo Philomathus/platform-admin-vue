@@ -84,7 +84,9 @@ export function exportPayAgentRechargeAccountLog(query) {
   return request({
     url: url.platformWeb + '/pay/payAgentRechargeAccountLog/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }
 

@@ -349,7 +349,7 @@ export default {
       }).then(function() {
         return exportPayAgentRechargeLog(queryParams)
       }).then(response => {
-        this.downloadExcel(response, '公司入款')
+        this.downloadExcel(response, '代充日志')
       }).catch(() => {
       })
     }

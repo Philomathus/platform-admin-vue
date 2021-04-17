@@ -171,7 +171,7 @@
             clearable
             size="small"
             style="width: 240px"
-            :disabled="form.id != null || form.id !== ''"
+            :disabled="form.id != null"
           >
             <el-option
               v-for="dict in paytypeOptions"

@@ -58,6 +58,22 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item prop="bankName" style="width: 120px">
+        <el-select
+          v-model="queryParams.bankName"
+          placeholder="银行名称"
+          clearable
+          size="small"
+          style="width: 120px"
+        >
+          <el-option
+            v-for="dict in bankList"
+            :key="dict.bankName"
+            :label="dict.bankName"
+            :value="dict.bankName"
+          />
+        </el-select>
+      </el-form-item>
       <el-form-item prop="rechargeUserName" style="width: 120px;">
         <el-input
           v-model="queryParams.rechargeUserName"
@@ -227,90 +243,98 @@
 </template>
 
 <script>
-import {
-  listMemberRechargeLog,
-  listCount,
-  getMemberRechargeLog,
-  exportMemberRechargeLog,
-  firstAuditMemberRechargeLog,
-  finalAuditMemberRechargeLog,
-  refusedAuditMemberRechargeLog,
-  recoverAuditMemberRechargeLog
-} from '@/api/platform-web/pay/memberRechargeLog'
-import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
+  import {
+    listMemberRechargeLog,
+    listCount,
+    getMemberRechargeLog,
+    exportMemberRechargeLog,
+    firstAuditMemberRechargeLog,
+    finalAuditMemberRechargeLog,
+    refusedAuditMemberRechargeLog,
+    recoverAuditMemberRechargeLog
+  } from '@/api/platform-web/pay/memberRechargeLog'
+  import {
+    listBankList
+  } from "@/api/platform-web/pay/bankList";
+  import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
 
-export default {
-  name: 'MemberRechargeLog',
-  components: {},
-  data() {
-    return {
-      refreshSec: '5',
-      refreshType: 'primary',
-      refreshIcon: 'el-icon-refresh',
-      refreshLabel: '开始刷新',
-      refreshDesc: '',
-      pickerOptions: {shortcuts: pickerDateTimeShortcuts},
-      totalData: {},
-      // 遮罩层
-      loading: true,
-      // 非单个禁用
-      single: true,
-      // 非多个禁用
-      multiple: true,
-      // 显示搜索条件
-      showSearch: true,
-      // 总条数
-      total: 0,
-      // 公司入款信息表格数据
-      memberRechargeLogList: [],
-      // 弹出层标题
-      title: '',
-      // 是否显示弹出层
-      open: false,
-      // 状态字典
-      statusOptions: [],
-      // 状态字典
-      firstStatusOptions: [],
-      // 审核不通过原因字典
-      refusedAuditReasonOptions: [],
-      // 查询参数
-      queryParams: {
-        selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
-        pageNum: 1,
-        pageSize: 50,
-        orderByColumn: 'create_time',
-        isAsc: 'desc',
-        status: null,
-        rechargeUserName: null,
-        bankUserName: null,
-        searchValue: null,
-        orderNo: null
-      },
-      // 表单参数
-      form: {},
-      // 表单校验
-      rules: {
-        refusedAuditReason: [
-          {required: true, message: '审核不通过原因不能为空', trigger: 'blur'}
-        ]
+  export default {
+    name: 'MemberRechargeLog',
+    components: {},
+    data() {
+      return {
+        refreshSec: '5',
+        refreshType: 'primary',
+        refreshIcon: 'el-icon-refresh',
+        refreshLabel: '开始刷新',
+        refreshDesc: '',
+        pickerOptions: {shortcuts: pickerDateTimeShortcuts},
+        totalData: {},
+        // 遮罩层
+        loading: true,
+        // 非单个禁用
+        single: true,
+        // 非多个禁用
+        multiple: true,
+        // 显示搜索条件
+        showSearch: true,
+        // 总条数
+        total: 0,
+        // 公司入款信息表格数据
+        memberRechargeLogList: [],
+        // 弹出层标题
+        title: '',
+        // 是否显示弹出层
+        open: false,
+        // 状态字典
+        statusOptions: [],
+        // 状态字典
+        firstStatusOptions: [],
+        // 审核不通过原因字典
+        refusedAuditReasonOptions: [],
+        //银行卡列表
+        bankList: [],
+        // 查询参数
+        queryParams: {
+          selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
+          pageNum: 1,
+          pageSize: 50,
+          orderByColumn: 'create_time',
+          isAsc: 'desc',
+          status: null,
+          rechargeUserName: null,
+          bankUserName: null,
+          searchValue: null,
+          orderNo: null
+        },
+        // 表单参数
+        form: {},
+        // 表单校验
+        rules: {
+          refusedAuditReason: [
+            {required: true, message: '审核不通过原因不能为空', trigger: 'blur'}
+          ]
+        }
       }
-    }
-  },
-  created() {
-    this.getList()
-    this.listCount()
-    this.getDicts('recharge_log_status').then(response => {
-      this.statusOptions = response.data
-    })
-    this.getDicts('first').then(response => {
-      this.firstStatusOptions = response.data
-    })
-  },
-  activated() {
-    this.refreshType = 'primary'
-    this.refreshIcon = 'el-icon-refresh'
-    this.refreshLabel = '开始刷新'
-    this.refreshDesc = ''
+    },
+    created() {
+      this.getList()
+      this.listCount()
+      this.getDicts('recharge_log_status').then(response => {
+        this.statusOptions = response.data
+      })
+      this.getDicts('first').then(response => {
+        this.firstStatusOptions = response.data
+      })
+      listBankList({}).then((res) => {
+        this.bankList = res.rows
+      })
+    },
+    activated() {
+      this.refreshType = 'primary'
+      this.refreshIcon = 'el-icon-refresh'
+      this.refreshLabel = '开始刷新'
+      this.refreshDesc = ''
 
     this.stopRefresh()
   },

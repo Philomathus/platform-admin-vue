@@ -49,7 +49,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="bankUserName" style="width: 120px;">
+<!--      <el-form-item prop="bankUserName" style="width: 120px;">
         <el-input
           v-model="queryParams.bankUserName"
           placeholder="收款人"
@@ -57,20 +57,22 @@
           size="small"
           @keyup.enter.native="handleQuery"
         />
-      </el-form-item>
-      <el-form-item prop="bankName" style="width: 120px">
+      </el-form-item>-->
+      <el-form-item prop="bankName" style="width: 200px">
         <el-select
-          v-model="queryParams.bankName"
-          placeholder="银行名称"
+          v-model="queryParams.bankNameUser"
+          filterable
+          placeholder="银行-收款人"
           clearable
           size="small"
-          style="width: 120px"
+          style="width: 200px"
+          @change="changeBank()"
         >
           <el-option
-            v-for="dict in bankList"
-            :key="dict.bankName"
-            :label="dict.bankName"
-            :value="dict.bankName"
+            v-for="(dict,index) in bankList"
+            :key="index"
+            :label="dict"
+            :value="dict"
           />
         </el-select>
       </el-form-item>
@@ -254,8 +256,8 @@
     recoverAuditMemberRechargeLog
   } from '@/api/platform-web/pay/memberRechargeLog'
   import {
-    listBankList
-  } from "@/api/platform-web/pay/bankList";
+    listConfigBank,
+  } from '@/api/platform-web/pay/configBank'
   import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
 
   export default {
@@ -301,6 +303,7 @@
           pageSize: 50,
           orderByColumn: 'create_time',
           isAsc: 'desc',
+          bankNameUser: null,
           status: null,
           rechargeUserName: null,
           bankUserName: null,
@@ -326,8 +329,10 @@
       this.getDicts('first').then(response => {
         this.firstStatusOptions = response.data
       })
-      listBankList({}).then((res) => {
-        this.bankList = res.rows
+      listConfigBank({}).then((res) => {
+        res.rows.forEach((value, index, array) => {
+          this.bankList.push(value.name+ '-' +value.accountName)
+        });
       })
     },
     activated() {
@@ -339,6 +344,11 @@
     this.stopRefresh()
   },
   methods: {
+    changeBank()  {
+      var split = this.queryParams.bankNameUser.split('-');
+      this.queryParams.bankName = split[0]
+      this.queryParams.bankUserName =split[1]
+    },
     listCount() {
       listCount(this.queryParams).then((res) => {
         this.totalData = res

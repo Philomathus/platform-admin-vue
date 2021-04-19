@@ -2,12 +2,15 @@
   <div class="app-container">
     <el-button type="success" @click="copy1">交易笔数 {{ this.totalData.total }}</el-button>
     <el-button type="warning" @click="copy2">总成功金额 {{ this.totalData.successMoney || 0 }}</el-button>
-    <el-button type="info" id="copy3" @click="copy3">成功率 {{ numberUtil.toPercent(this.totalData.successRate) }}</el-button>
-    <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 10px" v-show="showSearch" label-width="100px">
+    <el-button type="info" id="copy3" @click="copy3">成功率 {{ numberUtil.toPercent(this.totalData.successRate) }}
+    </el-button>
+    <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 10px" v-show="showSearch"
+             label-width="100px">
       <el-form-item label="审核时间" prop="selectDate" label-width="70px">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
-                        end-placeholder="结束时间" range-separator="至" :default-time="['00:00:00', '23:59:59']" clearable :picker-options="pickerOptions"
+                        end-placeholder="结束时间" range-separator="至" :default-time="['00:00:00', '23:59:59']" clearable
+                        :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="status">
@@ -44,7 +47,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="bankUserName" style="width: 120px;">
+      <el-form-item prop="bankUserName" style="width: 120px">
         <el-input
           v-model="queryParams.bankUserName"
           placeholder="收款人"
@@ -52,6 +55,22 @@
           size="small"
           @keyup.enter.native="handleQuery"
         />
+      </el-form-item>
+      <el-form-item prop="bankName" style="width: 120px">
+        <el-select
+          v-model="queryParams.bankName"
+          placeholder="银行名称"
+          clearable
+          size="small"
+          style="width: 120px"
+        >
+          <el-option
+            v-for="dict in bankList"
+            :key="dict.bankName"
+            :label="dict.bankName"
+            :value="dict.bankName"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item prop="rechargeUserName" style="width: 120px;">
         <el-input
@@ -91,23 +110,24 @@
       </el-col>
       <el-col :span="10" style="margin-left: 10px">
         <span style="font-size: 16px;margin-right: 10px">记录刷新</span>
-          <el-select v-model="refreshSec" placeholder="时间间隔" style="width: 110px">
-            <el-option value="5" label="5秒"></el-option>
-            <el-option value="10" label="10秒"></el-option>
-            <el-option value="15" label="15秒"></el-option>
-            <el-option value="20" label="20秒"></el-option>
-            <el-option value="30" label="30秒"></el-option>
-          </el-select>
-          <div style="width: 120px;display: inline-block;text-align: center">
-            <span>{{ refreshDesc }}</span>
-          </div>
-          <el-button :type="refreshType" :icon="refreshIcon" size="mini" @click="refreshData">{{ refreshLabel }}</el-button>
+        <el-select v-model="refreshSec" placeholder="时间间隔" style="width: 110px">
+          <el-option value="5" label="5秒"></el-option>
+          <el-option value="10" label="10秒"></el-option>
+          <el-option value="15" label="15秒"></el-option>
+          <el-option value="20" label="20秒"></el-option>
+          <el-option value="30" label="30秒"></el-option>
+        </el-select>
+        <div style="width: 120px;display: inline-block;text-align: center">
+          <span>{{ refreshDesc }}</span>
+        </div>
+        <el-button :type="refreshType" :icon="refreshIcon" size="mini" @click="refreshData">{{ refreshLabel }}
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table :stripe="true" v-loading="loading" :data="memberRechargeLogList" :highlight-current-row="true">
-      <el-table-column label="复制" align="center" >
+      <el-table-column label="复制" align="center">
         <template slot-scope="scope">
           <el-button
             type="primary" size="mini"
@@ -118,14 +138,16 @@
       </el-table-column>
       <el-table-column label="会员ID" :show-overflow-tooltip="true" align="center" prop="memberId" min-width="120"/>
       <el-table-column label="会员账号" align="center" prop="userName" min-width="90" show-overflow-tooltip/>
-      <el-table-column label="充值人姓名" :show-overflow-tooltip="true" align="center" prop="rechargeUserName" min-width="90"/>
+      <el-table-column label="充值人姓名" :show-overflow-tooltip="true" align="center" prop="rechargeUserName"
+                       min-width="90"/>
       <el-table-column label="充值金额" align="center" prop="rechargeMoney" min-width="90"/>
       <el-table-column label="收款人" :show-overflow-tooltip="true" align="center" prop="bankUserName" min-width="90"/>
       <el-table-column label="银行名称" :show-overflow-tooltip="true" align="center" prop="bankName" min-width="120"/>
       <el-table-column label="订单号" :show-overflow-tooltip="true" align="center" prop="orderNo" min-width="220"/>
       <el-table-column label="状态" align="center" prop="status" min-width="120">
         <template slot-scope="scope">
-          <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">{{ status.dictLabel }}</span>
+          <span
+            :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">{{ status.dictLabel }}</span>
         </template>
       </el-table-column>
       <el-table-column label="是否首次" align="center" prop="first" :formatter="firstStatusFormat" min-width="75"/>
@@ -190,7 +212,8 @@
     />
 
     <!-- 添加或修改公司入款信息对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" title="审核不通过原因" :visible.sync="open" width="260px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" title="审核不通过原因" :visible.sync="open" width="260px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules">
         <el-select
           v-model="form.refusedAuditReason"
@@ -215,310 +238,318 @@
 </template>
 
 <script>
-import {
-  listMemberRechargeLog,
-  listCount,
-  getMemberRechargeLog,
-  exportMemberRechargeLog,
-  firstAuditMemberRechargeLog,
-  finalAuditMemberRechargeLog,
-  refusedAuditMemberRechargeLog,
-  recoverAuditMemberRechargeLog
-} from '@/api/platform-web/pay/memberRechargeLog'
-import { pickerDateTimeShortcuts } from '@/utils/dateUtils'
+  import {
+    listMemberRechargeLog,
+    listCount,
+    getMemberRechargeLog,
+    exportMemberRechargeLog,
+    firstAuditMemberRechargeLog,
+    finalAuditMemberRechargeLog,
+    refusedAuditMemberRechargeLog,
+    recoverAuditMemberRechargeLog
+  } from '@/api/platform-web/pay/memberRechargeLog'
+  import {
+    listBankList
+  } from "@/api/platform-web/pay/bankList";
+  import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
 
-export default {
-  name: 'MemberRechargeLog',
-  components: {},
-  data() {
-    return {
-      refreshSec: '5',
-      refreshType: 'primary',
-      refreshIcon: 'el-icon-refresh',
-      refreshLabel: '开始刷新',
-      refreshDesc: '',
-      pickerOptions: { shortcuts: pickerDateTimeShortcuts },
-      totalData: {},
-      // 遮罩层
-      loading: true,
-      // 非单个禁用
-      single: true,
-      // 非多个禁用
-      multiple: true,
-      // 显示搜索条件
-      showSearch: true,
-      // 总条数
-      total: 0,
-      // 公司入款信息表格数据
-      memberRechargeLogList: [],
-      // 弹出层标题
-      title: '',
-      // 是否显示弹出层
-      open: false,
-      // 状态字典
-      statusOptions: [],
-      // 状态字典
-      firstStatusOptions: [],
-      // 审核不通过原因字典
-      refusedAuditReasonOptions: [],
-      // 查询参数
-      queryParams: {
-        selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
-        pageNum: 1,
-        pageSize: 50,
-        orderByColumn: 'create_time',
-        isAsc: 'desc',
-        status: null,
-        rechargeUserName: null,
-        bankUserName: null,
-        searchValue: null,
-        orderNo: null
-      },
-      // 表单参数
-      form: {},
-      // 表单校验
-      rules: {
-        refusedAuditReason: [
-          { required: true, message: '审核不通过原因不能为空', trigger: 'blur' }
-        ]
+  export default {
+    name: 'MemberRechargeLog',
+    components: {},
+    data() {
+      return {
+        refreshSec: '5',
+        refreshType: 'primary',
+        refreshIcon: 'el-icon-refresh',
+        refreshLabel: '开始刷新',
+        refreshDesc: '',
+        pickerOptions: {shortcuts: pickerDateTimeShortcuts},
+        totalData: {},
+        // 遮罩层
+        loading: true,
+        // 非单个禁用
+        single: true,
+        // 非多个禁用
+        multiple: true,
+        // 显示搜索条件
+        showSearch: true,
+        // 总条数
+        total: 0,
+        // 公司入款信息表格数据
+        memberRechargeLogList: [],
+        // 弹出层标题
+        title: '',
+        // 是否显示弹出层
+        open: false,
+        // 状态字典
+        statusOptions: [],
+        // 状态字典
+        firstStatusOptions: [],
+        // 审核不通过原因字典
+        refusedAuditReasonOptions: [],
+        //银行卡列表
+        bankList: [],
+        // 查询参数
+        queryParams: {
+          selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
+          pageNum: 1,
+          pageSize: 50,
+          orderByColumn: 'create_time',
+          isAsc: 'desc',
+          status: null,
+          rechargeUserName: null,
+          bankUserName: null,
+          searchValue: null,
+          orderNo: null
+        },
+        // 表单参数
+        form: {},
+        // 表单校验
+        rules: {
+          refusedAuditReason: [
+            {required: true, message: '审核不通过原因不能为空', trigger: 'blur'}
+          ]
+        }
       }
-    }
-  },
-  created() {
-    this.getList()
-    this.listCount()
-    this.getDicts('recharge_log_status').then(response => {
-      this.statusOptions = response.data
-    })
-    this.getDicts('first').then(response => {
-      this.firstStatusOptions = response.data
-    })
-  },
-  activated() {
-    this.refreshType = 'primary'
-    this.refreshIcon = 'el-icon-refresh'
-    this.refreshLabel = '开始刷新'
-    this.refreshDesc = ''
-
-    this.stopRefresh()
-  },
-  methods: {
-    listCount() {
-      listCount(this.queryParams).then((res) => {
-        this.totalData = res
-      })
     },
-    /** 查询公司入款信息列表 */
-    getList() {
-      this.loading = true
-      listMemberRechargeLog(this.queryParams).then(response => {
-        this.memberRechargeLogList = response.rows
-        this.total = response.total
-        this.loading = false
-      })
-    },
-    //复制
-    copy1() {
-      this.copyCommand(this.totalData.total)
-    },
-    copy2() {
-      this.copyCommand(this.totalData.successMoney)
-    },
-    copy3() {
-      this.copyCommand(this.numberUtil.toPercent(this.totalData.successRate))
-    },
-    // 状态字典翻译
-    firstStatusFormat(row, column) {
-      return this.selectDictLabel(this.firstStatusOptions, row.first)
-    },
-    // 取消按钮
-    cancel() {
-      this.open = false
-      this.reset()
-    },
-    // 表单重置
-    reset() {
-      this.form = {
-        id: null,
-        memberId: null,
-        userName: null,
-        rechargeMoney: null,
-        bankName: null,
-        bankAccount: null,
-        status: null,
-        remark: null,
-        opName: null,
-        createTime: null,
-        updateTime: null,
-        bankAddress: null,
-        type: null,
-        rechargeUserName: null,
-        bankUserName: null,
-        orderNo: null,
-        discountBill: null,
-        first: null
-      }
-      this.resetForm('form')
-    },
-    /** 搜索按钮操作 */
-    handleQuery() {
-      this.queryParams.pageNum = 1
+    created() {
       this.getList()
       this.listCount()
-    },
-    /** 复制按钮 */
-    handleCopy(row){
-      var status=this.statusOptions[parseInt(row.status)];
-      var textarea = document.createElement("textarea");
-      let html = '<table><tr>'
-      html += '<td>' + row.memberId + '</td>'
-      html += '<td>' + row.userName + '</td>'
-      html += '<td>' + row.rechargeUserName + '</td>'
-      html += '<td>' + row.rechargeMoney + '</td>'
-      html += '<td>' + row.bankUserName + '</td>'
-      html += '<td>' + row.bankName + '</td>'
-      html += '<td>' + row.orderNo + '</td>'
-      html += '<td>' + row.opName + '</td>'
-      html += '<td>' + status.dictLabel + '</td>'
-      html += '<td>' + row.createTime + '</td>'
-      html += '<td>' + row.updateTime  + '</td>'
-      html += '</tr></table>'
-      textarea.value = html;
-      this.copyData = html
-      this.copy(this.copyData)
-    },
-    copy(data){
-      let url = data;
-      let oInput = document.createElement('input');
-      oInput.value = url;
-      document.body.appendChild(oInput);
-      oInput.select(); // 选择对象;
-      document.execCommand("Copy"); // 执行浏览器复制命令
-      this.$message({
-        message: '复制成功',
-        type: 'success'
-      });
-      oInput.remove()
-    },
-    /** 重置按钮操作 */
-    resetQuery() {
-      this.resetForm('queryForm')
-      this.handleQuery()
-    },
-    /** 修改按钮操作 */
-    handleUpdate(row) {
-      this.reset()
-      const id = row.id
-      getMemberRechargeLog(id).then(response => {
-        this.form = response.data
-        this.open = true
-        this.title = '修改公司入款信息'
+      this.getDicts('recharge_log_status').then(response => {
+        this.statusOptions = response.data
+      })
+      this.getDicts('first').then(response => {
+        this.firstStatusOptions = response.data
+      })
+      listBankList({}).then((res) => {
+        this.bankList = res.rows
       })
     },
-    /** 导出按钮操作 */
-    handleExport() {
-      const queryParams = this.queryParams
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(function() {
-        return exportMemberRechargeLog(queryParams)
-      }).then(response => {
-        this.downloadExcel(response, '公司入款')
-      }).catch(() => {
-      })
-    },
-    handleFirstAudit(row) {
-      firstAuditMemberRechargeLog({
-        id: row.id
-      }).then(response => {
-        this.msgSuccess(response.msg)
-        if (response.code == 200) {
-          this.open = false
-          this.getList()
-        }
-      })
-    },
-    handleFinalAudit(row) {
-      finalAuditMemberRechargeLog({
-        id: row.id
-      }).then(response => {
-        this.msgSuccess(response.msg)
-        if (response.code == 200) {
-          this.open = false
-          this.getList()
-        }
-      })
-    },
-    handleRefusedAudit(row) {
-      this.getDicts('memberRechargeLog_refusedAudit_reason').then(response => {
-        this.refusedAuditReasonOptions = response.data
-        this.form.id = row.id
-        this.open = true
-      })
-    },
-    submitRefusedAudit() {
-      this.$refs['form'].validate(valid => {
-        if (valid) {
-          refusedAuditMemberRechargeLog({
-            id: this.form.id,
-            remark: this.form.refusedAuditReason
-          }).then(response => {
-            this.msgSuccess(response.msg)
-            if (response.code == 200) {
-              this.open = false
-              this.getList()
-            }
-          })
-        }
-      })
-    },
-    handleRecoverAudit(row) {
-      recoverAuditMemberRechargeLog({
-        id: row.id
-      }).then(response => {
-        this.msgSuccess(response.msg)
-        if (response.code == 200) {
-          this.open = false
-          this.getList()
-        }
-      })
-    },
-    refreshData() {
-      if (this.refreshType === 'primary') {
-        this.refreshType = 'danger'
-        this.refreshIcon = 'el-icon-circle-close'
-        this.refreshLabel = '停止刷新'
-        this.refreshDesc = ''
+    activated() {
+      this.refreshType = 'primary'
+      this.refreshIcon = 'el-icon-refresh'
+      this.refreshLabel = '开始刷新'
+      this.refreshDesc = ''
 
-        this.stopRefresh()
+      this.stopRefresh()
+    },
+    methods: {
+      listCount() {
+        listCount(this.queryParams).then((res) => {
+          this.totalData = res
+        })
+      },
+      /** 查询公司入款信息列表 */
+      getList() {
+        this.loading = true
+        listMemberRechargeLog(this.queryParams).then(response => {
+          this.memberRechargeLogList = response.rows
+          this.total = response.total
+          this.loading = false
+        })
+      },
+      //复制
+      copy1() {
+        this.copyCommand(this.totalData.total)
+      },
+      copy2() {
+        this.copyCommand(this.totalData.successMoney)
+      },
+      copy3() {
+        this.copyCommand(this.numberUtil.toPercent(this.totalData.successRate))
+      },
+      // 状态字典翻译
+      firstStatusFormat(row, column) {
+        return this.selectDictLabel(this.firstStatusOptions, row.first)
+      },
+      // 取消按钮
+      cancel() {
+        this.open = false
+        this.reset()
+      },
+      // 表单重置
+      reset() {
+        this.form = {
+          id: null,
+          memberId: null,
+          userName: null,
+          rechargeMoney: null,
+          bankName: null,
+          bankAccount: null,
+          status: null,
+          remark: null,
+          opName: null,
+          createTime: null,
+          updateTime: null,
+          bankAddress: null,
+          type: null,
+          rechargeUserName: null,
+          bankUserName: null,
+          orderNo: null,
+          discountBill: null,
+          first: null
+        }
+        this.resetForm('form')
+      },
+      /** 搜索按钮操作 */
+      handleQuery() {
+        this.queryParams.pageNum = 1
         this.getList()
-        this.startRefresh()
-      } else {
-        this.refreshType = 'primary'
-        this.refreshIcon = 'el-icon-refresh'
-        this.refreshLabel = '开始刷新'
-        this.refreshDesc = ''
+        this.listCount()
+      },
+      /** 复制按钮 */
+      handleCopy(row) {
+        var status = this.statusOptions[parseInt(row.status)];
+        var textarea = document.createElement("textarea");
+        let html = '<table><tr>'
+        html += '<td>' + row.memberId + '</td>'
+        html += '<td>' + row.userName + '</td>'
+        html += '<td>' + row.rechargeUserName + '</td>'
+        html += '<td>' + row.rechargeMoney + '</td>'
+        html += '<td>' + row.bankUserName + '</td>'
+        html += '<td>' + row.bankName + '</td>'
+        html += '<td>' + row.orderNo + '</td>'
+        html += '<td>' + row.opName + '</td>'
+        html += '<td>' + status.dictLabel + '</td>'
+        html += '<td>' + row.createTime + '</td>'
+        html += '<td>' + row.updateTime + '</td>'
+        html += '</tr></table>'
+        textarea.value = html;
+        this.copyData = html
+        this.copy(this.copyData)
+      },
+      copy(data) {
+        let url = data;
+        let oInput = document.createElement('input');
+        oInput.value = url;
+        document.body.appendChild(oInput);
+        oInput.select(); // 选择对象;
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        this.$message({
+          message: '复制成功',
+          type: 'success'
+        });
+        oInput.remove()
+      },
+      /** 重置按钮操作 */
+      resetQuery() {
+        this.resetForm('queryForm')
+        this.handleQuery()
+      },
+      /** 修改按钮操作 */
+      handleUpdate(row) {
+        this.reset()
+        const id = row.id
+        getMemberRechargeLog(id).then(response => {
+          this.form = response.data
+          this.open = true
+          this.title = '修改公司入款信息'
+        })
+      },
+      /** 导出按钮操作 */
+      handleExport() {
+        const queryParams = this.queryParams
+        this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+          confirmButtonText: '确认',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(function () {
+          return exportMemberRechargeLog(queryParams)
+        }).then(response => {
+          this.downloadExcel(response, '公司入款')
+        }).catch(() => {
+        })
+      },
+      handleFirstAudit(row) {
+        firstAuditMemberRechargeLog({
+          id: row.id
+        }).then(response => {
+          this.msgSuccess(response.msg)
+          if (response.code == 200) {
+            this.open = false
+            this.getList()
+          }
+        })
+      },
+      handleFinalAudit(row) {
+        finalAuditMemberRechargeLog({
+          id: row.id
+        }).then(response => {
+          this.msgSuccess(response.msg)
+          if (response.code == 200) {
+            this.open = false
+            this.getList()
+          }
+        })
+      },
+      handleRefusedAudit(row) {
+        this.getDicts('memberRechargeLog_refusedAudit_reason').then(response => {
+          this.refusedAuditReasonOptions = response.data
+          this.form.id = row.id
+          this.open = true
+        })
+      },
+      submitRefusedAudit() {
+        this.$refs['form'].validate(valid => {
+          if (valid) {
+            refusedAuditMemberRechargeLog({
+              id: this.form.id,
+              remark: this.form.refusedAuditReason
+            }).then(response => {
+              this.msgSuccess(response.msg)
+              if (response.code == 200) {
+                this.open = false
+                this.getList()
+              }
+            })
+          }
+        })
+      },
+      handleRecoverAudit(row) {
+        recoverAuditMemberRechargeLog({
+          id: row.id
+        }).then(response => {
+          this.msgSuccess(response.msg)
+          if (response.code == 200) {
+            this.open = false
+            this.getList()
+          }
+        })
+      },
+      refreshData() {
+        if (this.refreshType === 'primary') {
+          this.refreshType = 'danger'
+          this.refreshIcon = 'el-icon-circle-close'
+          this.refreshLabel = '停止刷新'
+          this.refreshDesc = ''
 
-        this.stopRefresh()
-      }
-    },
-    startRefresh() {
-      const thet = this
-      let secs = thet.refreshSec
-      window.refreshInterval = setInterval(function() {
-        if (secs === 0) {
-          thet.getList()
-          secs = thet.refreshSec
+          this.stopRefresh()
+          this.getList()
+          this.startRefresh()
+        } else {
+          this.refreshType = 'primary'
+          this.refreshIcon = 'el-icon-refresh'
+          this.refreshLabel = '开始刷新'
+          this.refreshDesc = ''
+
+          this.stopRefresh()
         }
-        thet.refreshDesc = secs + '秒后开始刷新'
-        secs--
-      }, 1000)
-    },
-    stopRefresh() {
-      clearInterval(window.refreshInterval)
+      },
+      startRefresh() {
+        const thet = this
+        let secs = thet.refreshSec
+        window.refreshInterval = setInterval(function () {
+          if (secs === 0) {
+            thet.getList()
+            secs = thet.refreshSec
+          }
+          thet.refreshDesc = secs + '秒后开始刷新'
+          secs--
+        }, 1000)
+      },
+      stopRefresh() {
+        clearInterval(window.refreshInterval)
+      }
     }
   }
-}
 </script>

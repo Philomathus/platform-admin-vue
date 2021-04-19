@@ -19,6 +19,14 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item prop="gameId">
+        <el-input
+          v-model="queryParams.gameId"
+          placeholder="请输入游戏局号"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item prop="agent">
         <el-input
           v-model="queryParams.agent"
@@ -65,6 +73,7 @@
 <!--        </template>-->
 <!--      </el-table-column>-->
       <el-table-column label="子平台ID" align="center" prop="agent"/>
+      <el-table-column label="游戏局号" align="center" prop="gameId"/>
       <el-table-column label="平台名称" align="center" prop="platformName"/>
       <el-table-column label="子平台名称" align="center" prop="sonPlatformName"/>
       <el-table-column label="有效下注" align="center" prop="cell_score"/>

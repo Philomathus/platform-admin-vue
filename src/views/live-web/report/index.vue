@@ -120,7 +120,9 @@ export default {
         type: "0",
         reptime: new Date(),
         pageNum: 1,
-        pageSize: 20
+        pageSize: 20,
+        orderByColumn: 'sort',
+        isAsc: 'asc'
       },
       // 表单参数
       form: {},

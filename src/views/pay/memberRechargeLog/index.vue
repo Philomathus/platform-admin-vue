@@ -61,6 +61,7 @@
       <el-form-item prop="bankName" style="width: 200px">
         <el-select
           v-model="queryParams.bankNameUser"
+          filterable
           placeholder="银行-收款人"
           clearable
           size="small"

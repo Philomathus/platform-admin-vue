@@ -239,14 +239,14 @@ export default {
         hostId: null,
         settlementRate: 0.7,
         pageNum: 1,
-        pageSize: 20,
+        pageSize: 100,
       },
       detailsList: [],
       detailsTotal: 0,
       queryDetailsParams: {
         dateDay: this.parseTime(new Date(), '{y}-{m}-{d}'),
         pageNum: 1,
-        pageSize: 20,
+        pageSize: 100,
         orderByColumn: 'create_time',
         isAsc: 'desc'
       },

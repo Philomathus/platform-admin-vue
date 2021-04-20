@@ -200,9 +200,6 @@
           v-hasPermi="['live-web:liveUserWithdrawNewlog:export']"
         >导出</el-button>
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-    </el-row>
-    <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
           type="primary"
@@ -216,6 +213,10 @@
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
+<!--    <el-row :gutter="10" class="mb8">
+
+      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+    </el-row>-->
 
     <el-table stripe v-loading="loading" :data="liveUserWithdrawNewlogList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>

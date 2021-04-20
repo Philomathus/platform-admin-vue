@@ -88,19 +88,31 @@
     <!--银行卡-->
     <el-row v-if="index===7">
         <el-table @row-click="clickRow" ref="table" :data="liveBankList">
-        <el-table-column prop="realName" label="真实姓名" :show-overflow-tooltip="true" min-width="80" align="center"/>
-        <el-table-column prop="bankName" label="银行名称" :show-overflow-tooltip="true" min-width="80" align="center"/>
-        <el-table-column prop="bankAccount" label="银行卡号" :show-overflow-tooltip="true" min-width="150" align="center"/>
-        <el-table-column prop="bankAddress" label="银行地址" :show-overflow-tooltip="true" min-width="100" align="center"/>
-        <el-table-column label="操作" min-width="140" align="center">
+        <el-table-column prop="id" v-if="index===100"/>
+        <el-table-column prop="realName" label="真实姓名" :show-overflow-tooltip="true" min-width="80" align="center">
+          <template v-slot="{row}" v-if="index===7">
+            <el-input v-model="row.realName"></el-input>
+          </template>
+          </el-table-column>
+        <el-table-column prop="bankAccount" label="银行卡号" :show-overflow-tooltip="true" min-width="150" align="center">
+          <template v-slot="{row}" v-if="index===7">
+            <el-input v-model="row.bankAccount"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column prop="bankName" label="银行名称" :show-overflow-tooltip="true" min-width="80" align="center">
+            <template v-slot="{row}" v-if="index===7">
+              <el-input v-model="row.bankName"></el-input>
+            </template>
+        </el-table-column>
+        <el-table-column label="操作" min-width="90" align="center">
           <template v-slot="{row}"  v-if="index===7">
-<!--            <el-button-->
-<!--            size="mini"-->
-<!--            type="text"-->
-<!--            icon="el-icon-edit"-->
-<!--            @click="handleUpdate(scope.row)"-->
-<!--            >修改-->
-<!--            </el-button>-->
+            <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            @click="handleUpdate(row)"
+            >确认修改
+            </el-button>
             <el-button
               size="mini"
               type="text"
@@ -208,34 +220,13 @@
       <el-button @click="visible = false">取 消</el-button>
     </div>-->
   </el-dialog>
-
 </template>
-
-
-<!-- 修改主播银行卡对话框 -->
-<!--<el-dialog title="修改主播银行卡" :visible.sync="openBank" width="700px" append-to-body>-->
-<!--<el-form :model="UpdateBankForm" :rules="BankCardrules" label-width="90px">-->
-<!--  <el-form-item label="真实姓名" prop="realName">-->
-<!--    <el-input v-model="UpdateBankForm.realName" placeholder="请输入真实姓名"/>-->
-<!--  </el-form-item>-->
-<!--  <el-form-item label="银行卡号" prop="bankAccount">-->
-<!--    <el-input v-model="UpdateBankForm.bankAccount" placeholder="请输入银行卡号"/>-->
-<!--  </el-form-item>-->
-<!--  <el-form-item label="银行地址" prop="bankAddress">-->
-<!--    <el-input v-model="UpdateBankForm.bankAddress" placeholder="请输入银行地址"/>-->
-<!--  </el-form-item>-->
-<!--</el-form>-->
-<!--<div slot="footer" class="dialog-footer">-->
-<!--  <el-button type="primary" @click="submitForm">确 定</el-button>-->
-<!--  <el-button @click="cancel">取 消</el-button>-->
-<!--</div>-->
-<!--</el-dialog>-->
 
 <script>
     import {listDbTable, importTable} from "@/api/platform-web/tool/gen";
     import {
       goFamiily,
-      chatPage, receiveProplist, logPage, updateLiveUser, getLiveUser,updateMobile,getLiveUserBank,getLiveUserBankOne,delLiveUserBank
+      chatPage, receiveProplist, logPage, updateLiveUser, getLiveUser,updateMobile,getLiveUserBank,updateLiveUserBank,delLiveUserBank
     } from "@/api/live-web/liveUser";
 
     export default {
@@ -545,16 +536,29 @@
                 this.total = response.total;
             })
           },
-          // //修改主播银行卡
-          // handleUpdate(row) {
-          //   this.reset();
-          //   const id = row.id
-          //   getLiveUserBankOne(id).then(response => {
-          //     this.UpdateBankForm = response.data;
-          //     this.openBank = true;
-          //     this.title = "修改活动信息";
-          //   });
-          // },
+          //修改主播银行卡
+          handleUpdate(row) {
+          this.$confirm('是否修改银行卡信息?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.loading = true
+            updateLiveUserBank(row).then(res => {
+              this.msgSuccess("修改成功");
+              this.queryBank();
+            }).catch(() => {
+              this.$notify.error('网络异常')
+            }).finally(() => {
+              this.loading = false
+            })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消'
+            });
+          });
+        },
           /** 删除按钮操作 */
           handleDelete(row) {
             const bankAccount = row.bankAccount;

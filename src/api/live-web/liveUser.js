@@ -163,11 +163,12 @@ export function getLiveUserBank(userId) {
   })
 }
 
-// 修改主播银行卡查询详细
-export function getLiveUserBankOne(id) {
+// 修改主播银行卡
+export function updateLiveUserBank(data) {
   return request({
-    url: url.platformWeb + '/admin/liveUser/liveBankOne/' + id,
-    method: 'get'
+    url: url.platformWeb + '/admin/liveUser/updateBank',
+    method: 'put',
+    data: data
   })
 }
 

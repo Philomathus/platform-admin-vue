@@ -143,11 +143,7 @@
 
     <el-table stripe v-loading="loading" :data="liveHostPreList" @selection-change="handleSelectionChange">
       <el-table-column label="日期+主播ID" align="center" prop="id" min-width="160"/>
-      <el-table-column label="家族ID" align="center" prop="familyId">
-        <template slot-scope="scope">
-          <span type="text" v-if="scope.row.familyId == 0">散户</span>
-        </template>
-      </el-table-column>
+      <el-table-column label="家族ID" align="center" prop="familyId"/>
       <el-table-column label="主播ID" align="center" prop="hostId"/>
       <el-table-column label="直播昵称" align="center" prop="hostName" min-width="100"/>
       <el-table-column label="状态" align="center" prop="status">

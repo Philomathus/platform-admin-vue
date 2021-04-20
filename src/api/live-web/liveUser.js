@@ -154,3 +154,27 @@ export function exportAnchorAward(query) {
     timeout: 60000
   })
 }
+
+// 查询主播银行卡
+export function getLiveUserBank(userId) {
+  return request({
+    url: url.platformWeb + '/admin/liveUser/liveBank/' + userId,
+    method: 'get'
+  })
+}
+
+// 修改主播银行卡查询详细
+export function getLiveUserBankOne(id) {
+  return request({
+    url: url.platformWeb + '/admin/liveUser/liveBankOne/' + id,
+    method: 'get'
+  })
+}
+
+// 删除主播银行卡
+export function delLiveUserBank(bankAccount) {
+  return request({
+    url: url.platformWeb + '/admin/liveUser/liveBank/' + bankAccount,
+    method: 'delete'
+  })
+}

@@ -16,6 +16,8 @@
         <span>重置手机号</span></button>
       <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(4,'加入家族')">
         <span>加入家族</span></button>
+      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(7,'银行卡')">
+        <span>银行卡</span></button>
     </div>
     <!--聊天室记录-->
     <el-row v-if="index===1">
@@ -83,6 +85,40 @@
       />
     </el-row>
 
+    <!--银行卡-->
+    <el-row v-if="index===7">
+        <el-table @row-click="clickRow" ref="table" :data="liveBankList">
+        <el-table-column prop="realName" label="真实姓名" :show-overflow-tooltip="true" min-width="80" align="center"/>
+        <el-table-column prop="bankName" label="银行名称" :show-overflow-tooltip="true" min-width="80" align="center"/>
+        <el-table-column prop="bankAccount" label="银行卡号" :show-overflow-tooltip="true" min-width="150" align="center"/>
+        <el-table-column prop="bankAddress" label="银行地址" :show-overflow-tooltip="true" min-width="100" align="center"/>
+        <el-table-column label="操作" min-width="140" align="center">
+          <template v-slot="{row}"  v-if="index===7">
+<!--            <el-button-->
+<!--            size="mini"-->
+<!--            type="text"-->
+<!--            icon="el-icon-edit"-->
+<!--            @click="handleUpdate(scope.row)"-->
+<!--            >修改-->
+<!--            </el-button>-->
+            <el-button
+              size="mini"
+              type="text"
+              icon="el-icon-delete"
+              @click="handleDelete(row)"
+            >删除
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <pagination
+        v-show="total>0"
+        :total="total"
+        :page.sync="queryParams.pageNum"
+        :limit.sync="queryParams.pageSize"
+        @pagination="getList"
+      />
+    </el-row>
 
     <!--收礼物日志-->
     <el-row v-if="index===3">
@@ -172,13 +208,34 @@
       <el-button @click="visible = false">取 消</el-button>
     </div>-->
   </el-dialog>
+
 </template>
+
+
+<!-- 修改主播银行卡对话框 -->
+<!--<el-dialog title="修改主播银行卡" :visible.sync="openBank" width="700px" append-to-body>-->
+<!--<el-form :model="UpdateBankForm" :rules="BankCardrules" label-width="90px">-->
+<!--  <el-form-item label="真实姓名" prop="realName">-->
+<!--    <el-input v-model="UpdateBankForm.realName" placeholder="请输入真实姓名"/>-->
+<!--  </el-form-item>-->
+<!--  <el-form-item label="银行卡号" prop="bankAccount">-->
+<!--    <el-input v-model="UpdateBankForm.bankAccount" placeholder="请输入银行卡号"/>-->
+<!--  </el-form-item>-->
+<!--  <el-form-item label="银行地址" prop="bankAddress">-->
+<!--    <el-input v-model="UpdateBankForm.bankAddress" placeholder="请输入银行地址"/>-->
+<!--  </el-form-item>-->
+<!--</el-form>-->
+<!--<div slot="footer" class="dialog-footer">-->
+<!--  <el-button type="primary" @click="submitForm">确 定</el-button>-->
+<!--  <el-button @click="cancel">取 消</el-button>-->
+<!--</div>-->
+<!--</el-dialog>-->
 
 <script>
     import {listDbTable, importTable} from "@/api/platform-web/tool/gen";
     import {
       goFamiily,
-      chatPage, receiveProplist, logPage, updateLiveUser, getLiveUser,updateMobile
+      chatPage, receiveProplist, logPage, updateLiveUser, getLiveUser,updateMobile,getLiveUserBank,getLiveUserBankOne,delLiveUserBank
     } from "@/api/live-web/liveUser";
 
     export default {
@@ -190,6 +247,8 @@
         },
         data() {
             return {
+              //数据结构
+              detailsList: {},
               userId : null,
               //弹出框标题
               title: '积分明细',
@@ -214,6 +273,20 @@
                   {required: true, message: '谷歌验证码不能为空', trigger: 'blur'}
                 ],
               },
+              //银行卡校验规则
+              BankCardrules: {
+                realName: [
+                  {required: true, message: '真实姓名不能为空', trigger: 'blur'}
+                ],
+                bankAccount: [
+                  {required: true, message: '银行卡号不能为空', trigger: 'blur'}
+                ],
+                bankAddress: [
+                  {required: true, message: '银行地址不能为空', trigger: 'blur'}
+                ],
+              },
+              //修改银行卡表格
+              UpdateBankForm: {},
                 // 选中数组值
                 tables: [],
                 //账户类型
@@ -230,8 +303,11 @@
                 },
                 // 总条数
                 total: 0,
+                //表格
+                openBank: null,
                 // 表数据
                 dbTableList: [],
+                liveBankList: [],
                 // 查询参数
                 queryParams: {
                     selectDate: undefined,//选择日期
@@ -257,8 +333,8 @@
                 })
               }
             })
-
           },
+
             formatterMsg(row, column) {
                 var type = row.type;
                 if (type === 0) {
@@ -366,8 +442,8 @@
                         });
                     });
                 }
-
             },
+
             // 显示弹框
             show(userId,phone) {
                 this.userId = userId
@@ -396,6 +472,9 @@
                         break;
                     case 5:
                         this.queryRate()
+                        break;
+                    case 7:
+                        this.queryBank()
                         break;
                 }
             },
@@ -458,6 +537,40 @@
               this.liveUserRate = response.data
             })
             },
+          //查询主播银行卡
+          queryBank() {
+            this.dbTableList = []
+            getLiveUserBank(this.userId).then(response => {
+                this.liveBankList = response.rows
+                this.total = response.total;
+            })
+          },
+          // //修改主播银行卡
+          // handleUpdate(row) {
+          //   this.reset();
+          //   const id = row.id
+          //   getLiveUserBankOne(id).then(response => {
+          //     this.UpdateBankForm = response.data;
+          //     this.openBank = true;
+          //     this.title = "修改活动信息";
+          //   });
+          // },
+          /** 删除按钮操作 */
+          handleDelete(row) {
+            const bankAccount = row.bankAccount;
+            this.$confirm('是否确认删除银行卡号为"' + row.bankAccount + '"的数据项?', "警告", {
+              confirmButtonText: "确定",
+              cancelButtonText: "取消",
+              type: "warning"
+            }).then(function () {
+              return delLiveUserBank(bankAccount);
+            }).then(() => {
+              this.queryBank();
+              this.msgSuccess("删除成功");
+            }).catch(() => {
+              this.msgWarning('取消删除')
+            });
+          },
             //获取账户日志
             logPage(){
                 logPage({podcastId: this.userId,
@@ -467,7 +580,7 @@
                     _: new Date().getTime()}).then((res) => {
                     console.log('账户日志 \n'+JSON.stringify(res))
                     if (res.code === 200) {
-                        this.dbTableList = res.rows;
+                        this.detailsList = res.rows;
                         this.total = res.total;
                     }
                 }).catch(() => {

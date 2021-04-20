@@ -148,7 +148,7 @@
       <el-table-column label="直播昵称" align="center" prop="hostName" min-width="100"/>
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
-        <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">
+        <span :style="{color: (status = statusOptions[scope.row.status]).color}">
             {{ status.dictLabel }}
           </span>
         </template>

@@ -137,7 +137,7 @@
           size="mini"
           @click="handleBatchPayAgent"
           v-has-permi="['pay:payAgentPlatform:order']"
-        >联付宝批量代付
+        >批量代付
         </el-button>
       </el-col>
       <el-col :span="10" style="margin-left: 10px">
@@ -337,6 +337,7 @@
           plain
           size="small"
           @click="handlePayAgent"
+          :disabled="payDisabled"
           v-has-permi="['pay:payAgentPlatform:order']"
         >代 付
         </el-button>
@@ -448,6 +449,8 @@ export default {
     return {
       // 选中数组
       ids: [],
+      //代付
+      payDisabled: false,
       // 非单个禁用
       single: true,
       // 非多个禁用
@@ -861,6 +864,8 @@ export default {
     handlePayAgent() {
       this.$refs['form'].validate(valid => {
         if (valid) {
+          this.payDisabled = true
+          debugger;
           payAgentOrder({
             payAgentPlatId: this.form.payAgentPlatId,
             withdrawOrderNo: this.form.orderNo,
@@ -871,6 +876,8 @@ export default {
               this.open = false
               this.getList()
             }
+          }).finally(()=>{
+            this.payDisabled = false
           })
         }
       })
@@ -904,9 +911,13 @@ export default {
         if (response.code == 200) {
           this.batchPayAgentOpen = false
           this.getList()
-          const successNum = response.data.sucess
-          const failData = response.data.fail
-          this.$alert('成功数量：' + successNum, '批量代付信息', {
+          var successNum = response.data.sucess
+          var failData = response.data.fail
+          var failTxt = "成功数量: "+successNum+";<br/> 失败原因: <br/>"
+          for (let failDataKey in failData) {
+            failTxt += failDataKey +"  "+ failData[failDataKey]+" ;<br/> "
+          }
+          this.$alert(failTxt, '批量代付信息', {
             confirmButtonText: '确定',
             dangerouslyUseHTMLString: true
           })

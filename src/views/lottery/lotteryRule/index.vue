@@ -108,7 +108,7 @@
     <!-- 添加或修改开奖规则说明对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-        <el-form-item label="所属彩种类型" prop="kind">
+        <el-form-item label="所属彩种类型" prop="kind" v-if="form.id == null">
           <el-select
             filterable
             v-model="form.kind"
@@ -209,7 +209,6 @@ export default {
   created() {
     this.getList();
     this.getDicts('lotteryRule_kind').then(response => {
-      console.info(response.data)
       this.kindOptions = response.data
     })
   },

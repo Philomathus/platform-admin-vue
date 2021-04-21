@@ -88,7 +88,6 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
@@ -550,6 +549,7 @@ export default {
         hostId: null,
         hostName: null,
         status: 0,
+        live: 0,
         live0: null,
         live1: null,
         live2: null,

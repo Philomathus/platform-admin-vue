@@ -10,6 +10,15 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="备注" prop="mark">
+        <el-input
+          v-model="queryParams.mark"
+          placeholder="请输入备注"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item label="启用状态" prop="ipStatus">
         <el-select v-model="queryParams.ipStatus" placeholder="请选择IP白名单启用状态" clearable size="small">
           <el-option
@@ -196,7 +205,14 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {}
+      rules: {
+        ipAddress: [
+          {required: true, message: "IP不能为空", trigger: "blur"}
+        ],
+        mark: [
+          {required: true, message: "备注不能为空", trigger: "blur"}
+        ]
+      }
     }
   },
   created() {

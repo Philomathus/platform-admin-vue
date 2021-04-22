@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="IP白名单" prop="ipAddress">
+      <el-form-item prop="ipAddress">
         <el-input
           v-model="queryParams.ipAddress"
           placeholder="请输入IP白名单"
@@ -10,7 +10,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="备注" prop="mark">
+      <el-form-item prop="mark">
         <el-input
           v-model="queryParams.mark"
           placeholder="请输入备注"
@@ -19,7 +19,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="启用状态" prop="ipStatus">
+      <el-form-item prop="ipStatus">
         <el-select v-model="queryParams.ipStatus" placeholder="请选择IP白名单启用状态" clearable size="small">
           <el-option
             v-for="item in ipStatus"

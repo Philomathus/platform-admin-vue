@@ -95,7 +95,7 @@
       <el-table-column label="操作" width="145" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
-            v-show="!scope.row.noSpeaking"
+            v-show="scope.row.status==1 && !scope.row.noSpeaking"
             size="small"
             type="danger"
             @click="handleUpdateStop(scope.row)"
@@ -103,7 +103,7 @@
           >封停
           </el-button>
           <el-button
-            v-show="scope.row.noSpeaking"
+            v-show="scope.row.status==1 && scope.row.noSpeaking"
             size="small"
             type="success"
             @click="handleUpdate(scope.row)"

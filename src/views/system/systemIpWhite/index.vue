@@ -89,6 +89,9 @@
     <el-table stripe v-loading="loading" :data="systemIpWhiteList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="IP白名单" align="center" prop="ipAddress"/>
+      <el-table-column label="添加管理员" align="center" prop="ipAdmin"/>
+      <el-table-column label="备注" align="center" prop="mark"/>
+      <el-table-column label="IP登录数量" align="center" prop="ipCount"/>
       <el-table-column label="IP白名单启用状态" align="center" prop="ipStatus">
         <template slot-scope="scope">
           <el-switch
@@ -99,9 +102,6 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="添加管理员" align="center" prop="ipAdmin"/>
-      <el-table-column label="备注" align="center" prop="mark"/>
-      <el-table-column label="IP登录数量" align="center" prop="ipCount"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button

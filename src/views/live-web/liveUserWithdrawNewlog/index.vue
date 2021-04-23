@@ -64,9 +64,9 @@
          <el-option :label="item.labelName" :value="item.labelValue" v-for="item in liveWithdrawType" />
        </el-select>
       </el-form-item>
-      <el-form-item prop="SearchCardBlack" style="width: 130px;">
+      <el-form-item prop="SearchCardBlack" style="width: 155px;">
         <template>
-          <el-select v-model="queryParams.SearchCardBlack" placeholder="银行卡黑名单" size="small">
+          <el-select v-model="queryParams.SearchCardBlack" placeholder="银行归属地黑名单" size="small" clearable>
             <el-option
               v-for="item in CardBlackOptions"
               :key="item.value"
@@ -186,7 +186,12 @@
           <a style="color: #00afff" @click="copyColumn(row.bankAddress)">{{ row.bankAddress }}</a>
         </template>
       </el-table-column>
-      <el-table-column label="银行卡黑名单" align="center" min-width="110" prop="cardBlack" :formatter="cardBlackFormat"/>
+      <el-table-column label="银行归属地" align="center" min-width="110" prop="cardBlack" >
+      <template v-slot="{row}">
+        <span style="color: #ff0026" v-if="row.cardBlack == 1">{{ row.realBankAddress }}</span>
+        <span v-if="row.cardBlack == 0">否</span>
+      </template>
+      </el-table-column>
       <el-table-column label="状态" min-width="120" align="center" prop="wstatus">
         <template slot-scope="scope">
           <span :style="{color: (wstatus = statusOptions[parseInt(scope.row.wstatus)]).color}">{{ wstatus.dictLabel }}</span>
@@ -571,14 +576,6 @@ export default {
       textarea.value = html
       this.copyData = html
       this.copy(this.copyData)
-    },
-    //银行卡是否黑名单
-    cardBlackFormat(row, column) {
-      if (row.cardBlack == 0) {
-        return '否'
-      } else if (row.cardBlack == 1) {
-        return '是'
-      }
     },
     //合并订单
     fixIds() {

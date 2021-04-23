@@ -78,9 +78,9 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="SearchCardBlack" style="width: 130px;">
+      <el-form-item prop="SearchCardBlack" style="width: 155px;">
         <template>
-          <el-select v-model="queryParams.SearchCardBlack" placeholder="银行卡黑名单" size="small">
+          <el-select v-model="queryParams.SearchCardBlack" placeholder="银行归属地黑名单" size="small" clearable>
             <el-option
               v-for="item in CardBlackOptions"
               :key="item.value"
@@ -229,8 +229,13 @@
           >{{ status.dictLabel }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="银行归属地" align="center" min-width="110" prop="cardBlack">
+        <template v-slot="{row}">
+          <span style="color: #ff0026" v-if="row.cardBlack == 1">{{ row.realBankAddress }}</span>
+          <span v-if="row.cardBlack == 0">否</span>
+        </template>
+      </el-table-column>
       <el-table-column label="是否首次" min-width="90" align="center" prop="first" :formatter="firstFormat"/>
-      <el-table-column label="银行卡黑名单" align="center" min-width="110" prop="cardBlack" :formatter="cardBlackFormat"/>
       <el-table-column label="操作人" min-width="120" align="center" prop="opName"/>
       <el-table-column label="审核备注" min-width="200" align="center" prop="remark"/>
       <el-table-column label="下单时间" min-width="150" align="center" prop="createTime"/>
@@ -510,6 +515,8 @@ export default {
       firstOptions: [],
       // 代付平台
       payAgentPlatformOptions: [],
+      //银行归属地
+      realBankAddress: null,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -606,14 +613,6 @@ export default {
     // 是否首次1是0否字典翻译
     firstFormat(row, column) {
       return this.selectDictLabel(this.firstOptions, row.first)
-    },
-    //银行卡是否黑名单
-    cardBlackFormat(row, column) {
-      if (row.cardBlack == 0) {
-        return '否'
-      } else if (row.cardBlack == 1) {
-        return '是'
-      }
     },
     // 取消按钮
     cancel() {

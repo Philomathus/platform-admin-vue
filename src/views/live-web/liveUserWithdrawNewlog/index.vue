@@ -3,13 +3,6 @@
     <el-button type="success" @click="copy1">交易笔数 {{ this.totalData.countNumber || 0 }}</el-button>
     <el-button type="warning" @click="copy2">总金额 {{ this.totalData.countWithdrawMoney || 0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px"  style="margin-top: 20px">
-<!--      <el-form-item label="日期范围" prop="searchTime">
-        <el-date-picker type="datetimerange" v-model="queryParams.searchTime" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}" start-placeholder="开始时间"
-                        end-placeholder="开始时间"
-                        range-separator="至" clearable :default-time="['00:00:00', '23:59:59']" :picker-options="pickerOptions"
-        ></el-date-picker>
-      </el-form-item>-->
       <el-form-item prop="searchTime">
         <el-date-picker
           v-model="queryParams.searchTime"
@@ -39,6 +32,7 @@
           placeholder="主播昵称"
           clearable
           size="small"
+          style="width:140px"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
@@ -51,34 +45,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-<!--      <el-form-item label="订单表达式" prop="orderExpression">
-        <el-input
-          v-model="queryParams.orderExpression"
-          placeholder="请输入订单表达式"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="提现金额" prop="withdrawMoney">
-        <el-input
-          v-model="queryParams.withdrawMoney"
-          placeholder="请输入提现金额"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="提现收款人真实姓名" prop="bankUserName">
-        <el-input
-          v-model="queryParams.bankUserName"
-          placeholder="请输入提现收款人真实姓名"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>-->
-      <el-form-item  prop="bankAccount" label-width="120px">
+      <el-form-item prop="bankAccount">
         <el-input
           v-model="queryParams.bankAccount"
           placeholder="提现银行账号"
@@ -87,24 +54,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
- <!--     <el-form-item label="提现银行账号开户行" prop="bankAddress">
-        <el-input
-          v-model="queryParams.bankAddress"
-          placeholder="请输入提现银行账号开户行"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="提现银行类型ID" prop="bankTypeId">
-        <el-input
-          v-model="queryParams.bankTypeId"
-          placeholder="请输入提现银行类型ID"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>-->
       <el-form-item  prop="wstatus" style="width: 160px">
         <el-select v-model="queryParams.wstatus" placeholder="全部状态" clearable size="small">
           <el-option :label="item.labelName" :value="item.labelValue" v-for="item in withdrawTypes" />
@@ -115,42 +64,18 @@
          <el-option :label="item.labelName" :value="item.labelValue" v-for="item in liveWithdrawType" />
        </el-select>
       </el-form-item>
-<!--      <el-form-item label="审核员" prop="opName">
-        <el-input
-          v-model="queryParams.opName"
-          placeholder="请输入审核员"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+      <el-form-item prop="SearchCardBlack" style="width: 155px;">
+        <template>
+          <el-select v-model="queryParams.SearchCardBlack" placeholder="银行归属地黑名单" size="small" clearable>
+            <el-option
+              v-for="item in CardBlackOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </template>
       </el-form-item>
-      <el-form-item label="主播时长" prop="livetime">
-        <el-input
-          v-model="queryParams.livetime"
-          placeholder="请输入主播时长"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="主播礼物" prop="liveticket">
-        <el-input
-          v-model="queryParams.liveticket"
-          placeholder="请输入主播礼物"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="主播派奖" prop="livepaijiang">
-        <el-input
-          v-model="queryParams.livepaijiang"
-          placeholder="请输入主播派奖"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>-->
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -261,8 +186,12 @@
           <a style="color: #00afff" @click="copyColumn(row.bankAddress)">{{ row.bankAddress }}</a>
         </template>
       </el-table-column>
-
-<!--      <el-table-column label="状态" align="center" prop="wstatus" :formatter="formatterType" min-width="100px" />-->
+      <el-table-column label="银行归属地" align="center" min-width="110" prop="cardBlack" >
+      <template v-slot="{row}">
+        <span style="color: #ff0026" v-if="row.cardBlack == 1">{{ row.realBankAddress }}</span>
+        <span v-if="row.cardBlack == 0">否</span>
+      </template>
+      </el-table-column>
       <el-table-column label="状态" min-width="120" align="center" prop="wstatus">
         <template slot-scope="scope">
           <span :style="{color: (wstatus = statusOptions[parseInt(scope.row.wstatus)]).color}">{{ wstatus.dictLabel }}</span>
@@ -445,6 +374,14 @@ export default {
   },
   data() {
     return {
+      //银行卡黑名单下拉框
+      CardBlackOptions: [{
+        value: '1',
+        label: '是'
+      }, {
+        value: '0',
+        label: '否'
+      }],
       pickerOptions: {shortcuts: pickerDateTimeShortcuts},
       // 遮罩层
       loading: true,
@@ -489,6 +426,9 @@ export default {
         livetime: null,
         liveticket: null,
         livepaijiang: null,
+        //银行卡黑名单
+        SearchCardBlack: null,
+        cardBlack: null,
         orderByColumn: 'update_time',
         isAsc: 'desc'
       },

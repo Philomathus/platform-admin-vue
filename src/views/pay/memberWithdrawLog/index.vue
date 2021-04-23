@@ -6,13 +6,14 @@
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="100px"
              style="margin-top: 20px"
     >
-      <el-form-item label="修改日期" prop="searchTime" label-width="70px">
+      <el-form-item prop="searchTime">
         <el-date-picker type="datetimerange" v-model="queryParams.searchTime" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
-                        end-placeholder="结束时间" range-separator="至" :default-time="['00:00:00', '23:59:59']" clearable :picker-options="pickerOptions"
+                        end-placeholder="结束时间" range-separator="至" :default-time="['00:00:00', '23:59:59']" clearable
+                        :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item prop="status" style="width: 150px">
+      <el-form-item prop="status" style="width: 130px">
         <el-select v-model="queryParams.status" placeholder="全部状态" clearable size="small">
           <el-option value="-1" label="首次提现会员"/>
           <el-option
@@ -32,7 +33,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="提现金额" prop="withdrawMoney">
+      <el-form-item label="提现金额" prop="withdrawMoney" label-width="70px">
         <el-input
           v-model="queryParams.priceMin"
           placeholder="￥"
@@ -68,7 +69,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="remark" style="width: 120px;">
+      <el-form-item prop="remark" style="width: 100px;">
         <el-input
           v-model="queryParams.remark"
           placeholder="备注"
@@ -76,6 +77,18 @@
           size="small"
           @keyup.enter.native="handleQuery"
         />
+      </el-form-item>
+      <el-form-item prop="SearchCardBlack" style="width: 130px;">
+        <template>
+          <el-select v-model="queryParams.SearchCardBlack" placeholder="银行卡黑名单" size="small">
+            <el-option
+              v-for="item in CardBlackOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </template>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -217,6 +230,7 @@
         </template>
       </el-table-column>
       <el-table-column label="是否首次" min-width="90" align="center" prop="first" :formatter="firstFormat"/>
+      <el-table-column label="银行卡黑名单" align="center" min-width="110" prop="cardBlack" :formatter="cardBlackFormat"/>
       <el-table-column label="操作人" min-width="120" align="center" prop="opName"/>
       <el-table-column label="审核备注" min-width="200" align="center" prop="remark"/>
       <el-table-column label="下单时间" min-width="150" align="center" prop="createTime"/>
@@ -440,13 +454,21 @@ import {
   payAgentOrder,
   payAgentOrders
 } from '@/api/platform-web/pay/payAgentPlatform'
-import { pickerDateTimeShortcuts } from '@/utils/dateUtils'
+import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
 
 export default {
   name: 'MemberWithdrawLog',
   components: {},
   data() {
     return {
+      //银行卡黑名单下拉框
+      CardBlackOptions: [{
+        value: '1',
+        label: '是'
+      }, {
+        value: '0',
+        label: '否'
+      }],
       // 选中数组
       ids: [],
       //代付
@@ -460,7 +482,7 @@ export default {
       refreshIcon: 'el-icon-refresh',
       refreshLabel: '开始刷新',
       refreshDesc: '',
-      pickerOptions: { shortcuts: pickerDateTimeShortcuts },
+      pickerOptions: {shortcuts: pickerDateTimeShortcuts},
       // 头部数据
       totalData: {},
       //点击导出后不可点击
@@ -498,6 +520,9 @@ export default {
         priceMin: null,
         priceMax: null,
         remark: null,
+        //银行卡黑名单
+        SearchCardBlack: null,
+        cardBlack: null,
         orderByColumn: 'create_time',
         isAsc: 'desc'
       },
@@ -507,10 +532,10 @@ export default {
       // 表单校验
       rules: {
         googleAuthCode: [
-          { required: true, message: 'google验证码不能为空', trigger: 'blur' }
+          {required: true, message: 'google验证码不能为空', trigger: 'blur'}
         ],
         payAgentPlatId: [
-          { required: true, message: '请选择代付平台', trigger: 'blur' }
+          {required: true, message: '请选择代付平台', trigger: 'blur'}
         ]
       }
     }
@@ -539,7 +564,7 @@ export default {
       this.single = selection.length !== 1
       this.multiple = !selection.length
     },
-    tableRowClassName({ row, rowIndex }) {
+    tableRowClassName({row, rowIndex}) {
       if (row.class_twoname === '彩票异常投注次数') {
         return 'danger-row'
       }
@@ -581,6 +606,14 @@ export default {
     // 是否首次1是0否字典翻译
     firstFormat(row, column) {
       return this.selectDictLabel(this.firstOptions, row.first)
+    },
+    //银行卡是否黑名单
+    cardBlackFormat(row, column) {
+      if (row.cardBlack == 0) {
+        return '否'
+      } else if (row.cardBlack == 1) {
+        return '是'
+      }
     },
     // 取消按钮
     cancel() {
@@ -691,7 +724,7 @@ export default {
         confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportMemberWithdrawLog(queryParams)
       }).then(response => {
         this.downloadExcel(response, '会员提现')
@@ -712,7 +745,7 @@ export default {
         confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportShunWeiMemberWithdrawLog(that.ids)
       }).then(response => {
         this.downloadExcel(response, '顺为代付提现')
@@ -780,7 +813,7 @@ export default {
       this.$prompt(null, '请输入出款异常原因', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
-      }).then(({ value }) => {
+      }).then(({value}) => {
         abnormalWithdrawal({
           id: this.form.id,
           remark: value
@@ -811,7 +844,7 @@ export default {
         cancelButtonText: '取消',
         inputPattern: /\S/,
         inputErrorMessage: '拒绝原因不可为空'
-      }).then(({ value }) => {
+      }).then(({value}) => {
         refusedMemberWithdrawLog({
           id: id,
           remark: value
@@ -837,7 +870,7 @@ export default {
       this.$prompt(null, '请输入拒绝出款原因', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
-      }).then(({ value }) => {
+      }).then(({value}) => {
         refusedsMemberWithdrawLog({
           ids: this.ids,
           remark: value
@@ -876,7 +909,7 @@ export default {
               this.open = false
               this.getList()
             }
-          }).finally(()=>{
+          }).finally(() => {
             this.payDisabled = false
           })
         }
@@ -913,9 +946,9 @@ export default {
           this.getList()
           var successNum = response.data.sucess
           var failData = response.data.fail
-          var failTxt = "成功数量: "+successNum+";<br/> 失败原因: <br/>"
+          var failTxt = "成功数量: " + successNum + ";<br/> 失败原因: <br/>"
           for (let failDataKey in failData) {
-            failTxt += failDataKey +"  "+ failData[failDataKey]+" ;<br/> "
+            failTxt += failDataKey + "  " + failData[failDataKey] + " ;<br/> "
           }
           this.$alert(failTxt, '批量代付信息', {
             confirmButtonText: '确定',
@@ -946,7 +979,7 @@ export default {
     startRefresh() {
       const thet = this
       let secs = thet.refreshSec
-      window.refreshInterval = setInterval(function() {
+      window.refreshInterval = setInterval(function () {
         if (secs === 0) {
           thet.getList()
           secs = thet.refreshSec

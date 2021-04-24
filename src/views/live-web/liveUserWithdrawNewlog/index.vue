@@ -189,7 +189,7 @@
       <el-table-column label="银行归属地" align="center" min-width="110" prop="cardBlack" >
       <template v-slot="{row}">
         <span style="color: #ff0026" v-if="row.cardBlack == 1">{{ row.realBankAddress }}</span>
-        <span v-if="row.cardBlack == 0">否</span>
+        <span v-if="row.cardBlack == 0">{{ row.realBankAddress }}</span>
       </template>
       </el-table-column>
       <el-table-column label="状态" min-width="120" align="center" prop="wstatus">

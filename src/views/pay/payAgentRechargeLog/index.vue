@@ -249,7 +249,7 @@ export default {
     handleQuery() {
       this.queryParams.pageNum = 1;
       this.getList();
-      this.count();
+      // this.count();
     },
     /** 重置按钮操作 */
     resetQuery() {

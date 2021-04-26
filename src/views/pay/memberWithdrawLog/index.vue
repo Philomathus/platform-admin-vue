@@ -638,7 +638,7 @@ export default {
     handleQuery() {
       this.queryParams.pageNum = 1
       this.getList()
-      this.getCountTotal()
+      // this.getCountTotal()
     },
     /** 重置按钮操作 */
     resetQuery() {

@@ -1,7 +1,10 @@
 <template>
   <div class="app-container">
-    <el-button type="success" @click="copy1">交易笔数: {{this.data.countNumber}}</el-button>
+    <div v-loading="totalLoading">
+    <el-button type="success" @click="copy1">交易笔数: {{this.data.countNumber || 0}}</el-button>
     <el-button type="warning" @click="copy2">总上分金额: {{this.data.countMoney || 0 }}</el-button>
+      <el-button  type="primary" icon="el-icon-search" size="mini" @click="count()" style="margin-left: 20px">统计查询</el-button>
+    </div>
     <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 10px" v-show="showSearch" label-width="68px">
       <el-form-item label="创建时间" prop="selectDate" label-width="70px">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
@@ -154,6 +157,7 @@ export default {
       // 总条数
       total: 0,
       data: {},
+      totalLoading: false,
       // 代充信息日志表格数据
       payAgentRechargeLogList: [],
       // 弹出层标题
@@ -199,7 +203,6 @@ export default {
   },
   created() {
     this.getList();
-    this.count();
   },
   methods: {
     /** 查询代充信息日志列表 */
@@ -217,11 +220,10 @@ export default {
       this.reset();
     },
     count() {
-      this.loading = true;
+      this.totalLoading = true;
       countMoney(this.queryParams).then(response => {
         this.data= response.data;
-        this.loading = false;
-      });
+      }).finally(()=>{this.totalLoading = false;})
     },
     //复制
     copy1() {

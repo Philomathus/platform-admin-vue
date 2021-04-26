@@ -414,7 +414,7 @@
     handleQuery() {
       this.queryParams.pageNum = 1
       this.getList()
-      this.listCount()
+      // this.listCount()
     },
     /** 复制按钮 */
     handleCopy(row) {

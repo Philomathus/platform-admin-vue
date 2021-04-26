@@ -343,7 +343,7 @@ export default {
     handleQuery() {
       this.queryParams.pageNum = 1
       this.getList()
-      this.listCount()
+      // this.listCount()
     },
     /** 重置按钮操作 */
     resetQuery() {

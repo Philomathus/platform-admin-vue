@@ -262,7 +262,7 @@ export default {
       }).then(function() {
         return exportMemberPayJour(queryParams)
       }).then(response => {
-        this.downloadExcel(response, '线上充值')
+        this.downloadExcel(response, '线下充值报表')
         loading.close()
         this.disabled = false
       }).catch(() => {

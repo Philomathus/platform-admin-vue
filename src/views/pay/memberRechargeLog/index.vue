@@ -1,11 +1,14 @@
 <template>
   <div class="app-container">
-    <el-button type="success" @click="copy1">交易笔数 {{ this.totalData.total }}</el-button>
+    <div v-loading="totalLoading">
+    <el-button type="success" @click="copy1">交易笔数 {{ this.totalData.total || 0}}</el-button>
     <el-button type="warning" @click="copy2">总成功金额 {{ this.totalData.successMoney || 0 }}</el-button>
     <el-button type="info" id="copy3" @click="copy3">成功率 {{
-        numberUtil.toPercent(this.totalData.successRate)
+        numberUtil.toPercent(this.totalData.successRate || 0)
       }}
     </el-button>
+    <el-button  type="primary" icon="el-icon-search" size="mini" @click="listCount()" style="margin-left: 20px">统计查询</el-button>
+    </div>
     <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 10px" v-show="showSearch"
              label-width="100px">
       <el-form-item label="审核时间" prop="selectDate" label-width="70px">
@@ -272,6 +275,7 @@
         refreshDesc: '',
         pickerOptions: {shortcuts: pickerDateTimeShortcuts},
         totalData: {},
+        totalLoading: false,
         // 遮罩层
         loading: true,
         // 非单个禁用
@@ -322,7 +326,6 @@
     },
     created() {
       this.getList()
-      this.listCount()
       this.getDicts('recharge_log_status').then(response => {
         this.statusOptions = response.data
       })
@@ -350,9 +353,10 @@
       this.queryParams.bankUserName =split[1]
     },
     listCount() {
+      this.totalLoading = true
       listCount(this.queryParams).then((res) => {
         this.totalData = res
-      })
+      }).finally(()=>{this.totalLoading=false})
     },
     /** 查询公司入款信息列表 */
     getList() {

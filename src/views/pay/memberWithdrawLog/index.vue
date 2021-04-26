@@ -1,8 +1,11 @@
 <template>
   <div class="app-container">
+    <div v-loading="totalLoading">
     <el-button type="success" @click="copy1">成功出款笔数 {{ this.totalData.total || 0 }}</el-button>
     <el-button type="warning" @click="copy2">总出款金额 {{ this.totalData.successTotal || 0 }}</el-button>
     <el-button type="info" @click="copy3">成功率 {{ numberUtil.toPercent(this.totalData.successRate) }}</el-button>
+      <el-button  type="primary" icon="el-icon-search" size="mini" @click="getCountTotal()" style="margin-left: 20px">统计查询</el-button>
+    </div>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="100px"
              style="margin-top: 20px"
     >
@@ -463,6 +466,7 @@ export default {
       pickerOptions: { shortcuts: pickerDateTimeShortcuts },
       // 头部数据
       totalData: {},
+      totalLoading: false,
       //点击导出后不可点击
       disabled: false,
       // 遮罩层
@@ -523,7 +527,6 @@ export default {
       this.firstOptions = response.data
     })
     this.getList()
-    this.getCountTotal()
   },
   activated() {
     this.refreshType = 'primary'
@@ -565,9 +568,10 @@ export default {
       this.copyCommand(value)
     },
     getCountTotal() {
+      this.totalLoading=true
       getCountTotal(this.queryParams).then((res) => {
         this.totalData = res.data
-      })
+      }).finally(()=>{this.totalLoading=false})
     },
     /** 查询会员提现信息列表 */
     getList() {

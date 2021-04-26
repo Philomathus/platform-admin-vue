@@ -1,9 +1,12 @@
 <template>
   <div class="app-container">
+    <div v-loading="totalLoading">
     <el-button type="primary" @click="copy1">交易笔数 {{ this.totalData.total || 0 }}</el-button>
     <el-button type="success" @click="copy2">总成功金额 {{ this.totalData.totalMoney || 0 }}</el-button>
     <el-button type="warning" @click="copy3">补单金额 {{ this.totalData.replenishmentTotalMoney || 0 }}</el-button>
-    <el-button type="info" id="copy4" @click="copy4">成功率 {{ numberUtil.toPercent(this.totalData.failRate) }}</el-button>
+    <el-button type="info" id="copy4" @click="copy4">成功率 {{ numberUtil.toPercent(this.totalData.failRate || 0 ) }}</el-button>
+    <el-button  type="primary" icon="el-icon-search" size="mini" @click="listCount()" style="margin-left: 20px">统计查询</el-button>
+    </div>
     <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 10px" v-show="showSearch" label-width="100px">
       <el-form-item label="回调时间" prop="selectDate" label-width="100px">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
@@ -239,6 +242,8 @@ export default {
       open: false,
       // 状态
       statusOptions: [],
+      //统计状态
+      totalLoading: false,
       // 查询参数
       queryParams: {
         selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],//回调日期
@@ -272,7 +277,6 @@ export default {
       this.statusOptions = response.data
     })
     this.getList()
-    this.listCount()
   },
   activated() {
     this.refreshType = 'primary'
@@ -285,9 +289,10 @@ export default {
   methods: {
     //
     listCount() {
+      this.totalLoading=true
       listCount(this.queryParams).then((res) => {
         this.totalData = res
-      })
+      }).finally(()=>{this.totalLoading=false})
     },
     //复制
     copy1() {

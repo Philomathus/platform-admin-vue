@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="IP白名单" prop="ipAddress">
+      <el-form-item prop="ipAddress">
         <el-input
           v-model="queryParams.ipAddress"
           placeholder="请输入IP白名单"
@@ -10,7 +10,16 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="启用状态" prop="ipStatus">
+      <el-form-item prop="mark">
+        <el-input
+          v-model="queryParams.mark"
+          placeholder="请输入备注"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item prop="ipStatus">
         <el-select v-model="queryParams.ipStatus" placeholder="请选择IP白名单启用状态" clearable size="small">
           <el-option
             v-for="item in ipStatus"
@@ -80,7 +89,9 @@
     <el-table stripe v-loading="loading" :data="systemIpWhiteList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="IP白名单" align="center" prop="ipAddress"/>
-      <el-table-column label="IP白名单启用状态" align="center" prop="ipStatus">
+      <el-table-column label="备注" align="center" prop="mark"/>
+      <el-table-column label="IP登录数量" align="center" prop="ipCount"/>
+      <el-table-column label="状态" align="center" prop="ipStatus">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.ipStatus"
@@ -90,9 +101,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="添加管理员" align="center" prop="ipAdmin"/>
-      <el-table-column label="备注" align="center" prop="mark"/>
-      <el-table-column label="IP登录数量" align="center" prop="ipCount"/>
+      <el-table-column label="创建人" align="center" prop="ipAdmin"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -196,7 +205,14 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {}
+      rules: {
+        ipAddress: [
+          {required: true, message: "IP不能为空", trigger: "blur"}
+        ],
+        mark: [
+          {required: true, message: "备注不能为空", trigger: "blur"}
+        ]
+      }
     }
   },
   created() {

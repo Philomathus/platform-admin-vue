@@ -88,7 +88,6 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
@@ -143,16 +142,12 @@
 
     <el-table stripe v-loading="loading" :data="liveHostPreList" @selection-change="handleSelectionChange">
       <el-table-column label="日期+主播ID" align="center" prop="id" min-width="160"/>
-      <el-table-column label="家族ID" align="center" prop="familyId">
-        <template slot-scope="scope">
-          <span type="text" v-if="scope.row.familyId == 0">散户</span>
-        </template>
-      </el-table-column>
+      <el-table-column label="家族ID" align="center" prop="familyId"/>
       <el-table-column label="主播ID" align="center" prop="hostId"/>
       <el-table-column label="直播昵称" align="center" prop="hostName" min-width="100"/>
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
-        <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">
+        <span :style="{color: (status = statusOptions[scope.row.status]).color}">
             {{ status.dictLabel }}
           </span>
         </template>
@@ -554,6 +549,7 @@ export default {
         hostId: null,
         hostName: null,
         status: 0,
+        live: 0,
         live0: null,
         live1: null,
         live2: null,

@@ -1,18 +1,22 @@
 <template>
   <div class="app-container">
+    <div v-loading="totalLoading">
     <el-button type="success" @click="copy1">成功出款笔数 {{ this.totalData.total || 0 }}</el-button>
     <el-button type="warning" @click="copy2">总出款金额 {{ this.totalData.successTotal || 0 }}</el-button>
     <el-button type="info" @click="copy3">成功率 {{ numberUtil.toPercent(this.totalData.successRate) }}</el-button>
+      <el-button  type="primary" icon="el-icon-search" size="mini" @click="getCountTotal()" style="margin-left: 20px">统计查询</el-button>
+    </div>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="100px"
              style="margin-top: 20px"
     >
-      <el-form-item label="修改日期" prop="searchTime" label-width="70px">
+      <el-form-item prop="searchTime">
         <el-date-picker type="datetimerange" v-model="queryParams.searchTime" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
-                        end-placeholder="结束时间" range-separator="至" :default-time="['00:00:00', '23:59:59']" clearable :picker-options="pickerOptions"
+                        end-placeholder="结束时间" range-separator="至" :default-time="['00:00:00', '23:59:59']" clearable
+                        :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item prop="status" style="width: 150px">
+      <el-form-item prop="status" style="width: 130px">
         <el-select v-model="queryParams.status" placeholder="全部状态" clearable size="small">
           <el-option value="-1" label="首次提现会员"/>
           <el-option
@@ -32,7 +36,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="提现金额" prop="withdrawMoney">
+      <el-form-item label="提现金额" prop="withdrawMoney" label-width="70px">
         <el-input
           v-model="queryParams.priceMin"
           placeholder="￥"
@@ -68,7 +72,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="remark" style="width: 120px;">
+      <el-form-item prop="remark" style="width: 100px;">
         <el-input
           v-model="queryParams.remark"
           placeholder="备注"
@@ -76,6 +80,18 @@
           size="small"
           @keyup.enter.native="handleQuery"
         />
+      </el-form-item>
+      <el-form-item prop="SearchCardBlack" style="width: 155px;">
+        <template>
+          <el-select v-model="queryParams.SearchCardBlack" placeholder="银行归属地黑名单" size="small" clearable>
+            <el-option
+              v-for="item in CardBlackOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </template>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -137,7 +153,7 @@
           size="mini"
           @click="handleBatchPayAgent"
           v-has-permi="['pay:payAgentPlatform:order']"
-        >联付宝批量代付
+        >批量代付
         </el-button>
       </el-col>
       <el-col :span="10" style="margin-left: 10px">
@@ -214,6 +230,12 @@
           <span
             :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}"
           >{{ status.dictLabel }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="银行归属地" align="center" min-width="110" prop="cardBlack">
+        <template v-slot="{row}">
+          <span style="color: #ff0026" v-if="row.cardBlack == 1">{{ row.realBankAddress }}</span>
+          <span v-if="row.cardBlack == 0">{{ row.realBankAddress }}</span>
         </template>
       </el-table-column>
       <el-table-column label="是否首次" min-width="90" align="center" prop="first" :formatter="firstFormat"/>
@@ -337,6 +359,7 @@
           plain
           size="small"
           @click="handlePayAgent"
+          :disabled="payDisabled"
           v-has-permi="['pay:payAgentPlatform:order']"
         >代 付
         </el-button>
@@ -439,15 +462,25 @@ import {
   payAgentOrder,
   payAgentOrders
 } from '@/api/platform-web/pay/payAgentPlatform'
-import { pickerDateTimeShortcuts } from '@/utils/dateUtils'
+import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
 
 export default {
   name: 'MemberWithdrawLog',
   components: {},
   data() {
     return {
+      //银行卡黑名单下拉框
+      CardBlackOptions: [{
+        value: '1',
+        label: '是'
+      }, {
+        value: '0',
+        label: '否'
+      }],
       // 选中数组
       ids: [],
+      //代付
+      payDisabled: false,
       // 非单个禁用
       single: true,
       // 非多个禁用
@@ -457,9 +490,10 @@ export default {
       refreshIcon: 'el-icon-refresh',
       refreshLabel: '开始刷新',
       refreshDesc: '',
-      pickerOptions: { shortcuts: pickerDateTimeShortcuts },
+      pickerOptions: {shortcuts: pickerDateTimeShortcuts},
       // 头部数据
       totalData: {},
+      totalLoading: false,
       //点击导出后不可点击
       disabled: false,
       // 遮罩层
@@ -485,6 +519,8 @@ export default {
       firstOptions: [],
       // 代付平台
       payAgentPlatformOptions: [],
+      //银行归属地
+      realBankAddress: null,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -495,6 +531,9 @@ export default {
         priceMin: null,
         priceMax: null,
         remark: null,
+        //银行卡黑名单
+        SearchCardBlack: null,
+        cardBlack: null,
         orderByColumn: 'create_time',
         isAsc: 'desc'
       },
@@ -504,10 +543,10 @@ export default {
       // 表单校验
       rules: {
         googleAuthCode: [
-          { required: true, message: 'google验证码不能为空', trigger: 'blur' }
+          {required: true, message: 'google验证码不能为空', trigger: 'blur'}
         ],
         payAgentPlatId: [
-          { required: true, message: '请选择代付平台', trigger: 'blur' }
+          {required: true, message: '请选择代付平台', trigger: 'blur'}
         ]
       }
     }
@@ -520,7 +559,6 @@ export default {
       this.firstOptions = response.data
     })
     this.getList()
-    this.getCountTotal()
   },
   activated() {
     this.refreshType = 'primary'
@@ -536,7 +574,7 @@ export default {
       this.single = selection.length !== 1
       this.multiple = !selection.length
     },
-    tableRowClassName({ row, rowIndex }) {
+    tableRowClassName({row, rowIndex}) {
       if (row.class_twoname === '彩票异常投注次数') {
         return 'danger-row'
       }
@@ -562,9 +600,10 @@ export default {
       this.copyCommand(value)
     },
     getCountTotal() {
+      this.totalLoading=true
       getCountTotal(this.queryParams).then((res) => {
         this.totalData = res.data
-      })
+      }).finally(()=>{this.totalLoading=false})
     },
     /** 查询会员提现信息列表 */
     getList() {
@@ -599,7 +638,7 @@ export default {
     handleQuery() {
       this.queryParams.pageNum = 1
       this.getList()
-      this.getCountTotal()
+      // this.getCountTotal()
     },
     /** 重置按钮操作 */
     resetQuery() {
@@ -688,7 +727,7 @@ export default {
         confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportMemberWithdrawLog(queryParams)
       }).then(response => {
         this.downloadExcel(response, '会员提现')
@@ -709,7 +748,7 @@ export default {
         confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportShunWeiMemberWithdrawLog(that.ids)
       }).then(response => {
         this.downloadExcel(response, '顺为代付提现')
@@ -777,7 +816,7 @@ export default {
       this.$prompt(null, '请输入出款异常原因', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
-      }).then(({ value }) => {
+      }).then(({value}) => {
         abnormalWithdrawal({
           id: this.form.id,
           remark: value
@@ -808,7 +847,7 @@ export default {
         cancelButtonText: '取消',
         inputPattern: /\S/,
         inputErrorMessage: '拒绝原因不可为空'
-      }).then(({ value }) => {
+      }).then(({value}) => {
         refusedMemberWithdrawLog({
           id: id,
           remark: value
@@ -834,7 +873,7 @@ export default {
       this.$prompt(null, '请输入拒绝出款原因', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
-      }).then(({ value }) => {
+      }).then(({value}) => {
         refusedsMemberWithdrawLog({
           ids: this.ids,
           remark: value
@@ -861,6 +900,8 @@ export default {
     handlePayAgent() {
       this.$refs['form'].validate(valid => {
         if (valid) {
+          this.payDisabled = true
+          debugger;
           payAgentOrder({
             payAgentPlatId: this.form.payAgentPlatId,
             withdrawOrderNo: this.form.orderNo,
@@ -871,6 +912,8 @@ export default {
               this.open = false
               this.getList()
             }
+          }).finally(() => {
+            this.payDisabled = false
           })
         }
       })
@@ -904,9 +947,13 @@ export default {
         if (response.code == 200) {
           this.batchPayAgentOpen = false
           this.getList()
-          const successNum = response.data.sucess
-          const failData = response.data.fail
-          this.$alert('成功数量：' + successNum, '批量代付信息', {
+          var successNum = response.data.sucess
+          var failData = response.data.fail
+          var failTxt = "成功数量: " + successNum + ";<br/> 失败原因: <br/>"
+          for (let failDataKey in failData) {
+            failTxt += failDataKey + "  " + failData[failDataKey] + " ;<br/> "
+          }
+          this.$alert(failTxt, '批量代付信息', {
             confirmButtonText: '确定',
             dangerouslyUseHTMLString: true
           })
@@ -935,7 +982,7 @@ export default {
     startRefresh() {
       const thet = this
       let secs = thet.refreshSec
-      window.refreshInterval = setInterval(function() {
+      window.refreshInterval = setInterval(function () {
         if (secs === 0) {
           thet.getList()
           secs = thet.refreshSec

@@ -119,7 +119,7 @@
     <el-table :stripe="true" v-loading="loading" :data="payChannelNewList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="ID" align="center" prop="id"/>
-      <el-table-column label="通道名称" align="center" prop="name"/>
+      <el-table-column label="通道名称" align="center" prop="name" min-width="120"/>
       <el-table-column label="支付方式编码" align="center" prop="payMethod"/>
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
@@ -320,6 +320,7 @@ export default {
         payAttr: null,
         failNum: null,
         successNum: null,
+        payRateStr: null,
         totalSuccessMoney: null,
         rechargeMin: null,
         rechargeMax: null,
@@ -335,7 +336,9 @@ export default {
         inputType: null,
         creator: null,
         updator: null,
-        payRate: null
+        payRate: null,
+        orderByColumn: 'pay_rate',
+        isAsc: 'asc'
       },
       // 表单参数
       form: {},

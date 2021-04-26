@@ -16,6 +16,8 @@
         <span>重置手机号</span></button>
       <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(4,'加入家族')">
         <span>加入家族</span></button>
+      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(7,'银行卡')">
+        <span>银行卡</span></button>
     </div>
     <!--聊天室记录-->
     <el-row v-if="index===1">
@@ -83,6 +85,52 @@
       />
     </el-row>
 
+    <!--银行卡-->
+    <el-row v-if="index===7">
+        <el-table @row-click="clickRow" ref="table" :data="liveBankList">
+        <el-table-column prop="id" v-if="index===100"/>
+        <el-table-column prop="realName" label="真实姓名" :show-overflow-tooltip="true" min-width="80" align="center">
+          <template v-slot="{row}" v-if="index===7">
+            <el-input v-model="row.realName"></el-input>
+          </template>
+          </el-table-column>
+        <el-table-column prop="bankAccount" label="银行卡号" :show-overflow-tooltip="true" min-width="150" align="center">
+          <template v-slot="{row}" v-if="index===7">
+            <el-input v-model="row.bankAccount"></el-input>
+          </template>
+        </el-table-column>
+        <el-table-column prop="bankName" label="银行名称" :show-overflow-tooltip="true" min-width="80" align="center">
+            <template v-slot="{row}" v-if="index===7">
+              <el-input v-model="row.bankName"></el-input>
+            </template>
+        </el-table-column>
+        <el-table-column label="操作" min-width="90" align="center">
+          <template v-slot="{row}"  v-if="index===7">
+            <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            @click="handleUpdate(row)"
+            >确认修改
+            </el-button>
+            <el-button
+              size="mini"
+              type="text"
+              icon="el-icon-delete"
+              @click="handleDelete(row)"
+            >删除
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <pagination
+        v-show="total>0"
+        :total="total"
+        :page.sync="queryParams.pageNum"
+        :limit.sync="queryParams.pageSize"
+        @pagination="getList"
+      />
+    </el-row>
 
     <!--收礼物日志-->
     <el-row v-if="index===3">
@@ -178,7 +226,7 @@
     import {listDbTable, importTable} from "@/api/platform-web/tool/gen";
     import {
       goFamiily,
-      chatPage, receiveProplist, logPage, updateLiveUser, getLiveUser,updateMobile
+      chatPage, receiveProplist, logPage, updateLiveUser, getLiveUser,updateMobile,getLiveUserBank,updateLiveUserBank,delLiveUserBank
     } from "@/api/live-web/liveUser";
 
     export default {
@@ -190,6 +238,8 @@
         },
         data() {
             return {
+              //数据结构
+              detailsList: {},
               userId : null,
               //弹出框标题
               title: '积分明细',
@@ -214,6 +264,20 @@
                   {required: true, message: '谷歌验证码不能为空', trigger: 'blur'}
                 ],
               },
+              //银行卡校验规则
+              BankCardrules: {
+                realName: [
+                  {required: true, message: '真实姓名不能为空', trigger: 'blur'}
+                ],
+                bankAccount: [
+                  {required: true, message: '银行卡号不能为空', trigger: 'blur'}
+                ],
+                bankAddress: [
+                  {required: true, message: '银行地址不能为空', trigger: 'blur'}
+                ],
+              },
+              //修改银行卡表格
+              UpdateBankForm: {},
                 // 选中数组值
                 tables: [],
                 //账户类型
@@ -230,8 +294,11 @@
                 },
                 // 总条数
                 total: 0,
+                //表格
+                openBank: null,
                 // 表数据
                 dbTableList: [],
+                liveBankList: [],
                 // 查询参数
                 queryParams: {
                     selectDate: undefined,//选择日期
@@ -257,8 +324,8 @@
                 })
               }
             })
-
           },
+
             formatterMsg(row, column) {
                 var type = row.type;
                 if (type === 0) {
@@ -366,8 +433,8 @@
                         });
                     });
                 }
-
             },
+
             // 显示弹框
             show(userId,phone) {
                 this.userId = userId
@@ -396,6 +463,9 @@
                         break;
                     case 5:
                         this.queryRate()
+                        break;
+                    case 7:
+                        this.queryBank()
                         break;
                 }
             },
@@ -458,6 +528,53 @@
               this.liveUserRate = response.data
             })
             },
+          //查询主播银行卡
+          queryBank() {
+            this.dbTableList = []
+            getLiveUserBank(this.userId).then(response => {
+                this.liveBankList = response.rows
+                this.total = response.total;
+            })
+          },
+          //修改主播银行卡
+          handleUpdate(row) {
+          this.$confirm('是否修改银行卡信息?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.loading = true
+            updateLiveUserBank(row).then(res => {
+              this.msgSuccess("修改成功");
+              this.queryBank();
+            }).catch(() => {
+              this.$notify.error('网络异常')
+            }).finally(() => {
+              this.loading = false
+            })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消'
+            });
+          });
+        },
+          /** 删除按钮操作 */
+          handleDelete(row) {
+            const bankAccount = row.bankAccount;
+            this.$confirm('是否确认删除银行卡号为"' + row.bankAccount + '"的数据项?', "警告", {
+              confirmButtonText: "确定",
+              cancelButtonText: "取消",
+              type: "warning"
+            }).then(function () {
+              return delLiveUserBank(bankAccount);
+            }).then(() => {
+              this.queryBank();
+              this.msgSuccess("删除成功");
+            }).catch(() => {
+              this.msgWarning('取消删除')
+            });
+          },
             //获取账户日志
             logPage(){
                 logPage({podcastId: this.userId,
@@ -467,7 +584,7 @@
                     _: new Date().getTime()}).then((res) => {
                     console.log('账户日志 \n'+JSON.stringify(res))
                     if (res.code === 200) {
-                        this.dbTableList = res.rows;
+                        this.detailsList = res.rows;
                         this.total = res.total;
                     }
                 }).catch(() => {

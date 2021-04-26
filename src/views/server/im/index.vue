@@ -122,7 +122,7 @@
 </template>
 
 <script>
-import { listIm, getIm, delIm, addIm, updateIm } from '@/api/platform-web/server/im'
+import { listIm, getIm, delIm, addIm, updateIm, effectIm } from '@/api/platform-web/server/im'
 
 export default {
   name: 'Im',
@@ -301,16 +301,16 @@ export default {
       })
     },
     handleEffect(row) {
+      var that = this
       this.$confirm('确定要激活编号为"' + row.id + '"的IM即时通讯服务吗?', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function() {
-        return effectIm(row.id)
-      }).then(() => {
-        this.getList()
-        this.msgSuccess('激活成功')
-      }).catch(() => {
+        return effectIm(row.id).then((res) => {
+          that.getList()
+          that.msgSuccess('激活成功')
+        })
       })
     }
   }

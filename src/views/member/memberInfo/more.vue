@@ -34,8 +34,8 @@
         <span>打码修复</span></button>
       <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(9,'修改Vip')">
         <span>修改Vip</span></button>
-      <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(12,'IM删除')">
-        <span>IM删除</span></button>
+      <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(12,'IM禁言')">
+        <span>IM禁言</span></button>
     </div>
     <!--积分明细-->
     <el-row v-if="index===1">
@@ -454,7 +454,7 @@
             this.open(hint, 4)
             break
           case 12 :
-            hint = '确定删除IM'
+            hint = 'IM禁言'
             this.open(hint, 5)
             break
         }
@@ -556,9 +556,9 @@
             })
             imDelete({id: this.memberId}).then((res) => {
               if (res.code === 0) {
-                this.$notify.success('重置保险箱成功')
+                this.$notify.success('IM禁言成功')
               } else {
-                this.$notify.error('重置保险箱失败')
+                this.$notify.error('IM禁言失败')
               }
             }).catch(() => {
               this.$notify.error('网络异常')

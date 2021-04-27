@@ -253,7 +253,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="快捷金额" prop="quickAmount">
-          <el-input v-model="form.quickAmount" type="textarea" placeholder="请输入快捷金额,用','分割(英文逗号)"/>
+          <el-input v-model="form.quickAmount" type="textarea" onkeyup="this.value=this.value.replace(/[^\d\,]/g,'')" placeholder="请输入快捷金额,用','分割(英文逗号)"/>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input v-model="form.remark" placeholder="请输入备注提示"/>

@@ -33,6 +33,7 @@
           placeholder="主播ID"
           clearable
           size="small"
+          type="number"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>

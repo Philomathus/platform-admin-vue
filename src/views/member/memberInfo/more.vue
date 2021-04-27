@@ -34,6 +34,8 @@
         <span>打码修复</span></button>
       <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(9,'修改Vip')">
         <span>修改Vip</span></button>
+      <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(12,'IM删除')">
+        <span>IM删除</span></button>
     </div>
     <!--积分明细-->
     <el-row v-if="index===1">
@@ -229,7 +231,7 @@
     resetSafe,
     unbindCard,
     changeBank,
-    resetWithdrawal,memberBcodeRepair,updateVip,sendMsg,updateMobile
+    resetWithdrawal,memberBcodeRepair,updateVip,sendMsg,updateMobile,imDelete
   } from '@/api/platform-web/member/memberInfo'
   import {hideKMobile} from '@/utils/mobile.js';
   export default {
@@ -451,6 +453,10 @@
             hint = '请输入Vip等级'
             this.open(hint, 4)
             break
+          case 12 :
+            hint = '确定删除IM'
+            this.open(hint, 5)
+            break
         }
         //其他的就是获取列表
         this.getList()
@@ -538,6 +544,31 @@
           })
         }else if (type==4){
           this.showVip = !this.showVip
+        }else if (type === 5) {
+          this.$confirm(hint, '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$message({
+              type: 'success',
+              message: '操作成功!'
+            })
+            imDelete({id: this.memberId}).then((res) => {
+              if (res.code === 0) {
+                this.$notify.success('重置保险箱成功')
+              } else {
+                this.$notify.error('重置保险箱失败')
+              }
+            }).catch(() => {
+              this.$notify.error('网络异常')
+            })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消'
+            })
+          })
         }
 
       },

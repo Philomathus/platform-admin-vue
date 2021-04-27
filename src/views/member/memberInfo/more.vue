@@ -218,6 +218,24 @@
       <el-button type="primary" :disabled="showVipDisabled" @click="updateVip">立即提交</el-button>
     </div>
   </el-dialog>
+
+    <el-dialog
+      v-dialogDrag
+      :close-on-click-modal="false"
+      title="禁用启用IM发言"
+      :visible.sync="im"
+      width="600px"
+      append-to-body
+      :show-close="false"
+      :close-on-press-escape="false"
+    >
+
+      禁言时间<el-input v-model="banSpeakTime" type="number" placeholder="0取消禁言,4294967295永久禁言,其它值具体禁言时间"/>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="im = !im">取消</el-button>
+        <el-button type="primary" :disabled="showImDisabled" @click="updateIm">立即提交</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -247,8 +265,9 @@
     },
     data() {
       return {
-        showVip: false,
+        im: false,
         showVipDisabled: false,
+        showImDisabled: false,
         msg: '',
         // 遮罩层
         loading: true,
@@ -257,6 +276,7 @@
         vip: null,
         oldVip: null,
         nickName: null,
+        banSpeakTime:null,
         msgList: [],
         mobileForm: {},
         //弹出框标题
@@ -544,31 +564,8 @@
           })
         }else if (type==4){
           this.showVip = !this.showVip
-        }else if (type === 5) {
-          this.$confirm(hint, '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            this.$message({
-              type: 'success',
-              message: '操作成功!'
-            })
-            imDelete({id: this.memberId}).then((res) => {
-              if (res.code === 0) {
-                this.$notify.success('IM禁言成功')
-              } else {
-                this.$notify.error('IM禁言失败')
-              }
-            }).catch(() => {
-              this.$notify.error('网络异常')
-            })
-          }).catch(() => {
-            this.$message({
-              type: 'info',
-              message: '已取消'
-            })
-          })
+        }else if (type==5) {
+          this.im=!this.im
         }
 
       },
@@ -589,6 +586,17 @@
           }
         }).catch(() => {
           that.$notify.error('网络异常')
+        })
+      },
+      updateIm(){
+        var that = this
+        imDelete({
+          banSpeakTime: that.banSpeakTime,
+          id: that.memberId
+
+        }).then((res) => {
+          that.msgSuccess(res.msg)
+          that.im = false
         })
       },
       // 显示弹框

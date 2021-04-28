@@ -229,8 +229,20 @@
       :show-close="false"
       :close-on-press-escape="false"
     >
+     剩余禁言时间: {{ this.ImList.ShuttedUntil}}
+      <br/>
+     会员账号: {{ this.ImList.Member_Account }}
+      <br/>
+     昵称: {{ this.ImList.nickName }}
+      <br/>
+      IM禁言时间备注：0取消禁言,4294967295永久禁言,其它值具体禁言时间,以秒为单位
+      <br/>
+      <br/>
 
-      禁言时间<el-input v-model="banSpeakTime" type="number" placeholder="0取消禁言,4294967295永久禁言,其它值具体禁言时间"/>
+        <div>禁言时间（单位秒）
+      <el-input width="200px" v-model="banSpeakTime" type="number"/>
+        </div>
+      <br/>
       <div slot="footer" class="dialog-footer">
         <el-button @click="im = !im">取消</el-button>
         <el-button type="primary" :disabled="showImDisabled" @click="updateIm">立即提交</el-button>
@@ -249,8 +261,9 @@
     resetSafe,
     unbindCard,
     changeBank,
-    resetWithdrawal,memberBcodeRepair,updateVip,sendMsg,updateMobile,imDelete,getMemberImInfo
+    resetWithdrawal,memberBcodeRepair,updateVip,sendMsg,updateMobile,imDelete
   } from '@/api/platform-web/member/memberInfo'
+  import { userImMute } from "@/api/platform-web/live-web/ImMute";
   import {hideKMobile} from '@/utils/mobile.js';
   export default {
     props: {
@@ -288,7 +301,11 @@
         visible: false,
         // 选中数组值
         tables: [],
-        ImList: [],
+        ImList: {
+          Member_Account:null,
+          nickName:null,
+          ShuttedUntil:null
+        },
         //加分备注别表
         addScoreRemarks: [{label: '人工备注'}, {label: '线上入款'}, {label: '线下入款'}],
         //加分提交的数据
@@ -639,9 +656,9 @@
       //获取积分列表
       getMemberImInfo() {
         this.loading = true
-        getMemberImInfo(this.memberId).then((res) => {
+        userImMute(this.memberId).then((res) => {
             if (res.code === 200) {
-              this.ImList = res.data
+              this.ImList = res.data[0];
               this.loading = false
             }
           }

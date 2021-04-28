@@ -54,3 +54,9 @@ export function exportImMute(query) {
     timeout: 60000
   })
 }
+export function userImMute(query) {
+  return request({
+    url: url.platformWeb + '/live-web/ImMute/list?userId='+query,
+    method: 'get',
+  })
+}

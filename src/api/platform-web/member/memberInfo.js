@@ -195,12 +195,4 @@ export function imDelete(query) {
     params: query
   })
 }
-// 查询会员信息列表
-export function getMemberImInfo(query) {
-  debugger;
-  return request({
-    url: url.platformWeb + '/live-web/ImMute/list',
-    method: 'get',
-    params: query
-  })
-}
+

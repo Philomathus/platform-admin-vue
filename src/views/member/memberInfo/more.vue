@@ -249,7 +249,7 @@
     resetSafe,
     unbindCard,
     changeBank,
-    resetWithdrawal,memberBcodeRepair,updateVip,sendMsg,updateMobile,imDelete
+    resetWithdrawal,memberBcodeRepair,updateVip,sendMsg,updateMobile,imDelete,getMemberImInfo
   } from '@/api/platform-web/member/memberInfo'
   import {hideKMobile} from '@/utils/mobile.js';
   export default {
@@ -287,6 +287,7 @@
         visible: false,
         // 选中数组值
         tables: [],
+        ImList: [],
         //加分备注别表
         addScoreRemarks: [{label: '人工备注'}, {label: '线上入款'}, {label: '线下入款'}],
         //加分提交的数据
@@ -629,7 +630,21 @@
           case 5:
             this.cardList()
             break
+          case 12:
+            this.getMemberImInfo()
+            break
         }
+      },
+      //获取积分列表
+      getMemberImInfo() {
+        this.loading = true
+        getMemberImInfo(this.memberId).then((res) => {
+            if (res.code === 200) {
+              this.ImList = res.data
+              this.loading = false
+            }
+          }
+        )
       },
       //获取积分列表
       gameBalance() {

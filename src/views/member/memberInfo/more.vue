@@ -229,7 +229,7 @@
       :show-close="false"
       :close-on-press-escape="false"
     >
-     剩余禁言时间: {{ this.ImList.ShuttedUntil}}
+     剩余禁言时间: {{ this.ImList.shutTamp}}
       <br/>
      会员账号: {{ this.ImList.Member_Account }}
       <br/>
@@ -304,7 +304,7 @@
         ImList: {
           Member_Account:null,
           nickName:null,
-          ShuttedUntil:null
+          shutTamp:null
         },
         //加分备注别表
         addScoreRemarks: [{label: '人工备注'}, {label: '线上入款'}, {label: '线下入款'}],

@@ -2,6 +2,8 @@
   <div class="app-container">
     <el-button type="primary" @click="copy1">通道总数 {{ this.total || 0 }}</el-button>
     <el-button type="success" @click="copy2">总成功金额 {{ this.totalData.subMoney || 0 }}</el-button>
+    <el-button type="success" @click="copy2">手续费总额 {{ this.totalData.handlingfeeTotal || 0 }}</el-button>
+    <el-button type="success" @click="copy2">结算总金额 {{ this.totalData.subMoney - this.totalData.handlingfeeTotal || 0 }}</el-button>
     <!--    <el-button type="info" id="copy4" @click="copy4">成功率 {{ numberUtil.toPercent(this.totalData.failRate) }}</el-button>-->
     <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 10px" v-show="showSearch" label-width="100px">
       <el-form-item label="更新时间" prop="updateTime" label-width="70px">
@@ -69,6 +71,9 @@
       <el-table-column label="支付通道" min-width="150" align="center" prop="channelName" :show-overflow-tooltip="true"/>
       <el-table-column label="请求金额" min-width="80" align="center" prop="money"/>
       <el-table-column label="实际金额" min-width="80" align="center" prop="subMoney"/>
+      <el-table-column label="费率" min-width="80" align="center" prop="channelPayRate"/>
+      <el-table-column label="手续费" min-width="80" align="center" prop="handlingfee"/>
+      <el-table-column label="结算金额" min-width="80" align="center" prop="remaining"/>
       <el-table-column label="更新时间" min-width="160" align="center" prop="updateTime"/>
     </el-table>
 

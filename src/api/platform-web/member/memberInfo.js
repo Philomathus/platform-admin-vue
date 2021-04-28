@@ -189,10 +189,10 @@ export function memberBcodeRepair(query) {
 }
 // 重置密码接口
 export function imDelete(query) {
-  debugger;
   return request({
     url: url.platformWeb + '/member/memberInfo/imDealBan',
     method: 'post',
     params: query
   })
 }
+

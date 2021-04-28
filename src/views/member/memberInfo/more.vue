@@ -265,6 +265,7 @@
     },
     data() {
       return {
+        showVip: false,
         im: false,
         showVipDisabled: false,
         showImDisabled: false,

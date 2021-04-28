@@ -149,6 +149,9 @@ export default {
       form: {},
       // 表单校验
       rules: {
+        name: [
+          {required: true, message: '名称不能为空', trigger: 'blur'}
+        ]
       }
     };
   },

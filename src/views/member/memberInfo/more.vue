@@ -34,6 +34,8 @@
         <span>打码修复</span></button>
       <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(9,'修改Vip')">
         <span>修改Vip</span></button>
+      <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(12,'IM禁言')">
+        <span>IM禁言</span></button>
     </div>
     <!--积分明细-->
     <el-row v-if="index===1">
@@ -216,6 +218,24 @@
       <el-button type="primary" :disabled="showVipDisabled" @click="updateVip">立即提交</el-button>
     </div>
   </el-dialog>
+
+    <el-dialog
+      v-dialogDrag
+      :close-on-click-modal="false"
+      title="禁用启用IM发言"
+      :visible.sync="im"
+      width="600px"
+      append-to-body
+      :show-close="false"
+      :close-on-press-escape="false"
+    >
+
+      禁言时间<el-input v-model="banSpeakTime" type="number" placeholder="0取消禁言,4294967295永久禁言,其它值具体禁言时间"/>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="im = !im">取消</el-button>
+        <el-button type="primary" :disabled="showImDisabled" @click="updateIm">立即提交</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -229,7 +249,7 @@
     resetSafe,
     unbindCard,
     changeBank,
-    resetWithdrawal,memberBcodeRepair,updateVip,sendMsg,updateMobile
+    resetWithdrawal,memberBcodeRepair,updateVip,sendMsg,updateMobile,imDelete
   } from '@/api/platform-web/member/memberInfo'
   import {hideKMobile} from '@/utils/mobile.js';
   export default {
@@ -246,7 +266,9 @@
     data() {
       return {
         showVip: false,
+        im: false,
         showVipDisabled: false,
+        showImDisabled: false,
         msg: '',
         // 遮罩层
         loading: true,
@@ -255,6 +277,7 @@
         vip: null,
         oldVip: null,
         nickName: null,
+        banSpeakTime:null,
         msgList: [],
         mobileForm: {},
         //弹出框标题
@@ -451,6 +474,10 @@
             hint = '请输入Vip等级'
             this.open(hint, 4)
             break
+          case 12 :
+            hint = 'IM禁言'
+            this.open(hint, 5)
+            break
         }
         //其他的就是获取列表
         this.getList()
@@ -538,6 +565,8 @@
           })
         }else if (type==4){
           this.showVip = !this.showVip
+        }else if (type==5) {
+          this.im=!this.im
         }
 
       },
@@ -558,6 +587,17 @@
           }
         }).catch(() => {
           that.$notify.error('网络异常')
+        })
+      },
+      updateIm(){
+        var that = this
+        imDelete({
+          banSpeakTime: that.banSpeakTime,
+          id: that.memberId
+
+        }).then((res) => {
+          that.msgSuccess(res.msg)
+          that.im = false
         })
       },
       // 显示弹框

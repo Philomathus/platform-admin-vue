@@ -1,5 +1,6 @@
 import request from '@/utils/request'
 import {url} from '@/utils/url'
+import de from "element-ui/src/locale/lang/de";
 
 // 查询直播列表
 export function listLiveVideo(query) {
@@ -54,5 +55,13 @@ export function exportLiveVideo(query) {
     params: query,
     responseType: 'arraybuffer',
     timeout: 60000
+  })
+}
+// 设置排序值
+export function sendLiveMsg(data){
+  return request({
+    url: url.platformWeb + '/admin/liveVideo/sendLiveMsg',
+    method: 'post',
+    data: data
   })
 }

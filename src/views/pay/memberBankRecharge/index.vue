@@ -79,6 +79,7 @@
     <el-table :stripe="true" v-loading="loading" :data="memberPayJourList" :highlight-current-row="true">
       <el-table-column label="收款人" :show-overflow-tooltip="true" align="center" prop="bankUserName" min-width="90"/>
       <el-table-column label="银行名称" :show-overflow-tooltip="true" align="center" prop="bankName" min-width="120"/>
+      <el-table-column label="银行账号" :show-overflow-tooltip="true" align="center" prop="bankAccount" min-width="200"/>
       <el-table-column label="充值金额" align="center" prop="rechargeMoney" min-width="90"/>
       <el-table-column label="次数" align="center" prop="time" min-width="90"/>
       <el-table-column label="更新时间" min-width="160" align="center" prop="updateTime"/>

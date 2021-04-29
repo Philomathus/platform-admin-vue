@@ -85,6 +85,17 @@
         >导出
         </el-button>
       </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="warning"
+          plain
+          icon="el-icon-download"
+          size="mini"
+          @click="sendRoomMsg"
+          v-hasPermi="['admin:liveUser:add']"
+        >直播间小助手
+        </el-button>
+      </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -240,7 +251,19 @@
         <el-button type="primary" @click="submitForm(1)">确 定</el-button>
       </div>
     </el-dialog>
-
+    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="sendMsg" width="500px" append-to-body>
+      <el-form ref="form" :model="form"  label-width="120px">
+        <el-form-item label="房间id" prop="id" >
+          <el-input v-model="form.id" type="number" placeholder="单个房间id发送该房间，为空发送所有房间"/>
+        </el-form-item>
+        <el-form-item label="小助手消息"  >
+          <el-input v-model="form.info" prop="info" type="textarea" :rows="4" placeholder="请输入发送小助手消息"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="sendLiveMsg()">确 定</el-button>
+      </div>
+    </el-dialog>
 
     <!-- 开播内容对话框 -->
     <el-dialog :close-on-click-modal="false" v-loading="openLoading" title="开播信息" :visible.sync="openLiveStatus" width="500px" append-to-body>
@@ -344,7 +367,7 @@ import ImageUpload from '@/components/ImageUpload/index'
 import more from './more'
 import { pickerDateShortcuts } from '@/utils/dateUtils'
 import { addH5Plugin, updateH5Plugin } from '@/api/live-web/h5/h5Plugin'
-import {getLiveVideo} from '@/api/live-web/liveVideo/liveVideo'
+import {getLiveVideo,sendLiveMsg} from '@/api/live-web/liveVideo/liveVideo'
 export default {
   name: 'LiveUser',
   components: {
@@ -364,6 +387,7 @@ export default {
       // 遮罩层
       loading: true,
       addopen: false,
+      sendMsg: false,
       // 选中数组
       ids: [],
       // 非单个禁用
@@ -536,6 +560,11 @@ export default {
       this.addopen = true
       this.title = '添加虚拟主播'
     },
+    sendRoomMsg() {
+      this.reset()
+      this.sendMsg = true
+      this.title = '直播间小助手'
+    },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset()
@@ -583,6 +612,15 @@ export default {
         }
       })
       }
+    },
+    /** 提交按钮 */
+    sendLiveMsg() {
+      const that = this
+      sendLiveMsg(this.form).then(res => {
+        that.msgSuccess(res.msg);
+        that.sendMsg = false;
+        that.getList();
+      });
     },
     /** 导出按钮操作 */
     handleExport() {

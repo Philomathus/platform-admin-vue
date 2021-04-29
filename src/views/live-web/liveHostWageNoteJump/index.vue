@@ -237,6 +237,7 @@ export default {
         dateDay: this.parseTime(new Date(), '{y}-{m}-{d}'),
         nickName: null,
         hostId: null,
+        familyId:null,
         settlementRate: 0.7,
         pageNum: 1,
         pageSize: 100,

@@ -229,6 +229,7 @@
       :show-close="false"
       :close-on-press-escape="false"
     >
+      <el-input v-model="id" v-show="false"/>
      剩余禁言时间: {{ this.ImList.shutTamp}}
       <br/>
      会员账号: {{ this.ImList.Member_Account }}
@@ -237,6 +238,7 @@
       <br/>
       IM禁言时间备注：0取消禁言,4294967295永久禁言,其它值具体禁言时间,以秒为单位
       <br/>
+      IM禁言原因备注： {{this.ImList.muteRemark}}
       <br/>
 
         <div>禁言时间（单位秒）
@@ -256,7 +258,7 @@
           :value="dict.dictValue"
         />
       </el-select>
-
+      <el-input v-model="remarked" placeholder="请输入禁言原因" v-if="this.email == '其他'"/>
       <div slot="footer" class="dialog-footer">
         <el-button @click="im = !im">取消</el-button>
         <el-button type="primary" :disabled="showImDisabled" @click="updateIm">立即提交</el-button>
@@ -275,7 +277,7 @@
     resetSafe,
     unbindCard,
     changeBank,
-    resetWithdrawal,memberBcodeRepair,updateVip,sendMsg,updateMobile,imDelete
+    resetWithdrawal,memberBcodeRepair,updateVip,sendMsg,updateMobile,imDelete,updateRemark
   } from '@/api/platform-web/member/memberInfo'
   import { userImMute } from "@/api/platform-web/live-web/ImMute";
   import {hideKMobile} from '@/utils/mobile.js';
@@ -298,6 +300,7 @@
         showImDisabled: false,
         muteRemarkOptions: [],
         msg: '',
+        remarked: null,
         // 遮罩层
         loading: true,
         memberId: null,
@@ -628,10 +631,13 @@
       },
       updateIm(){
         var that = this
+        if (that.remarked != null) {
+          that.email = that.remarked;
+        }
         imDelete({
           banSpeakTime: that.banSpeakTime,
-          id: that.memberId
-
+          id: that.memberId,
+          email: that.email
         }).then((res) => {
           that.msgSuccess(res.msg)
           that.im = false

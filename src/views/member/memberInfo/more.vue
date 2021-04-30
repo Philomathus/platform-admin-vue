@@ -243,6 +243,20 @@
       <el-input width="200px" v-model="banSpeakTime" type="number"/>
         </div>
       <br/>
+      <el-select
+        v-model="email"
+        placeholder="请选择禁言原因"
+        clearable
+        style="min-width: 360px"
+      >
+        <el-option
+          v-for="dict in muteRemarkOptions"
+          :key="dict.dictValue"
+          :label="dict.dictLabel"
+          :value="dict.dictValue"
+        />
+      </el-select>
+
       <div slot="footer" class="dialog-footer">
         <el-button @click="im = !im">取消</el-button>
         <el-button type="primary" :disabled="showImDisabled" @click="updateIm">立即提交</el-button>
@@ -282,6 +296,7 @@
         im: false,
         showVipDisabled: false,
         showImDisabled: false,
+        muteRemarkOptions: [],
         msg: '',
         // 遮罩层
         loading: true,
@@ -291,6 +306,7 @@
         oldVip: null,
         nickName: null,
         banSpeakTime:null,
+        email:null,
         msgList: [],
         mobileForm: {},
         //弹出框标题
@@ -381,6 +397,9 @@
     created() {
       this.getDicts('member_msg').then(response => {
         this.msgList = response.data;
+      })
+      this.getDicts('muteRemarkOptions').then(response => {
+        this.muteRemarkOptions = response.data
       })
     },
     methods: {

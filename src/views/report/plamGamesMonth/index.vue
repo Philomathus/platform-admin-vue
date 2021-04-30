@@ -1,6 +1,8 @@
 <template>
   <div class="app-container">
-    <el-button type="primary">总盈利: {{ this.countData.countBetMoney || 0 }}</el-button>
+    <el-button type="primary">总投注: {{ this.countData.countBetMoney || 0 }}</el-button>
+    <el-button type="primary">总派彩: {{ this.countData.countPaiCai || 0 }}</el-button>
+    <el-button type="primary">总盈利: {{ this.countData.countGameProfit || 0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" label-width="68px"
              v-show="showSearch"
     >
@@ -21,7 +23,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item> 
+      <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
@@ -41,7 +43,9 @@
                 :stripe="true"
       >
         <el-table-column label="平台名称" align="center" prop="gameplame"/>
-        <el-table-column label="盈利" align="center" prop="yingli"/>
+        <el-table-column label="投注" align="center" prop="gamecell"/>
+        <el-table-column label="派彩" align="center" prop="paicai"/>
+        <el-table-column label="盈利" align="center" prop="gameprofit"/>
         <el-table-column label="报表月份" align="center" prop="date"/>
 
       </el-table>
@@ -67,6 +71,8 @@ export default {
       showSearch: true,
       isDestroyed: false,
       countBetMoney:null,
+      countPaiCai:null,
+      countGameProfit:null,
       countBetPeople:null,
       // 表格数据
       listData: [],

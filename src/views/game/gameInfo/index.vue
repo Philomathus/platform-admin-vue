@@ -45,7 +45,7 @@
     <el-table :stripe="true" v-loading="loading" :data="report" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="游戏名称" align="center" prop="name"/>
-      <el-table-column label="图标" align="center" prop="icon">
+      <el-table-column label="竖版新版图标" align="center" prop="icon">
         <template slot-scope="scope">
           <el-image
             style="width: 50px;"
@@ -55,7 +55,7 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="新版图标" align="center" prop="editionIcon">
+      <el-table-column label="竖版图标" align="center" prop="editionIcon">
         <template slot-scope="scope">
           <el-image
             style="width: 50px;"

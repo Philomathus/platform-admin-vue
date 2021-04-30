@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <div v-loading="totalLoading">
-    <el-button type="success" @click="copy1">成功出款笔数 {{ this.totalData.total || 0 }}</el-button>
-    <el-button type="warning" @click="copy2">总出款金额 {{ this.totalData.successTotal || 0 }}</el-button>
-    <el-button type="info" @click="copy3">成功率 {{ numberUtil.toPercent(this.totalData.successRate) }}</el-button>
-      <el-button  type="primary" icon="el-icon-search" size="mini" @click="getCountTotal()" style="margin-left: 20px">统计查询</el-button>
+      <el-button type="success" @click="copy1">成功出款笔数 {{ this.totalData.total || 0 }}</el-button>
+      <el-button type="warning" @click="copy2">总出款金额 {{ this.totalData.successTotal || 0 }}</el-button>
+      <el-button type="info" @click="copy3">成功率 {{ numberUtil.toPercent(this.totalData.successRate) }}</el-button>
+      <el-button type="primary" icon="el-icon-search" size="mini" @click="getCountTotal()" style="margin-left: 20px">统计查询</el-button>
     </div>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="100px"
              style="margin-top: 20px"
@@ -88,7 +88,8 @@
               v-for="item in CardBlackOptions"
               :key="item.value"
               :label="item.label"
-              :value="item.value">
+              :value="item.value"
+            >
             </el-option>
           </el-select>
         </template>
@@ -154,6 +155,17 @@
           @click="handleBatchPayAgent"
           v-has-permi="['pay:payAgentPlatform:order']"
         >批量代付
+        </el-button>
+      </el-col>
+
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-document-copy"
+          size="mini"
+          @click="handleBatchCopy"
+        >批量复制
         </el-button>
       </el-col>
       <el-col :span="10" style="margin-left: 10px">
@@ -462,7 +474,7 @@ import {
   payAgentOrder,
   payAgentOrders
 } from '@/api/platform-web/pay/payAgentPlatform'
-import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
+import { pickerDateTimeShortcuts } from '@/utils/dateUtils'
 
 export default {
   name: 'MemberWithdrawLog',
@@ -490,7 +502,7 @@ export default {
       refreshIcon: 'el-icon-refresh',
       refreshLabel: '开始刷新',
       refreshDesc: '',
-      pickerOptions: {shortcuts: pickerDateTimeShortcuts},
+      pickerOptions: { shortcuts: pickerDateTimeShortcuts },
       // 头部数据
       totalData: {},
       totalLoading: false,
@@ -543,10 +555,10 @@ export default {
       // 表单校验
       rules: {
         googleAuthCode: [
-          {required: true, message: 'google验证码不能为空', trigger: 'blur'}
+          { required: true, message: 'google验证码不能为空', trigger: 'blur' }
         ],
         payAgentPlatId: [
-          {required: true, message: '请选择代付平台', trigger: 'blur'}
+          { required: true, message: '请选择代付平台', trigger: 'blur' }
         ]
       }
     }
@@ -574,7 +586,7 @@ export default {
       this.single = selection.length !== 1
       this.multiple = !selection.length
     },
-    tableRowClassName({row, rowIndex}) {
+    tableRowClassName({ row, rowIndex }) {
       if (row.class_twoname === '彩票异常投注次数') {
         return 'danger-row'
       }
@@ -600,10 +612,12 @@ export default {
       this.copyCommand(value)
     },
     getCountTotal() {
-      this.totalLoading=true
+      this.totalLoading = true
       getCountTotal(this.queryParams).then((res) => {
         this.totalData = res.data
-      }).finally(()=>{this.totalLoading=false})
+      }).finally(() => {
+        this.totalLoading = false
+      })
     },
     /** 查询会员提现信息列表 */
     getList() {
@@ -727,7 +741,7 @@ export default {
         confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function () {
+      }).then(function() {
         return exportMemberWithdrawLog(queryParams)
       }).then(response => {
         this.downloadExcel(response, '会员提现')
@@ -748,7 +762,7 @@ export default {
         confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function () {
+      }).then(function() {
         return exportShunWeiMemberWithdrawLog(that.ids)
       }).then(response => {
         this.downloadExcel(response, '顺为代付提现')
@@ -816,7 +830,7 @@ export default {
       this.$prompt(null, '请输入出款异常原因', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
-      }).then(({value}) => {
+      }).then(({ value }) => {
         abnormalWithdrawal({
           id: this.form.id,
           remark: value
@@ -847,7 +861,7 @@ export default {
         cancelButtonText: '取消',
         inputPattern: /\S/,
         inputErrorMessage: '拒绝原因不可为空'
-      }).then(({value}) => {
+      }).then(({ value }) => {
         refusedMemberWithdrawLog({
           id: id,
           remark: value
@@ -873,7 +887,7 @@ export default {
       this.$prompt(null, '请输入拒绝出款原因', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
-      }).then(({value}) => {
+      }).then(({ value }) => {
         refusedsMemberWithdrawLog({
           ids: this.ids,
           remark: value
@@ -949,9 +963,9 @@ export default {
           this.getList()
           var successNum = response.data.sucess
           var failData = response.data.fail
-          var failTxt = "成功数量: " + successNum + ";<br/> 失败原因: <br/>"
+          var failTxt = '成功数量: ' + successNum + ';<br/> 失败原因: <br/>'
           for (let failDataKey in failData) {
-            failTxt += failDataKey + "  " + failData[failDataKey] + " ;<br/> "
+            failTxt += failDataKey + '  ' + failData[failDataKey] + ' ;<br/> '
           }
           this.$alert(failTxt, '批量代付信息', {
             confirmButtonText: '确定',
@@ -959,6 +973,36 @@ export default {
           })
         }
       })
+    },
+    handleBatchCopy() {
+      if (this.ids.length <= 0) {
+        this.msgWarning('请选择需要批量复制选项')
+        return
+      }
+      var textarea = document.createElement('textarea')
+      let html = ''
+      for (const row of this.memberWithdrawLogList) {
+        for (const id of this.ids) {
+          if (id == row.id) {
+            var status = this.statusOptions[parseInt(row.status)]
+            html += '<table><tr>'
+            html += '<td>' + row.memberId + '</td>'
+            html += '<td>' + row.account + '</td>'
+            html += '<td>' + row.withdrawMoney + '</td>'
+            html += '<td>' + row.bankUserName + '</td>'
+            html += '<td>' + '\'' + row.bankAccount + '\'' + '</td>'
+            html += '<td>' + row.bankName + '</td>'
+            html += '<td>' + status.dictLabel + '</td>'
+            html += '<td>' + row.opName + '</td>'
+            html += '<td>' + row.createTime + '</td>'
+            html += '<td>' + row.updateTime + '</td>'
+            html += '</tr></table>'
+          }
+        }
+      }
+      textarea.value = html
+      this.copyData = html
+      this.copy(this.copyData)
     },
     refreshData() {
       if (this.refreshType === 'primary') {
@@ -982,7 +1026,7 @@ export default {
     startRefresh() {
       const thet = this
       let secs = thet.refreshSec
-      window.refreshInterval = setInterval(function () {
+      window.refreshInterval = setInterval(function() {
         if (secs === 0) {
           thet.getList()
           secs = thet.refreshSec

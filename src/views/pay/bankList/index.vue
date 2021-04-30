@@ -132,11 +132,11 @@
     />
 
     <!-- 添加出款银行列表对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="opene" width="500px"
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="opene" width="600px"
                append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="ID" prop="id">
-          <el-input v-model="form.id" placeholder="请输入ID"/>
+          <el-input v-model="form.id" placeholder="请输入ID" />
         </el-form-item>
         <el-form-item label="银行名称" prop="bankName">
           <el-input v-model="form.bankName" placeholder="请输入银行名称"/>
@@ -149,6 +149,15 @@
         </el-form-item>
         <el-form-item label="排序" prop="sort">
           <el-input v-model="form.sort" placeholder="请输入排序"/>
+        </el-form-item>
+        <el-form-item label="银行官网地址" prop="url">
+          <el-input v-model="form.url" placeholder="请输入银行官网地址"/>
+        </el-form-item>
+        <el-form-item label="开始颜色" prop="colorStart">
+          <el-color-picker v-model="form.colorStart" size="medium" :predefine="predefineColors"/>
+        </el-form-item>
+        <el-form-item label="结束颜色" prop="colorEnd">
+          <el-color-picker v-model="form.colorEnd" size="medium" :predefine="predefineColors"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -158,11 +167,11 @@
     </el-dialog>
 
     <!-- 修改出款银行列表对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="600px"
                append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="ID" prop="id">
-          <el-input v-model="form.id" placeholder="请输入ID"/>
+          <el-input v-model="form.id" placeholder="请输入ID" readonly disabled/>
         </el-form-item>
         <el-form-item label="银行名称" prop="bankName">
           <el-input v-model="form.bankName" placeholder="请输入银行名称"/>
@@ -175,6 +184,15 @@
         </el-form-item>
         <el-form-item label="排序" prop="sort">
           <el-input v-model="form.sort" placeholder="请输入排序"/>
+        </el-form-item>
+        <el-form-item label="银行官网地址" prop="url">
+          <el-input v-model="form.url" placeholder="请输入银行官网地址"/>
+        </el-form-item>
+        <el-form-item label="开始颜色" prop="colorStart">
+          <el-color-picker v-model="form.colorStart" size="medium" :predefine="predefineColors"/>
+        </el-form-item>
+        <el-form-item label="结束颜色" prop="colorEnd">
+          <el-color-picker v-model="form.colorEnd" size="medium" :predefine="predefineColors"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -223,6 +241,14 @@ export default {
       // 是否显示弹出层
       open: false,
       opene: false,
+      predefineColors: [
+        '#5FB878',
+        '#FF5722',
+        '#0000FF',
+        '#FFB800',
+        '#C0C0C0',
+        '#525252'
+      ],
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -250,6 +276,15 @@ export default {
         ],
         sort: [
           {required: true, message: "排序不能为空", trigger: "blur"}
+        ],
+        url: [
+          {required: true, message: "银行官网地址不能为空", trigger: "blur"}
+        ],
+        colorStart: [
+          {required: true, message: "开始颜色不能为空", trigger: "blur"}
+        ],
+        colorEnd: [
+          {required: true, message: "结束颜色不能为空", trigger: "blur"}
         ]
       }
     };
@@ -281,7 +316,9 @@ export default {
         bankCode: null,
         bankIcon: null,
         status: null,
-        sort: null
+        sort: null,
+        colorEnd:null,
+        colorStart:null
       };
       this.resetForm("form");
     },

@@ -689,7 +689,7 @@
             break
         }
       },
-      //获取积分列表
+      //获取im禁言
       getMemberImInfo() {
         this.loading = true
         userImMute(this.memberId).then((res) => {

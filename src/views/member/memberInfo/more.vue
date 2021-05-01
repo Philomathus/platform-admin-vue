@@ -684,11 +684,11 @@
         userImMute(this.memberId).then((res) => {
             if (res.code === 200) {
               this.ImList = res.data[0];
-              if(this.ImList.ShuttedUntil != null){
-                if(this.ImList.ShuttedUntil == "0"){
-                  this.ImList.ShuttedUntil = '未禁言'
-                } else if(this.ImList.ShuttedUntil == "-1"){}
-                this.ImList.ShuttedUntil = '永久禁言'
+              if(this.ImList.shutTamp != null){
+                if(this.ImList.shutTamp == "0"){
+                  this.ImList.shutTamp = '未禁言'
+                } else if(this.ImList.shutTamp == "-1"){}
+                this.ImList.shutTamp = '永久禁言'
               }
               this.loading = false
             }

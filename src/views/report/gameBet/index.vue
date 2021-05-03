@@ -58,7 +58,6 @@
         <el-table-column label="投注比数" align="center" prop="gametouzhu"/>
         <el-table-column label="总投注金额" align="center" prop="gamecell"/>
         <el-table-column label="有效投注金额" align="center" prop="gamebet"/>
-        <el-table-column label="平台抽水" align="center" prop="gamerevenve"/>
         <el-table-column label="会员盈利" align="center" prop="gameprofit"/>
         <el-table-column label="比例" align="center" prop="bili"/>
         <el-table-column label="日期" align="center" prop="begindate"/>

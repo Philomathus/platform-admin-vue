@@ -26,6 +26,8 @@
         <span>重置密码</span></button>
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(11,'重置手机号')">
         <span>重置手机号</span></button>
+      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(13,'重置邀请码')">
+        <span>重置邀请码</span></button>
       <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(6,'重置保险箱')">
         <span>重置保险箱</span></button>
       <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(7,'重置提现')">
@@ -96,6 +98,20 @@
         </el-form-item>
         <el-form-item label="google验证码" prop="googleAuthCode">
           <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>
+        </el-form-item>
+      </el-form>
+    </el-row>
+    <!--重置密码-->
+    <el-row v-if="index===13">
+      <el-form ref="formInviterCode" :model="form" :rules="inviterCodeRules" label-width="110px">
+        <el-form-item label="重置邀请码" prop="inviterCode">
+          <el-input v-model="form.inviterCode" placeholder="请输入邀请码"/>
+        </el-form-item>
+        <el-form-item label="google验证码" prop="googleAuthCode">
+          <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>
+        </el-form-item>
+        <el-form-item label="" >
+          <el-button type="primary" @click="updateInviterCode()"  >确 定</el-button>
         </el-form-item>
       </el-form>
     </el-row>
@@ -261,7 +277,7 @@
     resetSafe,
     unbindCard,
     changeBank,
-    resetWithdrawal,memberBcodeRepair,updateVip,sendMsg,updateMobile,imDelete
+    resetWithdrawal,memberBcodeRepair,updateVip,sendMsg,updateMobile,imDelete,updateInviterCode
   } from '@/api/platform-web/member/memberInfo'
   import { userImMute } from "@/api/platform-web/live-web/ImMute";
   import {hideKMobile} from '@/utils/mobile.js';
@@ -342,6 +358,15 @@
           ],
       },
         // 加分表单校验
+        inviterCodeRules: {
+          inviterCode: [
+            {required: true, message: '重置邀请码不能为空', trigger: 'blur'}
+          ],
+          googleAuthCode: [
+            {required: true, message: 'google验证码不能为空', trigger: 'blur'}
+          ]
+        },
+        // 加分表单校验
         rules: {
           password: [
             {required: true, message: '重置密码不能为空', trigger: 'blur'}
@@ -391,6 +416,19 @@
             this.mobileForm.memberId = this.memberId
             updateMobile(this.mobileForm).then((res) => {
               that.$notify.success("手机号修改成功")
+              that.visible = false
+              that.$emit('refMemeberData');
+            })
+          }
+        })
+
+      },
+      updateInviterCode(){
+        var that = this
+        this.$refs['formInviterCode'].validate(valid => {
+          if (valid) {
+            updateInviterCode(this.form.inviterCode,this.form.googleAuthCode,this.memberId).then((res) => {
+              that.$notify.success("邀请码修改成功")
               that.visible = false
               that.$emit('refMemeberData');
             })

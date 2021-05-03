@@ -473,8 +473,6 @@
           changeBank(row).then((res) => {
             this.msgSuccess(res.msg);
             this.cardList();
-          }).catch(() => {
-            this.$notify.error('网络异常')
           }).finally(() => {
             this.loading = false
           })

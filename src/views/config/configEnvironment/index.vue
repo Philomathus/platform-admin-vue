@@ -70,6 +70,7 @@
                 <el-input
                   :class="row.envStatus === 0  ? 'ban' : ''"
                   v-model="row.envValue"
+                  :type="row.envCode == 'level_2_password' ? 'password' : 'text'"
                   placeholder="请输入参数值"
                   size="small"
                 />

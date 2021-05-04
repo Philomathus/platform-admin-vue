@@ -45,7 +45,7 @@
     <el-table :stripe="true" v-loading="loading" :data="report" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="游戏名称" align="center" prop="name"/>
-      <el-table-column label="图标" align="center" prop="icon">
+      <el-table-column label="竖版新版图标" align="center" prop="icon">
         <template slot-scope="scope">
           <el-image
             style="width: 50px;"
@@ -55,7 +55,7 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="新版图标" align="center" prop="editionIcon">
+      <el-table-column label="竖版图标" align="center" prop="editionIcon">
         <template slot-scope="scope">
           <el-image
             style="width: 50px;"
@@ -124,17 +124,17 @@
 
     <!-- 添加或修改游戏信息对话框 -->
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="110px">
         <el-form-item label="游戏名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入游戏名称"/>
         </el-form-item>
         <el-form-item label="排序号" prop="indexs">
           <el-input v-model="form.indexs" placeholder="请输入排序号"/>
         </el-form-item>
-        <el-form-item label="图标" prop="icon">
+        <el-form-item label="竖版新版图标" prop="icon">
           <imageUpload v-model="form.icon" path="gameInfo"/>
         </el-form-item>
-        <el-form-item label="新版图标" prop="editionIcon">
+        <el-form-item label="竖版图标" prop="editionIcon">
           <imageUpload v-model="form.editionIcon" path="gameInfo"/>
         </el-form-item>
         <el-form-item label="游戏码" prop="kindId">

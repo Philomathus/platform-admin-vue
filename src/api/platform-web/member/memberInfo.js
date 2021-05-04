@@ -27,6 +27,15 @@ export function sendMsg(msg,memberId) {
     data: data
   })
 }
+// 会员邀请码修改
+export function updateInviterCode(inviterCode,googleAuthCode,memberId) {
+  var data = {inviterCode,googleAuthCode,memberId}
+  return request({
+    url: url.platformWeb + '/member/memberInfo/updateInviterCode',
+    method: 'post',
+    data: data
+  })
+}
 // 会员手机号码修改
 export function updateMobile(data) {
   return request({
@@ -187,7 +196,7 @@ export function memberBcodeRepair(query) {
       params: query
     })
 }
-// 重置密码接口
+// im禁言
 export function imDelete(query) {
   return request({
     url: url.platformWeb + '/member/memberInfo/imDealBan',

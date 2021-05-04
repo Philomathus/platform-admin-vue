@@ -108,7 +108,7 @@
           <el-input v-model="form.inviterCode" placeholder="请输入邀请码"/>
         </el-form-item>
         <el-form-item label="google验证码" prop="googleAuthCode">
-          <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>
+          <el-input v-model="form.googleAuthCode" type="number" placeholder="请输入google验证码"/>
         </el-form-item>
         <el-form-item label="" >
           <el-button type="primary" @click="updateInviterCode()"  >确 定</el-button>

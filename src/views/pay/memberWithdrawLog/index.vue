@@ -256,7 +256,7 @@
       <el-table-column label="下单时间" min-width="150" align="center" prop="createTime"/>
       <el-table-column label="最后修改时间" min-width="150" align="center" prop="updateTime"/>
       <el-table-column label="订单号" min-width="200" align="center" prop="orderNo"/>
-      <el-table-column label="操作" min-width="260" align="center" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column label="操作" min-width="285" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="small"
@@ -271,7 +271,7 @@
             size="small"
             type="primary"
             plain
-            v-show="scope.row.status == 1"
+            v-show="scope.row.status == 1 || scope.row.status == 5"
             icon="el-icon-unlock"
             @click="handleUnlock(scope.row)"
             v-has-permi="['pay:memberWithdrawLog:unlock']"

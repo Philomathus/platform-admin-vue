@@ -186,7 +186,7 @@
     </el-dialog>
 
     <!--查看封停ip-->
-    <el-dialog v-dialogDrag title="查看封停ip" :visible.sync="speakIpBlackListList" width="1200px" append-to-body>
+    <el-dialog title="查看封停ip" :visible.sync="speakIpBlackListList" width="1200px" append-to-body>
       <el-form :model="queryParam" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
         <el-form-item label="会员id" prop="userId">
           <el-input

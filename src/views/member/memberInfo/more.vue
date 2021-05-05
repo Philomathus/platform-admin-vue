@@ -101,14 +101,14 @@
           </el-form-item>
         </el-form>
       </el-row>
-      <!--重置邀请码-->
+      <!--重置密码-->
       <el-row v-if="index===13">
         <el-form ref="formInviterCode" :model="form" :rules="inviterCodeRules" label-width="110px">
           <el-form-item label="重置邀请码" prop="inviterCode">
             <el-input v-model="form.inviterCode" placeholder="请输入邀请码"/>
           </el-form-item>
           <el-form-item label="google验证码" prop="googleAuthCode">
-            <el-input v-model="form.googleAuthCode" type="number" placeholder="请输入google验证码"/>
+            <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>
           </el-form-item>
           <el-form-item label="">
             <el-button type="primary" @click="updateInviterCode()">确 定</el-button>
@@ -693,7 +693,7 @@ export default {
           break
       }
     },
-    //获取积分列表
+    //获取im禁言
     getMemberImInfo() {
       this.loading = true
       userImMute(this.memberId).then((res) => {

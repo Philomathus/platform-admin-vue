@@ -60,6 +60,6 @@ export function exportActivityMemberInfo(query) {
     method: 'get',
     params: query,
     responseType: 'arraybuffer',
-    timeout: 60000
+    timeout: 300000
   })
 }

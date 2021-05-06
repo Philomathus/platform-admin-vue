@@ -15,7 +15,9 @@ export function exportLiveProplog(query) {
   return request({
     url: url.platformWeb + '/admin/liveVideoProp/export',
     method: 'get',
-    params: query
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
   })
 }
 

@@ -206,7 +206,8 @@
       </el-table-column>
       <el-table-column label="会员ID" min-width="150" align="center" prop="memberId">
         <template v-slot="{row}">
-          <a style="color: #00afff" @click="funds(row.memberId)">{{ row.memberId }}</a>
+          <a style="color: #00afff" @click="funds(row.memberId)" v-if="row.memberStatus !== 4">{{ row.memberId }}</a>
+          <a style="color: #ff0000" @click="funds(row.memberId)" v-if="row.memberStatus === 4">{{ row.memberId }}</a>
         </template>
       </el-table-column>
       <el-table-column label="会员账号" min-width="120" align="center" prop="account"/>
@@ -533,6 +534,8 @@ export default {
       payAgentPlatformOptions: [],
       //银行归属地
       realBankAddress: null,
+      //会员状态是否为套利号
+      memberStatus: null,
       // 查询参数
       queryParams: {
         pageNum: 1,

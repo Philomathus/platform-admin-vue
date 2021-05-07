@@ -206,8 +206,9 @@
       </el-table-column>
       <el-table-column label="会员ID" min-width="150" align="center" prop="memberId">
         <template v-slot="{row}">
-          <a style="color: #00afff" @click="funds(row.memberId)" v-if="row.memberStatus !== 4">{{ row.memberId }}</a>
+          <a style="color: #00afff" @click="funds(row.memberId)" v-if="row.memberStatus === 0 || row.memberStatus === 1">{{ row.memberId }}</a>
           <a style="color: #ff0000" @click="funds(row.memberId)" v-if="row.memberStatus === 4">{{ row.memberId }}</a>
+          <a style="color: #ee00ff" @click="funds(row.memberId)" v-if="row.memberStatus === 2 || row.memberStatus === 3 || row.memberStatus === 5">{{ row.memberId }}</a>
         </template>
       </el-table-column>
       <el-table-column label="会员账号" min-width="120" align="center" prop="account"/>

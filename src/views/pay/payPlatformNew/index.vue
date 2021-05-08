@@ -117,34 +117,34 @@
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="770px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="135px">
         <el-form-item label="名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入平台名称"/>
+          <el-input v-model.trim="form.name" placeholder="请输入平台名称"/>
         </el-form-item>
         <el-form-item label="编码" prop="code">
-          <el-input v-model="form.code" placeholder="请输入平台编码"/>
+          <el-input v-model.trim="form.code" placeholder="请输入平台编码"/>
         </el-form-item>
         <el-form-item label="商户ID" prop="merId">
-          <el-input v-model="form.merId" placeholder="请输入商户ID"/>
+          <el-input v-model.trim="form.merId" placeholder="请输入商户ID"/>
         </el-form-item>
         <el-form-item label="机构号" prop="orgId">
-          <el-input v-model="form.orgId" placeholder="请输入机构号"/>
+          <el-input v-model.trim="form.orgId" placeholder="请输入机构号"/>
         </el-form-item>
         <el-form-item label="平台下单接口地址" prop="platPayUrl">
-          <el-input v-model="form.platPayUrl" placeholder="请输入平台下单接口地址"/>
+          <el-input v-model.trim="form.platPayUrl" placeholder="请输入平台下单接口地址"/>
         </el-form-item>
         <el-form-item label="平台订单查询地址" prop="platQueryUrl">
-          <el-input v-model="form.platQueryUrl" placeholder="请输入平台订单查询地址"/>
+          <el-input v-model.trim="form.platQueryUrl" placeholder="请输入平台订单查询地址"/>
         </el-form-item>
         <el-form-item label="MD5_key" prop="signMd5">
-          <el-input v-model="form.signMd5" placeholder="请输入MD5_key"/>
+          <el-input v-model.trim="form.signMd5" placeholder="请输入MD5_key"/>
         </el-form-item>
         <el-form-item label="加密公钥" prop="signPublicKey">
-          <el-input v-model="form.signPublicKey" type="textarea" placeholder="请输入内容"/>
+          <el-input v-model.trim="form.signPublicKey" type="textarea" placeholder="请输入内容"/>
         </el-form-item>
         <el-form-item label="解密私钥" prop="signPrivateKey">
-          <el-input v-model="form.signPrivateKey" type="textarea" placeholder="请输入内容"/>
+          <el-input v-model.trim="form.signPrivateKey" type="textarea" placeholder="请输入内容"/>
         </el-form-item>
         <el-form-item label="平台IP白名单" prop="platWhiteIpList">
-          <el-input v-model="form.platWhiteIpList" type="textarea" placeholder="请输入平台IP白名单"/>
+          <el-input v-model.trim="form.platWhiteIpList" type="textarea" placeholder="请输入平台IP白名单"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

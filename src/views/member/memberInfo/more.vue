@@ -28,12 +28,24 @@
           <span>重置手机号</span></button>
         <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(13,'重置邀请码')">
           <span>重置邀请码</span></button>
-        <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(6,'重置保险箱')">
-          <span>重置保险箱</span></button>
-        <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(7,'重置提现')">
-          <span>重置提现</span></button>
-        <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(8,'打码修复')">
-          <span>打码修复</span></button>
+        <button
+          type="button"
+          class="el-button el-button--success el-button--mini is-plain"
+          @click="change(6,'重置保险箱')"
+          v-has-permi="['member:memberInfo:resetBox']"
+        ><span>重置保险箱</span></button>
+        <button
+          type="button"
+          class="el-button el-button--success el-button--mini is-plain"
+          @click="change(7,'重置提现')"
+          v-has-permi="['member:memberInfo:resetTx']"
+        ><span>重置提现</span></button>
+        <button
+          type="button"
+          class="el-button el-button--success el-button--mini is-plain"
+          @click="change(8,'打码修复')"
+          v-has-permi="['member:memberInfo:bcodeRepair']"
+        ><span>打码修复</span></button>
         <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(9,'修改Vip')">
           <span>修改Vip</span></button>
         <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(12,'IM禁言')">
@@ -136,7 +148,7 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="sendMsg()">确 定</el-button>
+            <el-button type="primary" @click="sendMsg()" v-has-permi="['member:memberInfo:sendMsg']">确 定</el-button>
           </el-form-item>
         </el-form>
       </el-row>
@@ -153,7 +165,7 @@
             <el-input v-model="mobileForm.googleAuthCode" placeholder="请输入google验证码"/>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="updateMobile()">确 定</el-button>
+            <el-button type="primary" @click="updateMobile()" v-has-permi="['member:memberInfo:updateMobile']">确 定</el-button>
           </el-form-item>
         </el-form>
       </el-row>
@@ -195,9 +207,31 @@
           ></el-table-column>
           <el-table-column label="操作" min-width="140">
             <template v-slot="{row}" v-if="index===5">
-              <el-button @click="unbind(row)" v-if="row.dv==1" type="primary" disabled size="mini">主卡解绑</el-button>
-              <el-button @click="unbind(row)" v-if="row.dv==0" type="primary" size="mini">副卡解绑</el-button>
-              <el-button @click="changeBank(row)" size="mini" type="warning" style="margin-left: 0">确认修改</el-button>
+              <el-button
+                @click="unbind(row)"
+                v-show="row.dv==1"
+                type="primary"
+                disabled
+                size="mini"
+                v-has-permi="['member:memberInfo:unbindCard']"
+              >主卡解绑
+              </el-button>
+              <el-button
+                @click="unbind(row)"
+                v-show="row.dv==0"
+                type="primary"
+                size="mini"
+                v-has-permi="['member:memberInfo:unbindCard']"
+              >副卡解绑
+              </el-button>
+              <el-button
+                @click="changeBank(row)"
+                size="mini"
+                type="warning"
+                style="margin-left: 0"
+                v-has-permi="['member:memberInfo:changeBank']"
+              >确认修改
+              </el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -209,11 +243,21 @@
           @pagination="getList"
         />
       </el-row>
-
-
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="handlePassword" v-if="index===4">确 定</el-button>
-        <el-button type="primary" @click="handleImportTable" v-if="index===3">确 定</el-button>
+        <el-button
+          type="primary"
+          @click="handlePassword"
+          v-show="index === 4"
+          v-has-permi="['member:memberInfo:resetPwd']"
+        >确 定
+        </el-button>
+        <el-button
+          type="primary"
+          @click="handleImportTable"
+          v-show="index === 3"
+          v-has-permi="['member:memberInfo:addScore']"
+        >确 定
+        </el-button>
         <el-button @click="visible = false">取 消</el-button>
       </div>
     </el-dialog>
@@ -227,15 +271,19 @@
       append-to-body
       :show-close="false"
       :close-on-press-escape="false"
-    >
-
-      Vip等级
+    >Vip等级
       <el-input v-model="vip"/>
       昵称
       <el-input v-model="nickName"/>
       <div slot="footer" class="dialog-footer">
         <el-button @click="showVip = !showVip">取消</el-button>
-        <el-button type="primary" :disabled="showVipDisabled" @click="updateVip">立即提交</el-button>
+        <el-button
+          type="primary"
+          :disabled="showVipDisabled"
+          @click="updateVip"
+          v-has-permi="['member:memberInfo:updateVip']"
+        >立即提交
+        </el-button>
       </div>
     </el-dialog>
 
@@ -258,14 +306,19 @@
       IM禁言时间备注：0取消禁言,4294967295永久禁言,其它值具体禁言时间,以秒为单位
       <br/>
       <br/>
-
       <div>禁言时间（单位秒）
         <el-input width="200px" v-model="banSpeakTime" type="number"/>
       </div>
       <br/>
       <div slot="footer" class="dialog-footer">
         <el-button @click="im = !im">取消</el-button>
-        <el-button type="primary" :disabled="showImDisabled" @click="updateIm">立即提交</el-button>
+        <el-button
+          type="primary"
+          :disabled="showImDisabled"
+          @click="updateIm"
+          v-has-permi="['member:memberInfo:imBan']"
+        >立即提交
+        </el-button>
       </div>
     </el-dialog>
   </div>

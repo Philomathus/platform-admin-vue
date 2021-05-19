@@ -389,6 +389,7 @@ export default {
           prov: "黑龙江省", label: "黑河市"}, {
           prov: "黑龙江省", label: "绥化市"}, {
           prov: "黑龙江省", label: "大兴安岭地区"}, {
+          prov: "黑龙江省", label: "密山市"}, {
           prov: "上海市", label: "上海市"}, {
           prov: "江苏省", label: "南京市"}, {
           prov: "江苏省", label: "无锡市"}, {

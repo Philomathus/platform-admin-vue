@@ -19,7 +19,15 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-
+      <el-form-item label="下单接口" prop="platPayUrl">
+        <el-input
+          v-model="queryParams.platPayUrl"
+          placeholder="请输入下单接口地址"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>

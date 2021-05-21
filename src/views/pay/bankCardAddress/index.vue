@@ -683,6 +683,7 @@ export default {
           prov: "新疆维吾尔自治区", label: "阿拉尔市"}, {
           prov: "新疆维吾尔自治区", label: "图木舒克市"}, {
           prov: "新疆维吾尔自治区", label: "五家渠市"}, {
+          prov: "新疆维吾尔自治区", label: "巴州"}, {
           prov: "台湾省", label: "台北市"}, {
           prov: "台湾省", label: "高雄市"}, {
           prov: "台湾省", label: "基隆市"}, {

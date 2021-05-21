@@ -10,6 +10,15 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="下单地址" prop="payOrderAddr">
+        <el-input
+          v-model="queryParams.payOrderAddr"
+          placeholder="请输入代付下单地址"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item label="状态" prop="status">
         <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small">
           <el-option
@@ -195,7 +204,8 @@ export default {
         pageNum: 1,
         pageSize: 10,
         name: null,
-        status: null
+        status: null,
+        payOrderAddr: null
       },
       // 表单参数
       form: {},

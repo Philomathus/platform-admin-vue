@@ -107,7 +107,7 @@
           icon="el-icon-download"
           size="mini"
           :disabled="disabled"
-          @click="handleExport"
+          @click="openExport"
           v-hasPermi="['pay:memberWithdrawLog:export']"
         >导出
         </el-button>
@@ -450,6 +450,7 @@
         </el-button>
       </div>
     </el-dialog>
+    <ExcelPrompt ref="excelPrompt" @downLoadExcel="handleExport"></ExcelPrompt>
   </div>
 </template>
 <script>
@@ -477,10 +478,10 @@ import {
   payAgentOrders
 } from '@/api/platform-web/pay/payAgentPlatform'
 import { pickerDateTimeShortcuts } from '@/utils/dateUtils'
-
+import ExcelPrompt from '@/layout/components/prompt/excelPrompt.vue';
 export default {
   name: 'MemberWithdrawLog',
-  components: {},
+  components: {ExcelPrompt},
   data() {
     return {
       //银行卡黑名单下拉框
@@ -737,10 +738,16 @@ export default {
         }
       })
     },
+    openExport() {
+      this.$refs.excelPrompt.open=true;
+    },
     /** 导出按钮操作 */
-    handleExport() {
+    handleExport(date) {
       this.disabled = true
       const queryParams = this.queryParams
+      // queryParams.selectDate = []
+      queryParams.downLoadDate = date
+      queryParams.searchTime = []
       this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
         confirmButtonText: '确认',
         cancelButtonText: '取消',

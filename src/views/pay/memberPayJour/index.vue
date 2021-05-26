@@ -83,7 +83,7 @@
           icon="el-icon-download"
           size="mini"
           :disabled="disabled"
-          @click="handleExport"
+          @click="openExport"
           v-hasPermi="['pay:memberPayJour:export']"
         >导出
         </el-button>
@@ -192,6 +192,7 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+    <ExcelPrompt ref="excelPrompt" @downLoadExcel="handleExport"></ExcelPrompt>
   </div>
 </template>
 
@@ -205,10 +206,10 @@ import {
 import { platforms } from '@/api/platform-web/pay/payChannelNew'
 import { patchOrderPayPlatformNew } from '@/api/platform-web/pay/payPlatformNew'
 import { pickerDateTimeShortcuts } from '@/utils/dateUtils'
-
+import ExcelPrompt from '@/layout/components/prompt/excelPrompt.vue';
 export default {
   name: 'MemberPayJour',
-  components: {},
+  components: {ExcelPrompt},
   data() {
     return {
       refreshSec: '5',
@@ -253,7 +254,8 @@ export default {
         platformId: null,
         searchOrderNo: null,
         channelName: null,
-        status: null
+        status: null,
+        downLoadDate: [],
       },
       // 表单参数
       form: {},
@@ -368,10 +370,15 @@ export default {
         }
       })
     },
+    openExport() {
+      this.$refs.excelPrompt.open=true;
+    },
     /** 导出按钮操作 */
-    handleExport() {
+    handleExport(date) {
       this.disabled = true
       const queryParams = this.queryParams
+      queryParams.downLoadDate = date
+      queryParams.selectDate = []
       this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
         confirmButtonText: '确认',
         cancelButtonText: '取消',

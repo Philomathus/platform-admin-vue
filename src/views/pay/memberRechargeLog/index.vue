@@ -110,7 +110,7 @@
           plain
           icon="el-icon-download"
           size="mini"
-          @click="handleExport"
+          @click="openExport"
           v-hasPermi="['pay:memberRechargeLog:export']"
         >导出
         </el-button>
@@ -244,6 +244,7 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+    <ExcelPrompt ref="excelPrompt" @downLoadExcel="handleExport"></ExcelPrompt>
   </div>
 </template>
 
@@ -262,10 +263,10 @@
     listConfigBank,
   } from '@/api/platform-web/pay/configBank'
   import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
-
+  import ExcelPrompt from '@/layout/components/prompt/excelPrompt.vue';
   export default {
     name: 'MemberRechargeLog',
-    components: {},
+    components: {ExcelPrompt},
     data() {
       return {
         refreshSec: '5',
@@ -312,7 +313,8 @@
           rechargeUserName: null,
           bankUserName: null,
           searchValue: null,
-          orderNo: null
+          orderNo: null,
+          downLoadDate: [],
         },
         // 表单参数
         form: {},
@@ -465,9 +467,14 @@
         this.title = '修改公司入款信息'
       })
     },
+    openExport() {
+      this.$refs.excelPrompt.open=true;
+    },
     /** 导出按钮操作 */
-    handleExport() {
+    handleExport(date) {
       const queryParams = this.queryParams
+      queryParams.selectDate = []
+      queryParams.downLoadDate = date
       this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
         confirmButtonText: '确认',
         cancelButtonText: '取消',

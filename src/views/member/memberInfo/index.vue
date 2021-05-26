@@ -102,7 +102,7 @@
           plain
           icon="el-icon-download"
           size="mini"
-          @click="handleExport"
+          @click="openExport"
           v-hasPermi="['member:memberInfo:export']"
         >导出
         </el-button>
@@ -335,7 +335,7 @@
         @pagination="openIpBlackList"
       />
     </el-dialog>
-
+    <ExcelPrompt ref="excelPrompt" @downLoadExcel="handleExport"></ExcelPrompt>
   </div>
 </template>
 
@@ -354,12 +354,13 @@
   import {listSpeakIpBlackList, updateSpeakIpBlackList} from '@/api/live-web/chat/speakIpBlackList'
   import {pickerDateShortcuts} from '@/utils/dateUtils'
   import {getConfigEnvironment} from "@/api/platform-web/config/configEnvironment";
-
+  import ExcelPrompt from '@/layout/components/prompt/excelPrompt.vue';
 
   export default {
     name: 'MemberInfo',
     components: {
-      more: more
+      more: more,
+      ExcelPrompt
     },
     data() {
       return {
@@ -421,6 +422,7 @@
           nickName: '',
           inviterCode: '',
           channelcode: '',
+          downLoadDate: [],
           // orderByColumn: 'reg_time',
           // isAsc: 'desc'
         },
@@ -639,9 +641,14 @@
         this.memberId = row.id
         this.$refs.more.show(this.memberId, this.memberCode,row.vip,row.nickName,row.phone)
       },
+      openExport() {
+        this.$refs.excelPrompt.open=true;
+      },
       /** 导出按钮操作 */
-      handleExport() {
+      handleExport(date) {
         const queryParams = this.queryParams
+        queryParams.params = []
+        queryParams.downLoadDate = date
         this.$confirm('是否确认导出所有会员列表数据项?', '警告', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',

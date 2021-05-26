@@ -86,7 +86,7 @@
           plain
           icon="el-icon-download"
           size="mini"
-          @click="handleExport"
+          @click="openExport"
           v-hasPermi="['pay:payAgentRechargeLog:export']"
         >导出</el-button>
       </el-col>
@@ -130,16 +130,18 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+    <ExcelPrompt ref="excelPrompt" @downLoadExcel="handleExport"></ExcelPrompt>
   </div>
 </template>
 
 <script>
 import { listPayAgentRechargeLog, getPayAgentRechargeLog, delPayAgentRechargeLog, addPayAgentRechargeLog, updatePayAgentRechargeLog, exportPayAgentRechargeLog, countMoney } from "@/api/platform-web/pay/payAgentRechargeLog";
 import {pickerDateTimeShortcuts} from "@/utils/dateUtils";
-
+import ExcelPrompt from '@/layout/components/prompt/excelPrompt.vue';
 export default {
   name: "PayAgentRechargeLog",
   components: {
+    ExcelPrompt
   },
   data() {
     return {
@@ -174,7 +176,8 @@ export default {
         rechargeNickName: null,
         searchValue: null,
         orderByColumn: 'create_time',
-        isAsc: 'desc'
+        isAsc: 'desc',
+        downLoadDate: [],
       },
       // 表单参数
       form: {},
@@ -341,9 +344,14 @@ export default {
         this.msgSuccess("删除成功");
       })
     },
+    openExport() {
+      this.$refs.excelPrompt.open=true;
+    },
     /** 导出按钮操作 */
-    handleExport() {
+    handleExport(date) {
       const queryParams = this.queryParams
+      queryParams.downLoadDate = date
+      queryParams.selectDate = []
       this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
         confirmButtonText: '确认',
         cancelButtonText: '取消',

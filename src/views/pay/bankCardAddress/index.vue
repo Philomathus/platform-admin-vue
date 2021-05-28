@@ -367,15 +367,17 @@ export default {
           prov: "辽宁省", label: "铁岭市"}, {
           prov: "辽宁省", label: "朝阳市"}, {
           prov: "辽宁省", label: "葫芦岛市"}, {
+          prov: "辽宁省", label: "开原"}, {
           prov: "吉林省", label: "长春市"}, {
           prov: "吉林省", label: "吉林市"}, {
           prov: "吉林省", label: "四平市"}, {
           prov: "吉林省", label: "辽源市"}, {
-          prov: "吉林省", label: "通化市"}, {
           prov: "吉林省", label: "白山市"}, {
           prov: "吉林省", label: "松原市"}, {
           prov: "吉林省", label: "白城市"}, {
           prov: "吉林省", label: "延边朝鲜族自治州"}, {
+          prov: "吉林省", label: "通化"}, {
+          prov: "吉林省", label: "延吉"}, {
           prov: "黑龙江省", label: "哈尔滨市"}, {
           prov: "黑龙江省", label: "齐齐哈尔市"}, {
           prov: "黑龙江省", label: "鸡西市"}, {
@@ -389,7 +391,7 @@ export default {
           prov: "黑龙江省", label: "黑河市"}, {
           prov: "黑龙江省", label: "绥化市"}, {
           prov: "黑龙江省", label: "大兴安岭地区"}, {
-          prov: "黑龙江省", label: "密山市"}, {
+          prov: "黑龙江省", label: "密山"}, {
           prov: "上海市", label: "上海市"}, {
           prov: "江苏省", label: "南京市"}, {
           prov: "江苏省", label: "无锡市"}, {
@@ -684,6 +686,8 @@ export default {
           prov: "新疆维吾尔自治区", label: "图木舒克市"}, {
           prov: "新疆维吾尔自治区", label: "五家渠市"}, {
           prov: "新疆维吾尔自治区", label: "巴州"}, {
+          prov: "新疆维吾尔自治区", label: "伊宁"}, {
+          prov: "新疆维吾尔自治区", label: "昌吉州"}, {
           prov: "台湾省", label: "台北市"}, {
           prov: "台湾省", label: "高雄市"}, {
           prov: "台湾省", label: "基隆市"}, {

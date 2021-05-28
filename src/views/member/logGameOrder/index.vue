@@ -110,7 +110,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 20,
-        orderByColumn: 'e_time',
+        orderByColumn: 'b_time',
         isAsc: 'desc',
         searchValue: null,
         type: null,

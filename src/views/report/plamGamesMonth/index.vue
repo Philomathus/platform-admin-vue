@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
-    <el-button type="primary">总投注: {{ this.countData.countBetMoney || 0 }}</el-button>
-    <el-button type="primary">总派彩: {{ this.countData.countPaiCai || 0 }}</el-button>
-    <el-button type="primary">总盈利: {{ this.countData.countGameProfit || 0 }}</el-button>
+    <el-button type="primary" @click="copy1">总投注: {{ this.countData.countBetMoney || 0 }}</el-button>
+    <el-button type="primary" @click="copy2">总派彩: {{ this.countData.countPaiCai || 0 }}</el-button>
+    <el-button type="primary" @click="copy3">总盈利: {{ this.countData.countGameProfit || 0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" label-width="68px"
              v-show="showSearch"
     >
@@ -100,6 +100,18 @@ export default {
         this.loading = false
       })
     },
+
+    //复制
+    copy1() {
+      this.copyCommand(this.countData.countBetMoney)
+    },
+    copy2() {
+      this.copyCommand(this.countData.countPaiCai)
+    },
+    copy3() {
+      this.copyCommand(this.countData.countGameProfit)
+    },
+
 
     countBet() {
       this.loading = true

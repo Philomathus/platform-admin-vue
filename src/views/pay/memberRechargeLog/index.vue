@@ -11,9 +11,9 @@
     </div>
     <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 10px" v-show="showSearch"
              label-width="100px">
-      <el-form-item label="审核时间" prop="selectDate" label-width="70px">
+      <el-form-item  prop="selectDate" label-width="70px">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '360px'}" start-placeholder="开始时间"
                         end-placeholder="结束时间" range-separator="至" :default-time="['00:00:00', '23:59:59']" clearable
                         :picker-options="pickerOptions"
         ></el-date-picker>
@@ -34,7 +34,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item prop="orderNo" style="width: 210px;">
+      <el-form-item prop="orderNo" style="width: 160px;">
         <el-input
           v-model="queryParams.orderNo"
           placeholder="订单号"
@@ -43,7 +43,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="userName" style="width: 160px;">
+      <el-form-item prop="userName" style="width: 140px;">
         <el-input
           v-model="queryParams.searchValue"
           placeholder="会员ID/会员账号"
@@ -61,14 +61,41 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>-->
-      <el-form-item prop="bankName" style="width: 200px">
+      <el-form-item prop="withdrawMoney">
+        <el-input
+          v-model="queryParams.priceMin"
+          placeholder="充值￥"
+          clearable
+          autocomplete="on"
+          min="0"
+          size="small"
+          style="width: 86px"
+          type="number"
+          class="no-number"
+          @keyup.enter.native="handleQuery"
+        />
+        -
+        <el-input
+          v-model="queryParams.priceMax"
+          placeholder="区间￥"
+          clearable
+          autocomplete="on"
+          min="0"
+          size="small"
+          style="width: 86px"
+          type="number"
+          class="no-number"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item prop="bankName" style="width: 160px">
         <el-select
           v-model="queryParams.bankNameUser"
           filterable
           placeholder="银行-收款人"
           clearable
           size="small"
-          style="width: 200px"
+          style="width: 160px"
           @change="changeBank()"
         >
           <el-option
@@ -310,6 +337,8 @@
           isAsc: 'desc',
           bankNameUser: null,
           status: null,
+          priceMin: null,
+          priceMax: null,
           rechargeUserName: null,
           bankUserName: null,
           searchValue: null,
@@ -369,6 +398,7 @@
         this.loading = false
       })
     },
+
     //复制
     copy1() {
       this.copyCommand(this.totalData.total)
@@ -400,6 +430,8 @@
         status: null,
         remark: null,
         opName: null,
+        priceMin: null,
+        priceMax: null,
         createTime: null,
         updateTime: null,
         bankAddress: null,
@@ -550,7 +582,7 @@
         this.refreshDesc = ''
 
         this.stopRefresh()
-        this.getList()
+        this.resetQuery()
         this.startRefresh()
       } else {
         this.refreshType = 'primary'
@@ -566,7 +598,7 @@
       let secs = thet.refreshSec
       window.refreshInterval = setInterval(function () {
         if (secs === 0) {
-          thet.getList()
+          thet.resetQuery()
           secs = thet.refreshSec
         }
         thet.refreshDesc = secs + '秒后开始刷新'

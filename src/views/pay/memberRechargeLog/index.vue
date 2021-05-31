@@ -61,7 +61,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>-->
-      <el-form-item prop="withdrawMoney">
+      <el-form-item prop="rechargeMoney">
         <el-input
           v-model="queryParams.priceMin"
           placeholder="充值￥"
@@ -339,6 +339,7 @@
           status: null,
           priceMin: null,
           priceMax: null,
+          rechargeMoney:null,
           rechargeUserName: null,
           bankUserName: null,
           searchValue: null,
@@ -447,7 +448,21 @@
     /** 搜索按钮操作 */
     handleQuery() {
       this.queryParams.pageNum = 1
-      this.getList()
+      var min=this.queryParams.priceMin
+      var max=this.queryParams.priceMax
+      console.info(min);
+      if ((min!="" || min!=null) && (max!="" || max!=null)){
+          if (min>max){
+            this.$message.warning("请输入正确的充值金额区间值")
+          }else {
+            this.getList()
+          }
+      }else if ((min=="" || min==null) && (max=="" || max==null)){
+        this.getList()
+      }else {
+        this.$message.warning("请输入正确的充值金额区间值")
+      }
+
       // this.listCount()
     },
     /** 复制按钮 */
@@ -486,6 +501,8 @@
     },
     /** 重置按钮操作 */
     resetQuery() {
+      this.queryParams.priceMax=""
+      this.queryParams.priceMin=""
       this.resetForm('queryForm')
       this.handleQuery()
     },
@@ -580,7 +597,6 @@
         this.refreshIcon = 'el-icon-circle-close'
         this.refreshLabel = '停止刷新'
         this.refreshDesc = ''
-
         this.stopRefresh()
         this.resetQuery()
         this.startRefresh()

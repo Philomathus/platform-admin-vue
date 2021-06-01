@@ -28,7 +28,7 @@
       </div>
       <div class="mount" style="width: 20%">
         <div class="font">{{data.会员积分}}</div>
-        <div class="font">{{data.Id}}</div>
+        <div class="font">{{data.登录时间}}</div>
         <div class="font">{{data.会员VIP}}</div>
         <div class="font">{{data.会员注单}}</div>
         <div class="font">{{data.登陆地址}}</div>
@@ -53,7 +53,7 @@
       </div>
     </div>
     <div class="playInfo">
-      <div class="title">游戏盈利</div>
+      <div class="title" style="border-right:  1px solid rgba(0, 0, 0, 0.10);">游戏盈利</div>
       <div class="mount" style="width: 80%">
         <div class="font" v-for="item in playData">{{item}}</div>
       </div>
@@ -128,38 +128,47 @@ member
 
   div {
     display: inline-block;
-    border: 1px solid rgba(0, 0, 0, 0.51);
-    font-size: 13px;
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    font-size: 14px;
+    line-height: 300%;
     text-align: center;
     /*align-items:center; display: flex;*/
   }
 
   .font {
-    height: 30px;
+    height: 40px;
+    text-align: center;
   }
 
   .title {
     width: 20%;
+    margin: 0 0 0 0;
+    border:  0px solid rgba(0, 0, 0, 0.10);
+    /*height: 100%;*/
   }
 
   .memberInfo {
     display: flex;
-    justify-content: flex-start
+    justify-content: flex-start;
+    align-items: center;
   }
 
   .fundsInfo {
     display: flex;
-    justify-content: flex-start
+    justify-content: flex-start;
+    align-items: center;
   }
 
   .lotteryInfo {
     display: flex;
-    justify-content: flex-start
+    justify-content: flex-start;
+    align-items: center;
   }
 
   .playInfo {
     display: flex;
-    justify-content: flex-start
+    justify-content: flex-start;
+    align-items: center;
   }
 
   .mount {

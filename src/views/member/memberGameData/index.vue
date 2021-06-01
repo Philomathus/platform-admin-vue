@@ -227,6 +227,7 @@ export default {
     },
     funds(row) {
       getKYgameResReport(row).then((res) => {
+        console.info(res.data);
         this.fundsData = res.data
         this.fundsOpen = true
       })

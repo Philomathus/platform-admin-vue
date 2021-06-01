@@ -450,9 +450,8 @@
       this.queryParams.pageNum = 1
       var min=this.queryParams.priceMin
       var max=this.queryParams.priceMax
-      console.info(min);
       if ((min!="" || min!=null) && (max!="" || max!=null)){
-          if (min>max){
+        if (parseInt(min)>parseInt(max)){
             this.$message.warning("请输入正确的充值金额区间值")
           }else {
             this.getList()

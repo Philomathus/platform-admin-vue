@@ -73,7 +73,11 @@
 <!--        </template>-->
 <!--      </el-table-column>-->
       <el-table-column label="子平台ID" align="center" prop="agent"/>
-      <el-table-column label="游戏局号" align="center"  min-width="180px" :show-overflow-tooltip="true" prop="gameId"/>
+      <el-table-column label="游戏局号" align="center"  min-width="180px" :show-overflow-tooltip="true" prop="gameId">
+        <template v-slot="{row}">
+          <a style="color: #00afff"  @click="funds(row)">{{ row.gameId }}</a>
+        </template>
+      </el-table-column>
       <el-table-column label="平台名称" align="center" prop="platformName"/>
       <el-table-column label="子平台名称" align="center" prop="sonPlatformName"/>
       <el-table-column label="有效下注" align="center" prop="cell_score"/>
@@ -92,6 +96,14 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
+    <!-- 游戏对局日志 -->
+    <el-dialog title="游戏对局日志" :visible.sync="fundsOpen" width="450px" style="max-height:600px;overflow-y: scroll;"
+               append-to-body
+    >
+      <el-table :stripe="true" v-loading="loading" :data="fundsData" >
+        <el-table-column label="游戏对局日志" align="center" width="140" prop="data"/>
+      </el-table>
+    </el-dialog>
 
     <!--会员注单数据详情-->
     <el-dialog v-dialogDrag title="注单数据详情" :visible.sync="openBetData" width="450px" append-to-body>
@@ -107,9 +119,10 @@
 import {
   listMemberGameData,
   exportMemberGameData,
-  getCount, getLotteryBetData
+  getCount, getLotteryBetData,getKYgameResReport
 } from '@/api/platform-web/member/memberGameData'
 import {pickerDateTimeShortcuts} from "@/utils/dateUtils";
+
 
 export default {
   name: 'MemberGameData',
@@ -139,6 +152,9 @@ export default {
       betData: [],
       // 会员注单数据表格数据
       memberGameDataList: [],
+      //资金明细数据
+      fundsData: [],
+      fundsOpen: false,
       // 弹出层标题
       title: '',
       // 是否显示弹出层
@@ -209,6 +225,13 @@ export default {
         this.loading = false
       })
     },
+    funds(row) {
+      getKYgameResReport(row).then((res) => {
+        this.fundsData = res.data
+        this.fundsOpen = true
+      })
+    },
+
     /** 查询会员注单数据列表 */
     getList() {
       this.loading = true

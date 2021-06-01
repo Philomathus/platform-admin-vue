@@ -326,74 +326,10 @@
     <el-dialog title="资金明细" :visible.sync="fundsOpen" width="450px" style="max-height:600px;overflow-y: scroll;"
                append-to-body
     >
-      <!--      <el-table :stripe="true" v-loading="loading" :data="fundsData" :row-class-name="tableRowClassName">-->
-      <!--        <el-table-column label="项目名称" align="center" width="140" prop="class_twoname"/>-->
-      <!--        <el-table-column label="项目值" align="center" prop="t_value"/>-->
-      <!--      </el-table>-->
-
-      <el-form ref="form" :model="form" label-width="130px">
-        <el-form-item label="禁言原因" prop="email">
-          <el-input v-model="form.email" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="会员编号" prop="id">
-          <el-input v-model="form.id" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="会员名称">
-          <el-input v-model="form.phone" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="会员VIP">
-          <el-input v-model="form.vip" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="会员注册时间">
-          <el-input v-model="form.reg_time" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="会员积分">
-          <el-input v-model="form.total_account" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="会员注单">
-          <el-input v-model="form.code_account" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="会员打码">
-          <el-input v-model="form.code_total" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="登陆IP">
-          <el-input v-model="form.login_ip" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="登陆地址">
-          <el-input v-model="form.ipaddress" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="线下充值金额">
-          <el-input v-model="form.rechargemoney" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="线上金额(一月)">
-          <el-input v-model="form.submoney" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="人工代充金额">
-          <el-input v-model="form.p_money" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="手动增加金额">
-          <el-input v-model="form.rg_income" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="平台赠送金额">
-          <el-input v-model="form.zs_income" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="充值总的金额">
-          <el-input v-model="form.totalincom" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="会员提现次数">
-          <el-input v-model="form.w_count" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="会员提现金额">
-          <el-input v-model="form.w_sum" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="彩票异常投注次数">
-          <el-input v-model="form.gcount" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="彩票总投注笔数">
-          <el-input v-model="form.gtcount" readonly></el-input>
-        </el-form-item>
-      </el-form>
-
+      <el-table :stripe="true" v-loading="loading" :data="fundsData" :row-class-name="tableRowClassName">
+        <el-table-column label="项目名称" align="center" width="140" prop="class_twoname"/>
+        <el-table-column label="项目值" align="center" prop="t_value"/>
+      </el-table>
     </el-dialog>
 
     <!-- 添加或修改会员提现信息对话框 -->
@@ -548,8 +484,6 @@ export default {
   components: {ExcelPrompt},
   data() {
     return {
-      //会员信息弹框
-      email:null,
       //银行卡黑名单下拉框
       CardBlackOptions: [{
         value: '1',
@@ -664,9 +598,8 @@ export default {
       return ''
     },
     funds(userId) {
-      getMemberWithdrawReport(userId).then(res => {
-        // this.fundsData = res.data
-        this.form = res.data
+      getMemberWithdrawReport(userId).then((res) => {
+        this.fundsData = res.data
         this.fundsOpen = true
       })
     },

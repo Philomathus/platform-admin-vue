@@ -451,6 +451,7 @@
       </div>
     </el-dialog>
     <ExcelPrompt ref="excelPrompt" @downLoadExcel="handleExport"></ExcelPrompt>
+    <TableShow ref="tableShow" ></TableShow>
   </div>
 </template>
 <script>
@@ -479,9 +480,10 @@ import {
 } from '@/api/platform-web/pay/payAgentPlatform'
 import { pickerDateTimeShortcuts } from '@/utils/dateUtils'
 import ExcelPrompt from '@/layout/components/prompt/excelPrompt.vue';
+import TableShow from '@/views/pay/memberWithdrawLog/tableShow.vue';
 export default {
   name: 'MemberWithdrawLog',
-  components: {ExcelPrompt},
+  components: {ExcelPrompt,TableShow},
   data() {
     return {
       //银行卡黑名单下拉框
@@ -600,7 +602,8 @@ export default {
     funds(userId) {
       getMemberWithdrawReport(userId).then((res) => {
         this.fundsData = res.data
-        this.fundsOpen = true
+        this.$refs.tableShow.show(res.data);
+        // this.fundsOpen = true
       })
     },
     //复制

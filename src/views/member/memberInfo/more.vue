@@ -16,8 +16,6 @@
           <span>加分</span></button>
         <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(1,'三方游戏')">
           <span>三方游戏</span></button>
-        <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(2,'资金明细')">
-          <span>资金明细</span></button>
         <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(5,'银行卡')">
           <span>银行卡</span></button>
         <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(10,'发送短信')">
@@ -28,6 +26,8 @@
           <span>重置手机号</span></button>
         <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(13,'重置邀请码')">
           <span>重置邀请码</span></button>
+        <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(2,'资金明细')">
+          <span>资金明细</span></button>
         <button
           type="button"
           class="el-button el-button--success el-button--mini is-plain"
@@ -64,7 +64,7 @@
         </el-table>
       </el-row>
       <!--资金明细-->
-      <el-row v-if="index===2">
+<!--      <el-row v-if="index===2">
         <el-table
           @row-click="clickRow"
           ref="table"
@@ -72,11 +72,11 @@
           height="460px"
           v-loading="loading"
         >
-          <!--<el-table-column type="selection" width="55"></el-table-column>-->
+          &lt;!&ndash;<el-table-column type="selection" width="55"></el-table-column>&ndash;&gt;
           <el-table-column prop="class_twoname" label="项目名称" :show-overflow-tooltip="true"></el-table-column>
           <el-table-column prop="t_value" label="项目值" :show-overflow-tooltip="true"></el-table-column>
         </el-table>
-      </el-row>
+      </el-row>-->
       <!--加分-->
       <el-row v-if="index===3">
         <el-form ref="form" :model="form" :rules="rules" label-width="110px">
@@ -321,7 +321,9 @@
         </el-button>
       </div>
     </el-dialog>
+    <TableShow ref="tableShow" ></TableShow>
   </div>
+
 </template>
 
 <script>
@@ -338,7 +340,8 @@ import {
 } from '@/api/platform-web/member/memberInfo'
 import { userImMute } from '@/api/platform-web/live-web/ImMute'
 import { hideKMobile } from '@/utils/mobile.js'
-
+import TableShow from '@/views/pay/memberWithdrawLog/tableShow.vue';
+import {getMemberWithdrawReport} from "@/api/platform-web/pay/memberWithdrawLog";
 export default {
   props: {
     /*    memberId: {
@@ -350,6 +353,7 @@ export default {
           default: 0
         }*/
   },
+  components: {TableShow},
   data() {
     return {
       showVip: false,
@@ -467,6 +471,11 @@ export default {
     })
   },
   methods: {
+    funds(userId) {
+      getMemberWithdrawReport(userId).then((res) => {
+        this.$refs.tableShow.show(res.data);
+      })
+    },
     updateMobile() {
       var that = this
       this.$refs['mobileForm'].validate(valid => {
@@ -588,6 +597,10 @@ export default {
         case 12 :
           hint = 'IM禁言'
           this.open(hint, 5)
+          break
+        case 2 :
+          hint = 'IM禁言'
+          this.funds(this.memberId);
           break
       }
       //其他的就是获取列表

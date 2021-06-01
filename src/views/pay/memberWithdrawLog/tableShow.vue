@@ -28,7 +28,7 @@
       </div>
       <div class="mount" style="width: 20%">
         <div class="font">{{data.会员积分}}</div>
-        <div class="font">{{data.Id}}</div>
+        <div class="font">{{data.登录时间}}</div>
         <div class="font">{{data.会员VIP}}</div>
         <div class="font">{{data.会员注单}}</div>
         <div class="font">{{data.登陆地址}}</div>
@@ -128,14 +128,15 @@ member
 
   div {
     display: inline-block;
-    border: 1px solid rgba(0, 0, 0, 0.51);
-    font-size: 13px;
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    font-size: 14px;
     text-align: center;
     /*align-items:center; display: flex;*/
   }
 
   .font {
-    height: 30px;
+    height: 40px;
+    text-align: center;
   }
 
   .title {

@@ -12,7 +12,8 @@ export function listReport(query) {
   return request({
     url: url.platformWeb + '/admin/reportAgentcount/list',
     method: 'get',
-    params: query
+    params: query,
+    timeout: 30000
   })
 }
 export function exportReportAgentCount(query) {

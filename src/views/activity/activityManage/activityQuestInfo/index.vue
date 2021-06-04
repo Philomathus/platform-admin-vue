@@ -334,12 +334,20 @@ export default {
     handleAdd() {
       this.reset()
       this.open = true
+      //任务类型
+      activityQuestTypes().then(response => {
+        this.activityQuestTypeOptions = response.data
+      })
       this.title = '添加任务信息'
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset()
       const id = row.id || this.ids
+      //任务类型
+      activityQuestTypes().then(response => {
+        this.activityQuestTypeOptions = response.data
+      })
       getActivityQuestInfo(id).then(response => {
         this.form = response.data
         this.open = true

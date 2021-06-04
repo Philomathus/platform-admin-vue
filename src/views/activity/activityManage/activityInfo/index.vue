@@ -354,12 +354,20 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
+      //活动类型
+      activityTypes().then(response => {
+        this.activityTypeOptions = response.data
+      })
       this.title = "添加活动信息";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
       const id = row.id || this.ids
+      //活动类型
+      activityTypes().then(response => {
+        this.activityTypeOptions = response.data
+      })
       getActivityInfo(id).then(response => {
         response.data.type = response.data.type + ""
         this.form = response.data;

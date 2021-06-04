@@ -342,6 +342,8 @@ import { userImMute } from '@/api/platform-web/live-web/ImMute'
 import { hideKMobile } from '@/utils/mobile.js'
 import TableShow from '@/views/pay/memberWithdrawLog/tableShow.vue';
 import {getMemberWithdrawReport} from "@/api/platform-web/pay/memberWithdrawLog";
+import { validDecimal, validMobile, validNumber } from '../../../utils/validate'
+
 export default {
   props: {
     /*    memberId: {

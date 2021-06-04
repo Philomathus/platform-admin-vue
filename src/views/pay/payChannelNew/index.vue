@@ -192,7 +192,7 @@
           <el-select
             filterable
             v-model="form.payPlatformId"
-            placeholder="请选择存入类型"
+            placeholder="请选择支付平台"
             clearable
             size="small"
             style="width: 240px"
@@ -209,7 +209,7 @@
           <el-select
             filterable
             v-model="form.payTypeId"
-            placeholder="请选择存入类型"
+            placeholder="请选择支付类型"
             clearable
             size="small"
             style="width: 240px"
@@ -483,6 +483,11 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
+      //新增支付渠道时不再需要整体刷新页面才能显示新增的支付平台哈哈
+      //支付平台下拉框
+      platforms().then(response => {
+        this.payPlatformOptions = response.data
+      })
       this.title = "添加【支付通道】";
     },
     /** 修改按钮操作 */

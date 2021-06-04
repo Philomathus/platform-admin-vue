@@ -186,10 +186,10 @@
             <el-radio label="1">跳转链接</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="活动详情" v-if="form.type == 0">
+        <el-form-item label="活动详情" prop="content">
           <editor v-model="form.content" path="ActivityInfo"/>
         </el-form-item>
-        <el-form-item label="跳转链接" prop="url" v-if="form.type == 1">
+        <el-form-item label="跳转链接" prop="url">
           <el-input v-model="form.url" placeholder="请输入图标跳转链接"/>
         </el-form-item>
       </el-form>
@@ -273,7 +273,26 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {}
+      rules: {
+        title: [
+          {required: true, message: "标题不能为空", trigger: "blur"}
+        ],
+        icon: [
+          {required: true, message: "图标不能不上传", trigger: "blur"}
+        ],
+        typeId: [
+          {required: true, message: "活动类型不能为空", trigger: "blur"}
+        ],
+        type: [
+          {required: true, message: "跳转类型不能为空", trigger: "blur"}
+        ],
+        content: [
+          {required: true, message: "活动详情不能不上传", trigger: "blur"}
+        ],
+        url: [
+          {required: true, message: "跳转链接不能为空", trigger: "blur"}
+        ],
+      }
     };
   },
   created() {
@@ -335,12 +354,20 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
+      //活动类型
+      activityTypes().then(response => {
+        this.activityTypeOptions = response.data
+      })
       this.title = "添加活动信息";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
       const id = row.id || this.ids
+      //活动类型
+      activityTypes().then(response => {
+        this.activityTypeOptions = response.data
+      })
       getActivityInfo(id).then(response => {
         response.data.type = response.data.type + ""
         this.form = response.data;

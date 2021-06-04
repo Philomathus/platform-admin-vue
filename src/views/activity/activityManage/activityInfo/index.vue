@@ -186,10 +186,10 @@
             <el-radio label="1">跳转链接</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="活动详情" v-if="form.type == 0">
+        <el-form-item label="活动详情">
           <editor v-model="form.content" path="ActivityInfo"/>
         </el-form-item>
-        <el-form-item label="跳转链接" prop="url" v-if="form.type == 1">
+        <el-form-item label="跳转链接" prop="url">
           <el-input v-model="form.url" placeholder="请输入图标跳转链接"/>
         </el-form-item>
       </el-form>

@@ -444,8 +444,7 @@ export default {
           { max: 30,message: "重置邀请码长度不能超过30个字符" }
         ],
         score: [
-          { required: true, message: '加分金额不能为空', trigger: 'blur' },
-          { validator: validDecimal , trigger: "blur" }
+          { required: true, message: '加分金额不能为空', trigger: 'blur' }
         ],
         moneydes: [
           { required: true, message: '备注字典不能为空', trigger: 'blur' },{max: 100,message: "备注字典长度不能超过30位" }
@@ -458,7 +457,7 @@ export default {
         ],
         beatNum: [
           { required: true, message: '打码倍数不能为空', trigger: 'blur' },
-          { validator: validDecimal , trigger: "blur" },{max: 1,message: "打码倍数长度不能超过1位数字" }
+          { validator: validDecimal , trigger: "blur" },{max: 10,message: "打码倍数长度不能超过1位数字" }
         ],
         googleAuthCode: [
           { required: true, message: 'google验证码不能为空', trigger: 'blur' },

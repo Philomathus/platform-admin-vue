@@ -438,7 +438,7 @@
                             if (res.code===200){
                               this.$notify.success(res.msg)
                             }else {
-                              this.$notify.error('修改家族ID失败')
+                              this.$notify.error('修改印票失败')
                             }
                           }).catch(() => {
                             this.$notify.error('网络异常')

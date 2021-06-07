@@ -47,6 +47,12 @@
       </div>
     </div>
     <div class="lotteryInfo">
+      <div class="title">会员备注</div>
+      <div class="mount" style="width: 80%">
+        <el-input class="font" v-model.trim="email" @blur="updateEmail(email,data.会员编号)"></el-input>
+      </div>
+    </div>
+    <div class="lotteryInfo">
       <div class="title">彩票检测</div>
       <div class="mount" style="width: 80%">
         <div class="font">异常投注次数: {{data.彩票异常投注次数}}</div>
@@ -64,7 +70,7 @@ member
 <script>
   import {checkTwoLogin} from "@/utils/permission";
   import {
-    getMemberInfo,
+    getMemberInfo, updateMemberInfo,
   } from '@/api/platform-web/member/memberInfo'
 
   export default {
@@ -81,11 +87,17 @@ member
       return {
         open: false,
         data: {},
-        playData: []
+        playData: [],
+        email: '',
       }
     },
     /*组件方法*/
     methods: {
+      updateEmail(email, id) {
+        updateMemberInfo({id: id, email: email}).then((res) => {
+          this.$notify.success("修改成功")
+        })
+      },
       showPhone() {
         if (checkTwoLogin()) {
           //获取会员的手机号
@@ -110,6 +122,7 @@ member
         });
         this.open = true
         // this.data = data;
+        this.email = this.data.会员备注;
       }
     },
     /*组件的初始化方法*/
@@ -143,7 +156,7 @@ member
   .title {
     width: 20%;
     margin: 0 0 0 0;
-    border:  0px solid rgba(0, 0, 0, 0.10);
+    border: 0px solid rgba(0, 0, 0, 0.10);
     /*height: 100%;*/
   }
 

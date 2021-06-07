@@ -89,11 +89,19 @@ export function getFamiily(query) {
   })
 }
 
-// 修改家族id
+// 加入家族
 export function goFamiily(query) {
   return request({
     url: url.platformWeb + '/admin/liveUser/gofamiily',
     method: 'put',
+    params: query
+  })
+}
+
+export function updateTicket(query) {
+  return request({
+    url: url.platformWeb + '/admin/liveUser/updateTicket',
+    method: 'post',
     params: query
   })
 }

@@ -49,7 +49,11 @@
     <div class="lotteryInfo">
       <div class="title">会员备注</div>
       <div class="mount" style="width: 80%">
-        <el-input class="font" v-model.trim="email" @blur="updateEmail(email,data.会员编号)"></el-input>
+        <div style="    display: flex;
+    justify-content: flex-start;">
+          <el-input class="font" v-model.trim="email"></el-input>
+          <el-button type="success" @click="updateEmail(email,data.会员编号)">更新</el-button>
+        </div>
       </div>
     </div>
     <div class="lotteryInfo">
@@ -70,7 +74,7 @@ member
 <script>
   import {checkTwoLogin} from "@/utils/permission";
   import {
-    getMemberInfo, updateMemberInfo,
+    getMemberInfo, updateEmail,
   } from '@/api/platform-web/member/memberInfo'
 
   export default {
@@ -94,7 +98,7 @@ member
     /*组件方法*/
     methods: {
       updateEmail(email, id) {
-        updateMemberInfo({id: id, email: email}).then((res) => {
+        updateEmail({id: id, email: email}).then((res) => {
           this.$notify.success("修改成功")
         })
       },

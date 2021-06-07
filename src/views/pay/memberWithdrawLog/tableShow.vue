@@ -5,28 +5,28 @@
   >
     <div class="memberInfo">
       <div class="title">会员基本信息</div>
-      <div class="mount" style="width: 20%">
+      <div class="mount" style="width: 12%">
         <div class="font">会员Id</div>
         <div class="font">注册时间</div>
         <div class="font">电话号码</div>
         <div class="font">会员打码</div>
         <div class="font">会员IP</div>
       </div>
-      <div class="mount" style="width: 20%">
+      <div class="mount" style="width: 28%">
         <div class="font">{{data.会员编号}}</div>
         <div class="font">{{data.会员注册时间}}</div>
         <div class="font" @click="showPhone" style="background-color: #cccc77">{{data.会员名称}}</div>
         <div class="font">{{data.会员打码}}</div>
         <div class="font">{{data.登陆IP}}</div>
       </div>
-      <div class="mount" style="width: 20%">
+      <div class="mount" style="width: 12%">
         <div class="font">当前余额</div>
         <div class="font">登录时间</div>
         <div class="font">VIP等级</div>
         <div class="font">会员注单</div>
         <div class="font">登录地址</div>
       </div>
-      <div class="mount" style="width: 20%">
+      <div class="mount" style="width: 28%">
         <div class="font">{{data.会员积分}}</div>
         <div class="font">{{data.登录时间}}</div>
         <div class="font">{{data.会员VIP}}</div>

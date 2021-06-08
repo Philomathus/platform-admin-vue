@@ -6,7 +6,7 @@
           v-model="queryParams.title"
           placeholder="请输入系统模块"
           clearable
-          style="width: 240px;"
+          style="width: 180px;"
           size="small"
           @keyup.enter.native="handleQuery"
         />
@@ -16,18 +16,19 @@
           v-model="queryParams.operName"
           placeholder="请输入操作人员"
           clearable
-          style="width: 240px;"
+          style="width: 180px;"
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item label="类型" prop="businessType">
         <el-select
+          @change="selectChanged"
           v-model="queryParams.businessType"
           placeholder="操作类型"
           clearable
           size="small"
-          style="width: 240px"
+          style="width: 180px"
         >
           <el-option
             v-for="dict in typeOptions"
@@ -37,13 +38,23 @@
           />
         </el-select>
       </el-form-item>
+      <el-form-item label="会员ID" v-show="showParam">
+        <el-input
+          v-model="queryParams.operParam"
+          placeholder="请输入会员ID"
+          clearable
+          style="width: 180px;"
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item label="状态" prop="status">
         <el-select
           v-model="queryParams.status"
           placeholder="操作状态"
           clearable
           size="small"
-          style="width: 240px"
+          style="width: 180px"
         >
           <el-option
             v-for="dict in statusOptions"
@@ -206,6 +217,8 @@ export default {
       multiple: true,
       // 显示搜索条件
       showSearch: true,
+      //显示会员ID
+      showParam: false,
       // 总条数
       total: 0,
       // 表格数据
@@ -227,7 +240,8 @@ export default {
         title: undefined,
         operName: undefined,
         businessType: undefined,
-        status: undefined
+        status: undefined,
+        operParam: undefined
       }
     }
   },
@@ -321,6 +335,14 @@ export default {
         this.downloadExcel(response, '操作日志')
       }).catch(() => {
       })
+    },
+    /** 影藏搜索会员ID */
+    selectChanged(value) {
+      if (value != undefined && value == 2){
+        this.showParam = true;
+      }else {
+        this.showParam = false;
+      }
     }
   }
 }

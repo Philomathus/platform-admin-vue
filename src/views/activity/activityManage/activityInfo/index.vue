@@ -245,7 +245,6 @@ export default {
       dateRange: [],
       //活动类型
       activityTypeOptions: [],
-      activityTypeUrlOptions: [],
       statusOptions: [],
       // 非多个禁用
       multiple: true,
@@ -329,7 +328,8 @@ export default {
         ctime: null,
         indexs: null,
         typeId: null,
-        content: null
+        content: '',
+        url: null
       };
       this.resetForm("form");
     },

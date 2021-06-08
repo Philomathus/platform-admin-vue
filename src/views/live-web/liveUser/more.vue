@@ -421,11 +421,10 @@
                                 familyId: value,
                                 id: this.userId
                             }).then((res) => {
-                                console.log('修改家族ID \n'+ JSON.stringify(res))
                                 if (res.code===200){
-                                    this.$notify.success(res.msg)
+                                    this.success(res.msg)
                                 }else {
-                                    this.$notify.error('修改家族ID失败')
+                                    this.error('修改家族ID失败')
                                 }
                             }).catch(() => {
                                 this.$notify.error('网络异常')
@@ -435,14 +434,13 @@
                             ticket: value,
                             id: this.userId
                           }).then((res) => {
-                            if (res.code===200){
-                              this.$notify.success(res.msg)
-                            }else {
-                              this.$notify.error('修改印票失败')
+                            if (res.code === 200){
+                              this.$message.success(res.msg)
+                              this.$emit('refMemeberData')
+                            } else if(res.code === 100) {
+                              this.$message.error(res.msg)
                             }
-                          }).catch(() => {
-                            this.$notify.error('网络异常')
-                          });
+                          })
                         }
                     }).catch(() => {
                         this.$message({

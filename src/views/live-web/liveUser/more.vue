@@ -436,7 +436,7 @@
                           }).then((res) => {
                             if (res.code === 200){
                               this.$message.success(res.msg)
-                              this.getList()
+                              this.$emit('refMemeberData')
                             } else if(res.code === 100) {
                               this.$message.error(res.msg)
                             }

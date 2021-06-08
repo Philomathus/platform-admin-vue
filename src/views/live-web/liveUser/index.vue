@@ -346,7 +346,7 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
-    <more ref="more" :user-id="userId" @liveUserMore="handleQuery"></more>
+    <more ref="more" @refMemeberData="getList()" :user-id="userId" @liveUserMore="handleQuery"></more>
   </div>
 </template>
 

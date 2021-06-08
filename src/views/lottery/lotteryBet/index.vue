@@ -1,7 +1,10 @@
 <template>
   <div class="app-container">
+    <div v-loading="totalLoading">
     <el-button type="primary" @click="copy1">投注金额 {{ this.totalData.totalCost||0 }}</el-button>
     <el-button type="success" @click="copy2">中奖金额 {{this.totalData.totalPrize||0 }}</el-button>
+    <el-button  type="primary" icon="el-icon-search" size="mini" @click="getCountTotal()" style="margin-left: 20px">统计查询</el-button>
+    </div>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px" style="margin-top: 20px">
       <el-form-item label="下注时间" prop="betTime">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
@@ -156,7 +159,6 @@ export default {
     this.getDicts('lottery_bat_status').then(response => {
       this.statusOptions = response.data
     })
-    this.getCountTotal()
   },
   methods: {
     /** 查询用户投资行为列表 */
@@ -219,7 +221,6 @@ export default {
         return
       }
       this.getList()
-      this.getCountTotal()
     },
     /** 重置按钮操作 */
     resetQuery() {

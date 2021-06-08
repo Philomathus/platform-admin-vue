@@ -440,9 +440,7 @@
                             } else if(res.code === 100) {
                               this.$message.error(res.msg)
                             }
-                          }).catch(() => {
-                            this.$notify.error('网络异常')
-                          });
+                          })
                         }
                     }).catch(() => {
                         this.$message({

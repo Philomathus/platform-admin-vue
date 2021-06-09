@@ -126,7 +126,6 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
 
     </el-form>
@@ -498,11 +497,10 @@
       });
       oInput.remove()
     },
-    /** 重置按钮操作 */
-    resetQuery() {
+    /** 刷新搜索操作 */
+    refreshQuery() {
       this.queryParams.priceMax=""
       this.queryParams.priceMin=""
-      this.resetForm('queryForm')
       this.handleQuery()
     },
     /** 修改按钮操作 */
@@ -597,7 +595,7 @@
         this.refreshLabel = '停止刷新'
         this.refreshDesc = ''
         this.stopRefresh()
-        this.resetQuery()
+        this.refreshQuery()
         this.startRefresh()
       } else {
         this.refreshType = 'primary'
@@ -613,7 +611,7 @@
       let secs = thet.refreshSec
       window.refreshInterval = setInterval(function () {
         if (secs === 0) {
-          thet.resetQuery()
+          thet.refreshQuery()
           secs = thet.refreshSec
         }
         thet.refreshDesc = secs + '秒后开始刷新'

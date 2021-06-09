@@ -102,6 +102,7 @@
     <el-table stripe v-loading="loading" :data="liveUserList">
       <el-table-column label="主播ID" min-width="120" align="center" prop="id"/>
       <el-table-column label="主播昵称" min-width="140" :show-overflow-tooltip="true" align="center" prop="nickName"/>
+      <el-table-column label="主播名片" min-width="100" align="center" prop="weixinAccount"/>
       <el-table-column label="所属家族" min-width="120" align="center" prop="familyName">
         <template slot-scope="scope">
           <span v-if="scope.row.familyId === 0">未加入家族</span>

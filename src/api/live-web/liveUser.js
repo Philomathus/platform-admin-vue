@@ -187,3 +187,10 @@ export function delLiveUserBank(bankAccount) {
     method: 'delete'
   })
 }
+//踢出主播家族
+export function kickOutLiveUser(id){
+  return request({
+    url: url.platformWeb + '/admin/liveUser/kickOutLive/' + id,
+    method: 'put'
+  })
+}

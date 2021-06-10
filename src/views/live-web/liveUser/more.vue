@@ -424,11 +424,9 @@
                                 if (res.code===200){
                                     this.success(res.msg)
                                 }else {
-                                    this.error('修改家族ID失败')
+                                    this.error('加入家族失败')
                                 }
-                            }).catch(() => {
-                                this.$notify.error('网络异常')
-                            });
+                            })
                         } else if(this.index === 8){
                           updateTicket({
                             ticket: value,

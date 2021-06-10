@@ -186,10 +186,10 @@
             <el-radio label="1">跳转链接</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="活动详情" prop="content">
+        <el-form-item label="活动详情" prop="content" v-if="form.type == 0">
           <editor v-model="form.content" path="ActivityInfo"/>
         </el-form-item>
-        <el-form-item label="跳转链接" prop="url">
+        <el-form-item label="跳转链接" prop="url" v-if="form.type == 1">
           <el-input v-model="form.url" placeholder="请输入图标跳转链接"/>
         </el-form-item>
       </el-form>
@@ -284,13 +284,7 @@ export default {
         ],
         type: [
           {required: true, message: "跳转类型不能为空", trigger: "blur"}
-        ],
-        content: [
-          {required: true, message: "活动详情不能不上传", trigger: "blur"}
-        ],
-        url: [
-          {required: true, message: "跳转链接不能为空", trigger: "blur"}
-        ],
+        ]
       }
     };
   },

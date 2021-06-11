@@ -32,6 +32,15 @@ export function getLotteryBetData(agent,gameId) {
   })
 }
 
+// 查询KY注单数据统计
+export function getKYgameResReport(row) {
+  return request({
+    url: url.platformWeb + '/member/memberGameData/getKYgameResReport',
+    method: 'put',
+    params: row
+  })
+}
+
 // 导出会员注单数据
 export function exportMemberGameData(query) {
   return request({

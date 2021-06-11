@@ -180,6 +180,15 @@ export function changeBank(data) {
     data: data
   })
 }
+
+// 修改备注
+export function updateEmail(data) {
+  return request({
+    url: url.platformWeb + '/member/memberInfo/updateEmail',
+    method: 'put',
+    data: data
+  })
+}
 // 打码修复
 export function memberBcodeRepair(query) {
   return request({

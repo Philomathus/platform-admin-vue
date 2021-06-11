@@ -16,8 +16,6 @@
           <span>加分</span></button>
         <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(1,'三方游戏')">
           <span>三方游戏</span></button>
-        <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(2,'资金明细')">
-          <span>资金明细</span></button>
         <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(5,'银行卡')">
           <span>银行卡</span></button>
         <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(10,'发送短信')">
@@ -28,6 +26,8 @@
           <span>重置手机号</span></button>
         <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(13,'重置邀请码')">
           <span>重置邀请码</span></button>
+        <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(2,'资金明细')">
+          <span>资金明细</span></button>
         <button
           type="button"
           class="el-button el-button--success el-button--mini is-plain"
@@ -64,7 +64,7 @@
         </el-table>
       </el-row>
       <!--资金明细-->
-      <el-row v-if="index===2">
+<!--      <el-row v-if="index===2">
         <el-table
           @row-click="clickRow"
           ref="table"
@@ -72,11 +72,11 @@
           height="460px"
           v-loading="loading"
         >
-          <!--<el-table-column type="selection" width="55"></el-table-column>-->
+          &lt;!&ndash;<el-table-column type="selection" width="55"></el-table-column>&ndash;&gt;
           <el-table-column prop="class_twoname" label="项目名称" :show-overflow-tooltip="true"></el-table-column>
           <el-table-column prop="t_value" label="项目值" :show-overflow-tooltip="true"></el-table-column>
         </el-table>
-      </el-row>
+      </el-row>-->
       <!--加分-->
       <el-row v-if="index===3">
         <el-form ref="form" :model="form" :rules="rules" label-width="110px">
@@ -321,7 +321,9 @@
         </el-button>
       </div>
     </el-dialog>
+    <TableShow ref="tableShow" ></TableShow>
   </div>
+
 </template>
 
 <script>
@@ -338,6 +340,9 @@ import {
 } from '@/api/platform-web/member/memberInfo'
 import { userImMute } from '@/api/platform-web/live-web/ImMute'
 import { hideKMobile } from '@/utils/mobile.js'
+import TableShow from '@/views/pay/memberWithdrawLog/tableShow.vue';
+import {getMemberWithdrawReport} from "@/api/platform-web/pay/memberWithdrawLog";
+import { validDecimal, validMobile, validNumber } from '../../../utils/validate'
 
 export default {
   props: {
@@ -350,6 +355,7 @@ export default {
           default: 0
         }*/
   },
+  components: {TableShow},
   data() {
     return {
       showVip: false,
@@ -406,46 +412,56 @@ export default {
       //手机号校验规则
       mobileRules: {
         oldMobile: [
-          { required: true, message: '旧手机号码不能为空', trigger: 'blur' }
+          { required: true, message: '旧手机号码不能为空', trigger: 'blur' },
+          {max: 100,message: "机号码长度不能超过11位" },
+          { validator: validMobile , trigger: "blur"  }
         ],
         newMobile: [
-          { required: true, message: '新手机号码不能为空', trigger: 'blur' }
+          { required: true, message: '新手机号码不能为空', trigger: 'blur' },
+          {max: 11,message: "机号码长度不能超过11位" },
+          { validator: validMobile , trigger: "blur"  }
         ],
         googleAuthCode: [
-          { required: true, message: '谷歌验证码不能为空', trigger: 'blur' }
+          { required: true, message: '谷歌验证码不能为空', trigger: 'blur' },
+          { validator: validNumber , trigger: "blur"  }
         ]
       },
       // 加分表单校验
       inviterCodeRules: {
         inviterCode: [
-          { required: true, message: '重置邀请码不能为空', trigger: 'blur' }
+          { required: true, message: '重置邀请码不能为空', trigger: 'blur' },
+          { max: 500,message: "重置邀请码长度不能超过500个字符" }
         ],
         googleAuthCode: [
-          { required: true, message: 'google验证码不能为空', trigger: 'blur' }
+          { required: true, message: 'google验证码不能为空', trigger: 'blur' },
+          { validator: validNumber , trigger: "blur"  }
         ]
       },
       // 加分表单校验
       rules: {
         password: [
-          { required: true, message: '重置密码不能为空', trigger: 'blur' }
+          { required: true, message: '重置密码不能为空', trigger: 'blur' },
+          { max: 30,message: "重置邀请码长度不能超过30个字符" }
         ],
         score: [
           { required: true, message: '加分金额不能为空', trigger: 'blur' }
         ],
         moneydes: [
-          { required: true, message: '备注字典不能为空', trigger: 'blur' }
+          { required: true, message: '备注字典不能为空', trigger: 'blur' },{max: 100,message: "备注字典长度不能超过30位" }
         ],
         mk: [
-          { required: true, message: '备注信息不能为空', trigger: 'blur' }
+          { required: true, message: '备注信息不能为空', trigger: 'blur' },{max: 200,message: "备注信息长度不能超过200位" }
         ],
         ordermk: [
-          { required: true, message: '订单备注不能为空', trigger: 'blur' }
+          { required: true, message: '订单备注不能为空', trigger: 'blur' },{max: 200,message: "备注信息长度不能超过200位" }
         ],
         beatNum: [
-          { required: true, message: '打码倍数不能为空', trigger: 'blur' }
+          { required: true, message: '打码倍数不能为空', trigger: 'blur' },
+          { validator: validDecimal , trigger: "blur" },{max: 10,message: "打码倍数长度不能超过1位数字" }
         ],
         googleAuthCode: [
-          { required: true, message: 'google验证码不能为空', trigger: 'blur' }
+          { required: true, message: 'google验证码不能为空', trigger: 'blur' },
+          { validator: validNumber , trigger: "blur"  }
         ]
       }
     }
@@ -467,6 +483,11 @@ export default {
     })
   },
   methods: {
+    funds(userId) {
+      getMemberWithdrawReport(userId).then((res) => {
+        this.$refs.tableShow.show(res.data);
+      })
+    },
     updateMobile() {
       var that = this
       this.$refs['mobileForm'].validate(valid => {
@@ -512,8 +533,6 @@ export default {
         } else {
           this.$notify.error(res.msg)
         }
-      }).catch(() => {
-        this.$notify.error('网络异常')
       }).finally(() => {
         this.loading = false
       })
@@ -533,8 +552,6 @@ export default {
       unbindCard(id, memberId).then((res) => {
         this.msgSuccess(res.msg)
         this.cardList()
-      }).catch(() => {
-        this.$notify.error('网络异常')
       }).finally(() => {
         this.loading = false
       })
@@ -589,6 +606,10 @@ export default {
           hint = 'IM禁言'
           this.open(hint, 5)
           break
+        case 2 :
+          hint = 'IM禁言'
+          this.funds(this.memberId);
+          break
       }
       //其他的就是获取列表
       this.getList()
@@ -617,8 +638,6 @@ export default {
             } else {
               this.$notify.error('重置保险箱失败')
             }
-          }).catch(() => {
-            this.$notify.error('网络异常')
           })
         }).catch(() => {
           this.$message({
@@ -629,9 +648,9 @@ export default {
       } else if (type == 2) {
         this.$prompt(hint, '提示', {
           confirmButtonText: '确定',
-          cancelButtonText: '取消'
-          /*inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
-          inputErrorMessage: '验证码格式不正确'*/
+          cancelButtonText: '取消',
+          inputPattern: /^[0-9]{1,10}$/,
+          inputErrorMessage: '验证码格式不正确,0-10数字,请重新输入',
         }).then(({ value }) => {
           resetWithdrawal({
             googleAuthCode: value,
@@ -642,8 +661,6 @@ export default {
             } else {
               this.$notify.error('重置提现失败')
             }
-          }).catch(() => {
-            this.$notify.error('网络异常')
           })
         }).catch(() => {
           this.$message({
@@ -654,7 +671,9 @@ export default {
       } else if (type == 3) {
         this.$prompt(hint, '提示', {
           confirmButtonText: '确定',
-          cancelButtonText: '取消'
+          cancelButtonText: '取消',
+          inputPattern: /^[0-9]{1,10}$/,
+          inputErrorMessage: '验证码格式不正确,0-10数字,请重新输入',
         }).then(({ value }) => {
           memberBcodeRepair({
             googleAuthCode: value,
@@ -665,8 +684,6 @@ export default {
             } else {
               this.$notify.error('修复打码数据失败')
             }
-          }).catch(() => {
-            this.$notify.error('网络异常')
           })
         }).catch(() => {
           this.$message({
@@ -696,8 +713,6 @@ export default {
         } else {
           that.$notify.error('vip等级修改失败')
         }
-      }).catch(() => {
-        that.$notify.error('网络异常')
       })
     },
     updateIm() {
@@ -809,8 +824,6 @@ export default {
           this.$notify.success(res.msg)
           this.$emit('refMemeberData')
         }
-      }).catch((error) => {
-        this.$notify.error(error)
       }).finally(() => {
         this.loading = false
       })

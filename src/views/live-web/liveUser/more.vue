@@ -18,6 +18,8 @@
         <span>加入家族</span></button>
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(7,'银行卡')">
         <span>银行卡</span></button>
+      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(8,'修改印票')">
+        <span>修改印票</span></button>
     </div>
     <!--聊天室记录-->
     <el-row v-if="index===1">
@@ -225,7 +227,7 @@
 <script>
     import {listDbTable, importTable} from "@/api/platform-web/tool/gen";
     import {
-      goFamiily,
+      goFamiily,updateTicket,
       chatPage, receiveProplist, logPage, updateLiveUser, getLiveUser,updateMobile,getLiveUserBank,updateLiveUserBank,delLiveUserBank
     } from "@/api/live-web/liveUser";
 
@@ -350,10 +352,13 @@
                 //切换页面重置数据
                 this.reset()
                 var hint = '';
-                //如果是重置密码,保险箱,提现
                 switch (index) {
                     case 4 :
-                        hint = '请輸入家族D家族ID'
+                        hint = '请輸入家族ID'
+                        this.open(hint, 2);
+                        break;
+                    case 8 :
+                        hint = '请輸入印票'
                         this.open(hint, 2);
                         break;
                 }
@@ -404,27 +409,36 @@
                             message: '已取消'
                         });
                     });
-                } else {
+                } else if (type === 2){
                     this.$prompt(hint, '提示', {
                         confirmButtonText: '确定',
                         cancelButtonText: '取消',
-                        /*inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
-                        inputErrorMessage: '验证码格式不正确'*/
+                        inputPattern: /^(\-|\+)?\d+(\.\d+)?$/,
+                        inputErrorMessage: '请输入数字类型'
                     }).then(({value}) => {
                         if (this.index === 4) {
                             goFamiily({
                                 familyId: value,
                                 id: this.userId
                             }).then((res) => {
-                                console.log('修改家族ID \n'+ JSON.stringify(res))
                                 if (res.code===200){
-                                    this.$notify.success(res.msg)
+                                    this.success(res.msg)
                                 }else {
-                                    this.$notify.error('修改家族ID失败')
+                                    this.error('加入家族失败')
                                 }
-                            }).catch(() => {
-                                this.$notify.error('网络异常')
-                            });
+                            })
+                        } else if(this.index === 8){
+                          updateTicket({
+                            ticket: value,
+                            id: this.userId
+                          }).then((res) => {
+                            if (res.code === 200){
+                              this.$message.success(res.msg)
+                              this.$emit('refMemeberData')
+                            } else if(res.code === 100) {
+                              this.$message.error(res.msg)
+                            }
+                          })
                         }
                     }).catch(() => {
                         this.$message({

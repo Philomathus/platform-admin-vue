@@ -102,6 +102,7 @@
     <el-table stripe v-loading="loading" :data="liveUserList">
       <el-table-column label="主播ID" min-width="120" align="center" prop="id"/>
       <el-table-column label="主播昵称" min-width="140" :show-overflow-tooltip="true" align="center" prop="nickName"/>
+      <el-table-column label="主播名片" min-width="100" align="center" prop="weixinAccount"/>
       <el-table-column label="所属家族" min-width="120" align="center" prop="familyName">
         <template slot-scope="scope">
           <span v-if="scope.row.familyId === 0">未加入家族</span>
@@ -160,8 +161,20 @@
       <el-table-column label="手机号" min-width="100" align="center" prop="mobile"/>
       <el-table-column label="登陆IP" min-width="150" :show-overflow-tooltip="true" align="left" prop="loginIp"/>
       <el-table-column label="禁播原因" min-width="150" align="center" prop="banRemark"/>
-      <el-table-column label="操作" min-width="180" align="center" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column label="是否家族长" min-width="150" align="center" prop="familyChieftain" v-show="false"/>
+      <el-table-column label="家族ID" min-width="150" align="center" prop="familyId" v-show="false"/>
+      <el-table-column label="操作" min-width="200" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
+          <el-button
+            size="small"
+            plain
+            type="primary"
+            icon="el-icon-s-check"
+            @click="kickOutLive(scope.row)"
+            v-hasPermi="['admin:liveUser:edit']"
+            v-show="scope.row.familyId > 0 && (scope.row.familyChieftain === 0 || scope.row.familyChieftain === null)"
+          >剔除家族
+          </el-button>
           <el-button
             size="small"
             plain
@@ -346,7 +359,7 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
-    <more ref="more" :user-id="userId" @liveUserMore="handleQuery"></more>
+    <more ref="more" @refMemeberData="getList()" :user-id="userId" @liveUserMore="handleQuery"></more>
   </div>
 </template>
 
@@ -361,7 +374,8 @@ import {
   banDetail,
   getFamiily,
   openLive,
-  closeLive
+  closeLive,
+  kickOutLiveUser
 } from '@/api/live-web/liveUser'
 import ImageUpload from '@/components/ImageUpload/index'
 import more from './more'
@@ -662,7 +676,24 @@ export default {
         that.$notify.success("关播成功")
         that.getList();
       }).catch((err)=>{that.$notify.error("关播失败")})
-    }
+    },
+    //踢出主播
+    kickOutLive(row){
+      const id = row.id
+      const t = this;
+      this.$confirm('确定踢出主播昵称:[' + row.nickName + ']?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        kickOutLiveUser(id).then(response => {
+          t.$notify.success("剔除成功")
+          t.getList();
+        }).catch((err)=>{
+          t.$notify.error("剔除主播失败")
+        })
+      })
+    },
   }
 }
 </script>

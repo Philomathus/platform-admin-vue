@@ -30,28 +30,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="status" style="width: 120px;">
-        <el-select v-model="queryParams.status" placeholder="全部状态" clearable size="small">
-          <el-option
-            v-for="dict in statusOptions"
-            :key="dict.dictValue"
-            :label="dict.dictLabel"
-            :value="dict.dictValue"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item prop="lotteryName">
-        <el-input
-          v-model="queryParams.lotteryName"
-          placeholder="彩票名称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item prop="abnormal">
-        <el-checkbox v-model="queryParams.abnormal">异常投注</el-checkbox>
-      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -125,7 +103,6 @@ export default {
       total: 0,
       // 用户投资行为表格数据
       lotteryBet0List: [],
-      statusOptions: [],
       // 弹出层标题
       title: '',
       // 是否显示弹出层

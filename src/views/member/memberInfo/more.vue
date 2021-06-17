@@ -95,7 +95,7 @@
             <el-input v-model="form.ordermk" placeholder="补单请填写补单订单号，末开奖补回请填写开期号，无则填写为0"/>
           </el-form-item>
           <el-form-item label="打码倍数" prop="beatNum">
-            <el-input v-model="form.beatNum" placeholder="请输入打码倍数，默认请填写1,如未打算打码可填写为0"/>
+            <el-input v-model="form.beatNum" type="number" placeholder="请输入打码倍数，默认请填写1,如未打算打码可填写为0"/>
           </el-form-item>
           <el-form-item label="google验证码" prop="googleAuthCode">
             <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>
@@ -342,7 +342,7 @@ import { userImMute } from '@/api/platform-web/live-web/ImMute'
 import { hideKMobile } from '@/utils/mobile.js'
 import TableShow from '@/views/pay/memberWithdrawLog/tableShow.vue';
 import {getMemberWithdrawReport} from "@/api/platform-web/pay/memberWithdrawLog";
-import { validDecimal, validMobile, validNumber } from '../../../utils/validate'
+import { positiveInteger, validMobile, validNumber } from '../../../utils/validate'
 
 export default {
   props: {
@@ -457,7 +457,7 @@ export default {
         ],
         beatNum: [
           { required: true, message: '打码倍数不能为空', trigger: 'blur' },
-          { validator: validDecimal , trigger: "blur" },{max: 10,message: "打码倍数长度不能超过1位数字" }
+          { validator: positiveInteger , trigger: "blur" },{max: 10,message: "打码倍数长度不能超过1位数字" }
         ],
         googleAuthCode: [
           { required: true, message: 'google验证码不能为空', trigger: 'blur' },

@@ -1,6 +1,12 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+      <el-form-item label="返现结果时间" prop="selectDate" label-width="100px">
+        <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
+                        end-placeholder="结束时间" range-separator="至" :default-time="['00:00:00', '23:59:59']" clearable :picker-options="pickerOptions"
+        ></el-date-picker>
+      </el-form-item>
       <el-form-item  prop="rebate">
         <el-input
           v-model="queryParams.rebate"
@@ -67,7 +73,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:activityCashBack:export']"
-        >导出</el-button>
+        >返现结果导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -139,6 +145,7 @@
 
 <script>
 import { listActivityCashBack,changeActivityInfoStatus, getActivityCashBack, delActivityCashBack, addActivityCashBack, updateActivityCashBack, exportActivityCashBack } from "@/api/activity/activityCashBack";
+import { pickerDateTimeShortcuts } from '@/utils/dateUtils'
 
 
 export default {
@@ -162,12 +169,14 @@ export default {
       total: 0,
       // 【充值返现】表格数据
       activityCashBackList: [],
+      pickerOptions: { shortcuts: pickerDateTimeShortcuts },
       // 弹出层标题
       title: "充值返现",
       // 是否显示弹出层
       open: false,
       // 查询参数
       queryParams: {
+        selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],//回调日期
         pageNum: 1,
         pageSize: 10,
         depositTotalMin: null,

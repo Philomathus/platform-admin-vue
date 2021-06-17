@@ -95,6 +95,21 @@ export function validDecimal(rule, value, callback) {
     callback();
   }
 }
+
+export function positiveInteger(rule, value, callback) {
+  //校验金额类型
+  if (value.length > 12){
+    callback(new Error('请输入合法的金额，0.01-999999999999之间'));
+  }
+  //const re = /^(([1-9]{1}\d*)|(0{1}))(\.\d{1,2})?$/;
+  const reg = /^[1-9]\d*$/;
+  const rsCheck = reg.test(value);
+  if (!rsCheck) {
+    callback(new Error('请输入合法的金额数字，只能为整数'));
+  } else {
+    callback();
+  }
+}
 export function validNumber(rule, value, callback) {
   //校验整数
   if (value.length > 10){

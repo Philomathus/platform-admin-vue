@@ -1,11 +1,11 @@
 <template>
-  <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="350px"
+  <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
              append-to-body
   >
     <el-form ref="queryForm" :inline="true" label-width="68px">
       <el-form-item label="选择日期" prop="selectDate">
-        <el-date-picker type="daterange" v-model="selectDate" format="yyyy-MM-dd"
-                        value-format="yyyy-MM-dd" :style="{width: '240px'}" start-placeholder="开始日期"
+        <el-date-picker type="datetimerange" v-model="selectDate" format="yyyy-MM-dd HH:mm:ss"
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '370px'}" start-placeholder="开始日期"
                         end-placeholder="结束日期"
                         range-separator="至" clearable
         ></el-date-picker>
@@ -53,13 +53,7 @@
     methods: {
       submitForm() {
         if (this.selectDate) {
-          if (this.selectDate[1].indexOf(" 23:59:59") < 0) {
-            this.selectDate[1] = this.selectDate[1]+" 23:59:59";
-          }
           var milliseconds = new Date(this.selectDate[1]).getTime();
-          if (this.selectDate[0].indexOf(" 00:00:00") < 0){
-            this.selectDate[0] = this.selectDate[0]+ " 00:00:00"
-          }
           var milliseconds1 = new Date(this.selectDate[0]).getTime();
           if ((milliseconds - milliseconds1) < 604800000) {
             this.$emit("downLoadExcel", this.selectDate)

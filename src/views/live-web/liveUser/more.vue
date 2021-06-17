@@ -421,10 +421,10 @@
                                 familyId: value,
                                 id: this.userId
                             }).then((res) => {
-                                if (res.code===200){
-                                    this.success(res.msg)
-                                }else {
-                                    this.error('加入家族失败')
+                                if (res.code === 200){
+                                    this.$message.success('加入家族成功')
+                                } else {
+                                  this.$message.error(res.msg)
                                 }
                             })
                         } else if(this.index === 8){

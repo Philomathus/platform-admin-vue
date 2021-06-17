@@ -31,7 +31,7 @@
         <div class="font">{{data.登录时间}}</div>
         <div class="font">{{data.会员VIP}}</div>
         <div class="font">{{data.会员注单}}</div>
-        <div class="font">{{data.登陆地址}}</div>
+        <div class="font" @click="showAddress" style="background-color: #cccc77">{{address}}</div>
       </div>
     </div>
     <div class="fundsInfo">
@@ -74,7 +74,7 @@ member
 <script>
   import {checkTwoLogin} from "@/utils/permission";
   import {
-    getMemberInfo, updateEmail,
+    getMemberInfo, updateEmail, getMemberLoginAddress
   } from '@/api/platform-web/member/memberInfo'
 
   export default {
@@ -90,6 +90,7 @@ member
     data() {
       return {
         open: false,
+        address: '******',
         data: {},
         playData: [],
         email: '',
@@ -113,7 +114,14 @@ member
 
         }
       },
+      showAddress() {
+        //获取会员的登录地址
+        getMemberLoginAddress(this.data['会员编号']).then((res) => {
+          this.address = res.msg;
+        });
+      },
       show(data) {
+        this.address = '******'
         this.playData = []
         data.forEach((value, index, array) => {
           var classTwoname = value.class_twoname;

@@ -120,6 +120,14 @@ export function getMemberInfo(id) {
   })
 }
 
+// 查询会员登录地址
+export function getMemberLoginAddress(id) {
+  return request({
+    url: url.platformWeb + '/member/memberInfo/getMemberLoginAddress/' + id,
+    method: 'get'
+  })
+}
+
 // 新增会员信息
 export function addMemberInfo(data) {
   return request({

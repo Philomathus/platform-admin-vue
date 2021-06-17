@@ -84,8 +84,8 @@
       <el-table-column label="总下注" align="center" prop="all_bet"/>
       <el-table-column label="盈利" align="center" prop="profit"/>
 <!--      <el-table-column label="抽水" align="center" prop="revenue"/>-->
-      <el-table-column label="游戏开始时间" align="center" width="150px" prop="game_start_time"/>
-      <el-table-column label="游戏结束时间" align="center" width="150px" prop="game_end_time"/>
+<!--      <el-table-column label="游戏开始时间" align="center" width="150px" prop="game_start_time"/>-->
+      <el-table-column label="结算时间" align="center" width="150px" prop="game_end_time"/>
     </el-table>
 
     <pagination

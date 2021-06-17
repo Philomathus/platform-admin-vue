@@ -173,7 +173,7 @@
             @click="kickOutLive(scope.row)"
             v-hasPermi="['admin:liveUser:edit']"
             v-show="scope.row.familyId > 0 && (scope.row.familyChieftain === 0 || scope.row.familyChieftain === null)"
-          >剔除家族
+          >踢出家族
           </el-button>
           <el-button
             size="small"
@@ -687,10 +687,10 @@ export default {
         type: 'warning'
       }).then(function () {
         kickOutLiveUser(id).then(response => {
-          t.$notify.success("剔除成功")
+          t.$notify.success("踢出成功")
           t.getList();
         }).catch((err)=>{
-          t.$notify.error("剔除主播失败")
+          t.$notify.error("踢出主播失败")
         })
       })
     },

@@ -426,6 +426,8 @@
                                 } else {
                                   this.$message.error(res.msg)
                                 }
+                            }).catch(() => {
+                              this.$notify.error('加入家族失败')
                             })
                         } else if(this.index === 8){
                           updateTicket({
@@ -438,6 +440,8 @@
                             } else if(res.code === 100) {
                               this.$message.error(res.msg)
                             }
+                          }).catch(() => {
+                            this.$notify.error('修改印票失败')
                           })
                         }
                     }).catch(() => {

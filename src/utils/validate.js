@@ -102,7 +102,7 @@ export function positiveInteger(rule, value, callback) {
     callback(new Error('请输入合法的金额，0.01-999999999999之间'));
   }
   //const re = /^(([^0][0-9]+|0)$)|^(([1-9]+)$)/;
-  const re = /^[1-9]\d*$/;
+  const re = /^[0-9]\d*$/;
   const rsCheck = re.test(value);
   if (!rsCheck) {
     callback(new Error('请输入合法的金额数字，只能为整数'));

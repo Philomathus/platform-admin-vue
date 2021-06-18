@@ -98,10 +98,27 @@ member
     },
     /*组件方法*/
     methods: {
+      validateTextLength (value) {
+        // 中文、中文标点、全角字符按1长度，英文、英文符号、数字按0.5长度计算
+        let cnReg = /([\u4e00-\u9fa5]|[\u3000-\u303F]|[\uFF00-\uFF60])/g
+        let mat = value.match(cnReg)
+        let length
+        if (mat) {
+          length = (mat.length + (value.length - mat.length) * 0.5)
+          return length
+        } else {
+          return value.length * 0.5
+        }
+      },
+
       updateEmail(email, id) {
-        updateEmail({id: id, email: email}).then((res) => {
-          this.$notify.success("修改成功")
-        })
+        if(this.validateTextLength(this.email) > 50){
+          this.$message.error("最多输入50个汉字")
+        } else {
+          updateEmail({id: id, email: email}).then((res) => {
+            this.$notify.success("修改成功")
+          })
+        }
       },
       showPhone() {
         if (checkTwoLogin()) {

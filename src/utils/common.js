@@ -40,15 +40,6 @@ export function selectDictLabels(datas, value, separator) {
   return actions.join('').substring(0, actions.join('').length - 1)
 }
 
-// 通用下载方法
-export function download(fileName) {
-  request.get(url.platformWeb + '/common/download?fileName=' + encodeURI(fileName) + '&delete=' + true, { responseType: 'arraybuffer' }).then(res => {
-    var strings = encodeURI(fileName).split('_')
-    fileDownload(res, strings[strings.length - 1])
-  })
-  // window.location.href = url.platformWeb + "/common/download?fileName=" + encodeURI(fileName) + "&delete=" + true;
-}
-
 export function downloadExcel(response,filename) {
   let blob = new Blob([response]);
   const link = document.createElement('a')

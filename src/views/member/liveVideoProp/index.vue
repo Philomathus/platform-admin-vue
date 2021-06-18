@@ -217,6 +217,11 @@ export default {
       this.loading = true
       listLiveProplog(this.queryParams).then(response => {
         this.liveProplogList = response.rows
+        this.liveProplogList.forEach(function (item) {
+          if(item.toUserId<=1){
+            item.toUserId = '';
+          }
+        });
         this.total = response.total
       }).catch(() => {
         this.$notify.error('网络异常')

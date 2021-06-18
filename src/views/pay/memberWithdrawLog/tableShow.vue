@@ -99,9 +99,14 @@ member
     /*组件方法*/
     methods: {
       updateEmail(email, id) {
-        updateEmail({id: id, email: email}).then((res) => {
-          this.$notify.success("修改成功")
-        })
+        let lenge = this.validateTextLength(this.email)
+        if(lenge > 10){
+          this.$notify.error("最多输入10个汉字")
+        } else {
+          updateEmail({id: id, email: email}).then((res) => {
+            this.$notify.success("修改成功")
+          })
+        }
       },
       showPhone() {
         if (checkTwoLogin()) {

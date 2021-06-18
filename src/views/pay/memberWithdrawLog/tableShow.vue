@@ -112,8 +112,8 @@ member
       },
 
       updateEmail(email, id) {
-        if(this.validateTextLength(this.email) > 5){
-          this.$message.error("最多输入5个汉字")
+        if(this.validateTextLength(this.email) > 50){
+          this.$message.error("最多输入50个汉字")
         } else {
           updateEmail({id: id, email: email}).then((res) => {
             this.$notify.success("修改成功")

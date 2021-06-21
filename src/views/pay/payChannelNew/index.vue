@@ -229,7 +229,7 @@
           <el-input type="number" class="no-number" v-model.trim="form.rechargeMax" placeholder="请输入充值最高" :min="0"/>
         </el-form-item>
         <el-form-item label="通道费率" prop="payRate">
-          <el-input type="number" class="no-number" v-model.trim="form.payRate" placeholder="请输入通道费率(最高0.4最低0.02)"/>
+          <el-input type="number" class="no-number" v-model.trim="form.payRate" placeholder="请输入通道费率(最高0.4最低0.01)"/>
         </el-form-item>
         <el-form-item label="开放层级" prop="openLevel">
           <el-col :span="11">

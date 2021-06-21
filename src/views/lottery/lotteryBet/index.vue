@@ -30,6 +30,15 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item prop="lotteryName" style="width: 150px;">
+        <el-input
+          v-model="queryParams.lotteryName"
+          placeholder="彩票名称"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>

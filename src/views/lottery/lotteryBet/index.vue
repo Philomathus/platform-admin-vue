@@ -45,6 +45,21 @@
       </el-form-item>
     </el-form>
 
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button
+          type="warning"
+          plain
+          icon="el-icon-download"
+          size="mini"
+          @click="handleExport"
+          v-hasPermi="['admin:lotteryBet:list']"
+        >导出
+        </el-button>
+      </el-col>
+      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+    </el-row>
+
     <el-table stripe v-loading="loading" :data="lotteryBet0List">
       <el-table-column label="用户ID" align="center" prop="puserId"/>
       <el-table-column label="彩票名称" align="center" prop="lotteryName"/>
@@ -84,7 +99,7 @@
 </template>
 
 <script>
-import { listLotteryBet0, getCount } from '@/api/platform-web/lottery/lotteryBet'
+import { listLotteryBet0, getCount, exportLotteryBet0 } from '@/api/platform-web/lottery/lotteryBet'
 import { pickerDateTimeShortcuts } from '@/utils/dateUtils'
 
 export default {
@@ -213,6 +228,20 @@ export default {
       this.dateRange = []
       this.resetForm('queryForm')
       this.handleQuery()
+    },
+    /** 导出按钮操作 */
+    handleExport() {
+      const queryParams = this.queryParams;
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        return exportLotteryBet0(queryParams);
+      }).then(response => {
+        this.downloadExcel(response, '投注记录')
+      }).catch(() => {
+      })
     }
   }
 }

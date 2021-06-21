@@ -66,16 +66,10 @@
 
     <el-table stripe v-loading="loading" :data="memberGameDataList">
       <el-table-column label="会员ID" align="center" prop="account"/>
-<!--        <template v-slot="{row}">-->
-<!--          <a @click="lotteryBetData(row)" style="color: #00afff" v-if="row.agent==10000">{{ row.account }}</a>-->
-<!--          <a @click="lotteryBetData(row)" style="color: #f38010" v-else-if="row.agent==80000">{{ row.account }}</a>-->
-<!--          <div v-else>{{ row.account }}</div>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
       <el-table-column label="子平台ID" align="center" prop="agent"/>
       <el-table-column label="游戏局号" align="center"  min-width="180px" :show-overflow-tooltip="true" prop="gameId">
         <template v-slot="{row}">
-          <a style="color: #00afff"  @click="funds(row)">{{ row.gameId }}</a>
+          <a style="color: #00afff"  @click="handleRecord(row)">{{ row.gameId }}</a>
         </template>
       </el-table-column>
       <el-table-column label="平台名称" align="center" prop="platformName"/>
@@ -83,8 +77,6 @@
       <el-table-column label="有效下注" align="center" prop="cell_score"/>
       <el-table-column label="总下注" align="center" prop="all_bet"/>
       <el-table-column label="盈利" align="center" prop="profit"/>
-<!--      <el-table-column label="抽水" align="center" prop="revenue"/>-->
-<!--      <el-table-column label="游戏开始时间" align="center" width="150px" prop="game_start_time"/>-->
       <el-table-column label="结算时间" align="center" width="150px" prop="game_end_time"/>
     </el-table>
 
@@ -96,6 +88,9 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
+
+    <record ref="record" :game-id="gameId" />
+
     <!-- 游戏对局日志 -->
     <el-dialog title="游戏对局日志" :visible.sync="fundsOpen" width="450px" style="max-height:600px;overflow-y: scroll;"
                append-to-body
@@ -122,11 +117,12 @@ import {
   getCount, getLotteryBetData,getKYgameResReport
 } from '@/api/platform-web/member/memberGameData'
 import {pickerDateTimeShortcuts} from "@/utils/dateUtils";
+import record from './record'
 
 
 export default {
   name: 'MemberGameData',
-  components: {},
+  components: { record },
   data() {
     return {
       pickerOptions: { shortcuts: pickerDateTimeShortcuts },
@@ -157,6 +153,8 @@ export default {
       fundsOpen: false,
       // 弹出层标题
       title: '',
+      //游戏参数
+      gameId: null,
       // 是否显示弹出层
       open: false,
       // 查询参数
@@ -224,6 +222,11 @@ export default {
         }
         this.loading = false
       })
+    },
+    handleRecord(row){
+      this.gameId = row.gameId
+      alert(2)
+      this.$refs.record.show(this.gameId)
     },
     funds(row) {
       getKYgameResReport(row).then((res) => {

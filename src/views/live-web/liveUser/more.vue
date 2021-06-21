@@ -178,21 +178,21 @@
 
     <!--提现比例-->
     <el-row v-if="index===5">
-      <el-form :model="liveUserRate" ref="liveUserRate" :inline="false">
+      <el-form :model="liveUserRate" ref="liveUserRate" :inline="false" :rules="RateRules">
         <el-form-item label="时薪" prop="coin">
-          <el-input v-model="liveUserRate.coin" type="number"/>
+          <el-input v-model="liveUserRate.coin" type="number" class="no-number"/>
         </el-form-item>
         <el-form-item label="开播时长任务" prop="weixinPrice">
-          <el-input v-model="liveUserRate.weixinPrice" type="number" />
+          <el-input v-model="liveUserRate.weixinPrice" type="number" class="no-number"/>
         </el-form-item>
         <el-form-item label="收礼任务" prop="weiboMoney">
-          <el-input v-model="liveUserRate.weiboMoney" type="number"/>
+          <el-input v-model="liveUserRate.weiboMoney" type="number" class="no-number"/>
         </el-form-item>
         <el-form-item label="彩票抽成" prop="xpoint">
-          <el-input v-model="liveUserRate.xpoint" type="number"/>
+          <el-input v-model="liveUserRate.xpoint" type="number" class="no-number"/>
         </el-form-item>
         <el-form-item label="礼物抽成" prop="ypoint">
-          <el-input v-model="liveUserRate.ypoint" type="number"/>
+          <el-input v-model="liveUserRate.ypoint" type="number" class="no-number"/>
         </el-form-item>
         <el-form-item style="float: right">
           <el-button type="primary" icon="el-icon-edit" size="mini" @click="editRate">确定修改</el-button>
@@ -246,7 +246,7 @@
               //弹出框标题
               title: '积分明细',
               // 提现比例
-              liveUserRate: {coin: null,xpoint: null,ypoint: null,weixinPrice:null,weiboMoney:null},
+              liveUserRate: {coin: 0,xpoint: 0,ypoint: 0,weixinPrice:0,weiboMoney:0},
                 //页面编码
                 index: 1,
 /*                //用户id
@@ -264,6 +264,24 @@
                 ],
                 googleAuthCode: [
                   {required: true, message: '谷歌验证码不能为空', trigger: 'blur'}
+                ],
+              },
+              //提现比例校验规则
+              RateRules: {
+                coin: [
+                  {required: true, message: '时薪不能为空', trigger: 'blur'}
+                ],
+                weixinPrice: [
+                  {required: true, message: '开播时长任务不能为空', trigger: 'blur'}
+                ],
+                weiboMoney: [
+                  {required: true, message: '收礼任务不能为空', trigger: 'blur'}
+                ],
+                xpoint: [
+                  {required: true, message: '彩票抽成不能为空', trigger: 'blur'}
+                ],
+                ypoint: [
+                  {required: true, message: '礼物抽成不能为空', trigger: 'blur'}
                 ],
               },
               //银行卡校验规则
@@ -391,7 +409,6 @@
             },
             //打开提示框,type为1是打开不用输信息的提示框,2为输信息的
             open(hint, type) {
-                console.log(type)
                 if (type === 1) {
                     this.$confirm(hint, '提示', {
                         confirmButtonText: '确定',

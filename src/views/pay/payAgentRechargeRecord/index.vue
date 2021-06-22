@@ -492,7 +492,7 @@ export default {
         if (this.formdeposit.rechargeAcount != null) {
           deposit(this.formdeposit).then(response => {
             this.msgSuccess("提交成功");
-            this.open = false;
+            this.peopledeposit = false;
             this.getList();
           });
         }

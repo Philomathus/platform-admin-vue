@@ -81,7 +81,7 @@
       <el-row v-if="index===3">
         <el-form ref="form" :model="form" :rules="rules" label-width="110px">
           <el-form-item label="加分金额" prop="score">
-            <el-input v-model="form.score" placeholder="请输入金额"/>
+            <el-input v-model="form.score" type="number" placeholder="请输入金额"/>
           </el-form-item>
           <el-form-item label="备注字典" prop="moneydes">
             <el-select v-model="form.moneydes" placeholder="入款备注" clearable size="small">

@@ -222,12 +222,12 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="充值最低" prop="rechargeMin">
-          <el-input type="number" class="no-number" v-model.trim="form.rechargeMin" placeholder="请输入充值最低" :min="0"/>
-        </el-form-item>
-        <el-form-item label="充值最高" prop="rechargeMax">
-          <el-input type="number" class="no-number" v-model.trim="form.rechargeMax" placeholder="请输入充值最高" :min="0"/>
-        </el-form-item>
+<!--        <el-form-item label="充值最低" prop="rechargeMin">-->
+<!--          <el-input type="number" class="no-number" v-model.trim="form.rechargeMin" placeholder="请输入充值最低" :min="0"/>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="充值最高" prop="rechargeMax">-->
+<!--          <el-input type="number" class="no-number" v-model.trim="form.rechargeMax" placeholder="请输入充值最高" :min="0"/>-->
+<!--        </el-form-item>-->
         <el-form-item label="通道费率" prop="payRate">
           <el-input type="number" class="no-number" v-model.trim="form.payRate" placeholder="请输入通道费率(最高0.4最低0.01)"/>
         </el-form-item>
@@ -322,8 +322,8 @@ export default {
         successNum: null,
         payRateStr: null,
         totalSuccessMoney: null,
-        rechargeMin: null,
-        rechargeMax: null,
+        // rechargeMin: null,
+        // rechargeMax: null,
         status: null,
         isCanCallback: null,
         indexes: null,
@@ -442,8 +442,8 @@ export default {
         failNum: null,
         successNum: null,
         totalSuccessMoney: null,
-        rechargeMin: null,
-        rechargeMax: null,
+        // rechargeMin: null,
+        // rechargeMax: null,
         status: '0',
         isCanCallback: null,
         indexes: null,

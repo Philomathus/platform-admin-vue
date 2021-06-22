@@ -81,7 +81,7 @@
       <el-row v-if="index===3">
         <el-form ref="form" :model="form" :rules="rules" label-width="110px">
           <el-form-item label="加分金额" prop="score">
-            <el-input v-model="form.score" placeholder="请输入金额"/>
+            <el-input v-model="form.score" placeholder="请输入金额" type="number" class="no-number"/>
           </el-form-item>
           <el-form-item label="备注字典" prop="moneydes">
             <el-select v-model="form.moneydes" placeholder="入款备注" clearable size="small">
@@ -95,7 +95,7 @@
             <el-input v-model="form.ordermk" placeholder="补单请填写补单订单号，末开奖补回请填写开期号，无则填写为0"/>
           </el-form-item>
           <el-form-item label="打码倍数" prop="beatNum">
-            <el-input v-model="form.beatNum" type="number" placeholder="请输入打码倍数，默认请填写1,如未打算打码可填写为0"/>
+            <el-input v-model="form.beatNum" type="number" class="no-number" placeholder="请输入打码倍数，默认请填写1,如未打算打码可填写为0"/>
           </el-form-item>
           <el-form-item label="google验证码" prop="googleAuthCode">
             <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>

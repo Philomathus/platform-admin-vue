@@ -51,3 +51,20 @@ export function exportMemberGameData(query) {
     timeout: 60000
   })
 }
+//查询对局详情列表
+export function gameRecordList(query) {
+  return request({
+    url: url.platformWeb + '/member/memberGameData/recordList',
+    method: 'get',
+    params: query
+  })
+}
+
+//查询对局详情列表
+export function gameDetailList(query) {
+  return request({
+    url: url.platformWeb + '/member/memberGameData/detailList',
+    method: 'get',
+    params: query
+  })
+}

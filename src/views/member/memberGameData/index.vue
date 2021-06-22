@@ -69,7 +69,12 @@
       <el-table-column label="子平台ID" align="center" prop="agent"/>
       <el-table-column label="游戏局号" align="center"  min-width="180px" :show-overflow-tooltip="true" prop="gameId">
         <template v-slot="{row}">
-          <a style="color: #00afff"  @click="handleRecord(row)">{{ row.gameId }}</a>
+            <div v-if="row.platformId == 1">
+              <a style="color: #00afff"  @click="handleRecord(row)">{{ row.gameId }}</a>
+            </div>
+            <div v-else>
+              {{ row.gameId }}
+            </div>
         </template>
       </el-table-column>
       <el-table-column label="平台名称" align="center" prop="platformName"/>
@@ -224,9 +229,7 @@ export default {
       })
     },
     handleRecord(row){
-      this.gameId = row.gameId
-      alert(2)
-      this.$refs.record.show(this.gameId)
+      this.$refs.record.show(row)
     },
     funds(row) {
       getKYgameResReport(row).then((res) => {

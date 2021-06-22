@@ -489,8 +489,9 @@ export default {
 
     /** 人工存入按钮 */
     submitDeposit() {
-      if (this.formdeposit.money < 0) {
-        this.$message.error("存入金额必须大于0")
+      const regex = /^[0-9]*[1-9][0-9]*$/;
+      if (!regex.test(this.formdeposit.money)) {
+        this.$message.error("存入金额必须为正整数")
       } else {
         this.$refs["formdeposit"].validate(valid => {
           if (this.formdeposit.rechargeAcount != null) {
@@ -505,8 +506,9 @@ export default {
     },
     /** 人工提出按钮 */
     submitProposed() {
-      if (this.formproposed.money < 0) {
-        this.$message.error("提出金额必须大于0")
+      const regex = /^[0-9]*[1-9][0-9]*$/;
+      if (!regex.test(this.formproposed.money)) {
+        this.$message.error("提出金额必须为正整数")
       } else {
         this.$refs["formproposed"].validate(valid => {
           if (this.formproposed.rechargeAcount != null) {

@@ -110,10 +110,15 @@
           <span style="color: #5FB878">{{ row.totalRukuanjine}}</span>
         </template>
         </el-table-column>
-        <el-table-column label="出款总金额" min-width="130" align="center" prop="totalChukuanjine" fixed="right">
+        <el-table-column label="会员出款总金额" min-width="130" align="center" prop="totalChukuanjine" fixed="right">
         <template v-slot="{row}">
           <span style="color: #FF5722">{{ row.totalChukuanjine}}</span>
         </template>
+        </el-table-column>
+        <el-table-column label="主播提现" min-width="130" align="center" prop="totalActiveprop" fixed="right">
+          <template v-slot="{row}">
+            <span style="color: #FF5722">{{ row.totalActiveprop}}</span>
+          </template>
         </el-table-column>
         <el-table-column label="合计" align="center" prop="totalChukuanjineMath" fixed="right"
                          :formatter="totalChukuanjineMath" min-width="130"
@@ -263,7 +268,7 @@ export default {
       this.multiple = !selection.length
     },
     totalChukuanjineMath(rows, column) {
-      return (rows.totalRukuanjine - rows.totalChukuanjine).toFixed(2)
+      return (rows.totalRukuanjine - rows.totalChukuanjine-rows.totalActiveprop).toFixed(2)
     },
     handleExport() {
       const queryParams = this.queryParams

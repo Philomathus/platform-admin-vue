@@ -5,7 +5,7 @@
       :close-on-click-modal="false"
       :title="title"
       :visible.sync="visible"
-      width="500px"
+      width="550px"
       top="5vh"
       append-to-body
     >

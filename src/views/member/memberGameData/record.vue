@@ -7,6 +7,7 @@
       :visible.sync="visible"
       width="1500px"
       top="5vh"
+      @close="reset()"
       append-to-body
     >
       <el-table stripe v-loading="loading" :data="memberGameDataRecordList">
@@ -149,7 +150,11 @@ export default {
       row.chairId = this.chairId
       row.accounts = this.accounts
       this.$refs.detail.show(row)
-    }
+    },
+    /** 重置按钮操作 */
+    reset() {
+      this.memberGameDataRecordList = []
+    },
   }
 }
 </script>

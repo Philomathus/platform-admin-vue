@@ -7,6 +7,7 @@
       :visible.sync="visible"
       width="550px"
       top="5vh"
+      @close="reset()"
       append-to-body
     >
       <div v-model="memberGameDataDetail">
@@ -110,7 +111,11 @@ export default {
     },
     print(val) {
       return (val + '').replace(/\n/g,"<br/>")
-    }
+    },
+    /** 重置按钮操作 */
+    reset() {
+      this.memberGameDataDetail = []
+    },
   }
 }
 </script>

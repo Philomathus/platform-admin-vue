@@ -7,6 +7,7 @@
       :visible.sync="visible"
       width="1500px"
       top="5vh"
+      @close="reset()"
       append-to-body
     >
       <el-table stripe v-loading="loading" :data="memberGameDataRecordList">
@@ -22,9 +23,8 @@
         <el-table-column label="总下注" align="center" prop="allBet"/>
         <el-table-column label="盈利" align="center" prop="profit"/>
         <el-table-column label="抽水" align="center" prop="revenue"/>
-        <el-table-column label="游戏开始时间" align="center" prop="gameStartTime"/>
-        <el-table-column label="游戏结束时间" align="center" prop="gameEndTime"/>
-        <el-table-column label="渠道ID" align="center" prop="channelID"/>
+        <el-table-column label="结算时间" align="center" prop="gameEndTime"/>
+        <el-table-column label="代理ID" align="center" prop="channelID"/>
         <el-table-column label="所属站点" align="center" prop="lineCode"/>
         <el-table-column label="详情" align="center" class-name="small-padding fixed-width" fixed="right">
           <template slot-scope="scope">
@@ -40,16 +40,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <pagination
-        v-show="total>0"
-        :total="total"
-        :page-sizes="[15,50,100]"
-        :page.sync="queryParams.pageNum"
-        :limit.sync="queryParams.pageSize"
-        @pagination="getRecordList"
-      />
     </el-dialog>
-
     <detail ref="detail" :record-id="recordID"/>
   </div>
 
@@ -87,8 +78,6 @@ export default {
       memberGameDataRecordList: [],
       //加分提交的数据
       form: {},
-      // 总条数
-      total: 0,
       //日期开始时间
       game_start_time: null,
       //日期结束时间
@@ -97,15 +86,18 @@ export default {
       recordID: null,
       //平台ID
       platformId: null,
+      //椅子号
+      chairId: null,
+      //账号
+      accounts: null,
       // 查询参数
       queryParams: {
-        pageNum: 1,
-        pageSize: 10000,
         platformId: null,
         agent: null,
         gameId: null,
         gameStartTime: null,
-        gameEndTime: null
+        gameEndTime: null,
+        chairId: null
       }
     }
   },
@@ -129,10 +121,9 @@ export default {
     // 显示弹框
     show(row) {
       this.platformId = row.platformId
-
       this.queryParams.gameId = row.gameId;
       this.queryParams.agent = row.agent;
-      this.queryParams.gameStartTime = row.game_start_time;
+      this.queryParams.gameStartTime = row.game_start_time
       this.queryParams.gameEndTime = row.game_end_time
       this.queryParams.platformId = row.platformId
       this.getRecordList();
@@ -143,6 +134,10 @@ export default {
       this.loading = true
       gameRecordList(this.queryParams).then(response => {
         this.memberGameDataRecordList = response.data.list
+        if (response.data.list[0] != null && response.data.list[0] != undefined){
+          this.chairId = response.data.list[0].chairID
+          this.accounts = response.data.list[0].accounts
+        }
         this.total = response.data.count
         this.loading = false
       }).catch(() => {
@@ -152,8 +147,14 @@ export default {
     //查看明细
     handleDetail(row){
       row.platformId = this.platformId
+      row.chairId = this.chairId
+      row.accounts = this.accounts
       this.$refs.detail.show(row)
-    }
+    },
+    /** 重置按钮操作 */
+    reset() {
+      this.memberGameDataRecordList = []
+    },
   }
 }
 </script>

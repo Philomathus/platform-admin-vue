@@ -5,31 +5,15 @@
       :close-on-click-modal="false"
       :title="title"
       :visible.sync="visible"
-      width="1500px"
+      width="550px"
       top="5vh"
+      @close="reset()"
       append-to-body
     >
-      <el-table stripe v-loading="loading" :data="memberGameDataDetailList">
-        <el-table-column label="游戏局号" align="center" prop="bet"/>
-        <el-table-column label="玩家帐号" align="center" prop="accounts"/>
-        <el-table-column label="房间ID" align="center" prop="serverID"/>
-        <el-table-column label="游戏ID" align="center" prop="kindID"/>
-        <el-table-column label="桌子号" align="center" prop="tableID"/>
-        <el-table-column label="椅子号" align="center" prop="chairID"/>
-        <el-table-column label="玩家数量" align="center" prop="userCount"/>
-        <el-table-column label="手牌公共牌" align="center" prop="cardValue"/>
-        <el-table-column label="有效下注" align="center" prop="cellScore"/>
-        <el-table-column label="总下注" align="center" prop="allBet"/>
-        <el-table-column label="盈利" align="center" prop="profit"/>
-        <el-table-column label="抽水" align="center" prop="revenue"/>
-        <el-table-column label="游戏开始时间" align="center" prop="gameStartTime"/>
-        <el-table-column label="下注分数" align="center" prop="bet"/>
-        <el-table-column label="渠道ID" align="center" prop="channelID"/>
-        <el-table-column label="所属站点" align="center" prop="lineCode"/>
-      </el-table>
+      <div v-model="memberGameDataDetail">
+          <span v-html="print(memberGameDataDetail)"/>
+      </div>
     </el-dialog>
-
-    <detail ref="detail" :record-id="recordId"/>
   </div>
 
 </template>
@@ -58,10 +42,8 @@ export default {
       visible: false,
       //游戏id
       gameId: null,
-      // 选中数组值
-      tables: [],
       // 对局详情列表
-      memberGameDataDetailList: [],
+      memberGameDataDetail: [],
       //加分提交的数据
       form: {},
       // 总条数
@@ -74,6 +56,8 @@ export default {
       recordId: null,
       //游戏 ID
       kindID: null,
+      //椅子号
+      chairId: null,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -109,6 +93,7 @@ export default {
       this.queryParams.kindId = row.kindID
       this.queryParams.agent = row.agent
       this.queryParams.platformId = row.platformId
+      this.chairId = row.chairId
       this.getDetailList();
       this.visible = true
     },
@@ -116,13 +101,21 @@ export default {
     getDetailList() {
       this.loading = true
       gameDetailList(this.queryParams).then(response => {
-        this.memberGameDataDetailList = response.data.list
-        this.total = response.data.count
+        let result = response.data
+        let newMes = result.replace("chairId",this.chairId);
+        this.memberGameDataDetail = newMes
         this.loading = false
       }).catch(() => {
         this.loading = false
       })
-    }
+    },
+    print(val) {
+      return (val + '').replace(/\n/g,"<br/>")
+    },
+    /** 重置按钮操作 */
+    reset() {
+      this.memberGameDataDetail = []
+    },
   }
 }
 </script>

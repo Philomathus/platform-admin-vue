@@ -153,7 +153,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="存入金额" prop="money">
-          <el-input type="number" placeholder="请输入存入金额" v-model="formdeposit.money"/>
+          <el-input type="number" placeholder="请输入存入金额" v-model="formdeposit.money" class="no-number"/>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input placeholder="请输入备注" v-model="formdeposit.remark"/>
@@ -192,7 +192,8 @@
           </el-select>
         </el-form-item>
         <el-form-item label="提出金额" prop="money">
-          <el-input placeholder="请输入提出金额" type="number" label="BigDecimal" v-model="formproposed.money"/>
+          <el-input placeholder="请输入提出金额" type="number" class="no-number" label="BigDecimal"
+                    v-model="formproposed.money"/>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input placeholder="请输入备注" v-model="formproposed.remark"/>
@@ -323,7 +324,7 @@ export default {
           {required: true, message: "操作人不能为空", trigger: "blur"}
         ],
         googleAuthCode: [
-          { required: true, message: 'google验证码不能为空', trigger: 'blur' }
+          {required: true, message: 'google验证码不能为空', trigger: 'blur'}
         ]
       }
     };
@@ -371,7 +372,7 @@ export default {
         type: null,
         money: null,
         remark: null,
-        googleAuthCode:null
+        googleAuthCode: null
       };
       this.resetForm("formproposed");
     },
@@ -382,7 +383,7 @@ export default {
         type: null,
         money: null,
         remark: null,
-        googleAuthCode:null
+        googleAuthCode: null
       };
       this.resetForm("formdeposit");
     },
@@ -488,28 +489,38 @@ export default {
 
     /** 人工存入按钮 */
     submitDeposit() {
-      this.$refs["formdeposit"].validate(valid => {
-        if (this.formdeposit.rechargeAcount != null) {
-          deposit(this.formdeposit).then(response => {
-            this.msgSuccess("提交成功");
-            this.peopledeposit = false;
-            this.getList();
-          });
-        }
-      });
+      const regex = /^[0-9]*[1-9][0-9]*$/;
+      if (!regex.test(this.formdeposit.money)) {
+        this.$message.error("存入金额必须为正整数")
+      } else {
+        this.$refs["formdeposit"].validate(valid => {
+          if (this.formdeposit.rechargeAcount != null) {
+            deposit(this.formdeposit).then(response => {
+              this.msgSuccess("提交成功");
+              this.open = false;
+              this.getList();
+            });
+          }
+        });
+      }
     },
     /** 人工提出按钮 */
     submitProposed() {
-      this.$refs["formproposed"].validate(valid => {
-        if (this.formproposed.rechargeAcount != null) {
-          proposed(this.formproposed).then(response => {
-            this.msgSuccess("提交成功");
-            this.peopleproposed = false;
-            console.info(this.peopleproposed)
-            this.getList();
-          });
-        }
-      });
+      const regex = /^[0-9]*[1-9][0-9]*$/;
+      if (!regex.test(this.formproposed.money)) {
+        this.$message.error("提出金额必须为正整数")
+      } else {
+        this.$refs["formproposed"].validate(valid => {
+          if (this.formproposed.rechargeAcount != null) {
+            proposed(this.formproposed).then(response => {
+              this.msgSuccess("提交成功");
+              this.peopleproposed = false;
+              console.info(this.peopleproposed)
+              this.getList();
+            });
+          }
+        });
+      }
     },
     /** 提交按钮 */
     submitForm() {

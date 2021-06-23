@@ -250,7 +250,6 @@ export default {
     },
     count() {
       getCount(this.queryParams).then((res) => {
-        console.info(res.data)
         if (res.data) {
           this.totalData = res.data
         }

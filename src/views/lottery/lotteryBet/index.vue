@@ -39,6 +39,15 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item prop="cost" style="width: 150px;">
+        <el-input
+          v-model="queryParams.cost"
+          placeholder="投注金额"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -124,6 +133,7 @@ export default {
         issue: null,
         status: null,
         lotteryName: null,
+        cost: null,
         betTime: null,
         abnormal: false,
         selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],

@@ -93,6 +93,7 @@
             clearable
             size="small"
             type="number"
+            class="no-number"
             @keyup.enter.native="handleQuery"/>
         </el-form-item>
         <el-form-item>
@@ -236,8 +237,8 @@ export default {
         this.testAccountPorpData = response.rows
         this.total = response.total
         this.loading = false
-        this.testAccountCount()
       })
+      this.testAccountCount()
     },
     //复制
     copy() {
@@ -259,7 +260,6 @@ export default {
 
     testAccountCount() {
       testAccountCount(this.queryParam).then((res) => {
-        console.info(res.data)
         if (res.data) {
           this.totalData = res.data
         }

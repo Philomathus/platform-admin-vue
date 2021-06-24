@@ -149,6 +149,7 @@ export default {
       row.platformId = this.platformId
       row.chairId = this.chairId
       row.accounts = this.accounts
+      row.account = this.account
       this.$refs.detail.show(row)
     },
     /** 重置按钮操作 */

@@ -88,7 +88,7 @@ export default {
   methods: {
     // 显示弹框
     show(row) {
-      this.queryParams.account = row.accounts
+      this.queryParams.account = row.account
       this.queryParams.recordId = row.recordID
       this.queryParams.kindId = row.kindID
       this.queryParams.agent = row.agent

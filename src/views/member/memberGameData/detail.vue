@@ -65,7 +65,8 @@ export default {
         platformId: null,
         agent: null,
         kindId: null,
-        recordId: null
+        recordId: null,
+        account: null
       }
     }
   },

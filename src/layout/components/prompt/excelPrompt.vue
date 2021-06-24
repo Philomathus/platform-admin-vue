@@ -7,7 +7,7 @@
         <el-date-picker type="datetimerange" v-model="selectDate" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '370px'}" start-placeholder="开始日期"
                         end-placeholder="结束日期"
-                        range-separator="至" clearable
+                        range-separator="至" :default-time="['00:00:00', '23:59:59']"  clearable
         ></el-date-picker>
       </el-form-item>
     </el-form>

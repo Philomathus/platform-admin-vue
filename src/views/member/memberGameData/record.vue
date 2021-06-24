@@ -88,8 +88,6 @@ export default {
       platformId: null,
       //椅子号
       chairId: null,
-      //账号
-      accounts: null,
       // 查询参数
       queryParams: {
         platformId: null,
@@ -97,7 +95,8 @@ export default {
         gameId: null,
         gameStartTime: null,
         gameEndTime: null,
-        chairId: null
+        chairId: null,
+        account: null
       }
     }
   },
@@ -126,6 +125,7 @@ export default {
       this.queryParams.gameStartTime = row.game_start_time
       this.queryParams.gameEndTime = row.game_end_time
       this.queryParams.platformId = row.platformId
+      this.queryParams.account = row.account;
       this.getRecordList();
       this.visible = true
     },

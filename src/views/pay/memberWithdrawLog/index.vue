@@ -809,18 +809,16 @@ export default {
       })
     },
     handleBack(row) {
+      const id = row.id;
       this.$confirm('请核对代付信息,确认回退？', '警告', {
         confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function () {
-        backWithdrawLog({
-          id: row.id
-        }).then(response => {
-          console.info("111");
-          this.getList()
-          this.msgSuccess("回退成功")
-        })
+        return backWithdrawLog(id);
+      }).then(response => {
+        this.getList()
+        this.msgSuccess("回退成功")
       })
     },
     handleUnlock(row) {

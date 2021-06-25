@@ -804,7 +804,7 @@ export default {
       })
     },
     handleBack(row) {
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+      this.$confirm('请核对代付信息,确认回退？', '警告', {
       confirmButtonText: '确认',
       cancelButtonText: '取消',
       type: 'warning'

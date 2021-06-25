@@ -105,6 +105,15 @@ export function locksMemberWithdrawLog(data) {
   })
 }
 
+// 会员提现代付中回退
+export function backWithdrawLog(data) {
+  return request({
+    url: url.platformWeb + '/pay/memberWithdrawLog/back',
+    method: 'put',
+    data: data
+  })
+}
+
 // 会员提现锁定
 export function lockMemberWithdrawLog(data) {
   return request({

@@ -176,9 +176,13 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNum = 1
-      this.getList()
-      // this.totalCount()
+      if(this.queryParams.searchValue == null){
+        this.$message.error("请输入会员ID再搜索")
+      }else {
+        this.queryParams.pageNum = 1
+        this.getList()
+        // this.totalCount()
+      }
     },
     /** 重置按钮操作 */
     resetQuery() {

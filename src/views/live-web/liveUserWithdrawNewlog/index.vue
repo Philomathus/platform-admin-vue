@@ -580,7 +580,7 @@ export default {
     //合并订单
     fixIds() {
       const ids = this.ids
-      if (ids == null || ids == '') {
+      if (ids == null || ids == '' || ids.length<2) {
         this.msgError('请选择要合并的订单')
         return
       }

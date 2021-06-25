@@ -36,6 +36,15 @@ export function updateConfigEnvironment(data) {
   })
 }
 
+// 修改状态
+export function changeStatus(data) {
+  return request({
+    url: url.platformWeb + '/admin/configEnvironment/changeStatus',
+    method: 'put',
+    data: data
+  })
+}
+
 // 批量修改【请填写功能名称】
 export function updateConfigEnvironmentList(data) {
   return request({

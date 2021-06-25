@@ -804,11 +804,17 @@ export default {
       })
     },
     handleBack(row) {
-      backWithdrawLog({
-        id: row.id
-      }).then(response => {
-        this.msgSuccess(response.msg)
-        this.getList()
+      this.$confirm('请核对代付信息,确认回退？', '警告', {
+      confirmButtonText: '确认',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(function() {
+        return backWithdrawLog({
+          id: row.id
+        }).then(response => {
+          this.msgSuccess(response.msg)
+          this.getList()
+        })
       })
     },
     handleUnlock(row) {

@@ -956,10 +956,8 @@ export default {
             this.msgSuccess(response.msg)
             if (response.code == 200) {
               this.open = false
-              this.getList()
             }
           }).catch(() => {
-            this.getList()
             this.$notify.error('网络异常')
           }).finally(() => {
             this.getList()

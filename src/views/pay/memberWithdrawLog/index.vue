@@ -4,7 +4,9 @@
       <el-button type="success" @click="copy1">成功出款笔数 {{ this.totalData.total || 0 }}</el-button>
       <el-button type="warning" @click="copy2">总出款金额 {{ this.totalData.successTotal || 0 }}</el-button>
       <el-button type="info" @click="copy3">成功率 {{ numberUtil.toPercent(this.totalData.successRate) }}</el-button>
-      <el-button type="primary" icon="el-icon-search" size="mini" @click="getCountTotal()" style="margin-left: 20px">统计查询</el-button>
+      <el-button type="primary" icon="el-icon-search" size="mini" @click="getCountTotal()" style="margin-left: 20px">
+        统计查询
+      </el-button>
     </div>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="100px"
              style="margin-top: 20px"
@@ -206,9 +208,11 @@
       </el-table-column>
       <el-table-column label="会员ID" min-width="150" align="center" prop="memberId">
         <template v-slot="{row}">
-          <a style="color: #00afff" @click="funds(row.memberId)" v-if="row.memberStatus === 0 || row.memberStatus === 1">{{ row.memberId }}</a>
+          <a style="color: #00afff" @click="funds(row.memberId)"
+             v-if="row.memberStatus === 0 || row.memberStatus === 1">{{ row.memberId }}</a>
           <a style="color: #ff0000" @click="funds(row.memberId)" v-if="row.memberStatus === 4">{{ row.memberId }}</a>
-          <a style="color: #ee00ff" @click="funds(row.memberId)" v-if="row.memberStatus === 2 || row.memberStatus === 3 || row.memberStatus === 5">{{ row.memberId }}</a>
+          <a style="color: #ee00ff" @click="funds(row.memberId)"
+             v-if="row.memberStatus === 2 || row.memberStatus === 3 || row.memberStatus === 5">{{ row.memberId }}</a>
         </template>
       </el-table-column>
       <el-table-column label="会员账号" min-width="120" align="center" prop="account"/>
@@ -460,7 +464,7 @@
       </div>
     </el-dialog>
     <ExcelPrompt ref="excelPrompt" @downLoadExcel="handleExport"></ExcelPrompt>
-    <TableShow ref="tableShow" ></TableShow>
+    <TableShow ref="tableShow"></TableShow>
   </div>
 </template>
 <script>
@@ -488,12 +492,13 @@ import {
   payAgentOrder,
   payAgentOrders
 } from '@/api/platform-web/pay/payAgentPlatform'
-import { pickerDateTimeShortcuts } from '@/utils/dateUtils'
+import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
 import ExcelPrompt from '@/layout/components/prompt/excelPrompt.vue';
 import TableShow from '@/views/pay/memberWithdrawLog/tableShow.vue';
+
 export default {
   name: 'MemberWithdrawLog',
-  components: {ExcelPrompt,TableShow},
+  components: {ExcelPrompt, TableShow},
   data() {
     return {
       //银行卡黑名单下拉框
@@ -517,7 +522,7 @@ export default {
       refreshIcon: 'el-icon-refresh',
       refreshLabel: '开始刷新',
       refreshDesc: '',
-      pickerOptions: { shortcuts: pickerDateTimeShortcuts },
+      pickerOptions: {shortcuts: pickerDateTimeShortcuts},
       // 头部数据
       totalData: {},
       totalLoading: false,
@@ -572,10 +577,10 @@ export default {
       // 表单校验
       rules: {
         googleAuthCode: [
-          { required: true, message: 'google验证码不能为空', trigger: 'blur' }
+          {required: true, message: 'google验证码不能为空', trigger: 'blur'}
         ],
         payAgentPlatId: [
-          { required: true, message: '请选择代付平台', trigger: 'blur' }
+          {required: true, message: '请选择代付平台', trigger: 'blur'}
         ]
       }
     }
@@ -603,7 +608,7 @@ export default {
       this.single = selection.length !== 1
       this.multiple = !selection.length
     },
-    tableRowClassName({ row, rowIndex }) {
+    tableRowClassName({row, rowIndex}) {
       if (row.class_twoname === '彩票异常投注次数') {
         return 'danger-row'
       }
@@ -752,7 +757,7 @@ export default {
       })
     },
     openExport() {
-      this.$refs.excelPrompt.open=true;
+      this.$refs.excelPrompt.open = true;
     },
     /** 导出按钮操作 */
     handleExport(date) {
@@ -765,7 +770,7 @@ export default {
         confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportMemberWithdrawLog(queryParams)
       }).then(response => {
         this.downloadExcel(response, '会员提现')
@@ -786,7 +791,7 @@ export default {
         confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportShunWeiMemberWithdrawLog(that.ids)
       }).then(response => {
         this.downloadExcel(response, '顺为代付提现')
@@ -804,11 +809,16 @@ export default {
       })
     },
     handleBack(row) {
-      backWithdrawLog({
-        id: row.id
+      const id = row.id;
+      this.$confirm('请核对代付信息,确认回退？', '警告', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        return backWithdrawLog(id);
       }).then(response => {
-        this.msgSuccess(response.msg)
         this.getList()
+        this.msgSuccess("回退成功")
       })
     },
     handleUnlock(row) {
@@ -862,7 +872,7 @@ export default {
       this.$prompt(null, '请输入出款异常原因', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
-      }).then(({ value }) => {
+      }).then(({value}) => {
         abnormalWithdrawal({
           id: this.form.id,
           remark: value
@@ -893,7 +903,7 @@ export default {
         cancelButtonText: '取消',
         inputPattern: /\S/,
         inputErrorMessage: '拒绝原因不可为空'
-      }).then(({ value }) => {
+      }).then(({value}) => {
         refusedMemberWithdrawLog({
           id: id,
           remark: value
@@ -919,7 +929,7 @@ export default {
       this.$prompt(null, '请输入拒绝出款原因', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
-      }).then(({ value }) => {
+      }).then(({value}) => {
         refusedsMemberWithdrawLog({
           ids: this.ids,
           remark: value
@@ -956,10 +966,8 @@ export default {
             this.msgSuccess(response.msg)
             if (response.code == 200) {
               this.open = false
-              this.getList()
             }
           }).catch(() => {
-            this.getList()
             this.$notify.error('网络异常')
           }).finally(() => {
             this.getList()
@@ -1062,7 +1070,7 @@ export default {
     startRefresh() {
       const thet = this
       let secs = thet.refreshSec
-      window.refreshInterval = setInterval(function() {
+      window.refreshInterval = setInterval(function () {
         if (secs === 0) {
           thet.getList()
           secs = thet.refreshSec

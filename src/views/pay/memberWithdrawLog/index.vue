@@ -804,11 +804,17 @@ export default {
       })
     },
     handleBack(row) {
-      backWithdrawLog({
-        id: row.id
-      }).then(response => {
-        this.msgSuccess(response.msg)
-        this.getList()
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
+      confirmButtonText: '确认',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(function() {
+        return backWithdrawLog({
+          id: row.id
+        }).then(response => {
+          this.msgSuccess(response.msg)
+          this.getList()
+        })
       })
     },
     handleUnlock(row) {

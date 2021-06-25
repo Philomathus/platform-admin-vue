@@ -88,6 +88,8 @@ export default {
       platformId: null,
       //椅子号
       chairId: null,
+      //h会员账号
+      account: null,
       // 查询参数
       queryParams: {
         platformId: null,
@@ -126,6 +128,7 @@ export default {
       this.queryParams.gameEndTime = row.game_end_time
       this.queryParams.platformId = row.platformId
       this.queryParams.account = row.account;
+      this.account = row.account;
       this.getRecordList();
       this.visible = true
     },
@@ -136,7 +139,6 @@ export default {
         this.memberGameDataRecordList = response.data.list
         if (response.data.list[0] != null && response.data.list[0] != undefined){
           this.chairId = response.data.list[0].chairID
-          this.accounts = response.data.list[0].accounts
         }
         this.total = response.data.count
         this.loading = false
@@ -149,6 +151,7 @@ export default {
       row.platformId = this.platformId
       row.chairId = this.chairId
       row.accounts = this.accounts
+      row.account = this.account
       this.$refs.detail.show(row)
     },
     /** 重置按钮操作 */

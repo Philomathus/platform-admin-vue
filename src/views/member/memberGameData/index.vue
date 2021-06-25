@@ -69,8 +69,11 @@
       <el-table-column label="子平台ID" align="center" prop="agent"/>
       <el-table-column label="游戏局号" align="center"  min-width="180px" :show-overflow-tooltip="true" prop="gameId">
         <template v-slot="{row}">
-            <div v-if="row.platformId == 1 || row.platformId == 15 || row.platformId == 14">
+            <div v-if="row.platformId == 1 || row.platformId == 15">
               <a style="color: #00afff"  @click="handleRecord(row)">{{ row.gameId }}</a>
+            </div>
+            <div v-else-if="row.platformId == 14">
+              <a style="color: #00afff"  @click="openRecordLink(row)">{{ row.gameId }}</a>
             </div>
             <div v-else>
               {{ row.gameId }}
@@ -97,12 +100,11 @@
     <record ref="record" :game-id="gameId" />
 
     <!-- 游戏对局日志 -->
-    <el-dialog title="游戏对局日志" :visible.sync="fundsOpen" width="450px" style="max-height:600px;overflow-y: scroll;"
-               append-to-body
-    >
-      <el-table :stripe="true" v-loading="loading" :data="fundsData" >
-        <el-table-column label="游戏对局日志" align="center" width="140" prop="data"/>
-      </el-table>
+    <el-dialog title="游戏对局日志" :visible.sync="fundsOpen" width="1500px" style="max-height:100%;overflow-y: scroll;"
+               append-to-body>
+      <div v-loading="loading" :style="'height:'+ height">
+        <iframe :src="recordLink" frameborder="no" style="width: 100%;height: 500px" scrolling="auto" />
+      </div>
     </el-dialog>
 
     <!--会员注单数据详情-->
@@ -123,6 +125,7 @@ import {
 } from '@/api/platform-web/member/memberGameData'
 import {pickerDateTimeShortcuts} from "@/utils/dateUtils";
 import record from './record'
+import { gameRecordList } from '../../../api/platform-web/member/memberGameData'
 
 
 export default {
@@ -162,6 +165,8 @@ export default {
       gameId: null,
       // 是否显示弹出层
       open: false,
+      //对局地址
+      recordLink: null,
       // 查询参数
       queryParams: {
         sonPlatformName: null,
@@ -230,6 +235,22 @@ export default {
     },
     handleRecord(row){
       this.$refs.record.show(row)
+    },
+    openRecordLink(row){
+      this.queryParams.gameId = row.gameId;
+      this.queryParams.agent = row.agent;
+      this.queryParams.gameStartTime = row.game_start_time
+      this.queryParams.gameEndTime = row.game_end_time
+      this.queryParams.platformId = row.platformId
+      this.queryParams.account = row.account;
+      this.loading = true
+      gameRecordList(this.queryParams).then(response => {
+        this.recordLink = response.data.url
+        this.fundsOpen = true
+        this.loading = false
+      }).catch(() => {
+        this.loading = false
+      })
     },
     funds(row) {
       getKYgameResReport(row).then((res) => {

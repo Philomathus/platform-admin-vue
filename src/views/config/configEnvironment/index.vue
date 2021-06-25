@@ -90,7 +90,7 @@
             <el-table-column label="状态" width="100" align="center">
               <template v-slot="{row}">
                 <el-select :class="row.envStatus === 0  ? 'ban' : ''"
-                           v-model="row.envStatus" placeholder="请选择" size="small"
+                           v-model="row.envStatus" placeholder="请选择状态" size="small" @change="changeStatusButton(row)"
                 >
                   <el-option v-for="(item,index) in statusList" :key="index" :label="item.dictLabel"
                              :value="parseInt(item.dictValue)"
@@ -215,6 +215,7 @@
     updateConfigEnvironment,
     updateConfigEnvironmentList,
     exportConfigEnvironment,
+    changeStatus,
     getTitleIndex
   } from '@/api/platform-web/config/configEnvironment'
 
@@ -300,6 +301,15 @@
       })
     },
     methods: {
+      //修改环境变量状态
+      changeStatusButton(data) {
+        this.loading=true
+          changeStatus(data).then(res => {
+            this.msgSuccess('修改成功')
+            this.getList()
+            this.loading=false
+          })
+      },
       /*选中值之后调用的事件*/
       changeType(item) {
         this.titleCode.envCode = item.envCode

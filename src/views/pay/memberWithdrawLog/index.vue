@@ -263,6 +263,15 @@
           <el-button
             size="small"
             type="primary"
+            v-show="scope.row.status == 4"
+            icon="el-icon-refresh-right"
+            @click="handleBack(scope.row)"
+            v-has-permi="['pay:memberWithdrawLog:back']"
+          >回退
+          </el-button>
+          <el-button
+            size="small"
+            type="primary"
             v-show="scope.row.status == 0"
             icon="el-icon-lock"
             @click="handleLock(scope.row)"
@@ -464,6 +473,7 @@ import {
   exportShunWeiMemberWithdrawLog,
   refusedMemberWithdrawLog,
   refusedsMemberWithdrawLog,
+  backWithdrawLog,
   lockMemberWithdrawLog,
   locksMemberWithdrawLog,
   unlockMemberWithdrawLog,
@@ -787,6 +797,14 @@ export default {
     },
     handleLock(row) {
       lockMemberWithdrawLog({
+        id: row.id
+      }).then(response => {
+        this.msgSuccess(response.msg)
+        this.getList()
+      })
+    },
+    handleBack(row) {
+      backWithdrawLog({
         id: row.id
       }).then(response => {
         this.msgSuccess(response.msg)

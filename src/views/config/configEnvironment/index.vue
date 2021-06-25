@@ -90,7 +90,7 @@
             <el-table-column label="状态" width="100" align="center">
               <template v-slot="{row}">
                 <el-select :class="row.envStatus === 0  ? 'ban' : ''"
-                           v-model="row.envStatus" placeholder="请选择" size="small"
+                           v-model="row.envStatus" placeholder="请选择状态" size="small" @change="updateConfigEnvironment(row)"
                 >
                   <el-option v-for="(item,index) in statusList" :key="index" :label="item.dictLabel"
                              :value="parseInt(item.dictValue)"

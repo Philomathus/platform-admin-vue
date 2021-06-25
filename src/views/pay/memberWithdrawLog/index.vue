@@ -958,7 +958,11 @@ export default {
               this.open = false
               this.getList()
             }
+          }).catch(() => {
+            this.getList()
+            this.$notify.error('网络异常')
           }).finally(() => {
+            this.getList()
             this.payDisabled = false
           })
         }

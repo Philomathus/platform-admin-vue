@@ -106,7 +106,10 @@ export function locksMemberWithdrawLog(data) {
 }
 
 // 会员提现代付中回退
-export function backWithdrawLog(data) {
+export function backWithdrawLog(id) {
+  const data = {
+    id: id
+  }
   return request({
     url: url.platformWeb + '/pay/memberWithdrawLog/back',
     method: 'put',

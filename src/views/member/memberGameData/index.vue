@@ -69,7 +69,7 @@
       <el-table-column label="子平台ID" align="center" prop="agent"/>
       <el-table-column label="游戏局号" align="center"  min-width="180px" :show-overflow-tooltip="true" prop="gameId">
         <template v-slot="{row}">
-            <div v-if="row.platformId == 1 || row.platformId == 15">
+            <div v-if="row.platformId == 1 || row.platformId == 15 || row.platformId == 14">
               <a style="color: #00afff"  @click="handleRecord(row)">{{ row.gameId }}</a>
             </div>
             <div v-else>

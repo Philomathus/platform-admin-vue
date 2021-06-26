@@ -275,6 +275,15 @@
           </el-button>
           <el-button
             size="small"
+            type="warning"
+            v-show="scope.row.status == 4"
+            icon="el-icon-search"
+            @click="handleQueryStatus(scope.row)"
+            v-has-permi="['pay:memberWithdrawLog:queryStatus']"
+          >查询状态
+          </el-button>
+          <el-button
+            size="small"
             type="primary"
             v-show="scope.row.status == 0"
             icon="el-icon-lock"
@@ -467,6 +476,12 @@
     <TableShow ref="tableShow"></TableShow>
   </div>
 </template>
+<style>
+/**站内信长单词强制换行 */
+.message_box_alert {
+  word-break: break-all !important;
+}
+</style>
 <script>
 import {
   listMemberWithdrawLog,
@@ -485,6 +500,7 @@ import {
   abnormalWithdrawal,
   manualWithdrawal,
   getMemberWithdrawReport,
+  queryStatusWithdrawLog,
   getCountTotal
 } from '@/api/platform-web/pay/memberWithdrawLog'
 import {
@@ -821,6 +837,16 @@ export default {
         this.msgSuccess("回退成功")
       })
     },
+    handleQueryStatus(row) {
+      queryStatusWithdrawLog({
+        id: row.id
+      }).then(response => {
+        this.$alert(response.msg, '查询结果', {
+          confirmButtonText: '确定',
+          customClass:'message_box_alert'
+        });
+      })
+    },
     handleUnlock(row) {
       unlockMemberWithdrawLog({
         id: row.id
@@ -845,7 +871,6 @@ export default {
         })
     },
     handleArtificialWithdraw2(row) {
-
       artificialMemberWithdrawLog({
         id: row.id
       }).then(response => {

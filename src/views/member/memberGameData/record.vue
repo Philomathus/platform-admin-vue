@@ -1,5 +1,5 @@
 <template>
-  <div @click="closeDetail()">
+  <div @click="showModal=false">
     <el-dialog
       v-dialogDrag
       :close-on-click-modal="false"
@@ -41,7 +41,7 @@
         </el-table-column>
       </el-table>
     </el-dialog>
-    <detail ref="detail" :record-id="recordID"/>
+    <detail ref="detail" :record-id="recordID" v-if="showModal"/>
   </div>
 
 </template>
@@ -90,6 +90,8 @@ export default {
       chairId: null,
       //h会员账号
       account: null,
+      //默认关闭
+      showModal: false,
       // 查询参数
       queryParams: {
         platformId: null,
@@ -152,6 +154,7 @@ export default {
       row.chairId = this.chairId
       row.accounts = this.accounts
       row.account = this.account
+      this.showModal = true
       this.$refs.detail.show(row)
     },
     /** 重置按钮操作 */

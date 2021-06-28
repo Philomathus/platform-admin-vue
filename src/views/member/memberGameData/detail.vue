@@ -8,6 +8,7 @@
       width="550px"
       top="5vh"
       @close="reset()"
+      @mouseleave="reset()"
       append-to-body
     >
       <div v-model="memberGameDataDetail">

@@ -8,7 +8,6 @@
       width="550px"
       top="5vh"
       @close="reset()"
-      @mouseleave="reset()"
       append-to-body
     >
       <div v-model="memberGameDataDetail">
@@ -116,7 +115,6 @@ export default {
     },
     /** 重置按钮操作 */
     reset() {
-      this.close()
       this.memberGameDataDetail = []
     },
   }

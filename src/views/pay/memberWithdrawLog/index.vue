@@ -844,7 +844,7 @@ export default {
         id: row.id
       }).then(response => {
         this.$alert(response.msg, '查询结果', {
-          confirmButtonText: '确定',
+          confirmButtonText: '知道了',
           customClass:'message_box_alert'
         });
       })

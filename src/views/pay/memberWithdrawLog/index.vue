@@ -827,7 +827,7 @@ export default {
       })
     },
     handleBack(row) {
-      const id = row.orderNo;
+      const id = row.id;
       this.$confirm('请核对代付信息,确认回退？', '警告', {
         confirmButtonText: '确认',
         cancelButtonText: '取消',
@@ -842,7 +842,7 @@ export default {
     handleQueryStatus(row) {
       this.loading = true
       queryStatusWithdrawLog({
-        id: row.id
+        id: row.orderNo
       }).then(response => {
         this.$alert(response.msg, '查询结果', {
           confirmButtonText: '知道了',

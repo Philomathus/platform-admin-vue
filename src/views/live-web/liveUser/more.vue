@@ -93,12 +93,12 @@
         <el-table-column prop="id" v-if="index===100"/>
         <el-table-column prop="realName" label="真实姓名" :show-overflow-tooltip="true" min-width="80" align="center">
           <template v-slot="{row}" v-if="index===7">
-            <el-input v-model="row.realName"></el-input>
+            <el-input v-model.trim="row.realName"></el-input>
           </template>
           </el-table-column>
         <el-table-column prop="bankAccount" label="银行卡号" :show-overflow-tooltip="true" min-width="150" align="center">
           <template v-slot="{row}" v-if="index===7">
-            <el-input v-model="row.bankAccount"></el-input>
+            <el-input v-model.trim="row.bankAccount"></el-input>
           </template>
         </el-table-column>
         <el-table-column prop="bankName" label="银行名称"  min-width="80" align="center">

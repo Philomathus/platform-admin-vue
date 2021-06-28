@@ -126,6 +126,15 @@ export function lockMemberWithdrawLog(data) {
   })
 }
 
+// 会员提现查询状态
+export function queryStatusWithdrawLog(data) {
+  return request({
+    url: url.platformWeb + '/pay/memberWithdrawLog/queryStatus',
+    method: 'put',
+    data: data
+  })
+}
+
 // 会员提现解锁
 export function unlockMemberWithdrawLog(data) {
   return request({

@@ -266,7 +266,8 @@
         <template slot-scope="scope">
           <el-button
             size="small"
-            type="primary"
+            type="info"
+            plain
             v-show="scope.row.status == 4"
             icon="el-icon-refresh-right"
             @click="handleBack(scope.row)"
@@ -275,7 +276,8 @@
           </el-button>
           <el-button
             size="small"
-            type="warning"
+            type="primary"
+            plain
             v-show="scope.row.status == 4"
             icon="el-icon-search"
             @click="handleQueryStatus(scope.row)"
@@ -444,7 +446,7 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" title="批量代付" :visible.sync="batchPayAgentOpen" width="500px"
                append-to-body
     >
-      <el-form ref="form" :model="batchPayAgentForm" :rules="rules" label-width="120px">
+      <el-form ref="batchForm" :model="batchPayAgentForm" :rules="rules" label-width="120px">
         <el-form-item label="Google验证码" prop="googleAuthCode">
           <el-input v-model="batchPayAgentForm.googleAuthCode" placeholder="代付需输入Google验证码"/>
         </el-form-item>
@@ -838,13 +840,16 @@ export default {
       })
     },
     handleQueryStatus(row) {
+      this.loading = true
       queryStatusWithdrawLog({
-        id: row.id
+        orderNo: row.orderNo
       }).then(response => {
         this.$alert(response.msg, '查询结果', {
-          confirmButtonText: '确定',
-          customClass:'message_box_alert'
-        });
+          confirmButtonText: '知道了',
+          customClass: 'message_box_alert',
+        })
+      }).finally(() => {
+        this.loading = false
       })
     },
     handleUnlock(row) {
@@ -998,6 +1003,8 @@ export default {
             this.getList()
             this.payDisabled = false
           })
+        } else {
+          this.$message.error("表单验证不通过")
         }
       })
     },
@@ -1013,33 +1020,39 @@ export default {
       })
     },
     handleBatchPayAgentOk() {
-      let orderNos = []
-      for (const row of this.memberWithdrawLogList) {
-        for (const id of this.ids) {
-          if (id == row.id) {
-            orderNos.push(row.orderNo)
+      this.$refs['batchForm'].validate(valid => {
+        if (valid) {
+          let orderNos = []
+          for (const row of this.memberWithdrawLogList) {
+            for (const id of this.ids) {
+              if (id == row.id) {
+                orderNos.push(row.orderNo)
+              }
+            }
           }
-        }
-      }
-      payAgentOrders({
-        payAgentPlatId: this.batchPayAgentForm.payAgentPlatId,
-        withdrawOrderNos: orderNos,
-        googleAuthCode: this.batchPayAgentForm.googleAuthCode
-      }).then(response => {
-        this.msgSuccess(response.msg)
-        if (response.code == 200) {
-          this.batchPayAgentOpen = false
-          this.getList()
-          var successNum = response.data.sucess
-          var failData = response.data.fail
-          var failTxt = '成功数量: ' + successNum + ';<br/> 失败原因: <br/>'
-          for (let failDataKey in failData) {
-            failTxt += failDataKey + '  ' + failData[failDataKey] + ' ;<br/> '
-          }
-          this.$alert(failTxt, '批量代付信息', {
-            confirmButtonText: '确定',
-            dangerouslyUseHTMLString: true
+          payAgentOrders({
+            payAgentPlatId: this.batchPayAgentForm.payAgentPlatId,
+            withdrawOrderNos: orderNos,
+            googleAuthCode: this.batchPayAgentForm.googleAuthCode
+          }).then(response => {
+            this.msgSuccess(response.msg)
+            if (response.code == 200) {
+              this.batchPayAgentOpen = false
+              this.getList()
+              var successNum = response.data.sucess
+              var failData = response.data.fail
+              var failTxt = '成功数量: ' + successNum + ';<br/> 失败原因: <br/>'
+              for (let failDataKey in failData) {
+                failTxt += failDataKey + '  ' + failData[failDataKey] + ' ;<br/> '
+              }
+              this.$alert(failTxt, '批量代付信息', {
+                confirmButtonText: '确定',
+                dangerouslyUseHTMLString: true
+              })
+            }
           })
+        } else {
+          this.$message.error("表单验证不通过")
         }
       })
     },

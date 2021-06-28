@@ -13,9 +13,6 @@
     >
       <div v-model="memberGameDataDetail">
         <ele-form-textarea v-model="memberGameDataDetail" v-html="print(memberGameDataDetail)"/>
-        <el-form-item label="游戏对局详情">
-          <el-input type="textarea" :rows="7" v-model="memberGameDataDetail" v-html="print(memberGameDataDetail)"></el-input>
-        </el-form-item>
       </div>
     </el-dialog>
   </div>

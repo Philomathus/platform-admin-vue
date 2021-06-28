@@ -446,7 +446,7 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" title="批量代付" :visible.sync="batchPayAgentOpen" width="500px"
                append-to-body
     >
-      <el-form ref="form" :model="batchPayAgentForm" :rules="rules" label-width="120px">
+      <el-form ref="batchForm" :model="batchPayAgentForm" :rules="rules" label-width="120px">
         <el-form-item label="Google验证码" prop="googleAuthCode">
           <el-input v-model="batchPayAgentForm.googleAuthCode" placeholder="代付需输入Google验证码"/>
         </el-form-item>

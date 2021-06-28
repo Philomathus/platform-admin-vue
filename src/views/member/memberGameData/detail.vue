@@ -107,10 +107,7 @@ export default {
       gameDetailList(this.queryParams).then(response => {
         let result = response.data
         let newMes = result.replace("chairId",this.chairId);
-        this.memberGameDataDetail = newMes
-        this.memberGameDataDetail = this.memberGameDataDetail
-        this.memberGameDataDetail = this.memberGameDataDetail
-        this.memberGameDataDetail = this.memberGameDataDetail
+        this.memberGameDataDetail = newMes + newMes + newMes + newMes
         this.loading = false
       }).catch(() => {
         this.loading = false

@@ -27,21 +27,15 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="agent">
-        <el-input
-          v-model="queryParams.agent"
-          placeholder="请输入子平台ID"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item prop="kindId">
-        <el-input
-          v-model="queryParams.sonPlatformName"
-          placeholder="请输入子平台名称"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
+      <el-form-item prop="platformId">
+        <el-select v-model="queryParams.agent" placeholder="请选择平台">
+          <el-option
+            v-for="(item,index) in platformList"
+            :key="index"
+            :label="item.name"
+            :value="item.agent"
+          ></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -125,7 +119,7 @@ import {
 } from '@/api/platform-web/member/memberGameData'
 import {pickerDateTimeShortcuts} from "@/utils/dateUtils";
 import record from './record'
-import { gameRecordList } from '../../../api/platform-web/member/memberGameData'
+import { gamePlatformList, gameRecordList } from '../../../api/platform-web/member/memberGameData'
 
 
 export default {
@@ -156,6 +150,8 @@ export default {
       betData: [],
       // 会员注单数据表格数据
       memberGameDataList: [],
+      // 平台列表
+      platformList: [],
       //资金明细数据
       fundsData: [],
       fundsOpen: false,
@@ -214,6 +210,7 @@ export default {
         this.queryParams.selectDate = [createTime,this.parseTime(this.getTodayEndTime())]
       }
       this.getList()
+      this.getPlatformList()
     },
     // 0:未洗码1已经洗码
     formatterStatus(row) {
@@ -267,6 +264,12 @@ export default {
         this.memberGameDataList = response.rows
         this.total = response.total
         this.loading = false
+      })
+    },
+    /** 查询平台列表 8*/
+    getPlatformList() {
+      gamePlatformList(this.queryParams).then(response => {
+          this.platformList = response.data
       })
     },
     // 取消按钮

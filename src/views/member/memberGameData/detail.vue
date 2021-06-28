@@ -11,7 +11,9 @@
       append-to-body
     >
       <div v-model="memberGameDataDetail">
-          <span v-html="print(memberGameDataDetail)"/>
+        <ele-form-textarea>
+          print(memberGameDataDetail)
+        </ele-form-textarea>
       </div>
     </el-dialog>
   </div>

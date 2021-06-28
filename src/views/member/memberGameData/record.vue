@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click="closeDetail()">
     <el-dialog
       v-dialogDrag
       :close-on-click-modal="false"
@@ -8,7 +8,6 @@
       width="1500px"
       top="5vh"
       @close="reset()"
-      @mousedown="closeDetail()"
       append-to-body
     >
       <el-table stripe v-loading="loading" :data="memberGameDataRecordList">

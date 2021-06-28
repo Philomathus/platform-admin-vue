@@ -842,12 +842,13 @@ export default {
     handleQueryStatus(row) {
       this.loading = true
       queryStatusWithdrawLog({
-        id: row.id
+        id: row.orderNo
       }).then(response => {
         this.$alert(response.msg, '查询结果', {
           confirmButtonText: '知道了',
           customClass: 'message_box_alert',
-        });
+        })
+      }).finally(() => {
         this.loading = false
       })
     },

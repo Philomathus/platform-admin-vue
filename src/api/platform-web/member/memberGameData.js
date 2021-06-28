@@ -68,3 +68,11 @@ export function gameDetailList(query) {
     params: query
   })
 }
+//查询平台列表
+export function gamePlatformList(query) {
+  return request({
+    url: url.platformWeb + '/member/memberGameData/platformList',
+    method: 'get',
+    params: query
+  })
+}

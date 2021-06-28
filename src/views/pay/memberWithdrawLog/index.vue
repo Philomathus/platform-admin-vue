@@ -266,7 +266,8 @@
         <template slot-scope="scope">
           <el-button
             size="small"
-            type="primary"
+            type="info"
+            plain
             v-show="scope.row.status == 4"
             icon="el-icon-refresh-right"
             @click="handleBack(scope.row)"
@@ -275,7 +276,8 @@
           </el-button>
           <el-button
             size="small"
-            type="warning"
+            type="primary"
+            plain
             v-show="scope.row.status == 4"
             icon="el-icon-search"
             @click="handleQueryStatus(scope.row)"

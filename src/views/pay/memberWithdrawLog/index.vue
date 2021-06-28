@@ -842,7 +842,7 @@ export default {
     handleQueryStatus(row) {
       this.loading = true
       queryStatusWithdrawLog({
-        id: row.orderNo
+        orderNo: row.orderNo
       }).then(response => {
         this.$alert(response.msg, '查询结果', {
           confirmButtonText: '知道了',

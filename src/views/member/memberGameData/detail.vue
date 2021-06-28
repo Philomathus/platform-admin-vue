@@ -116,6 +116,7 @@ export default {
     },
     /** 重置按钮操作 */
     reset() {
+      this.close()
       this.memberGameDataDetail = []
     },
   }

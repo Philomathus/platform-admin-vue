@@ -109,6 +109,8 @@ export default {
         let newMes = result.replace("chairId",this.chairId);
         this.memberGameDataDetail = newMes
         this.memberGameDataDetail = this.memberGameDataDetail
+        this.memberGameDataDetail = this.memberGameDataDetail
+        this.memberGameDataDetail = this.memberGameDataDetail
         this.loading = false
       }).catch(() => {
         this.loading = false

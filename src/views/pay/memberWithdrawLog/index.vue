@@ -846,7 +846,7 @@ export default {
       }).then(response => {
         this.$alert(response.msg, '查询结果', {
           confirmButtonText: '知道了',
-          customClass:'message_box_alert',
+          customClass: 'message_box_alert',
         });
         this.loading = false
       })
@@ -1002,6 +1002,8 @@ export default {
             this.getList()
             this.payDisabled = false
           })
+        } else {
+          this.$message.error("表单验证不通过")
         }
       })
     },
@@ -1017,33 +1019,39 @@ export default {
       })
     },
     handleBatchPayAgentOk() {
-      let orderNos = []
-      for (const row of this.memberWithdrawLogList) {
-        for (const id of this.ids) {
-          if (id == row.id) {
-            orderNos.push(row.orderNo)
+      this.$refs['batchForm'].validate(valid => {
+        if (valid) {
+          let orderNos = []
+          for (const row of this.memberWithdrawLogList) {
+            for (const id of this.ids) {
+              if (id == row.id) {
+                orderNos.push(row.orderNo)
+              }
+            }
           }
-        }
-      }
-      payAgentOrders({
-        payAgentPlatId: this.batchPayAgentForm.payAgentPlatId,
-        withdrawOrderNos: orderNos,
-        googleAuthCode: this.batchPayAgentForm.googleAuthCode
-      }).then(response => {
-        this.msgSuccess(response.msg)
-        if (response.code == 200) {
-          this.batchPayAgentOpen = false
-          this.getList()
-          var successNum = response.data.sucess
-          var failData = response.data.fail
-          var failTxt = '成功数量: ' + successNum + ';<br/> 失败原因: <br/>'
-          for (let failDataKey in failData) {
-            failTxt += failDataKey + '  ' + failData[failDataKey] + ' ;<br/> '
-          }
-          this.$alert(failTxt, '批量代付信息', {
-            confirmButtonText: '确定',
-            dangerouslyUseHTMLString: true
+          payAgentOrders({
+            payAgentPlatId: this.batchPayAgentForm.payAgentPlatId,
+            withdrawOrderNos: orderNos,
+            googleAuthCode: this.batchPayAgentForm.googleAuthCode
+          }).then(response => {
+            this.msgSuccess(response.msg)
+            if (response.code == 200) {
+              this.batchPayAgentOpen = false
+              this.getList()
+              var successNum = response.data.sucess
+              var failData = response.data.fail
+              var failTxt = '成功数量: ' + successNum + ';<br/> 失败原因: <br/>'
+              for (let failDataKey in failData) {
+                failTxt += failDataKey + '  ' + failData[failDataKey] + ' ;<br/> '
+              }
+              this.$alert(failTxt, '批量代付信息', {
+                confirmButtonText: '确定',
+                dangerouslyUseHTMLString: true
+              })
+            }
           })
+        } else {
+          this.$message.error("表单验证不通过")
         }
       })
     },

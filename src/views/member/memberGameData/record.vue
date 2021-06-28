@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click="closeDetail()">
     <el-dialog
       v-dialogDrag
       :close-on-click-modal="false"
@@ -158,6 +158,11 @@ export default {
     reset() {
       this.memberGameDataRecordList = []
     },
+    /** 关闭子组件 */
+    closeDetail(){
+      alert('测试')
+      this.$refs.detail.close()
+    }
   }
 }
 </script>

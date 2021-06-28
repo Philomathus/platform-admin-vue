@@ -11,9 +11,7 @@
       append-to-body
     >
       <div v-model="memberGameDataDetail">
-        <ele-form-textarea>
-          print(memberGameDataDetail)
-        </ele-form-textarea>
+        <ele-form-textarea v-model="memberGameDataDetail" v-html="print(memberGameDataDetail)"/>
       </div>
     </el-dialog>
   </div>
@@ -106,7 +104,7 @@ export default {
       gameDetailList(this.queryParams).then(response => {
         let result = response.data
         let newMes = result.replace("chairId",this.chairId);
-        this.memberGameDataDetail = newMes
+        this.memberGameDataDetail = newMes + newMes + newMes + newMes
         this.loading = false
       }).catch(() => {
         this.loading = false

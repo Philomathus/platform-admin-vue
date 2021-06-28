@@ -171,6 +171,14 @@ export function getLiveUserBank(userId) {
   })
 }
 
+//银行卡列表
+export function banks() {
+  return request({
+    url: url.platformWeb + '/admin/liveUser/banks',
+    method: 'get'
+  })
+}
+
 // 修改主播银行卡
 export function updateLiveUserBank(data) {
   return request({

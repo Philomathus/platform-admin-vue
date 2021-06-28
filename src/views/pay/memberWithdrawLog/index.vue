@@ -827,7 +827,7 @@ export default {
       })
     },
     handleBack(row) {
-      const id = row.id;
+      const id = row.orderNo;
       this.$confirm('请核对代付信息,确认回退？', '警告', {
         confirmButtonText: '确认',
         cancelButtonText: '取消',
@@ -847,7 +847,8 @@ export default {
         this.$alert(response.msg, '查询结果', {
           confirmButtonText: '知道了',
           customClass: 'message_box_alert',
-        });
+        })
+      }).finally(() => {
         this.loading = false
       })
     },

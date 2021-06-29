@@ -44,7 +44,7 @@
     <detail ref="detail" :record-id="recordID"/>
 
     <!-- 游戏对局日志 -->
-    <el-dialog title="游戏对局日志" :visible.sync="fundsOpen" width="1500px" style="max-height:100%;overflow-y: scroll;"
+    <el-dialog title="游戏对局日志" :visible.sync="detailOpen" width="1500px" style="max-height:100%;overflow-y: scroll;"
                append-to-body>
       <div v-loading="loading" :style="'height:'+ height">
         <iframe :src="detailLink" frameborder="no" style="width: 100%;height: 600px" scrolling="auto" />
@@ -99,7 +99,7 @@ export default {
       //h会员账号
       account: null,
       //显示明细
-      fundsOpen: false,
+      detailOpen: false,
       //对局地址
       detailLink: null,
       // 查询参数
@@ -173,8 +173,8 @@ export default {
         this.queryParams.recordId = row.recordID
         this.loading = true
         gameDetailList(this.queryParams).then(response => {
-          this.detailLink = response.data.gameLogURL
-          this.fundsOpen = true
+          this.detailLink = response.data
+          this.detailOpen = true
           this.loading = false
         }).catch(() => {
           this.loading = false

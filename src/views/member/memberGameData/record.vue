@@ -165,9 +165,9 @@ export default {
     handleDetail(row){
       if (this.platformId == 17){
         this.queryParams.gameId = row.gameId;
-        this.queryParams.agent = row.agent;
+        this.queryParams.agent = row.accounts.split("_")[0];
         this.queryParams.platformId = this.platformId
-        this.queryParams.account = row.accounts;
+        this.queryParams.account = row.accounts.replace(this.queryParams.agent+"_","");
         this.queryParams.gameUserNo = row.gameID
         this.queryParams.serverId = row.serverID
         this.queryParams.recordId = row.recordID

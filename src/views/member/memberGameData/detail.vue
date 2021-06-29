@@ -5,14 +5,14 @@
       :close-on-click-modal="false"
       :title="title"
       :visible.sync="visible"
-      width="550px"
+      width="600px"
       top="5vh"
       @close="reset()"
       append-to-body
     >
-      <el-form ref="form" :model="memberGameDataDetail" :rules="rules" label-width="80px">
-        <el-form-item label="文本1" prop="tex1">
-          <el-input v-model="memberGameDataDetail" placeholder=""  type="textarea" :rows="10"/>
+      <el-form ref="form" :model="memberGameDataDetail">
+        <el-form-item>
+          <el-input v-model="memberGameDataDetail" placeholder=""  type="textarea" :rows="20"/>
         </el-form-item>
       </el-form>
     </el-dialog>

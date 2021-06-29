@@ -66,7 +66,9 @@ export default {
         agent: null,
         kindId: null,
         recordId: null,
-        account: null
+        account: null,
+        serverId: null,
+        gameUserNo: null
       }
     }
   },
@@ -95,6 +97,8 @@ export default {
       this.queryParams.agent = row.agent
       this.queryParams.platformId = row.platformId
       this.chairId = row.chairId
+      this.queryParams.gameUserNo = row.gameID
+      this.queryParams.serverId = row.serverID
       this.getDetailList();
       this.visible = true
     },

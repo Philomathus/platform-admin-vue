@@ -112,7 +112,8 @@ export default {
         chairId: null,
         account: null,
         serverId: null,
-        gameUserNo: null
+        gameUserNo: null,
+        recordId: null
       }
     }
   },
@@ -165,10 +166,11 @@ export default {
       if (this.platformId == 17){
         this.queryParams.gameId = row.gameId;
         this.queryParams.agent = row.agent;
-        this.queryParams.platformId = row.platformId
+        this.queryParams.platformId = this.platformId
         this.queryParams.account = row.accounts;
         this.queryParams.gameUserNo = row.gameID
         this.queryParams.serverId = row.serverID
+        this.queryParams.recordId = row.recordID
         this.loading = true
         gameDetailList(this.queryParams).then(response => {
           this.detailLink = response.data.gameLogURL

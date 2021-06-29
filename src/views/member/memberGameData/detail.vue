@@ -10,9 +10,11 @@
       @close="reset()"
       append-to-body
     >
-      <div v-model="memberGameDataDetail">
-        <ele-form-textarea v-model="memberGameDataDetail" v-html="print(memberGameDataDetail)"/>
-      </div>
+      <el-form ref="form" :model="memberGameDataDetail" :rules="rules" label-width="80px">
+        <el-form-item label="文本1" prop="tex1">
+          <el-input v-model="memberGameDataDetail" placeholder=""  type="textarea" :rows="10"/>
+        </el-form-item>
+      </el-form>
     </el-dialog>
   </div>
 

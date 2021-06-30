@@ -34,20 +34,16 @@
         <div class="font" @click="showAddress" style="background-color: #cccc77">{{ address }}</div>
       </div>
     </div>
-    <div class="lotteryInfo">
-      <div class="title">线上历史充值金额</div>
-      <div class="mount" style="width: 80%">
-        <div style="    display: flex;
-    justify-content: flex-start;">
-          <el-input readonly>{{ historyRecharge }}}</el-input>
-          <el-button type="success" @click="getHistoryRecharge(data.会员编号)">查询</el-button>
-        </div>
-      </div>
-    </div>
     <div class="fundsInfo">
       <div class="title">会员资金信息</div>
       <div class="mount" style="width: 80%">
         <div class="font">线上充值金额(一月内): {{ data.线上金额 }}</div>
+        <div style="display: flex;justify-content: flex-start;">
+          <div class="mount" style="width: 100%">
+            <div class="font">线上历史充值金额: {{ historyRecharge || 0.00 }}</div>
+          </div>
+          <el-button type="success" @click="getHistoryRecharge(data.会员编号)">查询</el-button>
+        </div>
         <div class="font">线下充值金额: {{ data.线下充值金额 }}</div>
         <div class="font">代充金额: {{ data.人工代充金额 }}</div>
         <div class="font">手工上分金额: {{ data.平台赠送金额 }}</div>
@@ -101,7 +97,7 @@ export default {
     return {
       open: false,
       address: '******',
-      historyRecharge: 0,
+      historyRecharge: 0.00,
       data: {},
       playData: [],
       email: '',

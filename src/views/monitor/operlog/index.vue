@@ -21,6 +21,16 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="请求参数" prop="operParam">
+        <el-input
+          v-model="queryParams.operParam"
+          placeholder="请输入请求参数"
+          clearable
+          style="width: 180px;"
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item label="类型" prop="businessType">
         <el-select
           @change="selectChanged"
@@ -128,7 +138,7 @@
       <el-table-column label="请求方式" align="center" prop="requestMethod"/>
       <el-table-column label="操作人员" align="center" prop="operName"/>
       <el-table-column label="主机" align="center" prop="operIp" width="130" :show-overflow-tooltip="true"/>
-      <el-table-column label="操作地点" align="center" prop="operLocation" :show-overflow-tooltip="true"/>
+<!--      <el-table-column label="操作地点" align="center" prop="operLocation" :show-overflow-tooltip="true"/>-->
       <el-table-column label="操作状态" align="center" prop="status" :formatter="statusFormat"/>
       <el-table-column label="操作日期" align="center" prop="operTime" width="180">
         <template slot-scope="scope">

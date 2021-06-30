@@ -366,10 +366,10 @@ export default {
         inputErrorMessage: '谷歌验证码必须为6位数字'
       }).then(({value}) => {
         updateGoogleAuth(row.id, value).then(response => {
-          if(response.data.code == 0 ){
-            this.msgError(response.data.msg)
-          }else {
+          if(response.code == 200 ){
             this.$notify.success("重置成功")
+          }else {
+            this.msgError(response.msg)
           }
         })
       })
@@ -382,10 +382,10 @@ export default {
         inputErrorMessage: '谷歌验证码必须为6位数字'
       }).then(({value}) => {
         updatePassword(row.id, value).then(response => {
-          if(response.data.code == 0 ){
-            this.msgError(response.data.msg)
-          }else {
+          if(response.code == 200 ){
             this.$notify.success("重置成功")
+          }else {
+            this.msgError(response.msg)
           }
         })
       })

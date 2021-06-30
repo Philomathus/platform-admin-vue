@@ -5,14 +5,16 @@
       :close-on-click-modal="false"
       :title="title"
       :visible.sync="visible"
-      width="550px"
+      width="600px"
       top="5vh"
       @close="reset()"
       append-to-body
     >
-      <div v-model="memberGameDataDetail">
-        <ele-form-textarea v-model="memberGameDataDetail" v-html="print(memberGameDataDetail)"/>
-      </div>
+      <el-form ref="form" :model="memberGameDataDetail">
+        <el-form-item>
+          <el-input v-model="memberGameDataDetail" placeholder=""  type="textarea" :rows="20"/>
+        </el-form-item>
+      </el-form>
     </el-dialog>
   </div>
 
@@ -104,7 +106,7 @@ export default {
       gameDetailList(this.queryParams).then(response => {
         let result = response.data
         let newMes = result.replace("chairId",this.chairId);
-        this.memberGameDataDetail = newMes + newMes + newMes + newMes
+        this.memberGameDataDetail = newMes
         this.loading = false
       }).catch(() => {
         this.loading = false

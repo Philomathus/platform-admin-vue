@@ -1,8 +1,9 @@
 <template>
   <div class="app-container">
-<!--    <el-button type="primary" @click="copy1">总收入 {{ this.totalData.totalIncome || 0 }}</el-button>-->
-<!--    <el-button type="success" @click="copy2">总支出 {{ this.totalData.totalPay || 0 }}</el-button>-->
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="88px" style="margin-top: 10px">
+    <!--    <el-button type="primary" @click="copy1">总收入 {{ this.totalData.totalIncome || 0 }}</el-button>-->
+    <!--    <el-button type="success" @click="copy2">总支出 {{ this.totalData.totalPay || 0 }}</el-button>-->
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="88px"
+             style="margin-top: 10px">
       <el-form-item label="行为类型" prop="type" class="checkbox-type">
         <el-checkbox-group v-model="queryParams.types" size="medium">
           <el-checkbox v-for="item in typeOptions" :key="item.type" :label="item.type">{{ item.des }}</el-checkbox>
@@ -11,7 +12,8 @@
       <el-form-item label="创建时间" prop="selectDate" label-width="100px">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
-                        end-placeholder="结束时间" :default-time="['00:00:00', '23:59:59']" range-separator="至" clearable :picker-options="pickerOptions"
+                        end-placeholder="结束时间" :default-time="['00:00:00', '23:59:59']" range-separator="至" clearable
+                        :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="searchValue">
@@ -62,7 +64,10 @@
       <el-table-column label="订单号备注" align="center" prop="markorder" min-width="320" :show-overflow-tooltip="true"/>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
-            <a style="color: #00afff" @click="jump(scope.row.userId,parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}'))">{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</a>
+          <a style="color: #00afff"
+             @click="jump(scope.row.userId,parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}'))">{{
+              parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}')
+            }}</a>
         </template>
       </el-table-column>
       <el-table-column label="收入" align="center" prop="income" min-width="90"/>
@@ -82,16 +87,16 @@
 </template>
 
 <script>
-import { listLogMoney, exportLogMoney, totalCount } from '@/api/platform-web/pay/logMoney'
-import { allTradeType } from '@/api/platform-web/config/tradeType'
-import { pickerDateTimeShortcuts } from '@/utils/dateUtils'
+import {listLogMoney, exportLogMoney, totalCount} from '@/api/platform-web/pay/logMoney'
+import {allTradeType} from '@/api/platform-web/config/tradeType'
+import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
 
 export default {
   name: 'LogMoney',
   components: {},
   data() {
     return {
-      pickerOptions: { shortcuts: pickerDateTimeShortcuts },
+      pickerOptions: {shortcuts: pickerDateTimeShortcuts},
       //统计
       totalData: {},
       // 遮罩层
@@ -156,8 +161,8 @@ export default {
     copy2() {
       this.copyCommand(this.totalData.totalPay)
     },
-    jump(userId,createTime){
-      this.$router.push({path: '/member/memberGameData',query: { userId: userId, createTime: createTime,}})
+    jump(userId, createTime) {
+      this.$router.push({path: '/member/memberGameData', query: {userId: userId, createTime: createTime,}})
     },
     /** 查询 会员资金信息列表 */
     getList() {
@@ -176,13 +181,9 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      if(this.queryParams.searchValue == null){
-        this.$message.error("请输入会员ID再搜索")
-      }else {
-        this.queryParams.pageNum = 1
-        this.getList()
-        // this.totalCount()
-      }
+      this.queryParams.pageNum = 1
+      this.getList()
+      // this.totalCount()
     },
     /** 重置按钮操作 */
     resetQuery() {
@@ -196,7 +197,7 @@ export default {
         confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportLogMoney(queryParams)
       }).then(response => {
         this.downloadExcel(response, '会员资金')

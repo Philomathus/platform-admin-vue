@@ -27,21 +27,15 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="agent">
-        <el-input
-          v-model="queryParams.agent"
-          placeholder="请输入子平台ID"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item prop="kindId">
-        <el-input
-          v-model="queryParams.sonPlatformName"
-          placeholder="请输入子平台名称"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
+      <el-form-item prop="platformId">
+        <el-select v-model="queryParams.agent" placeholder="请选择平台">
+          <el-option
+            v-for="(item,index) in platformList"
+            :key="index"
+            :label="item.name"
+            :value="item.agent"
+          ></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -69,8 +63,11 @@
       <el-table-column label="子平台ID" align="center" prop="agent"/>
       <el-table-column label="游戏局号" align="center"  min-width="180px" :show-overflow-tooltip="true" prop="gameId">
         <template v-slot="{row}">
-            <div v-if="row.platformId == 1 || row.platformId == 15">
+            <div v-if="row.platformId == 1 || row.platformId == 15 || row.platformId == 17">
               <a style="color: #00afff"  @click="handleRecord(row)">{{ row.gameId }}</a>
+            </div>
+            <div v-else-if="row.platformId == 14">
+              <a style="color: #00afff"  @click="openRecordLink(row)">{{ row.gameId }}</a>
             </div>
             <div v-else>
               {{ row.gameId }}
@@ -97,12 +94,11 @@
     <record ref="record" :game-id="gameId" />
 
     <!-- 游戏对局日志 -->
-    <el-dialog title="游戏对局日志" :visible.sync="fundsOpen" width="450px" style="max-height:600px;overflow-y: scroll;"
-               append-to-body
-    >
-      <el-table :stripe="true" v-loading="loading" :data="fundsData" >
-        <el-table-column label="游戏对局日志" align="center" width="140" prop="data"/>
-      </el-table>
+    <el-dialog title="游戏对局日志" :visible.sync="fundsOpen" width="1500px" style="max-height:100%;overflow-y: scroll;"
+               append-to-body>
+      <div v-loading="loading" :style="'height:'+ height">
+        <iframe :src="recordLink" frameborder="no" style="width: 100%;height: 600px" scrolling="auto" />
+      </div>
     </el-dialog>
 
     <!--会员注单数据详情-->
@@ -123,6 +119,7 @@ import {
 } from '@/api/platform-web/member/memberGameData'
 import {pickerDateTimeShortcuts} from "@/utils/dateUtils";
 import record from './record'
+import { gamePlatformList, gameRecordList } from '../../../api/platform-web/member/memberGameData'
 
 
 export default {
@@ -153,6 +150,8 @@ export default {
       betData: [],
       // 会员注单数据表格数据
       memberGameDataList: [],
+      // 平台列表
+      platformList: [],
       //资金明细数据
       fundsData: [],
       fundsOpen: false,
@@ -162,6 +161,8 @@ export default {
       gameId: null,
       // 是否显示弹出层
       open: false,
+      //对局地址
+      recordLink: null,
       // 查询参数
       queryParams: {
         sonPlatformName: null,
@@ -209,6 +210,7 @@ export default {
         this.queryParams.selectDate = [createTime,this.parseTime(this.getTodayEndTime())]
       }
       this.getList()
+      this.getPlatformList()
     },
     // 0:未洗码1已经洗码
     formatterStatus(row) {
@@ -231,6 +233,22 @@ export default {
     handleRecord(row){
       this.$refs.record.show(row)
     },
+    openRecordLink(row){
+      this.queryParams.gameId = row.gameId;
+      this.queryParams.agent = row.agent;
+      this.queryParams.gameStartTime = row.game_start_time
+      this.queryParams.gameEndTime = row.game_end_time
+      this.queryParams.platformId = row.platformId
+      this.queryParams.account = row.account;
+      this.loading = true
+      gameRecordList(this.queryParams).then(response => {
+        this.recordLink = response.data.url
+        this.fundsOpen = true
+        this.loading = false
+      }).catch(() => {
+        this.loading = false
+      })
+    },
     funds(row) {
       getKYgameResReport(row).then((res) => {
         console.info(res.data);
@@ -246,6 +264,13 @@ export default {
         this.memberGameDataList = response.rows
         this.total = response.total
         this.loading = false
+      })
+    },
+    /** 查询平台列表 8*/
+    getPlatformList() {
+      gamePlatformList(this.queryParams).then(response => {
+          this.platformList = response.data
+          this.platformList[this.platformList.length] = {"agent":null,id:null,name:"全部"}
       })
     },
     // 取消按钮

@@ -128,6 +128,14 @@ export function getMemberLoginAddress(id) {
   })
 }
 
+// 查询会员线上充值历史金额
+export function getHistoryRecharge(id) {
+  return request({
+    url: url.platformWeb + '/member/memberInfo/getHistoryRecharge/' + id,
+    method: 'get'
+  })
+}
+
 // 新增会员信息
 export function addMemberInfo(data) {
   return request({

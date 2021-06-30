@@ -42,13 +42,21 @@
       </el-table>
     </el-dialog>
     <detail ref="detail" :record-id="recordID"/>
+
+    <!-- 游戏对局日志 -->
+    <el-dialog title="游戏对局日志" :visible.sync="detailOpen" width="1500px" style="max-height:100%;overflow-y: scroll;"
+               append-to-body>
+      <div v-loading="loading" :style="'height:'+ height">
+        <iframe :src="detailLink" frameborder="no" style="width: 100%;height: 600px" scrolling="auto" />
+      </div>
+    </el-dialog>
   </div>
 
 </template>
 
 <script>
 
-import { gameRecordList } from '../../../api/platform-web/member/memberGameData'
+import { gameDetailList, gameRecordList } from '../../../api/platform-web/member/memberGameData'
 import detail from './detail'
 
 export default {
@@ -90,6 +98,10 @@ export default {
       chairId: null,
       //h会员账号
       account: null,
+      //显示明细
+      detailOpen: false,
+      //对局地址
+      detailLink: null,
       // 查询参数
       queryParams: {
         platformId: null,
@@ -98,7 +110,10 @@ export default {
         gameStartTime: null,
         gameEndTime: null,
         chairId: null,
-        account: null
+        account: null,
+        serverId: null,
+        gameUserNo: null,
+        recordId: null
       }
     }
   },
@@ -148,16 +163,34 @@ export default {
     },
     //查看明细
     handleDetail(row){
-      row.platformId = this.platformId
-      row.chairId = this.chairId
-      row.accounts = this.accounts
-      row.account = this.account
-      this.$refs.detail.show(row)
+      if (this.platformId == 17){
+        this.queryParams.gameId = row.gameId;
+        this.queryParams.agent = row.accounts.split("_")[0];
+        this.queryParams.platformId = this.platformId
+        this.queryParams.account = row.accounts.replace(this.queryParams.agent+"_","");
+        this.queryParams.gameUserNo = row.gameID
+        this.queryParams.serverId = row.serverID
+        this.queryParams.recordId = row.recordID
+        this.loading = true
+        gameDetailList(this.queryParams).then(response => {
+          this.detailLink = response.data
+          this.detailOpen = true
+          this.loading = false
+        }).catch(() => {
+          this.loading = false
+        })
+      }else {
+        row.platformId = this.platformId
+        row.chairId = this.chairId
+        row.accounts = this.accounts
+        row.account = this.account
+        this.$refs.detail.show(row)
+      }
     },
     /** 重置按钮操作 */
     reset() {
       this.memberGameDataRecordList = []
-    },
+    }
   }
 }
 </script>

@@ -352,7 +352,7 @@
   } from '@/api/platform-web/member/memberInfo'
   import more from './more'
   import {listSpeakIpBlackList, updateSpeakIpBlackList} from '@/api/live-web/chat/speakIpBlackList'
-  import {pickerDateShortcuts} from '@/utils/dateUtils'
+  import {pickerDateShortcuts, pickerDateTimeShortcuts} from '@/utils/dateUtils'
   import {getConfigEnvironment} from "@/api/platform-web/config/configEnvironment";
   import ExcelPrompt from '@/layout/components/prompt/excelPrompt.vue';
 
@@ -370,7 +370,7 @@
         password: null,
         //代理号
         agent: null,
-        pickerOptions: {shortcuts: pickerDateShortcuts},
+        pickerOptions: {shortcuts: pickerDateTimeShortcuts},
         // 遮罩层
         loading: true,
         // 传递到子组件的memberId/memberCode

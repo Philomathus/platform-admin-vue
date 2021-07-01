@@ -27,6 +27,15 @@ export function addPayPlatformNew(data) {
   })
 }
 
+// 新增支付平台对接配置
+export function addPayPlatformConfig(data) {
+  return request({
+    url: url.platformWeb + '/pay/payPlatformNew/addPayPlatformConfig',
+    method: 'post',
+    data: data
+  })
+}
+
 // 修改支付平台
 export function updatePayPlatformNew(data) {
   return request({

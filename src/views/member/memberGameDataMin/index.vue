@@ -66,21 +66,12 @@
       @pagination="getList"
     />
 
-    <el-dialog
-      v-dialogDrag
-      :close-on-click-modal="false"
-      :title="title"
-      :visible.sync="visible"
-      width="600px"
-      top="5vh"
-      @close="reset()"
-      append-to-body
-    >
-      <el-form ref="form" :model="memberGameDataMinDetail">
-        <el-form-item>
-          <el-input v-model="memberGameDataMinDetail" placeholder=""  type="textarea" :rows="20"/>
-        </el-form-item>
-      </el-form>
+    <!-- 游戏对局日志 -->
+    <el-dialog title="游戏对局日志" :visible.sync="detailOpen" width="1500px" style="max-height:100%;overflow-y: scroll;"
+               append-to-body>
+      <div v-loading="loading" :style="'height:'+ height">
+        <iframe :src="detailLink" frameborder="no" style="width: 100%;height: 600px" scrolling="auto" />
+      </div>
     </el-dialog>
 
   </div>
@@ -115,11 +106,13 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
+      //显示明细
+      detailOpen: false,
+      //对局地址
+      detailLink: null,
       betData: [],
       // 会员注单数据表格数据
       memberGameDataMinList: [],
-      // 会员明细数据
-      memberGameDataMinDetail: [],
       // 平台列表
       orderStateList: [],
       // 弹出层标题
@@ -221,8 +214,8 @@ export default {
       this.queryParams.account = row.UserName
       this.loading = true
       listMemberGameDataMinDetail(this.queryParams).then(response => {
-        this.memberGameDataMinDetail = response.data
-        this.total = response.total
+        this.detailLink = response.data
+        this.detailOpen = true
         this.loading = false
       }).catch(() => {
         this.loading = false

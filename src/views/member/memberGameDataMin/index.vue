@@ -102,6 +102,8 @@ export default {
     return {
       pickerOptions: { shortcuts: pickerDateTimeShortcuts },
       // 遮罩层
+      visible: false,
+      // 遮罩层
       loading: false,
       // 选中数组
       ids: [],
@@ -128,6 +130,8 @@ export default {
       open: false,
       // 游戏局号
       WagersID: null,
+      //账号
+      UserName: null,
       //对局地址
       recordLink: null,
       // 查询参数
@@ -214,6 +218,7 @@ export default {
     /** 获取游戏局号 */
     handleDetail(row){
       this.queryParams.gameId = row.WagersID
+      this.queryParams.account = row.UserName
       this.loading = true
       listMemberGameDataMinDetail(this.queryParams).then(response => {
         this.memberGameDataMinDetail = response.data

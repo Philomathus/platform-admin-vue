@@ -17,3 +17,13 @@ export function gameOrderBetStateList(query) {
     params: query
   })
 }
+
+export function listMemberGameDataMinDetail(query) {
+  return request({
+    url: url.platformWeb + '/member/memberGameDataMin/detail',
+    method: 'get',
+    params: query
+  })
+}
+
+

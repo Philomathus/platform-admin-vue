@@ -41,29 +41,20 @@
       </el-form-item>
     </el-form>
 
-
     <el-table stripe v-loading="loading" :data="memberGameDataMinList">
-      <el-table-column label="会员ID" align="center" prop="account"/>
+      <el-table-column label="会员ID" align="center" prop="UserName"/>
       <el-table-column label="子平台ID" align="center" prop="agent"/>
-      <el-table-column label="游戏局号" align="center"  min-width="180px" :show-overflow-tooltip="true" prop="gameId">
+      <el-table-column label="游戏局号" align="center"  min-width="180px" :show-overflow-tooltip="true" prop="WagersID">
         <template v-slot="{row}">
-            <div v-if="row.platformId == 1 || row.platformId == 15 || row.platformId == 17 || row.platformId == 12 || row.platformId == 9">
-              <a style="color: #00afff"  @click="handleRecord(row)">{{ row.gameId }}</a>
-            </div>
-            <div v-else-if="row.platformId == 14">
-              <a style="color: #00afff"  @click="openRecordLink(row)">{{ row.gameId }}</a>
-            </div>
-            <div v-else>
-              {{ row.gameId }}
-            </div>
+          <a style="color: #00afff"  @click="handleDetail(row)">{{ row.WagersID }}</a>
         </template>
       </el-table-column>
+      <el-table-column label="下注状态" align="center" prop="Result"/>
       <el-table-column label="平台名称" align="center" prop="platformName"/>
-      <el-table-column label="子平台名称" align="center" prop="sonPlatformName"/>
-      <el-table-column label="有效下注" align="center" prop="cell_score"/>
-      <el-table-column label="总下注" align="center" prop="all_bet"/>
-      <el-table-column label="盈利" align="center" prop="profit"/>
-      <el-table-column label="结算时间" align="center" width="150px" prop="game_end_time"/>
+      <el-table-column label="有效下注" align="center" prop="Commissionable"/>
+      <el-table-column label="总下注" align="center" prop="BetAmount"/>
+      <el-table-column label="盈利" align="center" prop="Payoff"/>
+      <el-table-column label="下注时间" align="center" width="150px" prop="WagersDate"/>
     </el-table>
 
     <pagination
@@ -74,13 +65,32 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
+
+    <el-dialog
+      v-dialogDrag
+      :close-on-click-modal="false"
+      :title="title"
+      :visible.sync="visible"
+      width="600px"
+      top="5vh"
+      @close="reset()"
+      append-to-body
+    >
+      <el-form ref="form" :model="memberGameDataMinDetail">
+        <el-form-item>
+          <el-input v-model="memberGameDataMinDetail" placeholder=""  type="textarea" :rows="20"/>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+
   </div>
 </template>
 
 <script>
 import {
   listMemberGameDataMin,
-  gameOrderBetStateList
+  gameOrderBetStateList,
+  listMemberGameDataMinDetail
 } from '@/api/platform-web/member/memberGameDataMin'
 import {pickerDateTimeShortcuts} from "@/utils/dateUtils";
 
@@ -106,6 +116,8 @@ export default {
       betData: [],
       // 会员注单数据表格数据
       memberGameDataMinList: [],
+      // 会员明细数据
+      memberGameDataMinDetail: [],
       // 平台列表
       orderStateList: [],
       // 弹出层标题
@@ -114,6 +126,8 @@ export default {
       gameId: null,
       // 是否显示弹出层
       open: false,
+      // 游戏局号
+      WagersID: null,
       //对局地址
       recordLink: null,
       // 查询参数
@@ -154,7 +168,7 @@ export default {
     getList() {
       this.loading = true
       listMemberGameDataMin(this.queryParams).then(response => {
-        this.memberGameDataMinList = response.rows
+        this.memberGameDataMinList = response.data
         this.total = response.total
         this.loading = false
       }).catch(() => {
@@ -196,6 +210,18 @@ export default {
     handleQuery() {
       this.queryParams.pageNum = 1
       this.getList()
+    },
+    /** 获取游戏局号 */
+    handleDetail(row){
+      this.queryParams.gameId = row.WagersID
+      this.loading = true
+      listMemberGameDataMinDetail(this.queryParams).then(response => {
+        this.memberGameDataMinDetail = response.data
+        this.total = response.total
+        this.loading = false
+      }).catch(() => {
+        this.loading = false
+      })
     },
     /** 重置按钮操作 */
     resetQuery() {

@@ -67,7 +67,7 @@
     />
 
     <!-- 游戏对局日志 -->
-    <el-dialog title="游戏对局日志" :visible.sync="detailOpen" width="1500px" style="max-height:100%;overflow-y: scroll;"
+    <el-dialog title="游戏对局日志" :visible.sync="detailOpen" width="800px" style="max-height:100%;overflow-y: scroll;"
                append-to-body>
       <div v-loading="loading" :style="'height:'+ height">
         <iframe :src="detailLink" frameborder="no" style="width: 100%;height: 600px" scrolling="auto" />
@@ -159,6 +159,11 @@ export default {
   },
   methods: {
     init(){
+      let createTime = this.$route.query.createTime
+      if (createTime) {
+        this.queryParams.selectDate = [createTime,this.parseTime(this.getTodayEndTime())]
+      }
+
       this.getOrderStateList()
     },
     /** 查询会员注单数据列表 */
@@ -214,7 +219,7 @@ export default {
       this.queryParams.account = row.UserName
       this.loading = true
       listMemberGameDataMinDetail(this.queryParams).then(response => {
-        this.detailLink = response.data
+        this.detailLink = response.data.Url
         this.detailOpen = true
         this.loading = false
       }).catch(() => {

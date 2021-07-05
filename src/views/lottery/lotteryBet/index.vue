@@ -39,12 +39,30 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="cost" style="width: 150px;">
+      <el-form-item prop="cost">
         <el-input
-          v-model="queryParams.cost"
-          placeholder="投注金额"
+          v-model="queryParams.priceMin"
+          placeholder="投注￥"
           clearable
+          autocomplete="on"
+          min="0"
           size="small"
+          style="width: 86px"
+          type="number"
+          class="no-number"
+          @keyup.enter.native="handleQuery"
+        />
+        -
+        <el-input
+          v-model="queryParams.priceMax"
+          placeholder="金额￥"
+          clearable
+          autocomplete="on"
+          min="0"
+          size="small"
+          style="width: 86px"
+          type="number"
+          class="no-number"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
@@ -227,6 +245,19 @@ export default {
     /** 搜索按钮操作 */
     handleQuery() {
       this.queryParams.pageNum = 1
+      var min=this.queryParams.priceMin
+      var max=this.queryParams.priceMax
+      if ((min!="" || min!=null) && (max!="" || max!=null)){
+        if (parseInt(min)>parseInt(max)){
+          this.$message.warning("请输入正确的投注金额区间值")
+        }else {
+          this.getList()
+        }
+      }else if ((min=="" || min==null) && (max=="" || max==null)){
+        this.getList()
+      }else {
+        this.$message.warning("请输入正确的投注金额区间值")
+      }
       if (this.queryParams.abnormal && !this.queryParams.puserId) {
         this.$message.error(`查询异常投注核对记录必须传入会员ID`)
         return

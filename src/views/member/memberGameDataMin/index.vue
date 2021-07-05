@@ -161,7 +161,7 @@ export default {
     init(){
       let createTime = this.$route.query.createTime
       if (createTime) {
-        this.queryParams.selectDate = [createTime,this.parseTime(this.getTodayEndTime())]
+        this.queryParams.selectDate = [createTime,this.parseTime(this.getMeiDongTodayEndTime())]
       }
 
       this.getOrderStateList()

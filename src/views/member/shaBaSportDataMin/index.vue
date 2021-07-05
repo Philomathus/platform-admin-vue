@@ -150,7 +150,7 @@ export default {
         gameEndTime: null,
         betState: null,
         gameStartTime: null,
-        selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
+        selectDate: [this.parseTime(this.getMeiDongTodayStartTime()), this.parseTime(this.getMeiDongTodayEndTime())],
         orderByColumn: 'game_end_time',
         isAsc: 'desc'
       },
@@ -174,7 +174,7 @@ export default {
     init(){
       let createTime = this.$route.query.createTime
       if (createTime) {
-        this.queryParams.selectDate = [createTime,this.parseTime(this.getTodayEndTime())]
+        this.queryParams.selectDate = [createTime,this.parseTime(this.getMeiDongTodayEndTime())]
       }
 
       this.getOrderStateList()

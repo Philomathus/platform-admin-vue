@@ -42,19 +42,20 @@
     </el-form>
 
     <el-table stripe v-loading="loading" :data="memberGameDataMinList">
-      <el-table-column label="会员ID" align="center" prop="UserName"/>
+      <el-table-column label="会员ID" align="center" prop="vendor_member_id"/>
       <el-table-column label="代理ID" align="center" prop="agent"/>
-      <el-table-column label="交易订单号" align="center"  min-width="180px" :show-overflow-tooltip="true" prop="WagersID">
+      <el-table-column label="交易订单号" align="center"  min-width="180px" :show-overflow-tooltip="true" prop="trans_id">
         <template v-slot="{row}">
-          <a style="color: #00afff"  @click="handleDetail(row)">{{ row.WagersID }}</a>
+          <a style="color: #00afff"  @click="handleDetail(row)">{{ row.trans_id }}</a>
         </template>
       </el-table-column>
-      <el-table-column label="下注状态" align="center" prop="Result"/>
+      <el-table-column label="下注状态" align="center" prop="ticket_status"/>
       <el-table-column label="平台名称" align="center" prop="platformName"/>
-      <el-table-column label="有效下注" align="center" prop="Commissionable"/>
-      <el-table-column label="总下注" align="center" prop="BetAmount"/>
-      <el-table-column label="盈利" align="center" prop="Payoff"/>
-      <el-table-column label="下注时间" align="center" width="150px" prop="WagersDate"/>
+      <el-table-column label="子平台" align="center" prop="sport_type"/>
+      <el-table-column label="有效下注" align="center" prop="stake"/>
+      <el-table-column label="总下注" align="center" prop="stake"/>
+      <el-table-column label="盈利" align="center" prop="winlost_amount"/>
+      <el-table-column label="下注时间" align="center" width="150px" prop="transaction_time"/>
     </el-table>
 
     <pagination
@@ -66,13 +67,23 @@
       @pagination="getList"
     />
 
-    <!-- 游戏对局日志 -->
-    <el-dialog title="体育投注明细" :visible.sync="detailOpen" width="800px" style="max-height:100%;overflow-y: scroll;"
-               append-to-body>
-      <div v-loading="loading" :style="'height:'+ height">
-        <iframe :src="detailLink" frameborder="no" style="width: 100%;height: 600px" scrolling="auto" />
-      </div>
+    <el-dialog
+      v-dialogDrag
+      :close-on-click-modal="false"
+      :title="title"
+      :visible.sync="detailOpen"
+      width="800px"
+      top="5vh"
+      @close="reset()"
+      append-to-body
+    >
+      <el-form ref="form" :model="messageText" style="white-space: pre">
+        <el-form-item>
+          <el-input v-model="messageText" placeholder=""  type="textarea" :rows="20"/>
+        </el-form-item>
+      </el-form>
     </el-dialog>
+
 
   </div>
 </template>
@@ -82,12 +93,12 @@ import {
   listMemberGameDataMin,
   gameOrderBetStateList,
   listMemberGameDataMinDetail
-} from '@/api/platform-web/member/memberGameDataMin'
-import {pickerDateTimeMeiDong} from "@/utils/dateUtils";
-
+} from '@/api/platform-web/member/shaBaSportDataMin'
+import { pickerDateTimeMeiDong } from "@/utils/dateUtils";
+import { messageCode, messageVal } from '../../../utils/sportCode'
 
 export default {
-  name: 'MemberGameDataMin',
+  name: 'ShaBaSportDataMin',
   components: {  },
   data() {
     return {
@@ -113,6 +124,8 @@ export default {
       betData: [],
       // 会员注单数据表格数据
       memberGameDataMinList: [],
+      // 注单详情列表
+      messageText: null,
       // 平台列表
       orderStateList: [],
       // 弹出层标题
@@ -122,9 +135,9 @@ export default {
       // 是否显示弹出层
       open: false,
       // 游戏局号
-      WagersID: null,
+      trans_id: null,
       //账号
-      UserName: null,
+      vendor_member_id: null,
       //对局地址
       recordLink: null,
       // 查询参数
@@ -132,12 +145,12 @@ export default {
         pageNum: 1,
         pageSize: 15,
         gameId: null,
-        platformId: 9,
+        platformId: 12,
         account: null,
         gameEndTime: null,
         betState: null,
         gameStartTime: null,
-        selectDate: [this.parseTime(this.getMeiDongTodayStartTime()), this.parseTime(this.getMeiDongTodayEndTime())],
+        selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
         orderByColumn: 'game_end_time',
         isAsc: 'desc'
       },
@@ -146,7 +159,7 @@ export default {
       // 表单校验
       rules: {
         gameId: [
-          { required: true, message: '游戏局号不能为空', trigger: 'blur' }
+          { required: true, message: '注单号', trigger: 'blur' }
         ]
       }
     }
@@ -214,11 +227,16 @@ export default {
     },
     /** 获取游戏局号 */
     handleDetail(row){
-      this.queryParams.gameId = row.WagersID
-      this.queryParams.account = row.UserName
+      this.queryParams.gameId = row.trans_id
+      this.queryParams.account = row.vendor_member_id
       this.loading = true
       listMemberGameDataMinDetail(this.queryParams).then(response => {
-        this.detailLink = response.data.Url
+        let strings = response.data;
+        let buffer = "";
+        for (let key in strings){
+            buffer = buffer + (messageCode(key) + ":" +messageVal(key,strings[key]) + "\n");
+        }
+        this.messageText = buffer;
         this.detailOpen = true
         this.loading = false
       }).catch(() => {

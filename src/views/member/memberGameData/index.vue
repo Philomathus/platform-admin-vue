@@ -28,12 +28,12 @@
         />
       </el-form-item>
       <el-form-item prop="platformId">
-        <el-select v-model="queryParams.agent" placeholder="请选择平台">
+        <el-select v-model="queryParams.name" placeholder="请选择平台" :change="selectOne()">
           <el-option
             v-for="(item,index) in platformList"
             :key="index"
             :label="item.name"
-            :value="item.agent"
+            :value="item.id"
           ></el-option>
         </el-select>
       </el-form-item>
@@ -63,7 +63,7 @@
       <el-table-column label="子平台ID" align="center" prop="agent"/>
       <el-table-column label="游戏局号" align="center"  min-width="180px" :show-overflow-tooltip="true" prop="gameId">
         <template v-slot="{row}">
-            <div v-if="row.platformId == 1 || row.platformId == 15 || row.platformId == 17 || row.platformId == 12 || row.platformId == 9">
+            <div v-if="row.platformId == 1 || row.platformId == 15 || row.platformId == 17">
               <a style="color: #00afff"  @click="handleRecord(row)">{{ row.gameId }}</a>
             </div>
             <div v-else-if="row.platformId == 14">
@@ -167,6 +167,7 @@ export default {
       queryParams: {
         sonPlatformName: null,
         pageNum: 1,
+        name: null,
         pageSize: 15,
         gameId: null,
         account: null,
@@ -379,6 +380,18 @@ export default {
         this.openBetData = true
         this.title = '注单数据'
       })
+    },
+    selectOne() {     //change 触发事件
+      let id = this.queryParams.name;
+      if (id != null && id != undefined){
+        if (this.platformList != null && this.platformList != undefined){
+          this.platformList.forEach((value, key) => {
+            if (value.id == id){
+              this.queryParams.agent = value.agent
+            }
+          })
+        }
+      }
     }
   }
 }

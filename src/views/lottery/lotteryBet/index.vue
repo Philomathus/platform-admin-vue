@@ -247,13 +247,13 @@ export default {
       this.queryParams.pageNum = 1
       var min=this.queryParams.priceMin
       var max=this.queryParams.priceMax
-      if ((min!="" || min!=null) && (max!="" || max!=null)){
+      if ((min!=="" || min!=null) && (max!=="" || max!=null)){
         if (parseInt(min)>parseInt(max)){
           this.$message.warning("请输入正确的投注金额区间值")
         }else {
           this.getList()
         }
-      }else if ((min=="" || min==null) && (max=="" || max==null)){
+      }else if ((min==="" || min==null) && (max==="" || max==null)){
         this.getList()
       }else {
         this.$message.warning("请输入正确的投注金额区间值")

@@ -45,6 +45,19 @@ export function getTodayStartTime() {
   return this.getDateStartTime(new Date())
 }
 
+// 获取今天开始时间
+export function getMeiDongTodayStartTime() {
+  const date = new Date()
+  return new Date(date.toLocaleDateString() + ' 12:00:00')
+}
+
+// 获取今天结束时间
+export function getMeiDongTodayEndTime() {
+  const date = new Date()
+  date.setTime(date.getTime() + 3600 * 1000 * 24)
+  return new Date(date.toLocaleDateString() + ' 11:59:59')
+}
+
 // 获取今天结束时间
 export function getTodayEndTime() {
   return this.getDateEndTime(new Date())
@@ -300,5 +313,32 @@ export const toyesDayshortcuts = [{
     const date = new Date();
     date.setTime(date.getTime() - 3600 * 1000 * 48);
     picker.$emit('pick', date);
+  }
+}]
+
+export const pickerDateTimeMeiDong = [{
+  text: '今日',
+  onClick(picker) {
+    const start = new Date()
+    const end = new Date()
+    end.setTime(end.getTime() + 3600 * 1000 * 24)
+    picker.$emit('pick', [new Date(start.toLocaleDateString() + ' 12:00:00'), new Date(end.toLocaleDateString() + ' 11:59:59')])
+  }
+}, {
+  text: '昨日',
+  onClick(picker) {
+    const end = new Date()
+    const start = new Date()
+    start.setTime(start.getTime() - 3600 * 1000 * 24)
+    picker.$emit('pick', [new Date(start.toLocaleDateString() + ' 12:00:00'), new Date(end.toLocaleDateString() + ' 11:59:59')])
+  }
+}, {
+  text: '前天',
+  onClick(picker) {
+    const end = new Date()
+    const start = new Date()
+    start.setTime(start.getTime() - 3600 * 1000 * 48)
+    end.setTime(end.getTime()  - 3600 * 1000 * 24)
+    picker.$emit('pick', [new Date(start.toLocaleDateString() + ' 12:00:00'), new Date(end.toLocaleDateString() + ' 11:59:59')])
   }
 }]

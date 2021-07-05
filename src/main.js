@@ -29,6 +29,8 @@ import {
   parseTime,
   getTodayStartTime,
   getTodayEndTime,
+  getMeiDongTodayStartTime,
+  getMeiDongTodayEndTime,
   getDateStartTime,
   getDateEndTime,
   addDateRange
@@ -54,6 +56,8 @@ Vue.prototype.copyCommand = copyCommand
 Vue.prototype.parseTime = parseTime
 Vue.prototype.getTodayStartTime = getTodayStartTime
 Vue.prototype.getTodayEndTime = getTodayEndTime
+Vue.prototype.getMeiDongTodayStartTime = getMeiDongTodayStartTime
+Vue.prototype.getMeiDongTodayEndTime = getMeiDongTodayEndTime
 Vue.prototype.getDateStartTime = getDateStartTime
 Vue.prototype.getDateEndTime = getDateEndTime
 Vue.prototype.addDateRange = addDateRange

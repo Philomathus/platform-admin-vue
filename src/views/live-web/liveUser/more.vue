@@ -160,7 +160,7 @@
         <el-form-item label="礼物名称" prop="giftName">
           <el-input
             v-model="queryParams.giftName"
-            placeholder="请输入表描述"
+            placeholder="请输入礼物名称"
             clearable
             size="small"
             @keyup.enter.native="handleQuery"
@@ -388,11 +388,11 @@
                 var hint = '';
                 switch (index) {
                     case 4 :
-                        hint = '请輸入家族ID'
+                        hint = '请输入家族ID'
                         this.open(hint, 2);
                         break;
                     case 8 :
-                        hint = '请輸入印票'
+                        hint = '请输入印票'
                         this.open(hint, 2);
                         break;
                 }

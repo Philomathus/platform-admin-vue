@@ -97,7 +97,7 @@ export default {
     return {
       open: false,
       address: '******',
-      historyRecharge: 0.00,
+      historyRecharge: "未查询",
       data: {},
       playData: [],
       email: '',
@@ -148,6 +148,7 @@ export default {
       //获取会员的登录地址
       getHistoryRecharge(this.data['会员编号']).then((res) => {
         this.historyRecharge = res.msg;
+        this.data['充值总的金额'] = (parseFloat(this.data['充值总的金额']) + parseFloat(this.historyRecharge)).toFixed(2)
       });
     },
     show(data) {

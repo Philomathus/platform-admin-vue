@@ -101,10 +101,24 @@
             <el-input v-model.trim="row.bankAccount"></el-input>
           </template>
         </el-table-column>
-        <el-table-column prop="bankName" label="银行名称" :show-overflow-tooltip="true" min-width="80" align="center">
-            <template v-slot="{row}" v-if="index===7">
-              <el-input v-model="row.bankName"></el-input>
-            </template>
+        <el-table-column prop="bankName" label="银行名称"  min-width="80" align="center">
+          <template v-slot="{row}" v-if="index===7">
+            <el-select
+            filterable
+            v-model="row.bankName"
+            placeholder=""
+            clearable
+            size="small"
+            style="min-width: 120px"
+          >
+            <el-option
+              v-for="dict in banklists"
+              :key="dict.id"
+              :label="dict.bankName"
+              :value="dict.bankName"
+            />
+          </el-select>
+          </template>
         </el-table-column>
         <el-table-column label="操作" min-width="90" align="center">
           <template v-slot="{row}"  v-if="index===7">
@@ -228,7 +242,7 @@
     import {listDbTable, importTable} from "@/api/platform-web/tool/gen";
     import {
       goFamiily,updateTicket,
-      chatPage, receiveProplist, logPage, updateLiveUser, getLiveUser,updateMobile,getLiveUserBank,updateLiveUserBank,delLiveUserBank
+      chatPage, receiveProplist, logPage, banks,updateLiveUser, getLiveUser,updateMobile,getLiveUserBank,updateLiveUserBank,delLiveUserBank
     } from "@/api/live-web/liveUser";
 
     export default {
@@ -242,6 +256,8 @@
             return {
               //数据结构
               detailsList: {},
+              //银行卡
+              banklists: [],
               userId : null,
               //弹出框标题
               title: '积分明细',
@@ -562,7 +578,7 @@
             getLiveUser(this.userId).then(response => {
               this.liveUserRate = response.data
             })
-            },
+          },
           //查询主播银行卡
           queryBank() {
             this.dbTableList = []
@@ -570,7 +586,12 @@
                 this.liveBankList = response.rows
                 this.total = response.total;
             })
+            //银行卡列表
+            banks().then(response => {
+              this.banklists = response.data
+            })
           },
+
           //修改主播银行卡
           handleUpdate(row) {
           this.$confirm('是否修改银行卡信息?', '提示', {

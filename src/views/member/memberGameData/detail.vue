@@ -5,14 +5,16 @@
       :close-on-click-modal="false"
       :title="title"
       :visible.sync="visible"
-      width="550px"
+      width="600px"
       top="5vh"
       @close="reset()"
       append-to-body
     >
-      <div v-model="memberGameDataDetail">
-          <span v-html="print(memberGameDataDetail)"/>
-      </div>
+      <el-form ref="form" :model="memberGameDataDetail">
+        <el-form-item>
+          <el-input v-model="memberGameDataDetail" placeholder=""  type="textarea" :rows="20"/>
+        </el-form-item>
+      </el-form>
     </el-dialog>
   </div>
 
@@ -65,7 +67,8 @@ export default {
         platformId: null,
         agent: null,
         kindId: null,
-        recordId: null
+        recordId: null,
+        account: null
       }
     }
   },
@@ -88,7 +91,7 @@ export default {
   methods: {
     // 显示弹框
     show(row) {
-      this.queryParams.account = row.accounts
+      this.queryParams.account = row.account
       this.queryParams.recordId = row.recordID
       this.queryParams.kindId = row.kindID
       this.queryParams.agent = row.agent

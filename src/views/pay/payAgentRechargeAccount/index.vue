@@ -91,6 +91,7 @@
       <el-table-column label="代充昵称" align="center" prop="nickName" :show-overflow-tooltip="true" width="120"/>
       <el-table-column label="当前余额额度" align="center" prop="balanceAmount" width="100"/>
       <el-table-column label="代充次数" align="center" prop="rechargeNum"/>
+      <el-table-column label="IM账号" align="center" prop="imAccount"/>
       <el-table-column label="QQ号" align="center" prop="qqAccount" width="100"/>
       <el-table-column label="微信号" align="center" prop="wechatAccount" width="120"/>
       <el-table-column label="支付宝账号" align="center" prop="alipayAccount" :show-overflow-tooltip="true" width="160"/>
@@ -158,6 +159,14 @@
             @click="updateGoogleAuth(scope.row)"
             v-hasPermi="['pay:payAgentRechargeAccount:reset']"
           >重置秘钥
+          </el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-refresh-right"
+            @click="updatePassword(scope.row)"
+            v-hasPermi="['pay:payAgentRechargeAccount:reset']"
+          >重置密码
           </el-button>
           <el-button
             size="mini"
@@ -262,7 +271,7 @@ import {
   delPayAgentRechargeAccount, addPayAgentRechargeAccount, updatePayAgentRechargeAccount,
   exportPayAgentRechargeAccount, changeStatus, changeShowStatus
 } from "@/api/platform-web/pay/payAgentRechargeAccount";
-import {bindGoogleAuth2, getGoogleAuth2, updateGoogleAuth} from "@/api/platform-web/system/user";
+import {bindGoogleAuth2, getGoogleAuth2, updateGoogleAuth, updatePassword} from "@/api/platform-web/system/user";
 
 
 export default {
@@ -357,10 +366,26 @@ export default {
         inputErrorMessage: '谷歌验证码必须为6位数字'
       }).then(({value}) => {
         updateGoogleAuth(row.id, value).then(response => {
-          if(response.data.code == 0 ){
-            this.msgError(response.data.msg)
-          }else {
+          if(response.code == 200 ){
             this.$notify.success("重置成功")
+          }else {
+            this.msgError(response.msg)
+          }
+        })
+      })
+    },
+    updatePassword(row) {
+      this.$prompt('请输入谷歌验证码', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /^[0-9]*$/,
+        inputErrorMessage: '谷歌验证码必须为6位数字'
+      }).then(({value}) => {
+        updatePassword(row.id, value).then(response => {
+          if(response.code == 200 ){
+            this.$notify.success("重置成功")
+          }else {
+            this.msgError(response.msg)
           }
         })
       })

@@ -163,6 +163,19 @@ export function updateGoogleAuth(id,googleAuthCode) {
   })
 }
 
+//重置代充人IM密码
+export function updatePassword(id,googleAuthCode) {
+  const data = {
+    id,
+    googleAuthCode
+  }
+  return request({
+    url: url.platformWeb + '/system/user/updatePassword',
+    method: 'get',
+    params: data
+  })
+}
+
 //重置用户谷歌秘钥
 export function updateUserGoogleAuth(id,googleAuthCode) {
   const data = {

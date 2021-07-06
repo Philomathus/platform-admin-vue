@@ -128,14 +128,17 @@ export default {
       }
     },
     showPhone() {
-      if (checkTwoLogin()) {
-        //获取会员的手机号
-        getMemberInfo(this.data['会员编号']).then((res) => {
-          console.log(res)
-          this.data['会员名称'] = res.data.phone
-          this.$forceUpdate();
-        });
-
+      if(this.data['会员名称'] === null){
+        this.$message.error("此会员无手机号");
+      } else {
+        if (checkTwoLogin()) {
+          //获取会员的手机号
+          getMemberInfo(this.data['会员编号']).then((res) => {
+            console.log(res)
+            this.data['会员名称'] = res.data.phone
+            this.$forceUpdate();
+          });
+        }
       }
     },
     showAddress() {
@@ -153,6 +156,7 @@ export default {
     },
     show(data) {
       this.address = '******'
+      this.data['会员名称'] = null;
       this.playData = []
       data.forEach((value, index, array) => {
         var classTwoname = value.class_twoname;

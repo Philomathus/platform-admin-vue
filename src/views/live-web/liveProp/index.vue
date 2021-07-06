@@ -160,6 +160,12 @@
           <fileUpload v-model="form.animatedUrl" path="give"/>
         </el-form-item>
 
+        <el-form-item label="是否特殊礼物">
+          <el-radio-group v-model="form.isSpecial">
+            <el-radio label="0">正常</el-radio>
+            <el-radio label="1">特殊</el-radio>
+          </el-radio-group>
+        </el-form-item>
         <el-form-item label="类型">
           <el-radio-group v-model="form.type">
             <el-radio label="0">礼物</el-radio>
@@ -236,6 +242,7 @@ export default {
         sort: null,
         isRedEnvelope: null,
         isAnimated: null,
+        isSpecial: null,
         isEffect: null,
         animType: null,
         robotDiamonds: null,
@@ -286,6 +293,7 @@ export default {
         sort: null,
         isRedEnvelope: null,
         isAnimated: null,
+        isSpecial: null,
         isEffect: null,
         animType: null,
         robotDiamonds: null,

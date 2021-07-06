@@ -38,13 +38,14 @@
         />
       </el-form-item>
       <el-form-item prop="channelcode" style="width: 110px;">
-        <el-input
-          v-model="queryParams.channelcode"
-          placeholder="渠道号"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-select v-model="queryParams.channelcode" placeholder="全部类型" clearable size="small">
+          <el-option
+            v-for="dict in statusOptions"
+            :key="dict.dictValue"
+            :label="dict.dictLabel"
+            :value="dict.dictValue"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item prop="nickName" style="width: 110px;">
         <el-input
@@ -154,8 +155,12 @@
 
       <el-table-column label="累计有效投注" align="center" prop="codeTotal" min-width="100px"/>
       <el-table-column label="邀请码" align="center" prop="inviterCode" min-width="100px"/>
-      <el-table-column label="佣金" align="center" prop="inviteMoney" min-width="100px"/>
-      <el-table-column label="渠道号" align="center" prop="channelcode" min-width="100px"/>
+      <el-table-column label="用户类型" align="center" prop="channelcode" min-width="100px">
+        <template slot-scope="scope">
+          <span :style="{color: (channelcode = statusOptions[parseInt(scope.row.channelcode)]).color}">{{ channelcode.dictLabel }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="登录备注" align="center" prop="email" :show-overflow-tooltip="true" min-width="130px"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
@@ -365,6 +370,8 @@
         password: null,
         //代理号
         agent: null,
+        // 类型
+        statusOptions: [],
         pickerOptions: {shortcuts: pickerDateTimeShortcuts},
         // 遮罩层
         loading: true,
@@ -456,6 +463,9 @@
       })
       this.getDicts('member_type').then(response => {
         this.typeList = response.data
+      })
+      this.getDicts('device_type').then(response => {
+        this.statusOptions = response.data
       })
     },
     methods: {

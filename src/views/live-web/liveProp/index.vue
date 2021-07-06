@@ -162,8 +162,8 @@
 
         <el-form-item label="是否特殊礼物">
           <el-radio-group v-model="form.isSpecial">
-            <el-radio label="0">正常</el-radio>
-            <el-radio label="1">特殊</el-radio>
+            <el-radio label="0" v-model="radio">正常</el-radio>
+            <el-radio label="1" v-model="radio">特殊</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="类型">
@@ -211,6 +211,7 @@ export default {
   },
   data() {
     return {
+      radio: "0",
       // 遮罩层
       loading: true,
       // 选中数组

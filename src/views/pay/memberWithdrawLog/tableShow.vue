@@ -37,12 +37,17 @@
     <div class="fundsInfo">
       <div class="title">会员资金信息</div>
       <div class="mount" style="width: 80%">
-        <div class="font">线上充值金额(一月内): {{ data.线上金额 }}</div>
+
         <div style="display: flex;justify-content: flex-start;">
-          <div class="mount" style="width: 100%">
-            <div class="font">线上历史充值金额: {{ historyRecharge || 0.00 }}</div>
+          <div class="mount" style="width: 43%">
+            <div class="font">线上充值金额(一月内): {{ data.线上金额 }}</div>
           </div>
-          <el-button type="success" @click="getHistoryRecharge(data.会员编号)">查询</el-button>
+          <div class="mount" style="width: 45%">
+            <div class="font">线上历史充值金额:{{ historyRecharge || 0.00 }}</div>
+          </div>
+          <div class="mount" style="width: 12%">
+            <el-button type="success" @click="getHistoryRecharge(data.会员编号)">查询</el-button>
+          </div>
         </div>
         <div class="font">线下充值金额: {{ data.线下充值金额 }}</div>
         <div class="font">代充金额: {{ data.人工代充金额 }}</div>
@@ -128,7 +133,7 @@ export default {
       }
     },
     showPhone() {
-      if(this.data['会员名称'] === null){
+      if (this.data['会员名称'] === null) {
         this.$message.error("此会员无手机号");
       } else {
         if (checkTwoLogin()) {
@@ -151,7 +156,9 @@ export default {
       //获取会员的登录地址
       getHistoryRecharge(this.data['会员编号']).then((res) => {
         this.historyRecharge = res.msg;
-        this.data['充值总的金额'] = (parseFloat(this.data['充值总的金额']) + parseFloat(this.historyRecharge)).toFixed(2)
+        if (this.historyRecharge !== null) {
+          this.data['充值总的金额'] = (parseFloat(this.data['充值总的金额']) + parseFloat(this.historyRecharge)).toFixed(2)
+        }
       });
     },
     show(data) {

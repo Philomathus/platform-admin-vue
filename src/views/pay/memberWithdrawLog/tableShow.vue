@@ -153,6 +153,7 @@ export default {
     },
     show(data) {
       this.address = '******'
+      this.data['会员名称'] = null;
       this.playData = []
       data.forEach((value, index, array) => {
         var classTwoname = value.class_twoname;

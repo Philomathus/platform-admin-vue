@@ -63,7 +63,7 @@ let key_value = {
   'gametype':'游戏类型',
   'shoecode':'靴号',
   'flag':'结果状态',
-  'bankerpoint':' 庄分数',
+  'bankerpoint':'庄分数',
   'playerpoint':'闲分数',
   'cardnum':'牌的张数',
   'pair':'对子结果',

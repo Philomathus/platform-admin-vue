@@ -180,7 +180,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="排序" prop="sort">
-          <el-input v-model="form.sort" placeholder="请输入排序"/>
+          <el-input v-model="form.sort" placeholder="请输入排序"  type="number"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

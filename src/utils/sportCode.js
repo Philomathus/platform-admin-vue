@@ -46,7 +46,7 @@ let key_value = {
   'customInfo3': '厂商备注3',
   'customInfo4': '厂商备注4',
   'customInfo5': '厂商备注5',
-  'ba_status': '会员是否为BA状态:',
+  'ba_status': '会员是否为BA状态',
   'esports_gameid': '电子竞技游戏类型. 当 sport_type=43 返回字段',
   'total_score': '总进球. 当 bet_type=228 返回字段.注单未结算时返回数值为 0, 结算后返回投注,预测时间的赛果',
   'version_key': '版本号',
@@ -55,7 +55,23 @@ let key_value = {
   'ActionDate': '重新结算时间',
   'balancechange': '余额是否更动.(false 或 true)',
   'winlost': '前次结算输或赢的金额',
-  'parlay_type':'串关类型'
+  'parlay_type':'串关类型',
+  'gameCode':'游戏局号',
+  'begintime':'开始时间',
+  'closetime':'结束时间',
+  'dealer':'荷官名称',
+  'gametype':'游戏类型',
+  'shoecode':'靴号',
+  'flag':'结果状态',
+  'bankerpoint':'庄分数',
+  'playerpoint':'闲分数',
+  'cardnum':'牌的张数',
+  'pair':'对子结果',
+  'dragonpoint':'龙点数',
+  'tigerpoint':'虎点数',
+  'cardlist':'牌结果描述',
+  'vid':'视频ID',
+  'platformtype':'平台类型'
 }
 
 let sport_type = {
@@ -203,34 +219,68 @@ let parlay_type = {
   'MixParlay':'混合过关',
   'System Parlay':'串关'
 }
+let flag = {
+  '0':'无效',
+  '1':'有效'
+}
+let pair = {
+  '0':'没有对子',
+  '1':'庄对',
+  '2':'闲对',
+  '3':'庄对闲对'
+}
 
+let betfrom = {
+  'd':'亚洲版(已关闭) m 手机纯文字版',
+  'l':'手机 h5 版 z 中国版',
+  'x':'新亚洲版',
+  'c':'手机轻量版',
+  't':'快速连结',
+  '1':'沙巴电竞桌机版',
+  '2':'沙巴电竞手机版',
+  '4':'沙巴电玩桌机版',
+  '5':'沙巴电玩手机版'
+}
 export function messageCode(key) {
     return key_value[key]
 }
 export function messageVal(key,val){
+  let result = val;
   if (val instanceof Array || val instanceof Object){
-    return JSON.stringify(val)
+    result = JSON.stringify(val)
   }
   if (key == 'ticket_status'){
-    return ticket_status[val]
+    result = ticket_status[val]
   }
   if (key == 'ba_status'){
-    return ba_status[val]
+    result = ba_status[val]
   }
   if (key == 'sport_type'){
-    return sport_type[val]
+    result = sport_type[val]
   }
   if (key == 'bet_type'){
-    return bet_type[val]
+    result = bet_type[val]
   }
   if (key == 'islive'){
-    return islive[val]
+    result = islive[val]
   }
   if (key == 'parlay_type'){
-    return parlay_type[val]
+    result = parlay_type[val]
   }
   if (key == 'currency'){
-    return currency[val]
+    result = currency[val]
   }
-  return val
+  if (key == 'flag'){
+    result = flag[val]
+  }
+  if (key == 'pair'){
+    result = pair[val]
+  }
+  if (key == 'betfrom'){
+    result = betfrom[val]
+  }
+  if (result == undefined){
+    return '未知值['+val+']请查阅API文档'
+  }
+  return result
 }

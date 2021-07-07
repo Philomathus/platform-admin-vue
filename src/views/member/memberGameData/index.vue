@@ -64,10 +64,13 @@
       <el-table-column label="游戏局号" align="center"  min-width="180px" :show-overflow-tooltip="true" prop="gameId">
         <template v-slot="{row}">
             <div v-if="row.platformId == 1 || row.platformId == 15 || row.platformId == 17">
-              <a style="color: #00afff"  @click="handleRecord(row)">{{ row.gameId }}</a>
+              <a style="color: #00afff"  @click="openAgPlaypDetail(row)">{{ row.gameId }}</a>
             </div>
             <div v-else-if="row.platformId == 14">
               <a style="color: #00afff"  @click="openRecordLink(row)">{{ row.gameId }}</a>
+            </div>
+            <div v-else-if="row.platformId == 5">
+              <a style="color: #00afff"  @click="openAgPlaypDetail(row)">{{ row.gameId }}</a>
             </div>
             <div v-else>
               {{ row.gameId }}
@@ -108,6 +111,25 @@
         <el-table-column label="项目值" align="center" prop="value"/>
       </el-table>
     </el-dialog>
+
+    <!--会员Ag视讯注单数据详情-->
+    <el-dialog
+      title="注单数据详情"
+      v-dialogDrag
+      :close-on-click-modal="false"
+      :title="title"
+      :visible.sync="agVisible"
+      width="600px"
+      top="5vh"
+      @close="reset()"
+      append-to-body
+    >
+      <el-form ref="form" :model="messageText">
+        <el-form-item>
+          <el-input v-model="messageText" placeholder=""  type="textarea" :rows="20"/>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -119,7 +141,8 @@ import {
 } from '@/api/platform-web/member/memberGameData'
 import {pickerDateTimeShortcuts} from "@/utils/dateUtils";
 import record from './record'
-import { gamePlatformList, gameRecordList } from '../../../api/platform-web/member/memberGameData'
+import { gameDetailList, gamePlatformList, gameRecordList } from '../../../api/platform-web/member/memberGameData'
+import { messageCode, messageVal } from '../../../utils/sportCode'
 
 
 export default {
@@ -150,11 +173,14 @@ export default {
       betData: [],
       // 会员注单数据表格数据
       memberGameDataList: [],
+      //ag视讯详情
+      messageText: null,
       // 平台列表
       platformList: [],
       //资金明细数据
       fundsData: [],
       fundsOpen: false,
+      agVisible: false,
       // 弹出层标题
       title: '',
       //游戏参数
@@ -245,6 +271,29 @@ export default {
       gameRecordList(this.queryParams).then(response => {
         this.recordLink = response.data.url
         this.fundsOpen = true
+        this.loading = false
+      }).catch(() => {
+        this.loading = false
+      })
+    },
+    openAgPlaypDetail(row){
+      this.queryParams.gameId = row.gameId;
+      this.queryParams.agent = row.agent;
+      this.queryParams.gameStartTime = row.game_start_time
+      this.queryParams.gameEndTime = row.game_end_time
+      this.queryParams.platformId = row.platformId
+      this.queryParams.kindId = row.kindId
+      this.loading = true
+      gameDetailList(this.queryParams).then(response => {
+        if (response.data != null && response.data != undefined){
+          let strings = response.data[0];
+          let buffer = "";
+          for (let key in strings){
+            buffer = buffer + (messageCode(key) + ":" +messageVal(key,strings[key]) + "\n");
+          }
+          this.messageText = buffer;
+        }
+        this.agVisible = true
         this.loading = false
       }).catch(() => {
         this.loading = false

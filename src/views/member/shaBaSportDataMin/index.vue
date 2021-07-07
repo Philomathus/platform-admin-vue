@@ -56,6 +56,7 @@
       <el-table-column label="总下注" align="center" prop="stake"/>
       <el-table-column label="盈利" align="center" prop="winlost_amount"/>
       <el-table-column label="下注时间" align="center" width="150px" prop="transaction_time"/>
+      <el-table-column label="下注类型" v-if="false" align="center" width="150px" prop="bet_type"/>
     </el-table>
 
     <pagination
@@ -140,6 +141,8 @@ export default {
       vendor_member_id: null,
       //对局地址
       recordLink: null,
+      //游戏类型
+      betType: 0,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -148,6 +151,7 @@ export default {
         platformId: 12,
         account: null,
         gameEndTime: null,
+        betType: 0,
         betState: null,
         gameStartTime: null,
         selectDate: [this.parseTime(this.getMeiDongTodayStartTime()), this.parseTime(this.getMeiDongTodayEndTime())],
@@ -229,12 +233,15 @@ export default {
     handleDetail(row){
       this.queryParams.gameId = row.trans_id
       this.queryParams.account = row.vendor_member_id
+      this.queryParams.betType = row.bet_type
       this.loading = true
       listMemberGameDataMinDetail(this.queryParams).then(response => {
         let strings = response.data;
         let buffer = "";
         for (let key in strings){
-            buffer = buffer + (messageCode(key) + ":" +messageVal(key,strings[key]) + "\n");
+            if (strings[key] != undefined && strings[key] != "" && strings[key] != null){
+              buffer = buffer + (messageCode(key) + ":" +messageVal(key,strings[key]) + "\n");
+            }
         }
         this.messageText = buffer;
         this.detailOpen = true

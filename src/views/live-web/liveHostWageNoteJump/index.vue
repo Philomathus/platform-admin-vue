@@ -237,7 +237,7 @@ export default {
         dateDay: this.parseTime(new Date(), '{y}-{m}-{d}'),
         nickName: null,
         hostId: null,
-        familyId:null,
+        familyId: null,
         settlementRate: 0.7,
         pageNum: 1,
         pageSize: 100,
@@ -265,23 +265,23 @@ export default {
   },
   methods: {
     init() {
-       const familyId = this.$route.query.familyId
+      const familyId = this.$route.query.familyId
       const createTime = this.$route.query.createTime
       const hostId = this.$route.query.hostId
       // const settlementRate = this.$route.query.settlementRate
       //const selectDate = this.$route.query.selectDate
-       if (familyId && familyId >= 0) {
-         this.queryParams.familyId = familyId
-       } else {
+      if (familyId && familyId >= 0) {
+        this.queryParams.familyId = familyId
+      } else {
         this.queryParams.familyId = null
-       }
-       if (hostId!=null && familyId==0){
-         this.queryParams.hostId=hostId
-       }
+      }
+      if (hostId != null && familyId == 0) {
+        this.queryParams.hostId = hostId
+      }
       this.queryParams.dateDay = createTime
-     /* if (settlementRate != null) {
-        this.queryParams.settlementRate = settlementRate
-      }*/
+      /* if (settlementRate != null) {
+         this.queryParams.settlementRate = settlementRate
+       }*/
       /*if (selectDate != null) {
         this.queryParams.selectDate = selectDate
       }*/
@@ -292,9 +292,13 @@ export default {
       this.loading = true
       listHostWageNotePage(this.queryParams).then(response => {
         this.liveHostWageNoteList = response.rows
-        if(this.liveHostWageNoteList.length !== 0) {
+        if (this.liveHostWageNoteList.length !== 0) {
           this.liveHostWageNoteList.forEach(value => {
-            value.totalsettle = (parseFloat(value.livetimejiesuan) + parseFloat(value.ticket) + parseFloat(value.costQianliu)).toFixed(2)
+            if (value.livetimejiesuan !== null) {
+              value.totalsettle = (parseFloat(value.livetimejiesuan) + parseFloat(value.ticket) + parseFloat(value.costQianliu)).toFixed(2)
+            } else {
+              value.totalsettle = (parseFloat(value.ticket) + parseFloat(value.costQianliu)).toFixed(2)
+            }
             this.totalsettleTotalList.push(value.totalsettle)
           })
           for (var i = 0; i < this.totalsettleTotalList.length; i++) {

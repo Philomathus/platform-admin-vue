@@ -96,16 +96,16 @@
           <span v-else>{{ row.familyName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="族长ID" align="center" prop="familyUserId" />
-      <el-table-column label="族长昵称" align="center" prop="familyNickName" />
+      <el-table-column label="族长ID" align="center" prop="familyUserId"/>
+      <el-table-column label="族长昵称" align="center" prop="familyNickName"/>
       <el-table-column label="直播时长" align="center" prop="livetime"/>
       <el-table-column label="时长结算" align="center" prop="livetimejiesuan"/>
-      <el-table-column label="礼物金额" align="center" prop="liwu" />
-      <el-table-column label="礼物结算" align="center" prop="liwujiesuan" />
-      <el-table-column label="彩票投注" align="center" prop="lotteryCost" />
-      <el-table-column label="彩票结算" align="center" prop="costQianliu" />
-      <el-table-column label="开播次数" align="center" prop="times" />
-      <el-table-column label="结算总计" align="center" prop="totalsettle" />
+      <el-table-column label="礼物金额" align="center" prop="liwu"/>
+      <el-table-column label="礼物结算" align="center" prop="liwujiesuan"/>
+      <el-table-column label="彩票投注" align="center" prop="lotteryCost"/>
+      <el-table-column label="彩票结算" align="center" prop="costQianliu"/>
+      <el-table-column label="开播次数" align="center" prop="times"/>
+      <el-table-column label="结算总计" align="center" prop="totalsettle"/>
     </el-table>
 
     <pagination
@@ -124,7 +124,7 @@ import {
   listFamilyWageNotePage,
   exportFamilyWageNote
 } from '@/api/live-web/liveHostWageNote'
-import { toyesDayshortcuts } from '@/utils/dateUtils'
+import {toyesDayshortcuts} from '@/utils/dateUtils'
 
 export default {
   name: 'LiveHostWageNote',
@@ -170,12 +170,12 @@ export default {
     this.getList()
   },
   methods: {
-    familyShow(familyId,createTime) {
+    familyShow(familyId, createTime) {
       this.$router.push({
         path: '/live/live/liveHostWageNoteJump',
         query: {
           familyId: familyId,
-          createTime:this.queryParams.dateDay,
+          createTime: this.queryParams.dateDay,
           // settlementRate: this.queryParams.settlementRate,
           // selectDate: this.queryParams.selectDate
         }
@@ -187,7 +187,11 @@ export default {
       listFamilyWageNotePage(this.queryParams).then(response => {
         this.liveHostWageNoteList = response.rows
         this.liveHostWageNoteList.forEach(value => {
-          value.totalsettle = (parseFloat(value.livetimejiesuan)  + parseFloat(value.liwujiesuan) + parseFloat(value.costQianliu)).toFixed(2)
+          if (value.livetimejiesuan !== null) {
+            value.totalsettle = (parseFloat(value.livetimejiesuan) + parseFloat(value.liwujiesuan) + parseFloat(value.costQianliu)).toFixed(2)
+          } else {
+            value.totalsettle = (parseFloat(value.liwujiesuan) + parseFloat(value.costQianliu)).toFixed(2)
+          }
         })
         this.total = response.total
         this.loading = false
@@ -225,7 +229,7 @@ export default {
         confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportFamilyWageNote(queryParams)
       }).then(response => {
         this.downloadExcel(response, '家族直播时长')

@@ -293,7 +293,7 @@ export default {
         sort: null,
         isRedEnvelope: null,
         isAnimated: null,
-        isSpecial: null,
+        isSpecial: '0',
         isEffect: null,
         animType: null,
         robotDiamonds: null,

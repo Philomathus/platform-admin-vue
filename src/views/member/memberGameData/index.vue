@@ -69,9 +69,6 @@
             <div v-else-if="row.platformId == 14">
               <a style="color: #00afff"  @click="openRecordLink(row)">{{ row.gameId }}</a>
             </div>
-            <div v-else-if="row.platformId == 5">
-              <a style="color: #00afff"  @click="openAgPlaypDetail(row)">{{ row.gameId }}</a>
-            </div>
             <div v-else>
               {{ row.gameId }}
             </div>
@@ -83,6 +80,13 @@
       <el-table-column label="总下注" align="center" prop="all_bet"/>
       <el-table-column label="盈利" align="center" prop="profit"/>
       <el-table-column label="结算时间" align="center" width="150px" prop="game_end_time"/>
+      <el-table-column label="座位号" align="center" width="150px" :show-overflow-tooltip="true" prop="tableId">
+        <template v-slot="{row}">
+          <div v-if="row.platformId == 5">
+            <a style="color: #00afff"  @click="openAgPlaypDetail(row)">{{ row.tableId }}</a>
+          </div>
+        </template>
+      </el-table-column>
     </el-table>
 
     <pagination
@@ -187,6 +191,8 @@ export default {
       gameId: null,
       // 是否显示弹出层
       open: false,
+      //桌子号
+      tableId: null,
       //对局地址
       recordLink: null,
       // 查询参数
@@ -210,6 +216,7 @@ export default {
         gameStartTime: null,
         selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
         orderByColumn: 'game_end_time',
+        tableId: null,
         isAsc: 'desc'
       },
       // 表单参数
@@ -278,6 +285,7 @@ export default {
     },
     openAgPlaypDetail(row){
       this.queryParams.gameId = row.gameId;
+      this.queryParams.tableId = row.tableId;
       this.queryParams.agent = row.agent;
       this.queryParams.gameStartTime = row.game_start_time
       this.queryParams.gameEndTime = row.game_end_time

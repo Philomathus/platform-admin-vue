@@ -437,6 +437,8 @@ export default {
           this.platformList.forEach((value, key) => {
             if (value.id == id){
               this.queryParams.agent = value.agent
+              this.queryParams.platformId = value.id
+              this.queryParams.kindId = null
             }
           })
         }

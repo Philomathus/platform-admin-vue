@@ -44,6 +44,15 @@ export function updateMobile(data) {
     data: data
   })
 }
+
+// 会员完整手机号码查看
+export function fullMobile(id) {
+  return request({
+    url: url.platformWeb + '/member/memberInfo/fullMobile/' + id,
+    method: 'get'
+  })
+}
+
 // 加分提交接口
 export function addScore(query) {
   return request({

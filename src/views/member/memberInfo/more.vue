@@ -113,7 +113,7 @@
           </el-form-item>
         </el-form>
       </el-row>
-      <!--重置密码-->
+      <!--重置邀请码-->
       <el-row v-if="index===13">
         <el-form ref="formInviterCode" :model="form" :rules="inviterCodeRules" label-width="110px">
           <el-form-item label="重置邀请码" prop="inviterCode">
@@ -158,6 +158,9 @@
           <el-form-item label="旧手机号" prop="oldMobile">
             <el-input v-model="mobileForm.oldMobile" placeholder="请输入旧手机号" readonly/>
           </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="fullMobile()" v-has-permi="['member:memberInfo:fullMobile']">查看完整手机号</el-button>
+          </el-form-item>
           <el-form-item label="新手机号" prop="newMobile">
             <el-input v-model="mobileForm.newMobile" placeholder="请输入新手机号"/>
           </el-form-item>
@@ -165,7 +168,7 @@
             <el-input v-model="mobileForm.googleAuthCode" placeholder="请输入google验证码"/>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="updateMobile()" v-has-permi="['member:memberInfo:updateMobile']">确 定</el-button>
+              <el-button type="primary" @click="updateMobile()" v-has-permi="['member:memberInfo:updateMobile']">确 定</el-button>
           </el-form-item>
         </el-form>
       </el-row>
@@ -336,13 +339,14 @@ import {
   resetSafe,
   unbindCard,
   changeBank,
-  resetWithdrawal, memberBcodeRepair, updateVip, sendMsg, updateMobile, imDelete, updateInviterCode
+  resetWithdrawal, memberBcodeRepair, updateVip, sendMsg, updateMobile, fullMobile, imDelete, updateInviterCode
 } from '@/api/platform-web/member/memberInfo'
 import { userImMute } from '@/api/platform-web/live-web/ImMute'
-import { hideKMobile } from '@/utils/mobile.js'
+// import { hideKMobile } from '@/utils/mobile.js'
 import TableShow from '@/views/pay/memberWithdrawLog/tableShow.vue';
 import {getMemberWithdrawReport} from "@/api/platform-web/pay/memberWithdrawLog";
 import { positiveInteger, validMobile, validNumber } from '../../../utils/validate'
+import {checkTwoLogin} from "@/utils/permission";
 
 export default {
   props: {
@@ -413,12 +417,12 @@ export default {
       mobileRules: {
         oldMobile: [
           { required: true, message: '旧手机号码不能为空', trigger: 'blur' },
-          {max: 100,message: "机号码长度不能超过11位" },
+          {max: 100,message: "旧手机号码长度不能超过11位" },
           { validator: validMobile , trigger: "blur"  }
         ],
         newMobile: [
           { required: true, message: '新手机号码不能为空', trigger: 'blur' },
-          {max: 11,message: "机号码长度不能超过11位" },
+          {max: 11,message: "新手机号码长度不能超过11位" },
           { validator: validMobile , trigger: "blur"  }
         ],
         googleAuthCode: [
@@ -500,7 +504,14 @@ export default {
           })
         }
       })
-
+    },
+    fullMobile() {
+      if (checkTwoLogin()) {
+        fullMobile(this.memberId).then((res) => {
+          this.$message.success('完整手机号为:' + res.data.phone)
+          this.oldMobile = res.data.phone
+        })
+      }
     },
     updateInviterCode() {
       var that = this
@@ -730,7 +741,8 @@ export default {
     show(memberId, memberCode, vip, nickName, phone) {
       this.memberId = memberId
       this.memberCode = memberCode
-      this.mobileForm.oldMobile = hideKMobile(phone)
+      this.mobileForm.oldMobile = phone
+      // this.mobileForm.oldMobile = hideKMobile(phone)
       this.vip = vip
       this.oldVip = vip
       this.nickName = nickName

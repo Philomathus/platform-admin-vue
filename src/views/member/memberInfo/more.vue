@@ -155,8 +155,8 @@
       <!--重置手机号-->
       <el-row v-if="index===11">
         <el-form ref="mobileForm" label-width="110px" :model="mobileForm" :rules="mobileRules">
-          <el-form-item label="旧手机号" prop="oldMobile">
-            <el-input v-model="mobileForm.oldMobile" placeholder="请输入旧手机号" readonly/>
+          <el-form-item label="旧手机号" prop="phone">
+            <el-input v-model="mobileForm.phone" placeholder="请输入旧手机号" readonly/>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="fullMobile()" v-has-permi="['member:memberInfo:fullMobile']">查看完整手机号</el-button>
@@ -508,8 +508,8 @@ export default {
     fullMobile() {
       if (checkTwoLogin()) {
         fullMobile(this.memberId).then((res) => {
-          this.$message.success('完整手机号为:' + res.data.phone)
-          this.oldMobile = res.data.phone
+          this.$message.success('完整手机号码已展示')
+          this.mobileForm = res.data
         })
       }
     },
@@ -741,7 +741,7 @@ export default {
     show(memberId, memberCode, vip, nickName, phone) {
       this.memberId = memberId
       this.memberCode = memberCode
-      this.mobileForm.oldMobile = phone
+      this.mobileForm.phone = phone
       // this.mobileForm.oldMobile = hideKMobile(phone)
       this.vip = vip
       this.oldVip = vip

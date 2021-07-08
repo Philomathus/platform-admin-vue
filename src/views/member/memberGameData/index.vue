@@ -350,6 +350,9 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
+      this.queryParams.platformId = null
+      this.queryParams.kindId = null
+      this.queryParams.gameId = null
       this.queryParams.pageNum = 1
       this.getList()
       if(this.queryParams.account){

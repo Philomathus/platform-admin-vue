@@ -438,7 +438,10 @@ export default {
             if (value.id == id){
               this.queryParams.agent = value.agent
               this.queryParams.platformId = value.id
+              this.queryParams.gameId = null
               this.queryParams.kindId = null
+              this.queryParams.gameEndTime = null
+              this.queryParams.gameStartTime = null
             }
           })
         }

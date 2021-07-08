@@ -358,10 +358,8 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.platformId = null
       this.queryParams.kindId = null
       this.queryParams.pageNum = 1
-      this.queryParams.agent = null
       this.getList()
       if(this.queryParams.account){
         this.getCount()
@@ -456,6 +454,9 @@ export default {
             }
           })
         }
+      }else {
+        this.queryParams.agent = null
+        this.queryParams.platformId = null
       }
     }
   }

@@ -62,7 +62,7 @@
       <div class="mount" style="width: 80%">
         <div style="    display: flex;
     justify-content: flex-start;">
-          <el-input class="font" v-model.trim="email"></el-input>
+          <el-input class="font" v-model.trim="email" maxlength="50" show-word-limit></el-input>
           <el-button type="success" @click="updateEmail(email,data.会员编号)">更新</el-button>
         </div>
       </div>

@@ -74,12 +74,6 @@
             </div>
         </template>
       </el-table-column>
-      <el-table-column label="平台名称" align="center" prop="platformName"/>
-      <el-table-column label="子平台名称" align="center" prop="sonPlatformName"/>
-      <el-table-column label="有效下注" align="center" prop="cell_score"/>
-      <el-table-column label="总下注" align="center" prop="all_bet"/>
-      <el-table-column label="盈利" align="center" prop="profit"/>
-      <el-table-column label="结算时间" align="center" width="150px" prop="game_end_time"/>
       <el-table-column label="座位号" align="center" width="150px" :show-overflow-tooltip="true" prop="tableId">
         <template v-slot="{row}">
           <div v-if="row.platformId == 5">
@@ -87,6 +81,12 @@
           </div>
         </template>
       </el-table-column>
+      <el-table-column label="平台名称" align="center" prop="platformName"/>
+      <el-table-column label="子平台名称" align="center" prop="sonPlatformName"/>
+      <el-table-column label="有效下注" align="center" prop="cell_score"/>
+      <el-table-column label="总下注" align="center" prop="all_bet"/>
+      <el-table-column label="盈利" align="center" prop="profit"/>
+      <el-table-column label="结算时间" align="center" width="150px" prop="game_end_time"/>
     </el-table>
 
     <pagination

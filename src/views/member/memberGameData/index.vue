@@ -352,7 +352,6 @@ export default {
     handleQuery() {
       this.queryParams.platformId = null
       this.queryParams.kindId = null
-      this.queryParams.gameId = null
       this.queryParams.pageNum = 1
       this.getList()
       if(this.queryParams.account){

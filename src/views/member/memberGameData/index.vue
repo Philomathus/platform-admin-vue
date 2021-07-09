@@ -66,19 +66,15 @@
             <div v-if="row.platformId == 1 || row.platformId == 15 || row.platformId == 17">
               <a style="color: #00afff"  @click="handleRecord(row)">{{ row.gameId }}</a>
             </div>
+            <div v-if="row.platformId == 5">
+              <a style="color: #00afff"  @click="openAgPlaypDetail(row)">{{ row.gameId }}</a>
+            </div>
             <div v-else-if="row.platformId == 14">
               <a style="color: #00afff"  @click="openRecordLink(row)">{{ row.gameId }}</a>
             </div>
             <div v-else>
               {{ row.gameId }}
             </div>
-        </template>
-      </el-table-column>
-      <el-table-column label="房间号" align="center" width="150px" :show-overflow-tooltip="true" prop="serverId">
-        <template v-slot="{row}">
-          <div v-if="row.platformId == 5">
-            <a style="color: #00afff"  @click="openAgPlaypDetail(row)">{{ row.serverId }}</a>
-          </div>
         </template>
       </el-table-column>
       <el-table-column label="平台名称" align="center" prop="platformName"/>

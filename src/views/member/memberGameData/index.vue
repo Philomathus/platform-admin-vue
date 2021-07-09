@@ -74,10 +74,10 @@
             </div>
         </template>
       </el-table-column>
-      <el-table-column label="座位号" align="center" width="150px" :show-overflow-tooltip="true" prop="tableId">
+      <el-table-column label="房间号" align="center" width="150px" :show-overflow-tooltip="true" prop="serverId">
         <template v-slot="{row}">
           <div v-if="row.platformId == 5">
-            <a style="color: #00afff"  @click="openAgPlaypDetail(row)">{{ row.tableId }}</a>
+            <a style="color: #00afff"  @click="openAgPlaypDetail(row)">{{ row.serverId }}</a>
           </div>
         </template>
       </el-table-column>
@@ -191,8 +191,8 @@ export default {
       gameId: null,
       // 是否显示弹出层
       open: false,
-      //桌子号
-      tableId: null,
+      //房间号
+      serverId: null,
       //对局地址
       recordLink: null,
       // 查询参数
@@ -216,7 +216,7 @@ export default {
         gameStartTime: null,
         selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
         orderByColumn: 'game_end_time',
-        tableId: null,
+        serverId: null,
         isAsc: 'desc'
       },
       // 表单参数
@@ -285,7 +285,7 @@ export default {
     },
     openAgPlaypDetail(row){
       this.queryParams.gameId = row.gameId;
-      this.queryParams.tableId = row.tableId;
+      this.queryParams.serverId = row.serverId;
       this.queryParams.agent = row.agent;
       this.queryParams.gameStartTime = row.game_start_time
       this.queryParams.gameEndTime = row.game_end_time

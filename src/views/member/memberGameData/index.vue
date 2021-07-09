@@ -64,13 +64,13 @@
       <el-table-column label="游戏局号" align="center"  min-width="180px" :show-overflow-tooltip="true" prop="gameId">
         <template v-slot="{row}">
             <div v-if="row.platformId == 1 || row.platformId == 15 || row.platformId == 17">
+              <a style="color: #00afff"  @click="handleRecord(row)">{{ row.gameId }}</a>
+            </div>
+            <div v-else-if="row.platformId == 5">
               <a style="color: #00afff"  @click="openAgPlaypDetail(row)">{{ row.gameId }}</a>
             </div>
             <div v-else-if="row.platformId == 14">
               <a style="color: #00afff"  @click="openRecordLink(row)">{{ row.gameId }}</a>
-            </div>
-            <div v-else-if="row.platformId == 5">
-              <a style="color: #00afff"  @click="openAgPlaypDetail(row)">{{ row.gameId }}</a>
             </div>
             <div v-else>
               {{ row.gameId }}
@@ -187,6 +187,8 @@ export default {
       gameId: null,
       // 是否显示弹出层
       open: false,
+      //房间号
+      serverId: null,
       //对局地址
       recordLink: null,
       // 查询参数
@@ -210,6 +212,7 @@ export default {
         gameStartTime: null,
         selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
         orderByColumn: 'game_end_time',
+        serverId: null,
         isAsc: 'desc'
       },
       // 表单参数
@@ -278,6 +281,7 @@ export default {
     },
     openAgPlaypDetail(row){
       this.queryParams.gameId = row.gameId;
+      this.queryParams.serverId = row.serverId;
       this.queryParams.agent = row.agent;
       this.queryParams.gameStartTime = row.game_start_time
       this.queryParams.gameEndTime = row.game_end_time
@@ -350,6 +354,7 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
+      this.queryParams.kindId = null
       this.queryParams.pageNum = 1
       this.getList()
       if(this.queryParams.account){
@@ -437,9 +442,17 @@ export default {
           this.platformList.forEach((value, key) => {
             if (value.id == id){
               this.queryParams.agent = value.agent
+              this.queryParams.platformId = value.id
+              this.queryParams.gameId = null
+              this.queryParams.kindId = null
+              this.queryParams.gameEndTime = null
+              this.queryParams.gameStartTime = null
             }
           })
         }
+      }else {
+        this.queryParams.agent = null
+        this.queryParams.platformId = null
       }
     }
   }

@@ -97,7 +97,7 @@
         </el-form-item>
         <el-form-item label="杀率禁用时间点" prop="lotteryNokillratehour">
           <template>
-            <el-select v-model="form.lotteryNokillratehour" multiple placeholder="请选择杀率禁用时间点">
+            <el-select v-model="form.lotteryNokillratehour" multiple placeholder="请选择杀率禁用时间点(可多选)" clearable>
               <el-option
                 v-for="item in options"
                 :key="item.value"

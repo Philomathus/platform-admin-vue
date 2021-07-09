@@ -20,6 +20,16 @@
         </el-date-picker>
       </el-form-item>
 
+      <el-form-item label="主播昵称" prop="nickname">
+        <el-input
+          v-model="queryParams.nickname"
+          placeholder="请输入主播昵称"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>

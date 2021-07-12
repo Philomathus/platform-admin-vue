@@ -33,9 +33,9 @@
           <el-option label="失败" value="0"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="选择日期" prop="createTime">
+      <el-form-item label="选择日期" prop="selectDate">
         <el-date-picker
-          v-model="dateRange"
+          v-model="queryParams.selectDate"
           size="small"
           style="width: 240px"
           value-format="yyyy-MM-dd"
@@ -103,7 +103,7 @@
 <script>
 import { listPayLog, getPayLog, delPayLog, addPayLog, updatePayLog, exportPayLog } from '@/api/platform-web/pay/payLog'
 import { platforms } from '@/api/platform-web/pay/payChannelNew'
-import { pickerDateShortcuts } from '@/utils/dateUtils'
+import { get7beforeDay, pickerDateShortcuts } from '@/utils/dateUtils'
 
 export default {
   name: 'PayLog',
@@ -116,7 +116,7 @@ export default {
       // 选中数组
       ids: [],
       // 日期范围
-      dateRange: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
+      selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
       // 非单个禁用
       single: true,
       // 非多个禁用
@@ -139,6 +139,7 @@ export default {
       successOptions: [],
       // 查询参数
       queryParams: {
+        selectDate: [this.parseTime(new Date(), '{y}-{m}-{d}'), this.parseTime(new Date(), '{y}-{m}-{d}')],
         pageNum: 1,
         pageSize: 20,
         memberId: null,

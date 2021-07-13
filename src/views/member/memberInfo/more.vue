@@ -94,11 +94,14 @@
           <el-form-item label="订单备注" prop="ordermk">
             <el-input v-model="form.ordermk" placeholder="补单请填写补单订单号，末开奖补回请填写开期号，无则填写为0"/>
           </el-form-item>
-          <el-form-item label="打码倍数" prop="beatNum">
-            <el-input v-model="form.beatNum" type="number" placeholder="请输入打码倍数，默认请填写1,如未打算打码可填写为0"/>
+          <el-form-item label="待打码金额" prop="betMoney">
+            <el-input v-model="form.betMoney" type="number" placeholder="还需打码金额" @blur="codeMoney (form.betMoney,form.score)"/>
           </el-form-item>
-          <el-form-item label="google验证码" prop="googleAuthCode">
-            <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>
+          <el-form-item label="打码倍数" prop="beatNum">
+            <el-input v-model="form.beatNum" type="number" placeholder="请按顺序先输入加分金额，再输入待打码金额，系统会自动计算打码倍数。默认请填写1,如未打算打码可填写为0"/>
+          </el-form-item>
+          <el-form-item label="谷歌验证码" prop="googleAuthCode">
+            <el-input v-model="form.googleAuthCode" placeholder="请输入谷歌验证码"  />
           </el-form-item>
         </el-form>
       </el-row>
@@ -398,7 +401,8 @@ export default {
         mk: '',
         moneydes: '',
         ordermk: '',
-        score: ''
+        score: '',
+        betMoney:''
       },
       // 总条数
       total: 0,
@@ -456,10 +460,6 @@ export default {
         ],
         ordermk: [
           { required: true, message: '订单备注不能为空', trigger: 'blur' },{max: 200,message: "备注信息长度不能超过200位" }
-        ],
-        beatNum: [
-          { required: true, message: '打码倍数不能为空', trigger: 'blur' },
-          { validator: positiveInteger , trigger: "blur" },{max: 10,message: "打码倍数长度不能超过1位数字" }
         ],
         googleAuthCode: [
           { required: true, message: 'google验证码不能为空', trigger: 'blur' },
@@ -920,6 +920,15 @@ export default {
         }
       })
 
+    },
+    /** 计算打码倍数 */
+    codeMoney(betMoney,score) {
+      let r1,r2;
+      if (betMoney!=""&&betMoney!=null){
+        r1=Number(betMoney.toString().replace(".",""));
+        r2=Number(score.toString().replace(".",""));
+        this.form.beatNum= (r1/r2).toFixed(2);
+      }
     }
   }
 }

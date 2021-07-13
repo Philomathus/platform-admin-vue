@@ -987,7 +987,6 @@ export default {
       this.$refs['form'].validate(valid => {
         if (valid) {
           this.payDisabled = true
-          debugger;
           payAgentOrder({
             payAgentPlatId: this.form.payAgentPlatId,
             withdrawOrderNo: this.form.orderNo,

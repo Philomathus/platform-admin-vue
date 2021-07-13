@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="参数" prop="value">
+      <el-form-item  prop="value">
         <el-input
           v-model="queryParams.value"
           placeholder="请输入参数"
@@ -21,7 +21,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="备注" prop="mark">
+      <el-form-item  prop="mark">
         <el-input
           v-model="queryParams.mark"
           placeholder="请输入备注"
@@ -217,7 +217,7 @@ export default {
     },
     // 状态修改
     handleStatusChange(row) {
-      let text = row.ipStatus === '1' ? '启用' : '停用'
+      let text = row.status === '1' ? '启用' : '停用'
       this.$confirm('确认要"' + text + '""' + row.value + '"吗?', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -227,7 +227,7 @@ export default {
       }).then(() => {
         this.msgSuccess(text + '成功')
       }).catch(function() {
-        row.ipStatus = row.ipStatus === '0' ? '1' : '0'
+        row.status = row.status === '0' ? '1' : '0'
       })
     },
 
@@ -291,9 +291,13 @@ export default {
             });
           } else {
             addSystemIpTypeWhite(this.form).then(response => {
-              this.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
+              if (response.code == 0) {
+                this.msgError(response.msg)
+              } else {
+                this.msgSuccess('新增成功')
+                this.open = false
+                this.getList()
+              }
             });
           }
         }

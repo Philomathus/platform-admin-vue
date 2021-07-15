@@ -182,7 +182,7 @@
           </el-col>
         </el-form-item>
         <el-form-item label="谷歌验证码" prop="googleAuthCode">
-          <el-input v-model="form.googleAuthCode" placeholder="请输入谷歌验证码"/>
+          <el-input v-model="form.googleAuthCode" placeholder="请输入谷歌验证码" type="number" class="no-number"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

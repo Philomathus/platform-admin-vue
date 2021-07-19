@@ -76,7 +76,7 @@
       </div>
     </div>
     <div class="playInfo">
-      <div class="title" style="border-right:  1px solid rgba(0, 0, 0, 0.10);">游戏盈利</div>
+      <div class="title" style="border-right:  1px solid rgba(0, 0, 0, 0.10);">游戏盈利(一月内)</div>
       <div class="mount" style="width: 80%">
         <div class="font" v-for="item in playData">{{ item }}</div>
       </div>

@@ -181,6 +181,9 @@
             <el-input type="number" class="no-number" v-model="form.openLevelMax" placeholder="请输入最大开放层级"/>
           </el-col>
         </el-form-item>
+        <el-form-item label="谷歌验证码" prop="googleAuthCode">
+          <el-input v-model="form.googleAuthCode" placeholder="请输入谷歌验证码" type="number" class="no-number"/>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -253,6 +256,9 @@ export default {
         bankAccount: [
           { required: true, message: '银行账号地址不能为空', trigger: 'blur' }
         ],
+        googleAuthCode: [
+          { required: true, message: '谷歌验证码不能为空', trigger: 'blur' }
+        ]
       }
     }
   },

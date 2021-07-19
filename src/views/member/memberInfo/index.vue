@@ -74,6 +74,15 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item prop="loginIp" style="width: 110px;">
+        <el-input
+          v-model="queryParams.email"
+          placeholder="登录备注"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -418,6 +427,7 @@
         queryParams: {
           pageNum: 1,
           pageSize: 20,
+          email:'',
           bankAccount: '',
           searchValue: '', //会员Id,账号,手机号
           status: '',
@@ -522,6 +532,7 @@
       getList() {
         this.loading = true
         if (this.queryParams.bankAccount===''  &&
+            this.queryParams.email===''  &&
             this.queryParams.searchValue===''  &&
             this.queryParams.status===''  &&
             this.queryParams.loginIp===''  &&

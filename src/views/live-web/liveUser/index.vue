@@ -37,6 +37,12 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item prop="isBan" style="width: 150px">
+        <el-select v-model="queryParams.isBan" placeholder="是否禁播" clearable>
+          <el-option label="正常" value="0"></el-option>
+          <el-option label="禁播" value="1"></el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item prop="isAuthentication" style="width: 150px">
         <el-select v-model="queryParams.isAuthentication" placeholder="全部状态" clearable>
           <el-option label="未认证" value="0"></el-option>
@@ -426,6 +432,7 @@ export default {
         id: null,
         nickName: null,
         isAuthentication: null,
+        isBan:null,
         mobile: null,
         familyId: null,
         orderByColumn: 'u.create_time',

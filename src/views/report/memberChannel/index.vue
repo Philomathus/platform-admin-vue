@@ -17,8 +17,8 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="channelCode" style="width: 110px;">
-        <el-select v-model="queryParams.channelCode" placeholder="全部类型" clearable size="small">
+      <el-form-item prop="channelcode" style="width: 110px;">
+        <el-select v-model="queryParams.channelcode" placeholder="全部类型" clearable size="small">
           <el-option
             v-for="dict in statusOptions"
             :key="dict.dictValue"
@@ -80,10 +80,10 @@
       </el-table-column>
 <!--      <el-table-column label="状态" min-width="120" align="center" prop="status" :formatter="statusFormat" ></el-table-column>-->
       <el-table-column label="邀请码" align="center" prop="inviterCode" min-width="80"/>
-      <el-table-column label="用户类型" align="center" prop="channelCode" min-width="80px">
+      <el-table-column label="用户类型" align="center" prop="channelcode" min-width="80px">
         <template slot-scope="scope">
-          <span v-if="scope.row.channelCode == null" :style="{'color': '#5f91b8'}">会员(老接口)</span>
-          <span v-else :style="{color: (channelCode = statusOptions[parseInt(scope.row.channelCode)]).color}">{{ channelCode.dictLabel }}</span>
+          <span v-if="scope.row.channelcode == null" :style="{'color': '#5f91b8'}">会员(老接口)</span>
+          <span v-else :style="{color: (channelcode = statusOptions[parseInt(scope.row.channelcode)]).color}">{{ channelcode.dictLabel }}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -146,11 +146,11 @@ export default {
       // 查询参数
       queryParams: {
         pageNum: 1,
-        pageSize: 20,
+        pageSize: 50,
         email:'',
         //status: '',
         inviterCode: '',
-        channelCode: '',
+        channelcode: '',
         downLoadDate:[],
       },
       // 表单参数

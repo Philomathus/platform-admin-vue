@@ -38,7 +38,7 @@
           ></el-option>
         </el-select>
       </el-form-item>-->
-      <el-form-item prop="loginIp" style="width: 140px;">
+      <el-form-item prop="email" style="width: 160px;">
         <el-input
           v-model="queryParams.email"
           placeholder="登录备注"

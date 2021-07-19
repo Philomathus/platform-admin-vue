@@ -38,7 +38,7 @@
           ></el-option>
         </el-select>
       </el-form-item>-->
-      <el-form-item prop="loginIp" style="width: 110px;">
+      <el-form-item prop="loginIp" style="width: 140px;">
         <el-input
           v-model="queryParams.email"
           placeholder="登录备注"
@@ -171,15 +171,15 @@ export default {
     /** 查询线上充值信息列表 */
     getList() {
       this.loading = true
-      if (
+     /* if (
         this.queryParams.email===''  &&
-        this.queryParams.status===''  &&
         this.queryParams.inviterCode===''  &&
         this.queryParams.channelcode==='' ) {
         this.queryParams = this.addDateRange(this.queryParams, this.dateRange);
       }else {
         this.queryParams.params = []
-      }
+      }*/
+      this.queryParams = this.addDateRange(this.queryParams, this.dateRange);
       console.info(this.queryParams)
       listReport(this.queryParams).then(response => {
         this.memberPayJourList = response.rows

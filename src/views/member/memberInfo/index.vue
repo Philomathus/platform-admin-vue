@@ -497,6 +497,8 @@
             }
           }).catch(() => {
             this.$notify.error('网络异常')
+          }).finally(() =>{
+            this.getList()
           })
         }
       },

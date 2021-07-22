@@ -135,12 +135,12 @@
     <!-- 添加或修改任务信息对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px"
                append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="110px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="130px">
         <el-form-item label="标题" prop="title">
           <el-input v-model="form.title" placeholder="请输入标题"/>
         </el-form-item>
         <el-form-item label="排序号" prop="indexs">
-          <el-input v-model="form.indexs" placeholder="请输入排序号"/>
+          <el-input v-model="form.indexs" type="number" class="no-number" placeholder="请输入排序号"/>
         </el-form-item>
         <el-form-item label="任务类型" prop="typeId">
           <el-select
@@ -177,10 +177,10 @@
           </el-select>
         </el-form-item>
         <el-form-item label="目标任务量" prop="target">
-          <el-input v-model="form.target" placeholder="请输入目标任务量"/>
+          <el-input v-model="form.target" type="number" class="no-number" placeholder="请输入目标任务量"/>
         </el-form-item>
-        <el-form-item label="完成后增加的资金" prop="reward">
-          <el-input v-model="form.reward" placeholder="请输入完成后增加的资金"/>
+        <el-form-item label="完成后增加资金" prop="reward">
+          <el-input v-model="form.reward" type="number" class="no-number" placeholder="请输入完成后增加的资金"/>
         </el-form-item>
         <el-form-item label="图标" prop="icon">
           <imageUpload v-model="form.icon" path="ActivityQuestInfo"/>

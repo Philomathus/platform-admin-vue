@@ -179,6 +179,9 @@
         <el-form-item label="目标任务量" prop="target">
           <el-input v-model="form.target" placeholder="请输入目标任务量"/>
         </el-form-item>
+        <el-form-item label="完成后增加的资金" prop="reward">
+          <el-input v-model="form.reward" placeholder="请输入完成后增加的资金"/>
+        </el-form-item>
         <el-form-item label="图标" prop="icon">
           <imageUpload v-model="form.icon" path="ActivityQuestInfo"/>
         </el-form-item>

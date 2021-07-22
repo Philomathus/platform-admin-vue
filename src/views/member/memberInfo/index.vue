@@ -531,18 +531,19 @@
       /** 查询用户信息列表 */
       getList() {
         this.loading = true
-        if (this.queryParams.bankAccount===''  &&
-            this.queryParams.email===''  &&
-            this.queryParams.searchValue===''  &&
-            this.queryParams.status===''  &&
-            this.queryParams.loginIp===''  &&
-            this.queryParams.nickName===''  &&
-            this.queryParams.inviterCode===''  &&
-            this.queryParams.channelcode==='' ) {
+        // if (this.queryParams.bankAccount===''  &&
+        //     this.queryParams.email===''  &&
+        //     this.queryParams.searchValue===''  &&
+        //     this.queryParams.status===''  &&
+        //     this.queryParams.loginIp===''  &&
+        //     this.queryParams.nickName===''  &&
+        //     this.queryParams.inviterCode===''  &&
+        //     this.queryParams.channelcode==='' ) {
+        //   this.queryParams = this.addDateRange(this.queryParams, this.dateRange);
+        // }else {
           this.queryParams = this.addDateRange(this.queryParams, this.dateRange);
-        }else {
-          this.queryParams.params = []
-        }
+        //   this.queryParams.params = []
+        // }
         listMemberInfo(this.queryParams).then(response => {
           this.memberInfoList = response.rows
           this.total = response.total

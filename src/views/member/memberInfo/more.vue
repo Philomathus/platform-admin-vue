@@ -447,7 +447,7 @@ export default {
       rules: {
         password: [
           { required: true, message: '重置密码不能为空', trigger: 'blur' },
-          { max: 30,message: "重置邀请码长度不能超过30个字符" }
+          { max: 30,message: "重置密码长度不能超过30个字符" }
         ],
         score: [
           { required: true, message: '加分金额不能为空', trigger: 'blur' }

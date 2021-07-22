@@ -54,6 +54,15 @@ export function chatPage(query) {
   })
 }
 
+// 重置提现密码接口
+export function resetPaypassword(query) {
+  return request({
+    url: url.platformWeb + '/admin/liveUser/reset',
+    method: 'post',
+    params: query
+  })
+}
+
 // 收礼物日志列表
 export function receiveProplist(query) {
   return request({

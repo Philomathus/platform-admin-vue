@@ -20,6 +20,8 @@
         <span>银行卡</span></button>
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(8,'修改印票')">
         <span>修改印票</span></button>
+      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(9,'重置提现密码')">
+        <span>重置提现密码</span></button>
     </div>
     <!--聊天室记录-->
     <el-row v-if="index===1">
@@ -231,6 +233,22 @@
         </el-form-item>
       </el-form>
     </el-row>
+
+    <!--重置提现密码-->
+    <el-row v-if="index===9">
+      <el-form ref="paypasswordForm" :model="paypasswordForm" :rules="paypasswordRules" label-width="110px">
+        <el-form-item label="重置提现密码" prop="password">
+          <el-input v-model="form.payPassword" placeholder="请输入新提现密码"/>
+        </el-form-item>
+        <el-form-item label="google验证码" prop="googleAuthCode">
+          <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="handlePaypassword()" >确定</el-button>
+        </el-form-item>
+      </el-form>
+    </el-row>
+
 <!--    <div slot="footer" class="dialog-footer" v-if="index!==5">
       <el-button type="primary" @click="handleImportTable">确 定</el-button>
       <el-button @click="visible = false">取 消</el-button>
@@ -242,7 +260,7 @@
     import {listDbTable, importTable} from "@/api/platform-web/tool/gen";
     import {
       goFamiily,updateTicket,
-      chatPage, receiveProplist, logPage, banks,updateLiveUser, getLiveUser,updateMobile,getLiveUserBank,updateLiveUserBank,delLiveUserBank
+      chatPage, receiveProplist, logPage, banks,updateLiveUser, getLiveUser,updateMobile,getLiveUserBank,updateLiveUserBank,delLiveUserBank,resetPaypassword
     } from "@/api/live-web/liveUser";
 
     export default {
@@ -270,6 +288,14 @@
                 // 遮罩层
                 visible: false,
               mobileForm: {},
+              paypasswordForm: {},
+              // 重置提现密码表单校验
+              paypasswordRules: {
+                payPassword: [
+                  {required: true, message: '重置提现密码不能为空', trigger: 'blur'},
+                  {max: 30, message: "重置提现密码长度不能超过30个字符"}
+                ],
+              },
               //手机号校验规则
               mobileRules: {
                 oldMobile: [
@@ -485,6 +511,36 @@
                     });
                 }
             },
+
+          /** 重置提现密码 */
+          handlePaypassword() {
+            this.$refs['paypasswordForm'].validate(valid => {
+              if (valid) {
+                this.resetPaypassword()
+              }
+            })
+          },
+
+          //重置提现密码提交接口
+          resetPaypassword() {
+            this.loading = true
+            resetPaypassword({
+              paypassword: this.form.payPassword,
+              googleAuthCode: this.form.googleAuthCode,
+              id: this.userId
+            }).then((res) => {
+              if (res.code === 0) {
+                this.resetForm('paypasswordForm')
+                this.visible = false
+                this.$notify.success(res.msg)
+                this.$emit('refMemeberData')
+              }
+            }).catch((error) => {
+              this.$notify.error(error)
+            }).finally(() => {
+              this.loading = false
+            })
+          },
 
             // 显示弹框
             show(userId,phone) {

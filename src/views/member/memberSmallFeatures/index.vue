@@ -2,27 +2,30 @@
   <div class="app-container">
     <el-row>
 
-      <el-col :span="6" class="card-box">
+      <el-col :span="4" class="card-box">
         <el-card>
           <div slot="header"><span>批量手机号更新密码</span></div>
           <el-form :model="phoneFrom" ref="phoneFrom" :rules="phoneRules">
             <el-form-item prop="phones" style="width: 100%;">
               <el-input
                 type="textarea"
-                :rows="12"
+                :rows="40"
+                clearable
                 v-model="phoneFrom.phones"
-                placeholder="请输入批量手机号,统一以竖行排列,或者统一以英文逗号格式分隔"
+                placeholder="请输入批量手机号,统一以竖行排列"
               />
             </el-form-item>
-            <el-form-item prop="password" style="width: 30%;">
+            <el-form-item prop="password" style="width: 55%;">
               <el-input
                 type="text"
+                clearable
                 v-model="phoneFrom.password"
                 placeholder="请输入更新的密码"
               />
             </el-form-item>
-            <el-form-item prop="inviterCode" style="width: 30%;">
+            <el-form-item prop="inviterCode" style="width: 55%;">
               <el-input
+                clearable
                 type="number"
                 class="no-number"
                 v-model="phoneFrom.googleAuthCode"
@@ -75,13 +78,12 @@ export default {
     handleUpdate() {
       this.$refs['phoneFrom'].validate(valid => {
         if (valid) {
-          console.info("111")
           this.loading = true;
           updatePhones(this.phoneFrom).then(res => {
             if (res.code === 0) {
-              this.$message.error((res.msg))
+              this.msgError((res.msg))
             } else {
-              this.$message.success((res.msg))
+              this.msgSuccess((res.msg))
             }
           }).catch(() => {
             this.$notify.error('网络异常')

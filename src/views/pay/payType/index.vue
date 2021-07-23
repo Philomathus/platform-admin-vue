@@ -107,7 +107,7 @@
       <!--      <el-table-column label="是否线上(1是0否)" align="center" prop="isOnline" />-->
       <el-table-column label="支付类型" align="center" prop="type" :formatter="successFormat"/>
       <el-table-column label="开放层级" align="center" prop="openLevel"/>
-      <el-table-column label="设备类型" align="center" prop="deviceType"/>
+<!--      <el-table-column label="设备类型" align="center" prop="deviceType" :formatter="deviceTypeFormat"/>-->
       <el-table-column label="创建人" align="center" prop="creator"/>
       <el-table-column label="修改人" align="center" prop="updator"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -167,9 +167,9 @@
         <el-form-item label="设备类型" prop="deviceType">
           <template>
             <el-checkbox-group v-model="deviceTypes">
-              <el-checkbox label="ios"></el-checkbox>
-              <el-checkbox label="安卓"></el-checkbox>
-              <el-checkbox label="鸿蒙"></el-checkbox>
+              <el-checkbox label="1">ios</el-checkbox>
+              <el-checkbox label="2">安卓</el-checkbox>
+              <el-checkbox label="3">鸿蒙</el-checkbox>
             </el-checkbox-group>
           </template>
         </el-form-item>
@@ -269,7 +269,7 @@ export default {
       open: false,
       openText:false,
       //设备类型多选框
-      deviceTypes: ['ios','安卓','鸿蒙'],
+      deviceTypes: ['1','2','3'],
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -369,6 +369,24 @@ export default {
     // 支付类型
     successFormat(row, column) {
       return this.selectDictLabel(this.paytypeOptions, row.type)
+    },
+    //是否填充
+    deviceTypeFormat(row, column) {
+      if (row.deviceType === "1") {
+        return 'ios'
+      } else if (row.deviceType === "2") {
+        return '安卓'
+      } else if (row.deviceType === "3") {
+        return '鸿蒙'
+      } else if (row.deviceType === "1,2") {
+        return 'ios和安卓'
+      } else if (row.deviceType === "1,3") {
+        return 'ios和鸿蒙'
+      } else if (row.deviceType === "2,3") {
+        return '安卓和鸿蒙'
+      } else if (row.deviceType === "1,2,3") {
+        return 'ios和安卓和鸿蒙'
+      }
     },
     // 取消按钮
     cancel() {

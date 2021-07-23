@@ -16,12 +16,14 @@
               />
             </el-form-item>
             <el-form-item prop="password" style="width: 55%;">
-              <el-input
+              <el-autocomplete
+                class="inline-input"
+                :fetch-suggestions="querySearch"
                 type="text"
                 clearable
                 v-model="phoneFrom.password"
                 placeholder="请输入更新的密码"
-              />
+              ></el-autocomplete>
             </el-form-item>
             <el-form-item prop="inviterCode" style="width: 55%;">
               <el-input
@@ -52,6 +54,7 @@ export default {
   name: "Server",
   data() {
     return {
+      restaurants: [],
       // 手机号更新密码表单参数
       phoneFrom: {
         phones: null,
@@ -74,6 +77,22 @@ export default {
   created() {
   },
   methods: {
+    querySearch(queryString, cb) {
+      var restaurants = this.restaurants;
+      var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
+      // 调用 callback 返回建议列表的数据
+      cb(results);
+    },
+    createFilter(queryString) {
+      return (restaurant) => {
+        return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+      };
+    },
+    loadAll() {
+      return [
+        {"value": "123456"},
+      ];
+    },
     /** 手机号更新密码更新按钮 */
     handleUpdate() {
       this.$refs['phoneFrom'].validate(valid => {
@@ -91,6 +110,9 @@ export default {
         }
       })
     },
+  },
+  mounted() {
+    this.restaurants = this.loadAll();
   },
 };
 </script>

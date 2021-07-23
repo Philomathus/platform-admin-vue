@@ -12,7 +12,7 @@
                 :rows="40"
                 clearable
                 v-model="phoneFrom.phones"
-                placeholder="请输入批量手机号,统一以竖行排列"
+                placeholder="手机号统一以竖行排列,不允许有任何字符"
               />
             </el-form-item>
             <el-form-item prop="password" style="width: 55%;">

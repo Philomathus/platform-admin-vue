@@ -169,6 +169,7 @@
             <el-checkbox-group v-model="deviceTypes">
               <el-checkbox label="ios"></el-checkbox>
               <el-checkbox label="安卓"></el-checkbox>
+              <el-checkbox label="鸿蒙"></el-checkbox>
             </el-checkbox-group>
           </template>
         </el-form-item>
@@ -268,7 +269,7 @@ export default {
       open: false,
       openText:false,
       //设备类型多选框
-      deviceTypes: ['ios','安卓'],
+      deviceTypes: ['ios','安卓','鸿蒙'],
       // 查询参数
       queryParams: {
         pageNum: 1,

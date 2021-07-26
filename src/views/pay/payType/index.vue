@@ -107,6 +107,7 @@
       <!--      <el-table-column label="是否线上(1是0否)" align="center" prop="isOnline" />-->
       <el-table-column label="支付类型" align="center" prop="type" :formatter="successFormat"/>
       <el-table-column label="开放层级" align="center" prop="openLevel"/>
+<!--      <el-table-column label="设备类型" align="center" prop="deviceType" :formatter="deviceTypeFormat"/>-->
       <el-table-column label="创建人" align="center" prop="creator"/>
       <el-table-column label="修改人" align="center" prop="updator"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -162,6 +163,15 @@
         </el-form-item>
         <el-form-item label="排序" prop="indexes">
           <el-input v-model="form.indexes" placeholder="请输入排序"/>
+        </el-form-item>
+        <el-form-item label="设备类型" prop="deviceType">
+          <template>
+            <el-checkbox-group v-model="deviceTypes">
+              <el-checkbox label="1">ios</el-checkbox>
+              <el-checkbox label="2">安卓</el-checkbox>
+              <el-checkbox label="3">鸿蒙</el-checkbox>
+            </el-checkbox-group>
+          </template>
         </el-form-item>
         <el-form-item label="存入类型" prop="type">
           <el-select
@@ -258,6 +268,8 @@ export default {
       // 是否显示弹出层
       open: false,
       openText:false,
+      //设备类型多选框
+      deviceTypes: ['1','2','3'],
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -270,6 +282,7 @@ export default {
         status: null,
         isOnline: null,
         type: null,
+        deviceType: null,
         creator: null,
         updator: null,
         orderByColumn: 'indexes',
@@ -357,6 +370,24 @@ export default {
     successFormat(row, column) {
       return this.selectDictLabel(this.paytypeOptions, row.type)
     },
+    //是否填充
+    deviceTypeFormat(row, column) {
+      if (row.deviceType === "1") {
+        return 'ios'
+      } else if (row.deviceType === "2") {
+        return '安卓'
+      } else if (row.deviceType === "3") {
+        return '鸿蒙'
+      } else if (row.deviceType === "1,2") {
+        return 'ios和安卓'
+      } else if (row.deviceType === "1,3") {
+        return 'ios和鸿蒙'
+      } else if (row.deviceType === "2,3") {
+        return '安卓和鸿蒙'
+      } else if (row.deviceType === "1,2,3") {
+        return 'ios和安卓和鸿蒙'
+      }
+    },
     // 取消按钮
     cancel() {
       this.open = false
@@ -408,6 +439,9 @@ export default {
       this.reset()
       const id = row.id || this.ids
       getPayType(id).then(response => {
+        if (response.data.deviceType != null) {
+          this.deviceTypes = response.data.deviceType.split(',')
+        }
         this.form = response.data
         this.open = true
         this.title = '修改支付类型'
@@ -426,10 +460,13 @@ export default {
     submitForm() {
       this.$refs['form'].validate(valid => {
         if (valid) {
-          if (!(/^-[1-9]\d*$/).test(this.form.code) && this.form.code != 0) {
+          if (!(/^-[1-9]\d*$/).test(this.form.code) && this.form.code !== 0) {
             this.msgWarning('编码必须为负整数')
           } else {
             if (this.form.id != null) {
+              if (this.deviceTypes != null) {
+                this.form.deviceType = this.deviceTypes.join(',')
+              }
               updatePayType(this.form).then(response => {
                 this.msgSuccess('修改成功')
                 this.open = false
@@ -437,9 +474,12 @@ export default {
               })
             } else {
               existCode(this.form.code).then(response => {
-                if (response.code == 0) {
+                if (response.code === 0) {
                   this.msgError(response.msg);
                 } else {
+                  if (this.deviceTypes != null) {
+                    this.form.deviceType = this.deviceTypes.join(',')
+                  }
                   addPayType(this.form).then(response => {
                     this.msgSuccess('新增成功')
                     this.open = false

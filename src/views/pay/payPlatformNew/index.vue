@@ -330,12 +330,6 @@
         <el-form-item label="回调三方平台订单号参数名称" prop="callbackSanorderno">
           <el-input v-model="configForm.callbackSanorderno" placeholder="请输入回调三方平台订单号参数名称" />
         </el-form-item>
-        <el-form-item label="回调去除参数param1名称" prop="callbackParam1">
-          <el-input v-model="configForm.callbackParam1" placeholder="请输入回调去除参数param1名称" />
-        </el-form-item>
-        <el-form-item label="回调去除参数param2名称" prop="callbackParam2">
-          <el-input v-model="configForm.callbackParam2" placeholder="请输入回调去除参数param2名称" />
-        </el-form-item>
         <el-form-item label="回调状态判断参数名称" prop="callbackStatus">
             <el-input v-model="configForm.callbackStatus" placeholder="请输入回调状态判断参数名称,以逗号分隔，后面成功回调的值" />
         </el-form-item>

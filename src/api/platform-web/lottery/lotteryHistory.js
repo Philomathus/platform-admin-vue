@@ -26,3 +26,13 @@ export function lotteryInfoName() {
     method: 'get'
   })
 }
+
+// 新增人工补单管理
+export function addLotteryHistoryIssue(data) {
+  return request({
+    url: url.platformWeb + '/admin/lotteryHistory/addIssue',
+    method: 'post',
+    data: data
+  })
+}
+

@@ -107,7 +107,7 @@
       <!--      <el-table-column label="是否线上(1是0否)" align="center" prop="isOnline" />-->
       <el-table-column label="支付类型" align="center" prop="type" :formatter="successFormat"/>
       <el-table-column label="开放层级" align="center" prop="openLevel"/>
-<!--      <el-table-column label="设备类型" align="center" prop="deviceType" :formatter="deviceTypeFormat"/>-->
+      <el-table-column label="设备类型" align="center" prop="deviceType" :formatter="deviceTypeFormat"/>
       <el-table-column label="创建人" align="center" prop="creator"/>
       <el-table-column label="修改人" align="center" prop="updator"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -439,7 +439,7 @@ export default {
       this.reset()
       const id = row.id || this.ids
       getPayType(id).then(response => {
-        if (response.data.deviceType != null) {
+        if (response.data.deviceType !== null && response.data.deviceType !== "") {
           this.deviceTypes = response.data.deviceType.split(',')
         }
         this.form = response.data
@@ -464,7 +464,8 @@ export default {
             this.msgWarning('编码必须为负整数')
           } else {
             if (this.form.id != null) {
-              if (this.deviceTypes != null) {
+              console.info(this.deviceTypes)
+              if (this.deviceTypes != null && this.deviceTypes !== "") {
                 this.form.deviceType = this.deviceTypes.join(',')
               }
               updatePayType(this.form).then(response => {
@@ -477,7 +478,7 @@ export default {
                 if (response.code === 0) {
                   this.msgError(response.msg);
                 } else {
-                  if (this.deviceTypes != null) {
+                  if (this.deviceTypes != null && this.deviceTypes !== "") {
                     this.form.deviceType = this.deviceTypes.join(',')
                   }
                   addPayType(this.form).then(response => {

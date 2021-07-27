@@ -269,7 +269,7 @@ export function getConfigEnvironment(envCode) {
 
 export function userImMute(query) {
   return request({
-    url: url.platformWeb + '/member/memberInfoHistory/list?userId='+query,
+    url: url.platformWeb + '/member/memberInfoHistory/imList?userId='+query,
     method: 'get',
   })
 }

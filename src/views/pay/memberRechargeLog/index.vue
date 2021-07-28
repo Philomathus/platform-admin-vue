@@ -172,8 +172,8 @@
         </template>
       </el-table-column>
       <el-table-column label="会员ID" :show-overflow-tooltip="true" align="center" prop="memberId" min-width="120"/>
-<!--      <el-table-column label="会员账号" align="center" prop="userName" min-width="90" show-overflow-tooltip/>-->
-      <el-table-column label="入款姓名" min-width="120" align="center" prop="rechargeUserName"/>
+      <el-table-column label="会员账号" align="center" prop="userName" min-width="90" show-overflow-tooltip/>
+<!--      <el-table-column label="入款姓名" min-width="120" align="center" prop="rechargeUserName"/>-->
       <el-table-column label="充值人姓名" :show-overflow-tooltip="true" align="center" prop="rechargeUserName"
                        min-width="90"/>
       <el-table-column label="充值金额" align="center" prop="rechargeMoney" min-width="90"/>

@@ -301,9 +301,6 @@ export default {
         indexes: [
           {required: true, message: '排序不能为空', trigger: 'blur'}
         ],
-        // deviceType: [
-        //   {required: true, message: '设备类型不能为空', trigger: 'blur'}
-        // ],
         type: [
           {required: true, message: '存入类型不能为空', trigger: 'blur'}
         ]

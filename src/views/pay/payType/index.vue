@@ -382,13 +382,13 @@ export default {
       } else if (row.deviceType === "3") {
         return '鸿蒙'
       } else if (row.deviceType === "1,2" || row.deviceType === "2,1") {
-        return 'ios和安卓'
+        return 'ios/安卓'
       } else if (row.deviceType === "1,3" || row.deviceType === "3,1") {
-        return 'ios和鸿蒙'
+        return 'ios/鸿蒙'
       } else if (row.deviceType === "2,3" || row.deviceType === "3,2") {
-        return '安卓和鸿蒙'
+        return '安卓/鸿蒙'
       } else if (row.deviceType === "1,2,3" || row.deviceType === "1,3,2" || row.deviceType === "2,1,3" || row.deviceType === "2,3,1" || row.deviceType === "3,1,2" || row.deviceType === "3,2,1") {
-        return 'ios和安卓和鸿蒙'
+        return 'ios/安卓/鸿蒙'
       }
     },
     // 取消按钮

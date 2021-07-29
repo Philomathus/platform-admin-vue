@@ -301,9 +301,9 @@ export default {
         indexes: [
           {required: true, message: '排序不能为空', trigger: 'blur'}
         ],
-        //deviceType: [
-        //  {required: true, message: '设备类型不能为空', trigger: 'blur'}
-        //],
+        // deviceType: [
+        //   {required: true, message: '设备类型不能为空', trigger: 'blur'}
+        // ],
         type: [
           {required: true, message: '存入类型不能为空', trigger: 'blur'}
         ]
@@ -359,11 +359,11 @@ export default {
     //编码失去焦点验证
     existCode(value) {
       console.info(value)
-      if (!(/^-[1-9]\d*$/).test(value) && value != 0) {
+      if (!(/^-[1-9]\d*$/).test(value) && value !== 0) {
         this.msgWarning('编码必须为负整数')
       } else {
         existCode(value).then(response => {
-          if (response.code == 0) {
+          if (response.code === 0) {
             this.msgError(response.msg);
           }
         })

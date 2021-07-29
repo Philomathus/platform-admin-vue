@@ -88,6 +88,9 @@
               <el-option v-for="(item,index) in addScoreRemarks" :key="index" :label="item.label" :value="item.label"/>
             </el-select>
           </el-form-item>
+          <el-form-item label="支付备注" prop="remarkPay">
+            <el-input v-model="form.remarkPay" placeholder="请输入支付备注"/>
+          </el-form-item>
           <el-form-item label="备注信息" prop="mk">
             <el-input v-model="form.mk" placeholder="请备注具体入金原因"/>
           </el-form-item>
@@ -95,7 +98,7 @@
             <el-input v-model="form.ordermk" placeholder="补单请填写补单订单号，末开奖补回请填写开期号，无则填写为0"/>
           </el-form-item>
           <el-form-item label="待打码金额" prop="betMoney">
-            <el-input v-model="form.betMoney" type="number" placeholder="还需打码金额" @blur="codeMoney (form.betMoney,form.score)"/>
+            <el-input v-model="form.betMoney" type="number" placeholder="还需打码金额" @blur="codeMoney(form.betMoney,form.score)"/>
           </el-form-item>
           <el-form-item label="打码倍数" prop="beatNum">
             <el-input v-model="form.beatNum" type="number" placeholder="请按顺序先输入加分金额，再输入待打码金额，系统会自动计算打码倍数。默认请填写1,如未打算打码可填写为0"/>
@@ -399,6 +402,7 @@ export default {
         googleAuthCode: '',
         id: '',
         mk: '',
+        remarkPay: '',
         moneydes: '',
         ordermk: '',
         score: '',
@@ -924,7 +928,7 @@ export default {
     /** 计算打码倍数 */
     codeMoney(betMoney,score) {
       let r1,r2;
-      if (betMoney!=""&&betMoney!=null){
+      if (betMoney!==""&&betMoney!=null){
         r1=Number(betMoney.toString().replace(".",""));
         r2=Number(score.toString().replace(".",""));
         this.form.beatNum= (r1/r2).toFixed(2);

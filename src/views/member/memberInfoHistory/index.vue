@@ -129,9 +129,10 @@
       <el-table-column label="会员ID" align="center" prop="id" min-width="120px"/>
       <el-table-column label="账号" align="center" prop="userName" min-width="100px"/>
       <el-table-column label="昵称" :show-overflow-tooltip="true" align="center" prop="nickName" min-width="160"/>
-      <el-table-column label="会员vip" align="center" prop="vip" min-width="70px"/>
-      <el-table-column label="积分" :show-overflow-tooltip="true" align="center" prop="totalAccount" min-width="120px"/>
-      <el-table-column label="保险箱余额" :show-overflow-tooltip="true" align="center" prop="boxAccount" min-width="120px"/>
+<!--      <el-table-column label="会员vip" align="center" prop="vip" min-width="70px"/>-->
+<!--      <el-table-column label="积分" :show-overflow-tooltip="true" align="center" prop="totalAccount" min-width="120px"/>-->
+<!--      <el-table-column label="保险箱余额" :show-overflow-tooltip="true" align="center" prop="boxAccount" min-width="120px"/>-->
+      <el-table-column label="登录时间" align="center" prop="loginTime" min-width="110px">
       <el-table-column label="状态" align="center" min-width="110px">
         <template v-slot="{row}">
           <el-select v-model="row.status" placeholder="请选择状态" size="small"

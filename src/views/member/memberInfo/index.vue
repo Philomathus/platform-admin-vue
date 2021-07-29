@@ -65,7 +65,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="loginIp" style="width: 110px;">
+      <el-form-item prop="bankAccount" style="width: 110px;">
         <el-input
           v-model="queryParams.bankAccount"
           placeholder="银行卡号"
@@ -74,7 +74,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="loginIp" style="width: 110px;">
+      <el-form-item prop="email" style="width: 110px;">
         <el-input
           v-model="queryParams.email"
           placeholder="登录备注"

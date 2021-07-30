@@ -264,7 +264,14 @@
             :label="dict.dictLabel"
             :value="dict.dictValue"
           />
+          <el-input
+            v-model="form.refusedAuditReason"
+            placeholder="请输入手写备注"
+            clearable
+            size="small"
+          />
         </el-select>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitRefusedAudit">确 定</el-button>

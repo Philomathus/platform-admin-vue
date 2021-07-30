@@ -301,9 +301,6 @@ export default {
         indexes: [
           {required: true, message: '排序不能为空', trigger: 'blur'}
         ],
-        // deviceType: [
-        //   {required: true, message: '设备类型不能为空', trigger: 'blur'}
-        // ],
         type: [
           {required: true, message: '存入类型不能为空', trigger: 'blur'}
         ]
@@ -373,7 +370,7 @@ export default {
     successFormat(row, column) {
       return this.selectDictLabel(this.paytypeOptions, row.type)
     },
-    //是否填充
+    //设备类型
     deviceTypeFormat(row, column) {
       if (row.deviceType === "1") {
         return 'ios'
@@ -382,13 +379,13 @@ export default {
       } else if (row.deviceType === "3") {
         return '鸿蒙'
       } else if (row.deviceType === "1,2" || row.deviceType === "2,1") {
-        return 'ios和安卓'
+        return 'ios/安卓'
       } else if (row.deviceType === "1,3" || row.deviceType === "3,1") {
-        return 'ios和鸿蒙'
+        return 'ios/鸿蒙'
       } else if (row.deviceType === "2,3" || row.deviceType === "3,2") {
-        return '安卓和鸿蒙'
+        return '安卓/鸿蒙'
       } else if (row.deviceType === "1,2,3" || row.deviceType === "1,3,2" || row.deviceType === "2,1,3" || row.deviceType === "2,3,1" || row.deviceType === "3,1,2" || row.deviceType === "3,2,1") {
-        return 'ios和安卓和鸿蒙'
+        return 'ios/安卓/鸿蒙'
       }
     },
     // 取消按钮
@@ -506,7 +503,8 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids
-      this.$confirm('是否确认删除支付类型编号为"' + ids + '"的数据项?', '警告', {
+      const name = row.name
+      this.$confirm('是否确认删除"' + name + '"支付类型?', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'

@@ -83,10 +83,18 @@
           <el-form-item label="加分金额" prop="score">
             <el-input v-model="form.score" type="number" placeholder="请输入金额"/>
           </el-form-item>
-          <el-form-item label="备注字典" prop="moneydes">
-            <el-select v-model="form.moneydes" placeholder="入款备注" clearable size="small">
-              <el-option v-for="(item,index) in addScoreRemarks" :key="index" :label="item.label" :value="item.label"/>
+          <el-form-item label="入款类型" prop="moneydes">
+            <el-select v-model="form.moneydes" placeholder="入款类型" clearable size="small">
+              <el-option
+                v-for="item in moneydesOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
             </el-select>
+          </el-form-item>
+          <el-form-item label="支付备注" prop="remarkPay">
+            <el-input v-model="form.remarkPay" placeholder="请输入支付备注"/>
           </el-form-item>
           <el-form-item label="备注信息" prop="mk">
             <el-input v-model="form.mk" placeholder="请备注具体入金原因"/>
@@ -95,7 +103,7 @@
             <el-input v-model="form.ordermk" placeholder="补单请填写补单订单号，末开奖补回请填写开期号，无则填写为0"/>
           </el-form-item>
           <el-form-item label="待打码金额" prop="betMoney">
-            <el-input v-model="form.betMoney" type="number" placeholder="还需打码金额" @blur="codeMoney (form.betMoney,form.score)"/>
+            <el-input v-model="form.betMoney" type="number" placeholder="还需打码金额" @blur="codeMoney(form.betMoney,form.score)"/>
           </el-form-item>
           <el-form-item label="打码倍数" prop="beatNum">
             <el-input v-model="form.beatNum" type="number" placeholder="请按顺序先输入加分金额，再输入待打码金额，系统会自动计算打码倍数。默认请填写1,如未打算打码可填写为0"/>
@@ -145,7 +153,7 @@
               <el-option
                 v-for="dict in msgList "
                 :key="dict.dictValue"
-                :value="dict.dictLabel"
+                :value="dict.dictValue"
                 :label="dict.dictLabel"
               />
             </el-select>
@@ -391,8 +399,17 @@ export default {
         nickName: null,
         ShuttedUntil: null
       },
-      //加分备注别表
-      addScoreRemarks: [{ label: '人工备注' }, { label: '线上入款' }, { label: '线下入款' }],
+      //入款类型
+      moneydesOptions: [{
+        value: '1',
+        label: '人工入款'
+      }, {
+        value: '2',
+        label: '线上入款'
+      }, {
+        value: '3',
+        label: '线上入款'
+      }],
       //加分提交的数据
       form: {
         beatNum: '',
@@ -453,7 +470,7 @@ export default {
           { required: true, message: '加分金额不能为空', trigger: 'blur' }
         ],
         moneydes: [
-          { required: true, message: '备注字典不能为空', trigger: 'blur' },{max: 100,message: "备注字典长度不能超过30位" }
+          { required: true, message: '入款备注不能为空', trigger: 'blur' }
         ],
         mk: [
           { required: true, message: '备注信息不能为空', trigger: 'blur' },{max: 200,message: "备注信息长度不能超过200位" }
@@ -482,6 +499,7 @@ export default {
   created() {
     this.getDicts('member_msg').then(response => {
       this.msgList = response.data
+      console.info(this.msgList)
     })
   },
   methods: {
@@ -526,11 +544,16 @@ export default {
     },
     sendMsg() {
       sendMsg(this.msg, this.memberId).then((res) => {
-
+        if (res.code === 0) {
+          this.resetForm('form')
+          this.visible = false
+          this.$notify.success('发送短信成功')
+          this.$emit('refMemeberData')
+        }
       }).catch((err) => {
-
+        this.$notify.error(error)
       }).finally(() => {
-
+        this.loading = false
       })
     },
     gameEsc(row) {
@@ -923,8 +946,11 @@ export default {
     },
     /** 计算打码倍数 */
     codeMoney(betMoney,score) {
+      let r1,r2;
       if (betMoney!=""&&betMoney!=null){
-        this.form.beatNum= (betMoney/score).toFixed(2);
+        r1=Number(betMoney.toString().replace(".",""));
+        r2=Number(score.toString().replace(".",""));
+        this.form.beatNum= (r1/r2).toFixed(2);
       }
     }
   }

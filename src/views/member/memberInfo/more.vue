@@ -408,7 +408,7 @@ export default {
         label: '线上入款'
       }, {
         value: '3',
-        label: '线上入款'
+        label: '线下入款'
       }],
       //加分提交的数据
       form: {
@@ -842,6 +842,7 @@ export default {
         id: this.memberId,
         mk: this.form.mk,
         moneydes: this.form.moneydes,
+        remarkPay: this.form.remarkPay,
         ordermk: this.form.ordermk,
         score: this.form.score
       }).then((res) => {

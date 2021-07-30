@@ -62,9 +62,14 @@
 <!--          @keyup.enter.native="handleQuery"-->
 <!--        />-->
 <!--      </el-form-item>-->
-      <el-form-item prop="moneydes">
-        <el-select v-model="form.moneydes" placeholder="请选择入款类型" clearable size="small">
-          <el-option v-for="(item,index) in addScoreRemarks" :key="index" :label="item.label" :value="item.label"/>
+      <el-form-item label="入款类型" prop="moneydes">
+        <el-select v-model="queryParams.moneydes" placeholder="入款类型" clearable size="small">
+          <el-option
+            v-for="item in moneydesOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
         </el-select>
       </el-form-item>
       <el-form-item prop="opName">
@@ -244,6 +249,17 @@ export default {
   data() {
     return {
       pickerOptions: {shortcuts: pickerDateTimeShortcuts},
+      //入款类型
+      moneydesOptions: [{
+        value: '1',
+        label: '人工入款'
+      }, {
+        value: '2',
+        label: '线上入款'
+      }, {
+        value: '3',
+        label: '线下入款'
+      }],
       // 遮罩层
       loading: true,
       // 选中数组

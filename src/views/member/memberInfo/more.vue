@@ -148,7 +148,7 @@
               <el-option
                 v-for="dict in msgList "
                 :key="dict.dictValue"
-                :value="dict.dictLabel"
+                :value="dict.dictValue"
                 :label="dict.dictLabel"
               />
             </el-select>
@@ -485,6 +485,7 @@ export default {
   created() {
     this.getDicts('member_msg').then(response => {
       this.msgList = response.data
+      console.info(this.msgList)
     })
   },
   methods: {
@@ -529,11 +530,16 @@ export default {
     },
     sendMsg() {
       sendMsg(this.msg, this.memberId).then((res) => {
-
+        if (res.code === 0) {
+          this.resetForm('form')
+          this.visible = false
+          this.$notify.success('发送短信成功')
+          this.$emit('refMemeberData')
+        }
       }).catch((err) => {
-
+        this.$notify.error(error)
       }).finally(() => {
-
+        this.loading = false
       })
     },
     gameEsc(row) {

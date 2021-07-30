@@ -19,7 +19,7 @@
           ></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item prop="code">
+      <el-form-item prop="searchValue">
         <el-input
           v-model="queryParams.searchValue"
           placeholder="会员ID/账号/手机号"
@@ -132,7 +132,7 @@
 <!--      <el-table-column label="会员vip" align="center" prop="vip" min-width="70px"/>-->
 <!--      <el-table-column label="积分" :show-overflow-tooltip="true" align="center" prop="totalAccount" min-width="120px"/>-->
 <!--      <el-table-column label="保险箱余额" :show-overflow-tooltip="true" align="center" prop="boxAccount" min-width="120px"/>-->
-      <el-table-column label="登录时间" align="center" prop="loginTime" min-width="110px">
+      <el-table-column label="登录时间" align="center" prop="loginTime" min-width="110px"/>
       <el-table-column label="状态" align="center" min-width="110px">
         <template v-slot="{row}">
           <el-select v-model="row.status" placeholder="请选择状态" size="small"

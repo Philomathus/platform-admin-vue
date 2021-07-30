@@ -370,7 +370,7 @@ export default {
     successFormat(row, column) {
       return this.selectDictLabel(this.paytypeOptions, row.type)
     },
-    //是否填充
+    //设备类型
     deviceTypeFormat(row, column) {
       if (row.deviceType === "1") {
         return 'ios'

@@ -83,8 +83,8 @@
           <el-form-item label="加分金额" prop="score">
             <el-input v-model="form.score" type="number" placeholder="请输入金额"/>
           </el-form-item>
-          <el-form-item label="备注字典" prop="moneydes">
-            <el-select v-model="form.moneydes" placeholder="入款备注" clearable size="small">
+          <el-form-item label="入款类型" prop="moneydes">
+            <el-select v-model="form.moneydes" placeholder="入款类型" clearable size="small">
               <el-option v-for="(item,index) in addScoreRemarks" :key="index" :label="item.label" :value="item.label"/>
             </el-select>
           </el-form-item>
@@ -394,8 +394,8 @@ export default {
         nickName: null,
         ShuttedUntil: null
       },
-      //加分备注别表
-      addScoreRemarks: [{ label: '人工备注' }, { label: '线上入款' }, { label: '线下入款' }],
+      //入款类型
+      addScoreRemarks: [{ label: '人工入款' }, { label: '线上入款' }, { label: '线下入款' }],
       //加分提交的数据
       form: {
         beatNum: '',

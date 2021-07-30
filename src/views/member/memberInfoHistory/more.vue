@@ -85,7 +85,12 @@
           </el-form-item>
           <el-form-item label="入款类型" prop="moneydes">
             <el-select v-model="form.moneydes" placeholder="入款类型" clearable size="small">
-              <el-option v-for="(item,index) in addScoreRemarks" :key="index" :label="item.label" :value="item.label"/>
+              <el-option
+                v-for="item in moneydesOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="支付备注" prop="remarkPay">
@@ -402,7 +407,16 @@ export default {
         ShuttedUntil: null
       },
       //入款类型
-      addScoreRemarks: [{ label: '人工入款' }, { label: '线上入款' }, { label: '线下入款' }],
+      moneydesOptions: [{
+        value: '1',
+        label: '人工入款'
+      }, {
+        value: '2',
+        label: '线上入款'
+      }, {
+        value: '3',
+        label: '线上入款'
+      }],
       //加分提交的数据
       form: {
         beatNum: '',
@@ -464,7 +478,7 @@ export default {
           { required: true, message: '加分金额不能为空', trigger: 'blur' }
         ],
         moneydes: [
-          { required: true, message: '备注字典不能为空', trigger: 'blur' },{max: 100,message: "备注字典长度不能超过30位" }
+          { required: true, message: '入款类型不能为空', trigger: 'blur' }
         ],
         mk: [
           { required: true, message: '备注信息不能为空', trigger: 'blur' },{max: 200,message: "备注信息长度不能超过200位" }

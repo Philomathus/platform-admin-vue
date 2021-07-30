@@ -143,8 +143,8 @@
     </el-row>
 
     <el-table stripe v-loading="loading" :data="memberDepositLogList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="系统编号" align="center" prop="id" />
+<!--      <el-table-column type="selection" width="55" align="center" />-->
+<!--      <el-table-column label="系统编号" align="center" prop="id" />-->
       <el-table-column label="会员编号" align="center" prop="memberId" />
       <el-table-column label="会员账号" align="center" prop="userName" />
       <el-table-column label="入款类型" align="center" prop="moneydes" :formatter="moneydesFormat"/>

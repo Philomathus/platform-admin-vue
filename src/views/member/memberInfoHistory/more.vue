@@ -415,7 +415,7 @@ export default {
         label: '线上入款'
       }, {
         value: '3',
-        label: '线上入款'
+        label: '线下入款'
       }],
       //加分提交的数据
       form: {
@@ -850,6 +850,7 @@ export default {
         id: this.memberId,
         mk: this.form.mk,
         moneydes: this.form.moneydes,
+        remarkPay: this.form.remarkPay,
         ordermk: this.form.ordermk,
         score: this.form.score
       }).then((res) => {
@@ -948,11 +949,8 @@ export default {
     },
     /** 计算打码倍数 */
     codeMoney(betMoney,score) {
-      let r1,r2;
-      if (betMoney!==""&&betMoney!=null){
-        r1=Number(betMoney.toString().replace(".",""));
-        r2=Number(score.toString().replace(".",""));
-        this.form.beatNum= (r1/r2).toFixed(2);
+      if (betMoney!=""&&betMoney!=null){
+        this.form.beatNum= (betMoney/score).toFixed(2);
       }
     }
   }

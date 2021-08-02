@@ -62,9 +62,14 @@
 <!--          @keyup.enter.native="handleQuery"-->
 <!--        />-->
 <!--      </el-form-item>-->
-      <el-form-item prop="moneydes">
-        <el-select v-model="form.moneydes" placeholder="请选择入款类型" clearable size="small">
-          <el-option v-for="(item,index) in addScoreRemarks" :key="index" :label="item.label" :value="item.label"/>
+      <el-form-item label="入款类型" prop="moneydes">
+        <el-select v-model="queryParams.moneydes" placeholder="入款类型" clearable size="small">
+          <el-option
+            v-for="item in moneydesOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
         </el-select>
       </el-form-item>
       <el-form-item prop="opName">
@@ -87,7 +92,7 @@
 <!--      </el-form-item>-->
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+<!--        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>-->
       </el-form-item>
     </el-form>
 
@@ -138,8 +143,8 @@
     </el-row>
 
     <el-table stripe v-loading="loading" :data="memberDepositLogList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="系统编号" align="center" prop="id" />
+<!--      <el-table-column type="selection" width="55" align="center" />-->
+<!--      <el-table-column label="系统编号" align="center" prop="id" />-->
       <el-table-column label="会员编号" align="center" prop="memberId" />
       <el-table-column label="会员账号" align="center" prop="userName" />
       <el-table-column label="入款类型" align="center" prop="moneydes" :formatter="moneydesFormat"/>
@@ -244,6 +249,17 @@ export default {
   data() {
     return {
       pickerOptions: {shortcuts: pickerDateTimeShortcuts},
+      //入款类型
+      moneydesOptions: [{
+        value: '1',
+        label: '人工入款'
+      }, {
+        value: '2',
+        label: '线上入款'
+      }, {
+        value: '3',
+        label: '线下入款'
+      }],
       // 遮罩层
       loading: true,
       // 选中数组

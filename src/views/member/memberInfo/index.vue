@@ -165,8 +165,8 @@
       <el-table-column label="邀请码" align="center" prop="inviterCode" min-width="100px"/>
       <el-table-column label="用户类型" align="center" prop="channelcode" min-width="200px">
         <template slot-scope="scope">
-          <span v-if="scope.row.channelcode == null" :style="{'color': '#5FB878'}">会员|{{scope.row.version}}|{{scope.row.loginDev == 2 ?'andriod':scope.row.loginDev == 1 ? 'ios' : '其它'}}</span>
-          <span v-else :style="{color: (channelcode = statusOptions[parseInt(scope.row.channelcode)]).color}">{{ channelcode.dictLabel }}|{{scope.row.version}}|{{scope.row.loginDev == 2 ?'andriod':scope.row.loginDev == 1 ? 'ios' : '其它'}}</span>
+          <span v-if="scope.row.channelcode == null" :style="{'color': '#5FB878'}">会员|{{scope.row.version == null? '无':scope.row.version}}|{{scope.row.loginDev == 2 ?'andriod':scope.row.loginDev == 1 ? 'ios' : '其它'}}</span>
+          <span v-else :style="{color: (channelcode = statusOptions[parseInt(scope.row.channelcode)]).color}">{{ channelcode.dictLabel }}|{{scope.row.version == null? '无':scope.row.version}}|{{scope.row.loginDev == 2 ?'andriod':scope.row.loginDev == 1 ? 'ios' : '其它'}}</span>
         </template>
       </el-table-column>
       <el-table-column label="登录备注" align="center" prop="email" :show-overflow-tooltip="true" min-width="130px"/>

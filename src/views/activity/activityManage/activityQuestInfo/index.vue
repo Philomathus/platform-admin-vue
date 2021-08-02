@@ -367,7 +367,7 @@ export default {
           {required: true, message: "任务详情不能为空", trigger: "blur"}
         ],
         gameId: [
-          {required: true, message: "所属游戏id不能为空", trigger: "blur"}
+          {required: true, message: "所属游戏不能为空", trigger: "blur"}
         ],
         kindId: [
           {required: true, message: "平台游戏类型不能为空", trigger: "blur"}

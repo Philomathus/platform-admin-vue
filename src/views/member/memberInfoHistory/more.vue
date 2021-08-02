@@ -949,11 +949,8 @@ export default {
     },
     /** 计算打码倍数 */
     codeMoney(betMoney,score) {
-      let r1,r2;
-      if (betMoney!==""&&betMoney!=null){
-        r1=Number(betMoney.toString().replace(".",""));
-        r2=Number(score.toString().replace(".",""));
-        this.form.beatNum= (r1/r2).toFixed(2);
+      if (betMoney!=""&&betMoney!=null){
+        this.form.beatNum= (betMoney/score).toFixed(2);
       }
     }
   }

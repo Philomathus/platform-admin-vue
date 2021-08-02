@@ -131,7 +131,7 @@
       <el-table-column label="完成后增加的资金" align="center" prop="reward"/>
       <el-table-column label="描述" align="center" prop="content"/>
       <el-table-column label="任务详情" min-width="200" align="center" prop="detail"/>
-      <el-table-column label="平台游戏类型" min-width="200" align="center" prop="kindId"/>
+      <el-table-column label="平台游戏类型" align="center" prop="kindId"/>
 <!--      <el-table-column label="平台类型" min-width="200" align="center" prop="platformId"/>-->
       <el-table-column label="发布时间" align="center" prop="ctime" width="180">
         <template slot-scope="scope">

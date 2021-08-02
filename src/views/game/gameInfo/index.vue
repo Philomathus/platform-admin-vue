@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="全部平台" prop="platformId">
-        <el-select v-model="queryParams.platformId" placeholder="请选择">
+        <el-select  clearable filterable v-model="queryParams.platformId"  placeholder="请选择">
           <el-option
             v-for="dict in platformNameList"
             :key="dict.id"

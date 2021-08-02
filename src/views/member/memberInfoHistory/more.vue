@@ -153,7 +153,7 @@
               <el-option
                 v-for="dict in msgList "
                 :key="dict.dictValue"
-                :value="dict.dictValue"
+                :value="dict.dictLabel"
                 :label="dict.dictLabel"
               />
             </el-select>
@@ -348,12 +348,19 @@ import {
   resetSafe,
   unbindCard,
   changeBank,
-  resetWithdrawal, memberBcodeRepair, updateVip, sendMsg, updateMobile, fullMobile, imDelete, updateInviterCode
-} from '@/api/platform-web/member/memberInfo'
-import { userImMute } from '@/api/platform-web/live-web/ImMute'
+  resetWithdrawal,
+  memberBcodeRepair,
+  updateVip,
+  sendMsg,
+  updateMobile,
+  fullMobile,
+  imDelete,
+  updateInviterCode,
+  userImMute,
+  getMemberWithdrawReport
+} from '@/api/platform-web/member/memberInfoHistory'
 // import { hideKMobile } from '@/utils/mobile.js'
-import TableShow from '@/views/pay/memberWithdrawLog/tableShow.vue';
-import {getMemberWithdrawReport} from "@/api/platform-web/pay/memberWithdrawLog";
+import TableShow from '@/views/member/memberInfoHistory/tableShow.vue';
 import { positiveInteger, validMobile, validNumber } from '../../../utils/validate'
 import {checkTwoLogin} from "@/utils/permission";
 
@@ -416,6 +423,7 @@ export default {
         googleAuthCode: '',
         id: '',
         mk: '',
+        remarkPay: '',
         moneydes: '',
         ordermk: '',
         score: '',
@@ -470,7 +478,7 @@ export default {
           { required: true, message: '加分金额不能为空', trigger: 'blur' }
         ],
         moneydes: [
-          { required: true, message: '入款备注不能为空', trigger: 'blur' }
+          { required: true, message: '入款类型不能为空', trigger: 'blur' }
         ],
         mk: [
           { required: true, message: '备注信息不能为空', trigger: 'blur' },{max: 200,message: "备注信息长度不能超过200位" }
@@ -499,7 +507,6 @@ export default {
   created() {
     this.getDicts('member_msg').then(response => {
       this.msgList = response.data
-      console.info(this.msgList)
     })
   },
   methods: {
@@ -544,16 +551,11 @@ export default {
     },
     sendMsg() {
       sendMsg(this.msg, this.memberId).then((res) => {
-        if (res.code === 0) {
-          this.resetForm('form')
-          this.visible = false
-          this.$notify.success('发送短信成功')
-          this.$emit('refMemeberData')
-        }
+
       }).catch((err) => {
-        this.$notify.error(error)
+
       }).finally(() => {
-        this.loading = false
+
       })
     },
     gameEsc(row) {

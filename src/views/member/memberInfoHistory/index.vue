@@ -65,7 +65,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="bankAccount" style="width: 110px;">
+      <el-form-item prop="loginIp" style="width: 110px;">
         <el-input
           v-model="queryParams.bankAccount"
           placeholder="银行卡号"
@@ -74,7 +74,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="email" style="width: 110px;">
+      <el-form-item prop="loginIp" style="width: 110px;">
         <el-input
           v-model="queryParams.email"
           placeholder="登录备注"
@@ -129,9 +129,10 @@
       <el-table-column label="会员ID" align="center" prop="id" min-width="120px"/>
       <el-table-column label="账号" align="center" prop="userName" min-width="100px"/>
       <el-table-column label="昵称" :show-overflow-tooltip="true" align="center" prop="nickName" min-width="160"/>
-      <el-table-column label="会员vip" align="center" prop="vip" min-width="70px"/>
-      <el-table-column label="积分" :show-overflow-tooltip="true" align="center" prop="totalAccount" min-width="120px"/>
-      <el-table-column label="保险箱余额" :show-overflow-tooltip="true" align="center" prop="boxAccount" min-width="120px"/>
+<!--      <el-table-column label="会员vip" align="center" prop="vip" min-width="70px"/>-->
+<!--      <el-table-column label="积分" :show-overflow-tooltip="true" align="center" prop="totalAccount" min-width="120px"/>-->
+<!--      <el-table-column label="保险箱余额" :show-overflow-tooltip="true" align="center" prop="boxAccount" min-width="120px"/>-->
+      <el-table-column label="登录时间" align="center" prop="loginTime" min-width="110px"/>
       <el-table-column label="状态" align="center" min-width="110px">
         <template v-slot="{row}">
           <el-select v-model="row.status" placeholder="请选择状态" size="small"
@@ -358,12 +359,13 @@
     exportMemberInfo,
     changeSpeak,
     changeStatus,
-    changeStatusBan
-  } from '@/api/platform-web/member/memberInfo'
+    changeStatusBan,
+    listSpeakIpBlackList,
+    updateSpeakIpBlackList,
+    getConfigEnvironment
+  } from '@/api/platform-web/member/memberInfoHistory'
   import more from './more'
-  import {listSpeakIpBlackList, updateSpeakIpBlackList} from '@/api/live-web/chat/speakIpBlackList'
-  import {pickerDateShortcuts, pickerDateTimeShortcuts} from '@/utils/dateUtils'
-  import {getConfigEnvironment} from "@/api/platform-web/config/configEnvironment";
+  import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
   import ExcelPrompt from '@/layout/components/prompt/excelPrompt.vue';
 
   export default {

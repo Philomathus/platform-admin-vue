@@ -173,6 +173,7 @@
       </el-table-column>
       <el-table-column label="会员ID" :show-overflow-tooltip="true" align="center" prop="memberId" min-width="120"/>
       <el-table-column label="会员账号" align="center" prop="userName" min-width="90" show-overflow-tooltip/>
+<!--      <el-table-column label="入款姓名" min-width="120" align="center" prop="rechargeUserName"/>-->
       <el-table-column label="充值人姓名" :show-overflow-tooltip="true" align="center" prop="rechargeUserName"
                        min-width="90"/>
       <el-table-column label="充值金额" align="center" prop="rechargeMoney" min-width="90"/>
@@ -199,7 +200,7 @@
             type="primary"
             plain
             icon="el-icon-unlock"
-            v-show="scope.row.status == 0"
+            v-show="scope.row.status === 0"
             @click="handleFirstAudit(scope.row)"
             v-hasPermi="['pay:memberRechargeLog:firstAudit']"
           >初审
@@ -209,7 +210,7 @@
             type="success"
             plain
             icon="el-icon-check"
-            v-show="scope.row.status == 1"
+            v-show="scope.row.status === 1"
             @click="handleFinalAudit(scope.row)"
             v-hasPermi="['pay:memberRechargeLog:finalAudit']"
           >终审通过
@@ -219,7 +220,7 @@
             type="danger"
             plain
             icon="el-icon-close"
-            v-show="scope.row.status == 0 || scope.row.status == 1"
+            v-show="scope.row.status === 0 || scope.row.status === 1"
             @click="handleRefusedAudit(scope.row)"
             v-hasPermi="['pay:memberRechargeLog:refusedAudit']"
           >审核不通过
@@ -229,7 +230,7 @@
             type="info"
             plain
             icon="el-icon-refresh-right"
-            v-show="scope.row.status == 2 || scope.row.status == 4"
+            v-show="scope.row.status === 2 || scope.row.status === 4"
             @click="handleRecoverAudit(scope.row)"
             v-hasPermi="['pay:memberRechargeLog:recoverAudit']"
           >恢复
@@ -263,7 +264,14 @@
             :label="dict.dictLabel"
             :value="dict.dictValue"
           />
+          <el-input
+            v-model="form.refusedAuditReason"
+            placeholder="请输入手写备注"
+            clearable
+            size="small"
+          />
         </el-select>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitRefusedAudit">确 定</el-button>

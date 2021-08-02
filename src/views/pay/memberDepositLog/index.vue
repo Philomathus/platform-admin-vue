@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="日期范围" prop="opTime">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch">
+      <el-form-item prop="opTime">
         <el-date-picker type="datetimerange" v-model="dateRange" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}" start-placeholder="开始时间"
                         end-placeholder="开始时间"
@@ -13,9 +13,18 @@
           v-model="queryParams.searchValue"
           placeholder="会员ID/账号"
           clearable
-          size="small"
           @keyup.enter.native="handleQuery"
         />
+      </el-form-item>
+      <el-form-item prop="moneydes">
+        <el-select v-model="queryParams.moneydes" placeholder="请选择入款类型" clearable>
+          <el-option
+            v-for="item in moneydesOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
       </el-form-item>
 <!--      <el-form-item label="会员账号" prop="userName">-->
 <!--        <el-input-->
@@ -35,24 +44,30 @@
 <!--          @keyup.enter.native="handleQuery"-->
 <!--        />-->
 <!--      </el-form-item>-->
-<!--      <el-form-item label="支付备注" prop="remarkPay">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.remarkPay"-->
-<!--          placeholder="请输入支付备注"-->
-<!--          clearable-->
-<!--          size="small"-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
-<!--      <el-form-item label="订单备注" prop="orderRemark">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.orderRemark"-->
-<!--          placeholder="请输入订单备注"-->
-<!--          clearable-->
-<!--          size="small"-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
+      <el-form-item prop="remark">
+        <el-input
+          v-model="queryParams.remark"
+          placeholder="请输入加分备注"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item prop="remarkPay">
+        <el-input
+          v-model="queryParams.remarkPay"
+          placeholder="请输入支付备注"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item prop="orderRemark">
+        <el-input
+          v-model="queryParams.orderRemark"
+          placeholder="请输入订单备注"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
 <!--      <el-form-item label="打码倍数" prop="beatNum">-->
 <!--        <el-input-->
 <!--          v-model="queryParams.beatNum"-->
@@ -62,22 +77,11 @@
 <!--          @keyup.enter.native="handleQuery"-->
 <!--        />-->
 <!--      </el-form-item>-->
-      <el-form-item label="入款类型" prop="moneydes">
-        <el-select v-model="queryParams.moneydes" placeholder="入款类型" clearable size="small">
-          <el-option
-            v-for="item in moneydesOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-      </el-form-item>
       <el-form-item prop="opName">
         <el-input
           v-model="queryParams.opName"
           placeholder="请输入操作人"
           clearable
-          size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
@@ -149,7 +153,7 @@
       <el-table-column label="会员账号" align="center" prop="userName" />
       <el-table-column label="入款类型" align="center" prop="moneydes" :formatter="moneydesFormat"/>
       <el-table-column label="加分金额" align="center" prop="money" />
-      <el-table-column label="备注" align="center" prop="remark" />
+      <el-table-column label="加分备注" align="center" prop="remark" />
       <el-table-column label="支付备注" align="center" prop="remarkPay" />
       <el-table-column label="订单备注" align="center" prop="orderRemark" />
       <el-table-column label="打码倍数" align="center" prop="beatNum" />

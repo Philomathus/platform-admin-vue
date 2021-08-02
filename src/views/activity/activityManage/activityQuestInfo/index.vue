@@ -344,7 +344,38 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {}
+      rules: {
+        icon: [
+          {required: true, message: "图标不能不上传", trigger: "blur"}
+        ],
+        title: [
+          {required: true, message: "标题不能为空", trigger: "blur"}
+        ],
+        indexs: [
+          {required: true, message: "排序号不能为空", trigger: "blur"}
+        ],
+        typeId: [
+          {required: true, message: "任务类型id不能为空", trigger: "blur"}
+        ],
+        target: [
+          {required: true, message: "目标任务量不能为空", trigger: "blur"}
+        ],
+        reward: [
+          {required: true, message: "完成后增加的资金不能为空", trigger: "blur"}
+        ],
+        detail: [
+          {required: true, message: "任务详情不能为空", trigger: "blur"}
+        ],
+        gameId: [
+          {required: true, message: "所属游戏id不能为空", trigger: "blur"}
+        ],
+        kindId: [
+          {required: true, message: "平台游戏类型不能为空", trigger: "blur"}
+        ],
+        platformId: [
+          {required: true, message: "平台类型不能为空", trigger: "blur"}
+        ],
+      }
     }
   },
   created() {

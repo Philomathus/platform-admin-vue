@@ -355,7 +355,7 @@ export default {
           {required: true, message: "排序号不能为空", trigger: "blur"}
         ],
         typeId: [
-          {required: true, message: "任务类型id不能为空", trigger: "blur"}
+          {required: true, message: "任务类型不能为空", trigger: "blur"}
         ],
         target: [
           {required: true, message: "目标任务量不能为空", trigger: "blur"}

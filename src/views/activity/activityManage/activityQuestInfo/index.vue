@@ -1,15 +1,6 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="100px">
-      <el-form-item label="标题" prop="title">
-        <el-input
-          v-model="queryParams.title"
-          placeholder="请输入标题"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item label="发布时间" prop="ctime">
         <el-date-picker
           v-model="dateRange"
@@ -23,6 +14,49 @@
           :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
+      <el-form-item label="标题" prop="title">
+        <el-input
+          v-model="queryParams.title"
+          placeholder="请输入标题"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+<!--      <el-form-item label="平台游戏类型" prop="kindId">-->
+<!--        <el-select-->
+<!--          filterable-->
+<!--          v-model="form.kindId"-->
+<!--          placeholder="请选择平台游戏类型"-->
+<!--          clearable-->
+<!--          size="small"-->
+<!--          style="width: 240px"-->
+<!--        >-->
+<!--          <el-option-->
+<!--            v-for="dict in kindIdOptions"-->
+<!--            :key="dict.id"-->
+<!--            :label="dict.kindId"-->
+<!--            :value="dict.kindId"-->
+<!--          />-->
+<!--        </el-select>-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="平台类型" prop="platformId">-->
+<!--        <el-select-->
+<!--          filterable-->
+<!--          v-model="form.platformId"-->
+<!--          placeholder="请选择平台类型"-->
+<!--          clearable-->
+<!--          size="small"-->
+<!--          style="width: 240px"-->
+<!--        >-->
+<!--          <el-option-->
+<!--            v-for="dict in platformIdOptions"-->
+<!--            :key="dict.id"-->
+<!--            :label="dict.name"-->
+<!--            :value="dict.id"-->
+<!--          />-->
+<!--        </el-select>-->
+<!--      </el-form-item>-->
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -97,6 +131,8 @@
       <el-table-column label="完成后增加的资金" align="center" prop="reward"/>
       <el-table-column label="描述" align="center" prop="content"/>
       <el-table-column label="任务详情" min-width="200" align="center" prop="detail"/>
+      <el-table-column label="平台游戏类型" align="center" prop="kindId"/>
+<!--      <el-table-column label="平台类型" min-width="200" align="center" prop="platformId"/>-->
       <el-table-column label="发布时间" align="center" prop="ctime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.ctime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
@@ -176,6 +212,40 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item label="平台游戏类型" prop="kindId">
+          <el-select
+            filterable
+            v-model="form.kindId"
+            placeholder="请选择平台游戏类型"
+            clearable
+            size="small"
+            style="width: 240px"
+          >
+            <el-option
+              v-for="dict in kindIdOptions"
+              :key="dict.id"
+              :label="dict.kindId"
+              :value="dict.kindId"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="平台类型" prop="platformId">
+          <el-select
+            filterable
+            v-model="form.platformId"
+            placeholder="请选择平台类型"
+            clearable
+            size="small"
+            style="width: 240px"
+          >
+            <el-option
+              v-for="dict in platformIdOptions"
+              :key="dict.id"
+              :label="dict.name"
+              :value="dict.id"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item label="目标任务量" prop="target">
           <el-input v-model="form.target" type="number" class="no-number" placeholder="请输入目标任务量"/>
         </el-form-item>
@@ -209,7 +279,9 @@ import {
   updateActivityQuestInfo,
   exportActivityQuestInfo,
   activityQuestTypes,
-  gameInfoName
+  gameInfoName,
+  kindIdSelect,
+  platformIdSelect
 } from '@/api/activity/activityQuestInfo'
 import ImageUpload from '@/components/ImageUpload'
 import {pickerDateShortcuts} from "@/utils/dateUtils";
@@ -230,8 +302,12 @@ export default {
       dateRange: [],
       //任务类型
       activityQuestTypeOptions: [],
-      //任务类型
+      //所属游戏
       gameInfoOptions: [],
+      //平台游戏类型
+      kindIdOptions: [],
+      //平台类型
+      platformIdOptions: [],
       // 非单个禁用
       single: true,
       // 非多个禁用
@@ -268,7 +344,38 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {}
+      rules: {
+        icon: [
+          {required: true, message: "图标不能不上传", trigger: "blur"}
+        ],
+        title: [
+          {required: true, message: "标题不能为空", trigger: "blur"}
+        ],
+        indexs: [
+          {required: true, message: "排序号不能为空", trigger: "blur"}
+        ],
+        typeId: [
+          {required: true, message: "任务类型不能为空", trigger: "blur"}
+        ],
+        target: [
+          {required: true, message: "目标任务量不能为空", trigger: "blur"}
+        ],
+        reward: [
+          {required: true, message: "完成后增加的资金不能为空", trigger: "blur"}
+        ],
+        detail: [
+          {required: true, message: "任务详情不能为空", trigger: "blur"}
+        ],
+        gameId: [
+          {required: true, message: "所属游戏不能为空", trigger: "blur"}
+        ],
+        kindId: [
+          {required: true, message: "平台游戏类型不能为空", trigger: "blur"}
+        ],
+        platformId: [
+          {required: true, message: "平台类型不能为空", trigger: "blur"}
+        ],
+      }
     }
   },
   created() {
@@ -277,9 +384,18 @@ export default {
     activityQuestTypes().then(response => {
       this.activityQuestTypeOptions = response.data
     })
-    //任务类型
+    //所属游戏
     gameInfoName().then(response => {
       this.gameInfoOptions = response.data
+    })
+    //平台游戏类型
+    kindIdSelect().then(response => {
+      console.info(response.data)
+      this.kindIdOptions = response.data
+    })
+    //平台类型
+    platformIdSelect().then(response => {
+      this.platformIdOptions = response.data
     })
   },
   methods: {

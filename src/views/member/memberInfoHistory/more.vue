@@ -96,8 +96,8 @@
           <el-form-item label="支付备注" prop="remarkPay">
             <el-input v-model="form.remarkPay" placeholder="请输入支付备注"/>
           </el-form-item>
-          <el-form-item label="备注信息" prop="mk">
-            <el-input v-model="form.mk" placeholder="请备注具体入金原因"/>
+          <el-form-item label="加分备注" prop="mk">
+            <el-input v-model="form.mk" placeholder="请备注具体加分入金原因"/>
           </el-form-item>
           <el-form-item label="订单备注" prop="ordermk">
             <el-input v-model="form.ordermk" placeholder="补单请填写补单订单号，末开奖补回请填写开期号，无则填写为0"/>

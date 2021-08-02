@@ -72,3 +72,19 @@ export function gameInfoName() {
   })
 }
 
+//平台游戏类型
+export function kindIdSelect() {
+  return request({
+    url: url.platformWeb + '/admin/activityQuestInfo/kindIdSelect',
+    method: 'get'
+  })
+}
+
+//平台游戏类型
+export function platformIdSelect() {
+  return request({
+    url: url.platformWeb + '/admin/activityQuestInfo/platformIdSelect',
+    method: 'get'
+  })
+}
+

@@ -50,45 +50,18 @@
           :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
-      <!--      <el-form-item label="自开实际杀率" prop="killRate">-->
-      <!--        <el-input-->
-      <!--          v-model="queryParams.killRate"-->
-      <!--          placeholder="请输入自开实际杀率"-->
-      <!--          clearable-->
-      <!--          size="small"-->
-      <!--          @keyup.enter.native="handleQuery"-->
-      <!--        />-->
-      <!--      </el-form-item>-->
-      <!--      <el-form-item label="总投注" prop="totalBet">-->
-      <!--        <el-input-->
-      <!--          v-model="queryParams.totalBet"-->
-      <!--          placeholder="请输入总投注"-->
-      <!--          clearable-->
-      <!--          size="small"-->
-      <!--          @keyup.enter.native="handleQuery"-->
-      <!--        />-->
-      <!--      </el-form-item>-->
-      <!--      <el-form-item label="预计派奖总额" prop="totalPrize">-->
-      <!--        <el-input-->
-      <!--          v-model="queryParams.totalPrize"-->
-      <!--          placeholder="请输入预计派奖总额"-->
-      <!--          clearable-->
-      <!--          size="small"-->
-      <!--          @keyup.enter.native="handleQuery"-->
-      <!--        />-->
-      <!--      </el-form-item>-->
-      <!--      <el-form-item label="开奖分析" prop="analyse">-->
-      <!--        <el-input-->
-      <!--          v-model="queryParams.analyse"-->
-      <!--          placeholder="请输入开奖分析"-->
-      <!--          clearable-->
-      <!--          size="small"-->
-      <!--          @keyup.enter.native="handleQuery"-->
-      <!--        />-->
-      <!--      </el-form-item>-->
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="mini"
+          @click="addIssue"
+          v-hasPermi="['admin:lotteryHistory:add']"
+        >补期
+        </el-button>
       </el-form-item>
     </el-form>
 
@@ -132,14 +105,44 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
-
+    <!-- 添加补奖配置对话框 -->
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="opene" width="450px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+        <el-form-item label="开始期数" prop="gameStartTime" class="is-required" style="width: 350px">
+          <el-input v-model="form.startIssue" placeholder="请输入开始期数" prop="startIssue" />
+        </el-form-item>
+        <el-form-item label="结束期数" prop="gameEndTime" class="is-required" style="width: 350px">
+          <el-input v-model="form.endIssue" placeholder="请输入结束期数" prop="endIssue"/>
+        </el-form-item>
+        <el-form-item label="彩票名称" prop="name" class="is-required">
+          <el-select
+            filterable
+            v-model="form.name"
+            placeholder="请选择彩种"
+            clearable
+            size="small"
+            style="width: 250px"
+          >
+            <el-option
+              v-for="dict in lotteryInfoNameOptions"
+              :key="dict.name"
+              :label="dict.name"
+              :value="dict.name"
+            />
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import {listLotteryHistory, lotteryInfoName, changeStatus} from "@/api/platform-web/lottery/lotteryHistory";
+import {listLotteryHistory, lotteryInfoName, changeStatus,addLotteryHistoryIssue} from "@/api/platform-web/lottery/lotteryHistory";
 import {pickerDateShortcuts} from "@/utils/dateUtils";
-
 
 export default {
   name: "LotteryHistory",
@@ -170,6 +173,8 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      // 是否显示补开局弹出层
+      opene: false,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -185,15 +190,30 @@ export default {
         totalPrize: null,
         analyse: null,
         orderByColumn: 'ktime',
-        isAsc: 'desc'
+        isAsc: 'desc',
+        startIssue: null,
+        endIssue: null
       },
       // 表单参数
-      form: {},
+      form: {
+        name: null,
+        startIssue: null,
+        endIssue: null
+      },
       // 表单校验
       rules: {
         ktime: [
           {required: true, message: "开奖时间不能为空", trigger: "blur"}
         ],
+        name: [
+          { required: true, message: "彩种不能为空",trigger: "blur" }
+        ],
+        startIssue: [
+          { required: true, message: "开始期数不能为空",trigger: "blur" }
+        ],
+        endIssue: [
+          { required: true, message: "结束期数不能为空",trigger: "blur" }
+        ]
       }
     };
   },
@@ -235,14 +255,15 @@ export default {
     cancel() {
       this.open = false;
       this.reset();
+      this.opene = false;
     },
     /** 重新派奖按钮操作 */
     handleAward(row) {
       const id = row.id
       changeStatus(id).then(response => {
-        if(response.code == 0){
+        if (response.code == 0) {
           this.$message.error(response.msg)
-        }else{
+        } else {
           this.msgSuccess("重新派奖成功")
           this.getList()
         }
@@ -275,6 +296,24 @@ export default {
       this.dateRange = []
       this.resetForm("queryForm");
       this.handleQuery();
+    },
+    /** 补开奖期数 */
+    addIssue() {
+      this.reset();
+      this.opene = true;
+      this.title = "补开奖";
+    },
+    /** 提交按钮 */
+    submitForm() {
+      this.$refs["form"].validate(valid => {
+        if (valid) {
+          addLotteryHistoryIssue(this.form).then(response => {
+            this.msgSuccess("新增成功");
+            this.opene = false;
+            this.getList();
+          });
+        }
+      });
     }
   }
 };

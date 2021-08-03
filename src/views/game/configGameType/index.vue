@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="88px">
       <el-form-item label="平台id" prop="platformId">
         <el-input
           v-model="queryParams.platformId"
@@ -11,7 +11,7 @@
         />
       </el-form-item>
       <el-form-item label="平台名称" prop="platformName">
-        <el-select v-model="queryParams.platformName" placeholder="请选择" size="small">
+        <el-select v-model="queryParams.platformName" placeholder="请选择平台名称" size="small" clearable>
           <el-option
             v-for="dict in platformNameList"
             :key="dict.id"
@@ -20,9 +20,27 @@
           ></el-option>
         </el-select>
       </el-form-item>
+      <el-form-item label="子平台id" prop="sonPlatformId">
+        <el-input
+          v-model="queryParams.sonPlatformId"
+          placeholder="请输入子平台id"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="子平台名称" prop="sonPlatformName">
+        <el-input
+          v-model="queryParams.sonPlatformName"
+          placeholder="请输入子平台名称"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+<!--        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>-->
       </el-form-item>
     </el-form>
 
@@ -82,7 +100,7 @@
 
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="600px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="88px">
         <el-form-item label="平台名称" prop="platformName">
           <el-select v-model="form.platformName" placeholder="请选择">
             <el-option

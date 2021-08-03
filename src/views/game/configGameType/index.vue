@@ -11,13 +11,14 @@
         />
       </el-form-item>
       <el-form-item label="平台名称" prop="platformName">
-        <el-input
-          v-model="queryParams.platformName"
-          placeholder="请输入平台名称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-select v-model="queryParams.platformName" placeholder="请选择" size="small">
+          <el-option
+            v-for="dict in platformNameList"
+            :key="dict.id"
+            :label="dict.name"
+            :value="dict.name"
+          ></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -42,6 +43,7 @@
 
     <el-table :stripe="true" v-loading="loading" :data="configGametypeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
+      <el-table-column label="平台id-子平台id" align="center" prop="id" />
       <el-table-column label="平台id" align="center" prop="platformId" />
       <el-table-column label="平台名称" align="center" prop="platformName" />
       <el-table-column label="子平台id" align="center" prop="sonPlatformId" />

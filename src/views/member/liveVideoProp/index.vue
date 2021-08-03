@@ -119,7 +119,7 @@
       <el-table :stripe="true" v-loading="loading" :data="testAccountPorpData">
         <el-table-column type="selection" align="center"/>
         <el-table-column label="会员ID" align="center" prop="pUserId"/>
-        <el-table-column label="会员昵称" show-overflow-tooltip align="center" prop="puserName"/>
+        <el-table-column label="会员昵称" show-overflow-tooltip align="center" prop="pUserName"/>
         <el-table-column label="送礼金额" show-overflow-tooltip align="center" prop="totalDiamonds"/>
         <el-table-column label="主播ID" align="center" prop="toUserId"/>
       </el-table>

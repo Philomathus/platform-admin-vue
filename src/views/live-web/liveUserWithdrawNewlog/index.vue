@@ -285,6 +285,16 @@
             v-has-permi="['live-web:liveUserWithdrawNewlog:withdrawRefused']"
           >出款拒绝
           </el-button>
+          <el-button
+            size="small"
+            type="success"
+            plain
+            icon="el-icon-check"
+            v-show="scope.row.wstatus == 1 "
+            @click="updateWithdrawMoney(scope.row)"
+            v-has-permi="['live-web:liveUserWithdrawNewlog:modifyMoney']"
+          >修改提现金额
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -358,11 +368,33 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+    <!-- 修改提现金额 -->
+    <el-dialog
+      v-dialogDrag
+      :close-on-click-modal="false"
+      title="修改提现金额"
+      :visible.sync="peopledeposit"
+      width="500px"
+      append-to-body
+    >
+      <el-form ref="formdeposit" :model="formdeposit" :rules="formdepositRules" label-width="120px">
+
+        <el-form-item label="提现金额" prop="withdrawMoney">
+          <el-input type="number" placeholder="请输入提现金额" v-model="formdeposit.withdrawMoney" class="no-number"/>
+        </el-form-item>
+        <el-form-item label="谷歌验证码" prop="googleAuthCode">
+          <el-input v-model="formdeposit.googleAuthCode" type="number" placeholder="请输入google验证码"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitDeposit">立即提交</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { listLiveUserWithdrawNewlog,fixOrder,updateOrder,withdrawSucc,withdrawRefused,getCountTotal,unlockMemberWithdrawLog,refusedMemberWithdrawLog,artificialMemberWithdrawLog,finalAuditMemberRechargeLog,recoverAuditMemberRechargeLog, getLiveUserWithdrawNewlog, delLiveUserWithdrawNewlog, addLiveUserWithdrawNewlog, updateLiveUserWithdrawNewlog, exportLiveUserWithdrawNewlog } from "@/api/platform-web/live-web/liveUserWithdrawNewlog";
+import { listLiveUserWithdrawNewlog,fixOrder,updateOrder,modifyMoney,withdrawSucc,withdrawRefused,getCountTotal,unlockMemberWithdrawLog,refusedMemberWithdrawLog,artificialMemberWithdrawLog,finalAuditMemberRechargeLog,recoverAuditMemberRechargeLog, getLiveUserWithdrawNewlog, delLiveUserWithdrawNewlog, addLiveUserWithdrawNewlog, updateLiveUserWithdrawNewlog, exportLiveUserWithdrawNewlog } from "@/api/platform-web/live-web/liveUserWithdrawNewlog";
 import {getYesterDate, pickerDateTimeShortcuts} from "@/utils/dateUtils";
 
 
@@ -400,6 +432,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
+      //弹出层
+      peopledeposit: false,
       // 主播提现管理表格数据
       liveUserWithdrawNewlogList: [],
       // 弹出层标题
@@ -426,6 +460,7 @@ export default {
         livetime: null,
         liveticket: null,
         livepaijiang: null,
+        //googleAuthCode: null,
         //银行卡黑名单
         SearchCardBlack: null,
         cardBlack: null,
@@ -434,6 +469,20 @@ export default {
       },
       // 表单参数
       form: {},
+      //存入框参数
+      formdeposit: {
+        id: null,
+        withdrawMoney: null,
+        googleAuthCode: null
+      },
+      formdepositRules:{
+        withdrawMoney: [
+          { required: true, message: "提现金额不能为空", trigger: "blur" }
+        ],
+        googleAuthCode: [
+          {required: true, message: 'google验证码不能为空', trigger: 'blur'}
+        ]
+      },
       // 表单校验
       rules: {
         userId: [
@@ -447,6 +496,9 @@ export default {
         ],
         withdrawMoney: [
           { required: true, message: "提现金额不能为空", trigger: "blur" }
+        ],
+        googleAuthCode: [
+          {required: true, message: 'google验证码不能为空', trigger: 'blur'}
         ],
         bankUserName: [
           { required: true, message: "提现收款人真实姓名不能为空", trigger: "blur" }
@@ -678,6 +730,20 @@ export default {
       });
     },
 
+    /** 提交按钮 */
+    submitDeposit() {
+      this.$refs["formdeposit"].validate(valid => {
+        if (valid) {
+          modifyMoney(this.formdeposit).then(response => {
+              this.msgSuccess("修改提现金额成功");
+              this.peopledeposit = false;
+              this.getList();
+            });
+        }
+      });
+    },
+
+
     handleArtificialWithdraw2(row) {
 
       artificialMemberWithdrawLog({
@@ -757,6 +823,17 @@ export default {
         })
       }).catch(() => {
       })
+    },
+
+    //更新提现金额
+    updateWithdrawMoney(row) {
+      //重置
+      const id = row.id
+      getLiveUserWithdrawNewlog(id).then(response => {
+        this.formdeposit = response.data;
+        this.peopledeposit = true;
+      });
+
     },
 
     //出款

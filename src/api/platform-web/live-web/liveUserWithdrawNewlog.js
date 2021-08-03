@@ -103,6 +103,15 @@ export function artificialMemberWithdrawLog(data) {
   })
 }
 
+// 主播提现出款
+export function modifyMoney(data) {
+  return request({
+    url: url.platformWeb + '/live-web/liveUserWithdrawNewlog/modifyMoney',
+    method: 'put',
+    data: data
+  })
+}
+
 // 重新生成订单
 export function updateOrder(data) {
   return request({

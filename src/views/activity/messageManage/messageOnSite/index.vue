@@ -76,6 +76,17 @@
         >导出
         </el-button>
       </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="mini"
+          @click="handleAddUserMessage"
+          v-hasPermi="['admin:messageOnSite:add']"
+        >发送会员消息
+        </el-button>
+      </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -142,6 +153,24 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="openUserMessage" width="500px"
+               append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="会员id" prop="toUserId">
+          <el-input v-model="form.toUserId" placeholder="会员id"/>
+        </el-form-item>
+        <el-form-item label="信息标题" prop="title">
+          <el-input v-model="form.title" placeholder="请输入信息标题"/>
+        </el-form-item>
+        <el-form-item label="内容">
+          <el-input v-model="form.content" type="textarea" placeholder="请输入内容" rows="5"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitFormUserMessage">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -152,7 +181,8 @@ import {
   delMessageOnSite,
   addMessageOnSite,
   updateMessageOnSite,
-  exportMessageOnSite
+  exportMessageOnSite,
+  addUserMessage
 } from '@/api/activity/messageOnSite'
 import {pickerDateShortcuts} from "@/utils/dateUtils";
 
@@ -182,6 +212,7 @@ export default {
       title: '',
       // 是否显示弹出层
       open: false,
+      openUserMessage:false,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -201,6 +232,9 @@ export default {
       rules: {
         title: [
           {required: true, message: '信息标题不能为空', trigger: 'blur'}
+        ],
+        toUserId: [
+          {required: true, message: '会员id不能为空', trigger: 'blur'}
         ],
         content: [
           {required: true, message: '内容不能为空', trigger: 'blur'}
@@ -271,6 +305,12 @@ export default {
       this.open = true
       this.title = '添加站内信息'
     },
+    handleAddUserMessage() {
+      this.reset()
+      this.openUserMessage = true
+      this.title = '单个会员发送消息'
+    },
+
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset()
@@ -298,6 +338,17 @@ export default {
               this.getList()
             })
           }
+        }
+      })
+    },
+    submitFormUserMessage() {
+      this.$refs['form'].validate(valid => {
+        if (valid) {
+          addUserMessage(this.form).then(response => {
+              this.msgSuccess('发送成功')
+              this.openUserMessage = false
+              this.getList()
+            })
         }
       })
     },

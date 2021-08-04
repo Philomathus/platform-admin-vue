@@ -157,7 +157,7 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="openUserMessage" width="500px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="会员id" prop="title">
+        <el-form-item label="会员id" prop="toUserId">
           <el-input v-model="form.toUserId" placeholder="会员id"/>
         </el-form-item>
         <el-form-item label="信息标题" prop="title">
@@ -232,6 +232,9 @@ export default {
       rules: {
         title: [
           {required: true, message: '信息标题不能为空', trigger: 'blur'}
+        ],
+        toUserId: [
+          {required: true, message: '会员id不能为空', trigger: 'blur'}
         ],
         content: [
           {required: true, message: '内容不能为空', trigger: 'blur'}

@@ -270,7 +270,7 @@
             size="small"
             type="info"
             plain
-            v-show="scope.row.status == 4"
+            v-show="scope.row.status === 4"
             icon="el-icon-refresh-right"
             @click="handleBack(scope.row)"
             v-has-permi="['pay:memberWithdrawLog:back']"
@@ -278,9 +278,19 @@
           </el-button>
           <el-button
             size="small"
+            type="info"
+            plain
+            v-show="scope.row.status === 5"
+            icon="el-icon-refresh-right"
+            @click="handleFailBack(scope.row)"
+            v-has-permi="['pay:memberWithdrawLog:back']"
+          >回退
+          </el-button>
+          <el-button
+            size="small"
             type="primary"
             plain
-            v-show="scope.row.status == 4"
+            v-show="scope.row.status === 4 || scope.row.status === 5"
             icon="el-icon-search"
             @click="handleQueryStatus(scope.row)"
             v-has-permi="['pay:memberWithdrawLog:queryStatus']"
@@ -289,7 +299,7 @@
           <el-button
             size="small"
             type="primary"
-            v-show="scope.row.status == 0"
+            v-show="scope.row.status === 0"
             icon="el-icon-lock"
             @click="handleLock(scope.row)"
             v-has-permi="['pay:memberWithdrawLog:lock']"
@@ -299,7 +309,7 @@
             size="small"
             type="primary"
             plain
-            v-show="scope.row.status == 1 || scope.row.status == 5"
+            v-show="scope.row.status === 1"
             icon="el-icon-unlock"
             @click="handleUnlock(scope.row)"
             v-has-permi="['pay:memberWithdrawLog:unlock']"
@@ -497,6 +507,7 @@ import {
   refusedMemberWithdrawLog,
   refusedsMemberWithdrawLog,
   backWithdrawLog,
+  failBackWithdrawLog,
   lockMemberWithdrawLog,
   locksMemberWithdrawLog,
   unlockMemberWithdrawLog,
@@ -830,12 +841,25 @@ export default {
     },
     handleBack(row) {
       const id = row.id;
-      this.$confirm('请核对代付信息,确认回退？', '警告', {
+      this.$confirm('请核对订单是否成功提交,如提交成功不必回退.确认回退？', '警告', {
         confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function () {
         return backWithdrawLog(id);
+      }).then(response => {
+        this.getList()
+        this.msgSuccess("回退成功")
+      })
+    },
+    handleFailBack(row) {
+      const id = row.id;
+      this.$confirm('请核对订单是否确认已失败,确认回退？', '警告', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        return failBackWithdrawLog(id);
       }).then(response => {
         this.getList()
         this.msgSuccess("回退成功")

@@ -117,6 +117,18 @@ export function backWithdrawLog(id) {
   })
 }
 
+// 会员提现代付中回退
+export function failBackWithdrawLog(id) {
+  const data = {
+    id: id
+  }
+  return request({
+    url: url.platformWeb + '/pay/memberWithdrawLog/failBack',
+    method: 'put',
+    data: data
+  })
+}
+
 // 会员提现锁定
 export function lockMemberWithdrawLog(data) {
   return request({

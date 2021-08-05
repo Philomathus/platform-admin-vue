@@ -219,7 +219,7 @@
       <el-table-column label="入款姓名" min-width="120" align="center" prop="rechargeUserName"/>
       <el-table-column label="今日入款成功数" min-width="130" align="center" prop="bankCharge">
       <template v-slot="{row}">
-        <span style="color: #f10a0a" v-if="row.bankCharge > 4 && row.rechargeCodeRatio > 1.4">{{ row.bankCharge }}</span>
+        <span style="color: #f10a0a" v-if="row.bankCharge > 4">{{ row.bankCharge }}</span>
         <span v-else>{{ row.bankCharge }}</span>
       </template>
       </el-table-column>
@@ -231,7 +231,7 @@
       </el-table-column>
       <el-table-column label="投注打码比" min-width="100" align="center" prop="rechargeCodeRatio">
       <template v-slot="{row}">
-        <span style="color: #f10a0a" v-if="row.bankCharge > 4 && row.rechargeCodeRatio > 1.4">{{ row.rechargeCodeRatio }}</span>
+        <span style="color: #f10a0a" v-if="row.rechargeCodeRatio > 1.4">{{ row.rechargeCodeRatio }}</span>
         <span v-else>{{ row.rechargeCodeRatio }}</span>
       </template>
       </el-table-column>

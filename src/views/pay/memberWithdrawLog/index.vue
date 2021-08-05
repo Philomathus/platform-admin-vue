@@ -309,7 +309,7 @@
             size="small"
             type="primary"
             plain
-            v-show="scope.row.status === 1 || scope.row.status === 5"
+            v-show="scope.row.status === 1"
             icon="el-icon-unlock"
             @click="handleUnlock(scope.row)"
             v-has-permi="['pay:memberWithdrawLog:unlock']"

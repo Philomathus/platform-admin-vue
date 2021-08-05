@@ -194,10 +194,14 @@ export default {
     },
     //增加会员任务积分
     addMemberScore(id,curnums,score,target) {
-      this.loading = true;
       let curnum = curnums+Number(score);
+      if (curnum > target) {
+        this.$notify.info('补分不能超出任务目标数量');
+        return;
+      }
       let status = 0;
-      if(curnum>=target){
+      this.loading = true;
+      if(curnum===target){
         status = 1;
       }
       addMemberScore(id,status,curnum).then(res => {

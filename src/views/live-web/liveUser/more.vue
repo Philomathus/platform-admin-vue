@@ -178,7 +178,7 @@
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column prop="propId" label="礼物ID" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="propName" label="礼物名称" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="pUserId" label="会员平台ID" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="perUserId" label="会员平台ID" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="totalDiamonds" label="钻石" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="createDate" label="创建时间" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="num" label="发送数量" :show-overflow-tooltip="true"></el-table-column>

@@ -10,6 +10,15 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="任务标题" prop="title">
+        <el-input
+          v-model="queryParams.title"
+          placeholder="请输入任务标题"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -76,8 +85,8 @@
 
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width ">
         <template slot-scope="scope">
-          <el-input  v-model="scope.row.score" placeholder="请输入需要增加的积分" style="width:180px" v-if="scope.row.status === 0" class="input-with-select" />
-          <el-button type="primary" icon="el-icon-plus" v-if="scope.row.status === 0" @click="addMemberScore(scope.row.id,scope.row.curnum,scope.row.score)">增加</el-button>
+          <el-input  v-model="scope.row.score" placeholder="请输入需要增加的积分" style="width:180px" v-if="scope.row.status === 0" class="no-number" type="number" />
+          <el-button type="primary" icon="el-icon-plus" v-if="scope.row.status === 0" @click="addMemberScore(scope.row.id,scope.row.curnum,scope.row.score,scope.row.target)">补分</el-button>
         </template>
       </el-table-column>
 
@@ -161,9 +170,7 @@ export default {
         pageNum: 1,
         pageSize: 10,
         memberId: null,
-        questId: null,
-        status: null,
-        curnum: null
+        title: null
       },
       // 表单参数
       form: {},
@@ -185,12 +192,15 @@ export default {
         this.loading = false;
       });
     },
-    //增加会员积分
-    addMemberScore(id,curnums,score) {
-      debugger
+    //增加会员任务积分
+    addMemberScore(id,curnums,score,target) {
       this.loading = true;
       let curnum = curnums+Number(score);
-      addMemberScore(id,curnum).then(res => {
+      let status = 0;
+      if(curnum>=target){
+        status = 1;
+      }
+      addMemberScore(id,status,curnum).then(res => {
         if (res.code === 0) {
           this.msgError((res.msg))
         } else {

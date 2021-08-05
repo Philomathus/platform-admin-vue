@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import {url} from '@/utils/url'
 
-// 查询【请填写功能名称】列表
+// 查询会员任务列表
 export function listMemberQuest(query) {
   return request({
     url: url.platformWeb + '/member/memberQuest/list',
@@ -11,9 +11,10 @@ export function listMemberQuest(query) {
 }
 
 // 增加会员积分
-export function addMemberScore(id,curnum) {
+export function addMemberScore(id,status,curnum) {
   const data = {
     id,
+    status,
     curnum
   }
   return request({
@@ -23,7 +24,7 @@ export function addMemberScore(id,curnum) {
   })
 }
 
-// 查询【请填写功能名称】详细
+// 查询会员任务详详情
 export function getMemberQuest(id) {
   return request({
     url: url.platformWeb + '/member/memberQuest/' + id,
@@ -31,7 +32,7 @@ export function getMemberQuest(id) {
   })
 }
 
-// 新增【请填写功能名称】
+// 新增会员任务
 export function addMemberQuest(data) {
   return request({
     url: url.platformWeb + '/member/memberQuest',
@@ -40,7 +41,7 @@ export function addMemberQuest(data) {
   })
 }
 
-// 修改【请填写功能名称】
+// 修改会员任务
 export function updateMemberQuest(data) {
   return request({
     url: url.platformWeb + '/member/memberQuest',
@@ -49,7 +50,7 @@ export function updateMemberQuest(data) {
   })
 }
 
-// 删除【请填写功能名称】
+// 删除会员任务
 export function delMemberQuest(id) {
   return request({
     url: url.platformWeb + '/member/memberQuest/' + id,
@@ -57,7 +58,7 @@ export function delMemberQuest(id) {
   })
 }
 
-// 导出【请填写功能名称】
+// 导出会员任务列表
 export function exportMemberQuest(query) {
   return request({
     url: url.platformWeb + '/member/memberQuest/export',

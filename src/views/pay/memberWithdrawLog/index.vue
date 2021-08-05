@@ -231,7 +231,7 @@
       </el-table-column>
       <el-table-column label="投注打码比" min-width="100" align="center" prop="rechargeCodeRatio">
       <template v-slot="{row}">
-        <span style="color: #f10a0a" v-if="row.rechargeCodeRatio > 1.4">{{ row.rechargeCodeRatio }}</span>
+        <span style="color: #f10a0a" v-if="row.rechargeCodeRatio === 1.5 || row.rechargeCodeRatio > 1.5">{{ row.rechargeCodeRatio }}</span>
         <span v-else>{{ row.rechargeCodeRatio }}</span>
       </template>
       </el-table-column>

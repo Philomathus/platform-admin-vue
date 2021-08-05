@@ -25,52 +25,6 @@
       </el-form-item>
     </el-form>
 
-    <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['member:memberQuest:add']"
-        >新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['member:memberQuest:edit']"
-        >修改</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['member:memberQuest:remove']"
-        >删除</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['member:memberQuest:export']"
-        >导出</el-button>
-      </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-    </el-row>
-
     <el-table stripe v-loading="loading" :data="memberQuestList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="会员id" align="center" prop="memberId" />
@@ -194,15 +148,20 @@ export default {
     },
     //增加会员任务积分
     addMemberScore(id,curnums,score,target) {
-      let curnum = curnums+Number(score);
-      if (curnum > target) {
-        this.$notify.warning('补分不能超出目标任务数量');
+      if(!(/(^[1-9]\d*$)/.test(score))){
+        this.$notify.warning('请输入正整数')
         return;
       }
-      let status = 0;
+      if(score>100000){
+        this.$notify.warning('最多补分10w')
+        return;
+      }
       this.loading = true;
-      if(curnum===target){
-        status = 1;
+      let status = 0;
+      let curnum = curnums+Number(score);
+      if (curnum >= target) {
+          curnum = target;
+          status = 1;
       }
       addMemberScore(id,status,curnum).then(res => {
         if (res.code === 0) {

@@ -78,6 +78,7 @@
         </template>
       </el-table-column>
       <el-table-column label="平台名称" align="center" prop="platformName"/>
+      <el-table-column label="游戏id" align="center" prop="kindId"/>
       <el-table-column label="子平台名称" align="center" prop="sonPlatformName"/>
       <el-table-column label="有效下注" align="center" prop="cell_score"/>
       <el-table-column label="总下注" align="center" prop="all_bet"/>

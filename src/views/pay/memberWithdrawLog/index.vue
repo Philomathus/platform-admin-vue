@@ -581,6 +581,9 @@ export default {
       title: '',
       //资金明细
       fundsOpen: false,
+      rechargeCodeRatio: null,
+      rechargeWithdrawRate: null,
+      bankCharge: null,
       //资金明细数据
       fundsData: [],
       batchPayAgentOpen: false,

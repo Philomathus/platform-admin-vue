@@ -54,3 +54,11 @@ export function exportMessageOnSite(query) {
     timeout: 60000
   })
 }
+// 新增站内信息
+export function addUserMessage(data) {
+  return request({
+    url: url.platformWeb + '/admin/messageOnSite/addUserMessage',
+    method: 'post',
+    data: data
+  })
+}

@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="会员id" prop="memberId">
+      <el-form-item label="会员ID" prop="memberId">
         <el-input
           v-model="queryParams.memberId"
-          placeholder="请输入会员id"
+          placeholder="请输入会员ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -25,55 +25,9 @@
       </el-form-item>
     </el-form>
 
-    <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['member:memberQuest:add']"
-        >新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['member:memberQuest:edit']"
-        >修改</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['member:memberQuest:remove']"
-        >删除</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['member:memberQuest:export']"
-        >导出</el-button>
-      </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-    </el-row>
-
     <el-table stripe v-loading="loading" :data="memberQuestList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="会员id" align="center" prop="memberId" />
+      <el-table-column label="会员ID" align="center" prop="memberId" />
       <el-table-column label="任务标题" align="center" prop="title" />
       <el-table-column label="当前任务状态" align="center" prop="status" :formatter="formatterType" />
       <el-table-column label="当前任务数量" align="center" prop="curnum" >
@@ -104,8 +58,8 @@
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="会员id" prop="memberId">
-          <el-input v-model="form.memberId" placeholder="请输入会员id" />
+        <el-form-item label="会员ID" prop="memberId">
+          <el-input v-model="form.memberId" placeholder="请输入会员ID" />
         </el-form-item>
         <el-form-item label="任务id" prop="questId">
           <el-input v-model="form.questId" placeholder="请输入任务id" />
@@ -194,11 +148,20 @@ export default {
     },
     //增加会员任务积分
     addMemberScore(id,curnums,score,target) {
+      if(!(/(^[1-9]\d*$)/.test(score))){
+        this.$notify.warning('请输入正整数')
+        return;
+      }
+      if(score>100000){
+        this.$notify.warning('最多补分10w')
+        return;
+      }
       this.loading = true;
-      let curnum = curnums+Number(score);
       let status = 0;
-      if(curnum>=target){
-        status = 1;
+      let curnum = curnums+Number(score);
+      if (curnum >= target) {
+          curnum = target;
+          status = 1;
       }
       addMemberScore(id,status,curnum).then(res => {
         if (res.code === 0) {

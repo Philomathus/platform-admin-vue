@@ -196,7 +196,7 @@ export default {
     addMemberScore(id,curnums,score,target) {
       let curnum = curnums+Number(score);
       if (curnum > target) {
-        this.$notify.info('补分不能超出任务目标数量');
+        this.$notify.warning('补分不能超出目标任务数量');
         return;
       }
       let status = 0;

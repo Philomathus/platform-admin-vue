@@ -882,6 +882,7 @@ export default {
       queryStatusWithdrawLog({
         orderNo: row.orderNo
       }).then(response => {
+        this.getList()
         this.$alert(response.msg, '查询结果', {
           confirmButtonText: '知道了',
           customClass: 'message_box_alert',

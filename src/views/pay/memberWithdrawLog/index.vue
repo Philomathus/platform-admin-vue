@@ -188,8 +188,9 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table :stripe="true" v-loading="loading" :data="memberWithdrawLogList"
+    <el-table v-loading="loading" :data="memberWithdrawLogList"
               :highlight-current-row="true" @selection-change="handleSelectionChange"
+              :row-class-name="tableRowClassNameWithdraw"
     >
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="复制" align="center" width="100px">
@@ -217,24 +218,14 @@
       </el-table-column>
 <!--      <el-table-column label="会员账号" min-width="120" align="center" prop="account"/>-->
       <el-table-column label="入款姓名" min-width="120" align="center" prop="rechargeUserName"/>
-      <el-table-column label="今日入款成功数" min-width="130" align="center" prop="bankCharge">
-      <template v-slot="{row}">
-        <span style="color: #f10a0a" v-if="row.bankCharge > 4">{{ row.bankCharge }}</span>
-        <span v-else>{{ row.bankCharge }}</span>
-      </template>
-      </el-table-column>
+      <el-table-column label="今日入款成功数" min-width="130" align="center" prop="bankCharge"/>
       <el-table-column label="出入款比" min-width="100" align="center" prop="rechargeWithdrawRate">
         <template v-slot="{row}">
           <span style="color: #FF5722" v-if="row.rechargeWithdrawRate > 10">{{ row.rechargeWithdrawRate }}</span>
           <span v-else>{{ row.rechargeWithdrawRate }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="投注打码比" min-width="100" align="center" prop="rechargeCodeRatio">
-      <template v-slot="{row}">
-        <span style="color: #f10a0a" v-if="row.rechargeCodeRatio === 1.5 || row.rechargeCodeRatio > 1.5">{{ row.rechargeCodeRatio }}</span>
-        <span v-else>{{ row.rechargeCodeRatio }}</span>
-      </template>
-      </el-table-column>
+      <el-table-column label="投注打码比" min-width="100" align="center" prop="rechargeCodeRatio"/>
       <el-table-column label="提现金额" min-width="100" align="center" prop="withdrawMoney">
         <template v-slot="{row}">
           <a style="color: #00afff" @click="copyColumn(row.withdrawMoney)">{{ row.withdrawMoney }}</a>
@@ -647,6 +638,14 @@ export default {
     this.stopRefresh()
   },
   methods: {
+    tableRowClassNameWithdraw({row}) {
+      if (row.bankCharge !== null && row.bankCharge > 4) {
+        return 'warning-row'
+      }
+      if (row.rechargeCodeRatio !== null && (row.rechargeCodeRatio === 1.5 || row.rechargeCodeRatio < 1.5)) {
+        return 'warning-row'
+      }
+    },
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
       this.single = selection.length !== 1

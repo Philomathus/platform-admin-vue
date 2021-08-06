@@ -276,8 +276,6 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      //入款类型
-      addScoreRemarks: [{ label: '人工入款' }, { label: '线上入款' }, { label: '线下入款' }],
       // 日期范围
       dateRange: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
       // 人工加分日志表格数据

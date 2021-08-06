@@ -5,7 +5,7 @@
 </template>
 <style>
 .el-table .warning-row {
-  background: #ff9394;
+  background: #ffb4b4;
 }
 
 .el-table .success-row {

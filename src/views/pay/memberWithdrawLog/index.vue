@@ -188,8 +188,9 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table :stripe="true" v-loading="loading" :data="memberWithdrawLogList"
+    <el-table v-loading="loading" :data="memberWithdrawLogList"
               :highlight-current-row="true" @selection-change="handleSelectionChange"
+              :row-class-name="tableRowClassNameWithdraw"
     >
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="复制" align="center" width="100px">
@@ -637,6 +638,14 @@ export default {
     this.stopRefresh()
   },
   methods: {
+    tableRowClassNameWithdraw({row}) {
+      if (row.bankCharge !== null && row.bankCharge > 4) {
+        return 'warning-row'
+      }
+      if (row.rechargeCodeRatio !== null && (row.rechargeCodeRatio === 1.5 || row.rechargeCodeRatio < 1.5)) {
+        return 'warning-row'
+      }
+    },
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
       this.single = selection.length !== 1

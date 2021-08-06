@@ -182,3 +182,12 @@ export function manualWithdrawal(data) {
     data: data
   })
 }
+
+// 查询会员提现信息列表
+export function memberWithdrawLogCount(query) {
+  return request({
+    url: url.platformWeb + '/pay/memberWithdrawLog/count',
+    method: 'get',
+    params: query
+  })
+}

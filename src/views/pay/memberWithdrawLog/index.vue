@@ -642,7 +642,7 @@ export default {
       if (row.bankCharge !== null && row.bankCharge > 4) {
         return 'warning-row'
       }
-      if (row.rechargeCodeRatio !== null && (row.rechargeCodeRatio === 1.5 || row.rechargeCodeRatio < 1.5)) {
+      if (row.rechargeCodeRatio !== null && row.rechargeCodeRatio < 1.51) {
         return 'warning-row'
       }
     },

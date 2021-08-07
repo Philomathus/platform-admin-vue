@@ -66,9 +66,9 @@
             <div v-if="row.platformId == 1 || row.platformId == 15 || row.platformId == 17">
               <a style="color: #00afff"  @click="handleRecord(row)">{{ row.gameId }}</a>
             </div>
-            <div v-else-if="row.platformId == 5">
-              <a style="color: #00afff"  @click="openAgPlaypDetail(row)">{{ row.gameId }}</a>
-            </div>
+<!--            <div v-else-if="row.platformId == 5">-->
+<!--              <a style="color: #00afff"  @click="openAgPlaypDetail(row)">{{ row.gameId }}</a>-->
+<!--            </div>-->
             <div v-else-if="row.platformId == 14">
               <a style="color: #00afff"  @click="openRecordLink(row)">{{ row.gameId }}</a>
             </div>

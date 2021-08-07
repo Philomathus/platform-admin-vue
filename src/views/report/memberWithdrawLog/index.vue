@@ -28,7 +28,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table stripe v-loading="loading" :data="memberWithdrawLogList" @selection-change="handleSelectionChange">
+    <el-table stripe v-loading="loading" :data="memberWithdrawLogList">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="审核人" align="center" prop="opName" />
       <el-table-column label="审核总提现金额" align="center" prop="money" />

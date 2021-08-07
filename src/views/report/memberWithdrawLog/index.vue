@@ -92,7 +92,7 @@ export default {
         updateTime: null,
         orderNo: null,
         account: null,
-        orderByColumn: 'update_time',
+        orderByColumn: 'opName',
         isAsc: 'desc'
       },
       // 表单参数

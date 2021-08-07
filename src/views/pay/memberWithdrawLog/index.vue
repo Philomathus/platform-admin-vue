@@ -209,6 +209,8 @@
       </el-table-column>
       <el-table-column label="会员ID" min-width="150" align="center" prop="memberId">
         <template v-slot="{row}">
+          <a style="color: #ffa200" @click="funds(row.memberId)"
+             v-if="row.memberStatus === 7">{{ row.memberId }}</a>
           <a style="color: #00afff" @click="funds(row.memberId)"
              v-if="row.memberStatus === 0 || row.memberStatus === 1">{{ row.memberId }}</a>
           <a style="color: #ff0000" @click="funds(row.memberId)" v-if="row.memberStatus === 4">{{ row.memberId }}</a>
@@ -220,9 +222,10 @@
           <el-tooltip popper-class="tooltip" placement="top">
             <i class="el-icon-question"></i>
             <div slot="content" class="tooltip-content">
-              <div>字体蓝色:(禁用会员,正常会员)</div>
+              <div>字体蓝色:(正常会员)</div>
               <div>字体红色:(套利号)</div>
               <div>字体粉色:(测试号,超管号,稀有号)</div>
+              <div>字体橙色:(审查号)</div>
             </div>
           </el-tooltip>
         </template>

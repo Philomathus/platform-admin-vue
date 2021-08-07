@@ -39,8 +39,8 @@
 
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width ">
         <template slot-scope="scope">
-          <el-input  v-model="scope.row.score" placeholder="请输入需要增加的积分" style="width:180px" v-if="scope.row.status === 0" class="no-number" type="number" />
-          <el-button type="primary" icon="el-icon-plus" v-if="scope.row.status === 0" @click="addMemberScore(scope.row.id,scope.row.curnum,scope.row.score,scope.row.target)">补分</el-button>
+<!--          <el-input  v-model="scope.row.score" placeholder="请输入需要增加的积分" style="width:180px" v-if="scope.row.status === 0" class="no-number" type="number" />-->
+          <el-button type="primary" icon="el-icon-plus" v-if="scope.row.status === 0" @click="addMemberScore(scope.row.id,scope.row.curnum,scope.row.target)">补分</el-button>
         </template>
       </el-table-column>
 
@@ -147,32 +147,43 @@ export default {
       });
     },
     //增加会员任务积分
-    addMemberScore(id,curnums,score,target) {
-      if(!(/(^[1-9]\d*$)/.test(score))){
-        this.$notify.warning('请输入正整数')
-        return;
-      }
-      if(score>100000){
-        this.$notify.warning('最多补分10w')
-        return;
-      }
-      this.loading = true;
-      let status = 0;
-      let curnum = curnums+Number(score);
-      if (curnum >= target) {
+    addMemberScore(id,curnums,target) {
+
+      this.$prompt('请输入需要增加的积分', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /^[0-9]{1,10}$/,
+        inputErrorMessage: '增加的积分为正整数'
+      }).then(({ value }) => {
+        if(!(/(^[1-9]\d*$)/.test(value))){
+          this.$notify.warning('请输入正整数')
+          return;
+        }
+        if(value>100000){
+          this.$notify.warning('最多补分10w')
+          return;
+        }
+        this.loading = true;
+        let status = 0;
+        let curnum = curnums+Number(value);
+        if (curnum >= target) {
           curnum = target;
           status = 1;
-      }
-      addMemberScore(id,status,curnum).then(res => {
-        if (res.code === 0) {
-          this.msgError((res.msg))
-        } else {
-          this.getList();
-          this.msgSuccess((res.msg))
         }
+        addMemberScore(id,status,curnum).then(res => {
+          if (res.code === 0) {
+            this.msgError((res.msg))
+          } else {
+            this.getList();
+            this.msgSuccess((res.msg))
+          }
+        })
       }).catch(() => {
-        this.$notify.error('网络异常')
-      })
+        this.$message({
+          type: 'info',
+          message: '取消输入'
+        });
+      });
     },
     // 取消按钮
     cancel() {

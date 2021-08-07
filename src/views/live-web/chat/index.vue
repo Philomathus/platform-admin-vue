@@ -21,6 +21,16 @@
           style="width: 150px;"
         />
       </el-form-item>
+      <el-form-item prop="poscatId">
+        <el-input
+          v-model="queryParams.poscatId"
+          placeholder="主播ID"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+          style="width: 150px;"
+        />
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>

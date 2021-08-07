@@ -152,6 +152,7 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
+      totalLoading: false,
       // 用户投资行为表格数据
       lotteryBet0List: [],
       // 弹出层标题
@@ -213,11 +214,12 @@ export default {
     },
     //统计按钮
     getCountTotal() {
+      this.totalLoading = true
       getCount(this.queryParams).then((res) => {
         if (res.data) {
           this.totalData = res.data
         }
-        this.loading = false
+        this.totalLoading = false
       })
     },
     // 表单重置

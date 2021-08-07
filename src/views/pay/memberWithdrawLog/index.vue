@@ -215,17 +215,57 @@
           <a style="color: #ee00ff" @click="funds(row.memberId)"
              v-if="row.memberStatus === 2 || row.memberStatus === 3 || row.memberStatus === 5">{{ row.memberId }}</a>
         </template>
+        <template slot="header">
+          <span>会员ID</span>
+          <el-tooltip popper-class="tooltip" placement="top">
+            <i class="el-icon-question"></i>
+            <div slot="content" class="tooltip-content">
+              <div>字体蓝色:(禁用会员,正常会员)</div>
+              <div>字体红色:(套利号)</div>
+              <div>字体粉色:(测试号,超管号,稀有号)</div>
+            </div>
+          </el-tooltip>
+        </template>
       </el-table-column>
 <!--      <el-table-column label="会员账号" min-width="120" align="center" prop="account"/>-->
       <el-table-column label="入款姓名" min-width="120" align="center" prop="rechargeUserName"/>
-      <el-table-column label="今日入款成功数" min-width="130" align="center" prop="bankCharge"/>
-      <el-table-column label="出入款比" min-width="100" align="center" prop="rechargeWithdrawRate">
+      <el-table-column label="今日入款成功数" min-width="130" align="center" prop="bankCharge">
+      <template slot="header">
+        <span>今日入款成功数</span>
+        <el-tooltip popper-class="tooltip" placement="top">
+          <i class="el-icon-question"></i>
+          <div slot="content" class="tooltip-content">
+            <div>今日入款成功数大于等于5次则整行颜色变粉色</div>
+          </div>
+        </el-tooltip>
+      </template>
+      </el-table-column>
+      <el-table-column min-width="100" align="center" prop="rechargeWithdrawRate">
         <template v-slot="{row}">
           <span style="color: #FF5722" v-if="row.rechargeWithdrawRate > 10">{{ row.rechargeWithdrawRate }}</span>
           <span v-else>{{ row.rechargeWithdrawRate }}</span>
         </template>
+        <template slot="header">
+          <span>出入款比</span>
+          <el-tooltip popper-class="tooltip" placement="top">
+            <i class="el-icon-question"></i>
+            <div slot="content" class="tooltip-content">
+              <div>字体红色:出入款比大于10</div>
+            </div>
+          </el-tooltip>
+        </template>
       </el-table-column>
-      <el-table-column label="投注打码比" min-width="100" align="center" prop="rechargeCodeRatio"/>
+      <el-table-column label="投注打码比" min-width="100" align="center" prop="rechargeCodeRatio">
+      <template slot="header">
+        <span>投注打码比</span>
+        <el-tooltip popper-class="tooltip" placement="top">
+          <i class="el-icon-question"></i>
+          <div slot="content" class="tooltip-content">
+            <div>投注打码比小于等于1.5则整行颜色变粉色</div>
+          </div>
+        </el-tooltip>
+      </template>
+      </el-table-column>
       <el-table-column label="提现金额" min-width="100" align="center" prop="withdrawMoney">
         <template v-slot="{row}">
           <a style="color: #00afff" @click="copyColumn(row.withdrawMoney)">{{ row.withdrawMoney }}</a>
@@ -253,10 +293,19 @@
           >{{ status.dictLabel }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="银行归属地" align="center" min-width="110" prop="cardBlack">
+      <el-table-column align="center" min-width="110" prop="cardBlack">
         <template v-slot="{row}">
           <span style="color: #ff0026" v-if="row.cardBlack == 1">{{ row.realBankAddress }}</span>
           <span v-if="row.cardBlack == 0">{{ row.realBankAddress }}</span>
+        </template>
+        <template slot="header">
+          <span>银行归属地</span>
+          <el-tooltip popper-class="tooltip" placement="top">
+            <i class="el-icon-question"></i>
+            <div slot="content" class="tooltip-content">
+              <div>字体红色:银行归属地在黑名单中</div>
+            </div>
+          </el-tooltip>
         </template>
       </el-table-column>
       <el-table-column label="是否首次" min-width="90" align="center" prop="first" :formatter="firstFormat"/>

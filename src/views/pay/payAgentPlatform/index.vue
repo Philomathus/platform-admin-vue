@@ -148,8 +148,8 @@
         <el-form-item label="header_key" prop="headerKey">
           <el-input v-model.trim="form.headerKey" placeholder="请输入header_key" />
         </el-form-item>
-        <el-form-item label="MD5_key" prop="signMd5">
-          <el-input v-model.trim="form.signMd5" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="商户MD5密钥" prop="signMd5">
+          <el-input v-model.trim="form.signMd5" type="textarea" placeholder="请输入商户MD5密钥" />
         </el-form-item>
         <el-form-item label="加密公钥" prop="signPublicKey">
           <el-input v-model.trim="form.signPublicKey" type="textarea"  placeholder="请输入内容" />

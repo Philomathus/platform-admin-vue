@@ -153,8 +153,8 @@
         <el-form-item label="平台订单查询地址" prop="platQueryUrl">
           <el-input v-model.trim="form.platQueryUrl" placeholder="请输入平台订单查询地址"/>
         </el-form-item>
-        <el-form-item label="MD5_key" prop="signMd5">
-          <el-input v-model.trim="form.signMd5" placeholder="请输入MD5_key"/>
+        <el-form-item label="商户MD5密钥" prop="signMd5">
+          <el-input v-model.trim="form.signMd5" placeholder="请输入商户MD5密钥"/>
         </el-form-item>
         <el-form-item label="加密公钥" prop="signPublicKey">
           <el-input v-model.trim="form.signPublicKey" type="textarea" placeholder="请输入内容"/>

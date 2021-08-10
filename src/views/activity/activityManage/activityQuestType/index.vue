@@ -99,9 +99,9 @@
         <el-form-item label="名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入名称" />
         </el-form-item>
-        <el-form-item label="所属游戏id" prop="gameId">
-          <el-input v-model="form.gameId" placeholder="请输入所属游戏id" />
-        </el-form-item>
+<!--        <el-form-item label="所属游戏id" prop="gameId">-->
+<!--          <el-input v-model="form.gameId" placeholder="请输入所属游戏id" />-->
+<!--        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>

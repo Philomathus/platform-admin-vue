@@ -255,9 +255,9 @@
         <el-form-item label="图标" prop="icon">
           <imageUpload v-model="form.icon" path="ActivityQuestInfo"/>
         </el-form-item>
-        <el-form-item label="任务详情" prop="detail">
-          <el-input v-model="form.detail" type="textarea" placeholder="请输入内容"/>
-        </el-form-item>
+<!--        <el-form-item label="任务详情" prop="detail">-->
+<!--          <el-input v-model="form.detail" type="textarea" placeholder="请输入内容"/>-->
+<!--        </el-form-item>-->
         <el-form-item label="描述">
           <el-input v-model="form.content" type="textarea" placeholder="请输入内容" rows="5"/>
         </el-form-item>
@@ -363,9 +363,9 @@ export default {
         reward: [
           {required: true, message: "完成后增加的资金不能为空", trigger: "blur"}
         ],
-        detail: [
-          {required: true, message: "任务详情不能为空", trigger: "blur"}
-        ],
+        // detail: [
+        //   {required: true, message: "任务详情不能为空", trigger: "blur"}
+        // ],
         gameId: [
           {required: true, message: "所属游戏不能为空", trigger: "blur"}
         ],

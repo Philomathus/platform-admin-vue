@@ -8,6 +8,7 @@
           style="width: 240px"
           value-format="yyyy-MM-dd"
           type="daterange"
+          clearable
           range-separator="-"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
@@ -129,6 +130,10 @@ export default {
     /** 查询主播时长列表 */
     getList() {
       this.loading = true
+      console.info(this.queryParams.selectDate)
+      if (this.queryParams.selectDate==null){
+        this.queryParams.selectDate=[this.parseTime(new Date(), '{y}-{m}-{d}'), this.parseTime(new Date(), '{y}-{m}-{d}')]
+      }
       listHostWageNoteDaysPage(this.queryParams).then(response => {
         this.liveHostWageNoteList = response.data
         this.loading = false

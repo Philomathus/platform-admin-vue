@@ -75,7 +75,7 @@
       <el-table-column label="类型" align="center" prop="type" min-width="60" :formatter="formatterType"/>
       <el-table-column label="状态" align="center" prop="status" min-width="120" :formatter="formatterStatus">
         <template v-slot="{row}">
-          <el-select v-model="row.stateName" label-in-value :value="formatterStatus(row)" @change="initChange(row)" @focus="formatterStatus(row)" placeholder="请选择" filterable allow-create>
+          <el-select v-model="row.stateName" label-in-value :value="formatterStatus(row)" @change="initChange($event,row)" @focus="formatterStatus(row)" placeholder="请选择" filterable allow-create>
             <el-option v-for="item in stateCollection[row.type -1] " :key="item.label" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
@@ -100,10 +100,11 @@
 <script>
 import {
   listLogGameOrder,
-  exportLogGameOrder
+  exportLogGameOrder,
+  updateLogGameOrder,
+  listGame
 } from '@/api/platform-web/member/logGameOrder'
 import { pickerDateShortcuts } from '@/utils/dateUtils'
-import { listGame } from '../../../api/platform-web/member/logGameOrder'
 import analyze from './analyze'
 
 export default {
@@ -321,17 +322,20 @@ export default {
         this.loading = false
       })
     },
-    initChange(row){
-      if(row) {
+    initChange(selectOption,row){
+      if(selectOption) {
           //修改状态
-          this.$confirm('确认要保存状态为"' + row.status + '"吗?', '警告', {
+          this.$confirm('确认要修改状态为"' + this.formatterStatus(row) + '"吗?', '警告', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
           }).then(function () {
-
+            row.status = selectOption
+            return updateLogGameOrder(row)
           }).then(() => {
-            this.msgSuccess(text + '成功')
+            this.getList()
+            this.msgSuccess('修改成功')
+            this.loading = false
           })
       }
     }

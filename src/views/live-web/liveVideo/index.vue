@@ -211,6 +211,21 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+
+    <el-dialog v-dialogDrag :close-on-click-modal="false" title="是否立即生效" :visible.sync="effectOpen" width="290px"
+               append-to-body
+    >
+      <el-form ref="form" :model="form" label-width="105px">
+        <el-form-item label="是否立即生效" prop="effect">
+          <el-radio v-model="form.effect" label="1">是</el-radio>
+          <el-radio v-model="form.effect" label="2">否</el-radio>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitFormEffect">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
     <pagination
       v-show="total>0"
       :page-sizes="[50,100,200,500]"
@@ -266,6 +281,7 @@ export default {
       title: '',
       // 是否显示弹出层
       open: false,
+      effectOpen: false,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -276,7 +292,9 @@ export default {
         types: []
       },
       // 表单参数
-      form: {},
+      form: {
+        effect: '1',
+      },
       // 表单校验
       rules: {}
     }
@@ -309,6 +327,7 @@ export default {
     // 取消按钮
     cancel() {
       this.open = false
+      this.effectOpen = false
       this.reset()
     },
     // 表单重置
@@ -316,6 +335,7 @@ export default {
       this.form = {
         hostName: null,
         paiId: null,
+        effect: '1',
         types: []
       }
       this.queryParams = {
@@ -400,11 +420,11 @@ export default {
       })
     },
     typeFormat(row) {
-      if (row.cateId == '2') {
+      if (row.cateId === '2') {
         return '性感主播'
-      } else if (row.cateId == '3') {
+      } else if (row.cateId === '3') {
         return '大秀直播'
-      } else if (row.cateId == '4') {
+      } else if (row.cateId === '4') {
         return '收费直播'
       } else {
         return '彩票直播'
@@ -453,32 +473,33 @@ export default {
     },
     // 推荐
     recommend(row) {
-      updateVideoSort({
-        id: row.id,
-        isRecommend: 1
-      }).then(response => {
-        if (response.code === 200) {
-          this.msgSuccess(response.msg)
-        } else if (response.code === 500) {
-          this.msgError(response.msg)
-        }
-        this.getList()
-      })
+       this.id = row.id
+       this.isRecommend = 1
+       this.effectOpen = true
     },
     // 取消推荐
     closeRecommend(row) {
+      this.id = row.id
+      this.isRecommend = 0
+      this.effectOpen = true
+    },
+    submitFormEffect(){
       updateVideoSort({
-        id: row.id,
-        isRecommend: 0
+        id: this.id,
+        isRecommend: this.isRecommend,
+        effect: this.form.effect
       }).then(response => {
         if (response.code === 200) {
           this.msgSuccess(response.msg)
         } else if (response.code === 500) {
           this.msgError(response.msg)
         }
+        console.info("111")
         this.getList()
+        this.effectOpen = false
       })
     },
+
     // 置底
     stick(row) {
       updateVideoSort({

@@ -54,3 +54,41 @@ export function exportLogGameOrder(query) {
     timeout: 60000
   })
 }
+
+// 批量校对上下分
+export function listGame(query) {
+  return request({
+    url: url.platformWeb + '/member/logGameOrder/listGame',
+    method: 'get',
+    params: query
+  })
+}
+
+// 批量校对上下分
+export function handleVaildScore(data) {
+  return request({
+    url: url.platformWeb + '/member/logGameOrder/vaildScore',
+    method: 'post',
+    data: data
+  })
+}
+
+// 批量回退上下分
+export function handleBackScore(data) {
+  return request({
+    url: url.platformWeb + '/member/logGameOrder/backScore',
+    method: 'post',
+    data: data
+  })
+}
+
+// 查询会员上下分列表
+export function listScoreOrder(query) {
+  return request({
+    url: url.platformWeb + '/member/logGameOrder/score/list',
+    method: 'get',
+    params: query
+  })
+}
+
+

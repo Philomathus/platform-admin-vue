@@ -1,107 +1,106 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="日期范围" prop="selectDate">
-        <el-date-picker type="daterange" v-model="queryParams.selectDate" format="yyyy-MM-dd"
-                        value-format="yyyy-MM-dd" start-placeholder="开始日期"
-                        end-placeholder="结束日期"
-                        range-separator="-" clearable
-                        :picker-options="pickerOptions"
-        ></el-date-picker>
-      </el-form-item>
-      <el-form-item prop="searchValue">
-        <el-input
-          v-model="queryParams.searchValue"
-          placeholder="会员ID/会员账号"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item prop="platformId">
-        <el-select v-model="queryParams.platformId" placeholder="请选择平台" clearable size="small" style="width: 110px;">
-          <el-option v-for="item in platformList" :label="item.name" :value="item.id"/>
-        </el-select>
-      </el-form-item>
-      <el-form-item prop="type">
-        <el-select v-model="queryParams.type" placeholder="全部类型" @change="handleType()"  clearable size="small" style="width: 110px;">
-          <el-option v-for="item in typeList" :label="item.label" :value="item.value"/>
-        </el-select>
-        <span>-</span>
-      </el-form-item>
-      <el-form-item prop="status">
-        <el-select clearable multiple collapse-tags  v-model="stateList" placeholder="全部状态" clearable size="small" style="width: 150px;">
-          <el-option v-for="item in statusList" :label="item.label" :value="item.value"/>
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-      </el-form-item>
-    </el-form>
-    <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleScore(1)"
-          v-hasPermi="['member:logGameOrder:analyze']"
-        >分析上下分
-        </el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['member:logGameOrder:export']"
-        >导出
-        </el-button>
-      </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-    </el-row>
+    <el-dialog
+      v-dialogDrag
+      :close-on-click-modal="false"
+      :title="title"
+      :visible.sync="visible"
+      width="1500px"
+      top="5vh"
+      @close="reset()"
+      append-to-body
+    >
+      <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+        <el-form-item label="日期范围" prop="selectDate">
+          <el-date-picker type="daterange" v-model="queryParams.selectDate" format="yyyy-MM-dd"
+                          value-format="yyyy-MM-dd" start-placeholder="开始日期"
+                          end-placeholder="结束日期"
+                          range-separator="-" clearable
+                          :picker-options="pickerOptions"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item prop="searchValue">
+          <el-input
+            v-model="queryParams.searchValue"
+            placeholder="会员ID/会员账号"
+            clearable
+            size="small"
+            @keyup.enter.native="handleQuery"
+          />
+        </el-form-item>
+        <el-form-item prop="platformId">
+          <el-select v-model="queryParams.platformId" placeholder="请选择平台" clearable size="small" >
+            <el-option v-for="item in platformList" :label="item.name" :value="item.id"/>
+          </el-select>
+        </el-form-item>
+        <el-form-item prop="type">
+          <el-select v-model="queryParams.type" placeholder="全部类型" clearable size="small" >
+            <el-option v-for="item in typeList" :label="item.label" :value="item.value"/>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+          <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        </el-form-item>
+      </el-form>
+      <el-row :gutter="10" class="mb8">
+        <el-col :span="1.5">
+          <el-button
+            type="success"
+            plain
+            icon="el-icon-plus"
+            size="mini"
+            @click="handleScore"
+            v-hasPermi="['member:logGameOrder:backScore']"
+          >批量处理上下分
+          </el-button>
+        </el-col>
+        <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      </el-row>
 
-    <el-table stripe v-loading="loading" :data="logGameOrderList" >
-      <el-table-column label="会员ID" align="center" prop="memberId"/>
-      <el-table-column label="订单ID" align="center" prop="id" min-width="180"/>
-      <el-table-column label="游戏平台" align="center" prop="platformName"/>
-      <el-table-column label="金额" align="center" prop="money"/>
-      <el-table-column label="开始时间" align="center" prop="bTime" min-width="120"/>
-      <el-table-column label="结束时间" align="center" prop="eTime" min-width="120"/>
-      <el-table-column label="类型" align="center" prop="type" min-width="60" :formatter="formatterType"/>
-      <el-table-column label="状态" align="center" prop="status" min-width="120" :formatter="formatterStatus"/>
-      <el-table-column label="重试次数" align="center" prop="retryCount" min-width="50"/>
-    </el-table>
+      <el-table stripe v-loading="loading" :data="scoreList" @selection-change="handleSelectionChange">
+        <el-table-column type="selection" width="55" align="center" />
+        <el-table-column label="会员ID" align="center" prop="memberId"/>
+        <el-table-column label="订单ID" align="center" prop="id" min-width="150"/>
+        <el-table-column label="游戏平台" align="center" prop="platformName"/>
+        <el-table-column label="金额" align="center" prop="money"/>
+        <el-table-column label="类型" align="center" prop="type" min-width="60" :formatter="formatterType"/>
+        <el-table-column label="操作" min-width="150" align="center" class-name="small-padding fixed-width" fixed="right">
+          <template slot-scope="scope">
+            <el-button
+              type="success"
+              plain
+              size="small"
+              @click="handleBackScore(scope.row)"
+            >{{scope.row.type == 1 ? '回退上分':'补发下分'}}金额
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
 
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page-sizes="[20,50,100]"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
-
-    <analyze ref="analyze"></analyze>
+      <pagination
+        v-show="total>0"
+        :total="total"
+        :page-sizes="[20,50,100]"
+        :page.sync="queryParams.pageNum"
+        :limit.sync="queryParams.pageSize"
+        @pagination="getList"
+      />
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import {
-  listLogGameOrder,
-  exportLogGameOrder
+  listScoreOrder,
+  handleBackScore
 } from '@/api/platform-web/member/logGameOrder'
 import { pickerDateShortcuts } from '@/utils/dateUtils'
 import { listGame } from '../../../api/platform-web/member/logGameOrder'
-import analyze from './analyze'
 
 export default {
   name: 'LogGameOrder',
-  components: {analyze},
+  components: {},
   data() {
     return {
       pickerOptions: { shortcuts: pickerDateShortcuts },
@@ -127,7 +126,7 @@ export default {
                         { label: '上分交易不存在', value: '10' },
                         { label: '获取游戏失败', value: '11' },
                         { label: '未知异常', value: '12' },
-                        { label: '资金回退',value: '13'}
+                        { label: '回退上分', value: '13' }
 
       ],[
         { label: '出厅失败', value: '-1' },
@@ -141,6 +140,7 @@ export default {
         { label: '下分交易不存在', value: '10' },
         { label: '未知异常', value: '12' }
       ]],
+      visible: false,
       //状态列表
       stateList: [],
       // 遮罩层
@@ -149,6 +149,8 @@ export default {
       ids: [],
       // 选中数组
       scoreList: [],
+      //选中列表
+      selectionList: [],
       // 非单个禁用
       single: true,
       // 非多个禁用
@@ -216,33 +218,36 @@ export default {
       } else if (row.status == 4) {
         return '异常' + '上分扣款失败'
       } else if (row.status == 5) {
-        return scoreName + '失败'
+        return '失败' + scoreName
       } else if (row.status == 6) {
-        return scoreName + '超时'
+        return '超时' + scoreName
       } else if (row.status == 7) {
         return '查询余额失败'
       } else if (row.status == 8) {
-        return scoreName + '查询明细失败'
+        return '查询明细失败' + scoreName
       } else if (row.status == 9) {
-        return scoreName + '查询明细超时'
+        return '查询明细超时' + scoreName
       } else if (row.status == 10) {
-        return scoreName+ '交易不存在'
+        return '交易不存在' + scoreName
       } else if (row.status == 11) {
         return '获取游戏失败'
       } else if (row.status == 12) {
         return '未知异常'
-      } else if (row.status == 13) {
-        return '资金回退'
+      }else if (row.status == 13){
+        return '回退' + scoreName
       } else {
         return '未知'
       }
+    },
+    show(){
+      this.visible = true
     },
     /** 查询会员上下分列表 */
     getList() {
       this.loading = true
       this.queryParams.stateList = this.stateList
-      listLogGameOrder(this.queryParams).then(response => {
-        this.logGameOrderList = response.rows
+      listScoreOrder(this.queryParams).then(response => {
+        this.scoreList = response.rows
         this.total = response.total
         this.loading = false
       })
@@ -277,28 +282,31 @@ export default {
       this.resetForm('queryForm')
       this.handleQuery()
     },
-    /** 导出按钮操作 */
-    handleExport() {
-      const queryParams = this.queryParams
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(function() {
-        return exportLogGameOrder(queryParams)
-      }).then(response => {
-        this.downloadExcel(response, '会员上下分')
-      }).catch(() => {
-      })
-    },
     /** 上下分按钮操作 */
     handleScore() {
-      this.$refs.analyze.show()
+      if (this.scoreList.length == 0) {
+        this.$confirm('请选中会员', '提示', {
+          confirmButtonText: '确定',
+          type: 'warning'
+        })
+      }else {
+        handleBackScore(this.selectionList).then(response => {
+          this.msgSuccess("资金回退成功");
+          this.getList()
+        })
+      }
     },
-    handleType(){
-      let count = this.queryParams.type -1
-      let list = this.stateCollection[ count ]
-      this.statusList = list
+    handleSelectionChange(selection){
+      this.selectionList = selection
+      this.single = selection.length!==1
+      this.multiple = !selection.length
+    },
+    handleBackScore(row){
+      this.selectionList[0] = row
+      handleBackScore(this.selectionList).then(response => {
+        this.msgSuccess("资金回退成功");
+        this.getList()
+      })
     },
     getListGame(){
       listGame(this.queryParams).then(response => {

@@ -420,11 +420,11 @@ export default {
       })
     },
     typeFormat(row) {
-      if (row.cateId === '2') {
+      if (row.cateId == '2') {
         return '性感主播'
-      } else if (row.cateId === '3') {
+      } else if (row.cateId == '3') {
         return '大秀直播'
-      } else if (row.cateId === '4') {
+      } else if (row.cateId == '4') {
         return '收费直播'
       } else {
         return '彩票直播'

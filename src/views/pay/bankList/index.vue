@@ -395,7 +395,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除出款银行列表编号为"' + ids + '"的数据项?', "警告", {
+      this.$confirm('是否确认删除' + row.bankName  + '?', '警告', {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"

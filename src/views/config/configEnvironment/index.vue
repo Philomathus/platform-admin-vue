@@ -54,7 +54,7 @@
                 <el-input
                   :class="row.envStatus === 0  ? 'ban' : ''"
                   v-model="row.envTitle"
-                  placeholder="请输入参数编码"
+                  placeholder="请输入参数名称"
                   size="small"
                 />
               </template>
@@ -406,12 +406,22 @@
         this.multiple = !selection.length
       },
       updateConfigEnvironment(data){
-        this.loading=true
-        updateConfigEnvironment(data).then(response => {
-          this.msgSuccess('修改成功')
-          this.getList()
-          this.loading=false
-        })
+        this.$confirm('确认修改'+ data.envTitle +'吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消'
+        }).then(() => {
+          this.loading=true
+          updateConfigEnvironment(data).then(response => {
+            this.msgSuccess('修改成功')
+            this.getList()
+            this.loading=false
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消修改'
+          });
+        });
       },
       handleConfirm() {
         this.loading=true

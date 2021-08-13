@@ -1,5 +1,10 @@
 <template>
   <div class="app-container">
+    <div v-loading="totalLoading">
+      <el-button type="primary" @click="copy1">行为类型统计 {{ this.totalData.totalIncome || 0 }}</el-button>
+      <el-button type="primary" icon="el-icon-search" size="mini" @click="listCount()" style="margin-left: 20px">统计查询
+      </el-button>
+    </div>
     <!--    <el-button type="primary" @click="copy1">总收入 {{ this.totalData.totalIncome || 0 }}</el-button>-->
     <!--    <el-button type="success" @click="copy2">总支出 {{ this.totalData.totalPay || 0 }}</el-button>-->
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="88px"
@@ -87,7 +92,7 @@
 </template>
 
 <script>
-import {listLogMoney, exportLogMoney, totalCount} from '@/api/platform-web/pay/logMoney'
+import {listLogMoney, exportLogMoney, listCount, totalCount} from '@/api/platform-web/pay/logMoney'
 import {allTradeType} from '@/api/platform-web/config/tradeType'
 import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
 
@@ -113,6 +118,8 @@ export default {
       total: 0,
       //  会员资金信息表格数据
       logMoneyList: [],
+      //统计状态
+      totalLoading: false,
       // 弹出层标题
       title: '',
       // 是否显示弹出层
@@ -149,6 +156,20 @@ export default {
     this.getTypeData()
   },
   methods: {
+    listCount() {
+      if (this.queryParams.type === null || this.queryParams.type === '' || this.queryParams.types.length === 0) {
+        this.$message.error("请至少选择一个行为类型")
+      } else if (this.queryParams.searchValue === null || this.queryParams.searchValue === '' || this.queryParams.searchValue === undefined) {
+        this.$message.error("请输入会员ID")
+      } else {
+        this.totalLoading = true
+        listCount(this.queryParams).then((res) => {
+          this.totalData = res.data
+        }).finally(() => {
+          this.totalLoading = false
+        })
+      }
+    },
     // totalCount(){
     //   totalCount(this.queryParams).then((res) => {
     //           this.totalData = res.data;

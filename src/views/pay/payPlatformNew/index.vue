@@ -134,7 +134,7 @@
 
     <!-- 添加或修改【支付平台】对话框 -->
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="770px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="135px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="110px">
         <el-form-item label="名称" prop="name">
           <el-input v-model.trim="form.name" placeholder="请输入平台名称"/>
         </el-form-item>
@@ -147,10 +147,10 @@
         <el-form-item label="机构号" prop="orgId">
           <el-input v-model.trim="form.orgId" placeholder="请输入机构号"/>
         </el-form-item>
-        <el-form-item label="平台下单接口地址" prop="platPayUrl">
+        <el-form-item label="下单地址" prop="platPayUrl">
           <el-input v-model.trim="form.platPayUrl" placeholder="请输入平台下单接口地址"/>
         </el-form-item>
-        <el-form-item label="平台订单查询地址" prop="platQueryUrl">
+        <el-form-item label="查询地址" prop="platQueryUrl">
           <el-input v-model.trim="form.platQueryUrl" placeholder="请输入平台订单查询地址"/>
         </el-form-item>
         <el-form-item label="商户MD5密钥" prop="signMd5">
@@ -861,7 +861,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除【支付平台】编号为"' + ids + '"的数据项?', "警告", {
+      this.$confirm('是否确认删除' + row.name  + '?', '警告', {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"

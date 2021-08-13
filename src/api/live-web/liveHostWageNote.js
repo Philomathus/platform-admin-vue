@@ -50,3 +50,22 @@ export function exportHostWageNote(query) {
   })
 }
 
+// 查询主播统计时长明细列表
+export function listHostWageNoteDaysPage(query) {
+  return request({
+    url: url.platformWeb + '/admin/liveHostWageDay/lists',
+    method: 'get',
+    params: query
+  })
+}
+
+// 导出主播统计时长
+export function exportHostWageNoteDays(query) {
+  return request({
+    url: url.platformWeb + '/admin/liveHostWageDay/exportHosts',
+    method: 'get',
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
+  })
+}

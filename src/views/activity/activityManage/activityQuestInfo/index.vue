@@ -130,7 +130,7 @@
       <el-table-column label="目标任务量" align="center" prop="target"/>
       <el-table-column label="完成后增加的资金" align="center" prop="reward"/>
       <el-table-column label="描述" align="center" prop="content"/>
-<!--      <el-table-column label="任务详情" min-width="200" align="center" prop="detail"/>-->
+      <!--      <el-table-column label="任务详情" min-width="200" align="center" prop="detail"/>-->
       <el-table-column label="平台游戏类型" align="center" prop="kindId"/>
       <el-table-column label="平台类型" align="center" prop="platformName"/>
       <el-table-column label="任务模式" align="center" prop="taskMode" :formatter="hasTaskModeFormat"/>
@@ -325,12 +325,12 @@ export default {
       //所属游戏
       gameInfoOptions: [],
       taskMode: [{
-          value: 0,
-          label: '永久任务'
-        }, {
-          value: 1,
-          label: '每日任务'
-        }],
+        value: 0,
+        label: '永久任务'
+      }, {
+        value: 1,
+        label: '每日任务'
+      }],
       //平台游戏类型
       kindIdOptions: [],
       //平台类型

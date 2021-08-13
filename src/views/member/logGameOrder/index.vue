@@ -323,8 +323,16 @@ export default {
     },
     initChange(row){
       if(row) {
-        //修改状态
+          //修改状态
+          this.$confirm('确认要保存状态为"' + row.status + '"吗?', '警告', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(function () {
 
+          }).then(() => {
+            this.msgSuccess(text + '成功')
+          })
       }
     }
   }

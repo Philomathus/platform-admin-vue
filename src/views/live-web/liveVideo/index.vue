@@ -494,7 +494,6 @@ export default {
         } else if (response.code === 500) {
           this.msgError(response.msg)
         }
-        console.info("111")
         this.getList()
         this.effectOpen = false
       })

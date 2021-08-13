@@ -8,6 +8,7 @@
           style="width: 240px"
           value-format="yyyy-MM-dd"
           type="daterange"
+          clearable
           range-separator="-"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
@@ -48,20 +49,9 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['admin:liveHostWageNote:export']"
+          v-hasPermi="['admin:liveHostWageNote:exportHosts']"
         >导出
         </el-button>
-      </el-col>
-      <el-col :span="1.5" style="width: 140px">
-        <el-input
-          v-model="this.totalsettleTotal"
-          placeholder="结算总计统计"
-          readonly
-          clearable
-          size="small"
-        >
-          {{ this.totalsettleTotal || 0 }}}
-        </el-input>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -77,15 +67,6 @@
       <el-table-column label="开播次数" align="center" prop="times"/>
       <el-table-column label="总收入" align="center" prop="totalsettle"/>
     </el-table>
-
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page-sizes="[20,50,100,500]"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
   </div>
 </template>
 
@@ -132,20 +113,9 @@ export default {
         selectDate: [this.parseTime(new Date(), '{y}-{m}-{d}'), this.parseTime(new Date(), '{y}-{m}-{d}')],
         nickName: null,
         hostId: null,
-        familyId: null,
-        settlementRate: 0.7,
-        pageNum: 1,
-        pageSize: 100,
       },
       detailsList: [],
       detailsTotal: 0,
-      queryDetailsParams: {
-        //dateDay: this.parseTime(new Date(), '{y}-{m}-{d}'),
-        pageNum: 1,
-        pageSize: 100,
-        orderByColumn: 'create_time',
-        isAsc: 'desc'
-      },
       // 表单参数
       form: {},
       // 表单校验
@@ -160,9 +130,12 @@ export default {
     /** 查询主播时长列表 */
     getList() {
       this.loading = true
+      console.info(this.queryParams.selectDate)
+      if (this.queryParams.selectDate==null){
+        this.queryParams.selectDate=[this.parseTime(new Date(), '{y}-{m}-{d}'), this.parseTime(new Date(), '{y}-{m}-{d}')]
+      }
       listHostWageNoteDaysPage(this.queryParams).then(response => {
-        this.liveHostWageNoteList = response.rows
-        this.total = response.total
+        this.liveHostWageNoteList = response.data
         this.loading = false
       })
     },
@@ -183,9 +156,6 @@ export default {
 
     /** 搜索按钮操作 */
     handleQuery() {
-      this.totalsettleTotalList = []
-      this.totalsettleTotal = null
-      this.queryParams.pageNum = 1
       this.getList()
     },
     /** 重置按钮操作 */

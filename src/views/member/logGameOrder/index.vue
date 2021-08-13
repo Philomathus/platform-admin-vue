@@ -65,7 +65,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table stripe v-loading="loading" :data="logGameOrderList" >
+    <el-table stripe v-loading="loading" :data="logGameOrderList">
       <el-table-column label="会员ID" align="center" prop="memberId"/>
       <el-table-column label="订单ID" align="center" prop="id" min-width="180"/>
       <el-table-column label="游戏平台" align="center" prop="platformName"/>
@@ -73,7 +73,14 @@
       <el-table-column label="开始时间" align="center" prop="bTime" min-width="120"/>
       <el-table-column label="结束时间" align="center" prop="eTime" min-width="120"/>
       <el-table-column label="类型" align="center" prop="type" min-width="60" :formatter="formatterType"/>
-      <el-table-column label="状态" align="center" prop="status" min-width="120" :formatter="formatterStatus"/>
+      <el-table-column label="状态" align="center" prop="status" min-width="120" :formatter="formatterStatus">
+        <template v-slot="{row}">
+          <el-select v-model="row.stateName" label-in-value :value="formatterStatus(row)" @change="initChange(row)" @focus="formatterStatus(row)" placeholder="请选择" filterable allow-create>
+            <el-option v-for="item in stateCollection[row.type -1] " :key="item.label" :label="item.label" :value="item.value">
+            </el-option>
+          </el-select>
+        </template>
+      </el-table-column>
       <el-table-column label="重试次数" align="center" prop="retryCount" min-width="50"/>
     </el-table>
 
@@ -163,6 +170,8 @@ export default {
       title: '',
       // 是否显示弹出层
       open: false,
+      //状态名称
+      stateName: null,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -171,7 +180,7 @@ export default {
         isAsc: 'desc',
         searchValue: null,
         type: null,
-        status: null,
+        stateId: null,
         platformId: null,
         stateList:[],
         selectDate: [this.parseTime(new Date,'{y}-{m}-{d}'), this.parseTime(new Date,'{y}-{m}-{d}')]
@@ -179,7 +188,9 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {}
+      rules: {},
+      //颜色
+      colClass: null
     }
   },
   watch:{
@@ -242,7 +253,11 @@ export default {
       this.loading = true
       this.queryParams.stateList = this.stateList
       listLogGameOrder(this.queryParams).then(response => {
-        this.logGameOrderList = response.rows
+        let templateList = response.rows
+        for (const row of templateList){
+          row.stateName = this.formatterStatus(row)
+        }
+        this.logGameOrderList = templateList
         this.total = response.total
         this.loading = false
       })
@@ -305,6 +320,12 @@ export default {
         this.platformList = response.data
         this.loading = false
       })
+    },
+    initChange(row){
+      if(row) {
+        //修改状态
+
+      }
     }
   }
 }

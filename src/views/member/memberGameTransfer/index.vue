@@ -171,7 +171,8 @@ export default {
         transferState: null,
         transferType: null,
         transferAmount: null,
-        transferTime: null
+        transferTime: null,
+        selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())]
       },
       // 表单参数
       form: {},

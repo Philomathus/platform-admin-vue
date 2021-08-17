@@ -27,7 +27,9 @@
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
       </el-form-item>
+      <span style="color: red ;margin-top:10px">友情提示(每日推广数据查询前，请进行一次基础数据的预生成操作)</span>
     </el-form>
+
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
@@ -61,6 +63,17 @@
           @click="handleDelete"
           v-hasPermi="['admin:reportAgentcount:remove']"
         >删除推广码
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="mini"
+          @click="generatedata"
+          v-hasPermi="['admin:reportAgentcount:generatedata']"
+        >基础数据预生成
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -148,7 +161,8 @@ import {
   liststorage,
   exportReportAgentCount,
   addPromotionCode,
-  delPromotionCode
+  delPromotionCode,
+  generatedata
 } from '@/api/platform-web/report/agentCount'
 import { getYesterDate } from '@/utils/dateUtils'
 import { toyesDayshortcuts } from '@/utils/dateUtils'
@@ -269,6 +283,22 @@ export default {
     handleDelete() {
       this.resetformdelPromotionCode()
       this.delPromotionCode = true
+    },
+    //预生成数据
+    generatedata() {
+      const agenttime = this.queryParams.agenttime
+      console.info(agenttime)
+      if (agenttime == null || agenttime == '') {
+        this.msgError('请选择日期')
+        return
+      }
+      generatedata(this.queryParams).then(response => {
+        this.msgSuccess(response.msg)
+        if (response.code == 200) {
+          this.open = false
+          this.getList()
+        }
+      })
     },
     // 新增推广码表单重置
     resetformaddPromotionCode() {

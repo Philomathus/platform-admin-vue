@@ -40,7 +40,8 @@ export function generatedata(data) {
   return request({
     url: url.platformWeb + '/admin/reportAgentcount/generatedata',
     method: 'get',
-    params: data
+    params: data,
+    timeout: 60000
   })
 }
 

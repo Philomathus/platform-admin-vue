@@ -27,7 +27,7 @@
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
       </el-form-item>
-      <span style="color: red ;margin-top:10px">友情提示(每日推广数据查询前，请进行一次基础数据的预生成操作)</span>
+      <span style="position:relative ;color: red ;top:7px;font-size: 15px">友情提示(每日推广数据查询前，请进行一次基础数据的预生成操作)</span>
     </el-form>
 
 
@@ -66,7 +66,7 @@
         </el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button
+        <el-button :disabled="isDisable"
           type="primary"
           plain
           icon="el-icon-plus"
@@ -144,14 +144,14 @@
       </div>
     </el-dialog>
 
-    <pagination
+<!--    <pagination
       v-show="total>0"
       :total="total"
       :page-sizes="[20,50,100]"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
-    />
+    />-->
   </div>
 </template>
 
@@ -184,6 +184,7 @@ export default {
       ids: [],
       // 非单个禁用
       single: true,
+      isDisable:false,
       // 非多个禁用
       multiple: true,
       //新增推广码弹框
@@ -241,7 +242,7 @@ export default {
       listReport(this.addDateRange(this.queryParams, this.queryParams.dateRange)).then(response => {
 
         this.report = response.rows
-        this.total = response.total
+        //this.total = response.total
         this.loading = false
 
         // that.$loading.hide();
@@ -286,15 +287,19 @@ export default {
     },
     //预生成数据
     generatedata() {
+      this.isDisable=true;
       const agenttime = this.queryParams.agenttime
       console.info(agenttime)
       if (agenttime == null || agenttime == '') {
         this.msgError('请选择日期')
         return
       }
-      generatedata(this.queryParams).then(response => {
+      generatedata({
+        agenttime: agenttime
+      }).then(response => {
         this.msgSuccess(response.msg)
         if (response.code == 200) {
+          this.isDisable=false
           this.open = false
           this.getList()
         }

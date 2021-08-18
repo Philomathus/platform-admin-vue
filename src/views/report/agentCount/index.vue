@@ -25,7 +25,7 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery" :disabled="isDisable">搜索</el-button>
       </el-form-item>
       <span style="position:relative ;color: red ;top:7px;font-size: 15px">友情提示(每日推广数据查询前，请进行一次基础数据的预生成操作)</span>
     </el-form>

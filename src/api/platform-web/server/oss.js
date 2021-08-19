@@ -48,6 +48,6 @@ export function delOss(id) {
 export function effectOss(id) {
   return request({
     url: url.platformWeb + '/server/oss/effect/' + id,
-    method: 'put'
+    method: 'patch'
   })
 }

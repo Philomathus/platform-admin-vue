@@ -28,7 +28,6 @@ export function LotteryInfoName() {
 
 // 新增开奖配置
 export function addLotteryPrizeconfig(data) {
-  console.info(data)
   return request({
     url: url.platformWeb + '/admin/lotteryPrizeconfig',
     method: 'post',

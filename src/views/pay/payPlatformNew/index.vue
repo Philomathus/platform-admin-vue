@@ -728,7 +728,7 @@ export default {
         signPublicKey: null,
         signPrivateKey: null,
         platWhiteIpList: null,
-        urlType: null,
+        urlType: "0",
         creator: null,
         createTime: null,
         updator: null,

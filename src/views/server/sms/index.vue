@@ -155,7 +155,7 @@
         <el-form-item label="模板" prop="template">
           <el-input v-model="form.template" placeholder="请输入模板"/>
         </el-form-item>
-        <el-form-item label="地区" prop="region" v-if="form.provider != 0">
+        <el-form-item label="地区" prop="region">
           <el-input v-model="form.region" placeholder="请输入地区"/>
         </el-form-item>
         <el-form-item label="smsSdkAppid" prop="smsSdkAppid" v-if="form.provider == 0">

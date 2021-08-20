@@ -434,7 +434,7 @@ export default {
         isAuthentication: null,
         isBan:null,
         mobile: null,
-        familyId: null,
+        familyId: null
       },
       // 表单参数
       form: {},

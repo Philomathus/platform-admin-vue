@@ -66,10 +66,8 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table stripe :stripe="true" v-loading="loading" :data="payTypeList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center"/>
+    <el-table stripe :stripe="true" v-loading="loading" :data="payTypeList">
       <!--      <el-table-column label="编号" align="center" prop="id" />-->
-      <!--      <el-table-column label="编号" align="center" prop="code" />-->
       <el-table-column label="排序" align="center" prop="indexes"/>
       <el-table-column label="名称" align="center" prop="name"/>
       <el-table-column label="图标" align="center" prop="iconUrl">
@@ -249,8 +247,6 @@ export default {
     return {
       // 遮罩层
       loading: true,
-      // 选中数组
-      ids: [],
       // 非单个禁用
       single: true,
       // 非多个禁用
@@ -422,12 +418,6 @@ export default {
       this.resetForm('queryForm')
       this.handleQuery()
     },
-    // 多选框选中数据
-    handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
-      this.single = selection.length !== 1
-      this.multiple = !selection.length
-    },
     /** 新增按钮操作 */
     handleAdd() {
       this.reset()
@@ -437,7 +427,7 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset()
-      const id = row.id || this.ids
+      const id = row.id
       getPayType(id).then(response => {
         if (response.data.deviceType !== null && response.data.deviceType !== "") {
           this.deviceTypes = response.data.deviceType.split(',')
@@ -449,7 +439,7 @@ export default {
     },
     handleUpdateText(row) {
       this.reset()
-      const id = row.id || this.ids
+      const id = row.id
       getPayType(id).then(response => {
         this.form = response.data
         this.openText = true
@@ -502,14 +492,13 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const ids = row.id || this.ids
-      const name = row.name
-      this.$confirm('是否确认删除"' + name + '"支付类型?', '警告', {
+      const id = row.id
+      this.$confirm('是否确认删除"' + row.name + '"支付类型?', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function () {
-        return delPayType(ids)
+        return delPayType(id)
       }).then(() => {
         this.getList()
         this.msgSuccess('删除成功')

@@ -240,10 +240,10 @@ export default {
       var that = this
       this.loading = true
       listReport(this.addDateRange(this.queryParams, this.queryParams.dateRange)).then(response => {
-
-        this.report = response.rows
-        //this.total = response.total
-        this.loading = false
+        if (response.code == 200) {
+          this.report = response.rows
+          this.loading = false
+        }
 
         // that.$loading.hide();
         // that.listLoading = false;
@@ -294,15 +294,22 @@ export default {
         this.msgError('请选择日期')
         return
       }
+
       generatedata({
         agenttime: agenttime
       }).then(response => {
-        this.msgSuccess(response.msg)
+        //this.msgSuccess(response.msg)
         if (response.code == 200) {
+          this.msgSuccess(response.msg)
           this.isDisable=false
           this.open = false
           this.getList()
         }
+      }).catch((err)=>{
+        //that.$notify.error("预生成数据失败，请重新生成...")
+        this.isDisable=false
+        this.open = false
+        this.loading = false
       })
     },
     // 新增推广码表单重置

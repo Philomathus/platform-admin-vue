@@ -248,6 +248,9 @@ export default {
         // that.$loading.hide();
         // that.listLoading = false;
         // that.$rjLoading.hide();
+      }).catch((err)=>{
+        //that.$notify.error("预生成数据失败，请重新生成...")
+        this.loading = false
       })
       //   .catch((err) => {
       //   if (err=='Error: 报表正在生成，请稍后...'){

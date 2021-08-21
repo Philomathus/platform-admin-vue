@@ -67,12 +67,12 @@
       </el-col>
       <el-col :span="1.5">
         <el-button :disabled="isDisable"
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="generatedata"
-          v-hasPermi="['admin:reportAgentcount:generatedata']"
+                   type="primary"
+                   plain
+                   icon="el-icon-plus"
+                   size="mini"
+                   @click="generatedata"
+                   v-hasPermi="['admin:reportAgentcount:generatedata']"
         >基础数据预生成
         </el-button>
       </el-col>
@@ -97,10 +97,10 @@
         <el-table-column label="人/笔/金额（入款日总）" min-width="170" align="center" prop="rukuanjine" :formatter="rukuanjine" fixed="right"/>
         <el-table-column label="送礼次数/金额" min-width="120" align="center" prop="totalGiveprop"/>
         <el-table-column label="直播间次数/活跃安卓/活跃苹果" min-width="210" align="center" prop="ios" :formatter="ios" fixed="right"/>
-<!--          <template slot-scope="scope">-->
-<!--            <a style="color: #00afff" @click="jump(scope.row.agentcode,scope.row.agenttime)">{{ scope.row.ios }}</a>-->
-<!--          </template>-->
-<!--        </el-table-column>-->
+        <!--          <template slot-scope="scope">-->
+        <!--            <a style="color: #00afff" @click="jump(scope.row.agentcode,scope.row.agenttime)">{{ scope.row.ios }}</a>-->
+        <!--          </template>-->
+        <!--        </el-table-column>-->
       </el-table>
     </div>
 
@@ -144,14 +144,14 @@
       </div>
     </el-dialog>
 
-<!--    <pagination
-      v-show="total>0"
-      :total="total"
-      :page-sizes="[20,50,100]"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />-->
+    <!--    <pagination
+          v-show="total>0"
+          :total="total"
+          :page-sizes="[20,50,100]"
+          :page.sync="queryParams.pageNum"
+          :limit.sync="queryParams.pageSize"
+          @pagination="getList"
+        />-->
   </div>
 </template>
 

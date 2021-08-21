@@ -241,7 +241,7 @@ export default {
       this.loading = true
       listReport(this.addDateRange(this.queryParams, this.queryParams.dateRange)).then(response => {
         if (response.code == 200) {
-          this.report = response.rows
+          this.report = response.data
           this.loading = false
         }
 

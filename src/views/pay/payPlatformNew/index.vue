@@ -165,13 +165,6 @@
         <el-form-item label="平台IP白名单" prop="platWhiteIpList">
           <el-input v-model.trim="form.platWhiteIpList" type="textarea" placeholder="请输入平台IP白名单"/>
         </el-form-item>
-        <el-form-item label="链接类型" prop="urlType">
-          <el-select v-model="form.urlType" placeholder="链接类型" clearable size="small" style="width: 240px">
-            <el-option label="url" value="0"></el-option>
-            <el-option label="html" value="1"></el-option>
-            <el-option label="url&html" value="2"></el-option>
-          </el-select>
-        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -728,7 +721,6 @@ export default {
         signPublicKey: null,
         signPrivateKey: null,
         platWhiteIpList: null,
-        urlType: "0",
         creator: null,
         createTime: null,
         updator: null,

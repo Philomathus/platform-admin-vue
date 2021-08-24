@@ -216,6 +216,8 @@
           <a style="color: #ff0000" @click="funds(row.memberId)" v-if="row.memberStatus === 4">{{ row.memberId }}</a>
           <a style="color: #ee00ff" @click="funds(row.memberId)"
              v-if="row.memberStatus === 2 || row.memberStatus === 3 || row.memberStatus === 5">{{ row.memberId }}</a>
+          <a style="color: #5eff00" @click="funds(row.memberId)"
+             v-if="row.memberStatus === 6">{{ row.memberId }}</a>
         </template>
         <template slot="header">
           <span>会员ID</span>
@@ -223,8 +225,9 @@
             <i class="el-icon-question"></i>
             <div slot="content" class="tooltip-content">
               <div>字体蓝色:(正常会员)</div>
-              <div>字体红色:(套利号)</div>
               <div>字体粉色:(测试号,超管号,稀有号)</div>
+              <div>字体红色:(套利号)</div>
+              <div>字体绿色:(投诉号)</div>
               <div>字体橙色:(审查号)</div>
             </div>
           </el-tooltip>

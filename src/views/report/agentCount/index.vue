@@ -294,11 +294,10 @@ export default {
       const agenttime = this.queryParams.agenttime
       console.info(agenttime)
       if (agenttime == null || agenttime == '') {
-        this.msgError('请选择日期')
-        return
+        this.queryParams.agenttime=this.parseTime(getYesterDate(), '{y}-{m}-{d}')
       }
       generatedata({
-        agenttime: agenttime
+        agenttime: this.queryParams.agenttime
       }).then(response => {
         //this.msgSuccess(response.msg)
         if (response.code == 200) {

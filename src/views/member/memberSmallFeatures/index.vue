@@ -53,7 +53,6 @@
                 placeholder="会员ID统一以竖行排列,不允许有任何字符"
               />
             </el-form-item>
-            <span>下框回显手机号</span>
             <el-form-item prop="phonesByIds" style="width: 100%;">
                 <el-input
                   v-model="this.phonesByIds"
@@ -177,7 +176,6 @@ export default {
                 this.phonesByIdsList.data.forEach(value => {
                   this.phonesByIds = value + '\n' + this.phonesByIds
                 })
-                console.info(this.phonesByIds)
               }
               this.msgSuccess((res.msg))
             }

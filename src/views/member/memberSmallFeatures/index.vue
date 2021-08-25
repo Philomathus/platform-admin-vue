@@ -70,8 +70,7 @@
                 <el-input
                   v-model="this.phonesByIds"
                   type="textarea"
-                  :rows="20"
-                  readonly
+                  :rows="21"
                 >
                   {{ this.phonesByIds }}
                 </el-input>

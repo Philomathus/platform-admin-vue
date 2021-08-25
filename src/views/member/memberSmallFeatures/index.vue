@@ -53,17 +53,6 @@
                 placeholder="会员ID统一以竖行排列,不允许有任何字符"
               />
             </el-form-item>
-            <span>下框回显手机号</span>
-            <el-form-item prop="phonesByIds" style="width: 100%;">
-                <el-input
-                  v-model="this.phonesByIds"
-                  type="textarea"
-                  :rows="20"
-                  readonly
-                >
-                  {{ this.phonesByIds }}
-                </el-input>
-            </el-form-item>
             <el-form-item prop="inviterCode" style="width: 55%;">
               <el-input
                 clearable
@@ -75,7 +64,18 @@
             </el-form-item>
             <el-form-item>
               <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">查询</el-button>
+              <el-button type="primary" size="mini" @click="handleClear">清除回显手机号</el-button>
             </el-form-item>
+            <el-form-item prop="phonesByIds" style="width: 100%;">
+                <el-input
+                  v-model="this.phonesByIds"
+                  type="textarea"
+                  :rows="21"
+                >
+                  {{ this.phonesByIds }}
+                </el-input>
+            </el-form-item>
+
           </el-form>
         </el-card>
       </el-col>
@@ -177,7 +177,6 @@ export default {
                 this.phonesByIdsList.data.forEach(value => {
                   this.phonesByIds = value + '\n' + this.phonesByIds
                 })
-                console.info(this.phonesByIds)
               }
               this.msgSuccess((res.msg))
             }
@@ -187,6 +186,10 @@ export default {
         }
       })
     },
+    /** 批量会员ID查询手机号按钮 */
+    handleClear() {
+      this.phonesByIds = ''
+    }
   },
   mounted() {
     this.restaurants = this.loadAll();

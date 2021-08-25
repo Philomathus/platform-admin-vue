@@ -115,11 +115,11 @@ export default {
         ]
       },
       phoneRules: {
-        title: [
-          {phones: true, message: "批量手机号不能为空", trigger: "blur"}
+        phones: [
+          {required: true, message: "批量手机号不能为空", trigger: "blur"}
         ],
-        icon: [
-          {password: true, message: "密码不能为空", trigger: "blur"}
+        password: [
+          {required: true, message: "密码不能为空", trigger: "blur"}
         ],
         googleAuthCode: [
           {required: true, message: "谷歌验证码不能为空", trigger: "blur"}

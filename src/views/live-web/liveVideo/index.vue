@@ -212,11 +212,11 @@
       </div>
     </el-dialog>
 
-    <el-dialog v-dialogDrag :close-on-click-modal="false" title="是否立即生效" :visible.sync="effectOpen" width="290px"
+    <el-dialog v-dialogDrag :close-on-click-modal="false" title="是否立即生效" :visible.sync="effectOpen" width="300px"
                append-to-body
     >
-      <el-form ref="form" :model="form" label-width="105px">
-        <el-form-item label="是否立即生效" prop="effect">
+      <el-form ref="form" :model="form" label-width="65px">
+        <el-form-item prop="effect">
           <el-radio v-model="form.effect" label="1">是</el-radio>
           <el-radio v-model="form.effect" label="2">否</el-radio>
         </el-form-item>

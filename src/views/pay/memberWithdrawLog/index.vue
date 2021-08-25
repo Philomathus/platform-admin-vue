@@ -170,6 +170,16 @@
         >批量复制
         </el-button>
       </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-document-copy"
+          size="mini"
+          @click="handleBatchOrderNoCopy"
+        >订单号复制
+        </el-button>
+      </el-col>
       <el-col :span="10" style="margin-left: 10px">
         <span style="font-size: 16px;margin-right: 10px">记录刷新</span>
         <el-select v-model="refreshSec" placeholder="时间间隔" style="width: 110px">
@@ -216,6 +226,8 @@
           <a style="color: #ff0000" @click="funds(row.memberId)" v-if="row.memberStatus === 4">{{ row.memberId }}</a>
           <a style="color: #ee00ff" @click="funds(row.memberId)"
              v-if="row.memberStatus === 2 || row.memberStatus === 3 || row.memberStatus === 5">{{ row.memberId }}</a>
+          <a style="color: #5eff00" @click="funds(row.memberId)"
+             v-if="row.memberStatus === 6">{{ row.memberId }}</a>
         </template>
         <template slot="header">
           <span>会员ID</span>
@@ -223,8 +235,9 @@
             <i class="el-icon-question"></i>
             <div slot="content" class="tooltip-content">
               <div>字体蓝色:(正常会员)</div>
-              <div>字体红色:(套利号)</div>
               <div>字体粉色:(测试号,超管号,稀有号)</div>
+              <div>字体红色:(套利号)</div>
+              <div>字体绿色:(投诉号)</div>
               <div>字体橙色:(审查号)</div>
             </div>
           </el-tooltip>
@@ -1169,6 +1182,31 @@ export default {
             html += '<td>' + row.createTime + '</td>'
             html += '<td>' + row.updateTime + '</td>'
             html += '</tr></table>'
+          }
+        }
+      }
+      textarea.value = html
+      this.copyData = html
+      this.copy(this.copyData)
+    },
+    handleBatchOrderNoCopy() {
+      if (this.ids.length <= 0) {
+        var textarea = document.createElement('textarea')
+        let html = ''
+        for (const row of this.memberWithdrawLogList) {
+          html += row.orderNo + '\r'
+        }
+        textarea.value = html
+        this.copyData = html
+        this.copy(this.copyData)
+        return
+      }
+      var textarea = document.createElement('textarea')
+      let html = ''
+      for (const row of this.memberWithdrawLogList) {
+        for (const id of this.ids) {
+          if (id == row.id) {
+            html += row.orderNo + '\r'
           }
         }
       }

@@ -123,7 +123,9 @@
         </template>
       </el-table-column>
       <el-table-column label="家族名称" :show-overflow-tooltip="true" align="center" prop="familyName" min-width="100"/>
-      <el-table-column label="直播时长" align="center" prop="livetime"/>
+      <el-table-column label="直播开始时间" align="center" prop="startTime" min-width="150"/>
+      <el-table-column label="直播结束时间" align="center" prop="endTime" min-width="150"/>
+      <el-table-column label="直播时长" align="center" prop="livetime" />
       <el-table-column label="礼物任务" align="center" prop="lwrenwu"/>
       <el-table-column label="时长任务" align="center" prop="screnwu"/>
       <el-table-column label="时薪" align="center" prop="coin"/>

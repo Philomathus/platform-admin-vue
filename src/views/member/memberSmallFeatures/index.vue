@@ -64,7 +64,7 @@
             </el-form-item>
             <el-form-item>
               <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">查询</el-button>
-              <el-button type="primary" size="mini" @click="handleClear">清除回显手机号</el-button>
+              <el-button type="info" size="mini" @click="handleClear">清除回显手机号</el-button>
             </el-form-item>
             <el-form-item prop="phonesByIds" style="width: 100%;">
                 <el-input

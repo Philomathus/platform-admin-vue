@@ -7,6 +7,7 @@
           placeholder="请输入主播ID"
           clearable
           size="small"
+          type="number"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>

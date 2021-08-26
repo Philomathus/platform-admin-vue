@@ -638,6 +638,7 @@ export default {
       //资金明细
       fundsOpen: false,
       rechargeCodeRatio: null,
+      rechargeUserNameStatus:null,
       rechargeWithdrawRate: null,
       bankCharge: null,
       //资金明细数据
@@ -708,6 +709,9 @@ export default {
         return 'warning-row'
       }
       if (row.rechargeCodeRatio !== null && row.rechargeCodeRatio < 1.51) {
+        return 'warning-row'
+      }
+      if (row.rechargeUserNameStatus==1){
         return 'warning-row'
       }
     },

@@ -922,7 +922,7 @@ export default {
     },
     handleBack(row) {
       const id = row.id;
-      this.$confirm('请与三方核对该订单是否成功提交,如已提交成功不必回退.确认回退？', '警告', {
+      this.$confirm('请与三方仔细核对该订单是否成功提交,如已提交成功不应回退,避免重复出款.确认回退？', '警告', {
         confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
@@ -935,7 +935,7 @@ export default {
     },
     handleFailBack(row) {
       const id = row.id;
-      this.$confirm('请与三方仔细核对该订单是否确认已代付失败,避免重复出款.确认回退？', '警告', {
+      this.$confirm('请与三方仔细核对该订单是否确认已代付失败,如未确认此订单代付失败不应回退,避免重复出款.确认回退？', '警告', {
         confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'

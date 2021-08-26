@@ -45,7 +45,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:liveBlack:remove']"
-          >删除</el-button>
+          >移除黑名单禁言</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -166,20 +166,8 @@ export default {
       }).catch(() => {
       })
     },
-    /** 导出按钮操作 */
-    handleExport() {
-      const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(function() {
-        return exportLiveBlack(queryParams);
-      }).then(response => {
-        this.downloadExcel(response, '拉黑');
-      }).catch(() => {
-      })
-    }
+
+
   }
 };
 </script>

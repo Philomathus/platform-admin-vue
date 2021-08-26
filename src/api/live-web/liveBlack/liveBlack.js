@@ -13,7 +13,6 @@ export function listLiveBlack(query) {
 
 // 删除拉黑
 export function delLiveBlack(data) {
-  debugger;
   return request({
     url: url.platformWeb + '/admin/liveBlack/deleteLiveBlack',
     method: 'put',

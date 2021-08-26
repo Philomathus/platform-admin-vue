@@ -6,16 +6,16 @@
         <el-card>
           <div slot="header"><span>批量手机号更新密码</span></div>
           <el-form :model="phoneFrom" ref="phoneFrom" :rules="phoneRules">
-            <el-form-item prop="phones" style="width: 100%;">
+            <el-form-item prop="phones" style="width: 100%">
               <el-input
                 type="textarea"
-                :rows="41"
+                :rows="45"
                 clearable
                 v-model="phoneFrom.phones"
                 placeholder="手机号统一以竖行排列,不允许有任何字符"
               />
             </el-form-item>
-            <el-form-item prop="password" style="width: 55%;">
+            <el-form-item prop="password" style="width: 100%">
               <el-autocomplete
                 class="inline-input"
                 :fetch-suggestions="querySearch"
@@ -25,17 +25,16 @@
                 placeholder="请输入更新的密码"
               ></el-autocomplete>
             </el-form-item>
-            <el-form-item prop="inviterCode" style="width: 55%;">
+            <el-form-item prop="inviterCode" style="width: 100%">
               <el-input
+                style="width: 52%"
                 clearable
                 type="number"
                 class="no-number"
                 v-model="phoneFrom.googleAuthCode"
                 placeholder="请输入谷歌验证码"
               />
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" icon="el-icon-edit" size="mini" @click="handleUpdate">更新</el-button>
+              <el-button type="primary" style="width: 23%;" @click="handleUpdate">更新</el-button>
             </el-form-item>
           </el-form>
         </el-card>
@@ -44,38 +43,36 @@
         <el-card>
           <div slot="header"><span>批量会员ID查询手机号</span></div>
           <el-form :model="phoneByIdFrom" ref="phoneByIdFrom" :rules="phoneByIdRules">
-            <el-form-item prop="userIds" style="width: 100%;">
+            <el-form-item prop="userIds" style="width: 100%">
               <el-input
                 type="textarea"
-                :rows="21"
+                :rows="23"
                 clearable
                 v-model="phoneByIdFrom.userIds"
                 placeholder="会员ID统一以竖行排列,不允许有任何字符"
               />
             </el-form-item>
-            <el-form-item prop="inviterCode" style="width: 55%;">
+            <el-form-item prop="inviterCode">
               <el-input
                 clearable
+                style="width: 52%"
                 type="number"
                 class="no-number"
                 v-model="phoneByIdFrom.googleAuthCode"
                 placeholder="请输入谷歌验证码"
               />
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">查询</el-button>
-              <el-button type="info" size="mini" @click="handleClear">清除回显手机号</el-button>
+              <el-button type="primary" style="width: 25%" @click="handleQuery">查询</el-button>
+              <el-button type="info" size="mini" style="width: 18%" @click="handleClear">清除</el-button>
             </el-form-item>
             <el-form-item prop="phonesByIds" style="width: 100%;">
                 <el-input
                   v-model="this.phonesByIds"
                   type="textarea"
-                  :rows="21"
+                  :rows="23"
                 >
                   {{ this.phonesByIds }}
                 </el-input>
             </el-form-item>
-
           </el-form>
         </el-card>
       </el-col>

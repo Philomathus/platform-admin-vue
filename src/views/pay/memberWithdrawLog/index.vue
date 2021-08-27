@@ -997,7 +997,8 @@ export default {
     handleArtificialWithdraw() {
 
       artificialMemberWithdrawLog({
-        id: this.form.id
+        id: this.form.id,
+        payAgentPlatId: this.form.payAgentPlatId,
       }).then(response => {
         this.msgSuccess(response.msg)
         if (response.code == 200) {

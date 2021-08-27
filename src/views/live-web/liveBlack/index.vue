@@ -50,7 +50,13 @@
         </template>
       </el-table-column>
     </el-table>
-
+    <pagination
+      v-show="total>0"
+      :total="total"
+      :page.sync="queryParams.pageNum"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+    />
   </div>
 </template>
 
@@ -83,6 +89,8 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
+        pageNum: 1,
+        pageSize: 50,
         hostId: null,
         blackUserId: null,
       },
@@ -100,7 +108,8 @@ export default {
       this.loading = true;
       listLiveBlack(this.queryParams).then(response => {
         debugger;
-        this.liveBlackList = response;
+        this.liveBlackList = response.rows;
+        this.total = response.total;
         this.loading = false;
       });
     },

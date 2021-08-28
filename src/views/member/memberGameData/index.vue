@@ -286,13 +286,6 @@ export default {
       })
     },
     handleAgRecord(row){
-      this.queryParams.gameId = row.gameId;
-      this.queryParams.gameRound = row.gameRound;
-      this.queryParams.agent = row.agent;
-      this.queryParams.gameStartTime = row.game_start_time
-      this.queryParams.gameEndTime = row.game_end_time
-      this.queryParams.platformId = row.platformId
-      this.queryParams.account = row.account;
       this.$refs.agRecord.show(row)
     },
     funds(row) {

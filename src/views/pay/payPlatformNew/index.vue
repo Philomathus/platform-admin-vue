@@ -46,30 +46,30 @@
         >新增
         </el-button>
       </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['pay:payPlatformNew:edit']"
-        >修改
-        </el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['pay:payPlatformNew:remove']"
-        >删除
-        </el-button>
-      </el-col>
+<!--      <el-col :span="1.5">-->
+<!--        <el-button-->
+<!--          type="success"-->
+<!--          plain-->
+<!--          icon="el-icon-edit"-->
+<!--          size="mini"-->
+<!--          :disabled="single"-->
+<!--          @click="handleUpdate"-->
+<!--          v-hasPermi="['pay:payPlatformNew:edit']"-->
+<!--        >修改-->
+<!--        </el-button>-->
+<!--      </el-col>-->
+<!--      <el-col :span="1.5">-->
+<!--        <el-button-->
+<!--          type="danger"-->
+<!--          plain-->
+<!--          icon="el-icon-delete"-->
+<!--          size="mini"-->
+<!--          :disabled="multiple"-->
+<!--          @click="handleDelete"-->
+<!--          v-hasPermi="['pay:payPlatformNew:remove']"-->
+<!--        >删除-->
+<!--        </el-button>-->
+<!--      </el-col>-->
       <el-col :span="1.5">
         <el-button
           type="warning"
@@ -95,13 +95,13 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table :stripe="true" v-loading="loading" :data="payPlatformNewList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="平台名称" align="center" prop="name" width="150"/>
-      <el-table-column label="平台编码" align="center" prop="code" width="130"/>
-      <el-table-column label="平台下单接口地址" :show-overflow-tooltip="true" align="center" prop="platPayUrl"/>
-      <el-table-column label="平台订单查询地址" :show-overflow-tooltip="true" align="center" prop="platQueryUrl"/>
-      <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
+    <el-table :stripe="true" v-loading="loading" :data="payPlatformNewList">
+<!--      <el-table-column type="selection" width="55" align="center"/>-->
+      <el-table-column label="平台名称" align="center" prop="name"/>
+      <el-table-column label="平台编码" align="center" prop="code"/>
+      <el-table-column label="平台下单接口地址" :show-overflow-tooltip="true" align="center" width="800" prop="platPayUrl"/>
+      <el-table-column label="平台订单查询地址" :show-overflow-tooltip="true" align="center" width="800" prop="platQueryUrl"/>
+      <el-table-column label="操作" align="center" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -111,14 +111,14 @@
             v-hasPermi="['pay:payPlatformNew:edit']"
           >修改
           </el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['pay:payPlatformNew:remove']"
-          >删除
-          </el-button>
+<!--          <el-button-->
+<!--            size="mini"-->
+<!--            type="text"-->
+<!--            icon="el-icon-delete"-->
+<!--            @click="handleDelete(scope.row)"-->
+<!--            v-hasPermi="['pay:payPlatformNew:remove']"-->
+<!--          >删除-->
+<!--          </el-button>-->
         </template>
       </el-table-column>
     </el-table>

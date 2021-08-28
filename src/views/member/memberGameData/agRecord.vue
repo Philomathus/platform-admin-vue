@@ -190,7 +190,8 @@ export default {
     handleDetail(row){
       this.queryParams.gameId = row.gameId;
       this.queryParams.gameRound = row.gameRound;
-      this.queryParams.kindId = row.kindId
+      this.queryParams.kindId = row.gametype
+      this.queryParams.gametype = row.gametype
       this.loading = true
       gameDetailList(this.queryParams).then(response => {
         if (response.data != null && response.data != undefined){

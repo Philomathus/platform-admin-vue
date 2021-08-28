@@ -176,9 +176,9 @@ export default {
     getRecordList() {
       this.loading = true
       gameRecordList(this.queryParams).then(response => {
-        this.memberGameDataRecordList = response.data.list
-        if (response.data.list[0] != null && response.data.list[0] != undefined){
-          this.chairId = response.data.list[0].chairID
+        this.memberGameDataRecordList = response.data
+        if (response.data[0] != null && response.data[0] != undefined){
+          this.chairId = response.data[0].chairID
         }
         this.total = response.data.count
         this.loading = false

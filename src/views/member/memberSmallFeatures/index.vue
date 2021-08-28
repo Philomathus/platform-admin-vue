@@ -34,7 +34,7 @@
                 v-model="phoneFrom.googleAuthCode"
                 placeholder="请输入谷歌验证码"
               />
-              <el-button type="primary" style="width: 23%;" @click="handleUpdate">更新</el-button>
+              <el-button type="primary" plain style="width: 23%;" @click="handleUpdate">更新</el-button>
             </el-form-item>
           </el-form>
         </el-card>
@@ -61,8 +61,8 @@
                 v-model="phoneByIdFrom.googleAuthCode"
                 placeholder="请输入谷歌验证码"
               />
-              <el-button type="primary" style="width: 25%" @click="handleQuery">查询</el-button>
-              <el-button type="info" size="mini" style="width: 18%" @click="handleClear">清除</el-button>
+              <el-button type="primary" plain style="width: 25%" @click="handleQuery">查询</el-button>
+              <el-button type="info" size="mini" plain style="width: 18%" @click="handleClear">清除</el-button>
             </el-form-item>
             <el-form-item prop="phonesByIds" style="width: 100%;">
                 <el-input

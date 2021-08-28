@@ -34,12 +34,12 @@
         </el-table-column>
         <el-table-column label="玩法" align="center" prop="playType">
           <template slot-scope="scope">
-            <span v-if="scope.row.playType === 1">庄</span>
-            <span v-if="scope.row.playType === 2">闲</span>
-            <span v-if="scope.row.playType === 3">和</span>
-            <span v-if="scope.row.playType === 21">龙</span>
-            <span v-if="scope.row.playType === 22">虎</span>
-            <span v-if="scope.row.playType === 23">和</span>
+            <span v-if="scope.row.playType === '1'">庄</span>
+            <span v-if="scope.row.playType === '2'">闲</span>
+            <span v-if="scope.row.playType === '3'">和</span>
+            <span v-if="scope.row.playType === '21'">龙</span>
+            <span v-if="scope.row.playType === '22'">虎</span>
+            <span v-if="scope.row.playType === '23'">和</span>
           </template>
         </el-table-column>
         <el-table-column label="桌台号" align="center" prop="tableCode"/>

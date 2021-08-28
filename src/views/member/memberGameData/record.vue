@@ -170,7 +170,7 @@ export default {
         this.queryParams.gameRound = row.gameRound;
         this.queryParams.agent = row.accounts.split("_")[0];
         this.queryParams.platformId = this.platformId
-        this.queryParams.account = row.accounts.replace(this.queryParams.agent+"_","");
+        this.queryParams.account = row.accounts
         this.queryParams.gameUserNo = row.gameID
         this.queryParams.serverId = row.serverID
         this.queryParams.recordId = row.recordID

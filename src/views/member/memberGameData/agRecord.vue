@@ -34,19 +34,18 @@
         </el-table-column>
         <el-table-column label="玩法" align="center" prop="playType">
           <template slot-scope="scope">
-            <span v-if="scope.row.playType == '1'">庄</span>
-            <span v-if="scope.row.playType == '2'">闲</span>
-            <span v-if="scope.row.playType == '3'">和</span>
-            <span v-if="scope.row.playType == '21'">龙</span>
-            <span v-if="scope.row.playType == '22'">虎</span>
-            <span v-if="scope.row.playType == '23'">和</span>
+            <span v-if="scope.row.playType === 1">庄</span>
+            <span v-if="scope.row.playType === 2">闲</span>
+            <span v-if="scope.row.playType === 3">和</span>
+            <span v-if="scope.row.playType === 21">龙</span>
+            <span v-if="scope.row.playType === 22">虎</span>
+            <span v-if="scope.row.playType === 23">和</span>
           </template>
         </el-table-column>
         <el-table-column label="桌台号" align="center" prop="tableCode"/>
         <el-table-column label="派彩时间" align="center" prop="recalcuTime"/>
         <el-table-column label="余额" align="center" prop="beforeCredit"/>
         <el-table-column label="投注IP" align="center" prop="betIP"/>
-        <el-table-column label="桌位号" align="center" prop="Seat"/>
         <el-table-column label="详情" align="center" class-name="small-padding fixed-width" fixed="right">
           <template slot-scope="scope">
             <el-button

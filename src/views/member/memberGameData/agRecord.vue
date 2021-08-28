@@ -27,9 +27,9 @@
         <el-table-column label="订单状态" align="center" prop="flag">
           <template slot-scope="scope">
             <span v-if="scope.row.flag == '0'">异常</span>
-            <span v-if="scope.row.platformId == '1'">已派彩</span>
-            <span v-if="scope.row.platformId == '8'">已取消</span>
-            <span v-if="scope.row.platformId == '9'">已取消</span>
+            <span v-if="scope.row.flag == '1'">已派彩</span>
+            <span v-if="scope.row.flag == '8'">已取消</span>
+            <span v-if="scope.row.flag == '9'">已取消</span>
           </template>
         </el-table-column>
         <el-table-column label="玩法" align="center" prop="playType">

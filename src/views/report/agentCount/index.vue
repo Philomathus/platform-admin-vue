@@ -25,9 +25,11 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery" :disabled="isDisable">搜索</el-button>
       </el-form-item>
+      <span style="position:relative ;color: red ;top:7px;font-size: 15px">友情提示(每日推广数据查询前，请进行一次基础数据的预生成操作)</span>
     </el-form>
+
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
@@ -63,6 +65,17 @@
         >删除推广码
         </el-button>
       </el-col>
+      <el-col :span="1.5">
+        <el-button :disabled="isDisable"
+                   type="primary"
+                   plain
+                   icon="el-icon-plus"
+                   size="mini"
+                   @click="generatedata"
+                   v-hasPermi="['admin:reportAgentcount:generatedata']"
+        >基础数据预生成
+        </el-button>
+      </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
     <div ref="container" style="position: relative">
@@ -84,10 +97,10 @@
         <el-table-column label="人/笔/金额（入款日总）" min-width="170" align="center" prop="rukuanjine" :formatter="rukuanjine" fixed="right"/>
         <el-table-column label="送礼次数/金额" min-width="120" align="center" prop="totalGiveprop"/>
         <el-table-column label="直播间次数/活跃安卓/活跃苹果" min-width="210" align="center" prop="ios" :formatter="ios" fixed="right"/>
-<!--          <template slot-scope="scope">-->
-<!--            <a style="color: #00afff" @click="jump(scope.row.agentcode,scope.row.agenttime)">{{ scope.row.ios }}</a>-->
-<!--          </template>-->
-<!--        </el-table-column>-->
+        <!--          <template slot-scope="scope">-->
+        <!--            <a style="color: #00afff" @click="jump(scope.row.agentcode,scope.row.agenttime)">{{ scope.row.ios }}</a>-->
+        <!--          </template>-->
+        <!--        </el-table-column>-->
       </el-table>
     </div>
 
@@ -131,14 +144,14 @@
       </div>
     </el-dialog>
 
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page-sizes="[20,50,100]"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
+    <!--    <pagination
+          v-show="total>0"
+          :total="total"
+          :page-sizes="[20,50,100]"
+          :page.sync="queryParams.pageNum"
+          :limit.sync="queryParams.pageSize"
+          @pagination="getList"
+        />-->
   </div>
 </template>
 
@@ -148,7 +161,8 @@ import {
   liststorage,
   exportReportAgentCount,
   addPromotionCode,
-  delPromotionCode
+  delPromotionCode,
+  generatedata
 } from '@/api/platform-web/report/agentCount'
 import { getYesterDate } from '@/utils/dateUtils'
 import { toyesDayshortcuts } from '@/utils/dateUtils'
@@ -170,6 +184,7 @@ export default {
       ids: [],
       // 非单个禁用
       single: true,
+      isDisable:false,
       // 非多个禁用
       multiple: true,
       //新增推广码弹框
@@ -225,14 +240,17 @@ export default {
       var that = this
       this.loading = true
       listReport(this.addDateRange(this.queryParams, this.queryParams.dateRange)).then(response => {
-
-        this.report = response.rows
-        this.total = response.total
-        this.loading = false
+        if (response.code == 200) {
+          this.report = response.data
+          this.loading = false
+        }
 
         // that.$loading.hide();
         // that.listLoading = false;
         // that.$rjLoading.hide();
+      }).catch((err)=>{
+        //that.$notify.error("预生成数据失败，请重新生成...")
+        this.loading = false
       })
       //   .catch((err) => {
       //   if (err=='Error: 报表正在生成，请稍后...'){
@@ -269,6 +287,31 @@ export default {
     handleDelete() {
       this.resetformdelPromotionCode()
       this.delPromotionCode = true
+    },
+    //预生成数据
+    generatedata() {
+      this.isDisable=true;
+      const agenttime = this.queryParams.agenttime
+      console.info(agenttime)
+      if (agenttime == null || agenttime == '') {
+        this.queryParams.agenttime=this.parseTime(getYesterDate(), '{y}-{m}-{d}')
+      }
+      generatedata({
+        agenttime: this.queryParams.agenttime
+      }).then(response => {
+        //this.msgSuccess(response.msg)
+        if (response.code == 200) {
+          this.msgSuccess(response.msg)
+          this.isDisable=false
+          this.open = false
+          this.getList()
+        }
+      }).catch((err)=>{
+        //that.$notify.error("预生成数据失败，请重新生成...")
+        this.isDisable=false
+        this.open = false
+        this.loading = false
+      })
     },
     // 新增推广码表单重置
     resetformaddPromotionCode() {

@@ -434,9 +434,7 @@ export default {
         isAuthentication: null,
         isBan:null,
         mobile: null,
-        familyId: null,
-        orderByColumn: 'u.create_time',
-        isAsc: 'desc'
+        familyId: null
       },
       // 表单参数
       form: {},

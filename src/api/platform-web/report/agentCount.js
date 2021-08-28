@@ -35,6 +35,16 @@ export function addPromotionCode(data) {
   })
 }
 
+export function generatedata(data) {
+  console.info(data);
+  return request({
+    url: url.platformWeb + '/admin/reportAgentcount/generatedata',
+    method: 'get',
+    params: data,
+    timeout: 60000
+  })
+}
+
 export function delPromotionCode(data) {
   return request({
     url: url.platformWeb + '/admin/reportAgentcount/del',

@@ -170,6 +170,16 @@
         >批量复制
         </el-button>
       </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-document-copy"
+          size="mini"
+          @click="handleBatchOrderNoCopy"
+        >订单号复制
+        </el-button>
+      </el-col>
       <el-col :span="10" style="margin-left: 10px">
         <span style="font-size: 16px;margin-right: 10px">记录刷新</span>
         <el-select v-model="refreshSec" placeholder="时间间隔" style="width: 110px">
@@ -216,6 +226,8 @@
           <a style="color: #ff0000" @click="funds(row.memberId)" v-if="row.memberStatus === 4">{{ row.memberId }}</a>
           <a style="color: #ee00ff" @click="funds(row.memberId)"
              v-if="row.memberStatus === 2 || row.memberStatus === 3 || row.memberStatus === 5">{{ row.memberId }}</a>
+          <a style="color: #5eff00" @click="funds(row.memberId)"
+             v-if="row.memberStatus === 6">{{ row.memberId }}</a>
         </template>
         <template slot="header">
           <span>会员ID</span>
@@ -223,8 +235,9 @@
             <i class="el-icon-question"></i>
             <div slot="content" class="tooltip-content">
               <div>字体蓝色:(正常会员)</div>
-              <div>字体红色:(套利号)</div>
               <div>字体粉色:(测试号,超管号,稀有号)</div>
+              <div>字体红色:(套利号)</div>
+              <div>字体绿色:(投诉号)</div>
               <div>字体橙色:(审查号)</div>
             </div>
           </el-tooltip>
@@ -625,6 +638,7 @@ export default {
       //资金明细
       fundsOpen: false,
       rechargeCodeRatio: null,
+      rechargeUserNameStatus:null,
       rechargeWithdrawRate: null,
       bankCharge: null,
       //资金明细数据
@@ -695,6 +709,9 @@ export default {
         return 'warning-row'
       }
       if (row.rechargeCodeRatio !== null && row.rechargeCodeRatio < 1.51) {
+        return 'warning-row'
+      }
+      if (row.rechargeUserNameStatus==1){
         return 'warning-row'
       }
     },
@@ -905,7 +922,7 @@ export default {
     },
     handleBack(row) {
       const id = row.id;
-      this.$confirm('请与三方核对该订单是否成功提交,如已提交成功不必回退.确认回退？', '警告', {
+      this.$confirm('请与三方仔细核对该订单是否成功提交,如该订单已提交成功不应回退,避免重复出款.确认回退？', '警告', {
         confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
@@ -918,7 +935,7 @@ export default {
     },
     handleFailBack(row) {
       const id = row.id;
-      this.$confirm('请与三方仔细核对该订单是否确认已代付失败,避免重复出款.确认回退？', '警告', {
+      this.$confirm('请与三方仔细核对该订单是否已代付失败,如未确认该订单代付失败不应回退,避免重复出款.确认回退？', '警告', {
         confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
@@ -980,7 +997,8 @@ export default {
     handleArtificialWithdraw() {
 
       artificialMemberWithdrawLog({
-        id: this.form.id
+        id: this.form.id,
+        payAgentPlatId: this.form.payAgentPlatId,
       }).then(response => {
         this.msgSuccess(response.msg)
         if (response.code == 200) {
@@ -1169,6 +1187,31 @@ export default {
             html += '<td>' + row.createTime + '</td>'
             html += '<td>' + row.updateTime + '</td>'
             html += '</tr></table>'
+          }
+        }
+      }
+      textarea.value = html
+      this.copyData = html
+      this.copy(this.copyData)
+    },
+    handleBatchOrderNoCopy() {
+      if (this.ids.length <= 0) {
+        var textarea = document.createElement('textarea')
+        let html = ''
+        for (const row of this.memberWithdrawLogList) {
+          html += row.orderNo + '\r'
+        }
+        textarea.value = html
+        this.copyData = html
+        this.copy(this.copyData)
+        return
+      }
+      var textarea = document.createElement('textarea')
+      let html = ''
+      for (const row of this.memberWithdrawLogList) {
+        for (const id of this.ids) {
+          if (id == row.id) {
+            html += row.orderNo + '\r'
           }
         }
       }

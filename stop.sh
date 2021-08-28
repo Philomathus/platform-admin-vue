@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-docker kill --signal=SIGQUIT nginx
+docker kill --signal=SIGQUIT platform-admin-vue
 
-docker rm -f nginx
+docker rm -f platform-admin-vue

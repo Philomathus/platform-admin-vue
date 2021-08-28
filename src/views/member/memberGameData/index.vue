@@ -68,7 +68,7 @@
             <a style="color: #00afff"  @click="handleRecord(row)">{{ row.gameRound }}</a>
           </div>
           <div v-else-if="row.platformId == 5">
-            <a style="color: #00afff"  @click="openAgPlaypDetail(row)">{{ row.gameRound }}</a>
+            <a style="color: #00afff"  @click="handleAgRecord(row)">{{ row.gameRound }}</a>
           </div>
           <div v-else-if="row.platformId == 14">
             <a style="color: #00afff"  @click="openRecordLink(row)">{{ row.gameRound }}</a>
@@ -97,6 +97,8 @@
     />
 
     <record ref="record" :game-id="gameId" />
+
+    <AgRecord ref="agRecord" :game-id="gameId" />
 
     <!-- 游戏对局日志 -->
     <el-dialog title="游戏对局日志" :visible.sync="fundsOpen" width="1500px" style="max-height:100%;overflow-y: scroll;"
@@ -143,13 +145,13 @@ import {
 } from '@/api/platform-web/member/memberGameData'
 import {pickerDateTimeShortcuts} from "@/utils/dateUtils";
 import record from './record'
-import { gameDetailList, gamePlatformList, gameRecordList } from '../../../api/platform-web/member/memberGameData'
-import { messageCode, messageVal } from '../../../utils/sportCode'
+import { gamePlatformList, gameRecordList } from '../../../api/platform-web/member/memberGameData'
+import AgRecord from './agRecord'
 
 
 export default {
   name: 'MemberGameData',
-  components: { record },
+  components: { AgRecord, record },
   data() {
     return {
       pickerOptions: { shortcuts: pickerDateTimeShortcuts },
@@ -283,30 +285,8 @@ export default {
         this.loading = false
       })
     },
-    openAgPlaypDetail(row){
-      this.queryParams.gameId = row.gameId;
-      this.queryParams.gameRound = row.gameRound;
-      this.queryParams.serverId = row.serverId;
-      this.queryParams.agent = row.agent;
-      this.queryParams.gameStartTime = row.game_start_time
-      this.queryParams.gameEndTime = row.game_end_time
-      this.queryParams.platformId = row.platformId
-      this.queryParams.kindId = row.kindId
-      this.loading = true
-      gameDetailList(this.queryParams).then(response => {
-        if (response.data != null && response.data != undefined){
-          let strings = response.data[0];
-          let buffer = "";
-          for (let key in strings){
-            buffer = buffer + (messageCode(key) + ":" +messageVal(key,strings[key]) + "\n");
-          }
-          this.messageText = buffer;
-        }
-        this.agVisible = true
-        this.loading = false
-      }).catch(() => {
-        this.loading = false
-      })
+    handleAgRecord(row){
+      this.$refs.agRecord.show(row)
     },
     funds(row) {
       getKYgameResReport(row).then((res) => {

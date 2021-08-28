@@ -117,6 +117,7 @@ export default {
       tables: [],
       //ag视讯详情
       messageText: null,
+      agVisible: false,
       // 对局详情列表
       memberGameDataRecordList: [],
       //加分提交的数据

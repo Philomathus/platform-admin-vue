@@ -62,6 +62,7 @@ let key_value = {
   'closetime':'结束时间',
   'dealer':'荷官名称',
   'gametype':'游戏类型',
+  'playType':'玩法类型',
   'shoecode':'靴号',
   'flag':'结果状态',
   'bankerpoint':'庄分数',

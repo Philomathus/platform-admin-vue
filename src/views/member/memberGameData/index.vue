@@ -116,24 +116,6 @@
       </el-table>
     </el-dialog>
 
-    <!--会员Ag视讯注单数据详情-->
-    <el-dialog
-      title="注单数据详情"
-      v-dialogDrag
-      :close-on-click-modal="false"
-      :title="title"
-      :visible.sync="agVisible"
-      width="600px"
-      top="5vh"
-      @close="reset()"
-      append-to-body
-    >
-      <el-form ref="form" :model="messageText">
-        <el-form-item>
-          <el-input v-model="messageText" placeholder=""  type="textarea" :rows="20"/>
-        </el-form-item>
-      </el-form>
-    </el-dialog>
   </div>
 </template>
 
@@ -177,8 +159,6 @@ export default {
       betData: [],
       // 会员注单数据表格数据
       memberGameDataList: [],
-      //ag视讯详情
-      messageText: null,
       // 平台列表
       platformList: [],
       //资金明细数据

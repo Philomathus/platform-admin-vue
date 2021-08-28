@@ -64,12 +64,23 @@
     </el-dialog>
     <detail ref="detail" :record-id="gameRound"/>
 
-    <!-- 游戏对局日志 -->
-    <el-dialog title="游戏对局日志" :visible.sync="detailOpen" width="1500px" style="max-height:100%;overflow-y: scroll;"
-               append-to-body>
-      <div v-loading="loading" :style="'height:'+ height">
-        <iframe :src="detailLink" frameborder="no" style="width: 100%;height: 650px" scrolling="auto" />
-      </div>
+    <!--会员Ag视讯注单数据详情-->
+    <el-dialog
+      title="注单数据详情"
+      v-dialogDrag
+      :close-on-click-modal="false"
+      :title="title"
+      :visible.sync="agVisible"
+      width="600px"
+      top="5vh"
+      @close="reset()"
+      append-to-body
+    >
+      <el-form ref="form" :model="messageText">
+        <el-form-item>
+          <el-input v-model="messageText" placeholder=""  type="textarea" :rows="20"/>
+        </el-form-item>
+      </el-form>
     </el-dialog>
   </div>
 
@@ -104,6 +115,8 @@ export default {
       gameId: null,
       // 选中数组值
       tables: [],
+      //ag视讯详情
+      messageText: null,
       // 对局详情列表
       memberGameDataRecordList: [],
       //加分提交的数据

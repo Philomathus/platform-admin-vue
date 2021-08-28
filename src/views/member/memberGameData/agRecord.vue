@@ -11,7 +11,7 @@
       append-to-body
     >
       <el-table stripe v-loading="loading" :data="memberGameDataRecordList">
-        <el-table-column label="订单号" align="center" prop="gameID"/>
+        <el-table-column label="订单号" align="center" prop="gameId"/>
         <el-table-column label="用户名" align="center" prop="playName"/>
         <el-table-column label="局号" align="center" prop="gameRound"/>
         <el-table-column label="派彩额度" align="center" prop="netAmount"/>

@@ -161,7 +161,7 @@ export default {
     show(row) {
       this.platformId = row.platformId
       this.queryParams.gameId = row.gameId;
-      this.queryParams.gametype = row.kindId;
+      this.queryParams.kindId = row.kindId;
       this.queryParams.gameRound = row.gameRound;
       this.queryParams.agent = row.agent;
       this.queryParams.gameStartTime = row.game_start_time

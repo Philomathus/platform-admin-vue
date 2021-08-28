@@ -44,7 +44,9 @@
     <el-table stripe v-loading="loading" :data="memberGameDataMinList">
       <el-table-column label="会员ID" align="center" prop="UserName"/>
       <el-table-column label="代理ID" align="center" prop="agent"/>
-      <el-table-column label="交易订单号" align="center"  min-width="180px" :show-overflow-tooltip="true" prop="WagersID">
+      <el-table-column label="交易订单号" align="center"  min-width="180px" prop="WagersID">
+      </el-table-column>
+      <el-table-column label="游戏局号" align="center"  min-width="180px" :show-overflow-tooltip="true" prop="WagersID">
         <template v-slot="{row}">
           <a style="color: #00afff"  @click="handleDetail(row)">{{ row.WagersID }}</a>
         </template>
@@ -215,6 +217,7 @@ export default {
     /** 获取游戏局号 */
     handleDetail(row){
       this.queryParams.gameId = row.WagersID
+      this.queryParams.gameRound = row.WagersID
       this.queryParams.account = row.UserName
       this.loading = true
       listMemberGameDataMinDetail(this.queryParams).then(response => {

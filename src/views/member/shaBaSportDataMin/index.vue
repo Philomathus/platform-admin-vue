@@ -44,7 +44,9 @@
     <el-table stripe v-loading="loading" :data="memberGameDataMinList">
       <el-table-column label="会员ID" align="center" prop="vendor_member_id"/>
       <el-table-column label="代理ID" align="center" prop="agent"/>
-      <el-table-column label="交易订单号" align="center"  min-width="180px" :show-overflow-tooltip="true" prop="trans_id">
+      <el-table-column label="交易订单号" align="center"  min-width="180px" prop="trans_id">
+      </el-table-column>
+      <el-table-column label="交易订单号" align="center"  min-width="180px" :show-overflow-tooltip="true" prop="gameRound">
         <template v-slot="{row}">
           <a style="color: #00afff"  @click="handleDetail(row)">{{ row.trans_id }}</a>
         </template>
@@ -133,6 +135,7 @@ export default {
       title: '',
       //游戏参数
       gameId: null,
+      gameRound: null,
       // 是否显示弹出层
       open: false,
       // 游戏局号
@@ -148,6 +151,7 @@ export default {
         pageNum: 1,
         pageSize: 15,
         gameId: null,
+        gameRound: null,
         platformId: 12,
         account: null,
         gameEndTime: null,
@@ -232,6 +236,7 @@ export default {
     /** 获取游戏局号 */
     handleDetail(row){
       this.queryParams.gameId = row.trans_id
+      this.queryParams.gameRound = row.trans_id
       this.queryParams.account = row.vendor_member_id
       this.queryParams.betType = row.bet_type
       this.loading = true

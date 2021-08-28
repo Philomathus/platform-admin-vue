@@ -285,6 +285,7 @@ export default {
     },
     openAgPlaypDetail(row){
       this.queryParams.gameId = row.gameId;
+      this.queryParams.gameRound = row.gameRound;
       this.queryParams.serverId = row.serverId;
       this.queryParams.agent = row.agent;
       this.queryParams.gameStartTime = row.game_start_time

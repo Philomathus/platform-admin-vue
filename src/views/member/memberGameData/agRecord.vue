@@ -18,8 +18,8 @@
         <el-table-column label="下注时间" align="center" prop="betTime"/>
         <el-table-column label="游戏类型" align="center" prop="gameType">
           <template slot-scope="scope">
-            <span v-if="scope.row.gameType == 'BAC'">百家乐</span>
-            <span v-if="scope.row.gameType == 'DT'">龙虎</span>
+            <span v-if="scope.row.gametype == 'BAC'">百家乐</span>
+            <span v-if="scope.row.gametype == 'DT'">龙虎</span>
           </template>
         </el-table-column>
         <el-table-column label="总投注" align="center" prop="betAmount"/>

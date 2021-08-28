@@ -190,11 +190,6 @@ export default {
     handleDetail(row){
       this.queryParams.gameId = row.gameId;
       this.queryParams.gameRound = row.gameRound;
-      this.queryParams.serverId = row.serverId;
-      this.queryParams.agent = row.agent;
-      this.queryParams.gameStartTime = row.game_start_time
-      this.queryParams.gameEndTime = row.game_end_time
-      this.queryParams.platformId = row.platformId
       this.queryParams.kindId = row.kindId
       this.loading = true
       gameDetailList(this.queryParams).then(response => {

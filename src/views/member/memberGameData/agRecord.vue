@@ -23,7 +23,7 @@
           </template>
         </el-table-column>
         <el-table-column label="投注额度" align="center" prop="betAmount"/>
-        <el-table-column label="有效投注额度" align="center" prop="validBetAmount"/>
+        <el-table-column label="有效投注" align="center" prop="validBetAmount"/>
         <el-table-column label="订单状态" align="center" prop="flag">
           <template slot-scope="scope">
             <span v-if="scope.row.flag == '0'">异常</span>

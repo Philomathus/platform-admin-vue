@@ -69,10 +69,20 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table stripe v-loading="loading" :data="liveVideoChatList">
+    <el-table stripe v-loading="loading" :data="liveVideoChatList" :row-class-name="tableRowClassNameWithdraw">
       <el-table-column label="平台会员ID" min-width="130" align="center" prop="fromPlatform"/>
       <el-table-column label="用户昵称" :show-overflow-tooltip="true" width="120" align="center" prop="userNickName"/>
-      <el-table-column label="消息类型" width="80" align="center" prop="type" :formatter="msgFormat"/>
+      <el-table-column label="消息类型" width="90" align="center" prop="type" :formatter="typeFormat">
+      <template slot="header">
+        <span>消息类型</span>
+        <el-tooltip popper-class="tooltip" placement="top">
+          <i class="el-icon-question"></i>
+          <div slot="content" class="tooltip-content">
+            <div>若是主播单聊消息则整行颜色为粉红</div>
+          </div>
+        </el-tooltip>
+      </template>
+      </el-table-column>
       <el-table-column label="消息内容" :show-overflow-tooltip="true" min-width="350" align="center" prop="msg"/>
       <!--      <el-table-column label="会员ID" align="center" prop="id" />-->
       <el-table-column label="主播ID" min-width="120" align="center" prop="poscatId"/>
@@ -569,7 +579,12 @@ export default {
         this.msgSuccess('删除成功')
       })
     },
-    msgFormat(row, column) {
+    tableRowClassNameWithdraw({row}) {
+      if (row.type == '2') {
+        return 'warning-row'
+      }
+    },
+    typeFormat(row, column) {
       if (row.type == '0') {
         return '普通消息'
       } else if (row.type == '1'){

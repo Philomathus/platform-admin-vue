@@ -18,7 +18,7 @@ export function getPayPlatformNew(id) {
   })
 }
 
-// 新增支付平台
+// 新增支付
 export function addPayPlatformNew(data) {
   return request({
     url: url.platformWeb + '/pay/payPlatformNew',
@@ -27,7 +27,16 @@ export function addPayPlatformNew(data) {
   })
 }
 
-// 新增支付平台对接配置
+// 全平台新增支付
+export function addPayPlatformNewAll(data, id) {
+  return request({
+    url: url.platformWeb + '/pay/payPlatformNew/' + id,
+    method: 'post',
+    data: data
+  })
+}
+
+// 新增支付对接配置
 export function addPayPlatformConfig(data) {
   return request({
     url: url.platformWeb + '/pay/payPlatformNew/addPayPlatformConfig',
@@ -36,7 +45,7 @@ export function addPayPlatformConfig(data) {
   })
 }
 
-// 修改支付平台
+// 修改支付
 export function updatePayPlatformNew(data) {
   return request({
     url: url.platformWeb + '/pay/payPlatformNew',

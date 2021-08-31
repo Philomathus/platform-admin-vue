@@ -109,6 +109,7 @@
             size="small"
             type="danger"
             @click="handleUpdateStop(scope.row)"
+            v-if="scope.row.type == '0' || scope.row.type == '1'"
             v-hasPermi="['admin:liveVideoChat:edit']"
           >封停
           </el-button>
@@ -117,6 +118,7 @@
             size="small"
             type="success"
             @click="handleUpdate(scope.row)"
+            v-if="scope.row.type == '0' || scope.row.type == '1'"
             v-hasPermi="['admin:liveVideoChat:edit']"
             style="margin-left: 0px"
           >解封
@@ -125,6 +127,7 @@
             size="small"
             type="warning"
             @click="handleForbid(scope.row)"
+            v-if="scope.row.type == '0' || scope.row.type == '1'"
             v-hasPermi="['admin:liveVideoChat:edit']"
           >禁言
           </el-button>
@@ -567,10 +570,12 @@ export default {
       })
     },
     msgFormat(row, column) {
-      if (row.msg == '1') {
-        return '弹幕消息'
-      } else {
+      if (row.type == '0') {
         return '普通消息'
+      } else if (row.type == '1'){
+        return '弹幕消息'
+      } else if (row.type == '2'){
+        return '主播单聊'
       }
     },
     speakFormat(row, column) {

@@ -116,6 +116,9 @@
         <el-form-item label="文件存储" prop="bucket">
           <el-input v-model="form.bucket" placeholder="请输入文件存储"/>
         </el-form-item>
+        <el-form-item label="文件存储" prop="bucket">
+          <el-input v-model="form.provider" placeholder="0代表騰訊,1代表亚马逊"/>
+        </el-form-item>
         <!--        <el-form-item label="加速域名" prop="vhost">-->
         <!--          <el-input v-model="form.vhost" placeholder="请输入加速域名"/>-->
         <!--        </el-form-item>-->

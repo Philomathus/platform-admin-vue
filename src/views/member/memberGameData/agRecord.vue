@@ -7,7 +7,7 @@
       :visible.sync="visible"
       width="1500px"
       top="5vh"
-      @close="reset()"
+      @close="resetRecord()"
       append-to-body
     >
       <el-table stripe v-loading="loading" :data="memberGameDataRecordList">
@@ -222,8 +222,11 @@ export default {
       })
     },
     /** 重置按钮操作 */
-    reset() {
+    resetRecord() {
       this.memberGameDataRecordList = []
+    },
+    reset(){
+      this.messageText = null
     }
   }
 }

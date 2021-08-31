@@ -651,6 +651,10 @@
             if (this.liveUserRate.qqToken==null || this.liveUserRate.qqToken==''){
                 this.liveUserRate.qqToken='23:59:59';
             }
+            if (this.liveUserRate.qqId>this.liveUserRate.qqToken){
+              this.$notify.warning('开始时间不能大于结束时间')
+              return;
+            }
               return updateLiveUser(this.liveUserRate).then((res) => {
                       this.$notify.success("修改成功")
                     }).catch(() => {

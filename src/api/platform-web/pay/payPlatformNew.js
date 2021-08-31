@@ -54,15 +54,6 @@ export function updatePayPlatformNew(data) {
   })
 }
 
-// 修改支付全平台更新
-export function updatePayPlatformNewAll(data) {
-  return request({
-    url: url.platformWeb + '/pay/payPlatformNew',
-    method: 'put',
-    data: data
-  })
-}
-
 // 删除支付平台
 export function delPayPlatformNew(id) {
   return request({

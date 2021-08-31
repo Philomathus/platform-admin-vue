@@ -7,7 +7,7 @@
       :visible.sync="visible"
       width="1500px"
       top="5vh"
-      @close="reset()"
+      @close="resetRecord()"
       append-to-body
     >
       <el-table stripe v-loading="loading" :data="memberGameDataRecordList">
@@ -75,7 +75,7 @@
       @close="reset()"
       append-to-body
     >
-      <el-form ref="form" :model="messageText">
+      <el-form ref="form" :model="form">
         <el-form-item>
           <el-input v-model="messageText" placeholder=""  type="textarea" :rows="20"/>
         </el-form-item>
@@ -222,8 +222,11 @@ export default {
       })
     },
     /** 重置按钮操作 */
-    reset() {
+    resetRecord() {
       this.memberGameDataRecordList = []
+    },
+    reset(){
+      this.messageText = null
     }
   }
 }

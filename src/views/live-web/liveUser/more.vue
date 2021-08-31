@@ -210,6 +210,22 @@
         <el-form-item label="礼物抽成" prop="ypoint">
           <el-input v-model="liveUserRate.ypoint" type="number" class="no-number"/>
         </el-form-item>
+        <el-form-item label="每日开播任务时间（开始）" prop="qqId" class="no-number">
+          <el-time-picker
+            arrow-control
+            v-model="liveUserRate.qqId"
+            value-format="HH:mm:ss"
+            placeholder="任意时间点">
+          </el-time-picker>
+        </el-form-item>
+        <el-form-item label="每日开播任务时间（结束）" prop="qqToken" class="no-number">
+          <el-time-picker
+            arrow-control
+            v-model="liveUserRate.qqToken"
+            value-format="HH:mm:ss"
+            placeholder="任意时间点">
+          </el-time-picker>
+        </el-form-item>
         <el-form-item style="float: right">
           <el-button type="primary" icon="el-icon-edit" size="mini" @click="editRate">确定修改</el-button>
         </el-form-item>
@@ -280,7 +296,7 @@
               //弹出框标题
               title: '积分明细',
               // 提现比例
-              liveUserRate: {coin: 0,xpoint: 0,ypoint: 0,weixinPrice:0,weiboMoney:0},
+              liveUserRate: {coin: 0,xpoint: 0,ypoint: 0,weixinPrice:0,weiboMoney:0,qqId:'00:00:00',qqToken:'23:59:59'},
                 //页面编码
                 index: 1,
 /*                //用户id
@@ -318,6 +334,12 @@
                 ],
                 weiboMoney: [
                   {required: true, message: '收礼任务不能为空', trigger: 'blur'}
+                ],
+                qqId: [
+                  {required: true, message: '每日开播任务时间（开始）', trigger: 'blur'}
+                ],
+                qqToken: [
+                  {required: true, message: '每日开播任务时间（结束）', trigger: 'blur'}
                 ],
                 xpoint: [
                   {required: true, message: '彩票抽成不能为空', trigger: 'blur'}
@@ -623,6 +645,12 @@
             },
           //修改主播提现比例
             editRate() {
+            if (this.liveUserRate.qqId==null || this.liveUserRate.qqId==''){
+              this.liveUserRate.qqId='00:00:00';
+            }
+            if (this.liveUserRate.qqToken==null || this.liveUserRate.qqToken==''){
+                this.liveUserRate.qqToken='23:59:59';
+            }
               return updateLiveUser(this.liveUserRate).then((res) => {
                       this.$notify.success("修改成功")
                     }).catch(() => {

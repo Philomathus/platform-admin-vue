@@ -107,7 +107,7 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改【支付平台】对话框 -->
+    <!-- 添加【支付平台】对话框 -->
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="770px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="110px">
         <el-form-item label="名称" prop="name">
@@ -142,8 +142,50 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button type="info" @click="submitFormAdd">全平台新增</el-button>
         <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <!-- 修改【支付平台】对话框 -->
+    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="opene" width="770px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="110px">
+        <el-form-item label="名称" prop="name">
+          <el-input v-model.trim="form.name" placeholder="请输入平台名称"/>
+        </el-form-item>
+        <el-form-item label="编码" prop="code">
+          <el-input v-model.trim="form.code" placeholder="请输入平台编码"/>
+        </el-form-item>
+        <el-form-item label="商户ID" prop="merId">
+          <el-input v-model.trim="form.merId" placeholder="请输入商户ID"/>
+        </el-form-item>
+        <el-form-item label="机构号" prop="orgId">
+          <el-input v-model.trim="form.orgId" placeholder="请输入机构号"/>
+        </el-form-item>
+        <el-form-item label="下单地址" prop="platPayUrl">
+          <el-input v-model.trim="form.platPayUrl" placeholder="请输入平台下单接口地址"/>
+        </el-form-item>
+        <el-form-item label="查询地址" prop="platQueryUrl">
+          <el-input v-model.trim="form.platQueryUrl" placeholder="请输入平台订单查询地址"/>
+        </el-form-item>
+        <el-form-item label="商户MD5密钥" prop="signMd5">
+          <el-input v-model.trim="form.signMd5" placeholder="请输入商户MD5密钥"/>
+        </el-form-item>
+        <el-form-item label="加密公钥" prop="signPublicKey">
+          <el-input v-model.trim="form.signPublicKey" type="textarea" placeholder="请输入内容"/>
+        </el-form-item>
+        <el-form-item label="解密私钥" prop="signPrivateKey">
+          <el-input v-model.trim="form.signPrivateKey" type="textarea" placeholder="请输入内容"/>
+        </el-form-item>
+        <el-form-item label="平台IP白名单" prop="platWhiteIpList">
+          <el-input v-model.trim="form.platWhiteIpList" type="textarea" placeholder="请输入平台IP白名单"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="info" @click="submitForm">全平台更新</el-button>
+        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">确 定</el-button>
       </div>
     </el-dialog>
 
@@ -418,6 +460,7 @@ import {
   delPayPlatformNew,
   addPayPlatformNew,
   updatePayPlatformNew,
+  addPayPlatformNewAll,
   exportPayPlatformNew,
   addPayPlatformConfig
 } from "@/api/platform-web/pay/payPlatformNew";
@@ -612,6 +655,7 @@ export default {
       title: "支付平台",
       // 是否显示弹出层
       open: false,
+      opene: false,
       configOpen: false,
       // 查询参数
       queryParams: {
@@ -677,6 +721,7 @@ export default {
     // 取消按钮
     cancel() {
       this.open = false;
+      this.opene = false;
       this.configOpen = false;
       this.reset();
     },
@@ -790,8 +835,32 @@ export default {
       const id = row.id
       getPayPlatformNew(id).then(response => {
         this.form = response.data;
-        this.open = true;
+        this.opene = true;
         this.title = "修改【支付平台】";
+      });
+    },
+    /** 全平台新增按钮操作 */
+    submitFormAdd(row) {
+      this.$prompt('请手动输入主键ID', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /^(\-|\+)?\d+(\.\d+)?$/,
+        inputErrorMessage: '请输入数字'
+      }).then(({ value }) => {
+        addPayPlatformNewAll(this.form, value).then(response => {
+          if(response.code === 0){
+            this.$message.error(response.msg);
+          } else {
+            this.msgSuccess("全平台新增支付成功");
+            this.open = false;
+            this.getList();
+          }
+        });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消输入'
+        });
       });
     },
     /** 提交按钮 */
@@ -801,7 +870,7 @@ export default {
           if (this.form.id != null) {
             updatePayPlatformNew(this.form).then(response => {
               this.msgSuccess("修改成功");
-              this.open = false;
+              this.opene = false;
               this.getList();
             });
           } else {

@@ -75,7 +75,7 @@
       @close="reset()"
       append-to-body
     >
-      <el-form ref="form" :model="messageText">
+      <el-form ref="form" :model="form">
         <el-form-item>
           <el-input v-model="messageText" placeholder=""  type="textarea" :rows="20"/>
         </el-form-item>

@@ -47,7 +47,7 @@
     <el-dialog title="游戏对局日志" :visible.sync="detailOpen" width="1500px" style="max-height:100%;overflow-y: scroll;"
                append-to-body>
       <div v-loading="loading" :style="'height:'+ height">
-        <iframe :src="detailLink" frameborder="no" style="width: 100%;height: 600px" scrolling="auto" />
+        <iframe :src="detailLink" frameborder="no" style="width: 100%;height: 650px" scrolling="auto" />
       </div>
     </el-dialog>
   </div>
@@ -107,6 +107,7 @@ export default {
         platformId: null,
         agent: null,
         gameId: null,
+        gameRound: null,
         gameStartTime: null,
         gameEndTime: null,
         chairId: null,
@@ -138,6 +139,7 @@ export default {
     show(row) {
       this.platformId = row.platformId
       this.queryParams.gameId = row.gameId;
+      this.queryParams.gameRound = row.gameRound;
       this.queryParams.agent = row.agent;
       this.queryParams.gameStartTime = row.game_start_time
       this.queryParams.gameEndTime = row.game_end_time
@@ -165,9 +167,10 @@ export default {
     handleDetail(row){
       if (this.platformId == 17){
         this.queryParams.gameId = row.gameId;
+        this.queryParams.gameRound = row.gameRound;
         this.queryParams.agent = row.accounts.split("_")[0];
         this.queryParams.platformId = this.platformId
-        this.queryParams.account = row.accounts.replace(this.queryParams.agent+"_","");
+        this.queryParams.account = row.accounts
         this.queryParams.gameUserNo = row.gameID
         this.queryParams.serverId = row.serverID
         this.queryParams.recordId = row.recordID

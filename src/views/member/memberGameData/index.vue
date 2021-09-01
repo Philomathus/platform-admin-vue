@@ -61,24 +61,25 @@
     <el-table stripe v-loading="loading" :data="memberGameDataList">
       <el-table-column label="会员ID" align="center" prop="account"/>
       <el-table-column label="子平台ID" align="center" prop="agent"/>
-      <el-table-column label="游戏局号" align="center"  min-width="180px" :show-overflow-tooltip="true" prop="gameId">
+      <el-table-column label="游戏ID" align="center"  min-width="160px" prop="gameId"/>
+      <el-table-column label="游戏局号" align="center"  min-width="160px" :show-overflow-tooltip="true" prop="gameRound">
         <template v-slot="{row}">
-            <div v-if="row.platformId == 1 || row.platformId == 15 || row.platformId == 17">
-              <a style="color: #00afff"  @click="handleRecord(row)">{{ row.gameId }}</a>
-            </div>
-<!--            <div v-else-if="row.platformId == 5">-->
-<!--              <a style="color: #00afff"  @click="openAgPlaypDetail(row)">{{ row.gameId }}</a>-->
-<!--            </div>-->
-            <div v-else-if="row.platformId == 14">
-              <a style="color: #00afff"  @click="openRecordLink(row)">{{ row.gameId }}</a>
-            </div>
-            <div v-else>
-              {{ row.gameId }}
-            </div>
+          <div v-if="row.platformId == 1 || row.platformId == 15 || row.platformId == 17">
+            <a style="color: #00afff"  @click="handleRecord(row)">{{ row.gameRound }}</a>
+          </div>
+          <div v-else-if="row.platformId == 5">
+            <a style="color: #00afff"  @click="handleAgRecord(row)">{{ row.gameRound }}</a>
+          </div>
+          <div v-else-if="row.platformId == 14">
+            <a style="color: #00afff"  @click="openRecordLink(row)">{{ row.gameRound }}</a>
+          </div>
+          <div v-else>
+            {{ row.gameRound }}
+          </div>
         </template>
       </el-table-column>
       <el-table-column label="平台名称" align="center" prop="platformName"/>
-      <el-table-column label="游戏id" align="center" prop="kindId"/>
+      <el-table-column label="游戏名称" align="center" prop="kindId"/>
       <el-table-column label="子平台名称" align="center" prop="sonPlatformName"/>
       <el-table-column label="有效下注" align="center" prop="cell_score"/>
       <el-table-column label="总下注" align="center" prop="all_bet"/>
@@ -97,6 +98,8 @@
 
     <record ref="record" :game-id="gameId" />
 
+    <AgRecord ref="agRecord" :game-id="gameId" />
+
     <!-- 游戏对局日志 -->
     <el-dialog title="游戏对局日志" :visible.sync="fundsOpen" width="1500px" style="max-height:100%;overflow-y: scroll;"
                append-to-body>
@@ -113,24 +116,6 @@
       </el-table>
     </el-dialog>
 
-    <!--会员Ag视讯注单数据详情-->
-    <el-dialog
-      title="注单数据详情"
-      v-dialogDrag
-      :close-on-click-modal="false"
-      :title="title"
-      :visible.sync="agVisible"
-      width="600px"
-      top="5vh"
-      @close="reset()"
-      append-to-body
-    >
-      <el-form ref="form" :model="messageText">
-        <el-form-item>
-          <el-input v-model="messageText" placeholder=""  type="textarea" :rows="20"/>
-        </el-form-item>
-      </el-form>
-    </el-dialog>
   </div>
 </template>
 
@@ -142,13 +127,13 @@ import {
 } from '@/api/platform-web/member/memberGameData'
 import {pickerDateTimeShortcuts} from "@/utils/dateUtils";
 import record from './record'
-import { gameDetailList, gamePlatformList, gameRecordList } from '../../../api/platform-web/member/memberGameData'
-import { messageCode, messageVal } from '../../../utils/sportCode'
+import { gamePlatformList, gameRecordList } from '../../../api/platform-web/member/memberGameData'
+import AgRecord from './agRecord'
 
 
 export default {
   name: 'MemberGameData',
-  components: { record },
+  components: { AgRecord, record },
   data() {
     return {
       pickerOptions: { shortcuts: pickerDateTimeShortcuts },
@@ -174,8 +159,6 @@ export default {
       betData: [],
       // 会员注单数据表格数据
       memberGameDataList: [],
-      //ag视讯详情
-      messageText: null,
       // 平台列表
       platformList: [],
       //资金明细数据
@@ -199,6 +182,7 @@ export default {
         name: null,
         pageSize: 15,
         gameId: null,
+        gameRound: null,
         account: null,
         kindId: null,
         cellScore: null,
@@ -266,6 +250,7 @@ export default {
     },
     openRecordLink(row){
       this.queryParams.gameId = row.gameId;
+      this.queryParams.gameRound = row.gameRound;
       this.queryParams.agent = row.agent;
       this.queryParams.gameStartTime = row.game_start_time
       this.queryParams.gameEndTime = row.game_end_time
@@ -280,29 +265,8 @@ export default {
         this.loading = false
       })
     },
-    openAgPlaypDetail(row){
-      this.queryParams.gameId = row.gameId;
-      this.queryParams.serverId = row.serverId;
-      this.queryParams.agent = row.agent;
-      this.queryParams.gameStartTime = row.game_start_time
-      this.queryParams.gameEndTime = row.game_end_time
-      this.queryParams.platformId = row.platformId
-      this.queryParams.kindId = row.kindId
-      this.loading = true
-      gameDetailList(this.queryParams).then(response => {
-        if (response.data != null && response.data != undefined){
-          let strings = response.data[0];
-          let buffer = "";
-          for (let key in strings){
-            buffer = buffer + (messageCode(key) + ":" +messageVal(key,strings[key]) + "\n");
-          }
-          this.messageText = buffer;
-        }
-        this.agVisible = true
-        this.loading = false
-      }).catch(() => {
-        this.loading = false
-      })
+    handleAgRecord(row){
+      this.$refs.agRecord.show(row)
     },
     funds(row) {
       getKYgameResReport(row).then((res) => {

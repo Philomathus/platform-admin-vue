@@ -10,6 +10,15 @@ export function listLiveVideoChat(query) {
   })
 }
 
+// 查询主播单聊列表
+export function listLiveVideoPushChat(query) {
+  return request({
+    url: url.platformWeb + '/admin/liveVideoChat/listLiveVideoPushChat',
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询会员发言详细
 export function getLiveVideoChat(id) {
   return request({

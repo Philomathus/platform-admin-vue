@@ -328,7 +328,7 @@
       <el-table-column label="操作人" min-width="120" align="center" prop="opName"/>
       <el-table-column label="审核备注" min-width="200" align="center" prop="remark">
       <template v-slot="{row}">
-        <a style="color: #00afff" @click="updateRemark(row.id)">{{ row.remark }}</a>
+        <a style="color: #00afff" @click="updateRemark(row.id, row.remark)">{{ row.remark }}</a>
       </template>
         <template slot="header">
           <span>审核备注</span>
@@ -863,8 +863,9 @@ export default {
       oInput.remove()
     },
     /** 修改备注弹框 */
-    updateRemark(id) {
+    updateRemark(id,remark) {
       this.$prompt('请输入备注', '提示', {
+        inputValue: remark,
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       }).then(({ value }) => {
@@ -1074,7 +1075,7 @@ export default {
     handleAbnormalWithdrawal() {
       this.$prompt(null, '请输入出款异常原因', {
         confirmButtonText: '确定',
-        cancelButtonText: '取消'
+        cancelButtonText: '取消',
       }).then(({value}) => {
         abnormalWithdrawal({
           id: this.form.id,

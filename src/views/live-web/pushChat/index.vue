@@ -74,7 +74,7 @@
       <el-table-column label="主播昵称" :show-overflow-tooltip="true" width="120" align="center" prop="poscatNickName"/>
       <el-table-column label="平台会员ID" min-width="130" align="center" prop="fromPlatform"/>
       <el-table-column label="用户昵称" :show-overflow-tooltip="true" width="120" align="center" prop="userNickName"/>
-      <el-table-column label="消息类型" width="90" align="center" prop="type" :formatter="typeFormat"/>
+<!--      <el-table-column label="消息类型" width="90" align="center" prop="type" :formatter="typeFormat"/>-->
       <el-table-column label="消息内容" :show-overflow-tooltip="true" min-width="350" align="center" prop="msg"/>
       <!--      <el-table-column label="会员ID" align="center" prop="id" />-->
       <!--      <el-table-column label="消息所在聊天组" align="center" prop="group" />-->

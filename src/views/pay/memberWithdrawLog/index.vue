@@ -243,18 +243,18 @@
           </el-tooltip>
         </template>
       </el-table-column>
-<!--      <el-table-column label="会员账号" min-width="120" align="center" prop="account"/>-->
+      <!--      <el-table-column label="会员账号" min-width="120" align="center" prop="account"/>-->
       <el-table-column label="入款姓名" min-width="120" align="center" prop="rechargeUserName"/>
       <el-table-column label="今日入款成功数" min-width="130" align="center" prop="bankCharge">
-      <template slot="header">
-        <span>今日入款成功数</span>
-        <el-tooltip popper-class="tooltip" placement="top">
-          <i class="el-icon-question"></i>
-          <div slot="content" class="tooltip-content">
-            <div>今日入款成功数大于等于5次则整行颜色变粉色</div>
-          </div>
-        </el-tooltip>
-      </template>
+        <template slot="header">
+          <span>今日入款成功数</span>
+          <el-tooltip popper-class="tooltip" placement="top">
+            <i class="el-icon-question"></i>
+            <div slot="content" class="tooltip-content">
+              <div>今日入款成功数大于等于5次则整行颜色变粉色</div>
+            </div>
+          </el-tooltip>
+        </template>
       </el-table-column>
       <el-table-column min-width="100" align="center" prop="rechargeWithdrawRate">
         <template v-slot="{row}">
@@ -272,15 +272,15 @@
         </template>
       </el-table-column>
       <el-table-column label="投注打码比" min-width="100" align="center" prop="rechargeCodeRatio">
-      <template slot="header">
-        <span>投注打码比</span>
-        <el-tooltip popper-class="tooltip" placement="top">
-          <i class="el-icon-question"></i>
-          <div slot="content" class="tooltip-content">
-            <div>投注打码比小于等于1.5则整行颜色变粉色</div>
-          </div>
-        </el-tooltip>
-      </template>
+        <template slot="header">
+          <span>投注打码比</span>
+          <el-tooltip popper-class="tooltip" placement="top">
+            <i class="el-icon-question"></i>
+            <div slot="content" class="tooltip-content">
+              <div>投注打码比小于等于1.5则整行颜色变粉色</div>
+            </div>
+          </el-tooltip>
+        </template>
       </el-table-column>
       <el-table-column label="提现金额" min-width="100" align="center" prop="withdrawMoney">
         <template v-slot="{row}">
@@ -327,9 +327,9 @@
       <el-table-column label="是否首次" min-width="90" align="center" prop="first" :formatter="firstFormat"/>
       <el-table-column label="操作人" min-width="120" align="center" prop="opName"/>
       <el-table-column label="审核备注" min-width="200" align="center" prop="remark">
-      <template v-slot="{row}">
-        <a style="color: #00afff" @click="updateRemark(row.id, row.remark)">{{ row.remark }}</a>
-      </template>
+        <template v-slot="{row}">
+          <a style="color: #00afff" @click="updateRemark(row.id, row.remark)">{{ row.remark }}</a>
+        </template>
         <template slot="header">
           <span>审核备注</span>
           <el-tooltip popper-class="tooltip" placement="top">
@@ -492,14 +492,14 @@
           v-has-permi="['pay:payAgentPlatform:order']"
         >代 付
         </el-button>
-<!--        <el-button-->
-<!--          plain-->
-<!--          size="small"-->
-<!--          @click="handleManualWithdrawal"-->
-<!--          v-show="form.status !== 7 && form.status !== 8"-->
-<!--          v-has-permi="['pay:memberWithdrawLog:manualWithdrawal']"-->
-<!--        >人工代付-->
-<!--        </el-button>-->
+        <!--        <el-button-->
+        <!--          plain-->
+        <!--          size="small"-->
+        <!--          @click="handleManualWithdrawal"-->
+        <!--          v-show="form.status !== 7 && form.status !== 8"-->
+        <!--          v-has-permi="['pay:memberWithdrawLog:manualWithdrawal']"-->
+        <!--        >人工代付-->
+        <!--        </el-button>-->
         <el-button
           type="success"
           plain
@@ -652,7 +652,7 @@ export default {
       //资金明细
       fundsOpen: false,
       rechargeCodeRatio: null,
-      rechargeUserNameStatus:null,
+      rechargeUserNameStatus: null,
       rechargeWithdrawRate: null,
       bankCharge: null,
       //资金明细数据
@@ -725,7 +725,7 @@ export default {
       if (row.rechargeCodeRatio !== null && row.rechargeCodeRatio < 1.51) {
         return 'warning-row'
       }
-      if (row.rechargeUserNameStatus==1){
+      if (row.rechargeUserNameStatus == 1) {
         return 'warning-row'
       }
     },
@@ -773,6 +773,11 @@ export default {
       this.loading = true
       listMemberWithdrawLog(this.queryParams).then(response => {
         this.memberWithdrawLogList = response.rows
+        this.memberWithdrawLogList.forEach(value => {
+          if (value.remark == null || value.remark === '') {
+            value.remark = "点击备注"
+          }
+        })
         this.total = response.total
         this.loading = false
       })
@@ -863,22 +868,39 @@ export default {
       oInput.remove()
     },
     /** 修改备注弹框 */
-    updateRemark(id,remark) {
-      this.$prompt('请输入备注', '提示', {
-        inputValue: remark,
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
-      }).then(({ value }) => {
-        updateRemark(id,value).then(response => {
+    updateRemark(id, remark) {
+      if(remark === '点击备注'){
+        this.$prompt('请输入备注', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消'
+        }).then(({value}) => {
+          updateRemark(id, value).then(response => {
             this.msgSuccess('修改备注成功')
             this.getList()
           })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消输入'
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消输入'
+          });
         });
-      });
+      } else {
+        this.$prompt('请输入备注', '提示', {
+          inputValue: remark,
+          confirmButtonText: '确定',
+          cancelButtonText: '取消'
+        }).then(({value}) => {
+          updateRemark(id, value).then(response => {
+            this.msgSuccess('修改备注成功')
+            this.getList()
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消输入'
+          });
+        });
+      }
     },
     /** 提交按钮 */
     submitForm() {
@@ -1008,11 +1030,11 @@ export default {
           this.form = response.data
           this.open = true
         }).then(() => {
-          //代付平台
-          effectListPayAgentPlatform().then(response => {
-            this.payAgentPlatformOptions = response.data
-          })
+        //代付平台
+        effectListPayAgentPlatform().then(response => {
+          this.payAgentPlatformOptions = response.data
         })
+      })
     },
     handleArtificialWithdraw2(row) {
       artificialMemberWithdrawLog({
@@ -1026,7 +1048,7 @@ export default {
       })
     },
     handleArtificialWithdraw() {
-      if(this.form.payAgentPlatId == null){
+      if (this.form.payAgentPlatId == null) {
         this.$confirm('你未选择代付平台，请确认是否已经银行卡出款成功，确认出款？', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',

@@ -479,19 +479,19 @@
           v-has-permi="['pay:payAgentPlatform:order']"
         >代 付
         </el-button>
-        <el-button
-          plain
-          size="small"
-          @click="handleManualWithdrawal"
-          v-show="form.status !== 7 && form.status !== 8"
-          v-has-permi="['pay:memberWithdrawLog:manualWithdrawal']"
-        >人工代付
-        </el-button>
+<!--        <el-button-->
+<!--          plain-->
+<!--          size="small"-->
+<!--          @click="handleManualWithdrawal"-->
+<!--          v-show="form.status !== 7 && form.status !== 8"-->
+<!--          v-has-permi="['pay:memberWithdrawLog:manualWithdrawal']"-->
+<!--        >人工代付-->
+<!--        </el-button>-->
         <el-button
           type="success"
           plain
           size="small"
-          @click="handleArtificialWithdraw"
+          @click="handleArtificialWithdraw()"
           v-has-permi="['pay:memberWithdrawLog:artificial']"
         >出 款
         </el-button>
@@ -975,8 +975,7 @@ export default {
         .then(response => {
           this.form = response.data
           this.open = true
-        })
-        .then(() => {
+        }).then(() => {
           //代付平台
           effectListPayAgentPlatform().then(response => {
             this.payAgentPlatformOptions = response.data
@@ -995,17 +994,51 @@ export default {
       })
     },
     handleArtificialWithdraw() {
-
-      artificialMemberWithdrawLog({
-        id: this.form.id,
-        payAgentPlatId: this.form.payAgentPlatId,
-      }).then(response => {
-        this.msgSuccess(response.msg)
-        if (response.code == 200) {
-          this.open = false
-          this.getList()
-        }
-      })
+      if(this.form.payAgentPlatId == null){
+        this.$confirm('你未选择代付平台，请确认是否已经银行卡出款成功，确认出款？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          artificialMemberWithdrawLog({
+            id: this.form.id,
+            payAgentPlatId: this.form.payAgentPlatId,
+          }).then(response => {
+            this.msgSuccess(response.msg)
+            if (response.code == 200) {
+              this.open = false
+              this.getList()
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消出款'
+          });
+        });
+      } else {
+        this.$confirm('你已选择代付平台,请确认是否已经在该代付平台的商户后台提交代付订单出款成功，确认出款？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          artificialMemberWithdrawLog({
+            id: this.form.id,
+            payAgentPlatId: this.form.payAgentPlatId,
+          }).then(response => {
+            this.msgSuccess(response.msg)
+            if (response.code == 200) {
+              this.open = false
+              this.getList()
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消出款'
+          });
+        });
+      }
     },
     handleAbnormalWithdrawal() {
       this.$prompt(null, '请输入出款异常原因', {

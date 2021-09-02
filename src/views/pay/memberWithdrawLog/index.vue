@@ -491,7 +491,7 @@
           type="success"
           plain
           size="small"
-          @click="handleArtificialWithdraw()"
+          @click="handleArtificialWithdraw"
           v-has-permi="['pay:memberWithdrawLog:artificial']"
         >出 款
         </el-button>

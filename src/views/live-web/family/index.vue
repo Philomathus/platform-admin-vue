@@ -107,6 +107,7 @@
           <el-button
             size="small"
             type="primary"
+            plain
             v-show="scope.row.status != 4"
             @click="handleUpdateFamily(scope.row)"
             v-hasPermi="['admin:liveFamily:edit']"
@@ -115,6 +116,7 @@
           <el-button
             size="small"
             type="info"
+            plain
             v-show="scope.row.status != 4"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:liveFamily:remove']"
@@ -123,6 +125,7 @@
           <el-button
             size="small"
             type="danger"
+            plain
             v-show="scope.row.status == 1"
             @click="handleUpdate(scope.row,2)"
             v-hasPermi="['admin:liveFamily:edit']"
@@ -131,6 +134,7 @@
           <el-button
             size="small"
             type="success"
+            plain
             v-show="scope.row.status == 3"
             @click="handleUpdate(scope.row,3)"
             v-hasPermi="['admin:liveFamily:edit']"
@@ -139,6 +143,7 @@
           <el-button
             size="small"
             type="success"
+            plain
             v-show="scope.row.status ==0"
             @click="handleUpdate(scope.row,1)"
           >通过
@@ -146,6 +151,7 @@
           <el-button
             size="small"
             type="danger"
+            plain
             v-show="scope.row.status ==0"
             @click="handleUpdate(scope.row,0)"
           >不通过

@@ -25,7 +25,7 @@
                 placeholder="请输入更新的密码"
               ></el-autocomplete>
             </el-form-item>
-            <el-form-item prop="inviterCode" style="width: 100%">
+            <el-form-item prop="googleAuthCode" style="width: 100%">
               <el-input
                 style="width: 52%"
                 clearable
@@ -52,7 +52,7 @@
                 placeholder="会员ID统一以竖行排列,不允许有任何字符"
               />
             </el-form-item>
-            <el-form-item prop="inviterCode">
+            <el-form-item prop="googleAuthCode">
               <el-input
                 clearable
                 style="width: 52%"

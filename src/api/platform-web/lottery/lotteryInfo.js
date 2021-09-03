@@ -9,3 +9,20 @@ export function listLotteryInfo(query) {
     params: query
   })
 }
+
+// 查询彩票名称详细
+export function getLotteryInfo(id) {
+  return request({
+    url: url.platformWeb + '/admin/lotteryInfo/' + id,
+    method: 'get'
+  })
+}
+
+// 修改彩票名称
+export function updateLotteryInfo(data) {
+  return request({
+    url: url.platformWeb + '/admin/lotteryInfo',
+    method: 'put',
+    data: data
+  })
+}

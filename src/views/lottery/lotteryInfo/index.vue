@@ -20,16 +20,16 @@
           </el-option>
         </el-select>
       </el-form-item>
-<!--      <el-form-item label="开奖形式" prop="official">-->
-<!--        <el-select v-model="queryParams.official" placeholder="请选择开奖形式" clearable size="small">-->
-<!--          <el-option-->
-<!--            v-for="item in official"-->
-<!--            :key="item.value"-->
-<!--            :label="item.label"-->
-<!--            :value="item.value">-->
-<!--          </el-option>-->
-<!--        </el-select>-->
-<!--      </el-form-item>-->
+      <!--      <el-form-item label="开奖形式" prop="official">-->
+      <!--        <el-select v-model="queryParams.official" placeholder="请选择开奖形式" clearable size="small">-->
+      <!--          <el-option-->
+      <!--            v-for="item in official"-->
+      <!--            :key="item.value"-->
+      <!--            :label="item.label"-->
+      <!--            :value="item.value">-->
+      <!--          </el-option>-->
+      <!--        </el-select>-->
+      <!--      </el-form-item>-->
       <el-form-item label="所属彩种类型" prop="type">
         <el-select v-model="queryParams.type" placeholder="请选择所属彩种类型" clearable size="small">
           <el-option
@@ -40,15 +40,15 @@
           </el-option>
         </el-select>
       </el-form-item>
-<!--      <el-form-item label="杀率" prop="killRate">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.killRate"-->
-<!--          placeholder="请输入杀率"-->
-<!--          clearable-->
-<!--          size="small"-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
+      <!--      <el-form-item label="杀率" prop="killRate">-->
+      <!--        <el-input-->
+      <!--          v-model="queryParams.killRate"-->
+      <!--          placeholder="请输入杀率"-->
+      <!--          clearable-->
+      <!--          size="small"-->
+      <!--          @keyup.enter.native="handleQuery"-->
+      <!--        />-->
+      <!--      </el-form-item>-->
       <!--      <el-form-item label="最小投注金额" prop="minCost">-->
       <!--        <el-input-->
       <!--          v-model="queryParams.minCost"-->
@@ -77,7 +77,8 @@
       <el-table-column label="彩票名称" align="center" prop="name"/>
       <el-table-column label="所属彩种类型" align="center" prop="type">
         <template v-slot="{row}">
-          <a @click="$router.push({path: '/lottery/lotteryMethod',query: { lotteryType: row.type}})" style="color: #00afff"> {{ row.type }}</a>
+          <a @click="$router.push({path: '/lottery/lotteryMethod',query: { lotteryType: row.type}})"
+             style="color: #00afff"> {{ row.type }}</a>
         </template>
       </el-table-column>
       <el-table-column label="图标" align="center" prop="icon">
@@ -94,6 +95,17 @@
       <el-table-column label="杀率" align="center" prop="killRate"/>
       <el-table-column label="周期" align="center" prop="cycle"/>
       <el-table-column label="最小投注金额" align="center" prop="minCost"/>
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            @click="handleUpdate(scope.row)"
+          >修改图标
+          </el-button>
+        </template>
+      </el-table-column>
     </el-table>
 
     <pagination
@@ -104,15 +116,31 @@
       @pagination="getList"
     />
 
+    <!-- 添加或修改活动信息对话框 -->
+    <el-dialog title="修改图标" :visible.sync="open" width="700px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="90px">
+        <el-form-item label="图标" prop="icon">
+          <imageUpload v-model="form.icon" path="LotteryInfo"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
 <script>
-import {listLotteryInfo } from "@/api/platform-web/lottery/lotteryInfo";
+import {listLotteryInfo, getLotteryInfo, updateLotteryInfo} from "@/api/platform-web/lottery/lotteryInfo";
+import ImageUpload from "@/components/ImageUpload";
 
 export default {
   name: "LotteryInfo",
-  components: {},
+  components: {
+    ImageUpload
+  },
   data() {
     return {
       //状态选择栏
@@ -135,7 +163,7 @@ export default {
         label: '自开(程序)'
       }],
       //所属彩种类型下拉框
-      type:  [{
+      type: [{
         value: '时时彩',
         label: '时时彩'
       }, {
@@ -203,6 +231,27 @@ export default {
         this.lotteryInfoList = response.rows;
         this.total = response.total;
         this.loading = false;
+      });
+    },
+    /** 修改按钮操作 */
+    handleUpdate(row) {
+      this.reset();
+      const id = row.id
+      getLotteryInfo(id).then(response => {
+        this.form = response.data;
+        this.open = true;
+      });
+    },
+    /** 修改图标提交按钮 */
+    submitForm() {
+      this.$refs["form"].validate(valid => {
+        if (valid) {
+          updateLotteryInfo(this.form).then(response => {
+            this.msgSuccess("修改成功");
+            this.open = false;
+            this.getList();
+          });
+        }
       });
     },
     // 0=官方1=自开（数据库）2=自开（程序）

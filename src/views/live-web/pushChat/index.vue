@@ -39,16 +39,16 @@
     </el-form>
 
     <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="openIpBlackList()"
-        >查看封停ip
-        </el-button>
-      </el-col>
+<!--      <el-col :span="1.5">-->
+<!--        <el-button-->
+<!--          type="primary"-->
+<!--          plain-->
+<!--          icon="el-icon-plus"-->
+<!--          size="mini"-->
+<!--          @click="openIpBlackList()"-->
+<!--        >查看封停ip-->
+<!--        </el-button>-->
+<!--      </el-col>-->
       <el-col :span="10" style="margin-left: 10px">
         <span style="font-size: 16px;margin-right: 10px">记录刷新</span>
         <el-select v-model="refreshSec" placeholder="时间间隔" style="width: 110px">
@@ -70,69 +70,68 @@
     </el-row>
 
     <el-table stripe v-loading="loading" :data="liveVideoChatList">
+      <el-table-column label="主播ID" min-width="120" align="center" prop="poscatId"/>
+      <el-table-column label="主播昵称" :show-overflow-tooltip="true" width="120" align="center" prop="poscatNickName"/>
       <el-table-column label="平台会员ID" min-width="130" align="center" prop="fromPlatform"/>
       <el-table-column label="用户昵称" :show-overflow-tooltip="true" width="120" align="center" prop="userNickName"/>
-      <el-table-column label="消息类型" width="90" align="center" prop="type" :formatter="typeFormat"/>
+<!--      <el-table-column label="消息类型" width="90" align="center" prop="type" :formatter="typeFormat"/>-->
       <el-table-column label="消息内容" :show-overflow-tooltip="true" min-width="350" align="center" prop="msg"/>
       <!--      <el-table-column label="会员ID" align="center" prop="id" />-->
-      <el-table-column label="主播ID" min-width="120" align="center" prop="poscatId"/>
       <!--      <el-table-column label="消息所在聊天组" align="center" prop="group" />-->
       <!--      <el-table-column label="发送者id" align="center" prop="userId" />-->
-
-      <el-table-column label="主播昵称" :show-overflow-tooltip="true" width="120" align="center" prop="poscatNickName"/>
-      <el-table-column label="是否封停" width="80" align="center" prop="noSpeaking">
-        <template slot-scope="scope">
-          <span v-if="scope.row.noSpeaking" style="color: #FF5722">
-            已封停
-          </span>
-          <span v-else style="color: #5FB878">
-            正常
-          </span>
-        </template>
-      </el-table-column>
-      <el-table-column label="是否禁言" width="80" align="center" prop="forbid">
-        <template slot-scope="scope">
-          <span v-if="scope.row.forbid" style="color: #FF5722">
-            禁言
-          </span>
-          <span v-else style="color: #5FB878">
-            正常
-          </span>
-        </template>
-      </el-table-column>
-      <el-table-column label="发言ip" width="160" align="center" prop="userIp"/>
+<!--      <el-table-column label="是否封停" width="80" align="center" prop="noSpeaking">-->
+<!--        <template slot-scope="scope">-->
+<!--          <span v-if="scope.row.noSpeaking" style="color: #FF5722">-->
+<!--            已封停-->
+<!--          </span>-->
+<!--          <span v-else style="color: #5FB878">-->
+<!--            正常-->
+<!--          </span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--      <el-table-column label="是否禁言" width="80" align="center" prop="forbid">-->
+<!--        <template slot-scope="scope">-->
+<!--          <span v-if="scope.row.forbid" style="color: #FF5722">-->
+<!--            禁言-->
+<!--          </span>-->
+<!--          <span v-else style="color: #5FB878">-->
+<!--            正常-->
+<!--          </span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--      <el-table-column label="发言ip" width="160" align="center" prop="userIp"/>-->
       <el-table-column label="发送时间" width="160" align="center" prop="createTimes"/>
-      <el-table-column label="操作" width="145" align="center" class-name="small-padding fixed-width" fixed="right">
-        <template slot-scope="scope">
-          <el-button
-            v-show="!scope.row.noSpeaking"
-            size="small"
-            type="danger"
-            @click="handleUpdateStop(scope.row)"
-            v-if="scope.row.type == '0' || scope.row.type == '1'"
-            v-hasPermi="['admin:liveVideoChat:edit']"
-          >封停
-          </el-button>
-          <el-button
-            v-show="scope.row.noSpeaking"
-            size="small"
-            type="success"
-            @click="handleUpdate(scope.row)"
-            v-if="scope.row.type == '0' || scope.row.type == '1'"
-            v-hasPermi="['admin:liveVideoChat:edit']"
-            style="margin-left: 0px"
-          >解封
-          </el-button>
-          <el-button
-            size="small"
-            type="warning"
-            @click="handleForbid(scope.row)"
-            v-if="scope.row.type == '0' || scope.row.type == '1'"
-            v-hasPermi="['admin:liveVideoChat:edit']"
-          >禁言
-          </el-button>
-        </template>
-      </el-table-column>
+<!--      <el-table-column label="操作" width="145" align="center" class-name="small-padding fixed-width" fixed="right">-->
+<!--        <template slot-scope="scope">-->
+<!--          <el-button-->
+<!--            v-show="!scope.row.noSpeaking"-->
+<!--            size="small"-->
+<!--            type="danger"-->
+<!--            @click="handleUpdateStop(scope.row)"-->
+<!--            v-if="scope.row.type == '0' || scope.row.type == '1'"-->
+<!--            v-hasPermi="['admin:liveVideoChat:edit']"-->
+<!--          >封停-->
+<!--          </el-button>-->
+<!--          <el-button-->
+<!--            v-show="scope.row.noSpeaking"-->
+<!--            size="small"-->
+<!--            type="success"-->
+<!--            @click="handleUpdate(scope.row)"-->
+<!--            v-if="scope.row.type == '0' || scope.row.type == '1'"-->
+<!--            v-hasPermi="['admin:liveVideoChat:edit']"-->
+<!--            style="margin-left: 0px"-->
+<!--          >解封-->
+<!--          </el-button>-->
+<!--          <el-button-->
+<!--            size="small"-->
+<!--            type="warning"-->
+<!--            @click="handleForbid(scope.row)"-->
+<!--            v-if="scope.row.type == '0' || scope.row.type == '1'"-->
+<!--            v-hasPermi="['admin:liveVideoChat:edit']"-->
+<!--          >禁言-->
+<!--          </el-button>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
     </el-table>
 
     <pagination
@@ -259,6 +258,7 @@ import {
   Forbid,
   suspendUser,
   listLiveVideoChat,
+  listLiveVideoPushChat,
   getLiveVideoChat,
   delLiveVideoChat,
   addLiveVideoChat,
@@ -357,7 +357,7 @@ export default {
     /** 查询会员发言列表 */
     getList() {
       this.loading = true
-      listLiveVideoChat(this.queryParams).then(response => {
+      listLiveVideoPushChat(this.queryParams).then(response => {
         this.liveVideoChatList = response.rows
         this.total = response.total
         this.loading = false
@@ -570,10 +570,8 @@ export default {
       })
     },
     typeFormat(row, column) {
-      if (row.type == '0') {
-        return '普通消息'
-      } else if (row.type == '1'){
-        return '弹幕消息'
+      if (row.type == '2') {
+        return '主播单聊'
       }
     },
     speakFormat(row, column) {

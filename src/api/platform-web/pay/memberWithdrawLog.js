@@ -165,6 +165,19 @@ export function artificialMemberWithdrawLog(data) {
   })
 }
 
+// 修改备注接口
+export function updateRemark(id,remark) {
+  const data = {
+    id: id,
+    remark: remark
+  }
+  return request({
+    url: url.platformWeb + '/pay/memberWithdrawLog/updateRemark',
+    method: 'post',
+    data: data
+  })
+}
+
 // 会员出款异常
 export function abnormalWithdrawal(data) {
   return request({

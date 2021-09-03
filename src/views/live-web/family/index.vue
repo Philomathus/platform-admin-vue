@@ -10,7 +10,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-
       <el-form-item prop="userId">
         <el-input
           type="number"
@@ -22,7 +21,17 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-
+      <el-form-item prop="id">
+        <el-input
+          type="number"
+          class="no-number"
+          v-model="queryParams.id"
+          placeholder="家族ID"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item>
         <el-select v-model="queryParams.status" placeholder="全部状态" clearable>
           <el-option label="未审核" value="0"></el-option>

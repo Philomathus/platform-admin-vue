@@ -92,7 +92,7 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 推广设置表格数据
+      // 推广图表格数据
       recommonPicList: [],
       // 弹出层标题
       title: "",
@@ -113,7 +113,7 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询推广设置列表 */
+    /** 查询推广图列表 */
     getList() {
       this.loading = true;
       listRecommonPic(this.queryParams).then(response => {
@@ -156,7 +156,7 @@ export default {
       getRecommonPic(envCode).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改推广设置";
+        this.title = "修改推广图";
       });
     },
     /** 提交按钮 */

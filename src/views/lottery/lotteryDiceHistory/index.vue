@@ -68,7 +68,7 @@
     <el-table stripe v-loading="loading" :data="wheelHistoryDiceList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="id" align="center" prop="id" />
-      <el-table-column label="会员ID" align="center" prop="pUserId" />
+      <el-table-column label="会员ID" align="center" prop="puserId" />
       <el-table-column label="昵称" align="center" prop="name" />
       <el-table-column label="奖项" align="center" prop="diceName" />
       <el-table-column label="骰数值" align="center" prop="diceValue" />
@@ -92,7 +92,7 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="会员ID" prop="pUserId">
-          <el-input v-model="form.pUserId" placeholder="请输入会员ID" />
+          <el-input v-model="form.puserId" placeholder="请输入会员ID" />
         </el-form-item>
         <el-form-item label="昵称" prop="name">
           <el-input v-model="form.name" placeholder="请输入昵称" />
@@ -125,13 +125,14 @@
 
 <script>
 import { listWheelHistoryDice, getWheelHistoryDice, delWheelHistoryDice, addWheelHistoryDice, updateWheelHistoryDice, exportWheelHistoryDice } from "@/api/activity/wheelHistoryDice";
-
+import {pickerDateShortcuts} from "@/utils/dateUtils";
 export default {
   name: "WheelHistoryDice",
   components: {
   },
   data() {
     return {
+      pickerOptions: {shortcuts: pickerDateShortcuts},
       // 遮罩层
       loading: true,
       // 选中数组
@@ -154,7 +155,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        pUserId: null,
+        puserId: null,
         name: null,
         diceName: null,
         cTime: null,
@@ -189,7 +190,7 @@ export default {
     reset() {
       this.form = {
         id: null,
-        pUserId: null,
+        puserId: null,
         name: null,
         diceName: null,
         cTime: null,

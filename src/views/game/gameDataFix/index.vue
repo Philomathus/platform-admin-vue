@@ -108,7 +108,7 @@
         </div>
       </el-form-item>-->
 <!--      <el-table-column label="本地平台id" align="center" prop="platformId" />-->
-      <el-table-column label="游戏平台" align="center" prop="platformId"/>
+      <el-table-column label="游戏平台" align="center" prop="platformName"/>
       <el-table-column label="状态" align="center" prop="status"  >
         <template slot-scope="scope">
           <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">{{ status.dictLabel }}</span>

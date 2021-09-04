@@ -99,7 +99,7 @@
 <!--          </span>-->
 <!--        </template>-->
 <!--      </el-table-column>-->
-      <el-table-column label="发言ip" width="160" align="center" prop="userIp"/>
+<!--      <el-table-column label="发言ip" width="160" align="center" prop="userIp"/>-->
       <el-table-column label="发送时间" width="160" align="center" prop="createTimes"/>
 <!--      <el-table-column label="操作" width="145" align="center" class-name="small-padding fixed-width" fixed="right">-->
 <!--        <template slot-scope="scope">-->

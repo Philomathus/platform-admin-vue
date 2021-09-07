@@ -158,7 +158,7 @@ export default {
       getHistoryRecharge(this.data['会员编号']).then((res) => {
         this.historyRecharge = res.msg;
         if (this.historyRecharge !== null) {
-          this.totalRecharge = (parseFloat(this.totalRecharge) + parseFloat(this.historyRecharge)).toFixed(2)
+          this.totalRecharge = (parseFloat(this.totalRechargeOriginal) + parseFloat(this.historyRecharge)).toFixed(2)
         }
       });
     },
@@ -178,7 +178,10 @@ export default {
       this.open = true
       // this.data = data;
       this.email = this.data.会员备注;
-      this.totalRecharge = this.data.充值总的金额;
+      this.totalRechargeOriginal = this.data.充值总的金额;
+      if (this.totalRecharge === null || this.totalRecharge === '') {
+        this.totalRecharge = this.data.充值总的金额;
+      }
     }
   },
   /*组件的初始化方法*/

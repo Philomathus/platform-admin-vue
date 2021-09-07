@@ -48,7 +48,7 @@
             <div class="font">线上历史充值金额:{{ historyRecharge || 0.00 }}</div>
           </div>
           <div class="mount" style="width: 12%">
-            <el-button type="success" @click="getHistoryRecharge(data.会员编号)">查询</el-button>
+            <el-button type="success" @click="getHistoryRecharge()">查询</el-button>
           </div>
         </div>
         <div class="font">线下充值金额: {{ data.线下充值金额 }}</div>
@@ -141,7 +141,6 @@ export default {
         if (checkTwoLogin()) {
           //获取会员的手机号
           getMemberInfo(this.data['会员编号']).then((res) => {
-            console.log(res)
             this.data['会员名称'] = res.data.phone
             this.$forceUpdate();
           });
@@ -155,7 +154,6 @@ export default {
       });
     },
     getHistoryRecharge() {
-      //获取会员的登录地址
       getHistoryRecharge(this.data['会员编号']).then((res) => {
         this.historyRecharge = res.msg;
         if (this.historyRecharge !== null) {

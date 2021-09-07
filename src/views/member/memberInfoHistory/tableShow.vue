@@ -54,7 +54,7 @@
         <div class="font">线下充值金额: {{ data.线下充值金额 }}</div>
         <div class="font">代充金额: {{ data.人工代充金额 }}</div>
         <div class="font">手工上分金额: {{ data.平台赠送金额 }}</div>
-        <div class="font">充值总金额: {{ data.充值总的金额 }}</div>
+        <div class="font">充值总金额: {{ totalRecharge || 0.00 }}</div>
         <div class="font">提现次数: {{ data.会员提现次数 }}</div>
         <div class="font">提现金额: {{ data.会员提现金额 }}</div>
       </div>
@@ -104,7 +104,8 @@ export default {
     return {
       open: false,
       address: '******',
-      historyRecharge: "未查询",
+      historyRecharge: "",
+      totalRecharge: "",
       data: {},
       playData: [],
       email: '',
@@ -157,7 +158,7 @@ export default {
       getHistoryRecharge(this.data['会员编号']).then((res) => {
         this.historyRecharge = res.msg;
         if (this.historyRecharge !== null) {
-          this.data['充值总的金额'] = (parseFloat(this.data['充值总的金额']) + parseFloat(this.historyRecharge)).toFixed(2)
+          this.totalRecharge = (parseFloat(this.totalRecharge) + parseFloat(this.historyRecharge)).toFixed(2)
         }
       });
     },
@@ -177,6 +178,7 @@ export default {
       this.open = true
       // this.data = data;
       this.email = this.data.会员备注;
+      this.totalRecharge = this.data.充值总的金额;
     }
   },
   /*组件的初始化方法*/

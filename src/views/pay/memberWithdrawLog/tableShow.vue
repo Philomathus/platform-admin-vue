@@ -105,8 +105,8 @@ export default {
     return {
       open: false,
       address: '******',
-      historyRecharge: "",
-      totalRecharge: "",
+      historyRecharge: '',
+      totalRecharge: '',
       data: {},
       playData: [],
       email: '',
@@ -177,12 +177,11 @@ export default {
         }
       });
       this.open = true
+      this.historyRecharge = ''
       // this.data = data;
       this.email = this.data.会员备注;
       this.totalRechargeOriginal = this.data.充值总的金额;
-      if (this.totalRecharge === null || this.totalRecharge === '') {
-        this.totalRecharge = this.data.充值总的金额;
-      }
+      this.totalRecharge = this.data.充值总的金额;
     }
   },
   /*组件的初始化方法*/

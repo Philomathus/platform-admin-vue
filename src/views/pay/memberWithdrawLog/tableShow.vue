@@ -55,7 +55,7 @@
         <div class="font">代充金额: {{ data.人工代充金额 }}</div>
         <div class="font">手工上分金额: {{ data.手动增加金额 }}</div>
         <div class="font">平台赠送金额: {{ data.平台赠送金额 }}</div>
-        <div class="font">充值总金额: {{ totalRecharge || 0.00 }}</div>
+        <div class="font">充值总金额: {{ data.充值总的金额 }}</div>
         <div class="font">提现次数: {{ data.会员提现次数 }}</div>
         <div class="font">提现金额: {{ data.会员提现金额 }}</div>
       </div>
@@ -159,7 +159,7 @@ export default {
       getHistoryRecharge(this.data['会员编号']).then((res) => {
         this.historyRecharge = res.msg;
         if (this.historyRecharge !== null) {
-          this.totalRecharge = (parseFloat(this.totalRechargeOriginal) + parseFloat(this.historyRecharge)).toFixed(2)
+          this.data['充值总的金额'] = (parseFloat(this.data['充值总的金额']) + parseFloat(this.historyRecharge)).toFixed(2)
         }
       });
     },
@@ -179,10 +179,10 @@ export default {
       this.open = true
       // this.data = data;
       this.email = this.data.会员备注;
-      this.totalRechargeOriginal = this.data.充值总的金额;
-      if (this.totalRecharge === null || this.totalRecharge === '') {
-        this.totalRecharge = this.data.充值总的金额;
-      }
+      // this.totalRechargeOriginal = this.data.充值总的金额;
+      // if (this.totalRecharge === null || this.totalRecharge === '') {
+      //   this.totalRecharge = this.data.充值总的金额;
+      // }
     }
   },
   /*组件的初始化方法*/

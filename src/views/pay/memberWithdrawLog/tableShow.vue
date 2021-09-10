@@ -8,7 +8,7 @@
       <div class="mount" style="width: 12%">
         <div class="font">会员Id</div>
         <div class="font">注册时间</div>
-<!--        <div class="font">电话号码</div>-->
+        <!--        <div class="font">电话号码</div>-->
         <div class="font">用户类型</div>
         <div class="font">会员打码</div>
         <div class="font">会员IP</div>
@@ -16,7 +16,7 @@
       <div class="mount" style="width: 28%">
         <div class="font">{{ data.会员编号 }}</div>
         <div class="font">{{ data.会员注册时间 }}</div>
-<!--        <div class="font" @click="showPhone" style="background-color: #cccc77">{{ data.会员名称 }}</div>-->
+        <!--        <div class="font" @click="showPhone" style="background-color: #cccc77">{{ data.会员名称 }}</div>-->
         <div class="font">{{ data.用户类型 }}</div>
         <div class="font">{{ data.会员打码 }}</div>
         <div class="font">{{ data.登陆IP }}</div>
@@ -48,14 +48,14 @@
             <div class="font">线上历史充值金额:{{ historyRecharge || 0.00 }}</div>
           </div>
           <div class="mount" style="width: 12%">
-            <el-button type="success" @click="getHistoryRecharge(data.会员编号)">查询</el-button>
+            <el-button type="primary" plain @click="getHistoryRecharge()">查询</el-button>
           </div>
         </div>
         <div class="font">线下充值金额: {{ data.线下充值金额 }}</div>
         <div class="font">代充金额: {{ data.人工代充金额 }}</div>
         <div class="font">手工上分金额: {{ data.手动增加金额 }}</div>
         <div class="font">平台赠送金额: {{ data.平台赠送金额 }}</div>
-        <div class="font">充值总金额: {{ data.充值总的金额 }}</div>
+        <div class="font">充值总金额: {{ totalRecharge || 0.00 }}</div>
         <div class="font">提现次数: {{ data.会员提现次数 }}</div>
         <div class="font">提现金额: {{ data.会员提现金额 }}</div>
       </div>
@@ -66,7 +66,7 @@
         <div style="    display: flex;
     justify-content: flex-start;">
           <el-input class="font" v-model.trim="email" maxlength="50" show-word-limit></el-input>
-          <el-button type="success" @click="updateEmail(email,data.会员编号)">更新</el-button>
+          <el-button type="primary" plain @click="updateEmail(email,data.会员编号)">更新</el-button>
         </div>
       </div>
     </div>
@@ -105,7 +105,8 @@ export default {
     return {
       open: false,
       address: '******',
-      historyRecharge: "未查询",
+      historyRecharge: '',
+      totalRecharge: '',
       data: {},
       playData: [],
       email: '',
@@ -142,7 +143,6 @@ export default {
         if (checkTwoLogin()) {
           //获取会员的手机号
           getMemberInfo(this.data['会员编号']).then((res) => {
-            console.log(res)
             this.data['会员名称'] = res.data.phone
             this.$forceUpdate();
           });
@@ -156,11 +156,10 @@ export default {
       });
     },
     getHistoryRecharge() {
-      //获取会员的登录地址
       getHistoryRecharge(this.data['会员编号']).then((res) => {
         this.historyRecharge = res.msg;
         if (this.historyRecharge !== null) {
-          this.data['充值总的金额'] = (parseFloat(this.data['充值总的金额']) + parseFloat(this.historyRecharge)).toFixed(2)
+          this.totalRecharge = (parseFloat(this.totalRechargeOriginal) + parseFloat(this.historyRecharge)).toFixed(2)
         }
       });
     },
@@ -178,8 +177,11 @@ export default {
         }
       });
       this.open = true
+      this.historyRecharge = ''
       // this.data = data;
       this.email = this.data.会员备注;
+      this.totalRechargeOriginal = this.data.充值总的金额;
+      this.totalRecharge = this.data.充值总的金额;
     }
   },
   /*组件的初始化方法*/

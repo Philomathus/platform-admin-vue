@@ -48,13 +48,13 @@
             <div class="font">线上历史充值金额:{{ historyRecharge || 0.00 }}</div>
           </div>
           <div class="mount" style="width: 12%">
-            <el-button type="success" @click="getHistoryRecharge(data.会员编号)">查询</el-button>
+            <el-button type="success" @click="getHistoryRecharge()">查询</el-button>
           </div>
         </div>
         <div class="font">线下充值金额: {{ data.线下充值金额 }}</div>
         <div class="font">代充金额: {{ data.人工代充金额 }}</div>
         <div class="font">手工上分金额: {{ data.平台赠送金额 }}</div>
-        <div class="font">充值总金额: {{ data.充值总的金额 }}</div>
+        <div class="font">充值总金额: {{ totalRecharge || 0.00 }}</div>
         <div class="font">提现次数: {{ data.会员提现次数 }}</div>
         <div class="font">提现金额: {{ data.会员提现金额 }}</div>
       </div>
@@ -104,7 +104,8 @@ export default {
     return {
       open: false,
       address: '******',
-      historyRecharge: "未查询",
+      historyRecharge: '',
+      totalRecharge: '',
       data: {},
       playData: [],
       email: '',
@@ -141,7 +142,6 @@ export default {
         if (checkTwoLogin()) {
           //获取会员的手机号
           getMemberInfo(this.data['会员编号']).then((res) => {
-            console.log(res)
             this.data['会员名称'] = res.data.phone
             this.$forceUpdate();
           });
@@ -155,11 +155,10 @@ export default {
       });
     },
     getHistoryRecharge() {
-      //获取会员的登录地址
       getHistoryRecharge(this.data['会员编号']).then((res) => {
         this.historyRecharge = res.msg;
         if (this.historyRecharge !== null) {
-          this.data['充值总的金额'] = (parseFloat(this.data['充值总的金额']) + parseFloat(this.historyRecharge)).toFixed(2)
+          this.totalRecharge = (parseFloat(this.totalRechargeOriginal) + parseFloat(this.historyRecharge)).toFixed(2)
         }
       });
     },
@@ -177,8 +176,13 @@ export default {
         }
       });
       this.open = true
+      this.historyRecharge = ''
       // this.data = data;
       this.email = this.data.会员备注;
+      this.totalRechargeOriginal = this.data.充值总的金额;
+      if (this.totalRecharge === null || this.totalRecharge === '') {
+        this.totalRecharge = this.data.充值总的金额;
+      }
     }
   },
   /*组件的初始化方法*/

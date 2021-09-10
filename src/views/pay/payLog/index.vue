@@ -145,7 +145,7 @@ export default {
         memberId: null,
         platformId: null,
         channelId: null,
-        success: null,
+        success: '0',
         createTime: null,
         orderByColumn: 'create_time',
         isAsc: 'desc'

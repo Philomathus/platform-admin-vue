@@ -28,10 +28,10 @@ export function addChatComplaint(data) {
 }
 
 // 修改客服投诉
-export function updateChatComplaint(id,remark,status) {
+export function updateChatComplaint(id,comments,status) {
   const data = {
     id : id,
-    remark : remark,
+    comments : comments,
     status : status
   }
   return request({

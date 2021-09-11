@@ -23,9 +23,18 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="代充账号" prop="kfId">
+      <el-form-item label="客服id" prop="kfId">
         <el-input
           v-model="queryParams.kfId"
+          placeholder="请输入客服id"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="客服代充账号" prop="account">
+        <el-input
+          v-model="queryParams.account"
           placeholder="请输入代充账号"
           clearable
           size="small"
@@ -116,7 +125,8 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="投诉内容" align="center" prop="remark" />
       <el-table-column label="发起人id" align="center" prop="userId" />
-      <el-table-column label="代充账号" align="center" prop="kfId" />
+      <el-table-column label="客服id" align="center" prop="kfId" />
+      <el-table-column label="客服代充账号" align="center" prop="account" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
@@ -270,6 +280,7 @@ export default {
         approver: null,
         comments: null,
         status: null,
+        account: null,
         orderByColumn: 'createTime',
         isAsc: 'desc'
       },
@@ -319,6 +330,7 @@ export default {
         approver: null,
         comments: null,
         createTime: null,
+        account: null,
         status: 0
       };
       this.resetForm("form");

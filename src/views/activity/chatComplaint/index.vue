@@ -1,9 +1,9 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="审批时间"  prop="processingTime">
+      <el-form-item label="创建时间" prop="selectDate">
         <el-date-picker
-          v-model="dateRange"
+          v-model="queryParams.selectDate"
           size="small"
           style="width: 240px"
           value-format="yyyy-MM-dd"
@@ -14,7 +14,7 @@
           :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item label="发起人id" prop="userId">
+      <el-form-item prop="userId">
         <el-input
           v-model="queryParams.userId"
           placeholder="请输入发起人id"
@@ -23,7 +23,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="客服id" prop="kfId">
+      <el-form-item prop="kfId">
         <el-input
           v-model="queryParams.kfId"
           placeholder="请输入客服id"
@@ -32,16 +32,16 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="客服代充账号" prop="account">
+      <el-form-item prop="account">
         <el-input
           v-model="queryParams.account"
-          placeholder="请输入代充账号"
+          placeholder="请输入客服代充账号"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="审批人" prop="approver">
+      <el-form-item prop="approver">
         <el-input
           v-model="queryParams.approver"
           placeholder="请输入审批人"
@@ -59,7 +59,7 @@
 <!--          @keyup.enter.native="handleQuery"-->
 <!--        />-->
 <!--      </el-form-item>-->
-      <el-form-item label="处理状态" prop="status">
+      <el-form-item prop="status">
           <el-select v-model="queryParams.status" placeholder="请选择处理状态" size="small">
             <el-option
               v-for="item in statusOptions"
@@ -121,7 +121,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table stripe v-loading="loading" :data="chatComplaintList" @selection-change="handleSelectionChange">
+    <el-table stripe v-loading="loading" :data="chatComplaintList">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="投诉内容" align="center" prop="remark" />
       <el-table-column label="发起人id" align="center" prop="userId" />
@@ -250,7 +250,7 @@ export default {
         label: '驳回'
       }],
       // 日期范围
-      dateRange: [],
+      selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
       pickerOptions: {shortcuts: pickerDateShortcuts},
       // 遮罩层
       loading: true,
@@ -272,6 +272,7 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
+        selectDate: [this.parseTime(new Date(), '{y}-{m}-{d}'), this.parseTime(new Date(), '{y}-{m}-{d}')],
         pageNum: 1,
         pageSize: 10,
         userId: null,

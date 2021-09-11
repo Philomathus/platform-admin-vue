@@ -351,7 +351,6 @@ export default {
     },
     //编码失去焦点验证
     existCode(value) {
-      console.info(value)
       if (!(/^-[1-9]\d*$/).test(value) && value !== 0) {
         this.msgWarning('编码必须为负整数')
       } else {
@@ -406,6 +405,7 @@ export default {
         updator: null,
         updateTime: null
       }
+      this.deviceTypes = ['1','2','3'],
       this.resetForm('form')
     },
     /** 搜索按钮操作 */
@@ -454,15 +454,17 @@ export default {
             this.msgWarning('编码必须为负整数')
           } else {
             if (this.form.id != null) {
-              console.info(this.deviceTypes)
-              if (this.deviceTypes != null && this.deviceTypes !== "") {
+              if (this.deviceTypes != null && this.deviceTypes.length !== 0) {
                 this.form.deviceType = this.deviceTypes.join(',')
+                updatePayType(this.form).then(response => {
+                  this.msgSuccess('修改成功')
+                  this.open = false
+                  this.getList()
+                })
+              } else {
+                this.$message.error("设备类型不可一个不选")
+                return
               }
-              updatePayType(this.form).then(response => {
-                this.msgSuccess('修改成功')
-                this.open = false
-                this.getList()
-              })
             } else {
               existCode(this.form.code).then(response => {
                 if (response.code === 0) {

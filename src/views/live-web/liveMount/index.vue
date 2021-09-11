@@ -78,6 +78,7 @@
 
     <el-table v-loading="loading" :data="liveMountList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="坐骑id" align="center" prop="id"/>
       <el-table-column label="vip等级" align="center" prop="gvip"/>
       <el-table-column label="坐骑名" align="center" prop="name"/>
       <el-table-column label="状态" align="center" key="status" v-if="columns[0].visible">

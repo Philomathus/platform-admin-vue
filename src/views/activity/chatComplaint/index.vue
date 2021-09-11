@@ -23,10 +23,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="客服id" prop="kfId">
+      <el-form-item label="代充账号" prop="kfId">
         <el-input
           v-model="queryParams.kfId"
-          placeholder="请输入客服id"
+          placeholder="请输入代充账号"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -116,15 +116,21 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="投诉内容" align="center" prop="remark" />
       <el-table-column label="发起人id" align="center" prop="userId" />
-      <el-table-column label="客服id" align="center" prop="kfId" />
+      <el-table-column label="代充账号" align="center" prop="kfId" />
+      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="审批人" align="center" prop="approver" />
+      <el-table-column label="审批备注" align="center" prop="comments" />
       <el-table-column label="审批时间" align="center" prop="processingTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.processingTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="审批人" align="center" prop="approver" />
-      <el-table-column label="审批备注" align="center" prop="comments" />
       <el-table-column label="处理状态" align="center" prop="status" :formatter="formatterStatus"/>
+
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button

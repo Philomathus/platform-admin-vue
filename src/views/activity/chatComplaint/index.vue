@@ -269,7 +269,9 @@ export default {
         processingTime: null,
         approver: null,
         comments: null,
-        status: null
+        status: null,
+        orderByColumn: 'createTime',
+        isAsc: 'desc'
       },
       // 表单参数
       form: {},

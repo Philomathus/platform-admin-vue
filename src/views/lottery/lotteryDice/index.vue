@@ -66,7 +66,17 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="编号" align="center" prop="id" />
       <el-table-column label="名称" align="center" prop="name" />
-      <el-table-column label="奖励" align="center" prop="prize" />
+      <el-table-column label="奖励" align="center" prop="prize" >
+        <template slot="header">
+          <span>奖励</span>
+          <el-tooltip popper-class="tooltip" placement="top">
+            <i class="el-icon-question"></i>
+            <div slot="content" class="tooltip-content">
+              <div>返现金额或坐骑ID</div>
+            </div>
+          </el-tooltip>
+        </template>
+      </el-table-column>
       <el-table-column label="类型" align="center" prop="type" :formatter="typeFormat" >
       </el-table-column>
       <el-table-column label="描述" align="center" prop="des" >
@@ -117,7 +127,7 @@
           <el-input v-model="form.name" placeholder="请输入名称" />
         </el-form-item>
         <el-form-item label="奖励" prop="prize">
-          <el-input v-model="form.prize" placeholder="请输入奖励" />
+          <el-input v-model="form.prize" type="number" placeholder="请输入奖励" />
         </el-form-item>
         <el-form-item label="权重" prop="weight">
           <el-input v-model="form.weight" type="number" placeholder="请输入权重" />
@@ -133,7 +143,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="描述" prop="des">
-          <el-input v-model="form.des" placeholder="请输入坐骑天数或是打码倍数" />
+          <el-input v-model="form.des"  type="number" placeholder="请输入坐骑天数或是打码倍数" />
         </el-form-item>
         <el-form-item label="奖励对应的图示" prop="diceValue">
           <el-input v-model="form.diceValue" placeholder="请输入奖励对应的图示" />

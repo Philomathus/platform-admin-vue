@@ -106,6 +106,7 @@
         </template>
       </el-table-column>
       <el-table-column label="审批人" align="center" prop="approver" />
+      <el-table-column label="审批备注" align="center" prop="remark" />
       <el-table-column label="审批时间" align="center" prop="processingTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.processingTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
@@ -247,7 +248,9 @@ export default {
         anchor: null,
         approver: null,
         processingTime: null,
-        status: null
+        status: null,
+        orderByColumn: 'createTime',
+        isAsc: 'desc'
       },
       // 表单参数
       form: {},

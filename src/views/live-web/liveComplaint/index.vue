@@ -94,9 +94,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table stripe v-loading="loading" :data="liveComplaintList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="id" align="center" prop="id" />
+    <el-table stripe v-loading="loading" :data="liveComplaintList">
       <el-table-column label="投诉内容" align="center" prop="content" />
       <el-table-column label="用户手机号" align="center" prop="mobile" />
       <el-table-column label="房间名称" align="center" prop="roomName" />

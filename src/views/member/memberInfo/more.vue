@@ -50,6 +50,8 @@
           <span>修改Vip</span></button>
         <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(12,'IM禁言')">
           <span>IM禁言</span></button>
+        <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(15,'域名展示')">
+          <span>域名展示</span></button>
       </div>
       <!--积分明细-->
       <el-row v-if="index===1">
@@ -64,19 +66,19 @@
         </el-table>
       </el-row>
       <!--资金明细-->
-<!--      <el-row v-if="index===2">
-        <el-table
-          @row-click="clickRow"
-          ref="table"
-          :data="dbTableList"
-          height="460px"
-          v-loading="loading"
-        >
-          &lt;!&ndash;<el-table-column type="selection" width="55"></el-table-column>&ndash;&gt;
-          <el-table-column prop="class_twoname" label="项目名称" :show-overflow-tooltip="true"></el-table-column>
-          <el-table-column prop="t_value" label="项目值" :show-overflow-tooltip="true"></el-table-column>
-        </el-table>
-      </el-row>-->
+      <!--      <el-row v-if="index===2">
+              <el-table
+                @row-click="clickRow"
+                ref="table"
+                :data="dbTableList"
+                height="460px"
+                v-loading="loading"
+              >
+                &lt;!&ndash;<el-table-column type="selection" width="55"></el-table-column>&ndash;&gt;
+                <el-table-column prop="class_twoname" label="项目名称" :show-overflow-tooltip="true"></el-table-column>
+                <el-table-column prop="t_value" label="项目值" :show-overflow-tooltip="true"></el-table-column>
+              </el-table>
+            </el-row>-->
       <!--加分-->
       <el-row v-if="index===3">
         <el-form ref="form" :model="form" :rules="rules" label-width="110px">
@@ -103,13 +105,15 @@
             <el-input v-model="form.ordermk" placeholder="补单请填写补单订单号，末开奖补回请填写开期号，无则填写为0"/>
           </el-form-item>
           <el-form-item label="待打码金额" prop="betMoney">
-            <el-input v-model="form.betMoney" type="number" placeholder="还需打码金额" @blur="codeMoney(form.betMoney,form.score)"/>
+            <el-input v-model="form.betMoney" type="number" placeholder="还需打码金额"
+                      @blur="codeMoney(form.betMoney,form.score)"/>
           </el-form-item>
           <el-form-item label="打码倍数" prop="beatNum">
-            <el-input v-model="form.beatNum" type="number" placeholder="请按顺序先输入加分金额，再输入待打码金额，系统会自动计算打码倍数。默认请填写1,如未打算打码可填写为0"/>
+            <el-input v-model="form.beatNum" type="number"
+                      placeholder="请按顺序先输入加分金额，再输入待打码金额，系统会自动计算打码倍数。默认请填写1,如未打算打码可填写为0"/>
           </el-form-item>
           <el-form-item label="谷歌验证码" prop="googleAuthCode">
-            <el-input v-model="form.googleAuthCode" placeholder="请输入谷歌验证码"  />
+            <el-input v-model="form.googleAuthCode" placeholder="请输入谷歌验证码"/>
           </el-form-item>
         </el-form>
       </el-row>
@@ -168,7 +172,8 @@
         <el-form ref="mobileForm" label-width="110px" :model="mobileForm" :rules="mobileRules">
           <el-form-item label="旧手机号" prop="phone">
             <el-input v-model="mobileForm.phone" placeholder="请输入旧手机号" readonly style="width: 88%;margin-right: 10px"/>
-            <el-button type="primary" @click="fullMobile()" v-has-permi="['member:memberInfo:fullMobile']">查看完整手机号</el-button>
+            <el-button type="primary" @click="fullMobile()" v-has-permi="['member:memberInfo:fullMobile']">查看完整手机号
+            </el-button>
           </el-form-item>
           <el-form-item label="新手机号" prop="newMobile">
             <el-input v-model="mobileForm.newMobile" placeholder="请输入新手机号"/>
@@ -177,11 +182,22 @@
             <el-input v-model="mobileForm.googleAuthCode" placeholder="请输入google验证码"/>
           </el-form-item>
           <el-form-item>
-              <el-button type="primary" @click="updateMobile()" v-has-permi="['member:memberInfo:updateMobile']">确 定</el-button>
+            <el-button type="primary" @click="updateMobile()" v-has-permi="['member:memberInfo:updateMobile']">确 定
+            </el-button>
           </el-form-item>
         </el-form>
       </el-row>
-
+      <!--域名展示-->
+      <el-row v-if="index===15">
+        <el-form label-width="110px">
+          <el-form-item label="登录域名">
+              {{this.registerDomain}}
+          </el-form-item>
+          <el-form-item label="注册域名">
+            {{this.LoginDomain}}
+          </el-form-item>
+        </el-form>
+      </el-row>
       <!--银行卡-->
       <el-row v-if="index===5">
         <el-table
@@ -333,13 +349,13 @@
         </el-button>
       </div>
     </el-dialog>
-    <TableShow ref="tableShow" ></TableShow>
+    <TableShow ref="tableShow"></TableShow>
   </div>
 
 </template>
 
 <script>
-import { gameBalance, gameEsc } from '@/api/platform-web/game/base'
+import {gameBalance, gameEsc} from '@/api/platform-web/game/base'
 import {
   memberWithdrawLog,
   addScore,
@@ -348,13 +364,14 @@ import {
   resetSafe,
   unbindCard,
   changeBank,
+  getMemberInfo,
   resetWithdrawal, memberBcodeRepair, updateVip, sendMsg, updateMobile, fullMobile, imDelete, updateInviterCode
 } from '@/api/platform-web/member/memberInfo'
-import { userImMute } from '@/api/platform-web/live-web/ImMute'
+import {userImMute} from '@/api/platform-web/live-web/ImMute'
 // import { hideKMobile } from '@/utils/mobile.js'
 import TableShow from '@/views/pay/memberWithdrawLog/tableShow.vue';
 import {getMemberWithdrawReport} from "@/api/platform-web/pay/memberWithdrawLog";
-import { positiveInteger, validMobile, validNumber } from '../../../utils/validate'
+import {positiveInteger, validMobile, validNumber} from '../../../utils/validate'
 import {checkTwoLogin} from "@/utils/permission";
 
 export default {
@@ -386,6 +403,8 @@ export default {
       banSpeakTime: null,
       msgList: [],
       mobileForm: {},
+      registerDomain: null,
+      LoginDomain: null,
       //弹出框标题
       title: '加分',
       //页面编码
@@ -419,7 +438,7 @@ export default {
         moneydes: '',
         ordermk: '',
         score: '',
-        betMoney:''
+        betMoney: ''
       },
       // 总条数
       total: 0,
@@ -435,59 +454,59 @@ export default {
       //手机号校验规则
       mobileRules: {
         oldMobile: [
-          { required: true, message: '旧手机号码不能为空', trigger: 'blur' },
-          {max: 100,message: "旧手机号码长度不能超过11位" },
-          { validator: validMobile , trigger: "blur"  }
+          {required: true, message: '旧手机号码不能为空', trigger: 'blur'},
+          {max: 100, message: "旧手机号码长度不能超过11位"},
+          {validator: validMobile, trigger: "blur"}
         ],
         newMobile: [
-          { required: true, message: '新手机号码不能为空', trigger: 'blur' },
-          {max: 11,message: "新手机号码长度不能超过11位" },
-          { validator: validMobile , trigger: "blur"  }
+          {required: true, message: '新手机号码不能为空', trigger: 'blur'},
+          {max: 11, message: "新手机号码长度不能超过11位"},
+          {validator: validMobile, trigger: "blur"}
         ],
         googleAuthCode: [
-          { required: true, message: '谷歌验证码不能为空', trigger: 'blur' },
-          { validator: validNumber , trigger: "blur"  }
+          {required: true, message: '谷歌验证码不能为空', trigger: 'blur'},
+          {validator: validNumber, trigger: "blur"}
         ]
       },
       // 加分表单校验
       inviterCodeRules: {
         inviterCode: [
-          { required: true, message: '重置邀请码不能为空', trigger: 'blur' },
-          { max: 500,message: "重置邀请码长度不能超过500个字符" }
+          {required: true, message: '重置邀请码不能为空', trigger: 'blur'},
+          {max: 500, message: "重置邀请码长度不能超过500个字符"}
         ],
         googleAuthCode: [
-          { required: true, message: 'google验证码不能为空', trigger: 'blur' },
-          { validator: validNumber , trigger: "blur"  }
+          {required: true, message: 'google验证码不能为空', trigger: 'blur'},
+          {validator: validNumber, trigger: "blur"}
         ]
       },
       // 加分表单校验
       rules: {
         password: [
-          { required: true, message: '重置密码不能为空', trigger: 'blur' },
-          { max: 30,message: "重置密码长度不能超过30个字符" }
+          {required: true, message: '重置密码不能为空', trigger: 'blur'},
+          {max: 30, message: "重置密码长度不能超过30个字符"}
         ],
         score: [
-          { required: true, message: '加分金额不能为空', trigger: 'blur' }
+          {required: true, message: '加分金额不能为空', trigger: 'blur'}
         ],
         moneydes: [
-          { required: true, message: '入款备注不能为空', trigger: 'blur' }
+          {required: true, message: '入款备注不能为空', trigger: 'blur'}
         ],
         mk: [
-          { required: true, message: '备注信息不能为空', trigger: 'blur' },{max: 200,message: "备注信息长度不能超过200位" }
+          {required: true, message: '备注信息不能为空', trigger: 'blur'}, {max: 200, message: "备注信息长度不能超过200位"}
         ],
         ordermk: [
-          { required: true, message: '订单备注不能为空', trigger: 'blur' },{max: 200,message: "备注信息长度不能超过200位" }
+          {required: true, message: '订单备注不能为空', trigger: 'blur'}, {max: 200, message: "备注信息长度不能超过200位"}
         ],
         googleAuthCode: [
-          { required: true, message: 'google验证码不能为空', trigger: 'blur' },
-          { validator: validNumber , trigger: "blur"  }
+          {required: true, message: 'google验证码不能为空', trigger: 'blur'},
+          {validator: validNumber, trigger: "blur"}
         ]
       }
     }
   },
   /*监听器,监听单个变量,param就是data的变量*/
   watch: {
-    vip: function(newVal, oldVal) {
+    vip: function (newVal, oldVal) {
       if (newVal < this.oldVip) {
         this.$notify.error('vip等级只能大于之前的等级')
         this.showVipDisabled = true
@@ -499,7 +518,6 @@ export default {
   created() {
     this.getDicts('member_msg').then(response => {
       this.msgList = response.data
-      console.info(this.msgList)
     })
   },
   methods: {
@@ -639,7 +657,7 @@ export default {
           this.open(hint, 5)
           break
         case 2 :
-          hint = 'IM禁言'
+          hint = '资金明细'
           this.funds(this.memberId);
           break
       }
@@ -664,7 +682,7 @@ export default {
             type: 'success',
             message: '操作成功!'
           })
-          resetSafe({ userId: this.memberId }).then((res) => {
+          resetSafe({userId: this.memberId}).then((res) => {
             if (res.code === 0) {
               this.$notify.success('重置保险箱成功')
             } else {
@@ -683,7 +701,7 @@ export default {
           cancelButtonText: '取消',
           inputPattern: /^[0-9]{1,10}$/,
           inputErrorMessage: '验证码格式不正确,0-10数字,请重新输入',
-        }).then(({ value }) => {
+        }).then(({value}) => {
           resetWithdrawal({
             googleAuthCode: value,
             id: this.memberId
@@ -706,7 +724,7 @@ export default {
           cancelButtonText: '取消',
           inputPattern: /^[0-9]{1,10}$/,
           inputErrorMessage: '验证码格式不正确,0-10数字,请重新输入',
-        }).then(({ value }) => {
+        }).then(({value}) => {
           memberBcodeRepair({
             googleAuthCode: value,
             id: this.memberId
@@ -792,7 +810,25 @@ export default {
         case 12:
           this.getMemberImInfo()
           break
+        case 15:
+          this.getMemberInfo()
+          break
       }
+    },
+    //获取详细信息
+    getMemberInfo() {
+      this.loading = true
+      getMemberInfo(this.memberId).then((res) => {
+          if (res.code === 200) {
+            if (res.data.linkUrl !== null) {
+              this.dbTableList = res.data.linkUrl.split(",")
+              this.registerDomain = this.dbTableList[0]
+              this.LoginDomain = this.dbTableList[1]
+              this.loading = false
+            }
+          }
+        }
+      )
     },
     //获取im禁言
     getMemberImInfo() {
@@ -946,9 +982,9 @@ export default {
 
     },
     /** 计算打码倍数 */
-    codeMoney(betMoney,score) {
-      if (betMoney!=""&&betMoney!=null){
-        this.form.beatNum= (betMoney/score).toFixed(2);
+    codeMoney(betMoney, score) {
+      if (betMoney != "" && betMoney != null) {
+        this.form.beatNum = (betMoney / score).toFixed(2);
       }
     }
   }

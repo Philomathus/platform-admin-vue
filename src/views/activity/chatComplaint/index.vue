@@ -122,7 +122,6 @@
     </el-row>
 
     <el-table stripe v-loading="loading" :data="chatComplaintList">
-      <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="投诉内容" align="center" prop="remark" />
       <el-table-column label="发起人id" align="center" prop="userId" />
       <el-table-column label="客服id" align="center" prop="kfId" />

@@ -105,8 +105,8 @@ export default {
     return {
       open: false,
       address: '******',
-      historyRecharge: '',
-      totalRecharge: '',
+      historyRecharge: "",
+      totalRecharge: "",
       data: {},
       playData: [],
       email: '',

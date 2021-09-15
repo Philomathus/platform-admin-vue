@@ -176,8 +176,8 @@
       <el-table-column label="充值金额" align="center" prop="rechargeMoney"/>
       <el-table-column label="优惠比例" align="center" prop="discountBill"/>
       <el-table-column label="链名称" align="center" prop="chainName"/>
-      <el-table-column label="充值地址" align="center" min-width="200" prop="rechargeAddress"/>
-      <el-table-column label="交易id" align="center" prop="transactionId"/>
+      <el-table-column label="充值地址" align="center" min-width="250" prop="rechargeAddress"/>
+      <el-table-column label="交易id" align="center" min-width="250" prop="transactionId"/>
       <el-table-column label="处理状态" align="center" prop="status" :formatter="formatterStatus"/>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">

@@ -60,7 +60,7 @@
       <!--        />-->
       <!--      </el-form-item>-->
       <el-form-item prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择处理状态" size="small">
+        <el-select v-model="queryParams.status" placeholder="请选择处理状态" size="small" clearable>
           <el-option
             v-for="item in statusOptions"
             :key="item.value"
@@ -176,8 +176,8 @@
       <el-table-column label="充值金额" align="center" prop="rechargeMoney"/>
       <el-table-column label="优惠比例" align="center" prop="discountBill"/>
       <el-table-column label="链名称" align="center" prop="chainName"/>
-      <el-table-column label="充值地址" align="center" min-width="200" prop="rechargeAddress"/>
-      <el-table-column label="交易id" align="center" prop="transactionId"/>
+      <el-table-column label="充值地址" align="center" min-width="250" prop="rechargeAddress"/>
+      <el-table-column label="交易id" align="center" min-width="250" prop="transactionId"/>
       <el-table-column label="处理状态" align="center" prop="status" :formatter="formatterStatus"/>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
@@ -191,7 +191,7 @@
           <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="180">
         <template slot-scope="scope">
           <el-button
             size="small"
@@ -270,8 +270,8 @@
         <el-form-item label="交易id" prop="transactionId">
           <el-input type="textarea" v-model="form.transactionId" readonly placeholder="请输入交易id"/>
         </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" placeholder="请输入备注"/>
+        <el-form-item label="审核备注" prop="remark">
+          <el-input v-model="form.remark" placeholder="请输入审核备注"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -349,9 +349,15 @@ export default {
         isAsc: 'desc'
       },
       // 表单参数
-      form: {},
+      form: {
+
+      },
       // 表单校验
-      rules: {}
+      rules: {
+        remark: [
+          {required: true, message: '审核备注不能为空', trigger: 'blur'}
+        ]
+      }
     };
   },
   created() {
@@ -439,7 +445,9 @@ export default {
     handleUpdateRefuse(row, status) {
       this.$prompt('请输入审核驳回备注', '提示', {
         confirmButtonText: '确定',
-        cancelButtonText: '取消'
+        cancelButtonText: '取消',
+        inputPattern: /\S/,
+        inputErrorMessage: '审核驳回备注不能为空',
       }).then(({value}) => {
         const id = row.id
         updatePayUsdtRecharge(id, value, status).then(response => {
@@ -461,9 +469,11 @@ export default {
           const remark = this.form.remark
           const status = '1'
           updatePayUsdtRecharge(id,remark,status).then(response => {
-            this.msgSuccess("审核通过成功");
-            this.open = false;
-            this.getList();
+            this.msgSuccess(response.msg)
+            if (response.code == 200) {
+              this.open = false;
+              this.getList();
+            }
           });
         }
       });

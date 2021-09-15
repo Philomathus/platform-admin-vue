@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
-    <el-button type="primary">有效下注 {{ this.totalData.totalSuccessBet||0 }}</el-button>
-    <el-button type="success">总下注 {{this.totalData.totalBet||0 }}</el-button>
-    <el-button type="warning">盈利 {{ this.totalData.totalIncome||0 }}</el-button>
+    <el-button type="primary" @click="copy1">有效下注 {{ this.totalData.totalSuccessBet||0 }}</el-button>
+    <el-button type="success" @click="copy2">总下注 {{this.totalData.totalBet||0 }}</el-button>
+    <el-button type="warning" @click="copy3">盈利 {{ this.totalData.totalIncome||0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" style="margin-top: 20px">
       <el-form-item label="日期范围" prop="selectDate">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
@@ -226,6 +226,16 @@ export default {
       }
       this.getList()
       this.getPlatformList()
+    },
+    //复制
+    copy1() {
+      this.copyCommand(this.totalData.totalSuccessBet)
+    },
+    copy2() {
+      this.copyCommand(this.totalData.totalBet)
+    },
+    copy3() {
+      this.copyCommand(this.totalData.totalIncome)
     },
     // 0:未洗码1已经洗码
     formatterStatus(row) {

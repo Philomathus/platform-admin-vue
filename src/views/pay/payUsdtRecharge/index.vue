@@ -60,7 +60,7 @@
       <!--        />-->
       <!--      </el-form-item>-->
       <el-form-item prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择处理状态" size="small">
+        <el-select v-model="queryParams.status" placeholder="请选择处理状态" size="small" clearable>
           <el-option
             v-for="item in statusOptions"
             :key="item.value"

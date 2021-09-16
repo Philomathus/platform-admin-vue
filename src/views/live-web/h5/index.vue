@@ -132,12 +132,12 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button type="primary" @click="submitFormAdd">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
 
-    <!-- 添加或修改h5插件对话框 -->
+    <!-- 修改h5插件对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="插件名称" prop="name">
@@ -276,23 +276,31 @@ export default {
         this.title = "修改h5插件";
       });
     },
-    /** 提交按钮 */
+    /** 新增页面提交按钮 */
+    submitFormAdd() {
+      this.$refs["form"].validate(valid => {
+        if (valid) {
+            addH5Plugin(this.form).then(response => {
+              if(response.code === 0){
+                this.$message.error(response.msg)
+              } else {
+              this.msgSuccess("新增成功");
+              this.opene = false;
+              this.getList();
+              }
+          });
+        }
+      });
+    },
+    /** 修改页面提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.open == true) {
             updateH5Plugin(this.form).then(response => {
               this.msgSuccess("修改成功");
               this.open = false;
               this.getList();
-            });
-          } else {
-            addH5Plugin(this.form).then(response => {
-              this.msgSuccess("新增成功");
-              this.opene = false;
-              this.getList();
-            });
-          }
+          });
         }
       });
     },

@@ -27,15 +27,27 @@ export function addPayUsdtRecharge(data) {
   })
 }
 
-// 修改USDT充值提交记录
-export function updatePayUsdtRecharge(id,comments,status) {
+// 通过USDT充值提交记录
+export function updatePayUsdtRecharge(id,comments) {
   const data = {
     id : id,
-    remark : comments,
-    status : status
+    remark : comments
   }
   return request({
     url: url.platformWeb + '/admin/payUsdtRecharge',
+    method: 'put',
+    data: data
+  })
+}
+
+// 拒绝USDT充值提交记录
+export function refusePayUsdtRecharge(id,comments) {
+  const data = {
+    id : id,
+    remark : comments
+  }
+  return request({
+    url: url.platformWeb + '/admin/payUsdtRecharge/refuse',
     method: 'put',
     data: data
   })

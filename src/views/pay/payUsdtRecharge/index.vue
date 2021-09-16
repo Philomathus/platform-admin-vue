@@ -207,9 +207,9 @@
             type="danger"
             plain
             v-show="scope.row.status == 0"
-            @click="handleUpdateRefuse(scope.row,2)"
+            @click="handleUpdateRefuse(scope.row)"
             v-hasPermi="['admin:liveComplaint:edit']"
-          >驳回
+          >拒绝
           </el-button>
         </template>
         <!--        <template slot-scope="scope">-->
@@ -289,6 +289,7 @@ import {
   delPayUsdtRecharge,
   addPayUsdtRecharge,
   updatePayUsdtRecharge,
+  refusePayUsdtRecharge,
   exportPayUsdtRecharge
 } from "@/api/platform-web/pay/payUsdtRecharge";
 import {pickerDateShortcuts} from "@/utils/dateUtils";
@@ -306,7 +307,7 @@ export default {
         label: '已处理'
       }, {
         value: '2',
-        label: '驳回'
+        label: '拒绝'
       }],
       // 日期范围
       selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
@@ -380,7 +381,7 @@ export default {
       } else if (row.status == 1) {
         return '已处理'
       } else if (row.status == 2) {
-        return '驳回'
+        return '拒绝'
       }
     },
     // 取消按钮
@@ -441,17 +442,17 @@ export default {
         this.title = "审批USDT充值记录申请";
       });
     },
-    /** 驳回按钮操作 */
-    handleUpdateRefuse(row, status) {
-      this.$prompt('请输入审核驳回备注', '提示', {
+    /** 拒绝按钮操作 */
+    handleUpdateRefuse(row) {
+      this.$prompt('请输入审核拒绝备注', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         inputPattern: /\S/,
-        inputErrorMessage: '审核驳回备注不能为空',
+        inputErrorMessage: '审核拒绝备注不能为空',
       }).then(({value}) => {
         const id = row.id
-        updatePayUsdtRecharge(id, value, status).then(response => {
-          this.msgSuccess("审核驳回成功");
+        refusePayUsdtRecharge(id, value).then(response => {
+          this.msgSuccess("审核拒绝成功");
           this.getList();
         });
       }).catch(() => {
@@ -461,14 +462,13 @@ export default {
         });
       });
     },
-    /** 提交按钮 */
+    /** 通过提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
           const id = this.form.id
           const remark = this.form.remark
-          const status = '1'
-          updatePayUsdtRecharge(id,remark,status).then(response => {
+          updatePayUsdtRecharge(id,remark).then(response => {
             this.msgSuccess(response.msg)
             if (response.code == 200) {
               this.open = false;

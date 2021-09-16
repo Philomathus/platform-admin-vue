@@ -82,8 +82,8 @@
 
     <el-table stripe v-loading="loading" :data="configUsdtRechargeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="排序" align="center" prop="indexs" />
-      <el-table-column label="钱包二维码" align="center" prop="icon">
+      <el-table-column label="排序" align="center" width="200" prop="indexs" />
+      <el-table-column label="钱包二维码" align="center" width="200" prop="icon">
         <template slot-scope="scope">
           <el-image
             style="height: 50px;"
@@ -93,7 +93,7 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="状态" align="center" prop="status">
+      <el-table-column label="状态" align="center" width="200" prop="status">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -103,12 +103,12 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="渠道名称" align="center" prop="channelName" />
-      <el-table-column label="链名称" align="center" prop="chainName" />
-      <el-table-column label="充值地址" align="center" prop="rechargeAddress" />
-      <el-table-column label="优惠比例" align="center" prop="discountBill" />
-      <el-table-column label="usdt汇率" align="center" prop="exchangeRate" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="渠道名称" align="center" width="260" prop="channelName" />
+      <el-table-column label="链名称" align="center" width="260" prop="chainName" />
+      <el-table-column label="充值地址" align="center" min-width="300" prop="rechargeAddress" />
+      <el-table-column label="优惠比例" align="center" width="200" prop="discountBill" />
+      <el-table-column label="usdt汇率" align="center" width="200" prop="exchangeRate" />
+      <el-table-column label="操作" align="center" width="260" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -138,7 +138,7 @@
 
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="90px">
         <el-form-item label="渠道名称" prop="channelName">
           <el-input v-model="form.channelName" placeholder="请输入渠道名称" />
         </el-form-item>
@@ -173,7 +173,7 @@
 </template>
 
 <script>
-import { listConfigUsdtRecharge, getConfigUsdtRecharge, delConfigUsdtRecharge, addConfigUsdtRecharge, updateConfigUsdtRecharge, exportConfigUsdtRecharge } from "@/api/platform-web/config/configUsdtRecharge"
+import { listConfigUsdtRecharge, getConfigUsdtRecharge, delConfigUsdtRecharge, addConfigUsdtRecharge, updateConfigUsdtRecharge, exportConfigUsdtRecharge, changeUsdtRechargeStatus } from "@/api/platform-web/config/configUsdtRecharge"
 import ImageUpload from '@/components/ImageUpload'
 
 export default {
@@ -249,6 +249,21 @@ export default {
         this.total = response.total;
         this.loading = false;
       });
+    },
+    //支付类型状态修改
+    handleStatusChange(row) {
+      let text = row.status === '1' ? '启用' : '停用'
+      this.$confirm('确认要"' + text + '""' + row.channelName + '"吗?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        return changeUsdtRechargeStatus(row.id, row.status)
+      }).then(() => {
+        this.msgSuccess(text + '成功')
+      }).catch(function () {
+        row.status = row.status === '0' ? '1' : '0'
+      })
     },
     // 取消按钮
     cancel() {

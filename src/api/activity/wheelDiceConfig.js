@@ -49,7 +49,7 @@ export function changeLotteryInfoStatus(id, status) {
     status
   }
   return request({
-    url: url.platformWeb + '/admin/activityCashBack/changeStatus',
+    url: url.platformWeb + '/admin/wheelDiceConfig/changeStatus',
     method: 'put',
     data: data
   })

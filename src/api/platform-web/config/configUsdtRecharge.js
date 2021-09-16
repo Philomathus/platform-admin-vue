@@ -54,3 +54,16 @@ export function exportConfigUsdtRecharge(query) {
     timeout: 60000
   })
 }
+
+// 支付类型状态修改
+export function changeUsdtRechargeStatus(id, status) {
+  const data = {
+    id,
+    status
+  }
+  return request({
+    url: url.platformWeb + '/admin/configUsdtRecharge/changeStatus',
+    method: 'put',
+    data: data
+  })
+}

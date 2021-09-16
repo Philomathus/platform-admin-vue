@@ -1,14 +1,15 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="名称" prop="name">
-        <el-input
-          v-model="queryParams.name"
-          placeholder="请输入名称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+      <el-form-item  prop="status">
+        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small">
+          <el-option
+            v-for="dict in statusOptions"
+            :key="dict.dictValue"
+            :label="dict.dictLabel"
+            :value="dict.dictValue"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -24,7 +25,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['admin:h5Plugin:add']"
+          v-hasPermi="['admin:wheelDiceConfig:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -35,7 +36,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['admin:h5Plugin:edit']"
+          v-hasPermi="['admin:wheelDiceConfig:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -46,27 +47,29 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['admin:h5Plugin:remove']"
+          v-hasPermi="['admin:wheelDiceConfig:remove']"
         >删除</el-button>
       </el-col>
-<!--      <el-col :span="1.5">-->
-<!--        <el-button-->
-<!--          type="warning"-->
-<!--          plain-->
-<!--          icon="el-icon-download"-->
-<!--          size="mini"-->
-<!--          @click="handleExport"-->
-<!--          v-hasPermi="['admin:h5Plugin:export']"-->
-<!--        >导出</el-button>-->
-<!--      </el-col>-->
+      <el-col :span="1.5">
+        <el-button
+          type="warning"
+          plain
+          icon="el-icon-download"
+          size="mini"
+          @click="handleExport"
+          v-hasPermi="['admin:wheelDiceConfig:export']"
+        >导出</el-button>
+      </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="h5PluginList" @selection-change="handleSelectionChange">
+    <el-table stripe v-loading="loading" :data="wheelDiceConfigList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="编号" align="center" prop="id" />
-      <el-table-column label="插件名称" align="center" prop="name" />
-      <el-table-column label="状态" align="center" key="status" v-if="columns[0].visible">
+      <el-table-column label="主键id" align="center" prop="id" />
+      <el-table-column label="当日存款总额最小值" align="center" prop="depositTotalMin" />
+      <el-table-column label="当日存款总额最大值" align="center" prop="depositTotalMax" />
+      <el-table-column label="抽奖次数" align="center" prop="lotteryTimes" />
+      <el-table-column label="状态" align="center" prop="status" >
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -76,17 +79,6 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="地址" width="305px" align="center" prop="conUrl" />
-      <el-table-column label="图标" align="center" prop="iconUrl">
-        <template slot-scope="scope">
-          <el-image
-            style="width: 50px;"
-            :src="scope.row.iconUrl"
-            fit="contain"
-          >
-          </el-image>
-        </template>
-      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -94,14 +86,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['admin:h5Plugin:edit']"
+            v-hasPermi="['admin:wheelDiceConfig:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['admin:h5Plugin:remove']"
+            v-hasPermi="['admin:wheelDiceConfig:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -115,39 +107,17 @@
       @pagination="getList"
     />
 
-    <!-- 添加h5插件对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="opene" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="编号" prop="id">
-          <el-input v-model="form.id" placeholder="请输入编号" />
-        </el-form-item>
-        <el-form-item label="插件名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入名称" />
-        </el-form-item>
-        <el-form-item label="内容地址" prop="conUrl">
-          <el-input v-model="form.conUrl" placeholder="请输入内容地址" />
-        </el-form-item>
-        <el-form-item label="图标地址" prop="iconUrl">
-          <imageUpload v-model="form.iconUrl" path="give"/>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
-      </div>
-    </el-dialog>
-
-    <!-- 添加或修改h5插件对话框 -->
+    <!-- 添加或修改【抽奖配置】对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="插件名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入名称" />
+      <el-form ref="form" :model="form" :rules="rules" label-width="150px">
+        <el-form-item label="当日存款总额最小值" prop="depositTotalMin">
+          <el-input v-model="form.depositTotalMin" type="number" placeholder="请输入当日存款总额最小值" />
         </el-form-item>
-        <el-form-item label="内容地址" prop="conUrl">
-          <el-input v-model="form.conUrl" placeholder="请输入内容地址" />
+        <el-form-item label="当日存款总额最大值" prop="depositTotalMax">
+          <el-input v-model="form.depositTotalMax" type="number" placeholder="请输入当日存款总额最大值" />
         </el-form-item>
-        <el-form-item label="图标地址" prop="iconUrl">
-          <imageUpload v-model="form.iconUrl" path="give"/>
+        <el-form-item label="抽奖次数" prop="lotteryTimes">
+          <el-input v-model="form.lotteryTimes" type="number" placeholder="请输入抽奖次数" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -159,12 +129,11 @@
 </template>
 
 <script>
-import { listH5Plugin, getH5Plugin, delH5Plugin, addH5Plugin, updateH5Plugin, exportH5Plugin } from "@/api/live-web/h5/h5Plugin";
-import ImageUpload from '@/components/ImageUpload';
+import { listWheelDiceConfig, getWheelDiceConfig, delWheelDiceConfig, addWheelDiceConfig, updateWheelDiceConfig, exportWheelDiceConfig ,changeLotteryInfoStatus} from "@/api/activity/wheelDiceConfig";
+
 export default {
-  name: "H5Plugin",
+  name: "WheelDiceConfig",
   components: {
-    ImageUpload
   },
   data() {
     return {
@@ -180,49 +149,50 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // h5插件表格数据
-      h5PluginList: [],
+      // 【抽奖配置】表格数据
+      wheelDiceConfigList: [],
+      statusOptions: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
       open: false,
-      // 是否显示弹出层
-      opene: false,
       // 查询参数
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        name: null,
-        status: null,
-        conUrl: null,
-        iconUrl: null
+        depositTotalMin: null,
+        depositTotalMax: null,
+        lotteryTimes: null,
+        status: null
       },
-      // 列信息
-      columns: [
-        {key: 0, label: `状态`, visible: true}
-      ],
       // 表单参数
       form: {},
       // 表单校验
       rules: {
-        name: [
-          { required: true, message: "名称不能为空", trigger: "blur" }
+        depositTotalMin: [
+          {required: true, message: "当日存款总额最小值不能为空", trigger: "blur"}
         ],
-        id: [
-          { required: true, message: "编号不能为空", trigger: "blur" }
+        depositTotalMax: [
+          {required: true, message: "当日存款总额最大值不能不上传", trigger: "blur"}
+        ],
+        lotteryTimes: [
+          {required: true, message: "抽奖次数不能为空", trigger: "blur"}
         ],
       }
     };
   },
   created() {
     this.getList();
+    this.getDicts('activityInfo_status').then(response => {
+      this.statusOptions = response.data
+    })
   },
   methods: {
-    /** 查询h5插件列表 */
+    /** 查询【抽奖配置】列表 */
     getList() {
       this.loading = true;
-      listH5Plugin(this.queryParams).then(response => {
-        this.h5PluginList = response.rows;
+      listWheelDiceConfig(this.queryParams).then(response => {
+        this.wheelDiceConfigList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
@@ -230,17 +200,16 @@ export default {
     // 取消按钮
     cancel() {
       this.open = false;
-      this.opene = false;
       this.reset();
     },
     // 表单重置
     reset() {
       this.form = {
         id: null,
-        name: null,
-        status: 0,
-        conUrl: null,
-        iconUrl: null
+        depositTotalMin: null,
+        depositTotalMax: null,
+        lotteryTimes: null,
+        status: 0
       };
       this.resetForm("form");
     },
@@ -263,33 +232,33 @@ export default {
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
-      this.opene = true;
-      this.title = "添加h5插件";
+      this.open = true;
+      this.title = "添加【抽奖配置】";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
       const id = row.id || this.ids
-      getH5Plugin(id).then(response => {
+      getWheelDiceConfig(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改h5插件";
+        this.title = "修改【抽奖配置】";
       });
     },
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.open == true) {
-            updateH5Plugin(this.form).then(response => {
+          if (this.form.id != null) {
+            updateWheelDiceConfig(this.form).then(response => {
               this.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addH5Plugin(this.form).then(response => {
+            addWheelDiceConfig(this.form).then(response => {
               this.msgSuccess("新增成功");
-              this.opene = false;
+              this.open = false;
               this.getList();
             });
           }
@@ -299,29 +268,27 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除h5插件编号为"' + ids + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return delH5Plugin(ids);
-        }).then(() => {
-          this.getList();
-          this.msgSuccess("删除成功");
-        })
+      this.$confirm('是否确认删除【抽奖配置】编号为"' + ids + '"的数据项?', "警告", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function() {
+        return delWheelDiceConfig(ids);
+      }).then(() => {
+        this.getList();
+        this.msgSuccess("删除成功");
+      }).catch(() => {
+	  })
     },
-    // 状态修改
+    //修改状态
     handleStatusChange(row) {
-      let text = row.status === '0' ? '停用' : '启用'
-      this.$confirm('确认要' + text + '"' + row.name + '"吗?', '警告', {
+      let text = row.status === '1' ? '启用' : '停用'
+      this.$confirm('确认要"' + text + '""' + this.title + '"吗?', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function () {
-        var data={};
-        data.id=row.id;
-        data.status=row.status;
-        return updateH5Plugin(data)
+        return changeLotteryInfoStatus(row.id, row.status)
       }).then(() => {
         this.msgSuccess(text + '成功')
       }).catch(function () {
@@ -331,15 +298,15 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
-        type: 'warning'
-        }).then(function() {
-          return exportH5Plugin(queryParams);
-        }).then(response => {
-           this.downloadExcel(response, 'h5插件')
-        }).catch(() => {
+      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
+        confirmButtonText: "确认",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function() {
+        return exportWheelDiceConfig(queryParams);
+      }).then(response => {
+        this.downloadExcel(response, '【抽奖配置】');
+      }).catch(() => {
       })
     }
   }

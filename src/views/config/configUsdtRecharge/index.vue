@@ -173,7 +173,7 @@
 </template>
 
 <script>
-import { listConfigUsdtRecharge, getConfigUsdtRecharge, delConfigUsdtRecharge, addConfigUsdtRecharge, updateConfigUsdtRecharge, exportConfigUsdtRecharge } from "@/api/platform-web/config/configUsdtRecharge"
+import { listConfigUsdtRecharge, getConfigUsdtRecharge, delConfigUsdtRecharge, addConfigUsdtRecharge, updateConfigUsdtRecharge, exportConfigUsdtRecharge, changeUsdtRechargeStatus } from "@/api/platform-web/config/configUsdtRecharge"
 import ImageUpload from '@/components/ImageUpload'
 
 export default {
@@ -249,6 +249,21 @@ export default {
         this.total = response.total;
         this.loading = false;
       });
+    },
+    //支付类型状态修改
+    handleStatusChange(row) {
+      let text = row.status === '1' ? '启用' : '停用'
+      this.$confirm('确认要"' + text + '""' + row.channelName + '"吗?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        return changeUsdtRechargeStatus(row.id, row.status)
+      }).then(() => {
+        this.msgSuccess(text + '成功')
+      }).catch(function () {
+        row.status = row.status === '0' ? '1' : '0'
+      })
     },
     // 取消按钮
     cancel() {

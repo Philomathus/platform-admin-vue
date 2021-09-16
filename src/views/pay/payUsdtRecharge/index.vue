@@ -1,17 +1,11 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="创建时间" prop="selectDate">
-        <el-date-picker
-          v-model="queryParams.selectDate"
-          size="small"
-          style="width: 240px"
-          value-format="yyyy-MM-dd"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-          :picker-options="pickerOptions"
+      <el-form-item label="创建时间" prop="selectDate" label-width="70px">
+        <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '360px'}" start-placeholder="开始时间"
+                        end-placeholder="结束时间" range-separator="至" :default-time="['00:00:00', '23:59:59']" clearable
+                        :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="memberId">
@@ -292,7 +286,7 @@ import {
   refusePayUsdtRecharge,
   exportPayUsdtRecharge
 } from "@/api/platform-web/pay/payUsdtRecharge";
-import {pickerDateShortcuts} from "@/utils/dateUtils";
+import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
 
 export default {
   name: "PayUsdtRecharge",
@@ -311,7 +305,7 @@ export default {
       }],
       // 日期范围
       selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
-      pickerOptions: {shortcuts: pickerDateShortcuts},
+      pickerOptions: {shortcuts: pickerDateTimeShortcuts},
       // 遮罩层
       loading: true,
       // 选中数组
@@ -332,7 +326,7 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
-        selectDate: [this.parseTime(new Date(), '{y}-{m}-{d}'), this.parseTime(new Date(), '{y}-{m}-{d}')],
+        selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
         pageNum: 1,
         pageSize: 10,
         memberId: null,

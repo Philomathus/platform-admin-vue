@@ -191,7 +191,7 @@
             size="small"
             type="primary"
             plain
-            v-show="scope.row.status == 0"
+            v-show="scope.row.status == 1"
             @click="handleUpdateLock(scope.row)"
             v-hasPermi="['admin:liveComplaint:edit']"
           >锁定
@@ -200,7 +200,7 @@
             size="small"
             type="primary"
             plain
-            v-show="scope.row.status == 3"
+            v-show="scope.row.status == 0"
             @click="handleUpdateUnLock(scope.row)"
             v-hasPermi="['admin:liveComplaint:edit']"
           >解锁
@@ -209,7 +209,7 @@
             size="small"
             type="success"
             plain
-            v-show="scope.row.status == 3"
+            v-show="scope.row.status == 0"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:liveComplaint:edit']"
           >通过
@@ -218,7 +218,7 @@
             size="small"
             type="danger"
             plain
-            v-show="scope.row.status == 3"
+            v-show="scope.row.status == 0"
             @click="handleUpdateRefuse(scope.row)"
             v-hasPermi="['admin:liveComplaint:edit']"
           >拒绝
@@ -390,13 +390,13 @@ export default {
     },
     // 处理状态
     formatterStatus(row) {
-      if (row.status == 0) {
+      if (row.status == 1) {
         return '未处理'
-      } else if (row.status == 1) {
-        return '已处理'
       } else if (row.status == 2) {
-        return '拒绝'
+        return '通过'
       } else if (row.status == 3) {
+        return '拒绝'
+      } else if (row.status == 0) {
         return '锁定'
       }
     },

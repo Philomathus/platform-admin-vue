@@ -750,6 +750,9 @@ export default {
     },
     updateVip() {
       var that = this
+      if(that.vip > 50){
+        this.$message.error("vip等级最大为50级")
+      } else {
       updateVip({
         nickName: that.nickName,
         vip: that.vip,
@@ -764,6 +767,7 @@ export default {
           that.$notify.error('vip等级修改失败')
         }
       })
+      }
     },
     updateIm() {
       var that = this

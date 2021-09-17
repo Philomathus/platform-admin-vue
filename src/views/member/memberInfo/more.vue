@@ -289,7 +289,7 @@
         <el-button @click="visible = false">取 消</el-button>
       </div>
     </el-dialog>
-    <!-- 禁用备注弹框 -->
+    <!-- 修改vip等级 -->
     <el-dialog
       v-dialogDrag
       :close-on-click-modal="false"
@@ -504,17 +504,17 @@ export default {
       }
     }
   },
-  /*监听器,监听单个变量,param就是data的变量*/
-  watch: {
-    vip: function (newVal, oldVal) {
-      if (newVal < this.oldVip) {
-        this.$notify.error('vip等级只能大于之前的等级')
-        this.showVipDisabled = true
-      } else {
-        this.showVipDisabled = false
-      }
-    }
-  },
+  // /*监听器,监听单个变量,param就是data的变量*/
+  // watch: {
+  //   vip: function (newVal, oldVal) {
+  //     if (newVal < this.oldVip) {
+  //       this.$notify.error('vip等级只能大于之前的等级')
+  //       this.showVipDisabled = true
+  //     } else {
+  //       this.showVipDisabled = false
+  //     }
+  //   }
+  // },
   created() {
     this.getDicts('member_msg').then(response => {
       this.msgList = response.data
@@ -752,8 +752,9 @@ export default {
       var that = this
       if(that.vip > 50){
         this.$message.error("vip等级最大为50级")
-      } else {
-      updateVip({
+      } else if(that.vip < this.oldVip) {
+        this.$message.error("vip等级修改不能小于之前的等级")
+      } else { updateVip({
         nickName: that.nickName,
         vip: that.vip,
         id: that.memberId

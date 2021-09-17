@@ -315,12 +315,15 @@ export default {
     return {
       statusOptions: [{
         value: '0',
-        label: '未处理'
+        label: '锁定'
       }, {
         value: '1',
-        label: '已处理'
+        label: '已提交'
       }, {
         value: '2',
+        label: '通过'
+      }, {
+        value: '3',
         label: '拒绝'
       }],
       // 日期范围

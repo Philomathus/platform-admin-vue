@@ -27,6 +27,22 @@ export function addPayUsdtRecharge(data) {
   })
 }
 
+// 锁定USDT充值提交记录
+export function lockPayUsdtRecharge(id) {
+  return request({
+    url: url.platformWeb + '/admin/payUsdtRecharge/lock/' + id,
+    method: 'get'
+  })
+}
+
+// 解锁USDT充值提交记录
+export function unLockPayUsdtRecharge(id) {
+  return request({
+    url: url.platformWeb + '/admin/payUsdtRecharge/unLock/' + id,
+    method: 'get'
+  })
+}
+
 // 通过USDT充值提交记录
 export function updatePayUsdtRecharge(id,comments) {
   const data = {

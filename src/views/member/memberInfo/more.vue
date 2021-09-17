@@ -758,11 +758,14 @@ export default {
         vip: that.vip,
         id: that.memberId
       }).then((res) => {
+        console.info(res)
         if (res.code === 0) {
           that.oldVip = that.vip
-          that.$notify.success('vip等级修改成功')
+          that.$message.success(res.data)
           that.showVip = false
           that.$emit('refMemeberData')
+        } else if (res.code === 1) {
+          that.$message.error(res.data)
         } else {
           that.$notify.error('vip等级修改失败')
         }

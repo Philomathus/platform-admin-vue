@@ -178,20 +178,38 @@
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark"/>
+      <el-table-column label="备注" align="center" min-width="100" prop="remark"/>
       <el-table-column label="操作人" align="center" prop="opName"/>
       <el-table-column label="审批时间" align="center" prop="updateTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="180">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="250">
         <template slot-scope="scope">
+          <el-button
+            size="small"
+            type="primary"
+            plain
+            v-show="scope.row.status == 0"
+            @click="handleUpdateLock(scope.row)"
+            v-hasPermi="['admin:liveComplaint:edit']"
+          >锁定
+          </el-button>
+          <el-button
+            size="small"
+            type="primary"
+            plain
+            v-show="scope.row.status == 3"
+            @click="handleUpdateUnLock(scope.row)"
+            v-hasPermi="['admin:liveComplaint:edit']"
+          >解锁
+          </el-button>
           <el-button
             size="small"
             type="success"
             plain
-            v-show="scope.row.status == 0"
+            v-show="scope.row.status == 3"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:liveComplaint:edit']"
           >通过
@@ -200,7 +218,7 @@
             size="small"
             type="danger"
             plain
-            v-show="scope.row.status == 0"
+            v-show="scope.row.status == 3"
             @click="handleUpdateRefuse(scope.row)"
             v-hasPermi="['admin:liveComplaint:edit']"
           >拒绝
@@ -284,7 +302,9 @@ import {
   addPayUsdtRecharge,
   updatePayUsdtRecharge,
   refusePayUsdtRecharge,
-  exportPayUsdtRecharge
+  exportPayUsdtRecharge,
+  lockPayUsdtRecharge,
+  unLockPayUsdtRecharge
 } from "@/api/platform-web/pay/payUsdtRecharge";
 import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
 
@@ -376,6 +396,8 @@ export default {
         return '已处理'
       } else if (row.status == 2) {
         return '拒绝'
+      } else if (row.status == 3) {
+        return '锁定'
       }
     },
     // 取消按钮
@@ -426,6 +448,26 @@ export default {
       this.open = true;
       this.title = "添加USDT充值记录";
     },
+    /** 锁定按钮操作 */
+    handleUpdateLock(row) {
+      const id = row.id
+      lockPayUsdtRecharge(id).then(response => {
+        this.$message.success("锁定成功")
+        this.getList()
+      });
+    },
+    /** 解锁按钮操作 */
+    handleUpdateUnLock(row) {
+      const id = row.id
+      unLockPayUsdtRecharge(id).then(response => {
+        if (response.data.code == 200) {
+          this.$message.success("解锁成功")
+          this.getList();
+        } else {
+          this.$message.error(response.data.msg)
+        }
+      });
+    },
     /** 通过按钮操作 */
     handleUpdate(row) {
       this.reset();
@@ -463,8 +505,8 @@ export default {
           const id = this.form.id
           const remark = this.form.remark
           updatePayUsdtRecharge(id,remark).then(response => {
-            this.msgSuccess(response.msg)
             if (response.code == 200) {
+              this.$message.success(response.msg)
               this.open = false;
               this.getList();
             }

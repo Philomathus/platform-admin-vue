@@ -321,10 +321,10 @@ export default {
         label: '已提交'
       }, {
         value: '2',
-        label: '通过'
+        label: '拒绝'
       }, {
         value: '3',
-        label: '拒绝'
+        label: '通过'
       }],
       // 日期范围
       selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
@@ -396,9 +396,9 @@ export default {
       if (row.status == 1) {
         return '未处理'
       } else if (row.status == 2) {
-        return '通过'
-      } else if (row.status == 3) {
         return '拒绝'
+      } else if (row.status == 3) {
+        return '通过'
       } else if (row.status == 0) {
         return '锁定'
       }

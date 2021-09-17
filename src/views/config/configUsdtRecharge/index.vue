@@ -83,7 +83,7 @@
     <el-table stripe v-loading="loading" :data="configUsdtRechargeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="排序" align="center" width="200" prop="indexs" />
-      <el-table-column label="钱包二维码" align="center" width="200" prop="icon">
+<!--      <el-table-column label="钱包二维码" align="center" width="200" prop="icon">
         <template slot-scope="scope">
           <el-image
             style="height: 50px;"
@@ -92,7 +92,7 @@
           >
           </el-image>
         </template>
-      </el-table-column>
+      </el-table-column>-->
       <el-table-column label="状态" align="center" width="200" prop="status">
         <template slot-scope="scope">
           <el-switch
@@ -157,9 +157,9 @@
         <el-form-item label="排序" prop="indexs">
           <el-input v-model="form.indexs" placeholder="请输入排序" />
         </el-form-item>
-        <el-form-item label="钱包二维码">
+<!--        <el-form-item label="钱包二维码">
           <imageUpload v-model="form.icon" path="ConfigUsdtRecharge"/>
-        </el-form-item>
+        </el-form-item>-->
         <el-form-item label="备注信息" prop="remark">
           <el-input v-model="form.remark" placeholder="请输入备注信息" />
         </el-form-item>

@@ -169,23 +169,23 @@
       <el-table-column label="充值U数量" align="center" prop="rechargeNumber"/>
       <el-table-column label="充值金额" align="center" prop="rechargeMoney"/>
       <el-table-column label="优惠比例" align="center" prop="discountBill"/>
-      <el-table-column label="链名称" align="center" prop="chainName"/>
-      <el-table-column label="充值地址" align="center" min-width="250" prop="rechargeAddress"/>
-      <el-table-column label="交易id" align="center" min-width="250" prop="transactionId"/>
+      <el-table-column label="交易链名称" align="center" min-width="120" prop="chainName"/>
+      <el-table-column label="充值地址" align="center" min-width="260" prop="rechargeAddress"/>
+      <el-table-column label="交易id" align="center" min-width="300" prop="transactionId"/>
       <el-table-column label="处理状态" align="center" prop="status" :formatter="formatterStatus"/>
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      <el-table-column label="创建时间" align="center" prop="createTime" width="150">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="备注" align="center" min-width="100" prop="remark"/>
+      <el-table-column label="备注" align="center" min-width="90" prop="remark"/>
       <el-table-column label="操作人" align="center" prop="opName"/>
-      <el-table-column label="审批时间" align="center" prop="updateTime" width="180">
+      <el-table-column label="审批时间" align="center" prop="updateTime" width="150">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="250">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="210">
         <template slot-scope="scope">
           <el-button
             size="small"
@@ -315,13 +315,16 @@ export default {
     return {
       statusOptions: [{
         value: '0',
-        label: '未处理'
+        label: '锁定'
       }, {
         value: '1',
-        label: '已处理'
+        label: '已提交'
       }, {
         value: '2',
         label: '拒绝'
+      }, {
+        value: '3',
+        label: '通过'
       }],
       // 日期范围
       selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
@@ -393,9 +396,9 @@ export default {
       if (row.status == 1) {
         return '未处理'
       } else if (row.status == 2) {
-        return '通过'
-      } else if (row.status == 3) {
         return '拒绝'
+      } else if (row.status == 3) {
+        return '通过'
       } else if (row.status == 0) {
         return '锁定'
       }
@@ -414,7 +417,7 @@ export default {
         channelName: null,
         rechargeNumber: null,
         rechargeMoney: null,
-        status: 0,
+        status: null,
         remark: null,
         discountBill: null,
         chainName: null,

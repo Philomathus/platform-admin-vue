@@ -44,10 +44,11 @@ export function unLockPayUsdtRecharge(id) {
 }
 
 // 通过USDT充值提交记录
-export function updatePayUsdtRecharge(id,comments) {
+export function updatePayUsdtRecharge(id,comments,googleAuthCode) {
   const data = {
     id : id,
-    remark : comments
+    remark : comments,
+    googleAuthCode : googleAuthCode
   }
   return request({
     url: url.platformWeb + '/admin/payUsdtRecharge',

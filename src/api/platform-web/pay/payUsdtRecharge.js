@@ -27,6 +27,14 @@ export function addPayUsdtRecharge(data) {
   })
 }
 
+//渠道名称列表
+export function channelNames() {
+  return request({
+    url: url.platformWeb + '/admin/payUsdtRecharge/channelNames',
+    method: 'get'
+  })
+}
+
 // 锁定USDT充值提交记录
 export function lockPayUsdtRecharge(id) {
   return request({

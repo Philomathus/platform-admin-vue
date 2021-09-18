@@ -26,14 +26,22 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="channelName">
-        <el-input
+      <el-form-item label="渠道名称" prop="channelName">
+        <el-select
+          filterable
           v-model="queryParams.channelName"
-          placeholder="请输入渠道名称"
+          placeholder="请选择渠道名称"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          style="width: 240px"
+        >
+          <el-option
+            v-for="Platform in channelNameOptions"
+            :key="Platform.name"
+            :label="Platform.name"
+            :value="Platform.name"
+          />
+        </el-select>
       </el-form-item>
       <!--      <el-form-item label="充值U数量" prop="rechargeNumber">-->
       <!--        <el-input-->
@@ -307,7 +315,8 @@ import {
   refusePayUsdtRecharge,
   exportPayUsdtRecharge,
   lockPayUsdtRecharge,
-  unLockPayUsdtRecharge
+  unLockPayUsdtRecharge,
+  channelNames
 } from "@/api/platform-web/pay/payUsdtRecharge";
 import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
 
@@ -332,6 +341,8 @@ export default {
       // 日期范围
       selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
       pickerOptions: {shortcuts: pickerDateTimeShortcuts},
+      //渠道名称
+      channelNameOptions: [],
       // 遮罩层
       loading: true,
       // 选中数组
@@ -384,6 +395,10 @@ export default {
   },
   created() {
     this.getList();
+    //渠道名称
+    channelNames().then(response => {
+      this.channelNameOptions = response.data
+    })
   },
   methods: {
     /** 查询USDT充值记录列表 */

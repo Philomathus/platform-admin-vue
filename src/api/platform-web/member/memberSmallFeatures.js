@@ -11,10 +11,14 @@ export function updatePhones(query) {
 }
 
 //会员小功能之批量会员ID查询手机号
-export function queryPhones(query) {
+export function queryPhones(userIds,googleAuthCode) {
+  const data = {
+    userIds: userIds,
+    googleAuthCode: googleAuthCode
+  }
   return request({
     url: url.platformWeb + '/member/memberInfo/queryPhones',
     method: 'post',
-    params: query
+    data: data
   })
 }

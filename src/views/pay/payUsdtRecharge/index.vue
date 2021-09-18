@@ -26,7 +26,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="渠道名称" prop="channelName">
+      <el-form-item prop="channelName">
         <el-select
           filterable
           v-model="queryParams.channelName"
@@ -36,10 +36,10 @@
           style="width: 240px"
         >
           <el-option
-            v-for="Platform in channelNameOptions"
-            :key="Platform.name"
-            :label="Platform.name"
-            :value="Platform.name"
+            v-for="channelName in channelNameOptions"
+            :key="channelName.channelName"
+            :label="channelName.channelName"
+            :value="channelName.channelName"
           />
         </el-select>
       </el-form-item>

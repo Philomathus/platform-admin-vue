@@ -27,13 +27,21 @@
         />
       </el-form-item>
       <el-form-item prop="channelName">
-        <el-input
+        <el-select
+          filterable
           v-model="queryParams.channelName"
-          placeholder="请输入渠道名称"
+          placeholder="请选择渠道名称"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          style="width: 240px"
+        >
+          <el-option
+            v-for="channelName in channelNameOptions"
+            :key="channelName.channelName"
+            :label="channelName.channelName"
+            :value="channelName.channelName"
+          />
+        </el-select>
       </el-form-item>
       <!--      <el-form-item label="充值U数量" prop="rechargeNumber">-->
       <!--        <el-input-->
@@ -254,7 +262,7 @@
     <!-- 通过USDT充值记录对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="会员编号" prop="memberId">
           <el-input v-model="form.memberId" readonly placeholder="请输入会员编号"/>
         </el-form-item>
@@ -285,6 +293,9 @@
         <el-form-item label="审核备注" prop="remark">
           <el-input v-model="form.remark" placeholder="请输入审核备注"/>
         </el-form-item>
+        <el-form-item label="谷歌验证码" prop="googleAuthCode">
+          <el-input v-model="form.googleAuthCode" type="number" class="no-number" placeholder="请输入谷歌验证码"/>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">通 过</el-button>
@@ -304,7 +315,8 @@ import {
   refusePayUsdtRecharge,
   exportPayUsdtRecharge,
   lockPayUsdtRecharge,
-  unLockPayUsdtRecharge
+  unLockPayUsdtRecharge,
+  channelNames
 } from "@/api/platform-web/pay/payUsdtRecharge";
 import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
 
@@ -329,6 +341,8 @@ export default {
       // 日期范围
       selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
       pickerOptions: {shortcuts: pickerDateTimeShortcuts},
+      //渠道名称
+      channelNameOptions: [],
       // 遮罩层
       loading: true,
       // 选中数组
@@ -367,19 +381,24 @@ export default {
         isAsc: 'desc'
       },
       // 表单参数
-      form: {
-
-      },
+      form: {},
       // 表单校验
       rules: {
         remark: [
           {required: true, message: '审核备注不能为空', trigger: 'blur'}
+        ],
+        googleAuthCode: [
+          {required: true, message: '谷歌验证码不能为空', trigger: 'blur'}
         ]
       }
     };
   },
   created() {
     this.getList();
+    //渠道名称
+    channelNames().then(response => {
+      this.channelNameOptions = response.data
+    })
   },
   methods: {
     /** 查询USDT充值记录列表 */
@@ -507,13 +526,19 @@ export default {
         if (valid) {
           const id = this.form.id
           const remark = this.form.remark
-          updatePayUsdtRecharge(id,remark).then(response => {
+          const googleAuthCode = this.form.googleAuthCode
+          updatePayUsdtRecharge(id,remark,googleAuthCode).then(response => {
+            console.info(response)
             if (response.code == 200) {
               this.$message.success(response.msg)
               this.open = false;
               this.getList();
+            } else {
+              this.$message.error(response.msg)
             }
-          });
+          }).catch(() => {
+            this.$message.error("订单审核通过有误")
+          })
         }
       });
     },

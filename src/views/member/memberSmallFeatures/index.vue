@@ -165,7 +165,9 @@ export default {
       this.$refs['phoneByIdFrom'].validate(valid => {
         if (valid) {
           this.loading = true;
-          queryPhones(this.phoneByIdFrom).then(res => {
+          const userIds = this.phoneByIdFrom.userIds
+          const googleAuthCode = this.phoneByIdFrom.googleAuthCode
+          queryPhones(userIds,googleAuthCode).then(res => {
             if (res.code === 0) {
               this.msgError((res.msg))
             } else {

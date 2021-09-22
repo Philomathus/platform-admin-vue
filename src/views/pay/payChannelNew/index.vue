@@ -144,6 +144,7 @@
       <el-table-column label="支付平台名称" align="center" prop="payPlatformName"/>
       <el-table-column label="支付类型名称" align="center" prop="payTypeName"/>
       <el-table-column label="通道费率" align="center" prop="payRateStr"/>
+      <el-table-column label="优惠比例" align="center" prop="discountBill" :formatter="formatterDiscountBill"/>
       <el-table-column label="成功率" align="center" prop="successRate"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -230,6 +231,9 @@
 <!--        </el-form-item>-->
         <el-form-item label="通道费率" prop="payRate">
           <el-input type="number" class="no-number" v-model.trim="form.payRate" placeholder="请输入通道费率(最高0.4最低0.01)"/>
+        </el-form-item>
+        <el-form-item label="优惠比例" prop="discountBill">
+          <el-input type="number" class="no-number" v-model.trim="form.discountBill" placeholder="请输入小数形式的优惠比例"/>
         </el-form-item>
         <el-form-item label="开放层级" prop="openLevel">
           <el-col :span="11">
@@ -396,7 +400,14 @@ export default {
         this.loading = false;
       });
     },
-
+    // 优惠比例为空，显示0
+    formatterDiscountBill(row) {
+      if (row.discountBill === null) {
+        return '0.00'
+      } else {
+        return row.discountBill
+      }
+    },
     //支付通道状态修改
     handleStatusChange(row) {
       let text = row.status === "1" ? "启用" : "停用";

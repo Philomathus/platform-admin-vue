@@ -5,8 +5,11 @@
         <el-date-picker clearable size="small"
                         v-model="queryParams.cTime"
                         type="date"
+                        format="yyyy-MM-dd"
                         value-format="yyyy-MM-dd"
-                        placeholder="选择时间">
+                        placeholder="选择日期"
+                        style="width: 140px"
+                        :picker-options="pickerOptions">
         </el-date-picker>
       </el-form-item>
       <el-form-item  prop="pUserId">
@@ -125,14 +128,14 @@
 
 <script>
 import { listWheelHistoryDice, getWheelHistoryDice, delWheelHistoryDice, addWheelHistoryDice, updateWheelHistoryDice, exportWheelHistoryDice } from "@/api/activity/wheelHistoryDice";
-import {pickerDateShortcuts} from "@/utils/dateUtils";
+import { pickerDateShortcuts, toyesDayshortcuts } from '@/utils/dateUtils'
 export default {
   name: "WheelHistoryDice",
   components: {
   },
   data() {
     return {
-      pickerOptions: {shortcuts: pickerDateShortcuts},
+      pickerOptions: {shortcuts: toyesDayshortcuts},
       // 遮罩层
       loading: true,
       // 选中数组
@@ -158,7 +161,7 @@ export default {
         puserId: null,
         name: null,
         diceName: null,
-        cTime: null,
+        cTime: this.parseTime(new Date(), '{y}-{m}-{d}'),
         diceId: null
       },
       // 表单参数

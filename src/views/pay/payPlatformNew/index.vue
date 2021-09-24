@@ -46,6 +46,30 @@
         >新增
         </el-button>
       </el-col>
+<!--      <el-col :span="1.5">-->
+<!--        <el-button-->
+<!--          type="success"-->
+<!--          plain-->
+<!--          icon="el-icon-edit"-->
+<!--          size="mini"-->
+<!--          :disabled="single"-->
+<!--          @click="handleUpdate"-->
+<!--          v-hasPermi="['pay:payPlatformNew:edit']"-->
+<!--        >修改-->
+<!--        </el-button>-->
+<!--      </el-col>-->
+<!--      <el-col :span="1.5">-->
+<!--        <el-button-->
+<!--          type="danger"-->
+<!--          plain-->
+<!--          icon="el-icon-delete"-->
+<!--          size="mini"-->
+<!--          :disabled="multiple"-->
+<!--          @click="handleDelete"-->
+<!--          v-hasPermi="['pay:payPlatformNew:remove']"-->
+<!--        >删除-->
+<!--        </el-button>-->
+<!--      </el-col>-->
       <el-col :span="1.5">
         <el-button
           type="warning"
@@ -72,11 +96,12 @@
     </el-row>
 
     <el-table :stripe="true" v-loading="loading" :data="payPlatformNewList">
-      <el-table-column label="平台名称" align="center" prop="name" width="150"/>
-      <el-table-column label="平台编码" align="center" prop="code" width="130"/>
-      <el-table-column label="平台下单接口地址" :show-overflow-tooltip="true" align="center" prop="platPayUrl"/>
-      <el-table-column label="平台订单查询地址" :show-overflow-tooltip="true" align="center" prop="platQueryUrl"/>
-      <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
+<!--      <el-table-column type="selection" width="55" align="center"/>-->
+      <el-table-column label="平台名称" align="center" prop="name"/>
+      <el-table-column label="平台编码" align="center" prop="code"/>
+      <el-table-column label="平台下单接口地址" :show-overflow-tooltip="true" align="center" width="800" prop="platPayUrl"/>
+      <el-table-column label="平台订单查询地址" :show-overflow-tooltip="true" align="center" width="800" prop="platQueryUrl"/>
+      <el-table-column label="操作" align="center" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -86,14 +111,14 @@
             v-hasPermi="['pay:payPlatformNew:edit']"
           >修改
           </el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['pay:payPlatformNew:remove']"
-          >删除
-          </el-button>
+<!--          <el-button-->
+<!--            size="mini"-->
+<!--            type="text"-->
+<!--            icon="el-icon-delete"-->
+<!--            @click="handleDelete(scope.row)"-->
+<!--            v-hasPermi="['pay:payPlatformNew:remove']"-->
+<!--          >删除-->
+<!--          </el-button>-->
         </template>
       </el-table-column>
     </el-table>
@@ -640,6 +665,8 @@ export default {
 
       // 遮罩层
       loading: true,
+      // 选中数组
+      ids: [],
       // 非单个禁用
       single: true,
       // 非多个禁用
@@ -816,6 +843,12 @@ export default {
       this.resetForm("queryForm");
       this.handleQuery();
     },
+    // 多选框选中数据
+    handleSelectionChange(selection) {
+      this.ids = selection.map(item => item.id)
+      this.single = selection.length !== 1
+      this.multiple = !selection.length
+    },
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
@@ -831,7 +864,7 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const id = row.id
+      const id = row.id || this.ids
       getPayPlatformNew(id).then(response => {
         this.form = response.data;
         this.opene = true;
@@ -895,13 +928,13 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const id = row.id;
+      const ids = row.id || this.ids;
       this.$confirm('是否确认删除' + row.name  + '?', '警告', {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       }).then(function () {
-        return delPayPlatformNew(id);
+        return delPayPlatformNew(ids);
       }).then(() => {
         this.getList();
         this.msgSuccess("删除成功");

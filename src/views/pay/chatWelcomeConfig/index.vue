@@ -1,15 +1,15 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="代充人id" prop="agentId">
-        <el-input
-          v-model="queryParams.agentId"
-          placeholder="请输入代充人id"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+<!--      <el-form-item label="代充人id" prop="agentId">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.agentId"-->
+<!--          placeholder="请输入代充人id"-->
+<!--          clearable-->
+<!--          size="small"-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
       <el-form-item label="代充账号" prop="agentId">
         <el-select
           filterable
@@ -22,20 +22,20 @@
           <el-option
             v-for="Account in accountOptions"
             :key="Account.id"
-            :label="Account.account"
+            :label="Account.nickName"
             :value="Account.id"
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="操作人" prop="operator">
-        <el-input
-          v-model="queryParams.operator"
-          placeholder="请输入操作人"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+<!--      <el-form-item label="操作人" prop="operator">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.operator"-->
+<!--          placeholder="请输入操作人"-->
+<!--          clearable-->
+<!--          size="small"-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
 <!--      <el-form-item label="操作时间" prop="operatorTime">-->
 <!--        <el-date-picker clearable size="small"-->
 <!--          v-model="queryParams.operatorTime"-->
@@ -123,6 +123,16 @@
         </template>
       </el-table-column>
       <el-table-column label="排序" align="center" prop="sort" />
+      <el-table-column label="状态" align="center" prop="status">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.status"
+            active-value="1"
+            inactive-value="0"
+            @change="handleStatusChange(scope.row)"
+          ></el-switch>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -173,7 +183,7 @@
 </template>
 
 <script>
-import { listChatWelcomeConfig, getChatWelcomeConfig, delChatWelcomeConfig, addChatWelcomeConfig, updateChatWelcomeConfig, exportChatWelcomeConfig, accounts } from "@/api/platform-web/pay/chatWelcomeConfig";
+import { listChatWelcomeConfig, getChatWelcomeConfig, delChatWelcomeConfig, addChatWelcomeConfig, updateChatWelcomeConfig, exportChatWelcomeConfig, accounts, changeStatus } from "@/api/platform-web/pay/chatWelcomeConfig";
 import Editor from '@/components/WangEditor';
 
 export default {
@@ -227,6 +237,21 @@ export default {
     })
   },
   methods: {
+    //状态修改
+    handleStatusChange(row) {
+      let text = row.status === '1' ? '启用' : '停用'
+      this.$confirm('确认要"' + text + '""' + row.nickName + '"吗?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        return changeStatus(row.id, row.status)
+      }).then(() => {
+        this.msgSuccess(text + '成功')
+      }).catch(function () {
+        row.status = row.status === '0' ? '1' : '0'
+      })
+    },
     /** 查询代充人欢迎语配置列表 */
     getList() {
       this.loading = true;

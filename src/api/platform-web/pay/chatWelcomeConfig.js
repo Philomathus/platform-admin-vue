@@ -44,6 +44,19 @@ export function updateChatWelcomeConfig(data) {
   })
 }
 
+// 代充人欢迎语配置状态修改
+export function changeStatus(id, status) {
+  const data = {
+    id,
+    status
+  }
+  return request({
+    url: url.platformWeb + '/admin/chatWelcomeConfig',
+    method: 'put',
+    data: data
+  })
+}
+
 // 删除代充人欢迎语配置
 export function delChatWelcomeConfig(id) {
   return request({

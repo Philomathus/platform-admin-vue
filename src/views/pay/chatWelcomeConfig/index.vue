@@ -10,11 +10,11 @@
 <!--          @keyup.enter.native="handleQuery"-->
 <!--        />-->
 <!--      </el-form-item>-->
-      <el-form-item label="代充账号" prop="agentId">
+      <el-form-item label="代充人昵称" prop="agentId">
         <el-select
           filterable
           v-model="queryParams.agentId"
-          placeholder="请选择代充账号"
+          placeholder="请选择代充人昵称"
           clearable
           size="small"
           style="width: 240px"

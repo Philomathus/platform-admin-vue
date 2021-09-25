@@ -107,9 +107,9 @@
 
     <el-table stripe v-loading="loading" :data="chatWelcomeConfigList">
 <!--      <el-table-column label="排序" align="center" prop="id" />-->
+      <el-table-column label="代充人昵称" align="center" prop="nickName" />
       <el-table-column label="内容" align="center" prop="content" />
 <!--      <el-table-column label="代充人id" align="center" prop="agentId" />-->
-      <el-table-column label="代充人昵称" align="center" prop="nickName" />
       <el-table-column label="创建人" align="center" prop="createBy" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">

@@ -162,13 +162,16 @@
     />
 
     <!-- 添加或修改代充人欢迎语配置对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="代充账号" prop="nickName">
+          <el-input v-model="form.nickName" placeholder="请输入代充账号" />
+        </el-form-item>
+<!--        <el-form-item label="代充人id" prop="agentId">-->
+<!--          <el-input v-model="form.agentId" placeholder="请输入代充人id" />-->
+<!--        </el-form-item>-->
         <el-form-item label="内容">
           <editor v-model="form.content"/>
-        </el-form-item>
-        <el-form-item label="代充人id" prop="agentId">
-          <el-input v-model="form.agentId" placeholder="请输入代充人id" />
         </el-form-item>
         <el-form-item label="排序" prop="sort">
           <el-input v-model="form.sort" placeholder="请输入排序" />
@@ -226,6 +229,9 @@ export default {
       form: {},
       // 表单校验
       rules: {
+        content: [
+          {required: true, message: "内容不能为空", trigger: "change"}
+        ]
       }
     };
   },

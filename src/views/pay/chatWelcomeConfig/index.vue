@@ -141,7 +141,7 @@
         <el-form-item label="代充人id" prop="agentId">
           <el-input v-model="form.agentId" placeholder="请输入代充人id" />
         </el-form-item>
-        <el-form-item label="内容">
+        <el-form-item label="内容" prop="content">
           <editor v-model="form.content"/>
         </el-form-item>
         <el-form-item label="排序" prop="sort">
@@ -301,12 +301,12 @@ export default {
             });
           } else {
             addChatWelcomeConfig(this.form).then(response => {
-              if (response.data.code !== 0) {
+              if (response.code !== 0) {
                  this.msgSuccess("新增成功");
                  this.open = false;
                  this.getList();
               } else {
-                this.$message.error(response.data.msg);
+                this.$message.error(response.msg);
               }
             });
           }

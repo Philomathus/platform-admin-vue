@@ -201,7 +201,7 @@
             plain
             v-show="scope.row.status == 1"
             @click="handleUpdateLock(scope.row)"
-            v-hasPermi="['admin:liveComplaint:edit']"
+            v-hasPermi="['admin:payUsdtRecharge:edit']"
           >锁定
           </el-button>
           <el-button
@@ -210,7 +210,7 @@
             plain
             v-show="scope.row.status == 0"
             @click="handleUpdateUnLock(scope.row)"
-            v-hasPermi="['admin:liveComplaint:edit']"
+            v-hasPermi="['admin:payUsdtRecharge:edit']"
           >解锁
           </el-button>
           <el-button
@@ -219,7 +219,7 @@
             plain
             v-show="scope.row.status == 0"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['admin:liveComplaint:edit']"
+            v-hasPermi="['admin:payUsdtRecharge:edit']"
           >通过
           </el-button>
           <el-button
@@ -228,7 +228,7 @@
             plain
             v-show="scope.row.status == 0"
             @click="handleUpdateRefuse(scope.row)"
-            v-hasPermi="['admin:liveComplaint:edit']"
+            v-hasPermi="['admin:payUsdtRecharge:edit']"
           >拒绝
           </el-button>
         </template>

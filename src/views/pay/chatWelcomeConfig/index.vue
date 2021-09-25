@@ -301,9 +301,13 @@ export default {
             });
           } else {
             addChatWelcomeConfig(this.form).then(response => {
-              this.msgSuccess("新增成功");
-              this.open = false;
-              this.getList();
+              if (response.data.code !== 0) {
+                 this.msgSuccess("新增成功");
+                 this.open = false;
+                 this.getList();
+              } else {
+                this.$message.error(response.data.msg);
+              }
             });
           }
         }

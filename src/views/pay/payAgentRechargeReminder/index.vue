@@ -1,36 +1,20 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-<!--      <el-form-item label="代充人id" prop="agentId">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.agentId"-->
-<!--          placeholder="请输入代充人id"-->
-<!--          clearable-->
-<!--          size="small"-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
+<!--      <el-form-item label="充值提示类型(card：银行卡)" prop="type">-->
+<!--        <el-select v-model="queryParams.type" placeholder="请选择充值提示类型(card：银行卡)" clearable size="small">-->
+<!--          <el-option label="请选择字典生成" value="" />-->
+<!--        </el-select>-->
 <!--      </el-form-item>-->
-      <el-form-item label="代充人账号-昵称" prop="agentId" label-width="118px">
-        <el-select
-          filterable
-          v-model="queryParams.agentId"
-          placeholder="请选择代充人账号-昵称"
-          clearable
-          size="small"
-          style="width: 240px"
-        >
-          <el-option
-            v-for="Account in accountOptions"
-            :key="Account.id"
-            :label="Account.nickName"
-            :value="Account.id"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+<!--      <el-form-item label="状态(1开启 0关闭)" prop="status">-->
+<!--        <el-select v-model="queryParams.status" placeholder="请选择状态(1开启 0关闭)" clearable size="small">-->
+<!--          <el-option label="请选择字典生成" value="" />-->
+<!--        </el-select>-->
+<!--      </el-form-item>-->
+<!--      <el-form-item>-->
+<!--        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>-->
 <!--        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>-->
-      </el-form-item>
+<!--      </el-form-item>-->
     </el-form>
 
     <el-row :gutter="10" class="mb8">
@@ -41,7 +25,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['admin:chatWelcomeConfig:add']"
+          v-hasPermi="['admin:payAgentRechargeReminder:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -52,7 +36,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['admin:chatWelcomeConfig:edit']"
+          v-hasPermi="['admin:payAgentRechargeReminder:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -63,7 +47,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['admin:chatWelcomeConfig:remove']"
+          v-hasPermi="['admin:payAgentRechargeReminder:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -73,30 +57,15 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['admin:chatWelcomeConfig:export']"
+          v-hasPermi="['admin:payAgentRechargeReminder:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table stripe v-loading="loading" :data="chatWelcomeConfigList">
-<!--      <el-table-column label="排序" align="center" prop="id" />-->
-      <el-table-column label="代充人昵称" align="center" prop="nickName" />
+    <el-table stripe v-loading="loading" :data="payAgentRechargeReminderList">
+      <el-table-column label="充值提示类型" align="center" prop="type" />
       <el-table-column label="内容" align="center" prop="content" />
-<!--      <el-table-column label="代充人id" align="center" prop="agentId" />-->
-      <el-table-column label="创建人" align="center" prop="createBy" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作人" align="center" prop="operator" />
-      <el-table-column label="操作时间" align="center" prop="operatorTime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.operatorTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="排序" align="center" prop="sort" />
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
           <el-switch
@@ -107,6 +76,16 @@
           ></el-switch>
         </template>
       </el-table-column>
+      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作时间" align="center" prop="updateTime" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -114,14 +93,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['admin:chatWelcomeConfig:edit']"
+            v-hasPermi="['admin:payAgentRechargeReminder:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['admin:chatWelcomeConfig:remove']"
+            v-hasPermi="['admin:payAgentRechargeReminder:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -135,17 +114,16 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改代充人欢迎语配置对话框 -->
+    <!-- 添加或修改代充银行提示语对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="代充人id" prop="agentId">
-          <el-input v-model="form.agentId" placeholder="请输入代充人id" />
-        </el-form-item>
+<!--        <el-form-item label="充值提示类型(card：银行卡)" prop="type">-->
+<!--          <el-select v-model="form.type" placeholder="请选择充值提示类型(card：银行卡)">-->
+<!--            <el-option label="请选择字典生成" value="" />-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
         <el-form-item label="内容">
           <editor v-model="form.content"/>
-        </el-form-item>
-        <el-form-item label="排序" prop="sort">
-          <el-input v-model="form.sort" placeholder="请输入排序" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -157,11 +135,11 @@
 </template>
 
 <script>
-import { listChatWelcomeConfig, getChatWelcomeConfig, delChatWelcomeConfig, addChatWelcomeConfig, updateChatWelcomeConfig, exportChatWelcomeConfig, accounts, changeStatus } from "@/api/platform-web/pay/chatWelcomeConfig";
+import { listPayAgentRechargeReminder, getPayAgentRechargeReminder, delPayAgentRechargeReminder, addPayAgentRechargeReminder, updatePayAgentRechargeReminder, exportPayAgentRechargeReminder, changeStatus } from "@/api/platform-web/pay/payAgentRechargeReminder";
 import Editor from '@/components/WangEditor';
 
 export default {
-  name: "ChatWelcomeConfig",
+  name: "PayAgentRechargeReminder",
   components: {
     Editor,
   },
@@ -179,9 +157,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 代充人欢迎语配置表格数据
-      chatWelcomeConfigList: [],
-      accountOptions: [],
+      // 代充银行提示语表格数据
+      payAgentRechargeReminderList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -190,34 +167,25 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
+        type: null,
         content: null,
-        agentId: null,
-        operator: null,
-        operatorTime: null,
-        sort: null
+        status: null
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
-        content: [
-          {required: true, message: "内容不能为空", trigger: "change"}
-        ]
       }
     };
   },
   created() {
     this.getList();
-    //代充账号
-    accounts().then(response => {
-      this.accountOptions = response.data
-    })
   },
   methods: {
     //状态修改
     handleStatusChange(row) {
       let text = row.status === '1' ? '启用' : '停用'
-      this.$confirm('确认要"' + text + '""' + row.nickName + '"吗?', '警告', {
+      this.$confirm('确认要"' + text + '""' + row.content + '"吗?', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -229,11 +197,11 @@ export default {
         row.status = row.status === '0' ? '1' : '0'
       })
     },
-    /** 查询代充人欢迎语配置列表 */
+    /** 查询代充银行提示语列表 */
     getList() {
       this.loading = true;
-      listChatWelcomeConfig(this.queryParams).then(response => {
-        this.chatWelcomeConfigList = response.rows;
+      listPayAgentRechargeReminder(this.queryParams).then(response => {
+        this.payAgentRechargeReminderList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
@@ -247,13 +215,11 @@ export default {
     reset() {
       this.form = {
         id: null,
+        type: null,
         content: null,
-        agentId: null,
         createTime: null,
         updateTime: null,
-        operator: null,
-        operatorTime: null,
-        sort: null
+        status: 0
       };
       this.resetForm("form");
     },
@@ -277,16 +243,16 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加代充人欢迎语配置";
+      this.title = "添加代充银行提示语";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
       const id = row.id || this.ids
-      getChatWelcomeConfig(id).then(response => {
+      getPayAgentRechargeReminder(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改代充人欢迎语配置";
+        this.title = "修改代充银行提示语";
       });
     },
     /** 提交按钮 */
@@ -294,20 +260,16 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
-            updateChatWelcomeConfig(this.form).then(response => {
+            updatePayAgentRechargeReminder(this.form).then(response => {
               this.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addChatWelcomeConfig(this.form).then(response => {
-              if (response.data.code !== 0) {
-                 this.msgSuccess("新增成功");
-                 this.open = false;
-                 this.getList();
-              } else {
-                this.$message.error(response.data.msg);
-              }
+            addPayAgentRechargeReminder(this.form).then(response => {
+              this.msgSuccess("新增成功");
+              this.open = false;
+              this.getList();
             });
           }
         }
@@ -316,12 +278,12 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除代充人欢迎语配置编号为"' + ids + '"的数据项?', "警告", {
+      this.$confirm('是否确认删除代充银行提示语编号为"' + ids + '"的数据项?', "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       }).then(function() {
-        return delChatWelcomeConfig(ids);
+        return delPayAgentRechargeReminder(ids);
       }).then(() => {
         this.getList();
         this.msgSuccess("删除成功");
@@ -336,9 +298,9 @@ export default {
         cancelButtonText: "取消",
         type: "warning"
       }).then(function() {
-        return exportChatWelcomeConfig(queryParams);
+        return exportPayAgentRechargeReminder(queryParams);
       }).then(response => {
-        this.downloadExcel(response, '代充人欢迎语配置');
+        this.downloadExcel(response, '代充银行提示语');
       }).catch(() => {
       })
     }

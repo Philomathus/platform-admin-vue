@@ -10,11 +10,11 @@
 <!--          @keyup.enter.native="handleQuery"-->
 <!--        />-->
 <!--      </el-form-item>-->
-      <el-form-item label="代充账号" prop="agentId">
+      <el-form-item label="代充人账号-昵称" prop="agentId" label-width="118px">
         <el-select
           filterable
           v-model="queryParams.agentId"
-          placeholder="请选择代充账号"
+          placeholder="请选择代充人账号-昵称"
           clearable
           size="small"
           style="width: 240px"
@@ -138,12 +138,9 @@
     <!-- 添加或修改代充人欢迎语配置对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="代充账号" prop="nickName">
-          <el-input v-model="form.nickName" placeholder="请输入代充账号" />
+        <el-form-item label="代充人id" prop="agentId">
+          <el-input v-model="form.agentId" placeholder="请输入代充人id" />
         </el-form-item>
-<!--        <el-form-item label="代充人id" prop="agentId">-->
-<!--          <el-input v-model="form.agentId" placeholder="请输入代充人id" />-->
-<!--        </el-form-item>-->
         <el-form-item label="内容">
           <editor v-model="form.content"/>
         </el-form-item>

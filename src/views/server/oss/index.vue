@@ -117,7 +117,7 @@
           <el-input v-model="form.bucket" placeholder="请输入文件存储"/>
         </el-form-item>
         <el-form-item label="服务商" prop="provider">
-          <el-select v-model="queryParams.provider" placeholder="请选择服务商" clearable size="small">
+          <el-select v-model="form.provider" placeholder="请选择服务商" clearable size="small">
             <el-option
               v-for="dict in providerDictionary"
               :key="dict.dictValue"
@@ -259,6 +259,7 @@ export default {
         createBy: null,
         createTime: null,
         updateBy: null,
+        provider:null,
         updateTime: null
       }
       this.resetForm('form')

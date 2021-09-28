@@ -13,7 +13,7 @@
       </el-form-item>
       <el-form-item prop="account">
         <el-input
-          v-model="queryParams.account"
+          v-model.trim="queryParams.account"
           placeholder="请输入会员ID"
           clearable
           @keyup.enter.native="handleQuery"

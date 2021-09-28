@@ -206,8 +206,8 @@
       <el-table-column label="交易链名称" align="center" min-width="120" prop="chainName"/>
       <el-table-column label="充值地址" align="center" min-width="260" prop="rechargeAddress"/>
       <el-table-column label="交易id" align="center" min-width="300" prop="transactionId"/>
-      <el-table-column label="处理状态" align="center" prop="status" :formatter="formatterStatus"/>
-      <el-table-column label="状态" align="center" prop="status" min-width="120">
+<!--      <el-table-column label="处理状态" align="center" prop="status" :formatter="formatterStatus"/>-->
+      <el-table-column label="处理状态" align="center" prop="status" min-width="120">
         <template slot-scope="scope">
           <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">{{
               status.dictLabel

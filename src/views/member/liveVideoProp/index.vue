@@ -107,7 +107,7 @@
             type="warning"
             plain
             icon="el-icon-download"
-            size="mini"
+            size="small"
             @click="handleExportTestAccount"
             v-hasPermi="['admin:liveVideoProp:export']"
           >导出
@@ -210,7 +210,7 @@ export default {
   created() {
     this.getList()
     this.count()
-    testAccountCount()
+    this.testAccountCount()
   },
   methods: {
     /** 查询用户送礼日志列表 */
@@ -256,11 +256,12 @@ export default {
         this.loading = false
       })
     },
-
     testAccountCount() {
       testAccountCount(this.queryParam).then((res) => {
         if (res.data) {
           this.totalData = res.data
+        } else {
+          this.totalData.testAccountPorpTotal = 0
         }
         this.loading = false
       })

@@ -600,7 +600,6 @@
             },
             //获取聊天记录列表
             chatPage() {
-                console.log(this.queryParams.selectDate)
                 var data = {
                     poscatId: this.userId,
                     pageNum: this.queryParams.pageNum,
@@ -609,9 +608,7 @@
                     sendStartTime: this.queryParams.selectDate===undefined ? undefined : this.queryParams.selectDate[0] +' 00:00:00',
                     sendEndTime: this.queryParams.selectDate===undefined ? undefined : this.queryParams.selectDate[1] +' 23:59:59',
                 }
-
                 chatPage(data).then((res) => {
-                    console.log('获取聊天记录列表 \n'+JSON.stringify(res))
                     if (res.code === 200) {
                         this.dbTableList = res.rows;
                         this.total = res.total;
@@ -629,12 +626,11 @@
                     _: new Date().getTime(),
                     orderByColumn: 'create_time',
                     isAsc: 'desc',
-                    sendStartTime: this.queryParams.selectDate===undefined ? undefined : this.queryParams.selectDate[0] +' 00:00:00',
-                    sendEndTime: this.queryParams.selectDate===undefined ? undefined : this.queryParams.selectDate[1] +' 23:59:59',
+                    startTime: (this.queryParams.selectDate===undefined || this.queryParams.selectDate===null) ? undefined : this.queryParams.selectDate[0] +' 00:00:00',
+                    endTime: (this.queryParams.selectDate===undefined || this.queryParams.selectDate===null) ? undefined : this.queryParams.selectDate[1] +' 23:59:59',
                     propName: this.queryParams.giftName,
                 }
                 receiveProplist(data).then((res) => {
-                    console.log('接受礼物 \n'+JSON.stringify(res))
                     if (res.code === 200) {
                         this.dbTableList = res.rows;
                         this.total = res.total;
@@ -726,7 +722,6 @@
                     pageSize: this.queryParams.pageSize,
                     type: this.queryParams.accountType,
                     _: new Date().getTime()}).then((res) => {
-                    console.log('账户日志 \n'+JSON.stringify(res))
                     if (res.code === 200) {
                         this.detailsList = res.rows;
                         this.total = res.total;

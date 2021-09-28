@@ -71,6 +71,7 @@
 
     <el-table stripe v-loading="loading" :data="liveProplogList">
       <el-table-column label="会员ID" align="center" prop="perUserId" width="120"/>
+      <el-table-column label="状态" align="center" min-width="110px" prop="isPrivate" :formatter="callbackStatusFormat"/>
       <el-table-column label="礼物名" align="center" prop="propName"/>
       <el-table-column label="礼物金额" align="center" prop="totalDiamonds"/>
       <el-table-column label="主播ID" align="center" prop="toUserId"/>
@@ -173,6 +174,7 @@ export default {
       single: true,
       // 非多个禁用
       multiple: true,
+      typeList: [],
       // 显示搜索条件
       showSearch: true,
       // 总条数
@@ -211,6 +213,9 @@ export default {
     this.getList()
     this.count()
     this.testAccountCount()
+    this.getDicts('member_type').then(response => {
+      this.typeList = response.data
+    })
   },
   methods: {
     /** 查询用户送礼日志列表 */
@@ -239,6 +244,10 @@ export default {
         this.loading = false
       })
       this.testAccountCount()
+    },
+    // 回调状态字典翻译
+    callbackStatusFormat(row, column) {
+      return this.selectDictLabel(this.typeList, row.isPrivate)
     },
     //复制
     copy() {

@@ -10,7 +10,7 @@
       </el-form-item>
       <el-form-item prop="memberId">
         <el-input
-          v-model="queryParams.memberId"
+          v-model.trim="queryParams.memberId"
           placeholder="请输入会员编号"
           clearable
           size="small"
@@ -61,14 +61,30 @@
       <!--          @keyup.enter.native="handleQuery"-->
       <!--        />-->
       <!--      </el-form-item>-->
+<!--      <el-form-item prop="status">-->
+<!--        <el-select v-model="queryParams.status" placeholder="请选择处理状态" size="small" clearable>-->
+<!--          <el-option-->
+<!--            v-for="item in statusQueryOptions"-->
+<!--            :key="item.value"-->
+<!--            :label="item.label"-->
+<!--            :value="item.value">-->
+<!--          </el-option>-->
+<!--        </el-select>-->
+<!--      </el-form-item>-->
       <el-form-item prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择处理状态" size="small" clearable>
+        <el-select
+          v-model="queryParams.status"
+          placeholder="请选择状态"
+          clearable
+          size="small"
+          style="width: 130px"
+        >
           <el-option
-            v-for="item in statusQueryOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
+            v-for="dict in statusOptions"
+            :key="dict.dictValue"
+            :label="dict.dictLabel"
+            :value="dict.dictValue"
+          />
         </el-select>
       </el-form-item>
       <!--      <el-form-item label="优惠比例" prop="discountBill">-->
@@ -206,7 +222,6 @@
       <el-table-column label="交易链名称" align="center" min-width="120" prop="chainName"/>
       <el-table-column label="充值地址" align="center" min-width="260" prop="rechargeAddress"/>
       <el-table-column label="交易id" align="center" min-width="300" prop="transactionId"/>
-<!--      <el-table-column label="处理状态" align="center" prop="status" :formatter="formatterStatus"/>-->
       <el-table-column label="处理状态" align="center" prop="status" min-width="120">
         <template slot-scope="scope">
           <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">{{
@@ -363,19 +378,6 @@ export default {
       refreshIcon: 'el-icon-refresh',
       refreshLabel: '开始刷新',
       refreshDesc: '',
-      statusQueryOptions: [{
-        value: '0',
-        label: '锁定'
-      }, {
-        value: '1',
-        label: '已提交'
-      }, {
-        value: '2',
-        label: '拒绝'
-      }, {
-        value: '3',
-        label: '通过'
-      }],
       // 状态字典
       statusOptions: [],
       // 日期范围
@@ -533,18 +535,6 @@ export default {
         this.total = response.total;
         this.loading = false;
       });
-    },
-    // 处理状态
-    formatterStatus(row) {
-      if (row.status == 1) {
-        return '未处理'
-      } else if (row.status == 2) {
-        return '拒绝'
-      } else if (row.status == 3) {
-        return '通过'
-      } else if (row.status == 0) {
-        return '锁定'
-      }
     },
     // 取消按钮
     cancel() {

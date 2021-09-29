@@ -316,9 +316,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateChatWelcomeConfig(this.form).then(response => {
+              if (response.code !== 0) {
               this.msgSuccess("修改成功");
               this.opene = false;
               this.getList();
+            } else {
+                this.msgError(response.code);
+              }
             });
           } else {
             addChatWelcomeConfig(this.form).then(response => {

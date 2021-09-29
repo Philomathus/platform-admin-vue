@@ -132,7 +132,7 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body
     >
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="代充人账号" prop="account">
           <el-input v-model="form.account" placeholder="请输入代充人账号"/>
         </el-form-item>
@@ -158,8 +158,8 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="opene" width="500px"
                append-to-body
     >
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="代充人账号" prop="account">
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+        <el-form-item label="代充人账号" prop="account" >
           <el-input v-model="form.account" placeholder="请输入代充人账号" disabled="true"/>
         </el-form-item>
         <el-form-item label="收款银行" prop="bankName">

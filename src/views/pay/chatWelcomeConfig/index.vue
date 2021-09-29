@@ -81,6 +81,7 @@
 
     <el-table stripe v-loading="loading" :data="chatWelcomeConfigList">
 <!--      <el-table-column label="排序" align="center" prop="id" />-->
+      <el-table-column label="代充人账号" align="center" prop="account" />
       <el-table-column label="代充人昵称" align="center" prop="nickName" />
       <el-table-column label="内容" align="center" prop="content" />
 <!--      <el-table-column label="代充人id" align="center" prop="agentId" />-->
@@ -135,11 +136,30 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改代充人欢迎语配置对话框 -->
+    <!-- 添加代充人欢迎语配置对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="代充人id" prop="agentId">
-          <el-input v-model="form.agentId" placeholder="请输入代充人id" />
+      <el-form ref="form" :model="form" :rules="rules" label-width="90px">
+        <el-form-item label="代充人账号" prop="account">
+          <el-input v-model="form.account" placeholder="请输入代充人账号" />
+        </el-form-item>
+        <el-form-item label="内容" prop="content">
+          <editor v-model="form.content"/>
+        </el-form-item>
+        <el-form-item label="排序" prop="sort">
+          <el-input v-model="form.sort" placeholder="请输入排序" />
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
+
+    <!-- 修改代充人欢迎语配置对话框 -->
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="opene" width="700px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="90px">
+        <el-form-item label="代充人账号" prop="account">
+          <el-input v-model="form.account" readonly placeholder="请输入代充人账号" />
         </el-form-item>
         <el-form-item label="内容" prop="content">
           <editor v-model="form.content"/>
@@ -186,6 +206,7 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      opene: false,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -285,7 +306,7 @@ export default {
       const id = row.id || this.ids
       getChatWelcomeConfig(id).then(response => {
         this.form = response.data;
-        this.open = true;
+        this.opene = true;
         this.title = "修改代充人欢迎语配置";
       });
     },
@@ -296,7 +317,7 @@ export default {
           if (this.form.id != null) {
             updateChatWelcomeConfig(this.form).then(response => {
               this.msgSuccess("修改成功");
-              this.open = false;
+              this.opene = false;
               this.getList();
             });
           } else {

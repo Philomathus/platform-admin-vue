@@ -21,7 +21,7 @@
       </el-form-item>
       <el-form-item label="发送者id" prop="userId">
         <el-input
-          v-model="queryParams.userId"
+          v-model.trim="queryParams.userId"
           placeholder="请输入发送者id"
           clearable
           size="small"

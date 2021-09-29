@@ -14,7 +14,7 @@
         <el-input
           type="number"
           class="no-number"
-          v-model="queryParams.userId"
+          v-model.trim="queryParams.userId"
           placeholder="族长ID"
           clearable
           size="small"

@@ -262,6 +262,7 @@ export default {
     // 取消按钮
     cancel() {
       this.open = false;
+      this.opene = false;
       this.reset();
     },
     // 表单重置

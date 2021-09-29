@@ -11,7 +11,7 @@
       </el-form-item>
       <el-form-item prop="searchValue" style="width: 130px;">
         <el-input
-          v-model="queryParams.userId"
+          v-model.trim="queryParams.userId"
           placeholder="请输入玩家ID"
           clearable
           size="small"

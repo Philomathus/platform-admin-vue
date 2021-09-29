@@ -19,7 +19,7 @@
       </el-form-item>
       <el-form-item prop="userId">
         <el-input
-          v-model="queryParams.userId"
+          v-model.trim="queryParams.userId"
           placeholder="会员ID"
           clearable
           size="small"

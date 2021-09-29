@@ -261,6 +261,8 @@ export default {
       getCount(this.queryParams).then((res) => {
         if (res.data) {
           this.totalData = res.data
+        } else {
+          this.totalData.countTotal = 0
         }
         this.loading = false
       })

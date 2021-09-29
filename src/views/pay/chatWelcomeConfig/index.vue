@@ -83,8 +83,18 @@
 <!--      <el-table-column label="排序" align="center" prop="id" />-->
       <el-table-column label="代充人账号" align="center" prop="account" />
       <el-table-column label="代充人昵称" align="center" prop="nickName" />
-      <el-table-column label="内容" align="center" prop="content" />
+      <el-table-column label="内容" align="center" min-width="400" prop="content" />
 <!--      <el-table-column label="代充人id" align="center" prop="agentId" />-->
+      <el-table-column label="状态" align="center" prop="status">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.status"
+            active-value="1"
+            inactive-value="0"
+            @change="handleStatusChange(scope.row)"
+          ></el-switch>
+        </template>
+      </el-table-column>
       <el-table-column label="创建人" align="center" prop="createBy" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
@@ -98,16 +108,6 @@
         </template>
       </el-table-column>
       <el-table-column label="排序" align="center" prop="sort" />
-      <el-table-column label="状态" align="center" prop="status">
-        <template slot-scope="scope">
-          <el-switch
-            v-model="scope.row.status"
-            active-value="1"
-            inactive-value="0"
-            @change="handleStatusChange(scope.row)"
-          ></el-switch>
-        </template>
-      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button

@@ -3,7 +3,7 @@
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="会员ID" prop="memberId">
         <el-input
-          v-model="queryParams.memberId"
+          v-model.trim="queryParams.memberId"
           placeholder="请输入会员ID"
           clearable
           size="small"

@@ -52,7 +52,7 @@
       </el-form-item>
       <el-form-item prop="searchValue">
         <el-input
-          v-model="queryParams.searchValue"
+          v-model.trim="queryParams.searchValue"
           placeholder="会员ID/会员账号"
           clearable
           size="small"

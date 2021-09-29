@@ -4,7 +4,7 @@
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px" style="margin-top: 20px">
       <el-form-item prop="searchValue">
         <el-input
-          v-model="queryParams.searchValue"
+          v-model.trim="queryParams.searchValue"
           placeholder="会员ID/账号"
           clearable
           size="small"

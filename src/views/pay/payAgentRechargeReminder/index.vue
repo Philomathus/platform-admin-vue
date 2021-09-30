@@ -64,7 +64,7 @@
     </el-row>
 
     <el-table stripe v-loading="loading" :data="payAgentRechargeReminderList">
-      <el-table-column label="充值提示类型" align="center" prop="type" />
+<!--      <el-table-column label="充值提示类型" align="center" prop="type" />-->
       <el-table-column label="内容" align="center" prop="content" />
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">

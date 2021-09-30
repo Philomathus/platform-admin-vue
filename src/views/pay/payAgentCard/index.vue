@@ -348,15 +348,23 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updatePayAgentCard(this.form).then(response => {
-              this.msgSuccess('修改成功')
-              this.opene = false
-              this.getList()
+              if (response.code !== 0) {
+                this.msgSuccess("修改成功");
+                this.opene = false;
+                this.getList();
+              } else {
+                this.msgError(response.msg);
+              }
             })
           } else {
             addPayAgentCard(this.form).then(response => {
-              this.msgSuccess('新增成功')
-              this.open = false
-              this.getList()
+              if (response.code !== 0) {
+                this.msgSuccess("新增成功");
+                this.open = false;
+                this.getList();
+              } else {
+                this.$message.error(response.msg);
+              }
             })
           }
         }

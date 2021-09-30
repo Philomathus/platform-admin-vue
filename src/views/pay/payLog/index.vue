@@ -71,6 +71,7 @@
       <el-table-column label="会员账号" align="center" prop="memberAccount" min-width="120"/>
       <el-table-column label="支付平台名称" align="center" prop="platformName" min-width="120"/>
       <el-table-column label="支付通道名称" align="center" prop="channelName" min-width="150"/>
+      <el-table-column label="支付通道编码" align="center" prop="channelId" />
       <el-table-column label="下单金额" align="center" prop="money" min-width="100"/>
       <el-table-column label="创建时间" align="center" prop="createTime" width="160">
         <template slot-scope="scope">

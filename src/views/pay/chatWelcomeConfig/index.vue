@@ -143,7 +143,7 @@
           <el-input v-model="form.account" placeholder="请输入代充人账号" />
         </el-form-item>
         <el-form-item label="内容" prop="content">
-          <editor v-model="form.content"/>
+          <el-input v-model="form.content" readonly type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="排序" prop="sort">
           <el-input v-model="form.sort" type="number" class="no-number" placeholder="请输入排序" />
@@ -162,7 +162,7 @@
           <el-input v-model="form.account" readonly placeholder="请输入代充人账号" />
         </el-form-item>
         <el-form-item label="内容" prop="content">
-          <editor v-model="form.content"/>
+          <el-input v-model="form.content" readonly type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="排序" prop="sort">
           <el-input v-model="form.sort" type="number" class="no-number" placeholder="请输入排序" />
@@ -178,13 +178,10 @@
 
 <script>
 import { listChatWelcomeConfig, getChatWelcomeConfig, delChatWelcomeConfig, addChatWelcomeConfig, updateChatWelcomeConfig, exportChatWelcomeConfig, accounts, changeStatus } from "@/api/platform-web/pay/chatWelcomeConfig";
-import Editor from '@/components/WangEditor';
 
 export default {
   name: "ChatWelcomeConfig",
-  components: {
-    Editor,
-  },
+  components: {},
   data() {
     return {
       // 遮罩层
@@ -221,6 +218,9 @@ export default {
       form: {},
       // 表单校验
       rules: {
+        account: [
+          {required: true, message: "代充人账号不能为空", trigger: "change"}
+        ],
         content: [
           {required: true, message: "内容不能为空", trigger: "change"}
         ]

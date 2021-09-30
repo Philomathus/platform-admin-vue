@@ -137,13 +137,13 @@
     />
 
     <!-- 添加代充人欢迎语配置对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="90px">
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="600px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="代充人账号" prop="account">
           <el-input v-model="form.account" placeholder="请输入代充人账号" />
         </el-form-item>
         <el-form-item label="内容" prop="content">
-          <el-input v-model="form.content" readonly type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.content" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="排序" prop="sort">
           <el-input v-model="form.sort" type="number" class="no-number" placeholder="请输入排序" />
@@ -157,12 +157,12 @@
 
     <!-- 修改代充人欢迎语配置对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="opene" width="700px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="90px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="代充人账号" prop="account">
           <el-input v-model="form.account" readonly placeholder="请输入代充人账号" />
         </el-form-item>
         <el-form-item label="内容" prop="content">
-          <el-input v-model="form.content" readonly type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.content" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="排序" prop="sort">
           <el-input v-model="form.sort" type="number" class="no-number" placeholder="请输入排序" />

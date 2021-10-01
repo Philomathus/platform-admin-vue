@@ -140,7 +140,7 @@
           <el-input v-model="form.bankName" placeholder="请输入收款银行"/>
         </el-form-item>
         <el-form-item label="收款账号" prop="bankAccount">
-          <el-input v-model="form.bankAccount" placeholder="请输入收款账号"/>
+          <el-input v-model="form.bankAccount" placeholder="请输入收款账号" maxlength="19" />
         </el-form-item>
         <el-form-item label="收款名称" prop="accountName">
           <el-input v-model="form.accountName" placeholder="请输入收款名称"/>
@@ -166,7 +166,7 @@
           <el-input v-model="form.bankName" placeholder="请输入收款银行"/>
         </el-form-item>
         <el-form-item label="收款账号" prop="bankAccount">
-          <el-input v-model="form.bankAccount" placeholder="请输入收款账号"/>
+          <el-input v-model="form.bankAccount" placeholder="请输入收款账号" maxlength="19" />
         </el-form-item>
         <el-form-item label="收款名称" prop="accountName">
           <el-input v-model="form.accountName" placeholder="请输入收款名称"/>
@@ -245,7 +245,7 @@ export default {
           { required: true, message: '收款银行不能为空', trigger: 'blur' }
         ],
         bankAccount: [
-          { required: true, message: '收款账号不能为空', trigger: 'blur' }
+          { required: true, message: '收款账号不能为空且位数为13位-19位', trigger: 'blur', pattern:/[1-9]\d{12,18}/ }
         ],
         accountName: [
           { required: true, message: '收款名称不能为空', trigger: 'blur' }

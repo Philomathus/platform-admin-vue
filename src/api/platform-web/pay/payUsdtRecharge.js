@@ -10,6 +10,15 @@ export function listPayUsdtRecharge(query) {
   })
 }
 
+// 统计USDT充值提交记录列表
+export function listCount(query) {
+  return request({
+    url: url.platformWeb + '/admin/payUsdtRecharge/listCount',
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询USDT充值提交记录详细
 export function getPayUsdtRecharge(id) {
   return request({

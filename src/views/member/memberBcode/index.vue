@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
-    <el-button type="primary">总充值 {{ this.totalData.total.toFixed(2) }}</el-button>
-    <el-button type="success">总打码 {{ this.totalData.countCur.toFixed(2) }}</el-button>
-    <el-button type="warning">还需打码 {{ (this.totalData.total - this.totalData.countCur).toFixed(2) }}</el-button>
+    <el-button type="primary" @click="copy1">总充值 {{ this.totalData.total.toFixed(2) }}</el-button>
+    <el-button type="success" @click="copy2">总打码 {{ this.totalData.countCur.toFixed(2) }}</el-button>
+    <el-button type="warning" @click="copy3">还需打码 {{ (this.totalData.total - this.totalData.countCur).toFixed(2) }}</el-button>
     <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" v-show="showSearch" label-width="100px">
       <el-form-item label="日期范围" prop="selectDate">
         <el-date-picker
@@ -125,6 +125,16 @@ export default {
     this.getTotalData()
   },
   methods: {
+    //复制
+    copy1() {
+      this.copyCommand(this.totalData.total.toFixed(2))
+    },
+    copy2() {
+      this.copyCommand(this.totalData.countCur.toFixed(2))
+    },
+    copy3() {
+      this.copyCommand((this.totalData.total - this.totalData.countCur).toFixed(2))
+    },
     getTotalData() {
       getTotalData(this.queryParams).then((res) => {
         this.totalData = res.data

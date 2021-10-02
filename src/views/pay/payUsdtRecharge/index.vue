@@ -211,7 +211,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table stripe v-loading="loading" :data="payUsdtRechargeList" :row-style="setRowStyle1">
+    <el-table stripe v-loading="loading" :data="payUsdtRechargeList">
       <el-table-column label="复制" align="center">
         <template slot-scope="scope">
           <el-button
@@ -294,7 +294,7 @@
           </el-button>
         </template>
         <!--        <template slot-scope="scope">-->
-        <!--          <el-button-->
+        <!--         <el-button-->
         <!--            size="mini"-->
         <!--            type="text"-->
         <!--            icon="el-icon-edit"-->
@@ -474,11 +474,6 @@ export default {
   methods: {
     copyColumn(value) {
       this.copyCommand(value)
-    },
-    setRowStyle1(row) {
-      if (row.row.transactionId == true) {
-        return 'color:black'
-      }
     },
     listCount() {
       this.totalLoading = true

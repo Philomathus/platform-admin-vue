@@ -147,6 +147,7 @@
         </template>
       </el-table-column>
       <el-table-column label="注册时间" align="center" prop="regTime" width="160"/>
+      <el-table-column label="登录时间" align="center" prop="loginTime" width="160"/>
       <el-table-column label="登陆次数" align="center" prop="loginNum" min-width="100px"/>
       <el-table-column label="登录ip" :show-overflow-tooltip="true" align="center" prop="loginIp" width="180"/>
       <el-table-column label="是否禁言" align="center" prop="speak">

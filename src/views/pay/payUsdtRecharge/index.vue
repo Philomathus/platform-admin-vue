@@ -232,7 +232,7 @@
       <el-table-column label="充值地址" align="center" min-width="260" prop="rechargeAddress"/>
       <el-table-column label="交易id" align="center" min-width="300" prop="transactionId">
       <template v-slot="{row}">
-        <a style="color: #00afff" @click="copyColumn(row.transactionId)">{{ row.transactionId }}</a>
+        <a :class="{blue:index !== row.transactionId}" @click="copyColumn(row.transactionId)">{{ row.transactionId }}</a>
       </template>
       </el-table-column>
       <el-table-column label="处理状态" align="center" prop="status" min-width="120">
@@ -365,7 +365,11 @@
     </el-dialog>
   </div>
 </template>
-
+<style>
+.blue{
+  color: #0888ee;
+}
+</style>
 <script>
 import {
   listPayUsdtRecharge,
@@ -441,6 +445,7 @@ export default {
         orderByColumn: 'createTime',
         isAsc: 'desc'
       },
+      index: 0,
       // 表单参数
       form: {},
       // 表单校验
@@ -473,6 +478,7 @@ export default {
   },
   methods: {
     copyColumn(value) {
+      this.index = value
       this.copyCommand(value)
     },
     listCount() {

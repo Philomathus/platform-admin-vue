@@ -38,7 +38,7 @@
             icon="el-icon-plus"
             size="mini"
             @click="handleAdd"
-            v-hasPermi="['member:logGameOrder:add']"
+            v-hasPermi="['admin:configEnvironment:add']"
           >新增
           </el-button>
         </el-col>

@@ -1,6 +1,15 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+    <div v-loading="totalLoading">
+      <el-button type="success" @click="copy1">交易笔数 {{ this.totalData.total || 0}}</el-button>
+      <el-button type="warning" @click="copy2">总成功金额 {{ this.totalData.successMoney || 0 }}</el-button>
+      <el-button type="info" id="copy3" @click="copy3">成功率 {{
+          numberUtil.toPercent(this.totalData.successRate || 0)
+        }}
+      </el-button>
+      <el-button  type="primary" icon="el-icon-search" size="mini" @click="listCount()" style="margin-left: 20px">统计查询</el-button>
+    </div>
+    <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 10px" v-show="showSearch" label-width="68px">
       <el-form-item label="创建时间" prop="selectDate" label-width="70px">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '360px'}" start-placeholder="开始时间"
@@ -221,7 +230,11 @@
       <el-table-column label="优惠比例" align="center" prop="discountBill"/>
       <el-table-column label="交易链名称" align="center" min-width="120" prop="chainName"/>
       <el-table-column label="充值地址" align="center" min-width="260" prop="rechargeAddress"/>
-      <el-table-column label="交易id" align="center" min-width="300" prop="transactionId"/>
+      <el-table-column label="交易id" align="center" min-width="300" prop="transactionId">
+      <template v-slot="{row}">
+        <a :class="{blue:index !== row.transactionId}" @click="copyColumn(row.transactionId)">{{ row.transactionId }}</a>
+      </template>
+      </el-table-column>
       <el-table-column label="处理状态" align="center" prop="status" min-width="120">
         <template slot-scope="scope">
           <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">{{
@@ -281,7 +294,7 @@
           </el-button>
         </template>
         <!--        <template slot-scope="scope">-->
-        <!--          <el-button-->
+        <!--         <el-button-->
         <!--            size="mini"-->
         <!--            type="text"-->
         <!--            icon="el-icon-edit"-->
@@ -352,7 +365,11 @@
     </el-dialog>
   </div>
 </template>
-
+<style>
+.blue{
+  color: #0888ee;
+}
+</style>
 <script>
 import {
   listPayUsdtRecharge,
@@ -364,7 +381,8 @@ import {
   exportPayUsdtRecharge,
   lockPayUsdtRecharge,
   unLockPayUsdtRecharge,
-  channelNames
+  channelNames,
+  listCount
 } from "@/api/platform-web/pay/payUsdtRecharge";
 import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
 
@@ -378,6 +396,11 @@ export default {
       refreshIcon: 'el-icon-refresh',
       refreshLabel: '开始刷新',
       refreshDesc: '',
+      totalData: {
+         successMoney: null,
+         successRate: null
+      },
+      totalLoading: false,
       // 状态字典
       statusOptions: [],
       // 日期范围
@@ -422,6 +445,7 @@ export default {
         orderByColumn: 'createTime',
         isAsc: 'desc'
       },
+      index: 0,
       // 表单参数
       form: {},
       // 表单校验
@@ -453,6 +477,26 @@ export default {
     this.stopRefresh()
   },
   methods: {
+    copyColumn(value) {
+      this.index = value
+      this.copyCommand(value)
+    },
+    listCount() {
+      this.totalLoading = true
+      listCount(this.queryParams).then((res) => {
+        this.totalData = res
+      }).finally(()=>{this.totalLoading=false})
+    },
+    //复制
+    copy1() {
+      this.copyCommand(this.totalData.total)
+    },
+    copy2() {
+      this.copyCommand(this.totalData.successMoney)
+    },
+    copy3() {
+      this.copyCommand(this.numberUtil.toPercent(this.totalData.successRate))
+    },
     refreshData() {
       if (this.refreshType === 'primary') {
         this.refreshType = 'danger'

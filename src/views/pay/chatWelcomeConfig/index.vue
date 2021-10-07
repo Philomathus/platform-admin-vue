@@ -212,7 +212,9 @@ export default {
         agentId: null,
         operator: null,
         operatorTime: null,
-        sort: null
+        sort: null,
+        orderByColumn: 'createTime',
+        isAsc: 'desc'
       },
       // 表单参数
       form: {},

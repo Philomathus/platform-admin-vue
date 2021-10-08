@@ -14,10 +14,10 @@
           :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item label="用户id" prop="userId">
+      <el-form-item label="会员ID" prop="userId">
         <el-input
           v-model.trim="queryParams.userId"
-          placeholder="请输入用户id"
+          placeholder="请输入会员ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -103,7 +103,7 @@
     </el-row>
 
     <el-table stripe v-loading="loading" :data="liveUserMountList">
-      <el-table-column label="用户id" align="center" prop="userId" />
+      <el-table-column label="会员ID" align="center" prop="userId" />
       <el-table-column label="过期时间" align="center" prop="effectiveTime">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.effectiveTime, '{y}-{m}-{d}') }}</span>
@@ -142,8 +142,8 @@
     <!-- 添加或修改坐骑领取记录对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="用户id" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入用户id" />
+        <el-form-item label="会员ID" prop="userId">
+          <el-input v-model="form.userId" placeholder="请输入会员ID" />
         </el-form-item>
         <el-form-item label="过期时间" prop="effectiveTime">
           <el-date-picker clearable size="small"
@@ -268,6 +268,14 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
+      if(this.queryParams.userId){
+        const reg = '^[0-9_]{1,}$'
+        let flag = this.queryParams.userId.match(reg)
+        if(!flag){
+          this.msgError("会员ID只能输入数字及下划线")
+          return
+        }
+      }
       this.queryParams.pageNum = 1;
       this.getList();
     },

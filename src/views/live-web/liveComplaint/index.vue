@@ -17,7 +17,7 @@
       <el-form-item prop="userId">
         <el-input
           v-model.trim="queryParams.userId"
-          placeholder="请输入用户ID"
+          placeholder="请输入会员ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -96,9 +96,9 @@
 
     <el-table stripe v-loading="loading" :data="liveComplaintList">
       <el-table-column label="投诉内容" align="center" prop="content" />
-      <el-table-column label="用户手机号" align="center" prop="mobile" />
+      <el-table-column label="会员手机号" align="center" prop="mobile" />
       <el-table-column label="房间名称" align="center" prop="roomName" />
-      <el-table-column label="用户ID" align="center" prop="userId" />
+      <el-table-column label="会员ID" align="center" prop="userId" />
       <el-table-column label="主播" align="center" prop="anchor" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
@@ -167,8 +167,8 @@
         <el-form-item label="投诉内容" prop="remark">
           <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
         </el-form-item>
-        <el-form-item label="用户" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入用户" />
+        <el-form-item label="会员ID" prop="userId">
+          <el-input v-model="form.userId" placeholder="请输入会员ID" />
         </el-form-item>
         <el-form-item label="主播" prop="anchor">
           <el-input v-model="form.anchor" placeholder="请输入主播" />
@@ -303,6 +303,14 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
+      if(this.queryParams.userId){
+        const reg = '^[0-9_]{1,}$'
+        let flag = this.queryParams.userId.match(reg)
+        if(!flag){
+          this.msgError("会员ID只能输入数字及下划线")
+          return
+        }
+      }
       this.queryParams.pageNum = 1;
       this.getList();
     },

@@ -19,17 +19,8 @@
       </el-form-item>
       <el-form-item prop="memberId">
         <el-input
-          v-model.trim="queryParams.memberId"
-          placeholder="请输入会员编号"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item prop="userName">
-        <el-input
-          v-model="queryParams.userName"
-          placeholder="请输入会员账号"
+          v-model.trim="queryParams.searchValue"
+          placeholder="请输入会员编号/账号"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -428,6 +419,7 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
+        searchValue: null,
         selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
         pageNum: 1,
         pageSize: 10,

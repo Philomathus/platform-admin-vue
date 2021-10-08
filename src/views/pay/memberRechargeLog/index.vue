@@ -466,7 +466,7 @@
         const reg = '^[0-9_]{1,}$'
         let flag = this.queryParams.searchValue.match(reg)
         if(!flag){
-          this.msgError("只能输入数字及下划线")
+          this.msgError("会员ID/会员账号只能输入数字及下划线")
           return
         }
       }

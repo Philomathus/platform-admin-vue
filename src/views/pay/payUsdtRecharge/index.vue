@@ -213,7 +213,7 @@
         </template>
       </el-table-column>
       <!--      <el-table-column label="系统编号" align="center" prop="id" />-->
-      <el-table-column label="会员编号" align="center" prop="memberId"/>
+      <el-table-column label="会员编号" align="center" min-width="90" prop="memberId"/>
 <!--      <el-table-column label="会员账号" align="center" prop="userName"/>-->
       <el-table-column label="渠道名称" align="center" min-width="120" prop="channelName"/>
       <el-table-column label="充值U数量" align="center" prop="rechargeNumber"/>
@@ -238,7 +238,7 @@
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="备注" align="center" min-width="90" prop="remark"/>
+      <el-table-column label="备注" align="center" min-width="120" prop="remark"/>
       <el-table-column label="操作人" align="center" prop="opName"/>
       <el-table-column label="审批时间" align="center" prop="updateTime" width="150">
         <template slot-scope="scope">

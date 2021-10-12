@@ -141,11 +141,11 @@
         <el-form-item label="编码" prop="code">
           <el-input v-model.trim="form.code" placeholder="请输入平台编码"/>
         </el-form-item>
-        <el-form-item label="商户ID" prop="merId">
-          <el-input v-model.trim="form.merId" placeholder="请输入商户ID"/>
+        <el-form-item label="商户号/ID" prop="merId">
+          <el-input v-model.trim="form.merId" placeholder="请输入商户号/ID"/>
         </el-form-item>
-        <el-form-item label="机构号" prop="orgId">
-          <el-input v-model.trim="form.orgId" placeholder="请输入机构号"/>
+        <el-form-item label="应用ID" prop="orgId">
+          <el-input v-model.trim="form.orgId" placeholder="如果此支付有应用ID请输入应用ID"/>
         </el-form-item>
         <el-form-item label="下单地址" prop="platPayUrl">
           <el-input v-model.trim="form.platPayUrl" placeholder="请输入平台下单接口地址"/>

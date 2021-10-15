@@ -129,15 +129,15 @@
 
     <!-- 添加或修改代付平台列表对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="770px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="110px">
         <el-form-item label="编码" prop="code">
           <el-input v-model.trim="form.code" placeholder="请输入自定义编码" />
         </el-form-item>
         <el-form-item label="名称" prop="name">
           <el-input v-model.trim="form.name" placeholder="请输入代付平台名称" />
         </el-form-item>
-        <el-form-item label="商户ID" prop="merId">
-          <el-input v-model.trim="form.merId" placeholder="请输入商户ID" />
+        <el-form-item label="商户号/ID" prop="merId">
+          <el-input v-model.trim="form.merId" placeholder="请输入商户号/ID" />
         </el-form-item>
         <el-form-item label="代付下单地址" prop="payOrderAddr">
           <el-input v-model.trim="form.payOrderAddr"  placeholder="请输入代付下单地址" />
@@ -151,11 +151,11 @@
         <el-form-item label="商户MD5密钥" prop="signMd5">
           <el-input v-model.trim="form.signMd5" type="textarea" placeholder="请输入商户MD5密钥" />
         </el-form-item>
-        <el-form-item label="加密公钥" prop="signPublicKey">
-          <el-input v-model.trim="form.signPublicKey" type="textarea"  placeholder="请输入内容" />
+        <el-form-item label="公钥(MIG开头)" prop="signPublicKey">
+          <el-input v-model.trim="form.signPublicKey" type="textarea"  placeholder="请输入公钥(MIG开头)" />
         </el-form-item>
-        <el-form-item label="解密私钥" prop="signPrivateKey">
-          <el-input v-model.trim="form.signPrivateKey" type="textarea"  placeholder="请输入内容" />
+        <el-form-item label="私钥(MII开头)" prop="signPrivateKey">
+          <el-input v-model.trim="form.signPrivateKey" type="textarea"  placeholder="请输入私钥(MII开头)" />
         </el-form-item>
         <el-form-item label="平台IP白名单" prop="platWhiteIpList">
           <el-input v-model.trim="form.platWhiteIpList" type="textarea" placeholder="多个IP使用英文逗号','分割" />

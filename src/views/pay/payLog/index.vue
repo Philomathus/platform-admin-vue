@@ -27,6 +27,15 @@
           />
         </el-select>
       </el-form-item>
+      <el-form-item label="通道编码" prop="channelId">
+        <el-input
+          v-model.trim="queryParams.channelId"
+          placeholder="请输入通道编码"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item label="状态" prop="success">
         <el-select v-model="queryParams.success" clearable placeholder="请选择状态">
           <el-option label="成功" value="1"></el-option>
@@ -68,7 +77,6 @@
 
     <el-table :stripe="true" v-loading="loading" :data="payLogList" @selection-change="handleSelectionChange">
       <el-table-column label="会员ID" align="center" prop="memberId" min-width="120"/>
-      <el-table-column label="会员账号" align="center" prop="memberAccount" min-width="120"/>
       <el-table-column label="支付平台名称" align="center" prop="platformName" min-width="120"/>
       <el-table-column label="支付通道名称" align="center" prop="channelName" min-width="150"/>
       <el-table-column label="支付通道编码" align="center" prop="channelId" />
@@ -158,9 +166,6 @@ export default {
         memberId: [
           { required: true, message: '会员ID不能为空', trigger: 'blur' }
         ],
-        memberAccount: [
-          { required: true, message: '会员账号不能为空', trigger: 'blur' }
-        ],
         platformId: [
           { required: true, message: '支付平台编号不能为空', trigger: 'change' }
         ],
@@ -223,7 +228,6 @@ export default {
       this.form = {
         id: null,
         memberId: null,
-        memberAccount: null,
         platformId: null,
         platformName: null,
         channelId: null,
@@ -238,6 +242,14 @@ export default {
 
     /** 搜索按钮操作 */
     handleQuery() {
+      if(this.queryParams.memberId){
+        const reg = '^[0-9_]{1,}$'
+        let flag = this.queryParams.memberId.match(reg)
+        if(!flag){
+          this.msgError("会员ID只能输入数字及下划线")
+          return
+        }
+      }
       this.queryParams.pageNum = 1
       this.getList()
     },

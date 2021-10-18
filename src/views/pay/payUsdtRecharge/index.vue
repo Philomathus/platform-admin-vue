@@ -20,7 +20,7 @@
       <el-form-item prop="memberId">
         <el-input
           v-model.trim="queryParams.searchValue"
-          placeholder="请输入会员编号/账号"
+          placeholder="请输入会员ID/账号"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -213,7 +213,7 @@
         </template>
       </el-table-column>
       <!--      <el-table-column label="系统编号" align="center" prop="id" />-->
-      <el-table-column label="会员编号" align="center" min-width="90" prop="memberId"/>
+      <el-table-column label="会员ID" align="center" prop="memberId"/>
 <!--      <el-table-column label="会员账号" align="center" prop="userName"/>-->
       <el-table-column label="渠道名称" align="center" min-width="120" prop="channelName"/>
       <el-table-column label="充值U数量" align="center" prop="rechargeNumber"/>
@@ -238,7 +238,7 @@
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="备注" align="center" min-width="120" prop="remark"/>
+      <el-table-column label="备注" align="center" min-width="90" prop="remark"/>
       <el-table-column label="操作人" align="center" prop="opName"/>
       <el-table-column label="审批时间" align="center" prop="updateTime" width="150">
         <template slot-scope="scope">
@@ -315,8 +315,8 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-        <el-form-item label="会员编号" prop="memberId">
-          <el-input v-model="form.memberId" readonly placeholder="请输入会员编号"/>
+        <el-form-item label="会员ID" prop="memberId">
+          <el-input v-model="form.memberId" readonly placeholder="请输入会员ID"/>
         </el-form-item>
         <el-form-item label="会员账号" prop="userName">
           <el-input v-model="form.userName" readonly placeholder="请输入会员账号"/>
@@ -600,6 +600,14 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
+      if(this.queryParams.searchValue){
+        const reg = '^[0-9_]{1,}$'
+        let flag = this.queryParams.searchValue.match(reg)
+        if(!flag){
+          this.msgError("会员ID/账号只能输入数字及下划线")
+          return
+        }
+      }
       this.queryParams.pageNum = 1;
       this.getList();
     },

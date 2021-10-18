@@ -145,7 +145,7 @@
           <el-input v-model.trim="form.merId" placeholder="请输入商户号/ID"/>
         </el-form-item>
         <el-form-item label="应用ID" prop="orgId">
-          <el-input v-model.trim="form.orgId" placeholder="如果此支付有应用ID请输入应用ID"/>
+          <el-input v-model.trim="form.orgId" placeholder="请输入应用ID"/>
         </el-form-item>
         <el-form-item label="下单地址" prop="platPayUrl">
           <el-input v-model.trim="form.platPayUrl" placeholder="请输入平台下单接口地址"/>
@@ -153,8 +153,8 @@
         <el-form-item label="查询地址" prop="platQueryUrl">
           <el-input v-model.trim="form.platQueryUrl" placeholder="请输入平台订单查询地址"/>
         </el-form-item>
-        <el-form-item label="商户MD5密钥" prop="signMd5">
-          <el-input v-model.trim="form.signMd5" placeholder="请输入商户MD5密钥"/>
+        <el-form-item label="MD5密钥" prop="signMd5">
+          <el-input v-model.trim="form.signMd5" placeholder="请输入MD5密钥"/>
         </el-form-item>
         <el-form-item label="公钥(MIG开头)" prop="signPublicKey">
           <el-input v-model.trim="form.signPublicKey" type="textarea" placeholder="请输入公钥(MIG开头)"/>
@@ -185,8 +185,8 @@
         <el-form-item label="商户号/ID" prop="merId">
           <el-input v-model.trim="form.merId" placeholder="请输入商户号/ID"/>
         </el-form-item>
-        <el-form-item label="机构号" prop="orgId">
-          <el-input v-model.trim="form.orgId" placeholder="请输入机构号"/>
+        <el-form-item label="应用ID" prop="orgId">
+          <el-input v-model.trim="form.orgId" placeholder="请输入应用ID"/>
         </el-form-item>
         <el-form-item label="下单地址" prop="platPayUrl">
           <el-input v-model.trim="form.platPayUrl" placeholder="请输入平台下单接口地址"/>
@@ -194,8 +194,8 @@
         <el-form-item label="查询地址" prop="platQueryUrl">
           <el-input v-model.trim="form.platQueryUrl" placeholder="请输入平台订单查询地址"/>
         </el-form-item>
-        <el-form-item label="商户MD5密钥" prop="signMd5">
-          <el-input v-model.trim="form.signMd5" placeholder="请输入商户MD5密钥"/>
+        <el-form-item label="MD5密钥" prop="signMd5">
+          <el-input v-model.trim="form.signMd5" placeholder="请输入MD5密钥"/>
         </el-form-item>
         <el-form-item label="公钥(MIG开头)" prop="signPublicKey">
           <el-input v-model.trim="form.signPublicKey" type="textarea" placeholder="请输入公钥(MIG开头)"/>

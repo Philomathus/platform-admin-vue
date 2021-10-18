@@ -77,7 +77,6 @@
 
     <el-table :stripe="true" v-loading="loading" :data="payLogList" @selection-change="handleSelectionChange">
       <el-table-column label="会员ID" align="center" prop="memberId" min-width="120"/>
-      <el-table-column label="会员账号" align="center" prop="memberAccount" min-width="120"/>
       <el-table-column label="支付平台名称" align="center" prop="platformName" min-width="120"/>
       <el-table-column label="支付通道名称" align="center" prop="channelName" min-width="150"/>
       <el-table-column label="支付通道编码" align="center" prop="channelId" />
@@ -167,9 +166,6 @@ export default {
         memberId: [
           { required: true, message: '会员ID不能为空', trigger: 'blur' }
         ],
-        memberAccount: [
-          { required: true, message: '会员账号不能为空', trigger: 'blur' }
-        ],
         platformId: [
           { required: true, message: '支付平台编号不能为空', trigger: 'change' }
         ],
@@ -232,7 +228,6 @@ export default {
       this.form = {
         id: null,
         memberId: null,
-        memberAccount: null,
         platformId: null,
         platformName: null,
         channelId: null,

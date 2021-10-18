@@ -27,6 +27,15 @@
           />
         </el-select>
       </el-form-item>
+      <el-form-item label="通道编码" prop="channelId">
+        <el-input
+          v-model.trim="queryParams.channelId"
+          placeholder="请输入通道编码"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item label="状态" prop="success">
         <el-select v-model="queryParams.success" clearable placeholder="请选择状态">
           <el-option label="成功" value="1"></el-option>

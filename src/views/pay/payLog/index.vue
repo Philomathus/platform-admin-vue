@@ -54,6 +54,13 @@
           end-placeholder="结束日期" :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
+      <el-form-item label="失败原因" prop="failReason">
+        <el-select v-model="queryParams.failReason" clearable placeholder="请选择失败原因">
+          <el-option label="网络连接失败,下单超时" value="网络连接失败,下单超时"></el-option>
+          <el-option label="网络连接失败,下单返回空值" value="网络连接失败,下单返回空值"></el-option>
+          <el-option label="网络连接失败,下单报错" value="网络连接失败,下单报错"></el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>

@@ -100,7 +100,20 @@
           >{{ success.dictLabel }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="失败原因" :show-overflow-tooltip="true" min-width="220" align="center" prop="failReason"/>
+      <el-table-column label="失败原因" :show-overflow-tooltip="true" min-width="220" align="center" prop="failReason">
+        <template slot="header">
+          <span>失败原因</span>
+          <el-tooltip popper-class="tooltip" placement="top">
+            <i class="el-icon-question"></i>
+            <div slot="content" class="tooltip-content">
+              <div>网络连接失败,下单报错:指下单时try-catch抛出异常原因字符已经超过255个</div>
+              <div>网络连接失败,下单超时:指下单时发送请求等待返回结果超过http默认等待时间</div>
+              <div>网络连接失败,下单返回空值:指下单时返回的结果为空</div>
+              <div>对于以上三种情况，如果此支付通道不是所有的订单都无法成功下单，则为三方支付平台的网络原因。如果失败订单所占比例过多，请在三方Telegram群里联系三方支付平台运营人员。</div>
+            </div>
+          </el-tooltip>
+        </template>
+      </el-table-column>
 
     </el-table>
 

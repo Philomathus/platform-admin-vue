@@ -54,6 +54,13 @@
           end-placeholder="结束日期" :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
+      <el-form-item label="失败原因" prop="failReason">
+        <el-select v-model="queryParams.failReason" clearable placeholder="请选择失败原因">
+          <el-option label="网络连接失败,下单超时" value="网络连接失败,下单超时"></el-option>
+          <el-option label="网络连接失败,下单报错" value="网络连接失败,下单报错"></el-option>
+          <el-option label="网络连接失败,下单返回空值" value="网络连接失败,下单返回空值"></el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -93,7 +100,21 @@
           >{{ success.dictLabel }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="失败原因" :show-overflow-tooltip="true" min-width="220" align="center" prop="failReason"/>
+      <el-table-column label="失败原因" :show-overflow-tooltip="true" min-width="220" align="center" prop="failReason">
+        <template slot="header">
+          <span>失败原因</span>
+          <el-tooltip popper-class="tooltip" placement="top">
+            <i class="el-icon-question"></i>
+            <div slot="content" class="tooltip-content">
+              <div>网络连接失败,下单报错:指下单时try-catch抛出异常原因字符已经超过255个</div>
+              <div>网络连接失败,下单超时:指下单时发送请求等待返回结果超过http默认等待时间</div>
+              <div>网络连接失败,下单返回空值:指下单时发送请求返回的结果为空</div>
+              <div>对于以上三种情况，为三方支付平台的网络原因。</div>
+              <div>如果某个支付通道失败订单占所有订单的比例过多，请在三方Telegram群里联系支付平台运营人员。</div>
+            </div>
+          </el-tooltip>
+        </template>
+      </el-table-column>
 
     </el-table>
 

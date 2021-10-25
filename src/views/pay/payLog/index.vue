@@ -1,14 +1,23 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="会员ID" prop="memberId">
-        <el-input
-          v-model.trim="queryParams.memberId"
-          placeholder="请输入会员ID"
-          clearable
+      <el-form-item label="选择日期" prop="selectDate">
+        <el-date-picker
+          v-model="queryParams.selectDate"
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          style="width: 240px"
+          value-format="yyyy-MM-dd"
+          type="daterange"
+          range-separator="-"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期" :picker-options="pickerOptions"
+        ></el-date-picker>
+      </el-form-item>
+      <el-form-item label="状态" prop="success">
+        <el-select v-model="queryParams.success" clearable placeholder="请选择状态">
+          <el-option label="成功" value="1"></el-option>
+          <el-option label="失败" value="0"></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="支付平台" prop="platformId">
         <el-select
@@ -36,29 +45,22 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="状态" prop="success">
-        <el-select v-model="queryParams.success" clearable placeholder="请选择状态">
-          <el-option label="成功" value="1"></el-option>
-          <el-option label="失败" value="0"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="选择日期" prop="selectDate">
-        <el-date-picker
-          v-model="queryParams.selectDate"
+      <el-form-item label="会员ID" prop="memberId">
+        <el-input
+          v-model.trim="queryParams.memberId"
+          placeholder="请输入会员ID"
+          clearable
           size="small"
-          style="width: 240px"
-          value-format="yyyy-MM-dd"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期" :picker-options="pickerOptions"
-        ></el-date-picker>
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
-      <el-form-item label="失败原因" prop="failReason">
+      <el-form-item prop="failReason">
         <el-select v-model="queryParams.failReason" clearable placeholder="请选择失败原因">
           <el-option label="网络连接失败,下单超时" value="网络连接失败,下单超时"></el-option>
           <el-option label="网络连接失败,下单报错" value="网络连接失败,下单报错"></el-option>
           <el-option label="网络连接失败,下单返回空值" value="网络连接失败,下单返回空值"></el-option>
+          <el-option label="首次下单:网络连接失败,下单超时" value="首次下单:网络连接失败,下单超时"></el-option>
+          <el-option label="首次下单:网络连接失败,下单返回空值" value="首次下单:网络连接失败,下单返回空值"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>

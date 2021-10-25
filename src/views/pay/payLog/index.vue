@@ -85,24 +85,24 @@
     </el-row>
 
     <el-table :stripe="true" v-loading="loading" :data="payLogList" @selection-change="handleSelectionChange">
-      <el-table-column label="会员ID" align="center" prop="memberId" min-width="120"/>
-      <el-table-column label="支付平台名称" align="center" prop="platformName" min-width="120"/>
-      <el-table-column label="支付通道名称" align="center" prop="channelName" min-width="150"/>
+      <el-table-column label="会员ID" align="center" prop="memberId" min-width="80"/>
+      <el-table-column label="支付平台名称" align="center" prop="platformName" min-width="90"/>
+      <el-table-column label="支付通道名称" align="center" prop="channelName" min-width="120"/>
       <el-table-column label="支付通道编码" align="center" prop="channelId" />
-      <el-table-column label="下单金额" align="center" prop="money" min-width="100"/>
-      <el-table-column label="创建时间" align="center" prop="createTime" width="160">
+      <el-table-column label="下单金额" align="center" prop="money"/>
+      <el-table-column label="创建时间" align="center" prop="createTime" min-width="120">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="下单状态" align="center" prop="success" min-width="100">
+      <el-table-column label="下单状态" align="center" prop="success">
         <template slot-scope="scope">
           <span
             :style="{color: (success = successOptions[parseInt(scope.row.success)]).color}"
           >{{ success.dictLabel }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="失败原因" :show-overflow-tooltip="true" min-width="220" align="center" prop="failReason">
+      <el-table-column label="失败原因" :show-overflow-tooltip="true" min-width="600" align="center" prop="failReason">
         <template slot="header">
           <span>失败原因</span>
           <el-tooltip popper-class="tooltip" placement="top">

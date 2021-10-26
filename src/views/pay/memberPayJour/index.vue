@@ -106,7 +106,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table :stripe="true" v-loading="loading" :data="memberPayJourList" :highlight-current-row="true">
+    <el-table :stripe="true" v-loading="loading" :data="memberPayJourList" :highlight-current-row="true" :default-sort = "{prop: 'payTime', order: 'descending'}">
       <el-table-column label="会员ID" min-width="120" align="center" prop="memberId"/>
       <el-table-column label="会员账号" min-width="120" align="center" prop="userName"/>
       <el-table-column label="订单号" min-width="190" align="center" prop="orderNo"/>
@@ -125,8 +125,8 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="订单时间" min-width="160" align="center" prop="payTime"/>
-      <el-table-column label="更新时间" min-width="160" align="center" prop="updateTime"/>
+      <el-table-column label="订单时间" min-width="160" align="center" prop="payTime" sortable/>
+      <el-table-column label="更新时间" min-width="160" align="center" prop="updateTime" sortable/>
       <el-table-column label="上游订单号" min-width="220" align="center" prop="tradeSn" :show-overflow-tooltip="true"/>
       <el-table-column label="备注" min-width="180" align="center" prop="remark" :show-overflow-tooltip="true"/>
       <el-table-column label="操作" min-width="120" align="center" class-name="small-padding fixed-width" fixed="right">

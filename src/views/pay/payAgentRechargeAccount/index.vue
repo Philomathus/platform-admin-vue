@@ -217,7 +217,8 @@
           <el-input v-model="form.account" placeholder="请输入代充账号" v-if="form.id != null" readonly/>
         </el-form-item>
         <el-form-item label="代充昵称" prop="nickName" v-if="form.id != null">
-          <el-input v-model="form.nickName" placeholder="请输入代充昵称"/>
+          <el-input v-model="form.nickName" placeholder="请输入代充昵称" v-if="form.id == null"/>
+          <el-input v-model="form.account" placeholder="请输入代充账号" v-if="form.id != null" readonly/>
         </el-form-item>
         <el-form-item label="QQ号" prop="qqAccount">
           <el-input v-model="form.qqAccount" placeholder="请输入QQ号"/>

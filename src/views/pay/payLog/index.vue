@@ -59,8 +59,8 @@
           <el-option label="网络连接失败,下单超时" value="网络连接失败,下单超时"></el-option>
           <el-option label="网络连接失败,下单报错" value="网络连接失败,下单报错"></el-option>
           <el-option label="网络连接失败,下单返回空值" value="网络连接失败,下单返回空值"></el-option>
-          <el-option label="首次下单:网络连接失败,下单超时" value="首次下单:网络连接失败,下单超时"></el-option>
-          <el-option label="首次下单:网络连接失败,下单返回空值" value="首次下单:网络连接失败,下单返回空值"></el-option>
+          <el-option label="首次下单超时,二次下单成功" value="首次下单超时,二次下单成功"></el-option>
+          <el-option label="首次下单空值,二次下单成功" value="首次下单空值,二次下单成功"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -113,7 +113,7 @@
               <div>网络连接失败,下单返回空值:指下单时发送请求返回的结果为空</div>
               <div>对于以上三种情况,为三方支付平台的网络原因</div>
               <div>如果某个支付通道失败订单占所有订单的比例过多,请在三方Telegram群里联系支付平台运营人员</div>
-              <div>对于下单超时和返回空值两种失败原因订单,有二次下单机制</div>
+              <div>对于下单超时和下单返回空值两种失败原因订单,有二次下单机制</div>
             </div>
           </el-tooltip>
         </template>

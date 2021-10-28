@@ -14,7 +14,7 @@
         ></el-date-picker>
       </el-form-item>
       <el-form-item label="状态" prop="success">
-        <el-select v-model="queryParams.success" clearable placeholder="请选择状态">
+        <el-select v-model="queryParams.success" clearable placeholder="请选择状态" size="small">
           <el-option label="成功" value="1"></el-option>
           <el-option label="失败" value="0"></el-option>
         </el-select>
@@ -54,8 +54,8 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="failReason">
-        <el-select v-model="queryParams.failReason" clearable placeholder="请选择失败原因">
+      <el-form-item label="失败原因" prop="failReason">
+        <el-select v-model="queryParams.failReason" clearable placeholder="请选择失败原因" size="small">
           <el-option label="网络连接失败,下单超时" value="网络连接失败,下单超时"></el-option>
           <el-option label="网络连接失败,下单报错" value="网络连接失败,下单报错"></el-option>
           <el-option label="网络连接失败,下单返回空值" value="网络连接失败,下单返回空值"></el-option>

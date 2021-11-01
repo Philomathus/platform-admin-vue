@@ -106,7 +106,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table :stripe="true" v-loading="loading" :data="memberPayJourList" :highlight-current-row="true" :default-sort = "{prop: 'payTime', order: 'descending'}">
+    <el-table :stripe="true" v-loading="loading" :data="memberPayJourList" :highlight-current-row="true" :default-sort = "{prop: 'updateTime', order: 'descending'}">
       <el-table-column label="会员ID" min-width="120" align="center" prop="memberId"/>
       <el-table-column label="会员账号" min-width="120" align="center" prop="userName"/>
       <el-table-column label="订单号" min-width="190" align="center" prop="orderNo"/>

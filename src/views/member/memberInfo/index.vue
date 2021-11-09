@@ -1,6 +1,12 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch">
+    <div v-loading="totalLoading">
+      <el-button type="primary" @click="copy1">会员人数 {{ this.totalData.peopledTotal || 0 }}</el-button>
+      <el-button type="success" @click="copy2">余额总计 {{ this.totalData.totalMoney || 0 }}</el-button>
+      <el-button type="warning" @click="copy3">保险箱余额总计 {{ this.totalData.safeBalanceTotalMoney || 0 }}</el-button>
+      <el-button  type="primary" icon="el-icon-search" size="mini" @click="listCount()" style="margin-left: 20px">统计查询</el-button>
+    </div>
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" style="margin-top: 20px">
       <el-form-item label="日期范围" prop="regTime">
         <el-date-picker type="datetimerange" v-model="dateRange" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}" start-placeholder="开始时间"
@@ -358,7 +364,8 @@
     exportMemberInfo,
     changeSpeak,
     changeStatus,
-    changeStatusBan
+    changeStatusBan,
+    listCount
   } from '@/api/platform-web/member/memberInfo'
   import more from './more'
   import {listSpeakIpBlackList, updateSpeakIpBlackList} from '@/api/live-web/chat/speakIpBlackList'
@@ -374,6 +381,14 @@
     },
     data() {
       return {
+        //统计状态
+        totalLoading: false,
+        //统计总的数据
+        totalData: {
+          peopledTotal: 0,
+          totalMoney: 0,
+          safeBalanceTotalMoney: 0
+        },
         //phone 手机号前四位
         phone: null,
         //password 密码
@@ -480,6 +495,26 @@
       })
     },
     methods: {
+      //复制
+      copy1() {
+        this.copyCommand(this.totalData.peopledTotal)
+      },
+      copy2() {
+        this.copyCommand(this.totalData.totalMoney)
+      },
+      copy3() {
+        this.copyCommand(this.totalData.safeBalanceTotalMoney)
+      },
+      //统计
+      listCount() {
+        this.totalLoading=true
+        this.queryParams = this.addDateRange(this.queryParams, this.dateRange);
+        listCount(this.queryParams).then((res) => {
+          this.totalData = res
+        }).finally(()=>{
+          this.totalLoading=false
+        })
+      },
       changetPhone(phone) {
         if (phone) {
           this.password = phone.substr(5, 6)

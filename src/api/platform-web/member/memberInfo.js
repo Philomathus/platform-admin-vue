@@ -10,6 +10,15 @@ export function listMemberInfo(query) {
   })
 }
 
+// 统计会员余额保险箱
+export function listCount(query) {
+  return request({
+    url: url.platformWeb + '/member/memberInfo/listCount',
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询资金明细列表
 export function memberWithdrawLog(query) {
   return request({

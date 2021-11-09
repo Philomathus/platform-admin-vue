@@ -133,7 +133,7 @@
       <el-table-column label="任务有效时间" min-width="200" align="center" prop="detail"/>
       <el-table-column label="平台游戏类型" align="center" prop="kindId"/>
       <el-table-column label="平台类型" align="center" prop="platformName"/>
-      <el-table-column label="任务模式" align="center" prop="taskMode" :formatter="hasTaskModeFormat"/>
+<!--      <el-table-column label="任务模式" align="center" prop="taskMode" :formatter="hasTaskModeFormat"/>-->
       <el-table-column label="发布时间" align="center" prop="ctime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.ctime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
@@ -248,23 +248,23 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item label="任务模式" prop="taskMode">
-          <el-select
-            filterable
-            v-model="form.taskMode"
-            placeholder="请选择任务模式"
-            clearable
-            size="small"
-            style="width: 240px"
-          >
-            <el-option
-              v-for="dict in taskMode"
-              :key="dict.value"
-              :label="dict.label"
-              :value="dict.value"
-            />
-          </el-select>
-        </el-form-item>
+<!--        <el-form-item label="任务模式" prop="taskMode">-->
+<!--          <el-select-->
+<!--            filterable-->
+<!--            v-model="form.taskMode"-->
+<!--            placeholder="请选择任务模式"-->
+<!--            clearable-->
+<!--            size="small"-->
+<!--            style="width: 240px"-->
+<!--          >-->
+<!--            <el-option-->
+<!--              v-for="dict in taskMode"-->
+<!--              :key="dict.value"-->
+<!--              :label="dict.label"-->
+<!--              :value="dict.value"-->
+<!--            />-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
 
         <el-form-item label="目标任务量" prop="target">
           <el-input v-model="form.target" type="number" class="no-number" placeholder="请输入目标任务量"/>
@@ -324,13 +324,13 @@ export default {
       activityQuestTypeOptions: [],
       //所属游戏
       gameInfoOptions: [],
-      taskMode: [{
-        value: 0,
-        label: '永久任务'
-      }, {
-        value: 1,
-        label: '每日任务'
-      }],
+      // taskMode: [{
+      //   value: 0,
+      //   label: '永久任务'
+      // }, {
+      //   value: 1,
+      //   label: '每日任务'
+      // }],
       //平台游戏类型
       kindIdOptions: [],
       //平台类型
@@ -402,9 +402,9 @@ export default {
         platformId: [
           {required: true, message: "平台类型不能为空", trigger: "blur"}
         ],
-        taskMode: [
-          {required: true, message: "任务模式不能为空", trigger: "blur"}
-        ],
+        // taskMode: [
+        //   {required: true, message: "任务模式不能为空", trigger: "blur"}
+        // ],
       }
     }
   },
@@ -459,7 +459,7 @@ export default {
         gameId: null,
         kindId: null,
         platformId: null,
-        taskMode: null
+        // taskMode: null
       }
       this.resetForm('form')
     },
@@ -468,9 +468,9 @@ export default {
       this.queryParams.pageNum = 1
       this.getList()
     },
-    hasTaskModeFormat(row,column){
-      return row.taskMode==0?'永久任务':'每日任务';
-    },
+    // hasTaskModeFormat(row,column){
+    //   return row.taskMode==0?'永久任务':'每日任务';
+    // },
     /** 重置按钮操作 */
     resetQuery() {
       this.dateRange = []

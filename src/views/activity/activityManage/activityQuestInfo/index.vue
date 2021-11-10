@@ -568,9 +568,9 @@ export default {
       this.queryParams.pageNum = 1
       this.getList()
     },
-    // hasTaskModeFormat(row,column){
-    //   return row.taskMode==0?'永久任务':'每日任务';
-    // },
+    hasTaskModeFormat(row,column){
+      return row.taskMode==0?'永久任务':'每日任务';
+    },
     /** 重置按钮操作 */
     resetQuery() {
       this.dateRange = []

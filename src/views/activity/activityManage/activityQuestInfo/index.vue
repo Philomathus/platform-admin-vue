@@ -289,7 +289,7 @@
     <!-- 修改任务信息对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="opene" width="700px"
                append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="130px">
+      <el-form ref="form" :model="form" :rules="rulese" label-width="130px">
         <el-form-item label="标题" prop="title">
           <el-input v-model="form.title" placeholder="请输入标题"/>
         </el-form-item>
@@ -501,9 +501,41 @@ export default {
         platformId: [
           {required: true, message: "平台类型不能为空", trigger: "blur"}
         ],
-        // taskMode: [
-        //   {required: true, message: "任务模式不能为空", trigger: "blur"}
-        // ],
+        taskMode: [
+          {required: true, message: "任务模式不能为空", trigger: "blur"}
+        ]
+      },
+      rulese: {
+        icon: [
+          {required: true, message: "图标不能不上传", trigger: "blur"}
+        ],
+        title: [
+          {required: true, message: "标题不能为空", trigger: "blur"}
+        ],
+        indexs: [
+          {required: true, message: "排序号不能为空", trigger: "blur"}
+        ],
+        typeId: [
+          {required: true, message: "任务类型不能为空", trigger: "blur"}
+        ],
+        target: [
+          {required: true, message: "目标任务量不能为空", trigger: "blur"}
+        ],
+        reward: [
+          {required: true, message: "完成后增加的资金不能为空", trigger: "blur"}
+        ],
+        detail: [
+          {required: true, message: "任务有效时间不能为空", trigger: "blur"}
+        ],
+        gameId: [
+          {required: true, message: "所属游戏不能为空", trigger: "blur"}
+        ],
+        kindId: [
+          {required: true, message: "平台游戏类型不能为空", trigger: "blur"}
+        ],
+        platformId: [
+          {required: true, message: "平台类型不能为空", trigger: "blur"}
+        ]
       }
     }
   },

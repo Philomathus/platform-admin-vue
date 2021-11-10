@@ -133,7 +133,7 @@
       <el-table-column label="任务有效时间" min-width="200" align="center" prop="detail"/>
       <el-table-column label="平台游戏类型" align="center" prop="kindId"/>
       <el-table-column label="平台类型" align="center" prop="platformName"/>
-<!--      <el-table-column label="任务模式" align="center" prop="taskMode" :formatter="hasTaskModeFormat"/>-->
+      <el-table-column label="任务模式" align="center" prop="taskMode" :formatter="hasTaskModeFormat"/>
       <el-table-column label="发布时间" align="center" prop="ctime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.ctime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
@@ -169,7 +169,7 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改任务信息对话框 -->
+    <!-- 添加任务信息对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="130px">
@@ -247,25 +247,123 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item label="任务模式" prop="taskMode">
+          <el-select
+            filterable
+            v-model="form.taskMode"
+            placeholder="请选择任务模式"
+            clearable
+            size="small"
+            style="width: 240px"
+          >
+            <el-option
+              v-for="dict in taskMode"
+              :key="dict.value"
+              :label="dict.label"
+              :value="dict.value"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="目标任务量" prop="target">
+          <el-input v-model="form.target" type="number" class="no-number" placeholder="请输入目标任务量"/>
+        </el-form-item>
+        <el-form-item label="完成后增加资金" prop="reward">
+          <el-input v-model="form.reward" type="number" class="no-number" placeholder="请输入完成后增加的资金"/>
+        </el-form-item>
+        <el-form-item label="图标" prop="icon">
+          <imageUpload v-model="form.icon" path="ActivityQuestInfo"/>
+        </el-form-item>
+        <el-form-item label="任务有效时间" prop="detail">
+          <el-input v-model="form.detail" type="textarea" placeholder="请输入内容"/>
+        </el-form-item>
+        <el-form-item label="描述">
+          <el-input v-model="form.content" type="textarea" placeholder="请输入内容" rows="5"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
 
-<!--        <el-form-item label="任务模式" prop="taskMode">-->
-<!--          <el-select-->
-<!--            filterable-->
-<!--            v-model="form.taskMode"-->
-<!--            placeholder="请选择任务模式"-->
-<!--            clearable-->
-<!--            size="small"-->
-<!--            style="width: 240px"-->
-<!--          >-->
-<!--            <el-option-->
-<!--              v-for="dict in taskMode"-->
-<!--              :key="dict.value"-->
-<!--              :label="dict.label"-->
-<!--              :value="dict.value"-->
-<!--            />-->
-<!--          </el-select>-->
-<!--        </el-form-item>-->
-
+    <!-- 修改任务信息对话框 -->
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="opene" width="700px"
+               append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="130px">
+        <el-form-item label="标题" prop="title">
+          <el-input v-model="form.title" placeholder="请输入标题"/>
+        </el-form-item>
+        <el-form-item label="排序号" prop="indexs">
+          <el-input v-model="form.indexs" type="number" class="no-number" placeholder="请输入排序号"/>
+        </el-form-item>
+        <el-form-item label="任务类型" prop="typeId">
+          <el-select
+            filterable
+            v-model="form.typeId"
+            placeholder="请选择任务类型"
+            clearable
+            size="small"
+            style="width: 240px"
+          >
+            <el-option
+              v-for="dict in activityQuestTypeOptions"
+              :key="dict.id"
+              :label="dict.name"
+              :value="dict.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="所属游戏" prop="gameId">
+          <el-select
+            filterable
+            v-model="form.gameId"
+            placeholder="请选择所属游戏"
+            clearable
+            size="small"
+            style="width: 240px"
+          >
+            <el-option
+              v-for="dict in gameInfoOptions"
+              :key="dict.id"
+              :label="dict.name"
+              :value="dict.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="平台游戏类型" prop="kindId">
+          <el-select
+            filterable
+            v-model="form.kindId"
+            placeholder="请选择平台游戏类型"
+            clearable
+            size="small"
+            style="width: 240px"
+          >
+            <el-option
+              v-for="dict in kindIdOptions"
+              :key="dict.id"
+              :label="dict.kindId"
+              :value="dict.kindId"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="平台类型" prop="platformId">
+          <el-select
+            filterable
+            v-model="form.platformId"
+            placeholder="请选择平台类型"
+            clearable
+            size="small"
+            style="width: 240px"
+          >
+            <el-option
+              v-for="dict in platformIdOptions"
+              :key="dict.id"
+              :label="dict.name"
+              :value="dict.id"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item label="目标任务量" prop="target">
           <el-input v-model="form.target" type="number" class="no-number" placeholder="请输入目标任务量"/>
         </el-form-item>
@@ -324,13 +422,13 @@ export default {
       activityQuestTypeOptions: [],
       //所属游戏
       gameInfoOptions: [],
-      // taskMode: [{
-      //   value: 0,
-      //   label: '永久任务'
-      // }, {
-      //   value: 1,
-      //   label: '每日任务'
-      // }],
+      taskMode: [{
+        value: 0,
+        label: '永久任务'
+      }, {
+        value: 1,
+        label: '每日任务'
+      }],
       //平台游戏类型
       kindIdOptions: [],
       //平台类型
@@ -349,6 +447,7 @@ export default {
       title: '',
       // 是否显示弹出层
       open: false,
+      opene: false,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -441,6 +540,7 @@ export default {
     // 取消按钮
     cancel() {
       this.open = false
+      this.opene = false
       this.reset()
     },
     // 表单重置
@@ -459,7 +559,7 @@ export default {
         gameId: null,
         kindId: null,
         platformId: null,
-        // taskMode: null
+        taskMode: null
       }
       this.resetForm('form')
     },
@@ -503,7 +603,7 @@ export default {
       })
       getActivityQuestInfo(id).then(response => {
         this.form = response.data
-        this.open = true
+        this.opene = true
         this.title = '修改任务信息'
       })
     },
@@ -514,7 +614,7 @@ export default {
           if (this.form.id != null) {
             updateActivityQuestInfo(this.form).then(response => {
               this.msgSuccess('修改成功')
-              this.open = false
+              this.opene = false
               this.getList()
             })
           } else {

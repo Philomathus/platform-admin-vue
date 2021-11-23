@@ -277,7 +277,7 @@
           <el-tooltip popper-class="tooltip" placement="top">
             <i class="el-icon-question"></i>
             <div slot="content" class="tooltip-content">
-              <div>投注打码比小于等于1.5则整行颜色变粉色</div>
+              <div>投注打码比小于等于风控打码倍数则整行颜色变粉色</div>
             </div>
           </el-tooltip>
         </template>
@@ -612,6 +612,10 @@ export default {
   components: {ExcelPrompt, TableShow},
   data() {
     return {
+      //风控打码倍数
+      multipleCode: null,
+      //注册48小时内的会员
+      registerColor: null,
       //银行卡黑名单下拉框
       CardBlackOptions: [{
         value: '1',
@@ -719,13 +723,14 @@ export default {
   },
   methods: {
     tableRowClassNameWithdraw({row}) {
-      if (row.bankCharge !== null && row.bankCharge > 4) {
+      if (row.registerColor != null && row.registerColor === 1){
+        return 'register-row'
+      } else if (row.bankCharge !== null && row.bankCharge > 4) {
         return 'warning-row'
-      }
-      if (row.rechargeCodeRatio !== null && row.rechargeCodeRatio < 1.51) {
+      } else if (row.rechargeCodeRatio !== null && row.multipleCode != null && row.rechargeCodeRatio < row.multipleCode
+      || row.rechargeCodeRatio === row.multipleCode) {
         return 'warning-row'
-      }
-      if (row.rechargeUserNameStatus == 1) {
+      } else if (row.rechargeUserNameStatus == 1) {
         return 'warning-row'
       }
     },

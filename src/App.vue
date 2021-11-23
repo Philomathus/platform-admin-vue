@@ -8,6 +8,10 @@
   background: #ffb4b4;
 }
 
+.el-table .register-row {
+  background: #b9ffb4;
+}
+
 .el-table .success-row {
   background: #f0f9eb;
 }

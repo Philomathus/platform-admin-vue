@@ -737,8 +737,8 @@ export default {
         return 'register-row'
       } else if (row.bankCharge !== null && row.bankCharge > 10) {
         return 'warning-row'
-      } else if (row.rechargeCodeRatio !== null && row.multipleCode != null && row.rechargeCodeRatio < row.multipleCode
-      || row.rechargeCodeRatio === row.multipleCode) {
+      } else if (row.rechargeCodeRatio !== null && row.multipleCode != null && (parseFloat(row.rechargeCodeRatio) < parseFloat(row.multipleCode)
+      || row.rechargeCodeRatio === row.multipleCode)) {
         return 'warning-row'
       } else if (row.rechargeUserNameStatus == 1) {
         return 'warning-row'

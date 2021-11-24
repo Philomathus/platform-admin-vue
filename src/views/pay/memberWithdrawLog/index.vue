@@ -244,14 +244,24 @@
         </template>
       </el-table-column>
       <!--      <el-table-column label="会员账号" min-width="120" align="center" prop="account"/>-->
-      <el-table-column label="入款姓名" min-width="120" align="center" prop="rechargeUserName"/>
+      <el-table-column label="入款姓名" min-width="120" align="center" prop="rechargeUserName">
+      <template slot="header">
+        <span>入款姓名</span>
+        <el-tooltip popper-class="tooltip" placement="top">
+          <i class="el-icon-question"></i>
+          <div slot="content" class="tooltip-content">
+            <div>入款姓名不包含提现姓名则整行颜色变粉色</div>
+          </div>
+        </el-tooltip>
+      </template>
+      </el-table-column>
       <el-table-column label="今日入款成功数" min-width="130" align="center" prop="bankCharge">
         <template slot="header">
           <span>今日入款成功数</span>
           <el-tooltip popper-class="tooltip" placement="top">
             <i class="el-icon-question"></i>
             <div slot="content" class="tooltip-content">
-              <div>今日入款成功数大于等于5次则整行颜色变粉色</div>
+              <div>今日入款成功数大于10次则整行颜色变粉色</div>
             </div>
           </el-tooltip>
         </template>
@@ -725,7 +735,7 @@ export default {
     tableRowClassNameWithdraw({row}) {
       if (row.registerColor != null && row.registerColor === 1){
         return 'register-row'
-      } else if (row.bankCharge !== null && row.bankCharge > 4) {
+      } else if (row.bankCharge !== null && row.bankCharge > 10) {
         return 'warning-row'
       } else if (row.rechargeCodeRatio !== null && row.multipleCode != null && row.rechargeCodeRatio < row.multipleCode
       || row.rechargeCodeRatio === row.multipleCode) {

@@ -54,6 +54,19 @@
       <el-table-column label="是否打码" align="center" prop="status" :formatter="formatterStatus"/>
       <el-table-column label="当前打码量" align="center" prop="cur"/>
       <el-table-column label="创建时间" align="center" prop="createTime" min-width="160"/>
+      <el-table-column label="操作" width="220" align="center" class-name="small-padding fixed-width" fixed="right">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            style="color: #FF5722"
+            @click="handleUpdate(scope.row)"
+            v-hasPermi="['member:memberBcode:edit']"
+          >修改
+          </el-button>
+        </template>
+      </el-table-column>
     </el-table>
 
     <pagination
@@ -65,6 +78,20 @@
       @pagination="getList"
     />
 
+    <!-- 修改会员打码数据对话框 -->
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
+               append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+        <el-form-item label="当前打码量" prop="cur">
+          <el-input v-model="form.cur" placeholder="请输入当前打码量" />
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm">确定</el-button>
+        <el-button @click="cancel">取消</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -72,7 +99,9 @@
 import {
   listMemberBcode,
   exportMemberBcode,
-  getTotalData
+  getTotalData,
+  getMemberBcode,
+  updateMemberBcode
 } from '@/api/platform-web/member/memberBcode'
 import { pickerDateShortcuts } from '@/utils/dateUtils'
 
@@ -117,7 +146,11 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {}
+      rules: {
+        cur: [
+          {required: true, message: '当前打码量不能为空,且数值不小于0', trigger: 'blur', pattern:'^0\\.\\d+$|^[0-9]+(\\.\\d+)?$'}
+        ]
+      }
     }
   },
   created() {
@@ -197,6 +230,32 @@ export default {
     resetQuery() {
       this.resetForm('queryForm')
       this.handleQuery()
+    },
+    /** 修改按钮操作 */
+    handleUpdate(row) {
+      this.reset();
+      this.pageType = 1
+      const id= row.id
+      getMemberBcode(id).then(response => {
+        this.form = response.data;
+        this.form.cur = this.form.cur + '';
+        this.open = true;
+        this.title = "修改会员打码数据";
+      });
+    },
+    /** 提交按钮 */
+    submitForm() {
+      this.$refs["form"].validate(valid => {
+        if (valid) {
+          if (this.pageType === 1) {
+            updateMemberBcode(this.form).then(response => {
+              this.msgSuccess("修改成功");
+              this.open = false;
+              this.getList();
+            });
+          }
+        }
+      });
     },
     /** 导出按钮操作 */
     handleExport() {

@@ -111,7 +111,7 @@
       <el-table-column label="游戏平台" align="center" prop="platformName"/>
       <el-table-column label="状态" align="center" prop="status"  >
         <template slot-scope="scope">
-          <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">{{ status.dictLabel }}</span>
+         {{ status.dictLabel }}
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">

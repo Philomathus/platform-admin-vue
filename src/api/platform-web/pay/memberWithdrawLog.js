@@ -22,7 +22,8 @@ export function getMemberWithdrawLog(id) {
 export function getMemberWithdrawReport(id) {
   return request({
     url: url.platformWeb + '/pay/memberWithdrawLog/report/' + id,
-    method: 'get'
+    method: 'get',
+    timeout: 120000
   })
 }
 

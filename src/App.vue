@@ -9,11 +9,11 @@
 }
 
 .el-table .register-row {
-  background: #3d8735;
+  background: #329e2a;
 }
 
 .el-table .gopay-row {
-  background: #2f4680;
+  background: #29479a;
 }
 
 .el-table .success-row {

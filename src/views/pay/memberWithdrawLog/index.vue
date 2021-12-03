@@ -733,7 +733,7 @@ export default {
   },
   methods: {
     tableRowClassNameWithdraw({row}) {
-      if (row.registerColor != null && row.registerColor === 1){
+      if ((row.registerColor != null && row.registerColor === 1) || (row.bankName != null || row.bankName === 'GOPAY')){
         return 'register-row'
       } else if (row.bankCharge !== null && row.bankCharge > 10) {
         return 'warning-row'

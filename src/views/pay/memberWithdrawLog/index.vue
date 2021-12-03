@@ -733,7 +733,7 @@ export default {
   },
   methods: {
     tableRowClassNameWithdraw({row}) {
-      if ((row.registerColor != null && row.registerColor === 1) || (row.bankName != null || row.bankName === 'GOPAY')){
+      if (row.registerColor != null && row.registerColor === 1){
         return 'register-row'
       } else if (row.bankCharge !== null && row.bankCharge > 10) {
         return 'warning-row'
@@ -742,7 +742,10 @@ export default {
         return 'warning-row'
       } else if (row.rechargeUserNameStatus == 1) {
         return 'warning-row'
+      } else if (row.bankName != null || row.bankName === 'GOPAY') {
+        return 'gopay-row'
       }
+
     },
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)

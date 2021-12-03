@@ -742,7 +742,7 @@ export default {
         return 'warning-row'
       } else if (row.rechargeUserNameStatus == 1) {
         return 'warning-row'
-      } else if (row.bankName != null || row.bankName === 'GOPAY') {
+      } else if (row.bankName != null && row.bankName === 'GOPAY') {
         return 'gopay-row'
       }
 

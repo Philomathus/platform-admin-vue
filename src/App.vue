@@ -13,7 +13,7 @@
 }
 
 .el-table .gopay-row {
-  background: #29479a;
+  background: #738fdc;
 }
 
 .el-table .success-row {

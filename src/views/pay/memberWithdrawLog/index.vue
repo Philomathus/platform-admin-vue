@@ -733,15 +733,14 @@ export default {
   },
   methods: {
     tableRowClassNameWithdraw({row}) {
-      console.info({row})
-      if (row.registerColor != null && row.registerColor === 1){
+      if ((row.registerColor != null && row.registerColor === 1) || (row.bankName != null || row.bankName === 'GOPAY')){
         return 'register-row'
       } else if (row.bankCharge !== null && row.bankCharge > 10) {
         return 'warning-row'
       } else if (row.rechargeCodeRatio !== null && row.multipleCode != null && (parseFloat(row.rechargeCodeRatio) < parseFloat(row.multipleCode)
       || row.rechargeCodeRatio === row.multipleCode)) {
         return 'warning-row'
-      } else if (row.rechargeUserNameStatus === 1) {
+      } else if (row.rechargeUserNameStatus == 1) {
         return 'warning-row'
       }
     },

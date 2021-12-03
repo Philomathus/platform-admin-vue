@@ -9,7 +9,7 @@
 }
 
 .el-table .register-row {
-  background: #b9ffb4;
+  background: #26cd18;
 }
 
 .el-table .success-row {

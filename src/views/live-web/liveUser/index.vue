@@ -272,9 +272,6 @@
     </el-dialog>
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="sendMsg" width="500px" append-to-body>
       <el-form ref="form" :model="form"  label-width="120px">
-        <el-form-item label="房间id" prop="id" >
-          <el-input v-model="form.id" type="number" placeholder="单个房间id发送该房间，为空发送所有房间"/>
-        </el-form-item>
         <el-form-item label="小助手消息"  >
           <el-input v-model="form.info" prop="info" type="textarea" :rows="4" placeholder="请输入发送小助手消息"/>
         </el-form-item>

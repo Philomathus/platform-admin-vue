@@ -84,6 +84,7 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="当前打码量" prop="cur">
           <el-input v-model="form.cur" placeholder="请输入当前打码量" />
+          <el-input v-model="form.curCode" v-show="false"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -110,6 +111,7 @@ export default {
   components: {},
   data() {
     return {
+      curCode: 0,
       pickerOptions: { shortcuts: pickerDateShortcuts },
       //顶部的三个总数据
       totalData: {
@@ -148,7 +150,7 @@ export default {
       // 表单校验
       rules: {
         cur: [
-          {required: true, message: '当前打码量不能为空,且数值不小于0', trigger: 'blur', pattern:'^0\\.\\d+$|^[0-9]+(\\.\\d+)?$'}
+          {required: true, message: '当前打码量不能为空,且为数字', trigger: 'blur', pattern:'^(\\-|\\+)?\\d+(\\.\\d+)?$'}
         ]
       }
     }
@@ -239,6 +241,7 @@ export default {
       getMemberBcode(id).then(response => {
         this.form = response.data;
         this.form.cur = this.form.cur + '';
+        this.form.curCode = this.form.cur + '';
         this.open = true;
         this.title = "修改会员打码数据";
       });
@@ -248,6 +251,17 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.pageType === 1) {
+            debugger;
+            let curCode = parseFloat(this.form.curCode);
+            let cur = parseFloat(this.form.cur);
+            console.log(curCode)
+            console.log(cur)
+            let count = curCode+cur;
+            console.log(count)
+            if(count<0){
+              this.msgError("当前打码量数值需大于或等于0")
+              return;
+            }
             updateMemberBcode(this.form).then(response => {
               this.msgSuccess("修改成功");
               this.open = false;

@@ -251,13 +251,9 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.pageType === 1) {
-            debugger;
             let curCode = parseFloat(this.form.curCode);
             let cur = parseFloat(this.form.cur);
-            console.log(curCode)
-            console.log(cur)
             let count = curCode+cur;
-            console.log(count)
             if(count<0){
               this.msgError("当前打码量数值需大于或等于0")
               return;

@@ -112,6 +112,18 @@
           <span>{{ parseTime(scope.row.betTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            @click="handleRepairLotteryBet0(scope.row)"
+            v-hasPermi="['admin:lotteryGame:edit']"
+          >补单
+          </el-button>
+        </template>
+      </el-table-column>
     </el-table>
 
     <pagination
@@ -126,7 +138,7 @@
 </template>
 
 <script>
-import { listLotteryBet0, getCount, exportLotteryBet0 } from '@/api/platform-web/lottery/lotteryBet'
+import { listLotteryBet0, getCount, exportLotteryBet0,repaireLotteryBet0 } from '@/api/platform-web/lottery/lotteryBet'
 import { pickerDateTimeShortcuts } from '@/utils/dateUtils'
 
 export default {
@@ -285,6 +297,14 @@ export default {
         this.downloadExcel(response, '投注记录')
       }).catch(() => {
       })
+    },
+    /** 补单 **/
+    handleRepairLotteryBet0(row) {
+      repaireLotteryBet0(row).then(response => {
+        this.msgSuccess("补单成功");
+        this.open = false;
+        this.getList();
+      });
     }
   }
 }

@@ -63,3 +63,14 @@ export function exportLotteryBet0(query) {
     timeout: 60000
   })
 }
+
+// 新增用户投资行为
+export function repaireLotteryBet0(query) {
+  return request({
+    url: url.platformWeb + '/admin/lotteryBet0/repairOrder',
+    method: 'get',
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
+  })
+}

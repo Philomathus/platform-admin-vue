@@ -1,14 +1,23 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="会员ID" prop="memberId">
-        <el-input
-          v-model="queryParams.memberId"
-          placeholder="请输入会员ID"
-          clearable
+      <el-form-item label="选择日期" prop="selectDate">
+        <el-date-picker
+          v-model="queryParams.selectDate"
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          style="width: 240px"
+          value-format="yyyy-MM-dd"
+          type="daterange"
+          range-separator="-"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期" :picker-options="pickerOptions"
+        ></el-date-picker>
+      </el-form-item>
+      <el-form-item label="状态" prop="success">
+        <el-select v-model="queryParams.success" clearable placeholder="请选择状态" size="small">
+          <el-option label="成功" value="1"></el-option>
+          <el-option label="失败" value="0"></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="支付平台" prop="platformId">
         <el-select
@@ -27,23 +36,31 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="状态" prop="success">
-        <el-select v-model="queryParams.success" clearable placeholder="请选择状态">
-          <el-option label="成功" value="1"></el-option>
-          <el-option label="失败" value="0"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="选择日期" prop="selectDate">
-        <el-date-picker
-          v-model="queryParams.selectDate"
+      <el-form-item label="通道编码" prop="channelId">
+        <el-input
+          v-model.trim="queryParams.channelId"
+          placeholder="请输入通道编码"
+          clearable
           size="small"
-          style="width: 240px"
-          value-format="yyyy-MM-dd"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期" :picker-options="pickerOptions"
-        ></el-date-picker>
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="会员ID" prop="memberId">
+        <el-input
+          v-model.trim="queryParams.memberId"
+          placeholder="请输入会员ID"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="失败原因" prop="failReason">
+        <el-select v-model="queryParams.failReason" clearable placeholder="请选择失败原因" size="small">
+          <el-option label="网络连接失败,下单超时" value="网络连接失败,下单超时"></el-option>
+          <el-option label="网络连接失败,下单报错" value="网络连接失败,下单报错"></el-option>
+          <el-option label="网络连接失败,下单返回空值" value="网络连接失败,下单返回空值"></el-option>
+          <el-option label="首次下单超时,二次下单成功" value="首次下单超时,二次下单成功"></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -67,24 +84,40 @@
     </el-row>
 
     <el-table :stripe="true" v-loading="loading" :data="payLogList" @selection-change="handleSelectionChange">
-      <el-table-column label="会员ID" align="center" prop="memberId" min-width="120"/>
-      <el-table-column label="会员账号" align="center" prop="memberAccount" min-width="120"/>
-      <el-table-column label="支付平台名称" align="center" prop="platformName" min-width="120"/>
-      <el-table-column label="支付通道名称" align="center" prop="channelName" min-width="150"/>
-      <el-table-column label="下单金额" align="center" prop="money" min-width="100"/>
-      <el-table-column label="创建时间" align="center" prop="createTime" width="160">
+      <el-table-column label="会员ID" align="center" prop="memberId" min-width="80"/>
+      <el-table-column label="支付平台名称" align="center" prop="platformName" min-width="90"/>
+      <el-table-column label="支付通道名称" align="center" prop="channelName" min-width="120"/>
+      <el-table-column label="支付通道编码" align="center" prop="channelId" />
+      <el-table-column label="下单金额" align="center" prop="money"/>
+      <el-table-column label="创建时间" align="center" prop="createTime" min-width="120">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="下单状态" align="center" prop="success" min-width="100">
+      <el-table-column label="下单状态" align="center" prop="success">
         <template slot-scope="scope">
           <span
             :style="{color: (success = successOptions[parseInt(scope.row.success)]).color}"
           >{{ success.dictLabel }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="失败原因" :show-overflow-tooltip="true" min-width="220" align="center" prop="failReason"/>
+      <el-table-column label="失败原因" :show-overflow-tooltip="true" min-width="600" align="center" prop="failReason">
+        <template slot="header">
+          <span>失败原因</span>
+          <el-tooltip popper-class="tooltip" placement="top">
+            <i class="el-icon-question"></i>
+            <div slot="content" class="tooltip-content">
+              <div>网络连接失败,下单报错:指下单时try-catch抛出异常原因字符已经超过255个</div>
+              <div>网络连接失败,下单超时:指下单时发送请求等待返回结果超过http默认等待时间</div>
+              <div>网络连接失败,下单返回空值:指下单时发送请求返回的结果为空</div>
+              <div>对于以上三种情况,为三方支付平台的网络原因</div>
+              <div>如果某个支付通道失败订单占所有订单的比例过多,请在三方Telegram群里联系支付平台运营人员</div>
+              <div>对于下单超时订单,有二次下单机制</div>
+              <div>对于(首次下单超时,二次下单成功)失败原因订单,请选择状态为'成功'再查询</div>
+            </div>
+          </el-tooltip>
+        </template>
+      </el-table-column>
 
     </el-table>
 
@@ -157,9 +190,6 @@ export default {
         memberId: [
           { required: true, message: '会员ID不能为空', trigger: 'blur' }
         ],
-        memberAccount: [
-          { required: true, message: '会员账号不能为空', trigger: 'blur' }
-        ],
         platformId: [
           { required: true, message: '支付平台编号不能为空', trigger: 'change' }
         ],
@@ -222,7 +252,6 @@ export default {
       this.form = {
         id: null,
         memberId: null,
-        memberAccount: null,
         platformId: null,
         platformName: null,
         channelId: null,
@@ -237,6 +266,14 @@ export default {
 
     /** 搜索按钮操作 */
     handleQuery() {
+      if(this.queryParams.memberId){
+        const reg = '^[0-9_]{1,}$'
+        let flag = this.queryParams.memberId.match(reg)
+        if(!flag){
+          this.msgError("会员ID只能输入数字及下划线")
+          return
+        }
+      }
       this.queryParams.pageNum = 1
       this.getList()
     },

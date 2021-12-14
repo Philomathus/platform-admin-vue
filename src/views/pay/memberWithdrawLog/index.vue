@@ -31,7 +31,7 @@
       </el-form-item>
       <el-form-item prop="searchValue">
         <el-input
-          v-model="queryParams.searchValue"
+          v-model.trim="queryParams.searchValue"
           placeholder="会员ID/会员账号/收款人/订单号"
           clearable
           size="small"
@@ -244,14 +244,24 @@
         </template>
       </el-table-column>
       <!--      <el-table-column label="会员账号" min-width="120" align="center" prop="account"/>-->
-      <el-table-column label="入款姓名" min-width="120" align="center" prop="rechargeUserName"/>
+      <el-table-column label="入款姓名" min-width="120" align="center" prop="rechargeUserName">
+      <template slot="header">
+        <span>入款姓名</span>
+        <el-tooltip popper-class="tooltip" placement="top">
+          <i class="el-icon-question"></i>
+          <div slot="content" class="tooltip-content">
+            <div>入款姓名不包含提现姓名则整行颜色变粉色</div>
+          </div>
+        </el-tooltip>
+      </template>
+      </el-table-column>
       <el-table-column label="今日入款成功数" min-width="130" align="center" prop="bankCharge">
         <template slot="header">
           <span>今日入款成功数</span>
           <el-tooltip popper-class="tooltip" placement="top">
             <i class="el-icon-question"></i>
             <div slot="content" class="tooltip-content">
-              <div>今日入款成功数大于等于5次则整行颜色变粉色</div>
+              <div>今日入款成功数大于10次则整行颜色变粉色</div>
             </div>
           </el-tooltip>
         </template>
@@ -277,7 +287,7 @@
           <el-tooltip popper-class="tooltip" placement="top">
             <i class="el-icon-question"></i>
             <div slot="content" class="tooltip-content">
-              <div>投注打码比小于等于1.5则整行颜色变粉色</div>
+              <div>投注打码比小于等于风控打码倍数则整行颜色变粉色</div>
             </div>
           </el-tooltip>
         </template>
@@ -612,6 +622,10 @@ export default {
   components: {ExcelPrompt, TableShow},
   data() {
     return {
+      //风控打码倍数
+      multipleCode: null,
+      //注册48小时内的会员
+      registerColor: null,
       //银行卡黑名单下拉框
       CardBlackOptions: [{
         value: '1',
@@ -719,15 +733,19 @@ export default {
   },
   methods: {
     tableRowClassNameWithdraw({row}) {
-      if (row.bankCharge !== null && row.bankCharge > 4) {
+      if (row.first != null && (row.first == 1 || row.first == 2 )){
+        return 'register-row'
+      } else if (row.bankCharge !== null && row.bankCharge > 10) {
         return 'warning-row'
-      }
-      if (row.rechargeCodeRatio !== null && row.rechargeCodeRatio < 1.51) {
+      } else if (row.rechargeCodeRatio !== null && row.multipleCode != null && (parseFloat(row.rechargeCodeRatio) < parseFloat(row.multipleCode)
+      || row.rechargeCodeRatio === row.multipleCode)) {
         return 'warning-row'
-      }
-      if (row.rechargeUserNameStatus == 1) {
+      } else if (row.rechargeUserNameStatus == 1) {
         return 'warning-row'
+      } else if (row.bankName != null && row.bankName === 'GOPAY') {
+        return 'gopay-row'
       }
+
     },
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)

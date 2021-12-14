@@ -45,7 +45,7 @@
       </el-form-item>
       <el-form-item prop="userName" style="width: 140px;">
         <el-input
-          v-model="queryParams.searchValue"
+          v-model.trim="queryParams.searchValue"
           placeholder="会员ID/会员账号"
           clearable
           size="small"
@@ -462,6 +462,14 @@
     },
     /** 搜索按钮操作 */
     handleQuery() {
+      if(this.queryParams.searchValue){
+        const reg = '^[0-9_]{1,}$'
+        let flag = this.queryParams.searchValue.match(reg)
+        if(!flag){
+          this.msgError("会员ID/会员账号只能输入数字及下划线")
+          return
+        }
+      }
       this.queryParams.pageNum = 1
       var min=this.queryParams.priceMin
       var max=this.queryParams.priceMax

@@ -48,7 +48,7 @@
       </el-form-item>
       <el-form-item label="会员ID" prop="memberId">
         <el-input
-          v-model="queryParams.memberId"
+          v-model.trim="queryParams.memberId"
           placeholder="请输入会员ID"
           clearable
           size="small"

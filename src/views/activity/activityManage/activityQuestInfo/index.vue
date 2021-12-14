@@ -169,7 +169,7 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改任务信息对话框 -->
+    <!-- 添加任务信息对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="130px">
@@ -247,7 +247,6 @@
             />
           </el-select>
         </el-form-item>
-
         <el-form-item label="任务模式" prop="taskMode">
           <el-select
             filterable
@@ -265,7 +264,106 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item label="目标任务量" prop="target">
+          <el-input v-model="form.target" type="number" class="no-number" placeholder="请输入目标任务量"/>
+        </el-form-item>
+        <el-form-item label="完成后增加资金" prop="reward">
+          <el-input v-model="form.reward" type="number" class="no-number" placeholder="请输入完成后增加的资金"/>
+        </el-form-item>
+        <el-form-item label="图标" prop="icon">
+          <imageUpload v-model="form.icon" path="ActivityQuestInfo"/>
+        </el-form-item>
+        <el-form-item label="任务有效时间" prop="detail">
+          <el-input v-model="form.detail" type="textarea" placeholder="请输入内容"/>
+        </el-form-item>
+        <el-form-item label="描述">
+          <el-input v-model="form.content" type="textarea" placeholder="请输入内容" rows="5"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
 
+    <!-- 修改任务信息对话框 -->
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="opene" width="700px"
+               append-to-body>
+      <el-form ref="form" :model="form" :rules="rulese" label-width="130px">
+        <el-form-item label="标题" prop="title">
+          <el-input v-model="form.title" placeholder="请输入标题"/>
+        </el-form-item>
+        <el-form-item label="排序号" prop="indexs">
+          <el-input v-model="form.indexs" type="number" class="no-number" placeholder="请输入排序号"/>
+        </el-form-item>
+        <el-form-item label="任务类型" prop="typeId">
+          <el-select
+            filterable
+            v-model="form.typeId"
+            placeholder="请选择任务类型"
+            clearable
+            size="small"
+            style="width: 240px"
+          >
+            <el-option
+              v-for="dict in activityQuestTypeOptions"
+              :key="dict.id"
+              :label="dict.name"
+              :value="dict.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="所属游戏" prop="gameId">
+          <el-select
+            filterable
+            v-model="form.gameId"
+            placeholder="请选择所属游戏"
+            clearable
+            size="small"
+            style="width: 240px"
+          >
+            <el-option
+              v-for="dict in gameInfoOptions"
+              :key="dict.id"
+              :label="dict.name"
+              :value="dict.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="平台游戏类型" prop="kindId">
+          <el-select
+            filterable
+            v-model="form.kindId"
+            placeholder="请选择平台游戏类型"
+            clearable
+            size="small"
+            style="width: 240px"
+          >
+            <el-option
+              v-for="dict in kindIdOptions"
+              :key="dict.id"
+              :label="dict.kindId"
+              :value="dict.kindId"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="平台类型" prop="platformId">
+          <el-select
+            filterable
+            v-model="form.platformId"
+            placeholder="请选择平台类型"
+            clearable
+            size="small"
+            style="width: 240px"
+          >
+            <el-option
+              v-for="dict in platformIdOptions"
+              :key="dict.id"
+              :label="dict.name"
+              :value="dict.id"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item label="目标任务量" prop="target">
           <el-input v-model="form.target" type="number" class="no-number" placeholder="请输入目标任务量"/>
         </el-form-item>
@@ -349,6 +447,7 @@ export default {
       title: '',
       // 是否显示弹出层
       open: false,
+      opene: false,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -404,7 +503,39 @@ export default {
         ],
         taskMode: [
           {required: true, message: "任务模式不能为空", trigger: "blur"}
+        ]
+      },
+      rulese: {
+        icon: [
+          {required: true, message: "图标不能不上传", trigger: "blur"}
         ],
+        title: [
+          {required: true, message: "标题不能为空", trigger: "blur"}
+        ],
+        indexs: [
+          {required: true, message: "排序号不能为空", trigger: "blur"}
+        ],
+        typeId: [
+          {required: true, message: "任务类型不能为空", trigger: "blur"}
+        ],
+        target: [
+          {required: true, message: "目标任务量不能为空", trigger: "blur"}
+        ],
+        reward: [
+          {required: true, message: "完成后增加的资金不能为空", trigger: "blur"}
+        ],
+        detail: [
+          {required: true, message: "任务有效时间不能为空", trigger: "blur"}
+        ],
+        gameId: [
+          {required: true, message: "所属游戏不能为空", trigger: "blur"}
+        ],
+        kindId: [
+          {required: true, message: "平台游戏类型不能为空", trigger: "blur"}
+        ],
+        platformId: [
+          {required: true, message: "平台类型不能为空", trigger: "blur"}
+        ]
       }
     }
   },
@@ -441,6 +572,7 @@ export default {
     // 取消按钮
     cancel() {
       this.open = false
+      this.opene = false
       this.reset()
     },
     // 表单重置
@@ -503,7 +635,7 @@ export default {
       })
       getActivityQuestInfo(id).then(response => {
         this.form = response.data
-        this.open = true
+        this.opene = true
         this.title = '修改任务信息'
       })
     },
@@ -514,7 +646,7 @@ export default {
           if (this.form.id != null) {
             updateActivityQuestInfo(this.form).then(response => {
               this.msgSuccess('修改成功')
-              this.open = false
+              this.opene = false
               this.getList()
             })
           } else {

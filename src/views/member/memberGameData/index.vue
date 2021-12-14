@@ -13,7 +13,7 @@
       </el-form-item>
       <el-form-item prop="account">
         <el-input
-          v-model="queryParams.account"
+          v-model.trim="queryParams.account"
           placeholder="请输入会员ID"
           clearable
           @keyup.enter.native="handleQuery"
@@ -329,6 +329,14 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
+      if(this.queryParams.account){
+        const reg = '^[0-9_]{1,}$'
+        let flag = this.queryParams.account.match(reg)
+        if(!flag){
+          this.msgError("会员ID只能输入数字及下划线")
+          return
+        }
+      }
       this.queryParams.kindId = null
       this.queryParams.pageNum = 1
       this.getList()

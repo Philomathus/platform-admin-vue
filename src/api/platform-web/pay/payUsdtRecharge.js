@@ -10,6 +10,15 @@ export function listPayUsdtRecharge(query) {
   })
 }
 
+// 统计USDT充值提交记录列表
+export function listCount(query) {
+  return request({
+    url: url.platformWeb + '/admin/payUsdtRecharge/listCount',
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询USDT充值提交记录详细
 export function getPayUsdtRecharge(id) {
   return request({
@@ -27,11 +36,36 @@ export function addPayUsdtRecharge(data) {
   })
 }
 
+//渠道名称列表
+export function channelNames() {
+  return request({
+    url: url.platformWeb + '/admin/payUsdtRecharge/channelNames',
+    method: 'get'
+  })
+}
+
+// 锁定USDT充值提交记录
+export function lockPayUsdtRecharge(id) {
+  return request({
+    url: url.platformWeb + '/admin/payUsdtRecharge/lock/' + id,
+    method: 'get'
+  })
+}
+
+// 解锁USDT充值提交记录
+export function unLockPayUsdtRecharge(id) {
+  return request({
+    url: url.platformWeb + '/admin/payUsdtRecharge/unLock/' + id,
+    method: 'get'
+  })
+}
+
 // 通过USDT充值提交记录
-export function updatePayUsdtRecharge(id,comments) {
+export function updatePayUsdtRecharge(id,comments,googleAuthCode) {
   const data = {
     id : id,
-    remark : comments
+    remark : comments,
+    googleAuthCode : googleAuthCode
   }
   return request({
     url: url.platformWeb + '/admin/payUsdtRecharge',

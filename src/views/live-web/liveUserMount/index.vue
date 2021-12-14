@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="创建时间" prop="selectDate">
+      <el-form-item label="过期时间" prop="selectDate">
         <el-date-picker
           v-model="queryParams.selectDate"
           size="small"
@@ -14,7 +14,7 @@
           :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item prop="userId">
+      <el-form-item label="会员ID" prop="userId">
         <el-input
           v-model.trim="queryParams.userId"
           placeholder="请输入会员ID"
@@ -23,19 +23,27 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="anchor">
-        <el-input
-          v-model="queryParams.anchor"
-          placeholder="请输入主播ID"
+      <el-form-item prop="mountId">
+        <el-select
+          filterable
+          v-model="queryParams.mountId"
+          placeholder="请选择坐骑名称"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择处理状态" size="small" clearable>
+          style="width: 240px"
+        >
           <el-option
-            v-for="item in statusOptions"
+            v-for="Platform in mountNameOptions"
+            :key="Platform.id"
+            :label="Platform.name"
+            :value="Platform.id"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item prop="isUse">
+        <el-select v-model="queryParams.isUse" placeholder="请选择状态" size="small" clearable>
+          <el-option
+            v-for="item in isUseOptions"
             :key="item.value"
             :label="item.label"
             :value="item.value">
@@ -44,7 +52,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+<!--        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>-->
       </el-form-item>
     </el-form>
 
@@ -56,7 +64,7 @@
 <!--          icon="el-icon-plus"-->
 <!--          size="mini"-->
 <!--          @click="handleAdd"-->
-<!--          v-hasPermi="['admin:liveComplaint:add']"-->
+<!--          v-hasPermi="['admin:liveUserMount:add']"-->
 <!--        >新增</el-button>-->
 <!--      </el-col>-->
 <!--      <el-col :span="1.5">-->
@@ -67,7 +75,7 @@
 <!--          size="mini"-->
 <!--          :disabled="single"-->
 <!--          @click="handleUpdate"-->
-<!--          v-hasPermi="['admin:liveComplaint:edit']"-->
+<!--          v-hasPermi="['admin:liveUserMount:edit']"-->
 <!--        >修改</el-button>-->
 <!--      </el-col>-->
 <!--      <el-col :span="1.5">-->
@@ -78,79 +86,49 @@
 <!--          size="mini"-->
 <!--          :disabled="multiple"-->
 <!--          @click="handleDelete"-->
-<!--          v-hasPermi="['admin:liveComplaint:remove']"-->
+<!--          v-hasPermi="['admin:liveUserMount:remove']"-->
 <!--        >删除</el-button>-->
 <!--      </el-col>-->
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['admin:liveComplaint:export']"
-        >导出</el-button>
-      </el-col>
+<!--      <el-col :span="1.5">-->
+<!--        <el-button-->
+<!--          type="warning"-->
+<!--          plain-->
+<!--          icon="el-icon-download"-->
+<!--          size="mini"-->
+<!--          @click="handleExport"-->
+<!--          v-hasPermi="['admin:liveUserMount:export']"-->
+<!--        >导出</el-button>-->
+<!--      </el-col>-->
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table stripe v-loading="loading" :data="liveComplaintList">
-      <el-table-column label="投诉内容" align="center" prop="content" />
-      <el-table-column label="会员手机号" align="center" prop="mobile" />
-      <el-table-column label="房间名称" align="center" prop="roomName" />
+    <el-table stripe v-loading="loading" :data="liveUserMountList">
       <el-table-column label="会员ID" align="center" prop="userId" />
-      <el-table-column label="主播" align="center" prop="anchor" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      <el-table-column label="过期时间" align="center" prop="effectiveTime">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+          <span>{{ parseTime(scope.row.effectiveTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="审批人" align="center" prop="approver" />
-      <el-table-column label="审批备注" align="center" prop="remark" />
-      <el-table-column label="审批时间" align="center" prop="processingTime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.processingTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="处理状态" align="center" prop="status" :formatter="formatterStatus"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
-          <el-button
-            size="small"
-            type="success"
-            plain
-            v-show="scope.row.status == 0"
-            @click="handleUpdate(scope.row,1)"
-            v-hasPermi="['admin:liveComplaint:edit']"
-          >处理
-          </el-button>
-          <el-button
-            size="small"
-            type="danger"
-            plain
-            v-show="scope.row.status == 0"
-            @click="handleUpdate(scope.row,2)"
-            v-hasPermi="['admin:liveComplaint:edit']"
-          >驳回
-          </el-button>
-        </template>
+      <el-table-column label="坐骑名称" align="center" prop="mountName" />
+      <el-table-column label="状态" align="center" prop="isUse" :formatter="formatterIsUse"/>
+<!--      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">-->
 <!--        <template slot-scope="scope">-->
 <!--          <el-button-->
 <!--            size="mini"-->
 <!--            type="text"-->
 <!--            icon="el-icon-edit"-->
 <!--            @click="handleUpdate(scope.row)"-->
-<!--            v-hasPermi="['admin:liveComplaint:edit']"-->
+<!--            v-hasPermi="['admin:liveUserMount:edit']"-->
 <!--          >修改</el-button>-->
 <!--          <el-button-->
 <!--            size="mini"-->
 <!--            type="text"-->
 <!--            icon="el-icon-delete"-->
 <!--            @click="handleDelete(scope.row)"-->
-<!--            v-hasPermi="['admin:liveComplaint:remove']"-->
+<!--            v-hasPermi="['admin:liveUserMount:remove']"-->
 <!--          >删除</el-button>-->
 <!--        </template>-->
-      </el-table-column>
+<!--      </el-table-column>-->
     </el-table>
 
     <pagination
@@ -161,33 +139,25 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改主播投诉记录对话框 -->
+    <!-- 添加或修改坐骑领取记录对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="投诉内容" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
         <el-form-item label="会员ID" prop="userId">
           <el-input v-model="form.userId" placeholder="请输入会员ID" />
         </el-form-item>
-        <el-form-item label="主播" prop="anchor">
-          <el-input v-model="form.anchor" placeholder="请输入主播" />
-        </el-form-item>
-        <el-form-item label="审批人" prop="approver">
-          <el-input v-model="form.approver" placeholder="请输入审批人" />
-        </el-form-item>
-        <el-form-item label="审批时间" prop="processingTime">
+        <el-form-item label="过期时间" prop="effectiveTime">
           <el-date-picker clearable size="small"
-            v-model="form.processingTime"
+            v-model="form.effectiveTime"
             type="date"
             value-format="yyyy-MM-dd"
-            placeholder="选择审批时间">
+            placeholder="选择过期时间">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="状态(0待处理 1审核通过 2驳回)">
-          <el-radio-group v-model="form.status">
-            <el-radio label="1">请选择字典生成</el-radio>
-          </el-radio-group>
+        <el-form-item label="坐骑名称" prop="mountId">
+          <el-input v-model="form.mountId" placeholder="请输入坐骑名称" />
+        </el-form-item>
+        <el-form-item label="0:禁用;1:启用;默认启用" prop="isUse">
+          <el-input v-model="form.isUse" placeholder="请输入0:禁用;1:启用;默认启用" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -199,28 +169,27 @@
 </template>
 
 <script>
-import { listLiveComplaint, getLiveComplaint, delLiveComplaint, addLiveComplaint, updateLiveComplaint, exportLiveComplaint } from "@/api/live-web/liveComplaint";
+import { listLiveUserMount, getLiveUserMount, delLiveUserMount, addLiveUserMount, updateLiveUserMount, exportLiveUserMount, mountNames} from "@/api/live-web/liveUserMount";
 import {pickerDateShortcuts} from "@/utils/dateUtils";
 
 export default {
-  name: "LiveComplaint",
+  name: "LiveUserMount",
   components: {
   },
   data() {
     return {
-      statusOptions: [{
+      isUseOptions: [{
         value: '0',
-        label: '未处理'
+        label: '禁用'
       }, {
         value: '1',
-        label: '已处理'
-      }, {
-        value: '2',
-        label: '驳回'
+        label: '启用'
       }],
       // 日期范围
       selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
       pickerOptions: {shortcuts: pickerDateShortcuts},
+      // 坐骑名称
+      mountNameOptions: [],
       // 遮罩层
       loading: true,
       // 选中数组
@@ -233,8 +202,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 主播投诉记录表格数据
-      liveComplaintList: [],
+      // 坐骑领取记录表格数据
+      liveUserMountList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -245,12 +214,9 @@ export default {
         pageNum: 1,
         pageSize: 10,
         userId: null,
-        anchor: null,
-        approver: null,
-        processingTime: null,
-        status: null,
-        orderByColumn: 'createTime',
-        isAsc: 'desc'
+        effectiveTime: null,
+        mountId: null,
+        isUse: null
       },
       // 表单参数
       form: {},
@@ -261,13 +227,25 @@ export default {
   },
   created() {
     this.getList();
+    //支付平台
+    mountNames().then(response => {
+      this.mountNameOptions = response.data
+    })
   },
   methods: {
-    /** 查询主播投诉记录列表 */
+    // 状态
+    formatterIsUse(row) {
+      if (row.isUse == 0) {
+        return '禁用'
+      } else if (row.isUse == 1) {
+        return '启用'
+      }
+    },
+    /** 查询坐骑领取记录列表 */
     getList() {
       this.loading = true;
-      listLiveComplaint(this.queryParams).then(response => {
-        this.liveComplaintList = response.rows;
+      listLiveUserMount(this.queryParams).then(response => {
+        this.liveUserMountList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
@@ -277,27 +255,14 @@ export default {
       this.open = false;
       this.reset();
     },
-    // 处理状态
-    formatterStatus(row) {
-      if (row.status == 0) {
-        return '未处理'
-      } else if (row.status == 1) {
-        return '已处理'
-      } else if (row.status == 2){
-        return '驳回'
-      }
-    },
     // 表单重置
     reset() {
       this.form = {
         id: null,
-        remark: null,
         userId: null,
-        anchor: null,
-        createTime: null,
-        approver: null,
-        processingTime: null,
-        status: 0
+        effectiveTime: null,
+        mountId: null,
+        isUse: null
       };
       this.resetForm("form");
     },
@@ -329,49 +294,30 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加主播投诉记录";
+      this.title = "添加坐骑领取记录";
     },
-    // /** 修改按钮操作 */
-    // handleUpdate(row) {
-    //   this.reset();
-    //   const id = row.id || this.ids
-    //   getLiveComplaint(id).then(response => {
-    //     this.form = response.data;
-    //     this.open = true;
-    //     this.title = "修改主播投诉记录";
-    //   });
-    // },
-    /** 处理驳回按钮操作 */
-    handleUpdate(row,status) {
-      this.$prompt('请输入审核备注', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
-      }).then(({ value }) => {
-        const id = row.id
-        updateLiveComplaint(id,value,status).then(response => {
-          this.msgSuccess("审核处理成功");
-          this.getList();
-        });
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消输入'
-        });
+    /** 修改按钮操作 */
+    handleUpdate(row) {
+      this.reset();
+      const id = row.id || this.ids
+      getLiveUserMount(id).then(response => {
+        this.form = response.data;
+        this.open = true;
+        this.title = "修改坐骑领取记录";
       });
-
     },
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
-            updateLiveComplaint(this.form).then(response => {
+            updateLiveUserMount(this.form).then(response => {
               this.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addLiveComplaint(this.form).then(response => {
+            addLiveUserMount(this.form).then(response => {
               this.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -383,12 +329,12 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除主播投诉记录编号为"' + ids + '"的数据项?', "警告", {
+      this.$confirm('是否确认删除坐骑领取记录编号为"' + ids + '"的数据项?', "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       }).then(function() {
-        return delLiveComplaint(ids);
+        return delLiveUserMount(ids);
       }).then(() => {
         this.getList();
         this.msgSuccess("删除成功");
@@ -403,9 +349,9 @@ export default {
         cancelButtonText: "取消",
         type: "warning"
       }).then(function() {
-        return exportLiveComplaint(queryParams);
+        return exportLiveUserMount(queryParams);
       }).then(response => {
-        this.downloadExcel(response, '主播投诉记录');
+        this.downloadExcel(response, '坐骑领取记录');
       }).catch(() => {
       })
     }

@@ -71,6 +71,7 @@
 
     <el-table stripe v-loading="loading" :data="liveProplogList">
       <el-table-column label="会员ID" align="center" prop="perUserId" width="120"/>
+      <el-table-column label="状态" align="center" min-width="110px" prop="isPrivate" :formatter="callbackStatusFormat"/>
       <el-table-column label="礼物名" align="center" prop="propName"/>
       <el-table-column label="礼物金额" align="center" prop="totalDiamonds"/>
       <el-table-column label="主播ID" align="center" prop="toUserId"/>
@@ -107,7 +108,7 @@
             type="warning"
             plain
             icon="el-icon-download"
-            size="mini"
+            size="small"
             @click="handleExportTestAccount"
             v-hasPermi="['admin:liveVideoProp:export']"
           >导出
@@ -173,6 +174,7 @@ export default {
       single: true,
       // 非多个禁用
       multiple: true,
+      typeList: [],
       // 显示搜索条件
       showSearch: true,
       // 总条数
@@ -210,7 +212,10 @@ export default {
   created() {
     this.getList()
     this.count()
-    testAccountCount()
+    this.testAccountCount()
+    this.getDicts('member_type').then(response => {
+      this.typeList = response.data
+    })
   },
   methods: {
     /** 查询用户送礼日志列表 */
@@ -240,6 +245,10 @@ export default {
       })
       this.testAccountCount()
     },
+    // 回调状态字典翻译
+    callbackStatusFormat(row, column) {
+      return this.selectDictLabel(this.typeList, row.isPrivate)
+    },
     //复制
     copy() {
       this.copyCommand(this.totalData.countTotal)
@@ -252,15 +261,18 @@ export default {
       getCount(this.queryParams).then((res) => {
         if (res.data) {
           this.totalData = res.data
+        } else {
+          this.totalData.countTotal = 0
         }
         this.loading = false
       })
     },
-
     testAccountCount() {
       testAccountCount(this.queryParam).then((res) => {
         if (res.data) {
           this.totalData = res.data
+        } else {
+          this.totalData.testAccountPorpTotal = 0
         }
         this.loading = false
       })
@@ -274,6 +286,14 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
+      if(this.queryParams.pUserId){
+        const reg = '^[0-9_]{1,}$'
+        let flag = this.queryParams.pUserId.match(reg)
+        if(!flag){
+          this.msgError("会员ID只能输入数字及下划线")
+          return
+        }
+      }
       this.queryParams.pageNum = 1
       this.getList()
       this.count()

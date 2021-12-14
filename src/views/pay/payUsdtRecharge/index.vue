@@ -1,45 +1,47 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="创建时间" prop="selectDate">
-        <el-date-picker
-          v-model="queryParams.selectDate"
-          size="small"
-          style="width: 240px"
-          value-format="yyyy-MM-dd"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-          :picker-options="pickerOptions"
+    <div v-loading="totalLoading">
+      <el-button type="success" @click="copy1">交易笔数 {{ this.totalData.total || 0}}</el-button>
+      <el-button type="warning" @click="copy2">总成功金额 {{ this.totalData.successMoney || 0 }}</el-button>
+      <el-button type="info" id="copy3" @click="copy3">成功率 {{
+          numberUtil.toPercent(this.totalData.successRate || 0)
+        }}
+      </el-button>
+      <el-button  type="primary" icon="el-icon-search" size="mini" @click="listCount()" style="margin-left: 20px">统计查询</el-button>
+    </div>
+    <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 10px" v-show="showSearch" label-width="68px">
+      <el-form-item label="创建时间" prop="selectDate" label-width="70px">
+        <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '360px'}" start-placeholder="开始时间"
+                        end-placeholder="结束时间" range-separator="至" :default-time="['00:00:00', '23:59:59']" clearable
+                        :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="memberId">
         <el-input
-          v-model="queryParams.memberId"
-          placeholder="请输入会员编号"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item prop="userName">
-        <el-input
-          v-model="queryParams.userName"
-          placeholder="请输入会员账号"
+          v-model.trim="queryParams.searchValue"
+          placeholder="请输入会员ID/账号"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item prop="channelName">
-        <el-input
+        <el-select
+          filterable
           v-model="queryParams.channelName"
-          placeholder="请输入渠道名称"
+          placeholder="请选择渠道名称"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          style="width: 240px"
+        >
+          <el-option
+            v-for="channelName in channelNameOptions"
+            :key="channelName.channelName"
+            :label="channelName.channelName"
+            :value="channelName.channelName"
+          />
+        </el-select>
       </el-form-item>
       <!--      <el-form-item label="充值U数量" prop="rechargeNumber">-->
       <!--        <el-input-->
@@ -59,14 +61,30 @@
       <!--          @keyup.enter.native="handleQuery"-->
       <!--        />-->
       <!--      </el-form-item>-->
+<!--      <el-form-item prop="status">-->
+<!--        <el-select v-model="queryParams.status" placeholder="请选择处理状态" size="small" clearable>-->
+<!--          <el-option-->
+<!--            v-for="item in statusQueryOptions"-->
+<!--            :key="item.value"-->
+<!--            :label="item.label"-->
+<!--            :value="item.value">-->
+<!--          </el-option>-->
+<!--        </el-select>-->
+<!--      </el-form-item>-->
       <el-form-item prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择处理状态" size="small" clearable>
+        <el-select
+          v-model="queryParams.status"
+          placeholder="请选择状态"
+          clearable
+          size="small"
+          style="width: 130px"
+        >
           <el-option
-            v-for="item in statusOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
+            v-for="dict in statusOptions"
+            :key="dict.dictValue"
+            :label="dict.dictLabel"
+            :value="dict.dictValue"
+          />
         </el-select>
       </el-form-item>
       <!--      <el-form-item label="优惠比例" prop="discountBill">-->
@@ -164,42 +182,96 @@
         >导出
         </el-button>
       </el-col>
+      <el-col :span="10" style="margin-left: 10px">
+        <span style="font-size: 16px;margin-right: 10px">记录刷新</span>
+        <el-select v-model="refreshSec" placeholder="时间间隔" style="width: 110px">
+          <el-option value="5" label="5秒"></el-option>
+          <el-option value="10" label="10秒"></el-option>
+          <el-option value="15" label="15秒"></el-option>
+          <el-option value="20" label="20秒"></el-option>
+          <el-option value="30" label="30秒"></el-option>
+        </el-select>
+        <div style="width: 120px;display: inline-block;text-align: center">
+          <span>{{ refreshDesc }}</span>
+        </div>
+        <el-button :type="refreshType" :icon="refreshIcon" size="mini" @click="refreshData">{{
+            refreshLabel
+          }}
+        </el-button>
+      </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="payUsdtRechargeList">
+      <el-table-column label="复制" align="center">
+        <template slot-scope="scope">
+          <el-button
+            type="primary" size="mini"
+            @click="handleCopy(scope.row)"
+          >复制
+          </el-button>
+        </template>
+      </el-table-column>
       <!--      <el-table-column label="系统编号" align="center" prop="id" />-->
-      <el-table-column label="会员编号" align="center" prop="memberId"/>
-      <el-table-column label="会员账号" align="center" prop="userName"/>
-      <el-table-column label="渠道名称" align="center" prop="channelName"/>
+      <el-table-column label="会员ID" align="center" prop="memberId"/>
+<!--      <el-table-column label="会员账号" align="center" prop="userName"/>-->
+      <el-table-column label="渠道名称" align="center" min-width="120" prop="channelName"/>
       <el-table-column label="充值U数量" align="center" prop="rechargeNumber"/>
       <el-table-column label="充值金额" align="center" prop="rechargeMoney"/>
       <el-table-column label="优惠比例" align="center" prop="discountBill"/>
-      <el-table-column label="链名称" align="center" prop="chainName"/>
-      <el-table-column label="充值地址" align="center" min-width="250" prop="rechargeAddress"/>
-      <el-table-column label="交易id" align="center" min-width="250" prop="transactionId"/>
-      <el-table-column label="处理状态" align="center" prop="status" :formatter="formatterStatus"/>
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      <el-table-column label="交易链名称" align="center" min-width="120" prop="chainName"/>
+      <el-table-column label="充值地址" align="center" min-width="260" prop="rechargeAddress"/>
+      <el-table-column label="交易id" align="center" min-width="300" prop="transactionId">
+      <template v-slot="{row}">
+        <a :class="{blue:index !== row.transactionId}" @click="copyColumn(row.transactionId)">{{ row.transactionId }}</a>
+      </template>
+      </el-table-column>
+      <el-table-column label="处理状态" align="center" prop="status" min-width="120">
+        <template slot-scope="scope">
+          <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">{{
+              status.dictLabel
+            }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="创建时间" align="center" prop="createTime" width="150">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark"/>
+      <el-table-column label="备注" align="center" min-width="90" prop="remark"/>
       <el-table-column label="操作人" align="center" prop="opName"/>
-      <el-table-column label="审批时间" align="center" prop="updateTime" width="180">
+      <el-table-column label="审批时间" align="center" prop="updateTime" width="150">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="180">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="210">
         <template slot-scope="scope">
+          <el-button
+            size="small"
+            type="primary"
+            plain
+            v-show="scope.row.status == 1"
+            @click="handleUpdateLock(scope.row)"
+            v-hasPermi="['admin:payUsdtRecharge:edit']"
+          >锁定
+          </el-button>
+          <el-button
+            size="small"
+            type="primary"
+            plain
+            v-show="scope.row.status == 0"
+            @click="handleUpdateUnLock(scope.row)"
+            v-hasPermi="['admin:payUsdtRecharge:edit']"
+          >解锁
+          </el-button>
           <el-button
             size="small"
             type="success"
             plain
             v-show="scope.row.status == 0"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['admin:liveComplaint:edit']"
+            v-hasPermi="['admin:payUsdtRecharge:edit']"
           >通过
           </el-button>
           <el-button
@@ -208,12 +280,12 @@
             plain
             v-show="scope.row.status == 0"
             @click="handleUpdateRefuse(scope.row)"
-            v-hasPermi="['admin:liveComplaint:edit']"
+            v-hasPermi="['admin:payUsdtRecharge:edit']"
           >拒绝
           </el-button>
         </template>
         <!--        <template slot-scope="scope">-->
-        <!--          <el-button-->
+        <!--         <el-button-->
         <!--            size="mini"-->
         <!--            type="text"-->
         <!--            icon="el-icon-edit"-->
@@ -242,9 +314,9 @@
     <!-- 通过USDT充值记录对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="会员编号" prop="memberId">
-          <el-input v-model="form.memberId" readonly placeholder="请输入会员编号"/>
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+        <el-form-item label="会员ID" prop="memberId">
+          <el-input v-model="form.memberId" readonly placeholder="请输入会员ID"/>
         </el-form-item>
         <el-form-item label="会员账号" prop="userName">
           <el-input v-model="form.userName" readonly placeholder="请输入会员账号"/>
@@ -273,6 +345,9 @@
         <el-form-item label="审核备注" prop="remark">
           <el-input v-model="form.remark" placeholder="请输入审核备注"/>
         </el-form-item>
+        <el-form-item label="谷歌验证码" prop="googleAuthCode">
+          <el-input v-model="form.googleAuthCode" type="number" class="no-number" placeholder="请输入谷歌验证码"/>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">通 过</el-button>
@@ -281,7 +356,11 @@
     </el-dialog>
   </div>
 </template>
-
+<style>
+.blue{
+  color: #0888ee;
+}
+</style>
 <script>
 import {
   listPayUsdtRecharge,
@@ -290,28 +369,36 @@ import {
   addPayUsdtRecharge,
   updatePayUsdtRecharge,
   refusePayUsdtRecharge,
-  exportPayUsdtRecharge
+  exportPayUsdtRecharge,
+  lockPayUsdtRecharge,
+  unLockPayUsdtRecharge,
+  channelNames,
+  listCount
 } from "@/api/platform-web/pay/payUsdtRecharge";
-import {pickerDateShortcuts} from "@/utils/dateUtils";
+import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
 
 export default {
   name: "PayUsdtRecharge",
   components: {},
   data() {
     return {
-      statusOptions: [{
-        value: '0',
-        label: '未处理'
-      }, {
-        value: '1',
-        label: '已处理'
-      }, {
-        value: '2',
-        label: '拒绝'
-      }],
+      refreshSec: '5',
+      refreshType: 'primary',
+      refreshIcon: 'el-icon-refresh',
+      refreshLabel: '开始刷新',
+      refreshDesc: '',
+      totalData: {
+         successMoney: null,
+         successRate: null
+      },
+      totalLoading: false,
+      // 状态字典
+      statusOptions: [],
       // 日期范围
       selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
-      pickerOptions: {shortcuts: pickerDateShortcuts},
+      pickerOptions: {shortcuts: pickerDateTimeShortcuts},
+      //渠道名称
+      channelNameOptions: [],
       // 遮罩层
       loading: true,
       // 选中数组
@@ -332,7 +419,8 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
-        selectDate: [this.parseTime(new Date(), '{y}-{m}-{d}'), this.parseTime(new Date(), '{y}-{m}-{d}')],
+        searchValue: null,
+        selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
         pageNum: 1,
         pageSize: 10,
         memberId: null,
@@ -349,22 +437,132 @@ export default {
         orderByColumn: 'createTime',
         isAsc: 'desc'
       },
+      index: 0,
       // 表单参数
-      form: {
-
-      },
+      form: {},
       // 表单校验
       rules: {
         remark: [
           {required: true, message: '审核备注不能为空', trigger: 'blur'}
+        ],
+        googleAuthCode: [
+          {required: true, message: '谷歌验证码不能为空', trigger: 'blur'}
         ]
       }
     };
   },
   created() {
     this.getList();
+    //渠道名称
+    channelNames().then(response => {
+      this.channelNameOptions = response.data
+    })
+    this.getDicts('pay_usdt_status').then(response => {
+      this.statusOptions = response.data
+    })
+  },
+  activated() {
+    this.refreshType = 'primary'
+    this.refreshIcon = 'el-icon-refresh'
+    this.refreshLabel = '开始刷新'
+    this.refreshDesc = ''
+    this.stopRefresh()
   },
   methods: {
+    copyColumn(value) {
+      this.index = value
+      this.copyCommand(value)
+    },
+    listCount() {
+      this.totalLoading = true
+      listCount(this.queryParams).then((res) => {
+        this.totalData = res
+      }).finally(()=>{this.totalLoading=false})
+    },
+    //复制
+    copy1() {
+      this.copyCommand(this.totalData.total)
+    },
+    copy2() {
+      this.copyCommand(this.totalData.successMoney)
+    },
+    copy3() {
+      this.copyCommand(this.numberUtil.toPercent(this.totalData.successRate))
+    },
+    refreshData() {
+      if (this.refreshType === 'primary') {
+        this.refreshType = 'danger'
+        this.refreshIcon = 'el-icon-circle-close'
+        this.refreshLabel = '停止刷新'
+        this.refreshDesc = ''
+        this.stopRefresh()
+        this.refreshQuery()
+        this.startRefresh()
+      } else {
+        this.refreshType = 'primary'
+        this.refreshIcon = 'el-icon-refresh'
+        this.refreshLabel = '开始刷新'
+        this.refreshDesc = ''
+        this.stopRefresh()
+      }
+    },
+    startRefresh() {
+      const thet = this
+      let secs = thet.refreshSec
+      window.refreshInterval = setInterval(function () {
+        if (secs === 0) {
+          thet.refreshQuery()
+          secs = thet.refreshSec
+        }
+        thet.refreshDesc = secs + '秒后开始刷新'
+        secs--
+      }, 1000)
+    },
+    stopRefresh() {
+      clearInterval(window.refreshInterval)
+    },
+    /** 刷新搜索操作 */
+    refreshQuery() {
+      this.queryParams.priceMax=""
+      this.queryParams.priceMin=""
+      this.handleQuery()
+    },
+    /** 复制按钮 */
+    handleCopy(row) {
+      var status = this.statusOptions[parseInt(row.status)];
+      var textarea = document.createElement("textarea");
+      let html = '<table><tr>'
+      html += '<td>' + row.memberId + '</td>'
+      html += '<td>' + row.channelName + '</td>'
+      html += '<td>' + row.rechargeNumber + '</td>'
+      html += '<td>' + row.rechargeMoney + '</td>'
+      html += '<td>' + row.discountBill + '</td>'
+      html += '<td>' + row.chainName + '</td>'
+      html += '<td>' + row.rechargeAddress + '</td>'
+      html += '<td>' + row.transactionId + '</td>'
+      html += '<td>' + status.dictLabel + '</td>'
+      html += '<td>' + row.createTime + '</td>'
+      html += '<td>' + row.remark + '</td>'
+      html += '<td>' + row.opName + '</td>'
+      html += '<td>' + row.updateTime + '</td>'
+      html += '</tr></table>'
+      textarea.value = html;
+      this.copyData = html
+      this.copy(this.copyData)
+    },
+    copy(data) {
+      let url = data;
+      let oInput = document.createElement('input');
+      oInput.value = url;
+      document.body.appendChild(oInput);
+      oInput.select(); // 选择对象;
+      document.execCommand("Copy"); // 执行浏览器复制命令
+      this.$message({
+        message: '复制成功',
+        type: 'success'
+      });
+      oInput.remove()
+    },
     /** 查询USDT充值记录列表 */
     getList() {
       this.loading = true;
@@ -373,16 +571,6 @@ export default {
         this.total = response.total;
         this.loading = false;
       });
-    },
-    // 处理状态
-    formatterStatus(row) {
-      if (row.status == 0) {
-        return '未处理'
-      } else if (row.status == 1) {
-        return '已处理'
-      } else if (row.status == 2) {
-        return '拒绝'
-      }
     },
     // 取消按钮
     cancel() {
@@ -398,7 +586,7 @@ export default {
         channelName: null,
         rechargeNumber: null,
         rechargeMoney: null,
-        status: 0,
+        status: null,
         remark: null,
         discountBill: null,
         chainName: null,
@@ -412,6 +600,14 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
+      if(this.queryParams.searchValue){
+        const reg = '^[0-9_]{1,}$'
+        let flag = this.queryParams.searchValue.match(reg)
+        if(!flag){
+          this.msgError("会员ID/账号只能输入数字及下划线")
+          return
+        }
+      }
       this.queryParams.pageNum = 1;
       this.getList();
     },
@@ -431,6 +627,26 @@ export default {
       this.reset();
       this.open = true;
       this.title = "添加USDT充值记录";
+    },
+    /** 锁定按钮操作 */
+    handleUpdateLock(row) {
+      const id = row.id
+      lockPayUsdtRecharge(id).then(response => {
+        this.$message.success("锁定成功")
+        this.getList()
+      });
+    },
+    /** 解锁按钮操作 */
+    handleUpdateUnLock(row) {
+      const id = row.id
+      unLockPayUsdtRecharge(id).then(response => {
+        if (response.data.code == 200) {
+          this.$message.success("解锁成功")
+          this.getList();
+        } else {
+          this.$message.error(response.data.msg)
+        }
+      });
     },
     /** 通过按钮操作 */
     handleUpdate(row) {
@@ -468,13 +684,19 @@ export default {
         if (valid) {
           const id = this.form.id
           const remark = this.form.remark
-          updatePayUsdtRecharge(id,remark).then(response => {
-            this.msgSuccess(response.msg)
+          const googleAuthCode = this.form.googleAuthCode
+          updatePayUsdtRecharge(id,remark,googleAuthCode).then(response => {
+            console.info(response)
             if (response.code == 200) {
+              this.$message.success(response.msg)
               this.open = false;
               this.getList();
+            } else {
+              this.$message.error(response.msg)
             }
-          });
+          }).catch(() => {
+            this.$message.error("订单审核通过有误")
+          })
         }
       });
     },

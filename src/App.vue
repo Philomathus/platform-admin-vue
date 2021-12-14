@@ -8,6 +8,14 @@
   background: #ffb4b4;
 }
 
+.el-table .register-row {
+  background: #9bbd99;
+}
+
+.el-table .gopay-row {
+  background: #6c7897;
+}
+
 .el-table .success-row {
   background: #f0f9eb;
 }

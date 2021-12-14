@@ -3,8 +3,8 @@
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item  prop="userId">
         <el-input
-          v-model="queryParams.userId"
-          placeholder="请输入账号"
+          v-model.trim="queryParams.userId"
+          placeholder="请输入会员ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -84,7 +84,7 @@
 
     <el-table stripe v-loading="loading" :data="memberGameDatafixList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="账号" align="center" prop="userId" />
+      <el-table-column label="会员ID" align="center" prop="userId" />
       <el-table-column label="游戏开始时间" align="center" prop="gameStartTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.gameStartTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
@@ -111,7 +111,7 @@
       <el-table-column label="游戏平台" align="center" prop="platformName"/>
       <el-table-column label="状态" align="center" prop="status"  >
         <template slot-scope="scope">
-          <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">{{ status.dictLabel }}</span>
+         {{ status.dictLabel }}
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -145,8 +145,8 @@
     <!-- 添加或修改游戏注单修复对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="600px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="130px">
-        <el-form-item label="账号" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入账号"  width="220px"/>
+        <el-form-item label="会员ID" prop="userId">
+          <el-input v-model="form.userId" placeholder="请输入会员ID"  width="220px"/>
         </el-form-item>
         <el-form-item label="游戏开始时间" prop="gameStartTime">
           <el-date-picker clearable size="small"
@@ -285,6 +285,14 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
+      if(this.queryParams.userId){
+        const reg = '^[0-9_]{1,}$'
+        let flag = this.queryParams.userId.match(reg)
+        if(!flag){
+          this.msgError("会员ID只能输入数字及下划线")
+          return
+        }
+      }
       this.queryParams.pageNum = 1;
       this.getList();
     },

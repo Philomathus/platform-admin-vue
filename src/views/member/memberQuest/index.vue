@@ -3,7 +3,7 @@
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="会员ID" prop="memberId">
         <el-input
-          v-model="queryParams.memberId"
+          v-model.trim="queryParams.memberId"
           placeholder="请输入会员ID"
           clearable
           size="small"
@@ -203,6 +203,14 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
+      if(this.queryParams.memberId){
+        const reg = '^[0-9_]{1,}$'
+        let flag = this.queryParams.memberId.match(reg)
+        if(!flag){
+          this.msgError("会员ID只能输入数字及下划线")
+          return
+        }
+      }
       this.queryParams.pageNum = 1;
       this.getList();
     },

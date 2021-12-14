@@ -10,6 +10,17 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="类型" prop="type">
+        <el-select v-model="queryParams.type" placeholder="请选择类型" clearable size="small">
+          <el-option
+            v-for="item in typeOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -211,6 +222,17 @@ export default {
   },
   data() {
     return {
+      //状态选择栏
+      typeOptions: [{
+        value: '0',
+        label: '礼物'
+      }, {
+        value: '1',
+        label: '打赏'
+      }, {
+        value: '2',
+        label: '守护'
+      }],
       // 遮罩层
       loading: true,
       // 选中数组

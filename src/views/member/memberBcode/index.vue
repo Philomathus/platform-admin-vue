@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
-    <el-button type="primary">总充值 {{ this.totalData.total.toFixed(2) }}</el-button>
-    <el-button type="success">总打码 {{ this.totalData.countCur.toFixed(2) }}</el-button>
-    <el-button type="warning">还需打码 {{ (this.totalData.total - this.totalData.countCur).toFixed(2) }}</el-button>
+    <el-button type="primary" @click="copy1">总充值 {{ this.totalData.total.toFixed(2) }}</el-button>
+    <el-button type="success" @click="copy2">总打码 {{ this.totalData.countCur.toFixed(2) }}</el-button>
+    <el-button type="warning" @click="copy3">还需打码 {{ (this.totalData.total - this.totalData.countCur).toFixed(2) }}</el-button>
     <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" v-show="showSearch" label-width="100px">
       <el-form-item label="日期范围" prop="selectDate">
         <el-date-picker
@@ -19,7 +19,7 @@
       </el-form-item>
       <el-form-item prop="userId">
         <el-input
-          v-model="queryParams.userId"
+          v-model.trim="queryParams.userId"
           placeholder="会员ID"
           clearable
           size="small"
@@ -54,6 +54,19 @@
       <el-table-column label="是否打码" align="center" prop="status" :formatter="formatterStatus"/>
       <el-table-column label="当前打码量" align="center" prop="cur"/>
       <el-table-column label="创建时间" align="center" prop="createTime" min-width="160"/>
+      <el-table-column label="操作" width="220" align="center" class-name="small-padding fixed-width" fixed="right">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            style="color: #FF5722"
+            @click="handleUpdate(scope.row)"
+            v-hasPermi="['member:memberBcode:edit']"
+          >修改
+          </el-button>
+        </template>
+      </el-table-column>
     </el-table>
 
     <pagination
@@ -65,6 +78,21 @@
       @pagination="getList"
     />
 
+    <!-- 修改会员打码数据对话框 -->
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
+               append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+        <el-form-item label="当前打码量" prop="cur">
+          <el-input v-model="form.cur" placeholder="请输入当前打码量" />
+          <el-input v-model="form.curCode" v-show="false"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm">确定</el-button>
+        <el-button @click="cancel">取消</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -72,7 +100,9 @@
 import {
   listMemberBcode,
   exportMemberBcode,
-  getTotalData
+  getTotalData,
+  getMemberBcode,
+  updateMemberBcode
 } from '@/api/platform-web/member/memberBcode'
 import { pickerDateShortcuts } from '@/utils/dateUtils'
 
@@ -81,6 +111,7 @@ export default {
   components: {},
   data() {
     return {
+      curCode: 0,
       pickerOptions: { shortcuts: pickerDateShortcuts },
       //顶部的三个总数据
       totalData: {
@@ -117,7 +148,11 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {}
+      rules: {
+        cur: [
+          {required: true, message: '当前打码量不能为空,且为数字', trigger: 'blur', pattern:'^(\\-|\\+)?\\d+(\\.\\d+)?$'}
+        ]
+      }
     }
   },
   created() {
@@ -125,6 +160,16 @@ export default {
     this.getTotalData()
   },
   methods: {
+    //复制
+    copy1() {
+      this.copyCommand(this.totalData.total.toFixed(2))
+    },
+    copy2() {
+      this.copyCommand(this.totalData.countCur.toFixed(2))
+    },
+    copy3() {
+      this.copyCommand((this.totalData.total - this.totalData.countCur).toFixed(2))
+    },
     getTotalData() {
       getTotalData(this.queryParams).then((res) => {
         this.totalData = res.data
@@ -171,6 +216,14 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
+      if(this.queryParams.userId){
+        const reg = '^[0-9_]{1,}$'
+        let flag = this.queryParams.userId.match(reg)
+        if(!flag){
+          this.msgError("会员ID只能输入数字及下划线")
+          return
+        }
+      }
       this.queryParams.pageNum = 1
       this.getList()
       this.getTotalData()
@@ -179,6 +232,40 @@ export default {
     resetQuery() {
       this.resetForm('queryForm')
       this.handleQuery()
+    },
+    /** 修改按钮操作 */
+    handleUpdate(row) {
+      this.reset();
+      this.pageType = 1
+      const id= row.id
+      getMemberBcode(id).then(response => {
+        this.form = response.data;
+        this.form.cur = this.form.cur + '';
+        this.form.curCode = this.form.cur + '';
+        this.open = true;
+        this.title = "修改会员打码数据";
+      });
+    },
+    /** 提交按钮 */
+    submitForm() {
+      this.$refs["form"].validate(valid => {
+        if (valid) {
+          if (this.pageType === 1) {
+            let curCode = parseFloat(this.form.curCode);
+            let cur = parseFloat(this.form.cur);
+            let count = curCode+cur;
+            if(count<0){
+              this.msgError("当前打码量数值需大于或等于0")
+              return;
+            }
+            updateMemberBcode(this.form).then(response => {
+              this.msgSuccess("修改成功");
+              this.open = false;
+              this.getList();
+            });
+          }
+        }
+      });
     },
     /** 导出按钮操作 */
     handleExport() {

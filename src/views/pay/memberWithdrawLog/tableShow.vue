@@ -52,6 +52,7 @@
           </div>
         </div>
         <div class="font">线下充值金额: {{ data.线下充值金额 }}</div>
+        <div class="font">USDT充值金额: {{ data.USDT充值金额 }}</div>
         <div class="font">代充金额: {{ data.人工代充金额 }}</div>
         <div class="font">手工上分金额: {{ data.手动增加金额 }}</div>
         <div class="font">平台赠送金额: {{ data.平台赠送金额 }}</div>

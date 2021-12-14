@@ -296,6 +296,7 @@ export default {
       if (agenttime == null || agenttime == '') {
         this.queryParams.agenttime=this.parseTime(getYesterDate(), '{y}-{m}-{d}')
       }
+
       generatedata({
         agenttime: this.queryParams.agenttime
       }).then(response => {

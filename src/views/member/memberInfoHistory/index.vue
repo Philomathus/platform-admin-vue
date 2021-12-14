@@ -21,7 +21,7 @@
       </el-form-item>
       <el-form-item prop="searchValue">
         <el-input
-          v-model="queryParams.searchValue"
+          v-model.trim="queryParams.searchValue"
           placeholder="会员ID/账号/手机号"
           clearable
           size="small"
@@ -603,6 +603,14 @@
       },
       /** 搜索按钮操作 */
       handleQuery() {
+        if(this.queryParams.searchValue){
+          const reg = '^[0-9_]{1,}$'
+          let flag = this.queryParams.searchValue.match(reg)
+          if(!flag){
+            this.msgError("会员ID/账号/手机号只能输入数字及下划线")
+            return
+          }
+        }
         this.queryParams.pageNum = 1
         this.getList()
       },

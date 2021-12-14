@@ -17,7 +17,7 @@
       </el-form-item>
       <el-form-item  prop="userId" style="width: 130px">
         <el-input
-          v-model="queryParams.userId"
+          v-model.trim="queryParams.userId"
           placeholder="主播ID"
           clearable
           size="small"

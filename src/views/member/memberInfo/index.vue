@@ -1,6 +1,12 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch">
+    <div v-loading="totalLoading">
+      <el-button type="primary" @click="copy1">会员人数 {{ this.totalData.peopledTotal || 0 }}</el-button>
+      <el-button type="success" @click="copy2">余额总计 {{ this.totalData.totalMoney || 0 }}</el-button>
+      <el-button type="warning" @click="copy3">保险箱余额总计 {{ this.totalData.safeBalanceTotalMoney || 0 }}</el-button>
+      <el-button  type="primary" icon="el-icon-search" size="mini" @click="listCount()" style="margin-left: 20px">统计查询</el-button>
+    </div>
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" style="margin-top: 20px">
       <el-form-item label="日期范围" prop="regTime">
         <el-date-picker type="datetimerange" v-model="dateRange" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}" start-placeholder="开始时间"
@@ -21,7 +27,7 @@
       </el-form-item>
       <el-form-item prop="searchValue">
         <el-input
-          v-model="queryParams.searchValue"
+          v-model.trim="queryParams.searchValue"
           placeholder="会员ID/账号/手机号"
           clearable
           size="small"
@@ -147,6 +153,7 @@
         </template>
       </el-table-column>
       <el-table-column label="注册时间" align="center" prop="regTime" width="160"/>
+      <el-table-column label="登录时间" align="center" prop="loginTime" width="160"/>
       <el-table-column label="登陆次数" align="center" prop="loginNum" min-width="100px"/>
       <el-table-column label="登录ip" :show-overflow-tooltip="true" align="center" prop="loginIp" width="180"/>
       <el-table-column label="是否禁言" align="center" prop="speak">
@@ -357,7 +364,8 @@
     exportMemberInfo,
     changeSpeak,
     changeStatus,
-    changeStatusBan
+    changeStatusBan,
+    listCount
   } from '@/api/platform-web/member/memberInfo'
   import more from './more'
   import {listSpeakIpBlackList, updateSpeakIpBlackList} from '@/api/live-web/chat/speakIpBlackList'
@@ -373,6 +381,14 @@
     },
     data() {
       return {
+        //统计状态
+        totalLoading: false,
+        //统计总的数据
+        totalData: {
+          peopledTotal: 0,
+          totalMoney: 0,
+          safeBalanceTotalMoney: 0
+        },
         //phone 手机号前四位
         phone: null,
         //password 密码
@@ -479,6 +495,26 @@
       })
     },
     methods: {
+      //复制
+      copy1() {
+        this.copyCommand(this.totalData.peopledTotal)
+      },
+      copy2() {
+        this.copyCommand(this.totalData.totalMoney)
+      },
+      copy3() {
+        this.copyCommand(this.totalData.safeBalanceTotalMoney)
+      },
+      //统计
+      listCount() {
+        this.totalLoading=true
+        this.queryParams = this.addDateRange(this.queryParams, this.dateRange);
+        listCount(this.queryParams).then((res) => {
+          this.totalData = res
+        }).finally(()=>{
+          this.totalLoading=false
+        })
+      },
       changetPhone(phone) {
         if (phone) {
           this.password = phone.substr(5, 6)
@@ -600,6 +636,14 @@
       },
       /** 搜索按钮操作 */
       handleQuery() {
+        if(this.queryParams.searchValue){
+          const reg = '^[0-9_]{1,}$'
+          let flag = this.queryParams.searchValue.match(reg)
+          if(!flag){
+            this.msgError("会员ID/账号/手机号只能输入数字及下划线")
+            return
+          }
+        }
         this.queryParams.pageNum = 1
         this.getList()
       },

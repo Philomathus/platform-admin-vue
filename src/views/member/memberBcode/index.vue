@@ -54,6 +54,12 @@
       <el-table-column label="是否打码" align="center" prop="status" :formatter="formatterStatus"/>
       <el-table-column label="当前打码量" align="center" prop="cur"/>
       <el-table-column label="创建时间" align="center" prop="createTime" min-width="160"/>
+      <el-table-column label="最后更新人" align="center" prop="updateBy" min-width="160"/>
+      <el-table-column label="最后更新时间" align="center" prop="updateTime" min-width="160">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.updateTime) }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="220" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
@@ -81,10 +87,13 @@
     <!-- 修改会员打码数据对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="当前打码量" prop="cur">
           <el-input v-model="form.cur" placeholder="请输入当前打码量" />
           <el-input v-model="form.curCode" v-show="false"/>
+        </el-form-item>
+        <el-form-item label="Google验证码" prop="googleAuthCode">
+          <el-input v-model="form.googleAuthCode" placeholder="请输入Google验证码"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -150,8 +159,11 @@ export default {
       // 表单校验
       rules: {
         cur: [
-          {required: true, message: '当前打码量不能为空,且为数字', trigger: 'blur', pattern:'^(\\-|\\+)?\\d+(\\.\\d+)?$'}
-        ]
+          {required: true, message: '当前打码量不能为空,且数值大于等于0', trigger: 'blur', pattern:'^0\\.\\d+$|^[0-9]+(\\.\\d+)?$'}
+        ],
+        googleAuthCode: [
+          {required: true, message: 'google验证码不能为空', trigger: 'blur'}
+        ],
       }
     }
   },
@@ -209,6 +221,8 @@ export default {
         des: null,
         income: null,
         createTime: null,
+        updateBy: null,
+        updateTime: null,
         status: 0,
         cur: null
       }
@@ -251,11 +265,9 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.pageType === 1) {
-            let curCode = parseFloat(this.form.curCode);
             let cur = parseFloat(this.form.cur);
-            let count = curCode+cur;
-            if(count<0){
-              this.msgError("当前打码量数值需大于或等于0")
+            if(cur>this.form.income){
+              this.msgError("当前打码量数值不能大于收入")
               return;
             }
             updateMemberBcode(this.form).then(response => {

@@ -90,7 +90,6 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="当前打码量" prop="cur">
           <el-input v-model="form.cur" placeholder="请输入当前打码量" />
-          <el-input v-model="form.curCode" v-show="false"/>
         </el-form-item>
         <el-form-item label="Google验证码" prop="googleAuthCode">
           <el-input v-model="form.googleAuthCode" placeholder="请输入Google验证码"/>
@@ -120,7 +119,6 @@ export default {
   components: {},
   data() {
     return {
-      curCode: 0,
       pickerOptions: { shortcuts: pickerDateShortcuts },
       //顶部的三个总数据
       totalData: {
@@ -255,7 +253,6 @@ export default {
       getMemberBcode(id).then(response => {
         this.form = response.data;
         this.form.cur = this.form.cur + '';
-        this.form.curCode = this.form.cur + '';
         this.open = true;
         this.title = "修改会员打码数据";
       });

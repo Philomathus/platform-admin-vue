@@ -54,12 +54,6 @@
       <el-table-column label="是否打码" align="center" prop="status" :formatter="formatterStatus"/>
       <el-table-column label="当前打码量" align="center" prop="cur"/>
       <el-table-column label="创建时间" align="center" prop="createTime" min-width="160"/>
-      <el-table-column label="最后更新人" align="center" prop="updateBy" min-width="160"/>
-      <el-table-column label="最后更新时间" align="center" prop="updateTime" min-width="160">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.updateTime) }}</span>
-        </template>
-      </el-table-column>
       <el-table-column label="操作" width="220" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
@@ -219,8 +213,6 @@ export default {
         des: null,
         income: null,
         createTime: null,
-        updateBy: null,
-        updateTime: null,
         status: 0,
         cur: null
       }

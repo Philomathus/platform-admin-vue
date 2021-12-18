@@ -210,8 +210,9 @@ export default {
     /** 提交按钮 */
     submitForm() {
       var mobile=this.form.mobile;
-      if (mobile==""|| mobile.length>11){
+      if (mobile==""|| mobile==null ||mobile.length>11){
         this.$message.error("手机号格式错误")
+        return false
       }
       this.$refs["form"].validate(valid => {
         if (valid) {

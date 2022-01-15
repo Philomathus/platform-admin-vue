@@ -104,6 +104,8 @@
       <el-table-column label="开户人" align="center" prop="accountName"/>
       <el-table-column label="最小开放层级" align="center" prop="openLevel"/>
       <el-table-column label="最大开放层级" align="center" prop="openLevelMax"/>
+      <el-table-column label="最小充值金额" align="center" prop="rechargeLimitMin"/>
+      <el-table-column label="最大充值金额" align="center" prop="rechargeLimitMax"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -179,6 +181,15 @@
           <el-col :span="2" style="text-align: center;">-</el-col>
           <el-col :span="11">
             <el-input type="number" class="no-number" v-model="form.openLevelMax" placeholder="请输入最大开放层级"/>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="金额限制" prop="openLevel">
+          <el-col :span="11">
+            <el-input type="number" class="no-number" v-model="form.rechargeLimitMin" placeholder="请输入最小充值金额"/>
+          </el-col>
+          <el-col :span="2" style="text-align: center;">-</el-col>
+          <el-col :span="11">
+            <el-input type="number" class="no-number" v-model="form.rechargeLimitMax" placeholder="请输入最大充值金额"/>
           </el-col>
         </el-form-item>
         <el-form-item label="谷歌验证码" prop="googleAuthCode">

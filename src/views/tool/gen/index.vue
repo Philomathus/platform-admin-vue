@@ -248,7 +248,7 @@ export default {
       // 日期范围
       dateRange: '',
       // 库名
-      tableSchemaOptions: ['7700_main', '7700_lottery', '7700_live'],
+      tableSchemaOptions: ['7700_main', '7700_lottery', '7700_live', 'gold_market'],
       // 查询参数
       queryParams: {
         pageNum: 1,

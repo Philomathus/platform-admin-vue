@@ -899,8 +899,10 @@ export default {
         if (res.code === 0) {
           this.resetForm('form')
           this.visible = false
-          this.$notify.success(res.msg)
+          this.$message.success(res.msg)
           this.$emit('refMemeberData')
+        } else {
+          this.$message.warning(res.msg)
         }
       }).finally(() => {
         this.loading = false

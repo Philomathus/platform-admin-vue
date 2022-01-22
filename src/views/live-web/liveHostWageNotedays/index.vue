@@ -60,6 +60,7 @@
     >
       <el-table-column label="主播ID" align="center" prop="hostId"/>
       <el-table-column label="主播昵称" :show-overflow-tooltip="true" align="center" prop="nickName" min-width="100"/>
+      <el-table-column label="家族名称" align="center" prop="familyName"/>
       <el-table-column label="开播时长" align="center" prop="livetime"/>
       <el-table-column label="时长结算" align="center" prop="livetimejiesuan"/>
       <el-table-column label="礼物结算" align="center" prop="ticket"/>

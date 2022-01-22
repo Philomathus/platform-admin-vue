@@ -19,8 +19,27 @@
       </el-form-item>
       <el-form-item prop="seller">
         <el-input
+          v-model.trim="queryParams.orderId"
+          placeholder="订单ID"
+          clearable
+          size="small"
+          style="width: 220px"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item prop="seller">
+        <el-input
           v-model.trim="queryParams.seller"
-          placeholder="会员ID"
+          placeholder="卖方会员ID"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item prop="seller">
+        <el-input
+          v-model.trim="queryParams.buyer"
+          placeholder="买方会员ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -79,47 +98,44 @@
     </el-row>
 
     <el-table stripe v-loading="loading" :data="orderList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="订单ID，主键" align="center" prop="orderId" />
-      <el-table-column label="订单状态" min-width="120" align="center" prop="status">
-        <template slot-scope="scope">
-          <span
-            :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}"
-          >{{ status.dictLabel }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="订单金额" align="center" prop="money" />
-      <el-table-column label="订单发起时间" align="center" prop="orderTime" width="180">
+      <el-table-column label="订单ID" width="200" align="center" prop="orderId" />
+      <el-table-column label="订单金额" width="100" align="center" prop="money" />
+      <el-table-column label="订单发起时间" align="center" prop="orderTime" width="155">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.orderTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="锁定订单时间" align="center" prop="lockTime" width="180">
+      <el-table-column label="锁定订单时间" align="center" prop="lockTime" width="155">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.lockTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="确定支付时间" align="center" prop="payTime" width="180">
+      <el-table-column label="确定支付时间" align="center" prop="payTime" width="155">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.payTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="交易成功时间" align="center" prop="successTime" width="180">
+      <el-table-column label="交易成功时间" align="center" prop="successTime" width="155">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.successTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="卖方平台代理号" align="center" prop="sellAgent" />
-      <el-table-column label="卖方会员ID" align="center" prop="seller" />
-      <el-table-column label="卖方银行卡号" align="center" prop="sellBankAccount" />
-      <el-table-column label="卖方银行名称" align="center" prop="sellBankName" />
-      <el-table-column label="卖方银行开户姓名" align="center" prop="sellBankUsername" />
-      <el-table-column label="买方平台代理号" align="center" prop="buyAgent" />
-      <el-table-column label="买方会员ID" align="center" prop="buyer" />
-      <el-table-column label="买方银行卡号" align="center" prop="buyBankAccount" />
-      <el-table-column label="买方银行名称" align="center" prop="buyBankName" />
-      <el-table-column label="买方银行开户姓名" align="center" prop="buyBankUsername" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="订单状态" width="80" align="center" prop="status">
+        <template slot-scope="scope">
+          <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">{{ status.dictLabel }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="卖方代理号" align="center" prop="sellAgent" width="90" />
+      <el-table-column label="卖方会员ID" align="center" prop="seller" min-width="120" :show-overflow-tooltip="true" />
+      <el-table-column label="卖方银行卡号" align="center" prop="sellBankAccount" min-width="180" :show-overflow-tooltip="true" />
+      <el-table-column label="卖方银行名称" align="center" prop="sellBankName" min-width="100" :show-overflow-tooltip="true" />
+      <el-table-column label="卖方姓名" align="center" prop="sellBankUsername" min-width="100" :show-overflow-tooltip="true" />
+      <el-table-column label="买方代理号" align="center" prop="buyAgent" width="90" />
+      <el-table-column label="买方会员ID" align="center" prop="buyer" min-width="120" :show-overflow-tooltip="true" />
+      <el-table-column label="买方银行卡号" align="center" prop="buyBankAccount" min-width="180" :show-overflow-tooltip="true" />
+      <el-table-column label="买方银行名称" align="center" prop="buyBankName" min-width="100" :show-overflow-tooltip="true" />
+      <el-table-column label="买方姓名" align="center" prop="buyBankUsername" min-width="100" :show-overflow-tooltip="true" />
+      <el-table-column label="操作" align="center" width="180" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="small"
@@ -309,7 +325,7 @@ export default {
     };
   },
   created() {
-    this.getDicts('order_status').then(response => {
+    this.getDicts('gold_market_order_status').then(response => {
       this.statusOptions = response.data
     })
     this.getList();

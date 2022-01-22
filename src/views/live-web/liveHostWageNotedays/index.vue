@@ -111,6 +111,8 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
+        pageNum: 1,
+        pageSize: 10,
         selectDate: [this.parseTime(new Date(), '{y}-{m}-{d}'), this.parseTime(new Date(), '{y}-{m}-{d}')],
         nickName: null,
         hostId: null,

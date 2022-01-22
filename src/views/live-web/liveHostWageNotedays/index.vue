@@ -35,6 +35,15 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item prop="familyName" style="width: 150px">
+        <el-input
+          v-model="queryParams.familyName"
+          placeholder="家族名称"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -68,6 +77,14 @@
       <el-table-column label="开播次数" align="center" prop="times"/>
       <el-table-column label="总收入" align="center" prop="totalsettle"/>
     </el-table>
+    <pagination
+      v-show="total>0"
+      :total="total"
+      :page-sizes="[20,50,100]"
+      :page.sync="queryParams.pageNum"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+    />
   </div>
 </template>
 
@@ -111,6 +128,8 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
+        pageNum: 1,
+        pageSize: 20,
         selectDate: [this.parseTime(new Date(), '{y}-{m}-{d}'), this.parseTime(new Date(), '{y}-{m}-{d}')],
         nickName: null,
         hostId: null,
@@ -157,6 +176,7 @@ export default {
 
     /** 搜索按钮操作 */
     handleQuery() {
+      this.queryParams.pageNum = 1
       this.getList()
     },
     /** 重置按钮操作 */

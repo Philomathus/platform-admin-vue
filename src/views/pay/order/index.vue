@@ -1,6 +1,15 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+    <div v-loading="totalLoading">
+      <el-button type="success" @click="copy1">总公开笔数 {{ this.totalData.openCount || 0 }}</el-button>
+      <el-button type="warning" @click="copy2">总公开金额 {{ this.totalData.openTotal || 0 }}</el-button>
+      <el-button type="warning" @click="copy3">总成功笔数 {{ this.totalData.successCount || 0 }}</el-button>
+      <el-button type="warning" @click="copy4">总成功金额 {{ this.totalData.successTotal || 0 }}</el-button>
+      <el-button type="primary" icon="el-icon-search" size="mini" @click="getCountTotal()" style="margin-left: 20px;">
+        统计查询
+      </el-button>
+    </div>
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px" style="margin-top: 20px">
       <el-form-item label="订单发起时间" prop="searchTime" label-width="100px">
         <el-date-picker type="datetimerange" v-model="queryParams.searchTime" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
@@ -259,7 +268,7 @@
 </template>
 
 <script>
-import { listOrder, getOrder, delOrder, addOrder, updateOrder, exportOrder, updateOrderFail, updateOrderOpen } from "@/api/platform-web/pay/order";
+import { listOrder, getOrder, delOrder, addOrder, updateOrder, exportOrder, updateOrderFail, updateOrderOpen, getCountTotal } from "@/api/platform-web/pay/order";
 import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
 
 export default {
@@ -268,6 +277,9 @@ export default {
   },
   data() {
     return {
+      totalLoading: false,
+      // 头部数据
+      totalData: {},
       // 订单状态（0公开状态 1锁定状态 2确认收款 3交易成功）
       statusOptions: [],
       pickerOptions: {shortcuts: pickerDateTimeShortcuts},
@@ -349,6 +361,27 @@ export default {
     this.getList();
   },
   methods: {
+    //复制
+    copy1() {
+      this.copyCommand(this.totalData.openCount)
+    },
+    copy2() {
+      this.copyCommand(this.totalData.openTotal)
+    },
+    copy3() {
+      this.copyCommand(this.totalData.successCount)
+    },
+    copy4() {
+      this.copyCommand(this.totalData.successTotal)
+    },
+    getCountTotal() {
+      this.totalLoading = true
+      getCountTotal(this.queryParams).then((res) => {
+        this.totalData = res
+      }).finally(() => {
+        this.totalLoading = false
+      })
+    },
     /** 查询金币市场列表 */
     getList() {
       this.loading = true;

@@ -10,6 +10,15 @@ export function listOrder(query) {
   })
 }
 
+// 查询会员提现报告统计信息
+export function getCountTotal(query) {
+  return request({
+    url: url.goldMarketWeb + '/orderAdmin/countTotal',
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询金币市场详细
 export function getOrder(orderId) {
   return request({

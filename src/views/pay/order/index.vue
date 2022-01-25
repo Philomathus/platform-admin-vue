@@ -123,7 +123,7 @@
       <el-table-column label="订单状态" width="80" align="center" prop="status">
         <template slot-scope="scope">
           <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">{{ status.dictLabel }}</span>
-<!--          <span style="color: #FF5722" v-if="scope.row.status == -1">交易失败</span>-->
+<!--          <span style="color: #FF5722" v-if="scope.row.status == 4">交易失败</span>-->
         </template>
       </el-table-column>
       <el-table-column label="卖方代理号" align="center" prop="sellAgent" width="90" />
@@ -158,10 +158,10 @@
           >确认失败</el-button>
           <el-button
             size="small"
-            type="icon"
+            type="primary"
             plain
             @click="handleUpdateOpen(scope.row)"
-            v-show="scope.row.status == -1 || scope.row.status == 2 || scope.row.status == 3"
+            v-show="scope.row.status == 4 || scope.row.status == 2 || scope.row.status == 3"
             v-hasPermi="['admin:order:edit']"
           >设置公开</el-button>
         </template>

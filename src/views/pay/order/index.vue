@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <div v-loading="totalLoading">
-      <el-button type="success" @click="copy1">总公开笔数 {{ this.totalData.openCount || 0 }}</el-button>
-      <el-button type="warning" @click="copy2">总公开金额 {{ this.totalData.openTotal || 0 }}</el-button>
-      <el-button type="warning" @click="copy3">总成功笔数 {{ this.totalData.successCount || 0 }}</el-button>
-      <el-button type="warning" @click="copy4">总成功金额 {{ this.totalData.successTotal || 0 }}</el-button>
+      <el-button type="primary" @click="copy1">总公开笔数 {{ this.totalData.openCount || 0 }}</el-button>
+      <el-button type="primary" @click="copy2">总公开金额 {{ this.totalData.openTotal || 0 }}</el-button>
+      <el-button type="success" @click="copy3">总成功笔数 {{ this.totalData.successCount || 0 }}</el-button>
+      <el-button type="success" @click="copy4">总成功金额 {{ this.totalData.successTotal || 0 }}</el-button>
       <el-button type="primary" icon="el-icon-search" size="mini" @click="getCountTotal()" style="margin-left: 20px;">
         统计查询
       </el-button>

@@ -123,6 +123,7 @@
       <el-table-column label="订单状态" width="80" align="center" prop="status">
         <template slot-scope="scope">
           <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">{{ status.dictLabel }}</span>
+<!--          <span style="color: #FF5722" v-if="scope.row.status == -1">交易失败</span>-->
         </template>
       </el-table-column>
       <el-table-column label="卖方代理号" align="center" prop="sellAgent" width="90" />
@@ -135,17 +136,34 @@
       <el-table-column label="买方银行卡号" align="center" prop="buyBankAccount" min-width="180" :show-overflow-tooltip="true" />
       <el-table-column label="买方银行名称" align="center" prop="buyBankName" min-width="100" :show-overflow-tooltip="true" />
       <el-table-column label="买方姓名" align="center" prop="buyBankUsername" min-width="100" :show-overflow-tooltip="true" />
-      <el-table-column label="操作" align="center" width="180" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column label="操作" align="center" width="220" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="small"
-            type="primary"
+            type="success"
             icon="el-icon-circle-check"
             plain
             @click="handleUpdate(scope.row)"
             v-show="scope.row.status == 0 || scope.row.status == 1"
             v-hasPermi="['admin:order:edit']"
           >确认成功</el-button>
+          <el-button
+            size="small"
+            type="danger"
+            icon="el-icon-close"
+            plain
+            @click="handleUpdateFail(scope.row)"
+            v-show="scope.row.status == 0 || scope.row.status == 1"
+            v-hasPermi="['admin:order:edit']"
+          >确认失败</el-button>
+          <el-button
+            size="small"
+            type="icon"
+            plain
+            @click="handleUpdateOpen(scope.row)"
+            v-show="scope.row.status == -1 || scope.row.status == 2 || scope.row.status == 3"
+            v-hasPermi="['admin:order:edit']"
+          >设置公开</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -160,7 +178,7 @@
 
     <!-- 添加或修改金币市场对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="130px">
 <!--        <el-form-item label="订单状态">-->
 <!--          <el-radio-group v-model="form.status">-->
 <!--            <el-radio label="1">请选择字典生成</el-radio>-->
@@ -241,7 +259,7 @@
 </template>
 
 <script>
-import { listOrder, getOrder, delOrder, addOrder, updateOrder, exportOrder } from "@/api/platform-web/pay/order";
+import { listOrder, getOrder, delOrder, addOrder, updateOrder, exportOrder, updateOrderFail, updateOrderOpen } from "@/api/platform-web/pay/order";
 import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
 
 export default {
@@ -398,6 +416,22 @@ export default {
         this.form = response.data;
         this.open = true;
         this.title = "修改金币市场";
+      });
+    },
+    /** 交易失败按钮操作 */
+    handleUpdateFail(row) {
+      this.reset();
+      const orderId = row.orderId || this.ids
+      updateOrderFail(orderId).then(response => {
+        this.$message.success(response.msg)
+      });
+    },
+    /** 设置公开按钮操作 */
+    handleUpdateOpen(row) {
+      this.reset();
+      const orderId = row.orderId || this.ids
+      updateOrderOpen(orderId).then(response => {
+        this.$message.success(response.msg)
       });
     },
     /** 提交按钮 */

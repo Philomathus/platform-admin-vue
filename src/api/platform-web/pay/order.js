@@ -36,6 +36,30 @@ export function updateOrder(data) {
   })
 }
 
+// 交易失败金币市场
+export function updateOrderFail(orderId) {
+  const data = {
+    orderId: orderId
+  }
+  return request({
+    url: url.goldMarketWeb + '/orderAdmin/orderFail',
+    method: 'put',
+    data: data
+  })
+}
+
+// 设置公开金币市场
+export function updateOrderOpen(orderId) {
+  const data = {
+    orderId: orderId
+  }
+  return request({
+    url: url.goldMarketWeb + '/orderAdmin/orderOpen',
+    method: 'put',
+    data: data
+  })
+}
+
 // 删除金币市场
 export function delOrder(orderId) {
   return request({

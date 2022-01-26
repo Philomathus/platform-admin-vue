@@ -170,7 +170,7 @@
             type="primary"
             plain
             @click="handleUpdateOpen(scope.row)"
-            v-show="scope.row.status == 4 || scope.row.status == 2 || scope.row.status == 3"
+            v-show="scope.row.status == 2 || scope.row.status == 1"
             v-hasPermi="['admin:order:edit']"
           >设置公开</el-button>
         </template>

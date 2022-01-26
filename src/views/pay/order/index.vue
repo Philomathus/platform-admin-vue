@@ -153,7 +153,7 @@
             icon="el-icon-circle-check"
             plain
             @click="handleUpdate(scope.row)"
-            v-show="scope.row.status == 0 || scope.row.status == 1"
+            v-show="scope.row.status == 2"
             v-hasPermi="['admin:order:edit']"
           >确认成功</el-button>
           <el-button

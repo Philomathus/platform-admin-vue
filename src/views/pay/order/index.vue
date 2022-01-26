@@ -162,7 +162,7 @@
             icon="el-icon-close"
             plain
             @click="handleUpdateFail(scope.row)"
-            v-show="scope.row.status != 3"
+            v-show="scope.row.status != 3 && scope.row.status != 4"
             v-hasPermi="['admin:order:edit']"
           >确认失败</el-button>
           <el-button

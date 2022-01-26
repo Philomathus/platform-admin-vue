@@ -145,7 +145,7 @@
       <el-table-column label="买方银行卡号" align="center" prop="buyBankAccount" min-width="180" :show-overflow-tooltip="true" />
       <el-table-column label="买方银行名称" align="center" prop="buyBankName" min-width="100" :show-overflow-tooltip="true" />
       <el-table-column label="买方姓名" align="center" prop="buyBankUsername" min-width="100" :show-overflow-tooltip="true" />
-      <el-table-column label="操作" align="center" width="220" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column label="操作" align="center" width="330" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="small"

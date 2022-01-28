@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="48px">
-<!--      <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-      </el-form-item>-->
+      <!--      <el-form-item>
+              <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+              <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+            </el-form-item>-->
     </el-form>
 
     <el-row :gutter="10" class="mb8">
@@ -91,6 +91,9 @@
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="活动类型" prop="type">
+          <el-input v-model="form.type" placeholder="请输入活动类型" />
+        </el-form-item>
         <el-form-item label="名称" prop="prizeName">
           <el-input v-model="form.prizeName" placeholder="请输入名称" />
         </el-form-item>
@@ -153,6 +156,9 @@ export default {
       form: {},
       // 表单校验
       rules: {
+        type: [
+          { required: true, message: '活动类型不能为空', trigger: 'blur' }
+        ],
         prizeName: [
           { required: true, message: '名称不能为空', trigger: 'blur' }
         ],
@@ -193,7 +199,7 @@ export default {
         prizeName: null,
         prize: null,
         prizeWeight: null,
-        type: null,
+        type: 1,
         prizeAmount: null
       };
       this.resetForm("form");
@@ -263,7 +269,7 @@ export default {
         this.getList();
         this.msgSuccess("删除成功");
       }).catch(() => {
-	  })
+      })
     },
     /** 导出按钮操作 */
     handleExport() {

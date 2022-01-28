@@ -153,6 +153,18 @@ export default {
       form: {},
       // 表单校验
       rules: {
+        prizeName: [
+          { required: true, message: '名称不能为空', trigger: 'blur' }
+        ],
+        prize: [
+          { required: true, message: '奖励不能为空', trigger: 'blur' }
+        ],
+        prizeWeight: [
+          { required: true, message: '奖品权重不能为空，且为1-9的一个数字', trigger: 'blur', pattern:'^[1-9]$' }
+        ],
+        prizeAmount: [
+          { required: true, message: '奖品不能为空', trigger: 'blur' }
+        ]
       }
     };
   },

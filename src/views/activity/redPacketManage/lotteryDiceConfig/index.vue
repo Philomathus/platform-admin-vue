@@ -96,7 +96,10 @@
 
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="140px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="150px">
+        <el-form-item label="活动类型" prop="type">
+          <el-input v-model="form.type" placeholder="请输入活动类型" />
+        </el-form-item>
         <el-form-item label="当日存款总额最小值" prop="depositTotalMin">
           <el-input v-model="form.depositTotalMin" placeholder="请输入当日存款总额最小值" />
         </el-form-item>
@@ -156,6 +159,18 @@ export default {
       form: {},
       // 表单校验
       rules: {
+        type: [
+          { required: true, message: '活动类型不能为空', trigger: 'blur' }
+        ],
+        depositTotalMin: [
+          { required: true, message: '当日存款总额最小值不能为空', trigger: 'blur' }
+        ],
+        depositTotalMax: [
+          { required: true, message: '当日存款总额最大值不能为空', trigger: 'blur' }
+        ],
+        lotteryTimes: [
+          { required: true, message: '抽奖次数不能为空', trigger: 'blur' }
+        ]
       }
     };
   },
@@ -185,7 +200,7 @@ export default {
         depositTotalMax: null,
         lotteryTimes: null,
         status: 0,
-        type: null
+        type: 1
       };
       this.resetForm("form");
     },

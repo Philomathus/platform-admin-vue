@@ -62,7 +62,7 @@
 
     <el-table stripe v-loading="loading" :data="lotteryHistoryDiceList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="会员ID" align="center" prop="puserId" />
+      <el-table-column label="会员ID" align="center" prop="pUserId" />
       <el-table-column label="昵称" align="center" prop="name" />
       <el-table-column label="头像" align="center" prop="headImg">
         <template slot-scope="scope">
@@ -105,7 +105,7 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="会员ID" prop="pUserId">
-          <el-input v-model="form.puserId" placeholder="请输入会员ID" />
+          <el-input v-model="form.pUserId" placeholder="请输入会员ID" />
         </el-form-item>
         <el-form-item label="昵称" prop="name">
           <el-input v-model="form.name" placeholder="请输入昵称" />
@@ -169,6 +169,9 @@ export default {
       form: {},
       // 表单校验
       rules: {
+        pUserId: [
+          { required: true, message: '会员ID不能为空', trigger: 'blur' }
+        ],
       }
     };
   },

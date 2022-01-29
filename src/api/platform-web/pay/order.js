@@ -69,6 +69,31 @@ export function updateOrderOpen(orderId) {
   })
 }
 
+// 审核通过
+export function handleUpdatePass(orderId) {
+  const data = {
+    orderId: orderId
+  }
+  return request({
+    url: url.goldMarketWeb + '/orderAdmin/handleUpdatePass',
+    method: 'put',
+    data: data
+  })
+}
+
+// 审核不通过
+export function handleUpdateUnPass(orderId,auditDesc) {
+  const data = {
+    orderId: orderId,
+    auditDesc: auditDesc,
+  }
+  return request({
+    url: url.goldMarketWeb + '/orderAdmin/handleUpdateUnPass',
+    method: 'put',
+    data: data
+  })
+}
+
 // 删除金币市场
 export function delOrder(orderId) {
   return request({

@@ -173,6 +173,22 @@
             v-show="scope.row.status == 2 || scope.row.status == 1"
             v-hasPermi="['admin:order:edit']"
           >设置公开</el-button>
+          <el-button
+            size="small"
+            type="primary"
+            plain
+            @click="handleUpdatePass(scope.row)"
+            v-show="scope.row.status == 0"
+            v-hasPermi="['admin:order:edit']"
+          >审核通过</el-button>
+          <el-button
+            size="small"
+            type="primary"
+            plain
+            @click="handleUpdateUnPass(scope.row)"
+            v-show="scope.row.status == 0"
+            v-hasPermi="['admin:order:edit']"
+          >审核不通过</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -268,7 +284,8 @@
 </template>
 
 <script>
-import { listOrder, getOrder, delOrder, addOrder, updateOrder, exportOrder, updateOrderFail, updateOrderOpen, getCountTotal } from "@/api/platform-web/pay/order";
+import { listOrder, getOrder, delOrder, addOrder, updateOrder, exportOrder,
+  updateOrderFail, updateOrderOpen, getCountTotal, handleUpdatePass, handleUpdateUnPass } from "@/api/platform-web/pay/order";
 import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
 
 export default {
@@ -466,6 +483,35 @@ export default {
       updateOrderOpen(orderId).then(response => {
         this.$message.success(response.msg)
       });
+    },
+    /** 审核通过按钮操作 */
+    handleUpdatePass(row) {
+      const orderId = row.id
+      this.$confirm('是否确认通过?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function() {
+        return handleUpdatePass(orderId)
+      }).then(() => {
+        this.getList()
+      })
+    },
+    /** 审核不通过按钮操作 */
+    handleUpdateUnPass(row) {
+      const orderId = row.orderId || this.ids
+      this.$prompt(null, '请输入不通过原因', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /\S/,
+        inputErrorMessage: '不通过原因不可为空'
+      }).then(({value}) => {
+        handleUpdateUnPass(orderId,value).then(response => {
+          this.msgSuccess(response.msg)
+          this.getList()
+        })
+      }).catch(() => {
+      })
     },
     /** 提交按钮 */
     submitForm() {

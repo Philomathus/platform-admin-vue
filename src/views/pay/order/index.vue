@@ -486,7 +486,7 @@ export default {
     },
     /** 审核通过按钮操作 */
     handleUpdatePass(row) {
-      const orderId = row.id
+      const orderId = row.orderId
       this.$confirm('是否确认通过?', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -499,7 +499,7 @@ export default {
     },
     /** 审核不通过按钮操作 */
     handleUpdateUnPass(row) {
-      const orderId = row.orderId || this.ids
+      const orderId = row.orderId
       this.$prompt(null, '请输入不通过原因', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

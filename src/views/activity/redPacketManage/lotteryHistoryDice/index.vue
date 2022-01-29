@@ -25,6 +25,41 @@
       </el-form-item>
     </el-form>
 
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="mini"
+          @click="handleAdd"
+          v-hasPermi="['admin:lotteryHistoryDice:add']"
+        >新增</el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="success"
+          plain
+          icon="el-icon-edit"
+          size="mini"
+          :disabled="single"
+          @click="handleUpdate"
+          v-hasPermi="['admin:lotteryHistoryDice:edit']"
+        >修改</el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="warning"
+          plain
+          icon="el-icon-download"
+          size="mini"
+          @click="handleExport"
+          v-hasPermi="['admin:lotteryHistoryDice:export']"
+        >导出</el-button>
+      </el-col>
+      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+    </el-row>
+
     <el-table stripe v-loading="loading" :data="lotteryHistoryDiceList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="会员ID" align="center" prop="puserId" />
@@ -45,6 +80,17 @@
         </template>
       </el-table-column>
       <el-table-column label="奖励" align="center" prop="award" />
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            @click="handleUpdate(scope.row)"
+            v-hasPermi="['admin:lotteryHistoryDice:edit']"
+          >修改</el-button>
+        </template>
+      </el-table-column>
     </el-table>
 
     <pagination
@@ -59,21 +105,13 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="会员ID" prop="pUserId">
-          <el-input v-model="form.pUserId" placeholder="请输入会员ID" />
+          <el-input v-model="form.puserId" placeholder="请输入会员ID" />
         </el-form-item>
         <el-form-item label="昵称" prop="name">
           <el-input v-model="form.name" placeholder="请输入昵称" />
         </el-form-item>
         <el-form-item label="头像">
           <imageUpload v-model="form.headImg" path="lotteryHistoryDice"/>
-        </el-form-item>
-        <el-form-item label="时间" prop="cTime">
-          <el-date-picker clearable size="small"
-            v-model="form.cTime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择时间">
-          </el-date-picker>
         </el-form-item>
         <el-form-item label="奖励" prop="award">
           <el-input v-model="form.award" placeholder="请输入奖励" />
@@ -185,7 +223,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【请填写功能名称】";
+      this.title = "添加抽奖结果";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -194,7 +232,7 @@ export default {
       getLotteryHistoryDice(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = "修改抽奖结果";
       });
     },
     /** 提交按钮 */
@@ -230,7 +268,7 @@ export default {
         this.getList();
         this.msgSuccess("删除成功");
       }).catch(() => {
-	  })
+      })
     },
     /** 导出按钮操作 */
     handleExport() {

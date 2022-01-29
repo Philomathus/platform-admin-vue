@@ -178,7 +178,7 @@
             type="primary"
             plain
             @click="handleUpdatePass(scope.row)"
-            v-show="scope.row.status == 0"
+            v-show="scope.row.status == 0 && scope.row.isAudit == 0"
             v-hasPermi="['admin:order:edit']"
           >审核通过</el-button>
           <el-button
@@ -186,7 +186,7 @@
             type="primary"
             plain
             @click="handleUpdateUnPass(scope.row)"
-            v-show="scope.row.status == 0"
+            v-show="scope.row.status == 0 && scope.row.isAudit == 0"
             v-hasPermi="['admin:order:edit']"
           >审核不通过</el-button>
         </template>

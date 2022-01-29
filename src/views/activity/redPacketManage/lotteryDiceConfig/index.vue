@@ -183,6 +183,7 @@ export default {
       this.loading = true;
       listLotteryDiceConfig(this.queryParams).then(response => {
         this.lotteryDiceConfigList = response.rows;
+        this.lotteryDiceConfigList.forEach(value => {value.status= value.status + ''})
         this.total = response.total;
         this.loading = false;
       });
@@ -269,7 +270,7 @@ export default {
         this.getList();
         this.msgSuccess("删除成功");
       }).catch(() => {
-	  })
+      })
     },
     //修改状态
     handleStatusChange(row) {

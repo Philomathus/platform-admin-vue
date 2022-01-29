@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="48px">
-<!--      <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-      </el-form-item>-->
+      <!--      <el-form-item>
+              <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+              <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+            </el-form-item>-->
     </el-form>
 
     <el-row :gutter="10" class="mb8">
@@ -269,7 +269,7 @@ export default {
         this.getList();
         this.msgSuccess("删除成功");
       }).catch(() => {
-	  })
+      })
     },
     /** 导出按钮操作 */
     handleExport() {

@@ -75,7 +75,7 @@ export function handleUpdatePass(orderId) {
     orderId: orderId
   }
   return request({
-    url: url.goldMarketWeb + '/orderAdmin/handleUpdatePass',
+    url: url.goldMarketWeb + '/orderAdmin/orderAuditSuccess',
     method: 'put',
     data: data
   })
@@ -88,7 +88,7 @@ export function handleUpdateUnPass(orderId,auditDesc) {
     auditDesc: auditDesc,
   }
   return request({
-    url: url.goldMarketWeb + '/orderAdmin/handleUpdateUnPass',
+    url: url.goldMarketWeb + '/orderAdmin/orderAuditFail',
     method: 'put',
     data: data
   })

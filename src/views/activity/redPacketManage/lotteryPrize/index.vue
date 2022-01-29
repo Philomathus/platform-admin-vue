@@ -1,12 +1,5 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="48px">
-      <!--      <el-form-item>
-              <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-              <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-            </el-form-item>-->
-    </el-form>
-
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
@@ -59,7 +52,7 @@
       <el-table-column label="名称" align="center" prop="prizeName" />
       <el-table-column label="奖励" align="center" prop="prize" />
       <el-table-column label="奖品权重" align="center" prop="prizeWeight" />
-      <el-table-column label="奖品" align="center" prop="prizeAmount" />
+      <el-table-column label="奖品（剩余）数量" align="center" prop="prizeAmount" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -90,7 +83,7 @@
 
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="140px">
         <el-form-item label="活动类型" prop="type">
           <el-input v-model="form.type" placeholder="请输入活动类型" />
         </el-form-item>
@@ -103,8 +96,8 @@
         <el-form-item label="奖品权重" prop="prizeWeight">
           <el-input v-model="form.prizeWeight" placeholder="请输入奖品权重" />
         </el-form-item>
-        <el-form-item label="奖品" prop="prizeAmount">
-          <el-input v-model="form.prizeAmount" placeholder="请输入奖品" />
+        <el-form-item label="奖品（剩余）数量" prop="prizeAmount">
+          <el-input v-model="form.prizeAmount" placeholder="请输入奖品（剩余）数量" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

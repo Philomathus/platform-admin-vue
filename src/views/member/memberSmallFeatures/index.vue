@@ -76,19 +76,78 @@
           </el-form>
         </el-card>
       </el-col>
+      <el-col :span="4.5" class="card-box">
+        <el-card>
+          <div slot="header"><span>批量会员ID派送彩金</span></div>
+          <el-form :model="memberIdsFrom" ref="memberIdsFrom" :rules="memberIdsRules">
+            <el-upload
+              class="upload-demo"
+              ref="upload"
+              :action="uploadFileUrl"
+              :headers="headers"
+              name="excelFile"
+              :on-preview="handlePreview"
+              :on-remove="handleRemove"
+              :file-list="fileList"
+              :on-error="uploadFalse"
+              :on-success="uploadSuccess"
+              :auto-upload="false"
+              :before-upload="beforeAvatarUpload">
+              <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+              <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">批量导入</el-button>
+              <div slot="tip" class="el-upload__tip">只能上传excel文件</div>
+            </el-upload>
+            <el-form-item prop="memberIds" style="width: 100%">
+              <el-input
+                type="textarea"
+                :rows="40"
+                clearable
+                v-model="memberIdsFrom.memberIds"
+                placeholder="会员ID统一以竖行排列,不允许有任何字符"
+              />
+            </el-form-item>
+            <el-form-item prop="money" style="width: 100%">
+              <el-input
+                class="no-number"
+                type="number"
+                clearable
+                v-model="memberIdsFrom.money"
+                placeholder="请输入派送金额"
+              ></el-input>
+            </el-form-item>
+            <el-form-item prop="googleAuthCode" style="width: 110%">
+              <el-input
+                style="width: 52%"
+                clearable
+                type="number"
+                class="no-number"
+                v-model="memberIdsFrom.googleAuthCode"
+                placeholder="请输入谷歌验证码"
+              />
+              <el-button type="primary" plain style="width: 23%;" @click="handleCommit">提交</el-button>
+            </el-form-item>
+          </el-form>
+        </el-card>
+      </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
 
-import { updatePhones, queryPhones } from '@/api/platform-web/member/memberSmallFeatures'
-
+import { updatePhones, queryPhones, commitMoney } from '@/api/platform-web/member/memberSmallFeatures'
+import { url } from '@/utils/url'
+import { getToken } from '@/utils/auth'
 
 export default {
   name: "Server",
   data() {
     return {
+      uploadFileUrl: url.platformWeb + "/member/memberInfo/batchInsertShops",
+      headers: {
+        Authorization: 'Bearer ' + getToken()
+      },
+      fileList: null,
       restaurants: [],
       phonesByIds: '',
       phonesByIdsList: null,
@@ -101,6 +160,12 @@ export default {
       // 批量会员ID查询手机号表单参数
       phoneByIdFrom: {
         userIds: null,
+        googleAuthCode: null
+      },
+      // 批量会员ID派送彩金表单参数
+      memberIdsFrom: {
+        memberIds: null,
+        money: null,
         googleAuthCode: null
       },
       phoneByIdRules: {
@@ -121,12 +186,67 @@ export default {
         googleAuthCode: [
           {required: true, message: "谷歌验证码不能为空", trigger: "blur"}
         ]
-      }
+      },
+      memberIdsRules: {
+        memberIds: [
+          {required: true, message: "批量会员ID不能为空", trigger: "blur"}
+        ],
+        money: [
+          {required: true, message: "派送金额不能为空", trigger: "blur"}
+        ],
+        googleAuthCode: [
+          {required: true, message: "谷歌验证码不能为空", trigger: "blur"}
+        ]
+      },
     };
   },
   created() {
   },
   methods: {
+    uploadSuccess(response, file, fileList) {
+      if (response.status) {
+        alert("文件导入成功");
+      } else {
+        alert("文件导入失败");
+      }
+    },
+    uploadFalse(response, file, fileList) {
+      alert("文件上传失败！");
+    },
+    // 上传前对文件的大小的判断
+    beforeAvatarUpload(file) {
+      const extension = file.name.split(".")[1] === "xls";
+      const extension2 = file.name.split(".")[1] === "xlsx";
+      const extension3 = file.name.split(".")[1] === "doc";
+      const extension4 = file.name.split(".")[1] === "docx";
+      const isLt2M = file.size / 1024 / 1024 < 10;
+      if (!extension && !extension2 && !extension3 && !extension4) {
+        alert("上传模板只能是 xls、xlsx、doc、docx 格式!");
+      }
+      if (!isLt2M) {
+        console.log("上传模板大小不能超过 10MB!");
+      }
+      return extension || extension2 || extension3 || (extension4 && isLt2M);
+    },
+    submitUpload() {
+      if (this.businessType != null) {
+        //触发组件的action
+        this.$refs.upload.submit();
+      }
+      if (this.businessType == null) {
+        this.businessType = "businessType不能为空";
+      }
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePreview(file) {
+      if (file.response.status) {
+        alert("此文件导入成功");
+      } else {
+        alert("此文件导入失败");
+      }
+    },
     querySearch(queryString, cb) {
       var restaurants = this.restaurants;
       var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
@@ -185,10 +305,31 @@ export default {
         }
       })
     },
-    /** 批量会员ID查询手机号按钮 */
+    /** 批量会员ID清除手机号按钮 */
     handleClear() {
       this.phonesByIds = ''
-    }
+    },
+    /** 批量会员ID派送彩金按钮 */
+    handleCommit() {
+      this.$refs['memberIdsFrom'].validate(valid => {
+        if (valid) {
+          this.loading = true;
+          const memberIds = this.memberIdsFrom.memberIds
+          const money = this.memberIdsFrom.money
+          const googleAuthCode = this.memberIdsFrom.googleAuthCode
+          commitMoney(memberIds,money,googleAuthCode).then(res => {
+            console.info(res)
+            if (res.code === 0) {
+              this.msgError((res.msg))
+            } else {
+              this.msgSuccess((res.msg))
+            }
+          }).catch(() => {
+            this.$notify.error('网络异常')
+          })
+        }
+      })
+    },
   },
   mounted() {
     this.restaurants = this.loadAll();

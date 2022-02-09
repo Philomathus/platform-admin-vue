@@ -22,3 +22,18 @@ export function queryPhones(userIds,googleAuthCode) {
     data: data
   })
 }
+
+
+//会员小功能之派送彩金
+export function commitMoney(memberIds,money,googleAuthCode) {
+  const data = {
+    memberIds: memberIds,
+    money: money,
+    googleAuthCode: googleAuthCode
+  }
+  return request({
+    url: url.platformWeb + '/member/memberInfo/commitMoney',
+    method: 'post',
+    data: data
+  })
+}

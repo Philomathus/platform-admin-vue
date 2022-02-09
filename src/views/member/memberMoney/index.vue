@@ -22,7 +22,6 @@
           name="excelFile"
           :on-preview="handlePreview"
           :on-remove="handleRemove"
-          :file-list="fileList"
           :on-error="uploadFalse"
           :on-success="uploadSuccess"
           :auto-upload="false"
@@ -272,14 +271,15 @@ export default {
       this.getList()
     },
     starSend() {
-      if (this.queryParams.moneydes === null) {
-        this.$message.error('必须选择入款类型')
+      if (this.queryParams.moneydes === null || this.queryParams.moneydes === '' || this.queryParams.moneydes === undefined) {
+        this.$message.error('请填写入款备注')
       } else {
         starSend(this.queryParams.moneydes).then(response => {
+          console.info(response)
           if (response.code === 0) {
             this.$message.success('操作成功')
           } else {
-            this.$message.error('操作失败,请重新派送')
+            this.$message.error(response.msg)
           }
         })
       }

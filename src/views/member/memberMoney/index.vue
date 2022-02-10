@@ -15,6 +15,9 @@
       </el-form-item>
       <el-form-item>
         <el-upload
+          multiple
+          :limit="1"
+          :on-exceed="handleExceed"
           class="upload-demo"
           ref="upload"
           :action="uploadFileUrl"
@@ -208,11 +211,14 @@ export default {
     this.getList()
   },
   methods: {
-    uploadSuccess(response, file, fileList) {
-      this.$message.success('excel文件上传成功')
+    uploadSuccess() {
+      this.$message.success('excel上传成功')
     },
-    uploadFalse(response, file, fileList) {
-      alert('文件上传失败！')
+    uploadFalse() {
+      this.$message.error('excel上传失败！')
+    },
+    handleExceed() {
+      this.$message.error('只能选取一个excel,如需更换请x掉再选取')
     },
     // 上传前对文件的大小的判断
     beforeAvatarUpload(file) {
@@ -230,24 +236,11 @@ export default {
       return extension || extension2 || extension3 || (extension4 && isLt2M)
     },
     submitUpload() {
-      if (this.businessType === '2') {
-        this.$message.warning('此文件已上传成功,x掉再选取文件')
-      }
-      if (this.businessType === undefined) {
-        this.$message.warning('选取后先等等再点击上传,还没导入成功')
-      }
-      if (this.businessType != null) {
-        //触发组件的action
-        this.$refs.upload.submit()
-        this.businessType = '2'
-      }
-      if (this.businessType == null) {
-        this.businessType = '1'
-      }
+      //触发组件的action
+      this.$refs.upload.submit()
     },
-    handleRemove(file, fileList) {
-      this.businessType = undefined
-      this.$message.success('操作成功')
+    handleRemove() {
+      this.$message.success('移除成功')
     },
     handlePreview(file) {
       if (file.response.status) {

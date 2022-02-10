@@ -39,7 +39,7 @@
       <el-form-item prop="moneydes">
         <el-input
           v-model="queryParams.moneydes"
-          placeholder="请输入派送备注"
+          placeholder="请输入入款备注"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"

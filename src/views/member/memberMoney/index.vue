@@ -33,9 +33,6 @@
           <el-button style="margin-left: 10px;" size="small" type="primary" @click="submitUpload">上传excel文件</el-button>
         </el-upload>
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" size="mini" @click="handleCheck">预览</el-button>
-      </el-form-item>
       <el-form-item prop="moneydes">
         <el-input
           v-model="queryParams.moneydes"
@@ -47,6 +44,9 @@
       </el-form-item>
       <el-form-item>
         <el-button type="success" size="mini" @click="starSend">开始派送</el-button>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" size="mini" @click="handleClean">清除数据</el-button>
       </el-form-item>
     </el-form>
 
@@ -158,7 +158,8 @@ import {
   addMemberMoney,
   updateMemberMoney,
   exportMemberMoney,
-  starSend
+  starSend,
+  handleClean
 } from '@/api/platform-web/member/memberMoney'
 import { url } from '@/utils/url'
 import { getToken } from '@/utils/auth'
@@ -261,19 +262,31 @@ export default {
         this.loading = false
       })
     },
-    handleCheck() {
-      this.queryParams.memberId = null
-      this.queryParams.pageNum = 1
-      this.getList()
+    handleClean() {
+      handleClean().then(response => {
+        this.$message.success('数据清理成功')
+        this.queryParams.memberId = null
+        this.queryParams.pageNum = 1
+        this.getList()
+      })
     },
     starSend() {
+      const loading = this.$loading({
+        lock: true,
+        text: '正在派送中',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      });
       if (this.queryParams.moneydes === null || this.queryParams.moneydes === '' || this.queryParams.moneydes === undefined) {
+        loading.close();
         this.$message.error('请填写入款备注')
       } else {
         starSend(this.queryParams.moneydes).then(response => {
           console.info(response)
           if (response.code === 0) {
-            this.$message.success('操作成功')
+            loading.close()
+            this.getList()
+            this.$message.success('派送成功')
           } else {
             this.$message.error(response.msg)
           }

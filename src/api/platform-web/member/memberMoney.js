@@ -10,6 +10,13 @@ export function listMemberMoney(query) {
   })
 }
 
+export function handleClean() {
+  return request({
+    url: url.platformWeb + '/admin/memberMoney/handleClean',
+    method: 'get'
+  })
+}
+
 // 查询派送彩金暂存表详细
 export function getMemberMoney(memberId) {
   return request({

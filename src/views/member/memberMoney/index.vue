@@ -213,6 +213,9 @@ export default {
   methods: {
     uploadSuccess() {
       this.$message.success('excel上传成功')
+      this.queryParams.memberId = null
+      this.queryParams.pageNum = 1
+      this.getList()
     },
     uploadFalse() {
       this.$message.error('excel上传失败！')

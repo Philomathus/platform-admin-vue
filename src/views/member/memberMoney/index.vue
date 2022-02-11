@@ -297,14 +297,16 @@ export default {
         background: 'rgba(0, 0, 0, 0.7)'
       })
       starSend(this.form.moneydes,this.form.googleAuthCode).then(response => {
+        loading.close()
         if (response.code === 0) {
-          loading.close()
           this.getList()
           this.$message.success('派送成功')
         } else {
           this.$message.error(response.msg)
         }
-      })
+      }).catch(
+        loading.close()
+      )
     },
     // 取消按钮
     cancel() {

@@ -25,9 +25,10 @@ export function getMemberMoney(memberId) {
   })
 }
 
-export function starSend(moneydes) {
+export function starSend(moneydes,googleAuthCode) {
   const data = {
-    moneydes
+    moneydes,
+    googleAuthCode
   }
   return request({
     url: url.platformWeb + '/admin/memberMoney/starSend',

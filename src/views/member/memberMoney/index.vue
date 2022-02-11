@@ -33,15 +33,6 @@
           <el-button style="margin-left: 10px;" size="small" type="primary" @click="submitUpload">上传excel文件</el-button>
         </el-upload>
       </el-form-item>
-      <el-form-item prop="moneydes">
-        <el-input
-          v-model="queryParams.moneydes"
-          placeholder="请输入入款备注"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item>
         <el-button type="success" size="mini" @click="starSend">开始派送</el-button>
       </el-form-item>
@@ -147,6 +138,22 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="opene" width="400px"
+               append-to-body>
+      <el-form ref="form" :model="form" :rules="startPaiRules" label-width="100px">
+        <el-form-item label="入款备注" prop="moneydes">
+          <el-input v-model="form.moneydes" placeholder="请输入入款备注"/>
+        </el-form-item>
+        <el-form-item label="谷歌验证码" prop="googleAuthCode">
+          <el-input v-model="form.googleAuthCode" placeholder="请输入谷歌验证码"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitFormStartSend">开始派送</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -192,6 +199,7 @@ export default {
       title: '',
       // 是否显示弹出层
       open: false,
+      opene: false,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -204,6 +212,14 @@ export default {
       rules: {
         money: [
           { required: true, message: '派送金额不能为空', trigger: 'blur' }
+        ]
+      },
+      startPaiRules: {
+        moneydes: [
+          { required: true, message: '入款备注不能为空', trigger: 'blur' }
+        ],
+        googleAuthCode: [
+          { required: true, message: '谷歌验证码不能为空', trigger: 'blur' }
         ]
       }
     }
@@ -226,18 +242,15 @@ export default {
     },
     // 上传前对文件的大小的判断
     beforeAvatarUpload(file) {
-      const extension = file.name.split('.')[1] === 'xls'
-      const extension2 = file.name.split('.')[1] === 'xlsx'
-      const extension3 = file.name.split('.')[1] === 'doc'
-      const extension4 = file.name.split('.')[1] === 'docx'
+      const extension = file.name.split('.')[1] === 'xlsx'
       const isLt2M = file.size / 1024 / 1024 < 10
-      if (!extension && !extension2 && !extension3 && !extension4) {
-        alert('上传模板只能是 xls、xlsx、doc、docx 格式!')
+      if (!extension) {
+        this.$message.error('上传模板只能是xlsx格式的excel文件!')
       }
       if (!isLt2M) {
-        console.log('上传模板大小不能超过 10MB!')
+        this.$message.error('上传模板大小不能超过10MB!')
       }
-      return extension || extension2 || extension3 || (extension4 && isLt2M)
+      return extension || isLt2M
     },
     submitUpload() {
       //触发组件的action
@@ -271,38 +284,41 @@ export default {
       })
     },
     starSend() {
+      this.reset()
+      this.opene = true
+      this.title = '开始派送'
+    },
+    submitFormStartSend() {
+      this.opene = false
       const loading = this.$loading({
         lock: true,
         text: '正在派送中',
         spinner: 'el-icon-loading',
         background: 'rgba(0, 0, 0, 0.7)'
-      });
-      if (this.queryParams.moneydes === null || this.queryParams.moneydes === '' || this.queryParams.moneydes === undefined) {
-        loading.close();
-        this.$message.error('请填写入款备注')
-      } else {
-        starSend(this.queryParams.moneydes).then(response => {
-          console.info(response)
-          if (response.code === 0) {
-            loading.close()
-            this.getList()
-            this.$message.success('派送成功')
-          } else {
-            this.$message.error(response.msg)
-          }
-        })
-      }
+      })
+      starSend(this.form.moneydes,this.form.googleAuthCode).then(response => {
+        if (response.code === 0) {
+          loading.close()
+          this.getList()
+          this.$message.success('派送成功')
+        } else {
+          this.$message.error(response.msg)
+        }
+      })
     },
     // 取消按钮
     cancel() {
       this.open = false
+      this.opene = false
       this.reset()
     },
     // 表单重置
     reset() {
       this.form = {
         memberId: null,
-        money: null
+        money: null,
+        moneydes: null,
+        googleAuthCode: null
       }
       this.resetForm('form')
     },

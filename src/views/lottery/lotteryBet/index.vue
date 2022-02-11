@@ -30,14 +30,21 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="lotteryName" style="width: 150px;">
-        <el-input
+      <el-form-item prop="lotteryName">
+        <el-select
           v-model="queryParams.lotteryName"
-          placeholder="彩票名称"
+          placeholder="请选择彩票名称"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          style="width: 240px"
+        >
+          <el-option
+            v-for="dict in lotteryNameOptions"
+            :key="dict.name"
+            :label="dict.name"
+            :value="dict.name"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item prop="cost">
         <el-input
@@ -139,6 +146,7 @@
 
 <script>
 import { listLotteryBet0, getCount, exportLotteryBet0,repaireLotteryBet0 } from '@/api/platform-web/lottery/lotteryBet'
+import {listLotteryInfo} from "@/api/platform-web/lottery/lotteryInfo";
 import { pickerDateTimeShortcuts } from '@/utils/dateUtils'
 
 export default {
@@ -146,6 +154,8 @@ export default {
   components: {},
   data() {
     return {
+      // 彩票名称字典
+      lotteryNameOptions: [],
       //统计数据
       totalData: {
         totalCost: 0,
@@ -200,6 +210,11 @@ export default {
     this.getList()
     this.getDicts('lottery_bat_status').then(response => {
       this.statusOptions = response.data
+    })
+    //彩票名称
+    listLotteryInfo().then(response => {
+      console.info(response)
+      this.lotteryNameOptions = response.rows
     })
   },
   methods: {

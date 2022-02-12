@@ -10,10 +10,28 @@ export function listOrder(query) {
   })
 }
 
+// 查询金币市场列表
+export function listOrderBuy(query) {
+  return request({
+    url: url.goldMarketWeb + '/orderAdmin/order/buyList',
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询会员提现报告统计信息
 export function getCountTotal(query) {
   return request({
     url: url.goldMarketWeb + '/orderAdmin/countTotal',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询会员提现报告统计信息
+export function getCountTotalBuy(query) {
+  return request({
+    url: url.goldMarketWeb + '/orderAdmin/countTotalBuy',
     method: 'get',
     params: query
   })

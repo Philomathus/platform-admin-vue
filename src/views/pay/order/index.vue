@@ -106,7 +106,8 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table stripe v-loading="loading" :data="orderList" @selection-change="handleSelectionChange">
+    <el-table stripe v-loading="loading" :data="orderList" @selection-change="handleSelectionChange"
+              :highlight-current-row="true" :row-class-name="tableRowClassNameWithdraw">
       <el-table-column label="订单ID" width="200" align="center" prop="orderId" />
       <el-table-column label="订单金额" width="100" align="center" prop="money" />
       <el-table-column label="订单发起时间" align="center" prop="orderTime" width="155">
@@ -380,6 +381,12 @@ export default {
     this.getList();
   },
   methods: {
+    tableRowClassNameWithdraw({row}) {
+      console.info(row.colorRight)
+      if (row.colorRight != null && row.colorRight == 1 ) {
+        return 'warning-row'
+      }
+    },
     //复制
     copy1() {
       this.copyCommand(this.totalData.openCount)

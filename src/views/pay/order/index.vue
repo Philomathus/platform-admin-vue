@@ -338,7 +338,9 @@ export default {
         buyer: null,
         buyBankAccount: null,
         buyBankName: null,
-        buyBankUsername: null
+        buyBankUsername: null,
+        orderByColumn: 'order_time',
+        isAsc: 'desc'
       },
       // 表单参数
       form: {},

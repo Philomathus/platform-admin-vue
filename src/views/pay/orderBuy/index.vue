@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
     <div v-loading="totalLoading">
-      <el-button type="primary" @click="copy1">总公开笔数 {{ this.totalData.openCount || 0 }}</el-button>
-      <el-button type="primary" @click="copy2">总公开金额 {{ this.totalData.openTotal || 0 }}</el-button>
+      <el-button type="primary" @click="copy1">总购买笔数 {{ this.totalData.openCount || 0 }}</el-button>
+      <el-button type="primary" @click="copy2">总购买金额 {{ this.totalData.openTotal || 0 }}</el-button>
       <el-button type="success" @click="copy3">总成功笔数 {{ this.totalData.successCount || 0 }}</el-button>
       <el-button type="success" @click="copy4">总成功金额 {{ this.totalData.successTotal || 0 }}</el-button>
       <el-button type="primary" icon="el-icon-search" size="mini" @click="getCountTotal()" style="margin-left: 20px;">
@@ -146,52 +146,52 @@
       <el-table-column label="买方银行卡号" align="center" prop="buyBankAccount" min-width="180" :show-overflow-tooltip="true" />
       <el-table-column label="买方银行名称" align="center" prop="buyBankName" min-width="100" :show-overflow-tooltip="true" />
       <el-table-column label="买方姓名" align="center" prop="buyBankUsername" min-width="100" :show-overflow-tooltip="true" />
-      <el-table-column label="操作" align="center" width="330" class-name="small-padding fixed-width" fixed="right">
-        <template slot-scope="scope">
-          <el-button
-            size="small"
-            type="success"
-            icon="el-icon-circle-check"
-            plain
-            @click="handleUpdate(scope.row)"
-            v-show="scope.row.status == 2"
-            v-hasPermi="['admin:order:edit']"
-          >确认成功</el-button>
-          <el-button
-            size="small"
-            type="danger"
-            icon="el-icon-close"
-            plain
-            @click="handleUpdateFail(scope.row)"
-            v-show="scope.row.status == 2 || scope.row.status == 1"
-            v-hasPermi="['admin:order:edit']"
-          >确认失败</el-button>
-          <el-button
-            size="small"
-            type="primary"
-            plain
-            @click="handleUpdateOpen(scope.row)"
-            v-show="scope.row.status == 2 || scope.row.status == 1"
-            v-hasPermi="['admin:order:edit']"
-          >设置公开</el-button>
-          <el-button
-            size="small"
-            type="primary"
-            plain
-            @click="handleUpdatePass(scope.row)"
-            v-show="scope.row.status == 0 && scope.row.isAudit == 0"
-            v-hasPermi="['admin:order:edit']"
-          >审核通过</el-button>
-          <el-button
-            size="small"
-            type="primary"
-            plain
-            @click="handleUpdateUnPass(scope.row)"
-            v-show="scope.row.status == 0 && scope.row.isAudit == 0"
-            v-hasPermi="['admin:order:edit']"
-          >审核不通过</el-button>
-        </template>
-      </el-table-column>
+<!--      <el-table-column label="操作" align="center" width="330" class-name="small-padding fixed-width" fixed="right">-->
+<!--        <template slot-scope="scope">-->
+<!--          <el-button-->
+<!--            size="small"-->
+<!--            type="success"-->
+<!--            icon="el-icon-circle-check"-->
+<!--            plain-->
+<!--            @click="handleUpdate(scope.row)"-->
+<!--            v-show="scope.row.status == 2"-->
+<!--            v-hasPermi="['admin:order:edit']"-->
+<!--          >确认成功</el-button>-->
+<!--          <el-button-->
+<!--            size="small"-->
+<!--            type="danger"-->
+<!--            icon="el-icon-close"-->
+<!--            plain-->
+<!--            @click="handleUpdateFail(scope.row)"-->
+<!--            v-show="scope.row.status == 2 || scope.row.status == 1"-->
+<!--            v-hasPermi="['admin:order:edit']"-->
+<!--          >确认失败</el-button>-->
+<!--          <el-button-->
+<!--            size="small"-->
+<!--            type="primary"-->
+<!--            plain-->
+<!--            @click="handleUpdateOpen(scope.row)"-->
+<!--            v-show="scope.row.status == 2 || scope.row.status == 1"-->
+<!--            v-hasPermi="['admin:order:edit']"-->
+<!--          >设置公开</el-button>-->
+<!--          <el-button-->
+<!--            size="small"-->
+<!--            type="primary"-->
+<!--            plain-->
+<!--            @click="handleUpdatePass(scope.row)"-->
+<!--            v-show="scope.row.status == 0 && scope.row.isAudit == 0"-->
+<!--            v-hasPermi="['admin:order:edit']"-->
+<!--          >审核通过</el-button>-->
+<!--          <el-button-->
+<!--            size="small"-->
+<!--            type="primary"-->
+<!--            plain-->
+<!--            @click="handleUpdateUnPass(scope.row)"-->
+<!--            v-show="scope.row.status == 0 && scope.row.isAudit == 0"-->
+<!--            v-hasPermi="['admin:order:edit']"-->
+<!--          >审核不通过</el-button>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
     </el-table>
 
     <pagination
@@ -285,8 +285,8 @@
 </template>
 
 <script>
-import { listOrder, getOrder, delOrder, addOrder, updateOrder, exportOrder,
-  updateOrderFail, updateOrderOpen, getCountTotal, handleUpdatePass, handleUpdateUnPass } from "@/api/platform-web/pay/order";
+import { listOrderBuy, getOrder, delOrder, addOrder, updateOrder, exportOrder,
+  updateOrderFail, updateOrderOpen, getCountTotalBuy, handleUpdatePass, handleUpdateUnPass } from "@/api/platform-web/pay/order";
 import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
 
 export default {
@@ -382,7 +382,6 @@ export default {
   },
   methods: {
     tableRowClassNameWithdraw({row}) {
-      console.info(row.colorRight)
       if (row.colorRight != null && row.colorRight == 1 ) {
         return 'warning-row'
       }
@@ -402,7 +401,7 @@ export default {
     },
     getCountTotal() {
       this.totalLoading = true
-      getCountTotal(this.queryParams).then((res) => {
+      getCountTotalBuy(this.queryParams).then((res) => {
         this.totalData = res
       }).finally(() => {
         this.totalLoading = false
@@ -411,7 +410,7 @@ export default {
     /** 查询金币市场列表 */
     getList() {
       this.loading = true;
-      listOrder(this.queryParams).then(response => {
+      listOrderBuy(this.queryParams).then(response => {
         this.orderList = response.rows;
         this.total = response.total;
         this.loading = false;

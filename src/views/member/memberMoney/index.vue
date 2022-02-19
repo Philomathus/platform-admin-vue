@@ -41,17 +41,17 @@
     </el-form>
 
     <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['admin:memberMoney:add']"
-        >新增
-        </el-button>
-      </el-col>
+<!--      <el-col :span="1.5">-->
+<!--        <el-button-->
+<!--          type="primary"-->
+<!--          plain-->
+<!--          icon="el-icon-plus"-->
+<!--          size="mini"-->
+<!--          @click="handleAdd"-->
+<!--          v-hasPermi="['admin:memberMoney:add']"-->
+<!--        >新增-->
+<!--        </el-button>-->
+<!--      </el-col>-->
       <el-col :span="1.5">
         <el-button
           type="success"
@@ -94,6 +94,7 @@
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="会员id" align="center" prop="memberId"/>
       <el-table-column label="派送金额" align="center" prop="money"/>
+      <el-table-column label="打码倍数" align="center" prop="beat"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -130,6 +131,9 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="派送金额" prop="money">
           <el-input v-model="form.money" placeholder="请输入派送金额"/>
+        </el-form-item>
+        <el-form-item label="打码倍数" prop="beat">
+          <el-input v-model="form.beat" placeholder="请输入打码倍数"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -211,6 +215,9 @@ export default {
       rules: {
         money: [
           { required: true, message: '派送金额不能为空', trigger: 'blur' }
+        ],
+        beat: [
+          { required: true, message: '打码倍数不能为空', trigger: 'blur' }
         ]
       },
       startPaiRules: {
@@ -298,14 +305,16 @@ export default {
         background: 'rgba(0, 0, 0, 0.7)'
       })
       starSend(this.form.moneydes,this.form.googleAuthCode).then(response => {
+        loading.close()
         if (response.code === 0) {
-          loading.close()
           this.getList()
           this.$message.success('派送成功')
         } else {
           this.$message.error(response.msg)
         }
-      })
+      }).catch(
+        loading.close()
+      )
     },
     // 取消按钮
     cancel() {
@@ -318,6 +327,7 @@ export default {
       this.form = {
         memberId: null,
         money: null,
+        beat: null,
         moneydes: null,
         googleAuthCode: null
       }

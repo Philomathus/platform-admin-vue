@@ -245,11 +245,12 @@ export default {
       const isLt2M = file.size / 1024 / 1024 < 10
       if (!extension) {
         this.$message.error('上传模板只能是xlsx格式的excel文件!')
+        return
       }
       if (!isLt2M) {
         this.$message.error('上传模板大小不能超过10MB!')
+        return
       }
-      return extension || isLt2M
     },
     submitUpload() {
       //触发组件的action

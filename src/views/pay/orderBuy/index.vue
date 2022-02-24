@@ -10,7 +10,7 @@
       </el-button>
     </div>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px" style="margin-top: 20px">
-      <el-form-item label="订单发起时间" prop="searchTime" label-width="100px">
+      <el-form-item label="交易成功时间" prop="searchTime" label-width="100px">
         <el-date-picker type="datetimerange" v-model="queryParams.searchTime" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
                         end-placeholder="结束时间" range-separator="至" :default-time="['00:00:00', '23:59:59']" clearable :picker-options="pickerOptions"

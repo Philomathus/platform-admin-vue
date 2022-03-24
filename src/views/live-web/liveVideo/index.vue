@@ -190,8 +190,7 @@
     </el-table>
 
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="350px"
-               append-to-body
-    >
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="85px">
         <el-form-item label="主播ID" prop="id">
           <el-input v-model="form.id" placeholder="主播ID" readonly disabled/>
@@ -414,9 +413,13 @@ export default {
         return
       }
       updateLivePay(this.form.id, this.form.liveFee).then(response => {
-        this.msgSuccess(response.msg)
-        this.open = false
-        this.getList()
+        if (response.code === 200) {
+          this.msgSuccess(response.msg)
+          this.open = false
+          this.getList()
+        } else if (response.code === 500) {
+          this.msgError(response.msg)
+        }
       })
     },
     typeFormat(row) {

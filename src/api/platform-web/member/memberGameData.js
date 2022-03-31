@@ -56,7 +56,8 @@ export function gameRecordList(query) {
   return request({
     url: url.platformWeb + '/member/memberGameData/recordList',
     method: 'get',
-    params: query
+    params: query,
+    timeout: 60000
   })
 }
 
@@ -65,7 +66,8 @@ export function gameDetailList(query) {
   return request({
     url: url.platformWeb + '/member/memberGameData/detailList',
     method: 'get',
-    params: query
+    params: query,
+    timeout: 60000
   })
 }
 //查询平台列表

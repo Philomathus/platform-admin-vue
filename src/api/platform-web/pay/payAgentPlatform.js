@@ -80,7 +80,8 @@ export function payAgentOrder(data) {
   return request({
     url: url.platformWeb + '/pay/payAgentPlatform/payAgentOrder',
     method: 'post',
-    data: data
+    data: data,
+    timeout: 60000
   })
 }
 
@@ -89,6 +90,7 @@ export function payAgentOrders(data) {
   return request({
     url: url.platformWeb + '/pay/payAgentPlatform/payAgentOrders',
     method: 'post',
-    data: data
+    data: data,
+    timeout: 60000
   })
 }

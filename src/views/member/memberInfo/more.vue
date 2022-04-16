@@ -431,14 +431,15 @@ export default {
       }],
       //加分提交的数据
       form: {
-        beatNum: '',
-        googleAuthCode: '',
-        id: '',
-        mk: '',
-        moneydes: '',
-        ordermk: '',
-        score: '',
-        betMoney: ''
+        beatNum: null,
+        googleAuthCode: null,
+        id: null,
+        mk: null,
+        moneydes: null,
+        ordermk: null,
+        remarkPay: null,
+        score: null,
+        betMoney: null
       },
       // 总条数
       total: 0,

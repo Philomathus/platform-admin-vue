@@ -71,10 +71,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="bankAccount" style="width: 110px;">
+      <el-form-item prop="bankAccount" style="width: 155px;">
         <el-input
           v-model="queryParams.bankAccount"
-          placeholder="银行卡号"
+          placeholder="银行卡号/真实姓名"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"

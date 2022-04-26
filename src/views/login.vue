@@ -7,7 +7,7 @@
           v-model="loginForm.username"
           type="text"
           auto-complete="off"
-          placeholder="账号"
+          placeholder="UserName | 账号"
         >
           <svg-icon slot="prefix" icon-class="user" class="el-input__icon input-icon"/>
         </el-input>
@@ -17,7 +17,7 @@
           v-model="loginForm.password"
           type="password"
           auto-complete="off"
-          placeholder="密码"
+          placeholder="Password | 密码"
         >
           <svg-icon slot="prefix" icon-class="password" class="el-input__icon input-icon"/>
         </el-input>
@@ -26,7 +26,7 @@
         <el-input
           v-model="loginForm.googleAuthCode"
           auto-complete="off"
-          placeholder="google验证码"
+          placeholder="google verification | 验证码"
           @keyup.enter.native="handleLogin"
           type="number"
           @input="loginForm.googleAuthCode.length>6
@@ -72,12 +72,12 @@ export default {
       },
       loginRules: {
         username: [
-          { required: true, trigger: 'blur', message: '用户名不能为空' }
+          { required: true, trigger: 'blur', message: 'Required | 用户名不能为空' }
         ],
         password: [
-          { required: true, trigger: 'blur', message: '密码不能为空' }
+          { required: true, trigger: 'blur', message: 'Required | 密码不能为空' }
         ],
-        googleAuthCode: [{ required: true, trigger: 'change', message: 'google验证码不能为空' }]
+        googleAuthCode: [{ required: true, trigger: 'change', message: 'Google verification Required | 验证码不能为空' }]
       },
       loading: false,
       redirect: undefined
@@ -123,6 +123,7 @@ export default {
   margin: 0px auto 30px auto;
   text-align: center;
   color: #707070;
+  font-size: 20px;
 }
 
 .login-form {

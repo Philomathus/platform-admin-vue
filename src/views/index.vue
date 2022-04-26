@@ -1,6 +1,5 @@
 <template>
 
-
   <div class="page">
     <div class="content">
       Welcome !
@@ -24,6 +23,7 @@
     font-weight: 400;
     line-height: calc(33vh * 100 / 1334);
     color: #ef159f;
+    font-style: italic;
   }
 
 </style>

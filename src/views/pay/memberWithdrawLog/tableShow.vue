@@ -62,10 +62,9 @@
     <div class="lotteryInfo">
       <div class="title">会员备注</div>
       <div class="mount" style="width: 80%">
-        <div style="    display: flex;
-    justify-content: flex-start;">
-          <el-input class="font" v-model.trim="email" maxlength="50" show-word-limit></el-input>
-          <el-button type="primary" plain @click="updateEmail(email,data.会员编号)">更新</el-button>
+        <div class="member-note-field">
+          <el-input type="textarea" id="text-area" class="font" style="height: auto" v-model.trim="email" maxlength="50" show-word-limit></el-input>
+          <el-button class="renew-btn2" type="primary" plain @click="updateEmail(email,data.会员编号)">更新</el-button>
         </div>
       </div>
     </div>
@@ -192,7 +191,6 @@ export default {
   },
 }
 
-
 </script>
 
 <style scoped>
@@ -206,9 +204,30 @@ div {
   /*align-items:center; display: flex;*/
 }
 
+.member-note-field{
+  display: flex;
+  justify-content: flex-start;
+  height: 57px;
+  padding-bottom: 5px;
+  overflow: hidden;
+}
+
+.el-textarea .el-input__count {
+  bottom: -10px !important;
+}
+
 .font {
   height: 40px;
   text-align: center;
+}
+#text-area{
+  height: 50px;
+  width: 100%;
+  text-align: center;
+}
+
+.renew-btn2{
+  height: 53px;
 }
 
 .title {

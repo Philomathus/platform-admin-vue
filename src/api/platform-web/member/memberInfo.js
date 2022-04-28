@@ -24,7 +24,8 @@ export function memberWithdrawLog(query) {
   return request({
     url: url.platformWeb + '/member/memberInfo/report',
     method: 'get',
-    params: query
+    params: query,
+    timeout: 60000
   })
 }
 // 会员信息发送

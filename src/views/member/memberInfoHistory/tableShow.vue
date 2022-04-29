@@ -63,7 +63,7 @@
       <div class="title">会员备注</div>
       <div class="mount" style="width: 80%">
         <div class="member-his-note-field">
-          <el-input type="textarea" class="font" id="text-area"style="height: auto" v-model.trim="email" maxlength="50" show-word-limit></el-input>
+          <el-input type="textarea" class="font" id="text-area" style="height: auto" v-model.trim="email" maxlength="50" show-word-limit></el-input>
           <el-button type="success" class="renew_btn" @click="updateEmail(email,data.会员编号)">更新</el-button>
         </div>
       </div>

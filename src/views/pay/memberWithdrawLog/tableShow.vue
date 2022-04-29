@@ -212,10 +212,6 @@ div {
   overflow: hidden;
 }
 
-.el-textarea .el-input__count {
-  bottom: -10px !important;
-}
-
 .font {
   height: 40px;
   text-align: center;

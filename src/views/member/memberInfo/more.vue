@@ -26,6 +26,12 @@
           <span>重置手机号</span></button>
         <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(13,'重置邀请码')">
           <span>重置邀请码</span></button>
+
+<!--Follow Members tab added by rajesh index:16 represent follow members-->
+        <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(16,'关注主播')">
+          <span>关注主播</span></button>
+<!--End follow members tab here  -->
+
         <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(2,'资金明细')">
           <span>资金明细</span></button>
         <button
@@ -53,6 +59,7 @@
         <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(15,'域名展示')">
           <span>域名展示</span></button>
       </div>
+
       <!--积分明细-->
       <el-row v-if="index===1">
         <el-table @row-click="clickRow" ref="table" :data="dbTableList" height="460px" v-loading="loading">
@@ -198,6 +205,8 @@
           </el-form-item>
         </el-form>
       </el-row>
+
+
       <!--银行卡-->
       <el-row v-if="index===5">
         <el-table
@@ -213,14 +222,14 @@
               <el-input v-model="row.realName"></el-input>
             </template>
           </el-table-column>
+
           <el-table-column prop="bankName" label="银行名称" :show-overflow-tooltip="true" min-width="100">
             <template v-slot="{row}" v-if="index===5">
               <el-input v-model="row.bankName"></el-input>
             </template>
           </el-table-column>
           <el-table-column prop="bankAccount" label="银行卡号" :show-overflow-tooltip="true" min-width="150"
-                           align="center"
-          >
+                           align="center">
             <template v-slot="{row}" v-if="index===5">
               <el-input v-model="row.bankAccount"></el-input>
             </template>
@@ -231,8 +240,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="createTime" label=" 绑定时间" :show-overflow-tooltip="true" min-width="160"
-                           align="center"
-          ></el-table-column>
+                           align="center"></el-table-column>
           <el-table-column label="操作" min-width="140">
             <template v-slot="{row}" v-if="index===5">
               <el-button
@@ -268,9 +276,26 @@
           :total="total"
           :page.sync="queryParams.pageNum"
           :limit.sync="queryParams.pageSize"
-          @pagination="getList"
-        />
+          @pagination="getList" />
       </el-row>
+
+
+<!--   关注主播- Follow the anchor created by Rajesh-->
+      <el-row v-if="index===16">
+        <el-table
+          @row-click="clickRow"
+          ref="table"
+          :data="dbTableList"
+          @selection-change="handleSelectionChange"
+          height="460px"
+          v-loading="loading">
+          <el-table-column label="主播ID" align="center" prop="id" min-width="120px"/>
+          <el-table-column label="主播昵称" align="center" prop="nickName" min-width="120px"/>
+        </el-table>
+      </el-row>
+<!--  END 关注主播- Follow the anchor function created by Rajesh -->
+
+
       <div slot="footer" class="dialog-footer">
         <el-button
           type="primary"
@@ -365,7 +390,8 @@ import {
   unbindCard,
   changeBank,
   getMemberInfo,
-  resetWithdrawal, memberBcodeRepair, updateVip, sendMsg, updateMobile, fullMobile, imDelete, updateInviterCode
+  resetWithdrawal, memberBcodeRepair, updateVip,
+  sendMsg, updateMobile, fullMobile, imDelete, updateInviterCode,followList
 } from '@/api/platform-web/member/memberInfo'
 import {userImMute} from '@/api/platform-web/live-web/ImMute'
 // import { hideKMobile } from '@/utils/mobile.js'
@@ -597,7 +623,7 @@ export default {
       return '未知'
     },
     unbind(row) {
-      this.loading = true
+      this.loading = truef
       const id = row.id
       const memberId = row.memberId
       unbindCard(id, memberId).then((res) => {
@@ -822,6 +848,9 @@ export default {
         case 15:
           this.getMemberInfo()
           break
+        case 16:                     //added case 16 by rajesh
+          this.followList()
+          break
       }
     },
     //获取详细信息
@@ -947,6 +976,22 @@ export default {
         }
       }).catch((error) => {
         this.$notify.warning('获取银行卡列表失败')
+        this.loading = false
+      })
+    },
+
+    //follow List function created by rajesh
+    followList() {
+      this.dbTableList = []
+      this.loading = true
+      followList({
+        id: this.memberId,
+        // _: new Date().getTime()
+      }).then((res) => {
+          this.dbTableList = res.data
+          this.loading = false
+      }).catch((error) => {
+        this.$notify.warning('获取关注列表失败')
         this.loading = false
       })
     },

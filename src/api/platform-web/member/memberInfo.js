@@ -249,3 +249,11 @@ export function imDelete(query) {
   })
 }
 
+// 查询银行卡列表接口
+export function followList(query) {
+  return request({
+    url: url.platformWeb + '/member/memberInfo/follow-list',
+    method: 'get',
+    params: query
+  })
+}

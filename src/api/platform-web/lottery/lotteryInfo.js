@@ -26,3 +26,12 @@ export function updateLotteryInfo(data) {
     data: data
   })
 }
+
+// 修改主播禁播状态
+export function statusDetail(query) {
+  return request({
+    url: url.platformWeb + '/admin/lotteryInfo/statusDetail',
+    method: 'put',
+    params: query
+  })
+}

@@ -91,7 +91,22 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="状态" align="center" prop="status" :formatter="formatterStatus"/>
+<!--      editing here-->
+<!--      <el-table-column label="状态" align="center" prop="status" :formatter="formatterStatus"/>-->
+
+      <el-table-column label="状态" align="center" prop="status" :formatter="formatterStatus">
+          <template v-slot="{row}">
+            <el-switch
+              :inactive-value="0"
+              :active-value="1"
+              inactive-color="#dadde5"
+              active-color="#5B7BFA"
+              v-model="row.status"
+              @change=formatterStatus(row)>
+            </el-switch>
+        </template>
+      </el-table-column>
+
       <el-table-column label="杀率" align="center" prop="killRate"/>
       <el-table-column label="周期" align="center" prop="cycle"/>
       <el-table-column label="最小投注金额" align="center" prop="minCost"/>
@@ -133,7 +148,7 @@
 </template>
 
 <script>
-import {listLotteryInfo, getLotteryInfo, updateLotteryInfo} from "@/api/platform-web/lottery/lotteryInfo";
+import {listLotteryInfo, getLotteryInfo, updateLotteryInfo,statusDetail} from "@/api/platform-web/lottery/lotteryInfo";
 import ImageUpload from "@/components/ImageUpload";
 
 export default {
@@ -209,6 +224,7 @@ export default {
         killRate: null,
         minCost: null,
         cycle: null,
+        isBan:null,
       },
       // 表单参数
       form: {},
@@ -233,6 +249,7 @@ export default {
         this.loading = false;
       });
     },
+
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
@@ -266,16 +283,56 @@ export default {
         return ''
       }
     },
-    // 禁用启用
+
+    /*<<<>>>====================================<<<<<>>>>>>>>>>
+         禁用启用 Set Status Active =1 and DeActive = 0
+                 started function from here
+      <<<<<>>>>>=================================<<<<<<>>>>  */
     formatterStatus(row) {
-      if (row.status == 0) {
-        return '禁用'
-      } else if (row.status == 1) {
-        return '启用'
-      } else {
-        return ''
+      if(row.status===1 || row.status===0){
+        if (row.status) {
+          return this.statusDetail( row, row.status)
+        } else {
+          return this.statusDetail(row, row.status)
+        }
+      }else{
+        return null;
       }
     },
+    opens(hint, row, type) {
+      var that = this
+      this.$prompt(hint, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+        /*inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+        inputErrorMessage: '验证码格式不正确'*/
+      }).then(({ value }) => {
+        that.statusDetail(row, type, value)
+      }).catch(() => {
+        row.status = row.status === 0 ? 1 : 0
+      })
+
+    },
+    statusDetail(row, type, value) {
+      statusDetail({
+        id: row.id,
+        status: type,
+        banRemark: value
+      }).then((res) => {
+        this.$notify.success(res.msg)
+        row.status = type
+        this.getList()
+      }).catch(() => {
+        this.$notify.error('修改禁播状态失败')
+      })
+    },
+
+    /*<<<>>>====================================<<<<<>>>>>>>>>>
+         禁用启用 Set Status Active =1 and DeActive = 0
+                 function ENDED HERE  here
+      <<<<<>>>>>=================================<<<<<<>>>>  */
+
+
     // 取消按钮
     cancel() {
       this.open = false;

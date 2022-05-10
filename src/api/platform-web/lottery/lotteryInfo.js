@@ -27,7 +27,7 @@ export function updateLotteryInfo(data) {
   })
 }
 
-// 修改主播禁播状态
+// 修改主播禁播状态- Lottery Status Handler Url
 export function statusDetail(query) {
   return request({
     url: url.platformWeb + '/admin/lotteryInfo/statusDetail',

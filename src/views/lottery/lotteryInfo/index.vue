@@ -224,7 +224,6 @@ export default {
         killRate: null,
         minCost: null,
         cycle: null,
-        isBan:null,
       },
       // 表单参数
       form: {},
@@ -304,8 +303,6 @@ export default {
       this.$prompt(hint, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
-        /*inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
-        inputErrorMessage: '验证码格式不正确'*/
       }).then(({ value }) => {
         that.statusDetail(row, type, value)
       }).catch(() => {

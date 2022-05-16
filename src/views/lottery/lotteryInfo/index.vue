@@ -91,9 +91,7 @@
           </el-image>
         </template>
       </el-table-column>
-<!--      editing here-->
-<!--      <el-table-column label="状态" align="center" prop="status" :formatter="formatterStatus"/>-->
-
+<!--     Status Handler Switch Button  -->
       <el-table-column label="状态" align="center" prop="status" :formatter="formatterStatus">
           <template v-slot="{row}">
             <el-switch
@@ -309,7 +307,6 @@ export default {
       }).catch(() => {
         row.status = row.status === 0 ? 1 : 0
       })
-
     },
     statusDetail(row, type, value) {
       statusDetail({

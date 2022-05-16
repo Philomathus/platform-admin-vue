@@ -41,6 +41,7 @@
     </el-form>
 
     <el-row :gutter="10" class="mb8">
+
 <!--      <el-col :span="1.5">-->
 <!--        <el-button-->
 <!--          type="primary"-->
@@ -52,6 +53,7 @@
 <!--        >新增-->
 <!--        </el-button>-->
 <!--      </el-col>-->
+
       <el-col :span="1.5">
         <el-button
           type="success"
@@ -96,6 +98,7 @@
       <el-table-column label="派送金额" align="center" prop="money"/>
       <el-table-column label="打码倍数" align="center" prop="beat"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -169,17 +172,18 @@ import {
   updateMemberMoney,
   exportMemberMoney,
   starSend,
-  handleClean
+  handleClean,
+  uploadFileUrl
 } from '@/api/platform-web/member/memberMoney'
-import { url } from '@/utils/url'
 import { getToken } from '@/utils/auth'
+
 
 export default {
   name: 'MemberMoney',
   components: {},
   data() {
     return {
-      uploadFileUrl: url.platformWeb + '/member/memberInfo/batchInsertShops',
+      uploadFileUrl : uploadFileUrl(),
       headers: {
         Authorization: 'Bearer ' + getToken()
       },
@@ -249,9 +253,10 @@ export default {
     // 上传前对文件的大小的判断
     beforeAvatarUpload(file) {
       const extension = file.name.split('.')[1] === 'xlsx'
+      const extensionXls = file.name.split('.')[1] === 'xls' //added this new extensionsXsl
       const isLt2M = file.size / 1024 / 1024 < 10
-      if (!extension) {
-        this.$message.error('上传模板只能是xlsx格式的excel文件!')
+      if (!extension && !extensionXls) {
+        this.$message.error('上传模板只能是xlsx or xls 格式的excel文件!')
         return
       }
       if (!isLt2M) {
@@ -263,12 +268,14 @@ export default {
       //触发组件的action
       this.$refs.upload.submit()
     },
+
     handleRemove() {
       this.$message.success('移除成功')
     },
     handlePreview(file) {
       console.info(file.response.status)
       if (file.response.status) {
+
         this.$message.success('此文件导入成功')
       } else {
         this.$message.error('此文件导入失败')

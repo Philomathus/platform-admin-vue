@@ -74,3 +74,8 @@ export function exportMemberMoney(query) {
     timeout: 60000
   })
 }
+
+//import Member Money temporary table-导入红利支付临时表
+export function uploadFileUrl(){
+  return url.platformWeb + '/member/memberInfo/batchInsertShops'
+}

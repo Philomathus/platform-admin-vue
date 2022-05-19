@@ -623,7 +623,7 @@ export default {
       return '未知'
     },
     unbind(row) {
-      this.loading = truef
+      this.loading = true
       const id = row.id
       const memberId = row.memberId
       unbindCard(id, memberId).then((res) => {

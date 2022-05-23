@@ -935,10 +935,10 @@ import {
         ipBan({
           loginIp: this.queryParamIp.loginIp,
         }).then((res) => {
-          if (res.code ===200) {
-            this.$notify.success('状态设置0成功')
+          if (res.code ===0) {
+            this.$notify.error('状态修改失败')
           } else {
-            this.$notify.error('状态修改失败|状态已禁用')
+            this.$notify.success('状态设置0成功')
           }
         }).catch(() => {
           this.$notify.error('网络异常error')

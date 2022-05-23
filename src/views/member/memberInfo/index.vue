@@ -872,7 +872,6 @@ import {
       paginationByIpList() {
         this.memberByIpAddressListList = true
         this.title = '查看已封停的ip'
-        // this.paginationShow = true;
         listMemberInfo(this.queryParamIp).then(response => {
           this.memberByIpAddress = response.rows
           this.total = response.total
@@ -893,7 +892,7 @@ import {
         this.queryParamsByIp.pageNum = 1
         this.getSearchList()
       },
-      /** 查询用户信息列表 */
+      /** Query user information list */
       getSearchList() {
         this.loading = true
 
@@ -947,7 +946,6 @@ import {
           this.searchMbyIpList()
         })
       }
-
 
 /** End Rajesh managed block of code here */
 

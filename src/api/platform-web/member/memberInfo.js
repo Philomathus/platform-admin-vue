@@ -10,6 +10,7 @@ export function listMemberInfo(query) {
   })
 }
 
+
 // 统计会员余额保险箱
 export function listCount(query) {
   return request({
@@ -257,3 +258,15 @@ export function followList(query) {
     params: query
   })
 }
+
+
+export function ipBan(query) {
+  return request({
+    url: url.platformWeb + '/member/memberInfo/ban-ip',
+    method: 'put',
+    params: query
+  })
+}
+
+
+

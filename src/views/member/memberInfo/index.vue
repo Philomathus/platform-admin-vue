@@ -18,8 +18,8 @@
         <el-select v-model="queryParams.status" placeholder="全部状态" clearable size="small">
 <!--          <el-option v-for="(item,index) in typeList" :key="index" :label="item.label" :value="item.value"/>-->
           <el-option
-            v-for="dict in typeList"
-            :key="dict.dictValue"
+            v-for="(dict,i) in typeList"
+            :key="i"
             :label="dict.dictLabel"
             :value="parseInt(dict.dictValue)"
           ></el-option>
@@ -46,8 +46,8 @@
       <el-form-item prop="channelcode" style="width: 110px;">
         <el-select v-model="queryParams.channelcode" placeholder="全部类型" clearable size="small">
           <el-option
-            v-for="dict in statusOptions"
-            :key="dict.dictValue"
+            v-for="(dict,i) in statusOptions"
+            :key="'A'+ i"
             :label="dict.dictLabel"
             :value="dict.dictValue"
           />
@@ -128,6 +128,21 @@
         >查看封停ip
         </el-button>
       </el-col>
+
+<!--      adding new button ip click get pop up-->
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="mini"
+          @click="memberListAccordingToIp()"
+        >批量封禁
+        </el-button>
+      </el-col>
+
+<!--      end adding button -->
+
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -144,8 +159,8 @@
           >
             <!--<el-option v-for="(item,index) in typeList" :key="index" :label="item.label" :value="item.value"/>-->
             <el-option
-              v-for="dict in typeList"
-              :key="dict.dictValue"
+              v-for="(dict,i) in typeList"
+              :key="'B'+ i"
               :label="dict.dictLabel"
               :value="parseInt(dict.dictValue)"
             ></el-option>
@@ -221,8 +236,8 @@
         style="min-width: 360px"
       >
         <el-option
-          v-for="dict in muteRemarkOptions"
-          :key="dict.dictValue"
+          v-for="(dict,i) in muteRemarkOptions"
+          :key="'C'+ i"
           :label="dict.dictLabel"
           :value="dict.dictValue"
         />
@@ -254,8 +269,8 @@
         style="min-width: 360px"
       >
         <el-option
-          v-for="dict in muteRemarkOptions"
-          :key="dict.dictValue"
+          v-for="(dict,i) in muteRemarkOptions"
+          :key="'D'+ i"
           :label="dict.dictLabel"
           :value="dict.dictValue"
         />
@@ -342,31 +357,93 @@
           </template>
         </el-table-column>
       </el-table>
-      <pagination
-        v-show="total>0"
-        :total="total"
-        :page-sizes="[10,20,100]"
-        :page.sync="queryParam.pageNum"
-        :limit.sync="queryParam.pageSize"
-        @pagination="openIpBlackList"
-      />
+      <div v-if="paginationShow===true">
+        <pagination
+          v-show="total>0"
+          :total="total"
+          :page-sizes="[10,20,100]"
+          :page.sync="queryParam.pageNum"
+          :limit.sync="queryParam.pageSize"
+          @pagination="openIpBlackList"
+        />
+      </div>
     </el-dialog>
+
+    <!--member by ip address start from here-->
+    <el-dialog :close-on-click-modal="false" title="查看会员ip" :visible.sync="memberByIpAddressListList"
+               width="1200px" append-to-body>
+      <el-form :model="queryParamIp" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+        <el-form-item label="会员id" prop="loginIp">
+          <el-input
+            v-model="queryParamIp.loginIp"
+            placeholder="会员ip"
+            clearable
+            size="small"
+            @keyup.enter.native="handleInputQuery"
+          />
+        </el-form-item>
+
+        <el-form-item>
+          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleSearchQueryByIp" :disabled='!queryParamIp.loginIp'>搜索</el-button>
+        </el-form-item>
+      </el-form>
+
+      <el-table :stripe="true" v-loading="loading" :data="memberByIpAddress" style="margin-bottom: 2px;">
+        <el-table-column label="会员ID" align="center" prop="id"/>
+        <el-table-column label="昵称" align="center" prop="nickName"/>
+
+        <el-table-column label="状态" min-width="90" align="center" prop="status" :formatter="statusFormat"/>
+
+        <el-table-column label="登录IP" align="center" prop="loginIp"/>
+        <el-table-column label="登录备注" align="center" prop="email"/>
+      </el-table>
+
+      <div v-if="paginationShow===true">
+        <pagination
+          v-show="total>0"
+          :total="total"
+          :page-sizes="[10,20,100]"
+          :page.sync="queryParamIp.pageNum"
+          :limit.sync="queryParamIp.pageSize"
+          @pagination="paginationByIpList"/>
+      </div>
+
+<!--      //** handling close button */-->
+      <el-row :gutter="10" class="mb8" style="margin-left: 80%;margin-top: 35px">
+<!--        handling onclick deactivate user status-->
+        <el-col :span="1.5">
+          <el-button type="primary" plain style="height: auto" @click = "ipBlockHandler" :disabled = '!paginationShow'>
+            堵塞
+          </el-button>
+        </el-col>
+<!--click on clock member searched panel  -->
+        <el-col :span="1.5">
+          <el-button type="primary" plain @click="closeTap()" style="height: auto">
+            关闭/Close
+          </el-button>
+        </el-col>
+      </el-row>
+
+
+    </el-dialog>
+    <!--member by ip address END here-->
+
     <ExcelPrompt ref="excelPrompt" @downLoadExcel="handleExport"></ExcelPrompt>
   </div>
 </template>
 
 <script>
-  import {
-    listMemberInfo,
-    getMemberInfo,
-    addMemberInfo,
-    updateMemberInfo,
-    exportMemberInfo,
-    changeSpeak,
-    changeStatus,
-    changeStatusBan,
-    listCount
-  } from '@/api/platform-web/member/memberInfo'
+import {
+  listMemberInfo,
+  getMemberInfo,
+  addMemberInfo,
+  updateMemberInfo,
+  exportMemberInfo,
+  changeSpeak,
+  changeStatus,
+  changeStatusBan,
+  listCount, ipBan
+} from '@/api/platform-web/member/memberInfo'
   import more from './more'
   import {listSpeakIpBlackList, updateSpeakIpBlackList} from '@/api/live-web/chat/speakIpBlackList'
   import {pickerDateShortcuts, pickerDateTimeShortcuts} from '@/utils/dateUtils'
@@ -409,6 +486,8 @@
         id: '',
         speak: '',
         status: '',
+        nickName: '',
+
         remark: '',
         remarked: '',
         // 选中数组
@@ -430,8 +509,20 @@
         //会员发言表格数据
         speakIpBlackData: [],
         speakIpBlackListList: false,
+
         // 用户信息表格数据
         memberInfoList: [],
+        memberByIpListList: false,
+
+        //adding new member by ip
+        memberByIpAddress: [],
+        memberByIpAddressListList: false,
+        paginationShow : false,
+        loginIp : '',
+        firstOptions: [],
+        first : null,
+        //end new data
+
         // 弹出层标题
         title: '',
         // 是否显示弹出层
@@ -459,6 +550,23 @@
           pageSize: 20,
           orderByColumn: 'create_time',
           isAsc: 'desc'
+        },
+        queryParamIp: {
+          pageNum: 1,
+          pageSize: 20,
+          orderByColumn: 'reg_time',
+          isAsc: 'desc'
+        },
+        queryParamsByIp: {
+          pageNum: 1,
+          pageSize: 20,
+          email:'',
+          searchValue: '', //会员Id,账号,手机号
+          status: '',
+          loginIp: '',
+          nickName: '',
+          orderByColumn: 'reg_time',
+          // isAsc: 'desc'
         },
         // 表单参数
         form: {},
@@ -493,6 +601,7 @@
       this.getDicts('device_type').then(response => {
         this.statusOptions = response.data
       })
+
     },
     methods: {
       //复制
@@ -746,7 +855,104 @@
           this.muteRemarkSpeak = false
           this.getList()
         })
+      },
+
+/** this block of code managed by Rajesh */
+      /** Handle click on display tab event by ip address */
+      memberListAccordingToIp() {
+        this.memberByIpAddressListList = true
+        this.title = '查看已封停的ip'
+      },
+      /** formatting the 0-1-2 value */
+      statusFormat(row, column) {
+        return this.selectDictLabel(this.typeList, row.status)
+      },
+
+      /**creating pagging part */
+      paginationByIpList() {
+        this.memberByIpAddressListList = true
+        this.title = '查看已封停的ip'
+        // this.paginationShow = true;
+        listMemberInfo(this.queryParamIp).then(response => {
+          this.memberByIpAddress = response.rows
+          this.total = response.total
+          this.loading = false
+        })
+      },
+
+      /** handling search function */
+      handleInputQuery() {
+        if(this.queryParamsByIp.searchValue){
+          const reg = '^[0-9_]{1,}$'
+          let flag = this.queryParamsByIp.searchValue.match(reg)
+          if(!flag){
+            this.msgError("search By iP")
+            return
+          }
+        }
+        this.queryParamsByIp.pageNum = 1
+        this.getSearchList()
+      },
+      /** 查询用户信息列表 */
+      getSearchList() {
+        this.loading = true
+
+        this.queryParamsByIp = this.addDateRange(this.queryParamsByIp, this.dateRange);
+        this.paginationShow = true;
+        listMemberInfo(this.queryParamsByIp).then(response => {
+          this.memberByIpAddress = response.rows
+          this.total = response.total
+          this.loading = false
+        })
+      },
+      handleSearchQueryByIp() {
+        this.queryParamIp.pageNum = 1
+        this.searchMbyIpList()
+      },
+      searchMbyIpList() {
+        this.paginationShow = true;
+        listMemberInfo(this.queryParamIp).then(response => {
+          this.memberByIpAddress = response.rows //this line test again later
+          this.total = response.total
+          this.loading = false
+        })
+      },
+
+      /**click handle clear data from table front end only */
+      closeTap(){
+        this.paginationShow = false;
+        this.memberByIpAddressListList = false;
+        this.queryParamIp.loginIp = "";
+        listMemberInfo(this.queryParamIp).then(response => {
+          this.memberByIpAddress  = null;
+          this.queryParamIp.pageNum = null
+          this.loading = false
+        })
+      },
+
+  /** start on click ip status to set 0 panel from here */
+     ipBlockHandler() {
+
+        ipBan({
+          loginIp: this.queryParamIp.loginIp,
+        }).then((res) => {
+          if (res.code ===200) {
+            this.$notify.success('状态设置0成功')
+          } else {
+            this.$notify.error('状态修改失败|状态已禁用')
+          }
+        }).catch(() => {
+          this.$notify.error('网络异常error')
+        }).finally(() => {
+          this.searchMbyIpList()
+        })
       }
+
+
+/** End Rajesh managed block of code here */
+
     },
   }
+
+
 </script>

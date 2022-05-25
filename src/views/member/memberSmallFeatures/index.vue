@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-row>
 
-      <el-col :span="4" class="card-box">
+      <el-col :span="5" class="card-box">
         <el-card>
           <div slot="header"><span>批量手机号更新密码</span></div>
           <el-form :model="phoneFrom" ref="phoneFrom" :rules="phoneRules">
@@ -39,7 +39,7 @@
           </el-form>
         </el-card>
       </el-col>
-      <el-col :span="4" class="card-box">
+      <el-col :span="5" class="card-box">
         <el-card>
           <div slot="header"><span>批量会员ID查询手机号</span></div>
           <el-form :model="phoneByIdFrom" ref="phoneByIdFrom" :rules="phoneByIdRules">
@@ -61,8 +61,8 @@
                 v-model="phoneByIdFrom.googleAuthCode"
                 placeholder="请输入谷歌验证码"
               />
-              <el-button type="primary" plain style="width: 25%" @click="handleQuery">查询</el-button>
-              <el-button type="info" size="mini" plain style="width: 18%" @click="handleClear">清除</el-button>
+              <el-button type="primary" plain style="width: 25%;margin-left: 1px" @click="handleQuery">查询</el-button>
+              <el-button type="info" size="mini" plain style="width: 18%;padding:11px" @click="handleClear">清除</el-button>
             </el-form-item>
             <el-form-item prop="phonesByIds" style="width: 100%;">
                 <el-input

@@ -931,15 +931,14 @@ import {
 
   /** start on click ip status to set 0 panel from here */
      ipBlockHandler() {
-
         ipBan({
           loginIp: this.queryParamIp.loginIp,
         }).then((res) => {
-          if (res.code ===0) {
+          if (res.code ===0 || res.code >200) {
             this.$notify.error('状态修改失败')
-          } else {
-            this.$notify.success('状态设置0成功')
           }
+            this.$notify.success('状态设置0成功')
+
         }).catch(() => {
           this.$notify.error('网络异常error')
         }).finally(() => {

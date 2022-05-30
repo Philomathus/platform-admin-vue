@@ -259,7 +259,7 @@ export function followList(query) {
   })
 }
 
-
+// 查询禁止成员 By Ip接口 Query ban member By Ip interface
 export function ipBan(query) {
   return request({
     url: url.platformWeb + '/member/memberInfo/ban-ip',

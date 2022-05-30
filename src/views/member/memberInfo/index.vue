@@ -911,7 +911,7 @@ import {
       searchMbyIpList() {
         this.paginationShow = true;
         listMemberInfo(this.queryParamIp).then(response => {
-          this.memberByIpAddress = response.rows //this line test again later
+          this.memberByIpAddress = response.rows
           this.total = response.total
           this.loading = false
         })

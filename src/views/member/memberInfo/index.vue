@@ -207,15 +207,16 @@
       </el-table-column>
     </el-table>
 
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page-sizes="[20,50,100,200]"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
-
+    <div v-if="memberInfoList.length>0">
+      <pagination
+        v-show="total>0"
+        :total="total"
+        :page-sizes="[20,50,100,200]"
+        :page.sync="queryParams.pageNum"
+        :limit.sync="queryParams.pageSize"
+        @pagination="getList"
+      />
+    </div>
     <!-- 禁用备注弹框 -->
     <el-dialog
       v-dialogDrag
@@ -357,7 +358,8 @@
           </template>
         </el-table-column>
       </el-table>
-      <div v-if="paginationShow===true">
+
+      <div v-if="speakIpBlackData.length>0">
         <pagination
           v-show="total>0"
           :total="total"

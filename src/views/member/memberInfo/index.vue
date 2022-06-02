@@ -871,7 +871,7 @@ import {
         return this.selectDictLabel(this.typeList, row.status)
       },
 
-      /**creating pagging part */
+      /**creating pagination part */
       paginationByIpList() {
         this.memberByIpAddressListList = true
         this.title = '查看已封停的ip'

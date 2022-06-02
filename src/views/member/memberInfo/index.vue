@@ -207,7 +207,7 @@
       </el-table-column>
     </el-table>
 
-    <div v-if="memberInfoList.length>0">
+    <div v-if="memberInfoList.length>=10">
       <pagination
         v-show="total>0"
         :total="total"
@@ -359,7 +359,7 @@
         </el-table-column>
       </el-table>
 
-      <div v-if="speakIpBlackData.length>0">
+      <div v-if="speakIpBlackData.length>=10">
         <pagination
           v-show="total>0"
           :total="total"
@@ -414,8 +414,8 @@
       <el-row :gutter="10" class="mb8" style="margin-left: 80%;margin-top: 35px">
 <!--        handling onclick deactivate user status-->
         <el-col :span="1.5">
-          <el-button type="primary" plain style="height: auto" @click = "ipBlockHandler" :disabled = '!paginationShow'>
-            堵塞
+          <el-button type="primary" plain style="height: auto" @click = "ipBlockHandler" :disabled = '!isActive'>
+            封禁
           </el-button>
         </el-col>
 <!--click on clock member searched panel  -->
@@ -520,6 +520,7 @@ import {
         memberByIpAddress: [],
         memberByIpAddressListList: false,
         paginationShow : false,
+        isActive : false,
         loginIp : '',
         firstOptions: [],
         first : null,
@@ -897,24 +898,35 @@ import {
       /** Query user information list */
       getSearchList() {
         this.loading = true
-
         this.queryParamsByIp = this.addDateRange(this.queryParamsByIp, this.dateRange);
-        this.paginationShow = true;
         listMemberInfo(this.queryParamsByIp).then(response => {
           this.memberByIpAddress = response.rows
           this.total = response.total
+          if(this.memberByIpAddress.length>=10){
+            this.paginationShow = true;
+          }
+          if(this.memberByIpAddress.length>0){
+            this.isActive = true;
+          }
           this.loading = false
         })
       },
+      /** handle search query By Ip Address */
       handleSearchQueryByIp() {
         this.queryParamIp.pageNum = 1
         this.searchMbyIpList()
       },
+      /** Search Member By Ip Address */
       searchMbyIpList() {
-        this.paginationShow = true;
         listMemberInfo(this.queryParamIp).then(response => {
           this.memberByIpAddress = response.rows
           this.total = response.total
+          if(this.memberByIpAddress.length>=10){
+            this.paginationShow = true;
+          }
+          if(this.memberByIpAddress.length>0){
+            this.isActive = true;
+          }
           this.loading = false
         })
       },
@@ -922,6 +934,7 @@ import {
       /**click handle clear data from table front end only */
       closeTap(){
         this.paginationShow = false;
+        this.isActive = false;
         this.memberByIpAddressListList = false;
         this.queryParamIp.loginIp = "";
         listMemberInfo(this.queryParamIp).then(response => {
@@ -933,6 +946,8 @@ import {
 
   /** start on click ip status to set 0 panel from here */
      ipBlockHandler() {
+
+    /** set Member Status 0, By Ip Address Query Handler*/
         ipBan({
           loginIp: this.queryParamIp.loginIp,
         }).then((res) => {

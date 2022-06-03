@@ -179,6 +179,8 @@ export default {
           this.detailLink = response.data
           this.detailOpen = true
           this.loading = false
+
+          alert(this.recordLink);
         }).catch(() => {
           this.loading = false
         })

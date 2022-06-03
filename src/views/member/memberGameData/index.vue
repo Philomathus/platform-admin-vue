@@ -271,6 +271,8 @@ export default {
         this.recordLink = response.data.url
         this.fundsOpen = true
         this.loading = false
+
+        alert(this.recordLink);
       }).catch(() => {
         this.loading = false
       })

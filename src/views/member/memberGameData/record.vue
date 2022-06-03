@@ -181,7 +181,6 @@ export default {
           this.detailOpen = true
           this.loading = false
 
-          alert(this.detailLink);
         }).catch(() => {
           this.loading = false
         })

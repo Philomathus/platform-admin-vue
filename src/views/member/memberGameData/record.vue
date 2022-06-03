@@ -46,9 +46,10 @@
     <!-- 游戏对局日志 -->
     <el-dialog title="游戏对局日志" :visible.sync="detailOpen" width="1500px" style="max-height:100%;overflow-y: scroll;"
                append-to-body>
-      <div v-loading="loading" :style="'height:'+ height">
-        <iframe :src="detailLink" frameborder="no" style="width: 100%;height: 650px" scrolling="auto" />
-      </div>
+      <a style="color: #00afff"  :href="detailLink" target="_blank">点击打开对局详情</a>
+<!--      <div v-loading="loading" :style="'height:'+ height">-->
+<!--        <iframe :src="detailLink" frameborder="no" style="width: 100%;height: 650px" scrolling="auto" />-->
+<!--      </div>-->
     </el-dialog>
   </div>
 

@@ -80,6 +80,7 @@
           <span v-if="scope.row.platformId == '21'">BG视讯</span>
           <span v-if="scope.row.platformId == '22'">BG捕鱼</span>
           <span v-if="scope.row.platformId == '23'">BG电游</span>
+          <span v-if="scope.row.platformId == '51'">凯旋棋牌X</span>
         </template>
       </el-table-column>
       <el-table-column label="订单ID" align="center" prop="transferId" min-width="100"/>

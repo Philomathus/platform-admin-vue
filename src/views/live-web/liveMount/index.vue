@@ -104,6 +104,7 @@
       <el-table-column label="价格" align="center" prop="price"/>
       <el-table-column label="折扣价格" align="center" prop="disPrice"/>
       <el-table-column label="有效天数" align="center" prop="vday"/>
+      <el-table-column label="排序" align="center" prop="oder"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -166,6 +167,11 @@
         <el-form-item label="有效天数" prop="vday">
           <el-input v-model="form.vday" placeholder="请输入有效天数"/>
         </el-form-item>
+
+        <el-form-item label="排序" prop="oder">
+          <el-input type="number" v-model="form.oder"/>
+        </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -224,7 +230,8 @@ export default {
         svgUrl: null,
         price: null,
         disPrice: null,
-        vday: null
+        vday: null,
+        oder : null
       },
       // 列信息
       columns: [
@@ -256,6 +263,9 @@ export default {
           {required: true, message: '折扣价格不能为空', trigger: 'blur'}
         ], vday: [
           {required: true, message: '赠送天数不能为空', trigger: 'blur'}
+        ],
+        oder: [
+          {required: true, message: '不能为空', trigger: 'blur'}
         ]
 
       }
@@ -290,7 +300,8 @@ export default {
         svgUrl: null,
         price: null,
         disPrice: null,
-        vday: null
+        vday: null,
+        oder : 0
       }
       this.resetForm('form')
     },

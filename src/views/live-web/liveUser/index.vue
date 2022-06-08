@@ -191,6 +191,7 @@
             v-show="scope.row.isAuthentication === 1"
           >审核
           </el-button>
+
           <el-button
             size="small"
             plain
@@ -205,6 +206,8 @@
             v-show="scope.row.roboter == 1 && scope.row.liveIn != 1"
           >开播
           </el-button>
+
+
           <el-button
             size="small"
             plain
@@ -281,7 +284,7 @@
       </div>
     </el-dialog>
 
-    <!-- 开播内容对话框 -->
+    <!-- 开播内容对话框 started work on this model pop-->
     <el-dialog :close-on-click-modal="false" v-loading="openLoading" title="开播信息" :visible.sync="openLiveStatus" width="500px" append-to-body>
       <el-form ref="form" :model="openLiveForm"  label-width="120px">
         <el-form-item label="标题" prop="title">
@@ -298,6 +301,16 @@
         <el-form-item label="开播背景" prop="liveImage">
           <imageUpload v-model="openLiveForm.liveImage" path="liveVideo"/>
         </el-form-item>
+
+        <el-form-item style="width: 150px" :data="lotteryInfoList" label="彩票">
+            <el-select v-model="openLiveForm.lottery" placeholder="" clearable style="width: 150px">
+              <el-option
+                v-for="lottery in lotteryInfoList"
+                :label="lottery.name"
+                :value="lottery.name"/>
+            </el-select>
+        </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="openLive()">确 定</el-button>
@@ -385,6 +398,8 @@ import more from './more'
 import { pickerDateShortcuts } from '@/utils/dateUtils'
 import { addH5Plugin, updateH5Plugin } from '@/api/live-web/h5/h5Plugin'
 import {getLiveVideo,sendLiveMsg} from '@/api/live-web/liveVideo/liveVideo'
+import {listLotteryInfo} from "@/api/platform-web/lottery/lotteryInfo";
+
 export default {
   name: 'LiveUser',
   components: {
@@ -394,7 +409,12 @@ export default {
   data() {
     return {
       openLoading: false,
-      openLiveForm: {title: null,flv: null,liveImage: null},
+      openLiveForm: {
+        title: null,
+        flv: null,
+        liveImage: null,
+        lottery :null
+      },
       openLiveStatus: false,
       pickerOptions: { shortcuts: pickerDateShortcuts },
       // 0指未认证  1指待审核 2指认证 3指审核不通过
@@ -433,6 +453,10 @@ export default {
         mobile: null,
         familyId: null
       },
+
+      //starting live lottery list
+      lotteryInfoList: [],
+
       // 表单参数
       form: {},
       // 表单校验
@@ -448,6 +472,7 @@ export default {
   },
   created() {
     this.init()
+    this.getLotteryList();
   },
   activated() {
     this.init()
@@ -696,6 +721,17 @@ export default {
         })
       })
     },
+
+    /** 查询彩票名称列表 Query lottery name list*/
+    getLotteryList() {
+      this.loading = true;
+      listLotteryInfo({status:1}).then(response => {
+        this.lotteryInfoList = response.rows;
+        this.total = response.total;
+        this.loading = false;
+      });
+    },
+
   }
 }
 </script>

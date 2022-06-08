@@ -71,7 +71,8 @@
     <!-- 游戏对局日志 -->
     <el-dialog title="体育投注明细" :visible.sync="detailOpen" width="800px" style="max-height:100%;overflow-y: scroll;"
                append-to-body>
-      <div v-loading="loading" :style="'height:'+ height">
+<!--      <div v-loading="loading" :style="'height:'+ height">-->
+      <div v-loading="loading">
         <iframe :src="detailLink" frameborder="no" style="width: 100%;height: 600px" scrolling="auto" />
       </div>
     </el-dialog>

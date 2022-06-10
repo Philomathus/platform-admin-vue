@@ -108,6 +108,10 @@
       <el-table-column label="杀率" align="center" prop="killRate"/>
       <el-table-column label="周期" align="center" prop="cycle"/>
       <el-table-column label="最小投注金额" align="center" prop="minCost"/>
+
+<!--      ORDER -->
+      <el-table-column label="排序" align="center" prop="order"/>
+
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -222,6 +226,7 @@ export default {
         killRate: null,
         minCost: null,
         cycle: null,
+        order : null
       },
       // 表单参数
       form: {},
@@ -344,7 +349,8 @@ export default {
         official: null,
         killRate: null,
         minCost: null,
-        cycle: null
+        cycle: null,
+        order:null
       };
       this.resetForm("form");
     },

@@ -192,6 +192,7 @@
           >审核
           </el-button>
 
+<!-- click on this button live Launch content dialog-->
           <el-button
             size="small"
             plain
@@ -206,7 +207,7 @@
             v-show="scope.row.roboter == 1 && scope.row.liveIn != 1"
           >开播
           </el-button>
-
+<!-- end Launch content dialog button -->
 
           <el-button
             size="small"
@@ -284,7 +285,7 @@
       </div>
     </el-dialog>
 
-    <!-- 开播内容对话框 started work on this model pop-->
+    <!-- 开播内容对话框 Launch live content dialog-->
     <el-dialog :close-on-click-modal="false" v-loading="openLoading" title="开播信息" :visible.sync="openLiveStatus" width="500px" append-to-body>
       <el-form ref="form" :model="openLiveForm"  label-width="120px">
         <el-form-item label="标题" prop="title">
@@ -498,6 +499,7 @@ export default {
           that.openLiveForm.title = res.data.title
           that.openLiveForm.flv = res.data.playUrl
           that.openLiveForm.liveImage = res.data.liveImage
+          that.openLiveForm.lottery = res.data.lottery
         }
       }).finally(() => {
         this.openLoading = false
@@ -689,7 +691,7 @@ export default {
     openLive() {
       var that = this;
       this.loading = true
-        openLive({id: this.openLiveForm.id,title: this.openLiveForm.title,flv: this.openLiveForm.flv,liveImage: this.openLiveForm.liveImage}).then(response => {
+        openLive({id: this.openLiveForm.id,title: this.openLiveForm.title,flv: this.openLiveForm.flv,liveImage: this.openLiveForm.liveImage,lottery:this.openLiveForm.lottery}).then(response => {
           that.openLiveStatus = false;
           that.$notify.success("开播成功")
           that.getList();

@@ -192,7 +192,7 @@
           >审核
           </el-button>
 
-<!-- click on this button live Launch content dialog-->
+          <!-- click on this button live Launch content dialog-->
           <el-button
             size="small"
             plain
@@ -207,7 +207,7 @@
             v-show="scope.row.roboter == 1 && scope.row.liveIn != 1"
           >开播
           </el-button>
-<!-- end Launch content dialog button -->
+          <!-- end Launch content dialog button -->
 
           <el-button
             size="small"
@@ -232,10 +232,10 @@
 
       </el-table-column>
 
-<!--      <el-table-column label="可用印票" min-width="120" align="center" prop="ticket"/>
+      <!--      <el-table-column label="可用印票" min-width="120" align="center" prop="ticket"/>
 
-      <el-table-column label="粉丝" min-width="120" align="center" prop="fansCount"/>
-      <el-table-column label="注册时间" min-width="160" :show-overflow-tooltip="true" align="center" prop="createTime"/>-->
+            <el-table-column label="粉丝" min-width="120" align="center" prop="fansCount"/>
+            <el-table-column label="注册时间" min-width="160" :show-overflow-tooltip="true" align="center" prop="createTime"/>-->
     </el-table>
 
     <pagination
@@ -249,12 +249,12 @@
 
     <!-- 添加或修改主播信息对话框 -->
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="addopen" width="500px" append-to-body>
-      <el-form ref="form" :model="form"  label-width="120px">
+      <el-form ref="form" :model="form" label-width="120px">
         <el-form-item label="手机号" prop="mobile">
-          <el-input v-model="form.mobile" />
+          <el-input v-model="form.mobile"/>
         </el-form-item>
         <el-form-item label="昵称" prop="nickName">
-          <el-input v-model="form.nickName" />
+          <el-input v-model="form.nickName"/>
         </el-form-item>
         <el-form-item label="用户头像">
           <imageUpload v-model="form.headImage" path="liveVideo"/>
@@ -275,8 +275,8 @@
       </div>
     </el-dialog>
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="sendMsg" width="500px" append-to-body>
-      <el-form ref="form" :model="form"  label-width="120px">
-        <el-form-item label="小助手消息"  >
+      <el-form ref="form" :model="form" label-width="120px">
+        <el-form-item label="小助手消息">
           <el-input v-model="form.info" prop="info" type="textarea" :rows="4" placeholder="请输入发送小助手消息"/>
         </el-form-item>
       </el-form>
@@ -286,10 +286,11 @@
     </el-dialog>
 
     <!-- 开播内容对话框 Launch live content dialog-->
-    <el-dialog :close-on-click-modal="false" v-loading="openLoading" title="开播信息" :visible.sync="openLiveStatus" width="500px" append-to-body>
-      <el-form ref="form" :model="openLiveForm"  label-width="120px">
+    <el-dialog :close-on-click-modal="false" v-loading="openLoading" title="开播信息" :visible.sync="openLiveStatus"
+               width="500px" append-to-body>
+      <el-form ref="form" :model="openLiveForm" label-width="120px">
         <el-form-item label="标题" prop="title">
-          <el-input v-model.trim="openLiveForm.title" />
+          <el-input v-model.trim="openLiveForm.title"/>
         </el-form-item>
         <el-form-item label="视频流地址" prop="flv">
           <el-input type="textarea" v-model.trim="openLiveForm.flv" @input="() =>{
@@ -297,19 +298,19 @@
               openLiveForm.flv = openLiveForm.flv.slice(0,250)
               this.$notify.warning('视频流地址长度不能超过250个字符')
             }
-          }" />
+          }"/>
         </el-form-item>
         <el-form-item label="开播背景" prop="liveImage">
           <imageUpload v-model="openLiveForm.liveImage" path="liveVideo"/>
         </el-form-item>
 
         <el-form-item style="width: 150px" :data="lotteryInfoList" label="彩票">
-            <el-select v-model="openLiveForm.lottery" placeholder="" clearable style="width: 150px">
-              <el-option
-                v-for="lottery in lotteryInfoList"
-                :label="lottery.name"
-                :value="lottery.name"/>
-            </el-select>
+          <el-select v-model="openLiveForm.lottery" placeholder="" clearable style="width: 150px">
+            <el-option
+              v-for="lottery in lotteryInfoList"
+              :label="lottery.name"
+              :value="lottery.id"/>
+          </el-select>
         </el-form-item>
 
       </el-form>
@@ -396,9 +397,9 @@ import {
 } from '@/api/live-web/liveUser'
 import ImageUpload from '@/components/ImageUpload/index'
 import more from './more'
-import { pickerDateShortcuts } from '@/utils/dateUtils'
-import { addH5Plugin, updateH5Plugin } from '@/api/live-web/h5/h5Plugin'
-import {getLiveVideo,sendLiveMsg} from '@/api/live-web/liveVideo/liveVideo'
+import {pickerDateShortcuts} from '@/utils/dateUtils'
+import {addH5Plugin, updateH5Plugin} from '@/api/live-web/h5/h5Plugin'
+import {getLiveVideo, sendLiveMsg} from '@/api/live-web/liveVideo/liveVideo'
 import {listLotteryInfo} from "@/api/platform-web/lottery/lotteryInfo";
 
 export default {
@@ -414,12 +415,12 @@ export default {
         title: null,
         flv: null,
         liveImage: null,
-        lottery :null
+        lottery: null
       },
       openLiveStatus: false,
-      pickerOptions: { shortcuts: pickerDateShortcuts },
+      pickerOptions: {shortcuts: pickerDateShortcuts},
       // 0指未认证  1指待审核 2指认证 3指审核不通过
-      attestList: [{ label: '待审核', value: 1 }, { label: '认证', value: 2 }, { label: '审核不通过', value: 3 }],
+      attestList: [{label: '待审核', value: 1}, {label: '认证', value: 2}, {label: '审核不通过', value: 3}],
       //所选的用户id
       userId: 0,
       // 遮罩层
@@ -450,7 +451,7 @@ export default {
         id: null,
         nickName: null,
         isAuthentication: null,
-        isBan:null,
+        isBan: null,
         mobile: null,
         familyId: null
       },
@@ -463,10 +464,10 @@ export default {
       // 表单校验
       rules: {
         vExplain: [
-          { required: true, message: '认证说明不能为空', trigger: 'blur' }
+          {required: true, message: '认证说明不能为空', trigger: 'blur'}
         ],
         investorSendInfo: [
-          { required: true, message: '拒绝理由不能为空', trigger: 'blur' }
+          {required: true, message: '拒绝理由不能为空', trigger: 'blur'}
         ]
       }
     }
@@ -479,7 +480,7 @@ export default {
     this.init()
   },
   watch: {
-    selectDate: function(newVal, oldVal) {
+    selectDate: function (newVal, oldVal) {
       if (newVal === null) {
         this.queryParams.sendStartTime = undefined
         this.queryParams.sendEndTime = undefined
@@ -491,7 +492,7 @@ export default {
   },
   methods: {
     //查询主播的直播状态
-    getLiveVideo(id){
+    getLiveVideo(id) {
       this.openLoading = true
       var that = this
       getLiveVideo(id).then((res) => {
@@ -529,7 +530,7 @@ export default {
         cancelButtonText: '取消'
         /*inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
         inputErrorMessage: '验证码格式不正确'*/
-      }).then(({ value }) => {
+      }).then(({value}) => {
         that.banDetail(row, type, value)
       }).catch(() => {
         row.isBan = row.isBan === 0 ? 1 : 0
@@ -561,7 +562,7 @@ export default {
     /** 更多按钮操作 */
     handleMore(row) {
       this.userId = row.id
-      this.$refs.more.show(this.userId,row.mobile)
+      this.$refs.more.show(this.userId, row.mobile)
     },
     // 取消按钮
     cancel() {
@@ -627,33 +628,33 @@ export default {
             that.msgSuccess(res.msg);
             that.showopen = false;
             that.getList();
-          }else {
+          } else {
             that.msgError(res.msg);
           }
         });
-      }else {
-      that.$refs['form'].validate(valid => {
-        if (valid) {
-          that.$confirm('是否确认' + (that.form.isAuthentication === 3 ? '不' : '') + '通过审核此主播?',
-            '警告',
-            {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning'
-            }).then(function() {
-            return updateLiveUser(that.form)
-          }).then(response => {
-            if (response.code === 200) {
-              that.msgSuccess('审核成功')
-            } else if (response.code === 500) {
-              that.msgError(response.msg)
-            }
-            this.open = false
-            that.getList()
-          }).catch(function() {
-          })
-        }
-      })
+      } else {
+        that.$refs['form'].validate(valid => {
+          if (valid) {
+            that.$confirm('是否确认' + (that.form.isAuthentication === 3 ? '不' : '') + '通过审核此主播?',
+              '警告',
+              {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+              }).then(function () {
+              return updateLiveUser(that.form)
+            }).then(response => {
+              if (response.code === 200) {
+                that.msgSuccess('审核成功')
+              } else if (response.code === 500) {
+                that.msgError(response.msg)
+              }
+              this.open = false
+              that.getList()
+            }).catch(function () {
+            })
+          }
+        })
       }
     },
     /** 提交按钮 */
@@ -672,7 +673,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportLiveUser(queryParams)
       }).then(response => {
         this.downloadExcel(response, '主播列表')
@@ -691,11 +692,27 @@ export default {
     openLive() {
       var that = this;
       this.loading = true
-        openLive({id: this.openLiveForm.id,title: this.openLiveForm.title,flv: this.openLiveForm.flv,liveImage: this.openLiveForm.liveImage,lottery:this.openLiveForm.lottery}).then(response => {
-          that.openLiveStatus = false;
-          that.$notify.success("开播成功")
-          that.getList();
-        }).catch((err)=>{that.$notify.error("开播失败")})
+      let lotteryName = null;
+      for (const info in this.lotteryInfoList) {
+        if (this.openLiveForm.lottery === info.id) {
+          lotteryName = info.name;
+          break
+        }
+      }
+      openLive({
+        id: this.openLiveForm.id,
+        title: this.openLiveForm.title,
+        flv: this.openLiveForm.flv,
+        liveImage: this.openLiveForm.liveImage,
+        lotteryId: this.openLiveForm.lottery,
+        lotteryName: lotteryName
+      }).then(response => {
+        that.openLiveStatus = false;
+        that.$notify.success("开播成功")
+        that.getList();
+      }).catch((err) => {
+        that.$notify.error("开播失败")
+      })
     },
     //关播
     closeLive(row) {
@@ -704,10 +721,12 @@ export default {
       closeLive({id: row.id}).then(response => {
         that.$notify.success("关播成功")
         that.getList();
-      }).catch((err)=>{that.$notify.error("关播失败")})
+      }).catch((err) => {
+        that.$notify.error("关播失败")
+      })
     },
     //踢出主播
-    kickOutLive(row){
+    kickOutLive(row) {
       const id = row.id
       const t = this;
       this.$confirm('确定踢出主播昵称:[' + row.nickName + ']?', '警告', {
@@ -718,7 +737,7 @@ export default {
         kickOutLiveUser(id).then(response => {
           t.$notify.success("踢出成功")
           t.getList();
-        }).catch((err)=>{
+        }).catch((err) => {
           t.$notify.error("踢出主播失败")
         })
       })
@@ -727,10 +746,8 @@ export default {
     /** 查询彩票名称列表 Query lottery name list*/
     getLotteryList() {
       this.loading = true;
-      listLotteryInfo({status:1}).then(response => {
+      listLotteryInfo({status: 1}).then(response => {
         this.lotteryInfoList = response.rows;
-        this.total = response.total;
-        this.loading = false;
       });
     },
 

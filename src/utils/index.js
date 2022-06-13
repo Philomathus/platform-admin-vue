@@ -1,4 +1,4 @@
-import { parseTime } from './common'
+import { parseTime } from './dateUtils'
 
 /**
  * 表格时间格式化

@@ -693,7 +693,8 @@ export default {
       var that = this;
       this.loading = true
       let lotteryName = null;
-      for (const info in this.lotteryInfoList) {
+      for (const index in this.lotteryInfoList) {
+        const info = this.lotteryInfoList[index]
         if (this.openLiveForm.lottery === info.id) {
           lotteryName = info.name;
           break

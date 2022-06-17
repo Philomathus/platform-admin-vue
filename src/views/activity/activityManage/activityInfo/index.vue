@@ -124,6 +124,7 @@
           ></el-switch>
         </template>
       </el-table-column>
+      <el-table-column label="排序" align="center" prop="order"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -192,6 +193,11 @@
         <el-form-item label="跳转链接" prop="url" v-if="form.type == 1">
           <el-input v-model="form.url" placeholder="请输入图标跳转链接"/>
         </el-form-item>
+<!--sort field-->
+        <el-form-item label="排序" prop="order">
+          <el-input v-model="form.order" placeholder="请输入排序"/>
+        </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -323,7 +329,8 @@ export default {
         indexs: null,
         typeId: null,
         content: '',
-        url: null
+        url: null,
+        order : null
       };
       this.resetForm("form");
     },

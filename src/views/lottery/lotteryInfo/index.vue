@@ -119,7 +119,7 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-          >修改图标
+          >修改
           </el-button>
         </template>
       </el-table-column>
@@ -134,7 +134,7 @@
     />
 
     <!-- 添加或修改活动信息对话框 -->
-    <el-dialog title="修改图标" :visible.sync="open" width="700px" append-to-body>
+    <el-dialog title="修改" :visible.sync="open" width="700px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="90px">
         <el-form-item label="图标" prop="icon">
           <imageUpload v-model="form.icon" path="LotteryInfo"/>

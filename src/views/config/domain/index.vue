@@ -135,9 +135,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="域名" prop="domain">
-          <el-input v-model="form.domain" placeholder="请输入域名">
-            <template slot="prepend">https://</template>
-          </el-input>
+          <el-input v-model="form.domain" placeholder="请输入域名"/>
         </el-form-item>
         <el-form-item label="动态编码" prop="dcode">
           <el-input v-model="form.dcode" placeholder="请输入动态编码"/>
@@ -165,13 +163,13 @@ export default {
   components: {},
   data() {
     const validUrl = (rule, value, callback) => {
-      if (/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/.test(value) == false) {
+      if (/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/.test(value) === false) {
         callback(new Error('请输入正确的URL'))
       } else {
         if (this.form.dgroup && this.form.id == null) {
           existsDomain({
             dgroup: this.form.dgroup,
-            domain: 'https://' + value.trim()
+            domain: value.trim()
           }).then(response => {
             if (response.data == 1) {
               callback(new Error('所在分组重复输入URL'))
@@ -316,7 +314,7 @@ export default {
     submitForm() {
       this.$refs['form'].validate(valid => {
         if (valid) {
-          this.form.domain = 'https://' + this.form.domain.trim()
+          this.form.domain = this.form.domain.trim()
           if (this.form.id != null) {
             updateDomain(this.form).then(response => {
               this.msgSuccess('修改成功')

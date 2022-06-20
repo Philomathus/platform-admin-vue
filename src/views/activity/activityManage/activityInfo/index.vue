@@ -272,8 +272,8 @@ export default {
         title: null,
         ctime: null,
         status: null,
-        orderByColumn: 'ctime',
-        isAsc: 'desc'
+        orderByColumn: '',
+        isAsc: ''
       },
       // 表单参数
       form: {},

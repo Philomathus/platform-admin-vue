@@ -134,11 +134,16 @@
     />
 
     <!-- 添加或修改活动信息对话框 -->
-    <el-dialog title="修改" :visible.sync="open" width="700px" append-to-body>
+    <el-dialog title="修改" :visible.sync="open" width="450px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="90px">
         <el-form-item label="图标" prop="icon">
           <imageUpload v-model="form.icon" path="LotteryInfo"/>
         </el-form-item>
+
+        <el-form-item label="排序" prop="order">
+          <el-input v-model="form.order" placeholder="请输入排序" style="width: 151px"/>
+        </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>

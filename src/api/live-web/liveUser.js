@@ -45,6 +45,14 @@ export function updateMobile(data) {
   })
 }
 
+// 直播用户完整手机号查看 live user full number
+export function liveFullMobile(id) {
+  return request({
+    url: url.platformWeb + '/admin/liveUser/fullMobile/' + id,
+    method: 'get'
+  })
+}
+
 // 聊天室记录列表
 export function chatPage(query) {
   return request({

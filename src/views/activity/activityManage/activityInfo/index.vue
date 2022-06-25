@@ -164,6 +164,10 @@
         <el-form-item label="图标" prop="icon">
           <imageUpload v-model="form.icon" path="ActivityInfo"/>
         </el-form-item>
+        <!--sort field-->
+        <el-form-item label="排序" prop="order">
+          <el-input v-model="form.order" placeholder="请输入排序"/>
+        </el-form-item>
         <el-form-item label="活动类型" prop="typeId">
           <el-select
             filterable
@@ -192,10 +196,6 @@
         </el-form-item>
         <el-form-item label="跳转链接" prop="url" v-if="form.type == 1">
           <el-input v-model="form.url" placeholder="请输入图标跳转链接"/>
-        </el-form-item>
-<!--sort field-->
-        <el-form-item label="排序" prop="order">
-          <el-input v-model="form.order" placeholder="请输入排序"/>
         </el-form-item>
 
       </el-form>

@@ -181,6 +181,9 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item label="排序" prop="order">
+          <el-input v-model="form.order" placeholder="请输入排序"/>
+        </el-form-item>
         <el-form-item label="跳转类型" prop="type">
           <el-radio-group v-model="form.type">
             <el-radio label="0">活动详情</el-radio>
@@ -192,10 +195,6 @@
         </el-form-item>
         <el-form-item label="跳转链接" prop="url" v-if="form.type == 1">
           <el-input v-model="form.url" placeholder="请输入图标跳转链接"/>
-        </el-form-item>
-<!--sort field-->
-        <el-form-item label="排序" prop="order">
-          <el-input v-model="form.order" placeholder="请输入排序"/>
         </el-form-item>
 
       </el-form>

@@ -232,11 +232,11 @@
       </el-form>
     </el-row>
 
-    <!--重置手机号-->
+    <!--重置手机号 reset phone number-->
     <el-row v-if="index===6">
       <el-form ref="mobileForm"  label-width="110px" :model="mobileForm" :rules="mobileRules">
         <el-form-item label="旧手机号"  prop="oldMobile">
-          <el-input v-model.lazy="mobileForm.oldMobile" placeholder="请输入旧手机号" style="width: 78%" readonly/>
+          <el-input v-model="mobileForm.oldMobile" placeholder="请输入旧手机号" style="width: 78%" readonly/>
           <el-button type="primary" style="float: right" @click="liveUserFullMobile()" >查看完整手机号</el-button>
         </el-form-item>
         <el-form-item label="新手机号" prop="newMobile">

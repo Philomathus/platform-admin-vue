@@ -235,13 +235,19 @@
     <!--重置手机号 reset phone number-->
     <el-row v-if="index===6">
       <el-form ref="mobileForm"  label-width="110px" :model="mobileForm" :rules="mobileRules">
-        <el-form-item label="旧手机号"  prop="oldMobile">
-          <el-input v-model="mobileForm.oldMobile" placeholder="请输入旧手机号" style="width: 78%" readonly/>
+
+<!-- mobile hide and display full number -->
+        <el-form-item label="旧手机号"  prop="mobile">
+          <el-input v-model="mobileForm.mobile" placeholder="请输入旧手机号" style="width: 78%" readonly/>
           <el-button type="primary" style="float: right" @click="liveUserFullMobile()" >查看完整手机号</el-button>
         </el-form-item>
+
+<!--   change mobile number add new mobile number -->
         <el-form-item label="新手机号" prop="newMobile">
           <el-input v-model="mobileForm.newMobile" placeholder="请输入新手机号"/>
         </el-form-item>
+
+
         <el-form-item label="google验证码" prop="googleAuthCode">
           <el-input v-model="mobileForm.googleAuthCode" placeholder="请输入google验证码"/>
         </el-form-item>
@@ -328,7 +334,7 @@
               },
               //手机号校验规则
               mobileRules: {
-                oldMobile: [
+                mobile: [
                   {required: true, message: '旧手机号码不能为空', trigger: 'blur'}
                 ],
                 newMobile: [
@@ -424,12 +430,12 @@
             })
           },
 
-          /**  click to check mobile number  */
+          /**  click to check full mobile number  */
           liveUserFullMobile() {
             if (checkTwoLogin()) {
-                liveFullMobile(this.userId).then((res) => {
+                liveFullMobile(this.userId+'').then((res) => {
                 this.$message.success('完整手机号码已展示')
-                this.mobileForm.oldMobile = res.msg
+                this.mobileForm = res.data
               })
             }
           },
@@ -589,9 +595,9 @@
           },
 
             // 显示弹框
-            show(userId,phone) {
+            show(userId,mobile) {
                 this.userId = userId
-                this.mobileForm.oldMobile = phone
+                this.mobileForm.mobile = mobile
                 this.getList();
                 this.visible = true;
             },

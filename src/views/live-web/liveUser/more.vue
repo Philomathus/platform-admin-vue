@@ -251,22 +251,24 @@
         <el-form-item label="google验证码" prop="googleAuthCode">
           <el-input v-model="mobileForm.googleAuthCode" placeholder="请输入google验证码"/>
         </el-form-item>
-        <el-form-item>
+        <el-form-item style="float: right">
           <el-button type="primary" @click="updateMobile()" >确 定</el-button>
+          <el-button @click="visible = false">取 消</el-button>
         </el-form-item>
       </el-form>
+
     </el-row>
 
     <!--重置提现密码-->
     <el-row v-if="index===9">
       <el-form ref="paypasswordForm" :model="paypasswordForm" :rules="paypasswordRules" label-width="110px">
-        <el-form-item label="重置提现密码" prop="password">
+        <el-form-item label="重置提现密码3" prop="password">
           <el-input v-model="form.payPassword" placeholder="请输入新提现密码"/>
         </el-form-item>
         <el-form-item label="google验证码" prop="googleAuthCode">
           <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>
         </el-form-item>
-        <el-form-item>
+        <el-form-item style="float: right">
           <el-button type="primary" @click="handlePaypassword()" >确定</el-button>
         </el-form-item>
       </el-form>

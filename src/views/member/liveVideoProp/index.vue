@@ -287,7 +287,7 @@ export default {
     /** 搜索按钮操作 */
     handleQuery() {
       if(this.queryParams.pUserId){
-        const reg = '^[0-9_]{1,}$'
+        const reg = '^[0-9a-zA-Z_]{1,}$'
         let flag = this.queryParams.pUserId.match(reg)
         if(!flag){
           this.msgError("会员ID只能输入数字及下划线")

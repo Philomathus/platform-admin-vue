@@ -434,8 +434,12 @@
           liveUserFullMobile() {
             if (checkTwoLogin()) {
                 liveFullMobile(this.userId+'').then((res) => {
-                this.$message.success('完整手机号码已展示')
                 this.mobileForm = res.data
+                  if(!this.mobileForm.mobile){
+                    this.$message.error("手机号码无法显示");
+                  }else{
+                    this.$message.success('完整手机号码已展示')
+                  }
               })
             }
           },

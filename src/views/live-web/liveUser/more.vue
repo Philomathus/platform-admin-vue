@@ -239,7 +239,7 @@
 <!-- mobile hide and display full number -->
         <el-form-item label="旧手机号"  prop="mobile">
           <el-input v-model="mobileForm.mobile" placeholder="请输入旧手机号" style="width: 78%" readonly/>
-          <el-button type="primary" style="float: right" @click="liveUserFullMobile()" >查看完整手机号</el-button>
+          <el-button type="primary" style="float: right" @click="liveUserFullMobile()">查看完整手机号</el-button>
         </el-form-item>
 
 <!--   change mobile number add new mobile number -->

@@ -436,7 +436,7 @@
                 liveFullMobile(this.userId+'').then((res) => {
                 this.mobileForm = res.data
                   if(!this.mobileForm.mobile){
-                    this.$message.error("手机号码无法显示");
+                    this.$message.error("手机号码不可用");
                   }else{
                     this.$message.success('完整手机号码已展示')
                   }

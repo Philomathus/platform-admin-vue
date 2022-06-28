@@ -262,7 +262,7 @@
     <!--重置提现密码-->
     <el-row v-if="index===9">
       <el-form ref="paypasswordForm" :model="paypasswordForm" :rules="paypasswordRules" label-width="110px">
-        <el-form-item label="重置提现密码3" prop="password">
+        <el-form-item label="重置提现密码" prop="password">
           <el-input v-model="form.payPassword" placeholder="请输入新提现密码"/>
         </el-form-item>
         <el-form-item label="google验证码" prop="googleAuthCode">

@@ -272,6 +272,8 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm(1)">确 定</el-button>
+        <!--add new model close button-->
+        <el-button @click="addopen = false">取 消</el-button>
       </div>
     </el-dialog>
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="sendMsg" width="500px" append-to-body>

@@ -53,8 +53,10 @@
         :total="total"
         :page.sync="queryParams.pageNum"
         :limit.sync="queryParams.pageSize"
-        @pagination="getList"
-      />
+        @pagination="getList"/>
+
+      <!--adding close button here-->
+      <el-button @click="visible = false" class="close-button">取 消</el-button>
     </el-row>
     <!--账户日志-->
     <el-row v-if="index===2">
@@ -148,6 +150,8 @@
         :limit.sync="queryParams.pageSize"
         @pagination="getList"
       />
+<!--adding close button here-->
+      <el-button @click="visible = false" class="close-button">取 消</el-button>
     </el-row>
 
     <!--收礼物日志-->
@@ -188,8 +192,7 @@
         :total="total"
         :page.sync="queryParams.pageNum"
         :limit.sync="queryParams.pageSize"
-        @pagination="getList"
-      />
+        @pagination="getList"/>
     </el-row>
 
     <!--提现比例-->
@@ -251,7 +254,7 @@
         <el-form-item label="google验证码" prop="googleAuthCode">
           <el-input v-model="mobileForm.googleAuthCode" placeholder="请输入google验证码"/>
         </el-form-item>
-        <el-form-item style="float: right">
+        <el-form-item class="edit-close-btn">
           <el-button type="primary" @click="updateMobile()" >确 定</el-button>
           <el-button @click="visible = false">取 消</el-button>
         </el-form-item>
@@ -268,7 +271,7 @@
         <el-form-item label="google验证码" prop="googleAuthCode">
           <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>
         </el-form-item>
-        <el-form-item style="float: right">
+        <el-form-item class="edit-close-btn">
           <el-button type="primary" @click="handlePaypassword()" >确定</el-button>
           <el-button @click="visible = false">取 消</el-button>
         </el-form-item>
@@ -790,3 +793,14 @@
         }
     };
 </script>
+
+
+<style>
+    .close-button{
+      float: right;
+      margin-top: 20px;
+    }
+    .edit-close-btn{
+      float: right;
+    }
+</style>

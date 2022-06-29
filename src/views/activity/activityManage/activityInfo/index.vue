@@ -164,10 +164,6 @@
         <el-form-item label="图标" prop="icon">
           <imageUpload v-model="form.icon" path="ActivityInfo"/>
         </el-form-item>
-        <!--sort field-->
-        <el-form-item label="排序" prop="order">
-          <el-input v-model="form.order" placeholder="请输入排序"/>
-        </el-form-item>
         <el-form-item label="活动类型" prop="typeId">
           <el-select
             filterable
@@ -175,8 +171,7 @@
             placeholder="请选择活动类型"
             clearable
             size="small"
-            style="width: 240px"
-          >
+            style="width: 240px">
             <el-option
               v-for="dict in activityTypeOptions"
               :key="dict.id"
@@ -184,6 +179,9 @@
               :value="dict.id"
             />
           </el-select>
+        </el-form-item>
+        <el-form-item label="排序" prop="order">
+          <el-input v-model="form.order" placeholder="请输入排序"/>
         </el-form-item>
         <el-form-item label="跳转类型" prop="type">
           <el-radio-group v-model="form.type">

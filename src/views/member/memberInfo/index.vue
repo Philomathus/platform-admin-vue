@@ -749,7 +749,7 @@ import {
       /** 搜索按钮操作 */
       handleQuery() {
         if(this.queryParams.searchValue){
-          const reg = '^[0-9_]{1,}$'
+          const reg = '^[0-9a-zA-Z_]{1,}$'
           let flag = this.queryParams.searchValue.match(reg)
           if(!flag){
             this.msgError("会员ID/账号/手机号只能输入数字及下划线")
@@ -885,7 +885,7 @@ import {
       /** handling search function */
       handleInputQuery() {
         if(this.queryParamsByIp.searchValue){
-          const reg = '^[0-9_]{1,}$'
+          const reg = '^[0-9a-zA-Z_]{1,}$'
           let flag = this.queryParamsByIp.searchValue.match(reg)
           if(!flag){
             this.msgError("search By iP")

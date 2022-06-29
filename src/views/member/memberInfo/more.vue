@@ -569,17 +569,9 @@ export default {
     fullMobile() {
       if (checkTwoLogin()) {
         fullMobile(this.memberId).then((res) => {
-<<<<<<< HEAD
-          this.mobileForm = res.data
-
-          if(!this.mobileForm.phone){
-            this.$message.error("手机号码不可用!")
-=======
-
           this.mobileForm = res.data
           if(!this.mobileForm.phone){
             this.$message.error('手机号码不可用。')
->>>>>>> ee1997617181017af87dd4543e3488aec1d35b14
           }else{
             this.$message.success('完整手机号码已展示')
           }

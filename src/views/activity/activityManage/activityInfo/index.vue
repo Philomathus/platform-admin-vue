@@ -181,7 +181,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="排序" prop="order">
-          <el-input v-model="form.order" placeholder="请输入排序"/>
+          <el-input v-model="form.order" placeholder="请输入排序" type="number"/>
         </el-form-item>
         <el-form-item label="跳转类型" prop="type">
           <el-radio-group v-model="form.type">

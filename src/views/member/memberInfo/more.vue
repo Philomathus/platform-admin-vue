@@ -6,58 +6,78 @@
       :close-on-click-modal="false"
       :title="title"
       :visible.sync="visible"
-      width="1500px"
+      width="800px"
       top="5vh"
       append-to-body
     >
       <!--顶部按钮-->
       <div class="page-tab" style="margin-bottom: 20px">
-        <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(3,'加分')">
-          <span>加分</span></button>
-        <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(1,'三方游戏')">
-          <span>三方游戏</span></button>
-        <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(5,'银行卡')">
-          <span>银行卡</span></button>
-        <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(10,'发送短信')">
-          <span>发送短信</span></button>
-        <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(4,'重置密码')">
-          <span>重置密码</span></button>
-        <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(11,'重置手机号')">
-          <span>重置手机号</span></button>
-        <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(13,'重置邀请码')">
-          <span>重置邀请码</span></button>
+          <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(3,'加分')">
+            <span>加分</span></button>
+          <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(1,'三方游戏')">
+            <span>三方游戏</span></button>
+          <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(5,'银行卡')">
+            <span>银行卡</span></button>
+          <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(10,'发送短信')">
+            <span>发送短信</span></button>
+          <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(4,'重置密码')">
+            <span>重置密码</span></button>
+          <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(11,'重置手机号')">
+            <span>重置手机号</span></button>
+          <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(13,'重置邀请码')">
+            <span>重置邀请码</span></button>
 
-<!--Follow Members tab added by rajesh index:16 represent follow members-->
-        <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(16,'关注主播')">
-          <span>关注主播</span></button>
-<!--End follow members tab here  -->
+  <!--Follow Members tab added by rajesh index:16 represent follow members-->
+          <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(16,'关注主播')">
+            <span>关注主播</span></button>
+  <!--End follow members tab here  -->
 
-        <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(2,'资金明细')">
-          <span>资金明细</span></button>
-        <button
-          type="button"
-          class="el-button el-button--success el-button--mini is-plain"
-          @click="change(6,'重置保险箱')"
-          v-has-permi="['member:memberInfo:resetBox']"
-        ><span>重置保险箱</span></button>
-        <button
-          type="button"
-          class="el-button el-button--success el-button--mini is-plain"
-          @click="change(7,'重置提现')"
-          v-has-permi="['member:memberInfo:resetTx']"
-        ><span>重置提现</span></button>
-        <button
-          type="button"
-          class="el-button el-button--success el-button--mini is-plain"
-          @click="change(8,'打码修复')"
-          v-has-permi="['member:memberInfo:bcodeRepair']"
-        ><span>打码修复</span></button>
-        <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(9,'修改Vip')">
-          <span>修改Vip</span></button>
-        <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(12,'IM禁言')">
-          <span>IM禁言</span></button>
-        <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(15,'域名展示')">
-          <span>域名展示</span></button>
+
+        <div class="el-button-group">
+            <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(2,'资金明细')" style="margin-top: 10px;margin-left: -3px">
+              <span>资金明细</span>
+            </button>
+
+            <button
+              type="button"
+              class="el-button el-button--success el-button--mini is-plain"
+              @click="change(6,'重置保险箱')"
+              v-has-permi="['member:memberInfo:resetBox']"
+              style="margin-top: 10px;">
+              <span>重置保险箱</span>
+            </button>
+
+            <button
+              type="button"
+              class="el-button el-button--success el-button--mini is-plain"
+              @click="change(7,'重置提现')"
+              v-has-permi="['member:memberInfo:resetTx']"
+              style="margin-top: 10px;">
+              <span>重置提现</span>
+            </button>
+
+            <button
+              type="button"
+              class="el-button el-button--success el-button--mini is-plain"
+              @click="change(8,'打码修复')"
+              v-has-permi="['member:memberInfo:bcodeRepair']"
+              style="margin-top: 10px;">
+              <span>打码修复</span>
+            </button>
+
+            <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(9,'修改Vip')" style="margin-top: 10px;">
+              <span>修改Vip</span>
+            </button>
+
+            <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(12,'IM禁言')" style="margin-top: 10px;">
+              <span>IM禁言</span>
+            </button>
+
+            <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(15,'域名展示')"  style="margin-top: 10px;">
+              <span>域名展示</span>
+            </button>
+        </div>
+
       </div>
 
       <!--积分明细-->
@@ -72,6 +92,8 @@
           </el-table-column>
         </el-table>
       </el-row>
+
+
       <!--资金明细-->
       <!--      <el-row v-if="index===2">
               <el-table
@@ -87,6 +109,8 @@
               </el-table>
             </el-row>-->
       <!--加分-->
+
+
       <el-row v-if="index===3">
         <el-form ref="form" :model="form" :rules="rules" label-width="110px">
           <el-form-item label="加分金额" prop="score">
@@ -124,6 +148,8 @@
           </el-form-item>
         </el-form>
       </el-row>
+
+
       <!--重置密码-->
       <el-row v-if="index===4">
         <el-form ref="form" :model="form" :rules="rules" label-width="110px">
@@ -135,20 +161,7 @@
           </el-form-item>
         </el-form>
       </el-row>
-      <!--重置邀请码-->
-      <el-row v-if="index===13">
-        <el-form ref="formInviterCode" :model="form" :rules="inviterCodeRules" label-width="110px">
-          <el-form-item label="重置邀请码" prop="inviterCode">
-            <el-input v-model="form.inviterCode" placeholder="请输入邀请码"/>
-          </el-form-item>
-          <el-form-item label="google验证码" prop="googleAuthCode">
-            <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>
-          </el-form-item>
-          <el-form-item label="">
-            <el-button type="primary" @click="updateInviterCode()">确 定</el-button>
-          </el-form-item>
-        </el-form>
-      </el-row>
+
       <!--发送短信-->
       <el-row v-if="index===10">
         <el-form label-width="110px">
@@ -169,16 +182,15 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="sendMsg()" v-has-permi="['member:memberInfo:sendMsg']">确 定</el-button>
-          </el-form-item>
         </el-form>
       </el-row>
+
+
       <!--重置手机号-->
       <el-row v-if="index===11">
         <el-form ref="mobileForm" label-width="110px" :model="mobileForm" :rules="mobileRules">
           <el-form-item label="旧手机号" prop="phone">
-            <el-input v-model="mobileForm.phone" placeholder="请输入旧手机号" readonly style="width: 88%;margin-right: 10px"/>
+            <el-input v-model="mobileForm.phone" placeholder="请输入旧手机号" readonly style="width: 76%;margin-right: 10px"/>
             <el-button type="primary" @click="fullMobile()" v-has-permi="['member:memberInfo:fullMobile']">查看完整手机号
             </el-button>
           </el-form-item>
@@ -188,12 +200,26 @@
           <el-form-item label="google验证码" prop="googleAuthCode">
             <el-input v-model="mobileForm.googleAuthCode" placeholder="请输入google验证码"/>
           </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="updateMobile()" v-has-permi="['member:memberInfo:updateMobile']">确 定
-            </el-button>
+<!--          <el-form-item>-->
+<!--            <el-button type="primary" @click="updateMobile()" v-has-permi="['member:memberInfo:updateMobile']">确 定-->
+<!--            </el-button>-->
+<!--          </el-form-item>-->
+        </el-form>
+      </el-row>
+
+      <!--重置邀请码 reset invitation code-->
+      <el-row v-if="index===13">
+        <el-form ref="formInviterCode" :model="form" :rules="inviterCodeRules" label-width="110px">
+          <el-form-item label="重置邀请码" prop="inviterCode">
+            <el-input v-model="form.inviterCode" placeholder="请输入邀请码"/>
+          </el-form-item>
+          <el-form-item label="google验证码" prop="googleAuthCode">
+            <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>
           </el-form-item>
         </el-form>
       </el-row>
+
+
       <!--域名展示-->
       <el-row v-if="index===15">
         <el-form label-width="110px">
@@ -215,8 +241,7 @@
           :data="dbTableList"
           @selection-change="handleSelectionChange"
           height="460px"
-          v-loading="loading"
-        >
+          v-loading="loading">
           <el-table-column prop="realName" label="真实姓名" :show-overflow-tooltip="true" min-width="80">
             <template v-slot="{row}" v-if="index===5">
               <el-input v-model="row.realName"></el-input>
@@ -295,7 +320,7 @@
       </el-row>
 <!--  END 关注主播- Follow the anchor function created by Rajesh -->
 
-
+<!-- footer slots adding to all models -->
       <div slot="footer" class="dialog-footer">
         <el-button
           type="primary"
@@ -311,8 +336,33 @@
           v-has-permi="['member:memberInfo:addScore']"
         >确 定
         </el-button>
+
+          <el-button
+            type="primary" @click="updateMobile()"
+            v-show="index ===11"
+            v-has-permi="['member:memberInfo:updateMobile']">
+            确 定
+          </el-button>
+
+        <el-button
+          type="primary"
+          @click="sendMsg()"
+          v-show="index ===10"
+          v-has-permi="['member:memberInfo:sendMsg']">
+          确 定
+        </el-button>
+
+        <el-button
+          type="primary"
+          v-show="index===13"
+          @click="updateInviterCode()">
+          确 定
+        </el-button>
+
         <el-button @click="visible = false">取 消</el-button>
       </div>
+<!--  end footer slots for all dialog models-->
+
     </el-dialog>
     <!-- 修改vip等级 -->
     <el-dialog
@@ -348,8 +398,7 @@
       width="600px"
       append-to-body
       :show-close="false"
-      :close-on-press-escape="false"
-    >
+      :close-on-press-escape="false">
       剩余禁言时间: {{ this.ImList.ShuttedUntil }}
       <br/>
       会员账号: {{ this.ImList.Member_Account }}

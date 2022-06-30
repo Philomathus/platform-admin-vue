@@ -204,14 +204,12 @@
                   placeholder="请选择任务类型"
                   clearable
                   size="small"
-                  style="width: 240px"
-                >
+                  class="select-type">
                   <el-option
                     v-for="dict in activityQuestTypeOptions"
                     :key="dict.id"
                     :label="dict.name"
-                    :value="dict.id"
-                  />
+                    :value="dict.id"/>
                 </el-select>
               </el-form-item>
           </el-col>
@@ -223,14 +221,12 @@
                   placeholder="请选择所属游戏"
                   clearable
                   size="small"
-                  style="width: 240px"
-                >
+                  class="select-type">
                   <el-option
                     v-for="dict in gameInfoOptions"
                     :key="dict.id"
                     :label="dict.name"
-                    :value="dict.id"
-                  />
+                    :value="dict.id"/>
                 </el-select>
               </el-form-item>
           </el-col>
@@ -245,14 +241,12 @@
               placeholder="请选择平台游戏类型"
               clearable
               size="small"
-              style="width: 240px"
-            >
+              class="select-type">
               <el-option
                 v-for="dict in kindIdOptions"
                 :key="dict.id"
                 :label="dict.kindId"
-                :value="dict.kindId"
-              />
+                :value="dict.kindId"/>
             </el-select>
           </el-form-item>
         </el-col>
@@ -264,14 +258,12 @@
               placeholder="请选择平台类型"
               clearable
               size="small"
-              style="width: 240px"
-            >
+              class="select-type">
               <el-option
                 v-for="dict in platformIdOptions"
                 :key="dict.id"
                 :label="dict.name"
-                :value="dict.id"
-              />
+                :value="dict.id"/>
             </el-select>
           </el-form-item>
           </el-col>
@@ -286,14 +278,12 @@
                 placeholder="请选择任务模式"
                 clearable
                 size="small"
-                style="width: 240px"
-              >
+                style="width: 240px">
                 <el-option
                   v-for="dict in taskMode"
                   :key="dict.value"
                   :label="dict.label"
-                  :value="dict.value"
-                />
+                  :value="dict.value"/>
               </el-select>
             </el-form-item>
           </el-col>
@@ -355,14 +345,12 @@
             placeholder="请选择任务类型"
             clearable
             size="small"
-            style="width: 240px"
-          >
+            class="select-type">
             <el-option
               v-for="dict in activityQuestTypeOptions"
               :key="dict.id"
               :label="dict.name"
-              :value="dict.id"
-            />
+              :value="dict.id"/>
           </el-select>
         </el-form-item>
         <el-form-item label="所属游戏" prop="gameId">
@@ -372,14 +360,12 @@
             placeholder="请选择所属游戏"
             clearable
             size="small"
-            style="width: 240px"
-          >
+            class="select-type">
             <el-option
               v-for="dict in gameInfoOptions"
               :key="dict.id"
               :label="dict.name"
-              :value="dict.id"
-            />
+              :value="dict.id"/>
           </el-select>
         </el-form-item>
         <el-form-item label="平台游戏类型" prop="kindId">
@@ -389,8 +375,7 @@
             placeholder="请选择平台游戏类型"
             clearable
             size="small"
-            style="width: 240px"
-          >
+            class="select-type">
             <el-option
               v-for="dict in kindIdOptions"
               :key="dict.id"
@@ -406,14 +391,12 @@
             placeholder="请选择平台类型"
             clearable
             size="small"
-            style="width: 240px"
-          >
+            class="select-type">
             <el-option
               v-for="dict in platformIdOptions"
               :key="dict.id"
               :label="dict.name"
-              :value="dict.id"
-            />
+              :value="dict.id"/>
           </el-select>
         </el-form-item>
         <el-form-item label="目标任务量" prop="target">
@@ -751,8 +734,11 @@ export default {
     .col-width-w45h{
       width: 45.5%;
     }
-
     .ml5{
       margin-left: 5%;
     }
+    .select-type{
+      width: 240px;
+    }
+
 </style>

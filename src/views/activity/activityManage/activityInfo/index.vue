@@ -7,8 +7,7 @@
           placeholder="请输入活动标题"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item prop="ctime">
         <el-date-picker
@@ -20,8 +19,9 @@
           range-separator="-"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
-          :picker-options="pickerOptions"
-        ></el-date-picker>
+          :picker-options="pickerOptions">
+
+        </el-date-picker>
       </el-form-item>
       <el-form-item prop="status">
         <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small">
@@ -29,8 +29,7 @@
             v-for="dict in statusOptions"
             :key="dict.dictValue"
             :label="dict.dictLabel"
-            :value="dict.dictValue"
-          />
+            :value="dict.dictValue"/>
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -47,8 +46,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['admin:activityInfo:add']"
-        >新增
+          v-hasPermi="['admin:activityInfo:add']">新增
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -59,8 +57,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['admin:activityInfo:edit']"
-        >修改
+          v-hasPermi="['admin:activityInfo:edit']">修改
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -71,8 +68,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['admin:activityInfo:remove']"
-        >删除
+          v-hasPermi="['admin:activityInfo:remove']">删除
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -82,8 +78,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['admin:activityInfo:export']"
-        >导出
+          v-hasPermi="['admin:activityInfo:export']">导出
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -97,8 +92,7 @@
           <el-image
             style="height:80px"
             :src="scope.row.icon"
-            fit="contain"
-          >
+            fit="contain">
           </el-image>
         </template>
       </el-table-column>
@@ -120,8 +114,8 @@
             v-model="scope.row.status"
             active-value="1"
             inactive-value="0"
-            @change="handleStatusChange(scope.row)"
-          ></el-switch>
+            @change="handleStatusChange(scope.row)">
+          </el-switch>
         </template>
       </el-table-column>
       <el-table-column label="排序" align="center" prop="order"/>
@@ -132,16 +126,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['admin:activityInfo:edit']"
-          >修改
+            v-hasPermi="['admin:activityInfo:edit']">修改
           </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['admin:activityInfo:remove']"
-          >删除
+            v-hasPermi="['admin:activityInfo:remove']">删除
           </el-button>
         </template>
       </el-table-column>
@@ -152,37 +144,43 @@
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
+      @pagination="getList"/>
 
     <!-- 添加或修改活动信息对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="700px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="90px">
-        <el-form-item label="标题" prop="title">
-          <el-input v-model="form.title" placeholder="请输入标题"/>
-        </el-form-item>
-        <el-form-item label="图标" prop="icon">
-          <imageUpload v-model="form.icon" path="ActivityInfo"/>
-        </el-form-item>
-        <el-form-item label="活动类型" prop="typeId">
-          <el-select
-            filterable
-            v-model="form.typeId"
-            placeholder="请选择活动类型"
-            clearable
-            size="small"
-            style="width: 240px">
-            <el-option
-              v-for="dict in activityTypeOptions"
-              :key="dict.id"
-              :label="dict.name"
-              :value="dict.id"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="排序" prop="order">
-          <el-input v-model="form.order" placeholder="请输入排序" type="number"/>
-        </el-form-item>
+
+        <div class="el-row">
+          <div class="el-col el-col-12">
+            <el-form-item label="标题" prop="title">
+              <el-input v-model="form.title" placeholder="请输入标题"/>
+            </el-form-item> <br>
+            <el-form-item label="活动类型" prop="typeId">
+              <el-select
+                filterable
+                v-model="form.typeId"
+                placeholder="请选择活动类型"
+                clearable
+                size="small"
+                style="width: 240px">
+                <el-option
+                  v-for="dict in activityTypeOptions"
+                  :key="dict.id"
+                  :label="dict.name"
+                  :value="dict.id"/>
+              </el-select>
+            </el-form-item><br>
+            <el-form-item label="排序" prop="order">
+              <el-input v-model="form.order" placeholder="请输入排序" type="number"/>
+            </el-form-item>
+          </div>
+          <div class="el-col el-col-8">
+            <el-form-item label="图标" prop="icon">
+              <imageUpload v-model="form.icon" path="ActivityInfo"/>
+            </el-form-item>
+          </div>
+        </div>
+
         <el-form-item label="跳转类型" prop="type">
           <el-radio-group v-model="form.type">
             <el-radio label="0">活动详情</el-radio>

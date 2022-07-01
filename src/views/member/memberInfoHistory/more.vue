@@ -15,60 +15,60 @@
                 class="el-button el-button--primary el-button--mini is-plain" @click="change(3,'加分')">
           <span>加分</span>
         </button>
-        <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(1,'三方游戏')">
+        <button type="button"
+                class="el-button el-button--primary el-button--mini is-plain" @click="change(1,'三方游戏')">
           <span>三方游戏</span>
         </button>
-        <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(5,'银行卡')">
+        <button type="button"
+                class="el-button el-button--primary el-button--mini is-plain" @click="change(5,'银行卡')">
           <span>银行卡</span>
         </button>
-        <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(10,'发送短信')">
+        <button type="button"
+                class="el-button el-button--primary el-button--mini is-plain" @click="change(10,'发送短信')">
           <span>发送短信</span>
         </button>
-        <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(4,'重置密码')">
+        <button type="button"
+                class="el-button el-button--primary el-button--mini is-plain" @click="change(4,'重置密码')">
           <span>重置密码</span>
         </button>
 <!--        <button type="button" class="el-button el-button&#45;&#45;primary el-button&#45;&#45;mini is-plain" @click="change(11,'重置手机号')">-->
 <!--          <span>重置手机号</span>-->
 <!--        </button>-->
 
-        <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(11,'重置手机号')">
+        <button type="button"
+                class="el-button el-button--primary el-button--mini is-plain" @click="change(11,'重置手机号')">
           <span>重置手机号</span>
         </button>
 
-        <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(13,'重置邀请码')">
+        <button type="button"
+                class="el-button el-button--primary el-button--mini is-plain" @click="change(13,'重置邀请码')">
           <span>重置邀请码</span>
         </button> <br>
 
 
         <div class="el-button-group pt5">
-          <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(2,'资金明细')">
+          <button type="button"
+                  class="el-button el-button--success el-button--mini is-plain" @click="change(2,'资金明细')">
             <span>资金明细</span>
           </button>
-          <button
-            type="button"
-            class="el-button el-button--success el-button--mini is-plain"
-            @click="change(6,'重置保险箱')"
-            v-has-permi="['member:memberInfo:resetBox']">
+          <button type="button"
+                  class="el-button el-button--success el-button--mini is-plain" @click="change(6,'重置保险箱')" v-has-permi="['member:memberInfo:resetBox']">
             <span>重置保险箱</span>
           </button>
-          <button
-            type="button"
-            class="el-button el-button--success el-button--mini is-plain"
-            @click="change(7,'重置提现')"
-            v-has-permi="['member:memberInfo:resetTx']">
+          <button type="button"
+                  class="el-button el-button--success el-button--mini is-plain" @click="change(7,'重置提现')" v-has-permi="['member:memberInfo:resetTx']">
             <span>重置提现</span>
           </button>
-          <button
-            type="button"
-            class="el-button el-button--success el-button--mini is-plain"
-            @click="change(8,'打码修复')"
-            v-has-permi="['member:memberInfo:bcodeRepair']">
+          <button type="button"
+                  class="el-button el-button--success el-button--mini is-plain" @click="change(8,'打码修复')" v-has-permi="['member:memberInfo:bcodeRepair']">
             <span>打码修复</span>
           </button>
-          <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(9,'修改Vip')">
+          <button type="button"
+                  class="el-button el-button--success el-button--mini is-plain" @click="change(9,'修改Vip')">
             <span>修改Vip</span>
           </button>
-          <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(12,'IM禁言')">
+          <button type="button"
+                  class="el-button el-button--success el-button--mini is-plain" @click="change(12,'IM禁言')">
             <span>IM禁言</span>
           </button>
         </div>
@@ -103,103 +103,100 @@
       <!--加分-->
       <el-row v-if="index===3">
         <el-form ref="form" :model="form" :rules="rules" label-width="110px">
-
-          <div class="el-row">
-            <div class="el-col el-col-9">
-              <el-form-item label="加分金额" prop="score">
-                <el-input v-model="form.score" type="number" placeholder="请输入金额"/>
-              </el-form-item>
+           <div class="el-row">
+              <div class="el-col el-col-9">
+                <el-form-item label="加分金额" prop="score">
+                  <el-input v-model="form.score" type="number" placeholder="请输入金额"/>
+                </el-form-item>
+              </div>
+              <div class="el-col el-col-9">
+                <el-form-item label="入款类型" prop="moneydes">
+                  <el-select v-model="form.moneydes" placeholder="入款类型" clearable size="small">
+                    <el-option
+                      v-for="item in moneydesOptions"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </div>
             </div>
-            <div class="el-col el-col-9">
-              <el-form-item label="入款类型" prop="moneydes">
-                <el-select v-model="form.moneydes" placeholder="入款类型" clearable size="small">
-                  <el-option
-                    v-for="item in moneydesOptions"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </div>
-
-          <el-form-item label="支付备注" prop="remarkPay">
-            <el-input v-model="form.remarkPay" placeholder="请输入支付备注"/>
-          </el-form-item>
-          <el-form-item label="加分备注" prop="mk">
-            <el-input v-model="form.mk" placeholder="请备注具体加分入金原因"/>
-          </el-form-item>
-          <el-form-item label="订单备注" prop="ordermk">
-            <el-input v-model="form.ordermk" placeholder="补单请填写补单订单号，末开奖补回请填写开期号，无则填写为0"/>
-          </el-form-item>
-          <el-form-item label="待打码金额" prop="betMoney">
-            <el-input v-model="form.betMoney" type="number" placeholder="还需打码金额" @blur="codeMoney(form.betMoney,form.score)"/>
-          </el-form-item>
-          <el-form-item label="打码倍数" prop="beatNum">
-            <el-input v-model="form.beatNum" type="number" placeholder="请按顺序先输入加分金额，再输入待打码金额，系统会自动计算打码倍数。默认请填写1,如未打算打码可填写为0"/>
-          </el-form-item>
-          <el-form-item label="谷歌验证码" prop="googleAuthCode">
-            <el-input v-model="form.googleAuthCode" placeholder="请输入谷歌验证码"  />
-          </el-form-item>
+            <el-form-item label="支付备注" prop="remarkPay">
+              <el-input v-model="form.remarkPay" placeholder="请输入支付备注"/>
+            </el-form-item>
+            <el-form-item label="加分备注" prop="mk">
+              <el-input v-model="form.mk" placeholder="请备注具体加分入金原因"/>
+            </el-form-item>
+            <el-form-item label="订单备注" prop="ordermk">
+              <el-input v-model="form.ordermk" placeholder="补单请填写补单订单号，末开奖补回请填写开期号，无则填写为0"/>
+            </el-form-item>
+            <el-form-item label="待打码金额" prop="betMoney">
+              <el-input v-model="form.betMoney" type="number" placeholder="还需打码金额" @blur="codeMoney(form.betMoney,form.score)"/>
+            </el-form-item>
+            <el-form-item label="打码倍数" prop="beatNum">
+              <el-input v-model="form.beatNum" type="number" placeholder="请按顺序先输入加分金额，再输入待打码金额，系统会自动计算打码倍数。默认请填写1,如未打算打码可填写为0"/>
+            </el-form-item>
+            <el-form-item label="谷歌验证码" prop="googleAuthCode">
+              <el-input v-model="form.googleAuthCode" placeholder="请输入谷歌验证码"  />
+            </el-form-item>
         </el-form>
       </el-row>
       <!--重置密码-->
       <el-row v-if="index===4">
-        <el-form ref="form" :model="form" :rules="rules" label-width="110px">
-          <el-form-item label="重置密码" prop="password">
-            <el-input v-model="form.password" placeholder="请输入新密码"/>
-          </el-form-item>
-          <el-form-item label="google验证码" prop="googleAuthCode">
-            <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>
-          </el-form-item>
-        </el-form>
+          <el-form ref="form" :model="form" :rules="rules" label-width="110px">
+            <el-form-item label="重置密码" prop="password">
+              <el-input v-model="form.password" placeholder="请输入新密码"/>
+            </el-form-item>
+            <el-form-item label="google验证码" prop="googleAuthCode">
+              <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>
+            </el-form-item>
+          </el-form>
       </el-row>
       <!--重置邀请码-->
       <el-row v-if="index===13">
-        <el-form ref="formInviterCode" :model="form" :rules="inviterCodeRules" label-width="110px">
-          <el-form-item label="重置邀请码" prop="inviterCode">
-            <el-input v-model="form.inviterCode" placeholder="请输入邀请码"/>
-          </el-form-item>
-          <el-form-item label="google验证码" prop="googleAuthCode">
-            <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>
-          </el-form-item>
-        </el-form>
+          <el-form ref="formInviterCode" :model="form" :rules="inviterCodeRules" label-width="110px">
+            <el-form-item label="重置邀请码" prop="inviterCode">
+              <el-input v-model="form.inviterCode" placeholder="请输入邀请码"/>
+            </el-form-item>
+            <el-form-item label="google验证码" prop="googleAuthCode">
+              <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>
+            </el-form-item>
+          </el-form>
       </el-row>
       <!--发送短信-->
       <el-row v-if="index===10">
         <el-form label-width="110px">
           <el-form-item label="短信信息">
-            <el-select
-              filterable
-              v-model="msg"
-              placeholder="请选择发送的信息"
-              clearable
-              size="small"
-              style="width: 240px">
+            <el-select  filterable
+                        v-model="msg"
+                        placeholder="请选择发送的信息"
+                        clearable
+                        size="small"
+                        style="width: 240px">
               <el-option
-                v-for="dict in msgList "
-                :key="dict.dictValue"
-                :value="dict.dictLabel"
-                :label="dict.dictLabel"/>
+                        v-for="dict in msgList "
+                        :key="dict.dictValue"
+                        :value="dict.dictLabel"
+                        :label="dict.dictLabel"/>
             </el-select>
           </el-form-item>
         </el-form>
       </el-row>
       <!--重置手机号 display full number-->
       <el-row v-if="index===11">
-        <el-form ref="mobileForm" label-width="110px" :model="mobileForm" :rules="mobileRules">
-          <el-form-item label="旧手机号" prop="phone">
-            <el-input v-model="mobileForm.phone" placeholder="请输入旧手机号" readonly style="width: 83%;margin-right: 2px"/>
-            <el-button type="primary" @click="fullMobile()" v-has-permi="['member:memberInfo:fullMobile']">查看完整手机号</el-button>
-          </el-form-item>
-          <el-form-item label="新手机号" prop="newMobile">
-            <el-input v-model="mobileForm.newMobile" placeholder="请输入新手机号"/>
-          </el-form-item>
-          <el-form-item label="google验证码" prop="googleAuthCode">
-            <el-input v-model="mobileForm.googleAuthCode" placeholder="请输入google验证码"/>
-          </el-form-item>
-        </el-form>
+          <el-form ref="mobileForm" label-width="110px" :model="mobileForm" :rules="mobileRules">
+            <el-form-item label="旧手机号" prop="phone">
+              <el-input v-model="mobileForm.phone" placeholder="请输入旧手机号" readonly style="width: 83%;margin-right: 2px"/>
+              <el-button type="primary" @click="fullMobile()" v-has-permi="['member:memberInfo:fullMobile']">查看完整手机号</el-button>
+            </el-form-item>
+            <el-form-item label="新手机号" prop="newMobile">
+              <el-input v-model="mobileForm.newMobile" placeholder="请输入新手机号"/>
+            </el-form-item>
+            <el-form-item label="google验证码" prop="googleAuthCode">
+              <el-input v-model="mobileForm.googleAuthCode" placeholder="请输入google验证码"/>
+            </el-form-item>
+          </el-form>
       </el-row>
 
       <!--银行卡-->

@@ -6,7 +6,7 @@
         :close-on-click-modal="false"
         :title="title"
         :visible.sync="visible"
-        width="950px"
+        width="1000px"
         top="5vh"
         append-to-body>
       <!--顶部按钮-->
@@ -103,19 +103,27 @@
       <!--加分-->
       <el-row v-if="index===3">
         <el-form ref="form" :model="form" :rules="rules" label-width="110px">
-          <el-form-item label="加分金额" prop="score">
-            <el-input v-model="form.score" type="number" placeholder="请输入金额"/>
-          </el-form-item>
-          <el-form-item label="入款类型" prop="moneydes">
-            <el-select v-model="form.moneydes" placeholder="入款类型" clearable size="small">
-              <el-option
-                v-for="item in moneydesOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
+
+          <div class="el-row">
+            <div class="el-col el-col-9">
+              <el-form-item label="加分金额" prop="score">
+                <el-input v-model="form.score" type="number" placeholder="请输入金额"/>
+              </el-form-item>
+            </div>
+            <div class="el-col el-col-9">
+              <el-form-item label="入款类型" prop="moneydes">
+                <el-select v-model="form.moneydes" placeholder="入款类型" clearable size="small">
+                  <el-option
+                    v-for="item in moneydesOptions"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </div>
+
           <el-form-item label="支付备注" prop="remarkPay">
             <el-input v-model="form.remarkPay" placeholder="请输入支付备注"/>
           </el-form-item>
@@ -202,26 +210,24 @@
           :data="dbTableList"
           @selection-change="handleSelectionChange"
           height="460px"
-          v-loading="loading"
-        >
-          <el-table-column prop="realName" label="真实姓名" :show-overflow-tooltip="true" min-width="80">
+          v-loading="loading">
+          <el-table-column prop="realName" label="真实姓名" :show-overflow-tooltip="true" min-width="120">
             <template v-slot="{row}" v-if="index===5">
               <el-input v-model="row.realName"></el-input>
             </template>
           </el-table-column>
-          <el-table-column prop="bankName" label="银行名称" :show-overflow-tooltip="true" min-width="100">
+          <el-table-column prop="bankName" label="银行名称" :show-overflow-tooltip="true" min-width="120">
             <template v-slot="{row}" v-if="index===5">
               <el-input v-model="row.bankName"></el-input>
             </template>
           </el-table-column>
-          <el-table-column prop="bankAccount" label="银行卡号" :show-overflow-tooltip="true" min-width="150"
-                           align="center"
-          >
+          <el-table-column prop="bankAccount" label="银行卡号" :show-overflow-tooltip="true" min-width="180"
+                           align="center">
             <template v-slot="{row}" v-if="index===5">
               <el-input v-model="row.bankAccount"></el-input>
             </template>
           </el-table-column>
-          <el-table-column prop="bankAddress" label="银行地址" :show-overflow-tooltip="true" min-width="100">
+          <el-table-column prop="bankAddress" label="银行地址" :show-overflow-tooltip="true" min-width="150">
             <template v-slot="{row}" v-if="index===5">
               <el-input v-model="row.bankAddress"></el-input>
             </template>
@@ -229,7 +235,7 @@
           <el-table-column prop="createTime" label=" 绑定时间" :show-overflow-tooltip="true" min-width="160"
                            align="center"
           ></el-table-column>
-          <el-table-column label="操作" min-width="140">
+          <el-table-column label="操作" min-width="200">
             <template v-slot="{row}" v-if="index===5">
               <el-button
                 @click="unbind(row)"

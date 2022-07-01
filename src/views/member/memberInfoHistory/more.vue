@@ -159,9 +159,6 @@
           <el-form-item label="google验证码" prop="googleAuthCode">
             <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>
           </el-form-item>
-          <el-form-item label="">
-            <el-button type="primary" @click="updateInviterCode()">确 定</el-button>
-          </el-form-item>
         </el-form>
       </el-row>
       <!--发送短信-->
@@ -243,24 +240,21 @@
                 type="primary"
                 disabled
                 size="mini"
-                v-has-permi="['member:memberInfo:unbindCard']"
-              >主卡解绑
+                v-has-permi="['member:memberInfo:unbindCard']">主卡解绑
               </el-button>
               <el-button
                 @click="unbind(row)"
                 v-show="row.dv==0"
                 type="primary"
                 size="mini"
-                v-has-permi="['member:memberInfo:unbindCard']"
-              >副卡解绑
+                v-has-permi="['member:memberInfo:unbindCard']">副卡解绑
               </el-button>
               <el-button
                 @click="changeBank(row)"
                 size="mini"
                 type="warning"
                 style="margin-left: 0"
-                v-has-permi="['member:memberInfo:changeBank']"
-              >确认修改
+                v-has-permi="['member:memberInfo:changeBank']">确认修改
               </el-button>
             </template>
           </el-table-column>
@@ -297,6 +291,11 @@
                    @click="updateMobile()"
                    v-show="index===11"
                    v-has-permi="['member:memberInfo:updateMobile']">确 定
+        </el-button>
+
+        <el-button type="primary"
+                   @click="updateInviterCode()"
+                   v-show="index===13">确 定
         </el-button>
 
         <el-button @click="visible = false">取 消</el-button>

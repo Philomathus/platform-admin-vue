@@ -1,17 +1,14 @@
 <template>
   <div>
     <!-- 导入表 -->
-
-
       <el-dialog
         v-dialogDrag
         :close-on-click-modal="false"
         :title="title"
         :visible.sync="visible"
-        width="850px"
+        width="950px"
         top="5vh"
-        append-to-body
-      >
+        append-to-body>
       <!--顶部按钮-->
       <div class="page-tab" style="margin-bottom: 20px">
         <button type="button"

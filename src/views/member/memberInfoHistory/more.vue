@@ -1,55 +1,81 @@
 <template>
   <div>
     <!-- 导入表 -->
-    <el-dialog
-      v-dialogDrag
-      :close-on-click-modal="false"
-      :title="title"
-      :visible.sync="visible"
-      width="1500px"
-      top="5vh"
-      append-to-body
-    >
+
+
+      <el-dialog
+        v-dialogDrag
+        :close-on-click-modal="false"
+        :title="title"
+        :visible.sync="visible"
+        width="850px"
+        top="5vh"
+        append-to-body
+      >
       <!--顶部按钮-->
       <div class="page-tab" style="margin-bottom: 20px">
-        <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(3,'加分')">
-          <span>加分</span></button>
+        <button type="button"
+                class="el-button el-button--primary el-button--mini is-plain" @click="change(3,'加分')">
+          <span>加分</span>
+        </button>
         <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(1,'三方游戏')">
-          <span>三方游戏</span></button>
+          <span>三方游戏</span>
+        </button>
         <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(5,'银行卡')">
-          <span>银行卡</span></button>
+          <span>银行卡</span>
+        </button>
         <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(10,'发送短信')">
-          <span>发送短信</span></button>
+          <span>发送短信</span>
+        </button>
         <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(4,'重置密码')">
-          <span>重置密码</span></button>
+          <span>重置密码</span>
+        </button>
+<!--        <button type="button" class="el-button el-button&#45;&#45;primary el-button&#45;&#45;mini is-plain" @click="change(11,'重置手机号')">-->
+<!--          <span>重置手机号</span>-->
+<!--        </button>-->
+
         <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(11,'重置手机号')">
-          <span>重置手机号</span></button>
+          <span>重置手机号</span>
+        </button>
+
         <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(13,'重置邀请码')">
-          <span>重置邀请码</span></button>
-        <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(2,'资金明细')">
-          <span>资金明细</span></button>
-        <button
-          type="button"
-          class="el-button el-button--success el-button--mini is-plain"
-          @click="change(6,'重置保险箱')"
-          v-has-permi="['member:memberInfo:resetBox']"
-        ><span>重置保险箱</span></button>
-        <button
-          type="button"
-          class="el-button el-button--success el-button--mini is-plain"
-          @click="change(7,'重置提现')"
-          v-has-permi="['member:memberInfo:resetTx']"
-        ><span>重置提现</span></button>
-        <button
-          type="button"
-          class="el-button el-button--success el-button--mini is-plain"
-          @click="change(8,'打码修复')"
-          v-has-permi="['member:memberInfo:bcodeRepair']"
-        ><span>打码修复</span></button>
-        <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(9,'修改Vip')">
-          <span>修改Vip</span></button>
-        <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(12,'IM禁言')">
-          <span>IM禁言</span></button>
+          <span>重置邀请码</span>
+        </button> <br>
+
+
+        <div class="el-button-group pt5">
+          <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(2,'资金明细')">
+            <span>资金明细</span>
+          </button>
+          <button
+            type="button"
+            class="el-button el-button--success el-button--mini is-plain"
+            @click="change(6,'重置保险箱')"
+            v-has-permi="['member:memberInfo:resetBox']">
+            <span>重置保险箱</span>
+          </button>
+          <button
+            type="button"
+            class="el-button el-button--success el-button--mini is-plain"
+            @click="change(7,'重置提现')"
+            v-has-permi="['member:memberInfo:resetTx']">
+            <span>重置提现</span>
+          </button>
+          <button
+            type="button"
+            class="el-button el-button--success el-button--mini is-plain"
+            @click="change(8,'打码修复')"
+            v-has-permi="['member:memberInfo:bcodeRepair']">
+            <span>打码修复</span>
+          </button>
+          <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(9,'修改Vip')">
+            <span>修改Vip</span>
+          </button>
+          <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(12,'IM禁言')">
+            <span>IM禁言</span>
+          </button>
+        </div>
+
       </div>
       <!--积分明细-->
       <el-row v-if="index===1">
@@ -148,26 +174,21 @@
               placeholder="请选择发送的信息"
               clearable
               size="small"
-              style="width: 240px"
-            >
+              style="width: 240px">
               <el-option
                 v-for="dict in msgList "
                 :key="dict.dictValue"
                 :value="dict.dictLabel"
-                :label="dict.dictLabel"
-              />
+                :label="dict.dictLabel"/>
             </el-select>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="sendMsg()" v-has-permi="['member:memberInfo:sendMsg']">确 定</el-button>
           </el-form-item>
         </el-form>
       </el-row>
-      <!--重置手机号-->
+      <!--重置手机号 display full number-->
       <el-row v-if="index===11">
         <el-form ref="mobileForm" label-width="110px" :model="mobileForm" :rules="mobileRules">
           <el-form-item label="旧手机号" prop="phone">
-            <el-input v-model="mobileForm.phone" placeholder="请输入旧手机号" readonly style="width: 88%;margin-right: 10px"/>
+            <el-input v-model="mobileForm.phone" placeholder="请输入旧手机号" readonly style="width: 78%;margin-right: 10px"/>
             <el-button type="primary" @click="fullMobile()" v-has-permi="['member:memberInfo:fullMobile']">查看完整手机号</el-button>
           </el-form-item>
           <el-form-item label="新手机号" prop="newMobile">
@@ -175,9 +196,6 @@
           </el-form-item>
           <el-form-item label="google验证码" prop="googleAuthCode">
             <el-input v-model="mobileForm.googleAuthCode" placeholder="请输入google验证码"/>
-          </el-form-item>
-          <el-form-item>
-              <el-button type="primary" @click="updateMobile()" v-has-permi="['member:memberInfo:updateMobile']">确 定</el-button>
           </el-form-item>
         </el-form>
       </el-row>
@@ -252,24 +270,35 @@
           :total="total"
           :page.sync="queryParams.pageNum"
           :limit.sync="queryParams.pageSize"
-          @pagination="getList"
-        />
+          @pagination="getList"/>
       </el-row>
+
+<!--  slots start from here-->
       <div slot="footer" class="dialog-footer">
-        <el-button
-          type="primary"
-          @click="handlePassword"
-          v-show="index === 4"
-          v-has-permi="['member:memberInfo:resetPwd']"
-        >确 定
+        <el-button type="primary"
+                   @click="handlePassword"
+                   v-show="index === 4"
+                   v-has-permi="['member:memberInfo:resetPwd']">确 定
         </el-button>
-        <el-button
-          type="primary"
-          @click="handleImportTable"
-          v-show="index === 3"
-          v-has-permi="['member:memberInfo:addScore']"
-        >确 定
+
+        <el-button type="primary"
+                   @click="handleImportTable"
+                   v-show="index === 3"
+                   v-has-permi="['member:memberInfo:addScore']">确 定
         </el-button>
+
+        <el-button type="primary"
+                   @click="sendMsg()"
+                   v-show="index === 10"
+                   v-has-permi="['member:memberInfo:sendMsg']">确 定
+        </el-button>
+
+        <el-button type="primary"
+                   @click="updateMobile()"
+                   v-show="index===11"
+                   v-has-permi="['member:memberInfo:updateMobile']">确 定
+        </el-button>
+
         <el-button @click="visible = false">取 消</el-button>
       </div>
     </el-dialog>
@@ -282,8 +311,8 @@
       width="400px"
       append-to-body
       :show-close="false"
-      :close-on-press-escape="false"
-    >Vip等级
+      :close-on-press-escape="false">
+      Vip等级
       <el-input v-model="vip"/>
       昵称
       <el-input v-model="nickName"/>
@@ -293,8 +322,7 @@
           type="primary"
           :disabled="showVipDisabled"
           @click="updateVip"
-          v-has-permi="['member:memberInfo:updateVip']"
-        >立即提交
+          v-has-permi="['member:memberInfo:updateVip']">立即提交
         </el-button>
       </div>
     </el-dialog>
@@ -307,8 +335,7 @@
       width="600px"
       append-to-body
       :show-close="false"
-      :close-on-press-escape="false"
-    >
+      :close-on-press-escape="false">
       剩余禁言时间: {{ this.ImList.ShuttedUntil }}
       <br/>
       会员账号: {{ this.ImList.Member_Account }}
@@ -328,8 +355,7 @@
           type="primary"
           :disabled="showImDisabled"
           @click="updateIm"
-          v-has-permi="['member:memberInfo:imBan']"
-        >立即提交
+          v-has-permi="['member:memberInfo:imBan']">立即提交
         </el-button>
       </div>
     </el-dialog>

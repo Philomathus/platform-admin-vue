@@ -143,16 +143,13 @@
         <div class="el-row">
           <div class="el-col-lg-13">
             <el-form-item label="名称" prop="name">
-              <el-input v-model="form.name"
-                        placeholder="请输入道具名"/>
+              <el-input v-model="form.name" placeholder="请输入道具名"/>
              </el-form-item><br>
              <el-form-item label="消费钻石" prop="diamonds">
-              <el-input v-model="form.diamonds"
-                        placeholder="请输入"/>
+              <el-input v-model="form.diamonds" placeholder="请输入"/>
              </el-form-item><br>
              <el-form-item label="主播获得热度:" prop="ticket">
-              <el-input v-model="form.ticket"
-                        placeholder="请输入"/>
+              <el-input v-model="form.ticket" placeholder="请输入"/>
              </el-form-item>
           </div>
           <div class="el-col-lg-11">

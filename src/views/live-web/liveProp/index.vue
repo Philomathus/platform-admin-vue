@@ -136,21 +136,29 @@
     />
 
     <!-- 添加或修改礼物列对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="800px"
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-        <el-form-item label="名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入道具名"/>
-        </el-form-item>
-        <el-form-item label="图标" prop="icon">
-          <imageUpload v-model="form.icon" path="give"/>
-        </el-form-item>
-        <el-form-item label="消费钻石" prop="diamonds">
-          <el-input v-model="form.diamonds" placeholder="请输入"/>
-        </el-form-item>
-        <el-form-item label="主播获得热度:" prop="ticket">
-          <el-input v-model="form.ticket" placeholder="请输入"/>
-        </el-form-item>
+
+        <div class="el-row">
+          <div class="el-col-lg-13">
+            <el-form-item label="名称" prop="name">
+              <el-input v-model="form.name" placeholder="请输入道具名"/>
+            </el-form-item><br>
+            <el-form-item label="消费钻石" prop="diamonds">
+              <el-input v-model="form.diamonds" placeholder="请输入"/>
+            </el-form-item><br>
+            <el-form-item label="主播获得热度:" prop="ticket">
+              <el-input v-model="form.ticket" placeholder="请输入"/>
+            </el-form-item>
+          </div>
+          <div class="el-col-lg-11">
+            <el-form-item label="图标" prop="icon">
+              <imageUpload v-model="form.icon" path="give"/>
+            </el-form-item>
+          </div>
+        </div>
+
         <el-form-item label="连续">
           <el-radio-group v-model="form.isMuch">
             <el-radio label="1">是</el-radio>

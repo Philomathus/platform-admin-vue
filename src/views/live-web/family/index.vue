@@ -168,30 +168,23 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="800px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="650px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <div class="el-row">
-          <div class="el-col-lg-12">
-            <el-form-item label="家族名称" prop="name"
-                          v-if="form.id == null">
-              <el-input v-model="form.name"
-                        placeholder="请输入家族名称"/>
+          <div class="el-col-lg-14">
+            <el-form-item label="家族名称" prop="name" v-if="form.id == null">
+              <el-input v-model="form.name" placeholder="请输入家族名称"/>
             </el-form-item>
-            <el-form-item label="家族长ID"
-                          prop="userId">
-              <el-input v-model="form.userId"
-                        placeholder="请输入家族长ID"/>
+            <el-form-item label="家族长ID" prop="userId">
+              <el-input v-model="form.userId" placeholder="请输入家族长ID"/>
             </el-form-item>
             <el-form-item label="家族长昵称" prop="nickName">
-              <el-input v-model="form.nickName"
-                        placeholder="请输入家族长昵称"/>
+              <el-input v-model="form.nickName" placeholder="请输入家族长昵称"/>
             </el-form-item>
           </div>
-          <div class="el-col-lg-12">
-            <el-form-item label="家族LOGO"
-                          prop="logo">
-              <imageUpload v-model="form.logo"
-                           path="liveFamily"/>
+          <div class="el-col-lg-10">
+            <el-form-item label="家族LOGO" prop="logo">
+              <imageUpload v-model="form.logo" path="liveFamily"/>
             </el-form-item>
           </div>
 

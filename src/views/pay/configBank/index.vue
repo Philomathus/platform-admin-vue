@@ -143,8 +143,16 @@
         <div class="el-row">
           <div class="el-col-lg-12">
             <el-form-item label="银行名称" prop="name">
-              <el-select filterable v-model="form.name" placeholder="请选择银行名称" clearable size="small" style="width: 240px">
-                <el-option v-for="dict in bankListOptions" :key="dict.id" :label="dict.bankName" :value="dict.bankName"/>
+              <el-select filterable
+                         v-model="form.name"
+                         placeholder="请选择银行名称"
+                         clearable
+                         size="small"
+                         style="width: 240px">
+                <el-option v-for="dict in bankListOptions"
+                           :key="dict.id"
+                           :label="dict.bankName"
+                           :value="dict.bankName"/>
               </el-select>
             </el-form-item>
           </div>

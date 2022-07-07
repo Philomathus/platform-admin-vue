@@ -147,21 +147,29 @@
     />
 
     <!-- 添加或修改【支付类型】对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入名称"/>
-        </el-form-item>
-        <el-form-item label="编码" prop="code">
-          <el-input v-model="form.code" placeholder="请输入负整数编码" type="number" @blur="existCode(form.code)"
-                    class="no-number" :disabled="form.id != null"/>
-        </el-form-item>
-        <el-form-item label="图标">
-          <imageUpload v-model="form.iconUrl" path="PayType"/>
-        </el-form-item>
-        <el-form-item label="排序" prop="indexes">
-          <el-input v-model="form.indexes" placeholder="请输入排序"/>
-        </el-form-item>
+
+        <div class="el-row">
+          <div class="el-col-lg-12">
+            <el-form-item label="名称" prop="name">
+              <el-input v-model="form.name" placeholder="请输入名称"/>
+            </el-form-item>
+            <el-form-item label="编码" prop="code">
+              <el-input v-model="form.code" placeholder="请输入负整数编码" type="number" @blur="existCode(form.code)"
+                        class="no-number" :disabled="form.id != null"/>
+            </el-form-item>
+            <el-form-item label="排序" prop="indexes">
+              <el-input v-model="form.indexes" placeholder="请输入排序"/>
+            </el-form-item>
+          </div>
+          <div class="el-col-lg-12">
+            <el-form-item label="图标">
+              <imageUpload v-model="form.iconUrl" path="PayType"/>
+            </el-form-item>
+          </div>
+        </div>
+
         <el-form-item label="设备类型" prop="deviceType">
           <template>
             <el-checkbox-group v-model="deviceTypes">

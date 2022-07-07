@@ -85,8 +85,7 @@
           <el-image
             style="height: 50px"
             :src="scope.row.bankIcon"
-            fit="contain"
-          >
+            fit="contain">
           </el-image>
         </template>
       </el-table-column>
@@ -96,8 +95,8 @@
             v-model="scope.row.status"
             active-value="1"
             inactive-value="0"
-            @change="handleStatusChange(scope.row)"
-          ></el-switch>
+            @change="handleStatusChange(scope.row)">
+          </el-switch>
         </template>
       </el-table-column>
       <el-table-column label="排序 从小到大顺序" align="center" prop="sort"/>
@@ -108,16 +107,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['admin:bankList:edit']"
-          >修改
+            v-hasPermi="['admin:bankList:edit']">修改
           </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['admin:bankList:remove']"
-          >删除
+            v-hasPermi="['admin:bankList:remove']">删除
           </el-button>
         </template>
       </el-table-column>
@@ -128,8 +125,7 @@
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
+      @pagination="getList"/>
 
     <!-- 添加出款银行列表对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="opene" width="650px"

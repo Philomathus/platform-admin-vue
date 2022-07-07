@@ -156,12 +156,19 @@
         <el-form-item label="银行官网地址" prop="url">
           <el-input v-model="form.url" placeholder="请输入银行官网地址"/>
         </el-form-item>
-        <el-form-item label="开始颜色" prop="colorStart">
-          <el-color-picker v-model="form.colorStart" size="medium" :predefine="predefineColors"/>
-        </el-form-item>
-        <el-form-item label="结束颜色" prop="colorEnd">
-          <el-color-picker v-model="form.colorEnd" size="medium" :predefine="predefineColors"/>
-        </el-form-item>
+
+        <div class="el-row">
+          <div class="el-col-lg-6">
+            <el-form-item label="开始颜色" prop="colorStart">
+              <el-color-picker v-model="form.colorStart" size="medium" :predefine="predefineColors"/>
+            </el-form-item>
+          </div>
+          <div class="el-col-lg-6">
+            <el-form-item label="结束颜色" prop="colorEnd">
+              <el-color-picker v-model="form.colorEnd" size="medium" :predefine="predefineColors"/>
+            </el-form-item>
+          </div>
+        </div>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="addsubmitForm">确 定</el-button>

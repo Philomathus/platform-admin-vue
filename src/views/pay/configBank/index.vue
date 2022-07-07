@@ -139,32 +139,35 @@
     <!-- 添加或修改公司入款银行列表对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-        <el-form-item label="银行名称" prop="name">
-          <el-select
-            filterable
-            v-model="form.name"
-            placeholder="请选择银行名称"
-            clearable
-            size="small"
-            style="width: 240px"
-          >
-            <el-option
-              v-for="dict in bankListOptions"
-              :key="dict.id"
-              :label="dict.bankName"
-              :value="dict.bankName"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="银行账号" prop="bankAccount">
-          <el-input v-model="form.bankAccount" placeholder="请输入银行账号"/>
-        </el-form-item>
-        <el-form-item label="排序号" prop="indexs">
-          <el-input v-model="form.indexs" placeholder="请输入排序号"/>
-        </el-form-item>
-        <el-form-item label="备注信息" prop="remark">
-          <el-input v-model="form.remark" placeholder="请输入备注信息"/>
-        </el-form-item>
+
+        <div class="el-row">
+          <div class="el-col-lg-12">
+            <el-form-item label="银行名称" prop="name">
+              <el-select filterable v-model="form.name" placeholder="请选择银行名称" clearable size="small" style="width: 240px">
+                <el-option v-for="dict in bankListOptions" :key="dict.id" :label="dict.bankName" :value="dict.bankName"/>
+              </el-select>
+            </el-form-item>
+          </div>
+          <div class="el-col-lg-12">
+            <el-form-item label="银行账号" prop="bankAccount">
+              <el-input v-model="form.bankAccount" placeholder="请输入银行账号"/>
+            </el-form-item>
+          </div>
+        </div>
+
+        <div class="el-row">
+          <div class="el-col-lg-12">
+            <el-form-item label="排序号" prop="indexs">
+              <el-input v-model="form.indexs" placeholder="请输入排序号"/>
+            </el-form-item>
+          </div>
+          <div class="el-col-lg-12">
+            <el-form-item label="备注信息" prop="remark">
+              <el-input v-model="form.remark" placeholder="请输入备注信息"/>
+            </el-form-item>
+          </div>
+        </div>
+
         <el-form-item label="开户人" prop="accountName">
           <el-input v-model="form.accountName" placeholder="请输入开户人"/>
         </el-form-item>

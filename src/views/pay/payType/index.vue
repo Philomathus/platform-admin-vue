@@ -151,7 +151,7 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
 
         <div class="el-row">
-          <div class="el-col-lg-12">
+          <div class="el-col-lg-14">
             <el-form-item label="名称" prop="name">
               <el-input v-model="form.name" placeholder="请输入名称"/>
             </el-form-item>
@@ -163,7 +163,7 @@
               <el-input v-model="form.indexes" placeholder="请输入排序"/>
             </el-form-item>
           </div>
-          <div class="el-col-lg-12">
+          <div class="el-col-lg-10">
             <el-form-item label="图标">
               <imageUpload v-model="form.iconUrl" path="PayType"/>
             </el-form-item>

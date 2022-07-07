@@ -132,21 +132,28 @@
     />
 
     <!-- 添加出款银行列表对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="opene" width="600px"
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="opene" width="650px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-        <el-form-item label="ID" prop="id">
-          <el-input v-model="form.id" placeholder="请输入ID" />
-        </el-form-item>
-        <el-form-item label="银行名称" prop="bankName">
-          <el-input v-model="form.bankName" placeholder="请输入银行名称"/>
-        </el-form-item>
-        <el-form-item label="银行编码" prop="bankCode">
-          <el-input v-model="form.bankCode" placeholder="请输入银行英文编码"/>
-        </el-form-item>
-        <el-form-item label="图标" prop="bankIcon">
-          <imageUpload v-model="form.bankIcon" path="bankList"/>
-        </el-form-item>
+        <div class="el-row">
+          <div class="el-col-lg-13">
+            <el-form-item label="ID" prop="id">
+              <el-input v-model="form.id" placeholder="请输入ID" />
+            </el-form-item>
+            <el-form-item label="银行名称" prop="bankName">
+              <el-input v-model="form.bankName" placeholder="请输入银行名称"/>
+            </el-form-item>
+            <el-form-item label="银行编码" prop="bankCode">
+              <el-input v-model="form.bankCode" placeholder="请输入银行英文编码"/>
+            </el-form-item>
+          </div>
+          <div class="el-col-lg-11">
+            <el-form-item label="图标" prop="bankIcon">
+              <imageUpload v-model="form.bankIcon" path="bankList"/>
+            </el-form-item>
+          </div>
+        </div>
+
         <el-form-item label="排序" prop="sort">
           <el-input v-model="form.sort" placeholder="请输入排序"/>
         </el-form-item>

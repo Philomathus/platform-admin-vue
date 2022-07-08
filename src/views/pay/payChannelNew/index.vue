@@ -177,8 +177,8 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改【支付通道】对话框 -->
-    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="770px" append-to-body>
+    <!-- 添加或修改【支付通道】对话框 PayChannelNew Add new Payment-->
+    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="720px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="通道名称" prop="name">
           <el-input v-model.trim="form.name" placeholder="请输入通道名称(前缀请加上支付平台)"/>
@@ -189,40 +189,46 @@
         <el-form-item label="排序号" prop="indexes">
           <el-input type="number" v-model.trim="form.indexes" placeholder="请输入排序号" :min="0"/>
         </el-form-item>
-        <el-form-item label="支付平台" prop="payPlatformId">
-          <el-select
-            filterable
-            v-model="form.payPlatformId"
-            placeholder="请选择支付平台"
-            clearable
-            size="small"
-            style="width: 240px"
-          >
-            <el-option
-              v-for="Platform in payPlatformOptions"
-              :key="Platform.id"
-              :label="Platform.name"
-              :value="Platform.id"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="支付类型" prop="payTypeId">
-          <el-select
-            filterable
-            v-model="form.payTypeId"
-            placeholder="请选择支付类型"
-            clearable
-            size="small"
-            style="width: 240px"
-          >
-            <el-option
-              v-for="dict in payTypes"
-              :key="dict.id"
-              :label="dict.name"
-              :value="dict.id"
-            />
-          </el-select>
-        </el-form-item>
+
+        <div class="el-row">
+          <div class="el-col-lg-12">
+            <el-form-item label="支付平台" prop="payPlatformId">
+              <el-select
+                filterable
+                v-model="form.payPlatformId"
+                placeholder="请选择支付平台"
+                clearable
+                size="small"
+                class="width240">
+                <el-option
+                  v-for="Platform in payPlatformOptions"
+                  :key="Platform.id"
+                  :label="Platform.name"
+                  :value="Platform.id"/>
+              </el-select>
+            </el-form-item>
+          </div>
+          <div class="el-col-lg-12">
+            <el-form-item label="支付类型" prop="payTypeId">
+              <el-select
+                filterable
+                v-model="form.payTypeId"
+                placeholder="请选择支付类型"
+                clearable
+                size="small"
+                class="width240">
+                <el-option
+                  v-for="dict in payTypes"
+                  :key="dict.id"
+                  :label="dict.name"
+                  :value="dict.id"/>
+              </el-select>
+            </el-form-item>
+          </div>
+        </div>
+
+
+
 <!--        <el-form-item label="充值最低" prop="rechargeMin">-->
 <!--          <el-input type="number" class="no-number" v-model.trim="form.rechargeMin" placeholder="请输入充值最低" :min="0"/>-->
 <!--        </el-form-item>-->

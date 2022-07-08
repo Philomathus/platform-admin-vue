@@ -136,25 +136,45 @@
     />
 
     <!-- 添加或修改礼物列对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
-               append-to-body
-    >
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="550px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="85px">
-        <el-form-item label="vip等级" prop="gvip">
-          <el-input v-model="form.gvip" placeholder="请输入免费领取VIP(-1只能买)"/>
-        </el-form-item>
-        <el-form-item label="坐骑名" prop="name">
-          <el-input v-model="form.name" placeholder="请输入坐骑名"/>
-        </el-form-item>
-        <el-form-item label="图标" prop="iconUrl">
-          <imageUpload v-model="form.iconUrl" path="mount"/>
-        </el-form-item>
-        <el-form-item label="状态">
-          <el-radio-group v-model="form.status">
-            <el-radio label="0">未启用</el-radio>
-            <el-radio label="1">启用</el-radio>
-          </el-radio-group>
-        </el-form-item>
+
+        <div class="el-row">
+          <div class="el-col-lg-12">
+            <el-form-item label="vip等级"
+                          prop="gvip">
+              <el-input v-model="form.gvip"
+                        placeholder="请输入免费领取VIP(-1只能买)"/>
+            </el-form-item>
+            <el-form-item label="坐骑名"
+                          prop="name">
+              <el-input v-model="form.name"
+                        placeholder="请输入坐骑名"/>
+            </el-form-item>
+            <el-form-item
+              label="状态">
+              <el-radio-group
+                v-model="form.status">
+                <el-radio
+                  label="0">未启用</el-radio>
+                <el-radio
+                  label="1">启用</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </div>
+          <div class="el-col-lg-12">
+            <el-form-item label="图标"
+                          prop="iconUrl">
+              <imageUpload v-model="form.iconUrl"
+                           path="mount"/>
+            </el-form-item>
+          </div>
+
+        </div>
+
+
+
+
         <el-form-item label="svga动画" prop="svgUrl">
           <fileUpload v-model="form.svgUrl" path="mount"/>
         </el-form-item>

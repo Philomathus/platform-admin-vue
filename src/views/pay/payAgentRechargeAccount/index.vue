@@ -149,32 +149,28 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['pay:payAgentRechargeAccount:edit']"
-          >修改
+            v-hasPermi="['pay:payAgentRechargeAccount:edit']">修改
           </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-refresh-right"
             @click="updateGoogleAuth(scope.row)"
-            v-hasPermi="['pay:payAgentRechargeAccount:reset']"
-          >重置秘钥
+            v-hasPermi="['pay:payAgentRechargeAccount:reset']">重置秘钥
           </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-refresh-right"
             @click="updatePassword(scope.row)"
-            v-hasPermi="['pay:payAgentRechargeAccount:reset']"
-          >重置密码
+            v-hasPermi="['pay:payAgentRechargeAccount:reset']">重置密码
           </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['pay:payAgentRechargeAccount:remove']"
-          >删除
+            v-hasPermi="['pay:payAgentRechargeAccount:remove']">删除
           </el-button>
         </template>
       </el-table-column>
@@ -185,8 +181,7 @@
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
+      @pagination="getList"/>
 
     <!-- 未绑定谷歌验证码弹框 -->
     <el-dialog
@@ -195,21 +190,19 @@
       title="重置谷歌验证码"
       :visible.sync="dialogVisible"
       width="15%"
-      @keyup.enter.native="getGoogleAuth"
-    >
+      @keyup.enter.native="getGoogleAuth">
       <img :src="pic" width="100%" alt="绑定谷歌验证码"/>
       <!--      <el-input v-model="userName" v-show="false"/>-->
       <el-input v-model="secretKey" v-show="false"/>
       <el-input
         placeholder="请输入谷歌验证码"
         v-model="googleAuthCode"
-        style="width: 70%"
-      />
+        style="width: 70%"/>
       <el-button type="primary" @click="bind">绑定</el-button>
     </el-dialog>
 
     <!-- 添加或修改代充人管理对话框 Add or modify agent management dialog -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="680px"
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="110px">
         <el-form-item label="代充账号" prop="account">

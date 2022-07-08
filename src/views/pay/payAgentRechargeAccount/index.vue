@@ -208,8 +208,8 @@
       <el-button type="primary" @click="bind">绑定</el-button>
     </el-dialog>
 
-    <!-- 添加或修改代充人管理对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px"
+    <!-- 添加或修改代充人管理对话框 Add or modify agent management dialog -->
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="680px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="110px">
         <el-form-item label="代充账号" prop="account">
@@ -231,22 +231,30 @@
         <el-form-item label="手机号" prop="mobile">
           <el-input v-model="form.mobile" placeholder="请输入手机号"/>
         </el-form-item>
-        <el-form-item label="开店时间" prop="businessBeginTime">
-          <el-time-picker
-            arrow-control
-            v-model="form.businessBeginTime"
-            value-format="HH:mm:ss"
-            placeholder="任意时间点">
-          </el-time-picker>
-        </el-form-item>
-        <el-form-item label="关店时间" prop="businessEndTime">
-          <el-time-picker
-            arrow-control
-            v-model="form.businessEndTime"
-            value-format="HH:mm:ss"
-            placeholder="任意时间点">
-          </el-time-picker>
-        </el-form-item>
+
+        <div class="el-row">
+          <div class="el-col-lg-12">
+            <el-form-item label="开店时间" prop="businessBeginTime">
+              <el-time-picker
+                arrow-control
+                v-model="form.businessBeginTime"
+                value-format="HH:mm:ss"
+                placeholder="任意时间点">
+              </el-time-picker>
+            </el-form-item>
+          </div>
+          <div class="el-col-lg-12">
+            <el-form-item label="关店时间" prop="businessEndTime">
+              <el-time-picker
+                arrow-control
+                v-model="form.businessEndTime"
+                value-format="HH:mm:ss"
+                placeholder="任意时间点">
+              </el-time-picker>
+            </el-form-item>
+          </div>
+        </div>
+
         <el-form-item label="充值优惠比例" prop="rechargeDiscountRate">
           <el-input v-model="form.rechargeDiscountRate" placeholder="请输入充值优惠比例"/>
         </el-form-item>

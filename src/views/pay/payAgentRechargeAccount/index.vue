@@ -7,8 +7,7 @@
           placeholder="请输入代充账号"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="代充昵称" prop="nickName">
         <el-input
@@ -16,8 +15,7 @@
           placeholder="请输入代充昵称"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="手机号" prop="mobile">
         <el-input
@@ -25,8 +23,7 @@
           placeholder="请输入手机号"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -42,8 +39,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['pay:payAgentRechargeAccount:add']"
-        >新增
+          v-hasPermi="['pay:payAgentRechargeAccount:add']">新增
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -54,8 +50,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['pay:payAgentRechargeAccount:edit']"
-        >修改
+          v-hasPermi="['pay:payAgentRechargeAccount:edit']">修改
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -66,8 +61,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['pay:payAgentRechargeAccount:remove']"
-        >删除
+          v-hasPermi="['pay:payAgentRechargeAccount:remove']">删除
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -77,8 +71,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['pay:payAgentRechargeAccount:export']"
-        >导出
+          v-hasPermi="['pay:payAgentRechargeAccount:export']">导出
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>

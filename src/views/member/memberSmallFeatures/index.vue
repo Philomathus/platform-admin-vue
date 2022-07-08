@@ -4,9 +4,9 @@
 
       <el-col :span="5" class="card-box">
         <el-card>
-          <div slot="header"><span>批量手机号更新密码</span></div>
+          <div slot="header"><span class="fs15">批量手机号更新密码</span></div>
           <el-form :model="phoneFrom" ref="phoneFrom" :rules="phoneRules">
-            <el-form-item prop="phones" style="width: 100%">
+            <el-form-item prop="phones">
               <el-input
                 type="textarea"
                 :rows="45"
@@ -15,7 +15,7 @@
                 placeholder="手机号统一以竖行排列,不允许有任何字符"
               />
             </el-form-item>
-            <el-form-item prop="password" style="width: 100%">
+            <el-form-item prop="password" class="col-100pr">
               <el-autocomplete
                 class="inline-input"
                 :fetch-suggestions="querySearch"
@@ -25,14 +25,14 @@
                 placeholder="请输入更新的密码"
               ></el-autocomplete>
             </el-form-item>
-            <el-form-item prop="googleAuthCode" style="width: 100%">
+            <el-form-item prop="googleAuthCode" class="col-100pr">
               <el-input
                 style="width: 52%"
                 clearable
                 type="number"
                 class="no-number"
                 v-model="phoneFrom.googleAuthCode"
-                placeholder="请输入谷歌验证码"
+                placeholder="请输入谷歌验证码21"
               />
               <el-button type="primary" plain style="width: 23%;" @click="handleUpdate">更新</el-button>
             </el-form-item>
@@ -41,9 +41,9 @@
       </el-col>
       <el-col :span="5" class="card-box">
         <el-card>
-          <div slot="header"><span>批量会员ID查询手机号</span></div>
+          <div slot="header"><span class="fs15">批量会员ID查询手机号</span></div>
           <el-form :model="phoneByIdFrom" ref="phoneByIdFrom" :rules="phoneByIdRules">
-            <el-form-item prop="userIds" style="width: 100%">
+            <el-form-item prop="userIds" class="col-100pr">
               <el-input
                 type="textarea"
                 :rows="23"
@@ -64,7 +64,7 @@
               <el-button type="primary" plain style="width: 25%;margin-left: 1px" @click="handleQuery">查询</el-button>
               <el-button type="info" size="mini" plain style="width: 18%;padding:11px" @click="handleClear">清除</el-button>
             </el-form-item>
-            <el-form-item prop="phonesByIds" style="width: 100%;">
+            <el-form-item prop="phonesByIds" class="col-100pr">
                 <el-input
                   v-model="this.phonesByIds"
                   type="textarea"
@@ -78,7 +78,7 @@
       </el-col>
       <el-col :span="4.5" class="card-box">
         <el-card>
-          <div slot="header"><span>批量会员ID派送彩金</span></div>
+          <div slot="header"><span class="fs15">批量会员ID派送彩金</span></div>
           <el-form :model="memberIdsFrom" ref="memberIdsFrom" :rules="memberIdsRules">
             <el-upload
               class="upload-demo"
@@ -97,7 +97,7 @@
               <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">批量导入</el-button>
               <div slot="tip" class="el-upload__tip">只能上传excel文件</div>
             </el-upload>
-            <el-form-item prop="memberIds" style="width: 100%">
+            <el-form-item prop="memberIds" class="col-100pr">
               <el-input
                 type="textarea"
                 :rows="40"
@@ -106,7 +106,7 @@
                 placeholder="会员ID统一以竖行排列,不允许有任何字符"
               />
             </el-form-item>
-            <el-form-item prop="money" style="width: 100%">
+            <el-form-item prop="money" class="col-100pr">
               <el-input
                 class="no-number"
                 type="number"

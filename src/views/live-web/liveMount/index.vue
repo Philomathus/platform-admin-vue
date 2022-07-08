@@ -136,61 +136,66 @@
     />
 
     <!-- 添加或修改礼物列对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="550px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="600px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="85px">
 
         <div class="el-row">
           <div class="el-col-lg-12">
-            <el-form-item label="vip等级"
-                          prop="gvip">
-              <el-input v-model="form.gvip"
-                        placeholder="请输入免费领取VIP(-1只能买)"/>
+            <el-form-item label="vip等级" prop="gvip">
+              <el-input v-model="form.gvip" placeholder="请输入免费领取VIP(-1只能买)"/>
             </el-form-item>
-            <el-form-item label="坐骑名"
-                          prop="name">
-              <el-input v-model="form.name"
-                        placeholder="请输入坐骑名"/>
+            <el-form-item label="坐骑名" prop="name">
+              <el-input v-model="form.name" placeholder="请输入坐骑名"/>
             </el-form-item>
-            <el-form-item
-              label="状态">
-              <el-radio-group
-                v-model="form.status">
-                <el-radio
-                  label="0">未启用</el-radio>
-                <el-radio
-                  label="1">启用</el-radio>
+            <el-form-item label="状态">
+              <el-radio-group v-model="form.status">
+                <el-radio label="0">未启用</el-radio>
+                <el-radio label="1">启用</el-radio>
               </el-radio-group>
             </el-form-item>
           </div>
           <div class="el-col-lg-12">
-            <el-form-item label="图标"
-                          prop="iconUrl">
-              <imageUpload v-model="form.iconUrl"
-                           path="mount"/>
+            <el-form-item label="图标" prop="iconUrl">
+              <imageUpload v-model="form.iconUrl" path="mount"/>
             </el-form-item>
           </div>
 
         </div>
 
-
-
-
         <el-form-item label="svga动画" prop="svgUrl">
           <fileUpload v-model="form.svgUrl" path="mount"/>
         </el-form-item>
-        <el-form-item label="价格" prop="price">
-          <el-input v-model="form.price" placeholder="请输入价格"/>
-        </el-form-item>
-        <el-form-item label="折扣价格" prop="disPrice">
-          <el-input v-model="form.disPrice" placeholder="请输入折扣价格"/>
-        </el-form-item>
-        <el-form-item label="有效天数" prop="vday">
-          <el-input v-model="form.vday" placeholder="请输入有效天数"/>
-        </el-form-item>
 
-        <el-form-item label="排序" prop="oder">
-          <el-input type="number" v-model="form.oder"/>
-        </el-form-item>
+        <div class="el-row">
+          <div class="el-col-lg-12">
+            <el-form-item label="价格" prop="price">
+              <el-input v-model="form.price" placeholder="请输入价格"/>
+            </el-form-item>
+          </div>
+          <div class="el-col-lg-12">
+            <el-form-item label="折扣价格" prop="disPrice">
+              <el-input v-model="form.disPrice" placeholder="请输入折扣价格"/>
+            </el-form-item>
+          </div>
+        </div>
+
+        <div class="el-row">
+          <div class="el-col-lg-12">
+            <el-form-item label="有效天数" prop="vday">
+              <el-input v-model="form.vday" placeholder="请输入有效天数"/>
+            </el-form-item>
+          </div>
+          <div class="el-col-lg-12">
+            <el-form-item label="排序" prop="oder">
+              <el-input type="number" v-model="form.oder"/>
+            </el-form-item>
+          </div>
+        </div>
+
+
+
+
+
 
       </el-form>
       <div slot="footer" class="dialog-footer">

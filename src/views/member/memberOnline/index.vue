@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-button type="primary" @click="copy">在线会员数量 {{ this.totalData.total || 0 }}</el-button>
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px" style="margin-top: 20px">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px" class="mt20">
       <el-form-item prop="searchValue">
         <el-input
           v-model.trim="queryParams.searchValue"

@@ -99,29 +99,33 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改游戏类型对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
-               append-to-body>
+    <!-- 添加或修改游戏类型对话框 Add or modify game type dialog -->
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="600px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入名称"/>
-        </el-form-item>
-        <el-form-item label="排序号" prop="indexs">
-          <el-input v-model="form.indexs" placeholder="请输入排序号"/>
-        </el-form-item>
-        <el-form-item label="图标">
-          <imageUpload v-model="form.icon" path="gameType"/>
-        </el-form-item>
-        <el-form-item label="图标类型" prop="iconType">
-          <el-select v-model="form.iconType" placeholder="请选择图标类型">
-            <el-option
-              v-for="dict in iconTypeOptions"
-              :key="dict.dictValue"
-              :label="dict.dictLabel"
-              :value="parseInt(dict.dictValue)"
-            ></el-option>
-          </el-select>
-        </el-form-item>
+        <div class="el-row">
+          <div class="el-col-lg-12">
+            <el-form-item label="名称" prop="name">
+              <el-input v-model="form.name" placeholder="请输入名称"/>
+            </el-form-item>
+            <el-form-item label="排序号" prop="indexs">
+              <el-input v-model="form.indexs" placeholder="请输入排序号"/>
+            </el-form-item>
+            <el-form-item label="图标类型" prop="iconType">
+              <el-select v-model="form.iconType" placeholder="请选择图标类型">
+                <el-option
+                  v-for="dict in iconTypeOptions"
+                  :key="dict.dictValue"
+                  :label="dict.dictLabel"
+                  :value="parseInt(dict.dictValue)"></el-option>
+              </el-select>
+            </el-form-item>
+          </div>
+          <div class="el-col-lg-12">
+            <el-form-item label="图标">
+              <imageUpload v-model="form.icon" path="gameType"/>
+            </el-form-item>
+          </div>
+        </div>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>

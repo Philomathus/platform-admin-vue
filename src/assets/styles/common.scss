@@ -239,6 +239,24 @@
 	float: right;
 }
 
-.width240{
+/* dynamic value for whole application ,please don't change this values
+   because this value used in whole application
+   整个应用程序的动态值，请不要更改此值
+   因为这个值在整个应用程序中使用 */
+.col-w240{
   width: 240px;
 }
+
+.col-77p{
+ width: 77%;
+}
+.col-83p{
+  width: 83%;
+}
+.mr2{
+  margin-right: 2px;
+}
+
+
+
+

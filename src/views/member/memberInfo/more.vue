@@ -186,11 +186,11 @@
       </el-row>
 
 
-      <!--重置手机号-->
+      <!--重置手机号 update phone number-->
       <el-row v-if="index===11">
         <el-form ref="mobileForm" label-width="110px" :model="mobileForm" :rules="mobileRules">
           <el-form-item label="旧手机号" prop="phone">
-            <el-input v-model="mobileForm.phone" placeholder="请输入旧手机号" readonly style="width: 76%;margin-right: 10px"/>
+            <el-input v-model="mobileForm.phone" placeholder="请输入旧手机号" readonly class="col-77p mr10"/>
             <el-button type="primary" @click="fullMobile()" v-has-permi="['member:memberInfo:fullMobile']">查看完整手机号
             </el-button>
           </el-form-item>

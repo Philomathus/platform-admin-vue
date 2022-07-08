@@ -7,8 +7,7 @@
           placeholder="请输入通道名称"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="状态" prop="status">
         <el-select
@@ -16,14 +15,12 @@
           placeholder="状态"
           clearable
           size="small"
-          style="width: 240px"
-        >
+          class="col-w240">
           <el-option
             v-for="dict in statusOptions"
             :key="dict.dictValue"
             :label="dict.dictLabel"
-            :value="dict.dictValue"
-          />
+            :value="dict.dictValue"/>
         </el-select>
       </el-form-item>
       <el-form-item label="支付平台" prop="payPlatformId">
@@ -33,14 +30,12 @@
           placeholder="支付平台"
           clearable
           size="small"
-          style="width: 240px"
-        >
+          class="col-w240">
           <el-option
             v-for="Platform in payPlatformOptions"
             :key="Platform.id"
             :label="Platform.name"
-            :value="Platform.id"
-          />
+            :value="Platform.id"/>
         </el-select>
       </el-form-item>
       <el-form-item label="支付类型" prop="payTypeId">
@@ -50,14 +45,12 @@
           placeholder="支付类型"
           clearable
           size="small"
-          style="width: 240px"
-        >
+          class="col-w240">
           <el-option
             v-for="payTp in payTypes"
             :key="payTp.id"
             :label="payTp.name"
-            :value="payTp.id"
-          />
+            :value="payTp.id"/>
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -74,8 +67,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['pay:payChannelNew:add']"
-        >新增
+          v-hasPermi="['pay:payChannelNew:add']">新增
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -86,8 +78,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['pay:payChannelNew:edit']"
-        >修改
+          v-hasPermi="['pay:payChannelNew:edit']">修改
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -98,8 +89,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['pay:payChannelNew:remove']"
-        >删除
+          v-hasPermi="['pay:payChannelNew:remove']">删除
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -109,8 +99,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['pay:payChannelNew:export']"
-        >导出
+          v-hasPermi="['pay:payChannelNew:export']">导出
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -127,8 +116,7 @@
             v-model="scope.row.status"
             active-value="1"
             inactive-value="0"
-            @change="handleStatusChange(scope.row)"
-          ></el-switch>
+            @change="handleStatusChange(scope.row)"></el-switch>
         </template>
       </el-table-column>
       <el-table-column label="开启回调" align="center" prop="isCanCallback">
@@ -137,8 +125,7 @@
             v-model="scope.row.isCanCallback"
             active-value="1"
             inactive-value="0"
-            @change="callbackStatusChange(scope.row)"
-          ></el-switch>
+            @change="callbackStatusChange(scope.row)"></el-switch>
         </template>
       </el-table-column>
       <el-table-column label="支付平台名称" align="center" prop="payPlatformName"/>
@@ -153,16 +140,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['pay:payChannelNew:edit']"
-          >修改
+            v-hasPermi="['pay:payChannelNew:edit']">修改
           </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['pay:payChannelNew:remove']"
-          >删除
+            v-hasPermi="['pay:payChannelNew:remove']">删除
           </el-button>
         </template>
       </el-table-column>
@@ -174,8 +159,7 @@
       :page-sizes="[20,50,100,200]"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
+      @pagination="getList"/>
 
     <!-- 添加或修改【支付通道】对话框 PayChannelNew Add new Payment-->
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="720px" append-to-body>
@@ -199,7 +183,7 @@
                 placeholder="请选择支付平台"
                 clearable
                 size="small"
-                class="width240">
+                class="col-w240">
                 <el-option
                   v-for="Platform in payPlatformOptions"
                   :key="Platform.id"
@@ -216,7 +200,7 @@
                 placeholder="请选择支付类型"
                 clearable
                 size="small"
-                class="width240">
+                class="col-w240">
                 <el-option
                   v-for="dict in payTypes"
                   :key="dict.id"
@@ -245,7 +229,7 @@
           <el-col :span="11">
             <el-input type="number" class="no-number" v-model.trim="form.openLevel" placeholder="请输入最小开放层级"/>
           </el-col>
-          <el-col :span="2" style="text-align: center;">-</el-col>
+          <el-col :span="2" class="text-center">-</el-col>
           <el-col :span="11">
             <el-input type="number" class="no-number" v-model.trim="form.openLevelMax" placeholder="请输入最大开放层级"/>
           </el-col>

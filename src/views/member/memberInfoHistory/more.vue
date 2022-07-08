@@ -10,7 +10,7 @@
         top="5vh"
         append-to-body>
       <!--顶部按钮-->
-      <div class="page-tab" style="margin-bottom: 20px">
+      <div class="page-tab mb20">
         <button type="button"
                 class="el-button el-button--primary el-button--mini is-plain" @click="change(3,'加分')">
           <span>加分</span>
@@ -173,7 +173,7 @@
                         placeholder="请选择发送的信息"
                         clearable
                         size="small"
-                        style="width: 240px">
+                        class="col-w240">
               <el-option
                         v-for="dict in msgList "
                         :key="dict.dictValue"
@@ -187,7 +187,7 @@
       <el-row v-if="index===11">
           <el-form ref="mobileForm" label-width="110px" :model="mobileForm" :rules="mobileRules">
             <el-form-item label="旧手机号" prop="phone">
-              <el-input v-model="mobileForm.phone" placeholder="请输入旧手机号" readonly style="width: 83%;margin-right: 2px"/>
+              <el-input v-model="mobileForm.phone" placeholder="请输入旧手机号" class="col-83p mr2" readonly/>
               <el-button type="primary" @click="fullMobile()" v-has-permi="['member:memberInfo:fullMobile']">查看完整手机号</el-button>
             </el-form-item>
             <el-form-item label="新手机号" prop="newMobile">

@@ -146,12 +146,20 @@
         </div>
 
 
-        <el-form-item label="游戏码" prop="kindId">
-          <el-input v-model="form.kindId" placeholder="请输入游戏码" style="width: 240px"/>
-        </el-form-item>
-        <el-form-item label="高宽比" prop="highWide">
-          <el-input v-model="form.highWide" placeholder="请输入高宽比" style="width: 240px"/>
-        </el-form-item>
+        <div class="el-row">
+          <div class="el-col-lg-12">
+            <el-form-item label="游戏码" prop="kindId">
+              <el-input v-model="form.kindId" placeholder="请输入游戏码"/>
+            </el-form-item>
+          </div>
+          <div class="el-col-lg-12">
+            <el-form-item label="高宽比" prop="highWide">
+              <el-input v-model="form.highWide" placeholder="请输入高宽比"/>
+            </el-form-item>
+          </div>
+        </div>
+
+
 <!--        <el-form-item label="是否填充" prop="isFull">
           <el-select v-model="form.isFull" placeholder="请选择">
             <el-option
@@ -162,31 +170,40 @@
             ></el-option>
           </el-select>
         </el-form-item>-->
-        <el-form-item label="横竖屏" prop="screen">
-          <el-select v-model="form.screen" placeholder="请选择">
-            <el-option
-              v-for="dict in screenList"
-              :key="dict.dictValue"
-              :label="dict.dictLabel"
-              :value="dict.dictValue"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="游戏平台" prop="platformName">
-          <el-select v-model="form.platformId"
-                     filterable
-                     clearable
-                     placeholder="请选择">
-            <el-option
-              v-for="dict in platformNameList"
-              :key="dict.id"
-              :label="dict.name"
-              :value="dict.id"
-            ></el-option>
-          </el-select>
-        </el-form-item>
+
+        <div class="el-row">
+          <div class="el-col-lg-12">
+            <el-form-item label="横竖屏" prop="screen">
+              <el-select v-model="form.screen" placeholder="请选择">
+                <el-option
+                  v-for="dict in screenList"
+                  :key="dict.dictValue"
+                  :label="dict.dictLabel"
+                  :value="dict.dictValue"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </div>
+          <div class="el-col-lg-12">
+            <el-form-item label="游戏平台" prop="platformName">
+              <el-select v-model="form.platformId"
+                         filterable
+                         clearable
+                         placeholder="请选择">
+                <el-option
+                  v-for="dict in platformNameList"
+                  :key="dict.id"
+                  :label="dict.name"
+                  :value="dict.id"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </div>
+        </div>
+
+
         <el-form-item label="简介" prop="remark">
-          <el-input v-model="form.remark" placeholder="请输入简介" style="width: 240px"/>
+          <el-input v-model="form.remark" placeholder="请输入简介" style="width: 100%"/>
         </el-form-item>
 
       </el-form>

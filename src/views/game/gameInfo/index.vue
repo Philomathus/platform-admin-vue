@@ -200,8 +200,7 @@
             </el-form-item>
           </div>
         </div>
-
-
+        
         <el-form-item label="简介" prop="remark">
           <el-input v-model="form.remark" placeholder="请输入简介" style="width: 100%"/>
         </el-form-item>

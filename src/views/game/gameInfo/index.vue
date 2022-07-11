@@ -7,8 +7,7 @@
             v-for="dict in platformNameList"
             :key="dict.id"
             :label="dict.name"
-            :value="dict.id"
-          ></el-option>
+            :value="dict.id"></el-option>
         </el-select>
       </el-form-item>
 
@@ -18,9 +17,8 @@
           placeholder="请输入游戏名称"
           clearable
           size="small"
-          style="width: 240px"
-          @keyup.enter.native="handleQuery"
-        />
+          class="col-w240"
+          @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -35,8 +33,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['game:info:add']"
-        >新增
+          v-hasPermi="['game:info:add']">新增
         </el-button>
       </el-col>
 
@@ -50,8 +47,7 @@
           <el-image
             style="width: 50px;"
             :src="scope.row.icon"
-            fit="contain"
-          >
+            fit="contain">
           </el-image>
         </template>
       </el-table-column>
@@ -60,8 +56,7 @@
           <el-image
             style="width: 50px;"
             :src="scope.row.editionIcon"
-            fit="contain"
-          >
+            fit="contain">
           </el-image>
         </template>
       </el-table-column>
@@ -85,8 +80,7 @@
             v-model="scope.row.status"
             active-value="1"
             inactive-value="0"
-            @change="handleStatusChange(scope.row)"
-          ></el-switch>
+            @change="handleStatusChange(scope.row)"></el-switch>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right">
@@ -97,8 +91,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             style="color: #FF5722"
-            v-hasPermi="['game:info:edit']"
-          >修改
+            v-hasPermi="['game:info:edit']">修改
           </el-button>
           <el-button
             size="mini"
@@ -106,8 +99,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             style="color: #FF5722"
-            v-hasPermi="['game:info:remove']"
-          >删除
+            v-hasPermi="['game:info:remove']">删除
           </el-button>
         </template>
       </el-table-column>
@@ -118,8 +110,7 @@
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
+      @pagination="getList"/>
 
 
     <!-- 添加或修改游戏信息对话框 -->
@@ -179,8 +170,7 @@
                   v-for="dict in screenList"
                   :key="dict.dictValue"
                   :label="dict.dictLabel"
-                  :value="dict.dictValue"
-                ></el-option>
+                  :value="dict.dictValue"></el-option>
               </el-select>
             </el-form-item>
           </div>
@@ -194,13 +184,12 @@
                   v-for="dict in platformNameList"
                   :key="dict.id"
                   :label="dict.name"
-                  :value="dict.id"
-                ></el-option>
+                  :value="dict.id"></el-option>
               </el-select>
             </el-form-item>
           </div>
         </div>
-        
+
         <el-form-item label="简介" prop="remark">
           <el-input v-model="form.remark" placeholder="请输入简介" style="width: 100%"/>
         </el-form-item>

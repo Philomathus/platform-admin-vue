@@ -143,10 +143,10 @@
     />
 
     <!-- 添加或修改游戏注单修复对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="600px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="470px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="130px">
         <el-form-item label="会员ID" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入会员ID"  width="220px"/>
+          <el-input v-model="form.userId" placeholder="请输入会员ID" style="width: 217px"/>
         </el-form-item>
         <el-form-item label="游戏开始时间" prop="gameStartTime">
           <el-date-picker clearable size="small"

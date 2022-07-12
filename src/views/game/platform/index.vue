@@ -140,18 +140,25 @@
         <el-form-item label="API接口" prop="apiUrl">
           <el-input v-model="form.apiUrl" placeholder="请输入API接口"/>
         </el-form-item>
-        <el-form-item label="站点标识" prop="linecode">
-          <el-input v-model="form.linecode" placeholder="请输入站点标识"/>
-        </el-form-item>
-        <el-form-item label="游戏类型" prop="gameTypeid">
-          <el-select v-model="form.gameTypeid" placeholder="请选择">
-            <el-option
-              v-for="dict in gameTypeList"
-              :key="dict.id"
-              :label="dict.name"
-              :value="dict.id"></el-option>
-          </el-select>
-        </el-form-item>
+
+        <div class="el-row">
+          <div class="el-col-lg-12">
+            <el-form-item label="站点标识" prop="linecode">
+              <el-input v-model="form.linecode" placeholder="请输入站点标识"/>
+            </el-form-item>
+          </div>
+          <div class="el-col-lg-12">
+            <el-form-item label="游戏类型" prop="gameTypeid">
+              <el-select v-model="form.gameTypeid" placeholder="请选择">
+                <el-option
+                  v-for="dict in gameTypeList"
+                  :key="dict.id"
+                  :label="dict.name"
+                  :value="dict.id"></el-option>
+              </el-select>
+            </el-form-item>
+          </div>
+        </div>
 
       </el-form>
       <div slot="footer" class="dialog-footer">

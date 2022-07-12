@@ -193,15 +193,15 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改转盘彩票对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
+    <!-- 添加或修改转盘彩票对话框 Add or Modify Carousel Lottery dialog box-->
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="450px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
 <!--        <el-form-item label="彩票ID" prop="lotteryId">
           <el-input v-model="form.lotteryId" placeholder="请输入彩票ID"/>
         </el-form-item>-->
         <el-form-item label="彩票名称" prop="name">
-            <el-select v-model="form.name" placeholder="请选择彩票名称" clearable size="small" :disabled="disAbleName" @change="changeId">
+            <el-select v-model="form.name" placeholder="请选择彩票名称" clearable size="small" :disabled="disAbleName" @change="changeId" class="col-w240">
               <el-option
                 v-for="dict in lotteryList "
                 :value="{form: form,dict: dict}"
@@ -217,10 +217,10 @@
                   <el-input v-model="form.minPrize" placeholder="请输入奖金池最小生效废弃）" />
                 </el-form-item>-->
         <el-form-item label="最小投注" prop="minBet">
-          <el-input v-model="form.minBet" type="number" placeholder="请输入最小投注"/>
+          <el-input v-model="form.minBet" type="number" placeholder="请输入最小投注" class="col-w240"/>
         </el-form-item>
         <el-form-item label="预备派奖金额" prop="prePrize">
-          <el-input v-model="form.prePrize" type="number" placeholder="请输入预备派奖金额"/>
+          <el-input v-model="form.prePrize" type="number" placeholder="请输入预备派奖金额" class="col-w240"/>
         </el-form-item>
         <!--        <el-form-item label="实际派奖金额" prop="actPrize">
                   <el-input v-model="form.actPrize" placeholder="请输入实际派奖金额" />
@@ -240,7 +240,8 @@
                           v-model="form.start"
                           type="date"
                           value-format="yyyy-MM-dd"
-                          placeholder="选择开始时间">
+                          placeholder="选择开始时间"
+                          style="width: 240px">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="结束时间" prop="end">
@@ -248,7 +249,8 @@
                           v-model="form.end"
                           type="date"
                           value-format="yyyy-MM-dd"
-                          placeholder="选择结束时间">
+                          placeholder="选择结束时间"
+                          style="width: 240px">
           </el-date-picker>
         </el-form-item>
       </el-form>

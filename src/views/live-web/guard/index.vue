@@ -105,8 +105,8 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
+    <!-- 添加或修改对话框 Add or modify dialogs-->
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="550px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="规格" prop="specifications">
@@ -118,29 +118,35 @@
         <el-form-item label="价格" prop="price">
           <el-input v-model="form.price" placeholder="请输入价格"/>
         </el-form-item>
-        <el-form-item label="守护类型">
-          <el-select v-model="form.type" placeholder="请选择">
-            <el-option
-              v-for="dict in guardOptions"
-              :key="dict.dictValue"
-              :label="dict.dictLabel"
-              :value="dict.dictValue"
-            ></el-option>
-          </el-select>
-        </el-form-item>
+
         <!--        <el-form-item label="礼物id" prop="propId">-->
         <!--          <el-input v-model="form.propId" placeholder="请输入礼物id" />-->
         <!--        </el-form-item>-->
-        <el-form-item label="关联礼物">
-          <el-select v-model="form.propId" placeholder="请选择">
-            <el-option
-              v-for="dict in propIdOptions"
-              :key="dict.id"
-              :label="dict.name"
-              :value="dict.id"
-            ></el-option>
-          </el-select>
-        </el-form-item>
+        <div class="el-row">
+          <div class="el-col-lg-12">
+            <el-form-item label="守护类型">
+              <el-select v-model="form.type" placeholder="请选择">
+                <el-option
+                  v-for="dict in guardOptions"
+                  :key="dict.dictValue"
+                  :label="dict.dictLabel"
+                  :value="dict.dictValue"></el-option>
+              </el-select>
+            </el-form-item>
+          </div>
+          <div class="el-col-lg-12">
+            <el-form-item label="关联礼物">
+              <el-select v-model="form.propId" placeholder="请选择">
+                <el-option
+                  v-for="dict in propIdOptions"
+                  :key="dict.id"
+                  :label="dict.name"
+                  :value="dict.id"></el-option>
+              </el-select>
+            </el-form-item>
+          </div>
+        </div>
+
         <el-form-item label="优惠价格" prop="discountPrice">
           <el-input v-model="form.discountPrice" placeholder="请输入优惠价格"/>
         </el-form-item>

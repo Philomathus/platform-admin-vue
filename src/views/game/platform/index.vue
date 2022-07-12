@@ -7,8 +7,7 @@
           placeholder="请输入代理号"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="平台名称" prop="name">
         <el-input
@@ -16,8 +15,7 @@
           placeholder="请输入平台名称"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          @keyup.enter.native="handleQuery"/>
       </el-form-item>
 
       <el-form-item>
@@ -34,8 +32,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['game:platform:add']"
-        >新增
+          v-hasPermi="['game:platform:add']">新增
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -51,8 +48,8 @@
             v-model="scope.row.status"
             active-value="1"
             inactive-value="0"
-            @change="handleStatusChange(scope.row)"
-          ></el-switch>
+            @change="handleStatusChange(scope.row)">
+          </el-switch>
         </template>
       </el-table-column>
       <el-table-column label="洗码比例" min-width="100" align="center" prop="rateClean">
@@ -86,8 +83,7 @@
             icon="el-icon-edit"
             style="color: #FF5722"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['game:platform:edit']"
-          >修改
+            v-hasPermi="['game:platform:edit']">修改
           </el-button>
           <el-button
             size="mini"
@@ -95,8 +91,7 @@
             icon="el-icon-delete"
             style="color: #FF5722"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['game:platform:remove']"
-          >删除
+            v-hasPermi="['game:platform:remove']">删除
           </el-button>
         </template>
       </el-table-column>
@@ -108,19 +103,25 @@
       :page-sizes="[15,50,100]"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
+      @pagination="getList"/>
 
     <!-- 添加或修改游戏平台对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
-               append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="600px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="平台id" prop="id">
-          <el-input v-model="form.id" placeholder="请输入代理id"/>
-        </el-form-item>
-        <el-form-item label="代理" prop="agent">
-          <el-input v-model="form.agent" placeholder="请输入代理"/>
-        </el-form-item>
+
+        <div class="el-row">
+          <div class="el-col-lg-12">
+            <el-form-item label="平台id" prop="id">
+              <el-input v-model="form.id" placeholder="请输入代理id"/>
+            </el-form-item>
+          </div>
+          <div class="el-col-lg-12">
+            <el-form-item label="代理" prop="agent">
+              <el-input v-model="form.agent" placeholder="请输入代理"/>
+            </el-form-item>
+          </div>
+        </div>
+
         <el-form-item label="平台名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入平台名称"/>
         </el-form-item>
@@ -148,8 +149,7 @@
               v-for="dict in gameTypeList"
               :key="dict.id"
               :label="dict.name"
-              :value="dict.id"
-            ></el-option>
+              :value="dict.id"></el-option>
           </el-select>
         </el-form-item>
 

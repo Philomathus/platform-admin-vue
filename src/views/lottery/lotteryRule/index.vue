@@ -17,8 +17,7 @@
           placeholder="请输入彩票类型名称"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -33,8 +32,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['admin:lotteryRule:add']"
-        >新增</el-button>
+          v-hasPermi="['admin:lotteryRule:add']">新增</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -44,8 +42,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['admin:lotteryRule:edit']"
-        >修改</el-button>
+          v-hasPermi="['admin:lotteryRule:edit']">修改</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -55,8 +52,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['admin:lotteryRule:remove']"
-        >删除</el-button>
+          v-hasPermi="['admin:lotteryRule:remove']">删除</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -65,8 +61,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['admin:lotteryRule:export']"
-        >导出</el-button>
+          v-hasPermi="['admin:lotteryRule:export']">导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -84,15 +79,13 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['admin:lotteryRule:edit']"
-          >修改</el-button>
+            v-hasPermi="['admin:lotteryRule:edit']">修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['admin:lotteryRule:remove']"
-          >删除</el-button>
+            v-hasPermi="['admin:lotteryRule:remove']">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -102,11 +95,10 @@
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
+      @pagination="getList"/>
 
-    <!-- 添加或修改开奖规则说明对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <!-- 添加或修改开奖规则说明对话框 Add or modify lottery rules description dialog-->
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="550px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="所属彩种类型" prop="kind" v-if="form.id == null">
           <el-select
@@ -115,14 +107,12 @@
             placeholder="请选择所属彩种类型"
             clearable
             size="small"
-            style="width: 240px"
-          >
+            style="width: 410px">
             <el-option
               v-for="dict in kindOptions"
               :key="dict.dictValue"
               :label="dict.dictLabel"
-              :value="dict.dictValue"
-            />
+              :value="dict.dictValue"/>
           </el-select>
         </el-form-item>
         <el-form-item label="彩票类型名称" prop="name">

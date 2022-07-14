@@ -8,14 +8,12 @@
           placeholder="请选择彩种"
           clearable
           size="small"
-          style="width: 240px"
-        >
+          style="width: 240px">
           <el-option
             v-for="dict in lotteryInfoNameOptions"
             :key="dict.name"
             :label="dict.name"
-            :value="dict.name"
-          />
+            :value="dict.name"/>
         </el-select>
       </el-form-item>
       <el-form-item prop="status">
@@ -24,8 +22,7 @@
             v-for="dict in statusOptions"
             :key="dict.dictValue"
             :label="dict.dictLabel"
-            :value="dict.dictValue"
-          />
+            :value="dict.dictValue"/>
         </el-select>
       </el-form-item>
       <el-form-item prop="issue">
@@ -34,8 +31,7 @@
           placeholder="请输入期数"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item prop="ktime">
         <el-date-picker
@@ -47,8 +43,8 @@
           range-separator="-"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
-          :picker-options="pickerOptions"
-        ></el-date-picker>
+          :picker-options="pickerOptions">
+        </el-date-picker>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -59,8 +55,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="addIssue"
-          v-hasPermi="['admin:lotteryHistory:add']"
-        >补期
+          v-hasPermi="['admin:lotteryHistory:add']">补期
         </el-button>
       </el-form-item>
     </el-form>

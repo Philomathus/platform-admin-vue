@@ -7,7 +7,7 @@
         numberUtil.toPercent(this.totalData.successRate || 0)
       }}
     </el-button>
-    <el-button  type="primary" icon="el-icon-search" size="mini" @click="listCount()" style="margin-left: 20px">统计查询</el-button>
+    <el-button type="primary" icon="el-icon-search" size="mini" @click="listCount()" style="margin-left: 20px;padding: 10px">统计查询</el-button>
     </div>
     <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 10px" v-show="showSearch"
              label-width="100px">

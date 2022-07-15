@@ -7,14 +7,14 @@
     <el-button type="info" id="copy4" @click="copy4">成功率 {{ numberUtil.toPercent(this.totalData.failRate || 0 ) }}</el-button>
     <el-button  type="primary" icon="el-icon-search" size="mini" @click="listCount()" style="margin-left: 20px">统计查询</el-button>
     </div>
-    <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 10px" v-show="showSearch" label-width="100px">
+    <el-form :model="queryParams" ref="queryForm" class="mt10" :inline="true"  v-show="showSearch" label-width="100px">
       <el-form-item label="回调时间" prop="selectDate" label-width="100px">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
                         end-placeholder="结束时间" range-separator="至" :default-time="['00:00:00', '23:59:59']" clearable :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item prop="status" style="width: 100px">
+      <el-form-item prop="status" class="col-w100">
         <el-select v-model="queryParams.status" placeholder="全部状态" clearable size="small">
           <el-option
             v-for="dict in statusOptions"
@@ -24,7 +24,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item prop="platformId" style="width: 150px">
+      <el-form-item prop="platformId" class="col-w150">
         <el-select
           filterable
           v-model="queryParams.platformId"

@@ -8,7 +8,7 @@
                         range-separator="至" clearable :picker-options="pickerOptions">
         </el-date-picker>
       </el-form-item>
-      <el-form-item prop="id" style="width: 150px">
+      <el-form-item prop="id" class="col-w150">
         <el-input
           v-model="queryParams.id"
           placeholder="主播ID"
@@ -18,7 +18,7 @@
           class="no-number"
           @keyup.enter.native="handleQuery"/>
       </el-form-item>
-      <el-form-item prop="nickName" style="width: 150px">
+      <el-form-item prop="nickName" class="col-w150">
         <el-input
           v-model="queryParams.nickName"
           placeholder="主播昵称"
@@ -26,7 +26,7 @@
           size="small"
           @keyup.enter.native="handleQuery"/>
       </el-form-item>
-      <el-form-item prop="mobile" style="width: 150px">
+      <el-form-item prop="mobile" class="col-w150">
         <el-input
           v-model="queryParams.mobile"
           placeholder="手机号"
@@ -34,13 +34,13 @@
           size="small"
           @keyup.enter.native="handleQuery"/>
       </el-form-item>
-      <el-form-item prop="isBan" style="width: 150px">
+      <el-form-item prop="isBan" class="col-w150">
         <el-select v-model="queryParams.isBan" placeholder="是否禁播" clearable>
           <el-option label="正常" value="0"></el-option>
           <el-option label="禁播" value="1"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item prop="isAuthentication" style="width: 150px">
+      <el-form-item prop="isAuthentication" class="col-w150">
         <el-select v-model="queryParams.isAuthentication" placeholder="全部状态" clearable>
           <el-option label="未认证" value="0"></el-option>
           <el-option label="待审核" value="1"></el-option>
@@ -48,7 +48,7 @@
           <el-option label="审核不通过" value="3"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item prop="mobile" style="width: 150px">
+      <el-form-item prop="mobile" class="col-w150">
         <el-input
           v-model="queryParams.familyId"
           placeholder="家族ID"

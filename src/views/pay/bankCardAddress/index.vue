@@ -7,8 +7,7 @@
           placeholder="请输入省份"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          @keyup.enter.native="handleQuery"/>
       </el-form-item>
 
       <el-form-item>
@@ -25,8 +24,8 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['admin:bankCardAddress:add']"
-        >新增或修改银行卡黑名单归属地
+          v-hasPermi="['admin:bankCardAddress:add']">
+          新增或修改银行卡黑名单归属地
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -43,8 +42,8 @@
           v-model="scope.row.status"
           active-value="1"
           inactive-value="0"
-          @change="handleStatusChange(scope.row)"
-        ></el-switch>
+          @change="handleStatusChange(scope.row)">
+        </el-switch>
       </template>
       </el-table-column>
       <el-table-column label="创建人" align="center" prop="createName"/>
@@ -55,14 +54,13 @@
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
+      @pagination="getList"/>
 
-    <!-- 添加或修改【请填写功能名称】对话框 -->
+    <!-- 添加或修改【请填写功能名称】对话框 Add or modify the dialog box -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="150px">
-        <el-select size="small" style="width: 100px"
+        <el-select size="small" class="col-w150"
                    v-model="selectProv"
                    placeholder="请选择省份"
                    v-on:change="getProv($event)">
@@ -72,7 +70,7 @@
             :value="item.value">
           </el-option>
         </el-select>
-        <el-select size="small" style="width: 200px"
+        <el-select size="small" class="col-w200 ml5"
                    v-if="selectProv!=''"
                    v-model="selectCity"
                    placeholder="请选择城市"

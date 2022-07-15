@@ -132,7 +132,7 @@
       @pagination="getList"
     />
 
-    <!-- 添加【支付平台】对话框 -->
+    <!-- 添加【支付平台】对话框 Add【Payment Platform】dialog-->
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="770px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="110px">
         <el-form-item label="名称" prop="name">
@@ -168,12 +168,12 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
 <!--        <el-button type="success" @click="submitFormAdd">全平台新增</el-button>-->
-        <el-button @click="cancel">取 消</el-button>
         <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
 
-    <!-- 修改【支付平台】对话框 -->
+    <!-- 修改【支付平台】对话框 Modify the [Payment Platform] dialog box-->
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="opene" width="770px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="110px">
         <el-form-item label="名称" prop="name">
@@ -208,8 +208,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="cancel">取 消</el-button>
         <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
 

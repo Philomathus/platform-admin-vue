@@ -95,13 +95,13 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table :stripe="true" v-loading="loading" :data="payPlatformNewList">
+    <el-table :stripe="true" v-loading="loading" :data="payPlatformNewList" class="el-table--border">
 <!--      <el-table-column type="selection" width="55" align="center"/>-->
-      <el-table-column label="平台名称" align="center" prop="name"/>
-      <el-table-column label="平台编码" align="center" prop="code"/>
-      <el-table-column label="平台下单接口地址" :show-overflow-tooltip="true" align="center" width="800" prop="platPayUrl"/>
-      <el-table-column label="平台订单查询地址" :show-overflow-tooltip="true" align="center" width="800" prop="platQueryUrl"/>
-      <el-table-column label="操作" align="center" fixed="right">
+      <el-table-column label="平台名称" prop="name" align="center" width="200"/>
+      <el-table-column label="平台编码" prop="code" width="200"/>
+      <el-table-column label="平台下单接口地址" :show-overflow-tooltip="true"  width="600" prop="platPayUrl"/>
+      <el-table-column label="平台订单查询地址" :show-overflow-tooltip="true" width="600" prop="platQueryUrl"/>
+      <el-table-column label="操作" align="center" fixed="right" width="130">
         <template slot-scope="scope">
           <el-button
             size="mini"

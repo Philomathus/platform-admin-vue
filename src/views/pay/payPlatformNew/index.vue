@@ -7,8 +7,7 @@
           placeholder="请输入平台名称"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="平台编码" prop="code">
         <el-input
@@ -16,8 +15,7 @@
           placeholder="请输入平台编码"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="下单地址" prop="platPayUrl">
         <el-input
@@ -25,8 +23,7 @@
           placeholder="请输入下单接口地址"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -42,8 +39,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['pay:payPlatformNew:add']"
-        >新增
+          v-hasPermi="['pay:payPlatformNew:add']">新增
         </el-button>
       </el-col>
 <!--      <el-col :span="1.5">-->
@@ -77,8 +73,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['pay:payPlatformNew:export']"
-        >导出
+          v-hasPermi="['pay:payPlatformNew:export']">导出
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -98,7 +93,7 @@
     <el-table :stripe="true" v-loading="loading" :data="payPlatformNewList" class="el-table--border">
 <!--      <el-table-column type="selection" width="55" align="center"/>-->
       <el-table-column label="平台名称" prop="name" align="center" width="200"/>
-      <el-table-column label="平台编码" prop="code" width="200"/>
+      <el-table-column label="平台编码" prop="code" align="center" width="200"/>
       <el-table-column label="平台下单接口地址" :show-overflow-tooltip="true"  width="600" prop="platPayUrl"/>
       <el-table-column label="平台订单查询地址" :show-overflow-tooltip="true" width="600" prop="platQueryUrl"/>
       <el-table-column label="操作" align="center" fixed="right" width="130">
@@ -108,8 +103,7 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['pay:payPlatformNew:edit']"
-          >修改
+            v-hasPermi="['pay:payPlatformNew:edit']">修改
           </el-button>
 <!--          <el-button-->
 <!--            size="mini"-->
@@ -129,8 +123,7 @@
       :page-sizes="[20,50,100]"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
+      @pagination="getList"/>
 
     <!-- 添加【支付平台】对话框 Add【Payment Platform】dialog-->
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="770px" append-to-body>

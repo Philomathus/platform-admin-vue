@@ -5,8 +5,8 @@
         <el-date-picker type="daterange" v-model="selectDate" format="yyyy-MM-dd"
                         value-format="yyyy-MM-dd" :style="{width: '240px'}" start-placeholder="开始日期"
                         end-placeholder="结束日期"
-                        range-separator="至" clearable :picker-options="pickerOptions"
-        ></el-date-picker>
+                        range-separator="至" clearable :picker-options="pickerOptions">
+        </el-date-picker>
       </el-form-item>
       <el-form-item prop="id" style="width: 150px">
         <el-input
@@ -16,8 +16,7 @@
           size="small"
           type="number"
           class="no-number"
-          @keyup.enter.native="handleQuery"
-        />
+          @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item prop="nickName" style="width: 150px">
         <el-input
@@ -25,8 +24,7 @@
           placeholder="主播昵称"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item prop="mobile" style="width: 150px">
         <el-input
@@ -34,8 +32,7 @@
           placeholder="手机号"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item prop="isBan" style="width: 150px">
         <el-select v-model="queryParams.isBan" placeholder="是否禁播" clearable>
@@ -59,8 +56,7 @@
           size="small"
           type="number"
           class="no-number"
-          @keyup.enter.native="handleQuery"
-        />
+          @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -76,8 +72,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['admin:liveUser:add']"
-        >新增
+          v-hasPermi="['admin:liveUser:add']">新增
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -87,8 +82,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['admin:liveUser:export']"
-        >导出
+          v-hasPermi="['admin:liveUser:export']">导出
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -98,8 +92,7 @@
           icon="el-icon-download"
           size="mini"
           @click="sendRoomMsg"
-          v-hasPermi="['admin:liveUser:add']"
-        >直播间小助手
+          v-hasPermi="['admin:liveUser:add']">直播间小助手
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -117,8 +110,7 @@
             placement="top"
             :title="scope.row.familyName"
             width="200"
-            trigger="click"
-          >
+            trigger="click">
             <table>
               <tr>
                 <td style="text-align: right">家 族 ID：</td>
@@ -159,8 +151,7 @@
             active-color="#5B7BFA"
             inactive-color="#dadde5"
             v-model="row.isBan"
-            @change=displayCheck(row)
-          >
+            @change=displayCheck(row)>
           </el-switch>
         </template>
       </el-table-column>
@@ -178,8 +169,7 @@
             icon="el-icon-s-check"
             @click="kickOutLive(scope.row)"
             v-hasPermi="['admin:liveUser:edit']"
-            v-show="scope.row.familyId > 0 && (scope.row.familyChieftain === 0 || scope.row.familyChieftain === null)"
-          >踢出家族
+            v-show="scope.row.familyId > 0 && (scope.row.familyChieftain === 0 || scope.row.familyChieftain === null)">踢出家族
           </el-button>
           <el-button
             size="small"
@@ -188,8 +178,7 @@
             icon="el-icon-s-check"
             @click="handleAuth(scope.row)"
             v-hasPermi="['admin:liveUser:edit']"
-            v-show="scope.row.isAuthentication === 1"
-          >审核
+            v-show="scope.row.isAuthentication === 1">审核
           </el-button>
 
           <!-- click on this button live Launch content dialog-->
@@ -204,8 +193,7 @@
                             getLiveVideo(scope.row.id);
             }"
             v-hasPermi="['admin:liveUser:edit']"
-            v-show="scope.row.roboter == 1 && scope.row.liveIn != 1"
-          >开播
+            v-show="scope.row.roboter == 1 && scope.row.liveIn != 1">开播
           </el-button>
           <!-- end Launch content dialog button -->
 
@@ -216,16 +204,14 @@
             icon="el-icon-s-check"
             @click="closeLive(scope.row)"
             v-hasPermi="['admin:liveUser:edit']"
-            v-show="scope.row.roboter == 1 && scope.row.liveIn == 1"
-          >关播
+            v-show="scope.row.roboter == 1 && scope.row.liveIn == 1">关播
           </el-button>
           <el-button
             size="small"
             plain
             type="success"
             icon="el-icon-menu"
-            @click="handleMore(scope.row)"
-          >更多
+            @click="handleMore(scope.row)">更多
             <!-- v-hasPermi="['admin:memberInfo:remove']"-->
           </el-button>
         </template>
@@ -244,21 +230,28 @@
       :page-sizes="[20,50,100]"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
+      @pagination="getList"/>
 
-    <!-- 添加或修改主播信息对话框 -->
-    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="addopen" width="500px" append-to-body>
+    <!-- 添加或修改主播信息对话框 Add or modify anchor information dialog-->
+    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="addopen" width="620px" append-to-body>
       <el-form ref="form" :model="form" label-width="120px">
-        <el-form-item label="手机号" prop="mobile">
-          <el-input v-model="form.mobile"/>
-        </el-form-item>
-        <el-form-item label="昵称" prop="nickName">
-          <el-input v-model="form.nickName"/>
-        </el-form-item>
-        <el-form-item label="用户头像">
-          <imageUpload v-model="form.headImage" path="liveVideo"/>
-        </el-form-item>
+
+        <section class="el-row">
+            <div class="el-col-lg-14">
+              <el-form-item label="手机号" prop="mobile">
+                <el-input v-model="form.mobile"/>
+              </el-form-item>
+              <el-form-item label="昵称" prop="nickName">
+                <el-input v-model="form.nickName"/>
+              </el-form-item>
+            </div>
+            <div class="el-col-lg-10">
+              <el-form-item label="用户头像" style="margin-left: -30px">
+                <imageUpload v-model="form.headImage" path="liveVideo"/>
+              </el-form-item>
+            </div>
+        </section>
+
         <el-form-item label="类型" prop="isAuthentication">
           <el-radio-group v-model="form.isAuthentication">
             <el-radio

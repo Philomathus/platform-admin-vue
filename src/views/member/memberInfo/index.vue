@@ -935,7 +935,7 @@ import {
       },
       /** Search Member By Ip Address */
       searchMbyIpList() {
-        listMemberInfo(this.queryParamIp).then(response => {
+        listMemberInfo(this.queryParamIp,this.userName).then(response => {
           this.memberByIpAddress = response.rows
           this.total = response.total
           if(this.memberByIpAddress.length>=10){
@@ -954,7 +954,8 @@ import {
         this.isActive = false;
         this.memberByIpAddressListList = false;
         this.queryParamIp.loginIp = "";
-        listMemberInfo(this.queryParamIp).then(response => {
+        this.queryParamIp.userName = ""
+        listMemberInfo(this.queryParamIp,this.userName).then(response => {
           this.memberByIpAddress  = null;
           this.queryParamIp.pageNum = null
           this.loading = false

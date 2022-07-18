@@ -148,6 +148,7 @@
 
     <el-table :stripe="true" v-loading="loading" :data="memberInfoList" @selection-change="handleSelectionChange">
       <el-table-column label="会员ID" align="center" prop="id" min-width="120px"/>
+      <el-table-column label="用户名" align="center" prop="userName" min-width="120px"/>
       <el-table-column label="昵称" :show-overflow-tooltip="true" align="center" prop="nickName" min-width="160"/>
       <el-table-column label="会员vip" align="center" prop="vip" min-width="70px"/>
       <el-table-column label="积分" :show-overflow-tooltip="true" align="center" prop="totalAccount" min-width="120px"/>
@@ -371,27 +372,38 @@
       </div>
     </el-dialog>
 
-    <!--member by ip address start from here-->
+    <!--member by ip address and username start from here-->
     <el-dialog :close-on-click-modal="false" title="查看会员ip" :visible.sync="memberByIpAddressListList"
                width="1200px" append-to-body>
       <el-form :model="queryParamIp" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-        <el-form-item label="会员id" prop="loginIp">
+        <el-form-item label="会员ip" prop="loginIp">
           <el-input
             v-model="queryParamIp.loginIp"
             placeholder="会员ip"
             clearable
             size="small"
-            @keyup.enter.native="handleInputQuery"
-          />
+            @keyup.enter.native="handleInputQuery"/>
+        </el-form-item>
+
+        <el-form-item label="用户名" prop="userName">
+          <el-input
+            v-model="queryParamIp.userName"
+            placeholder="用户名"
+            clearable
+            size="small"
+            @keyup.enter.native="handleInputQuery"/>
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleSearchQueryByIp" :disabled='!queryParamIp.loginIp'>搜索</el-button>
+          <el-button type="primary" icon="el-icon-search" size="mini"
+                     @click="handleSearchQueryByIp"
+                     :disabled='!queryParamIp.loginIp ||!queryParamIp.userName'>搜索</el-button>
         </el-form-item>
       </el-form>
 
       <el-table :stripe="true" v-loading="loading" :data="memberByIpAddress" style="margin-bottom: 2px;">
         <el-table-column label="会员ID" align="center" prop="id"/>
+        <el-table-column label="用户名" align="center" prop="userName"/>
         <el-table-column label="昵称" align="center" prop="nickName"/>
 
         <el-table-column label="状态" min-width="90" align="center" prop="status" :formatter="statusFormat"/>
@@ -486,9 +498,11 @@ import {
         dateRange: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
         //禁言禁用
         id: '',
+        userName:'',
         speak: '',
         status: '',
         nickName: '',
+
 
         remark: '',
         remarked: '',
@@ -567,6 +581,7 @@ import {
           searchValue: '', //会员Id,账号,手机号
           status: '',
           loginIp: '',
+          userName:'',
           nickName: '',
           orderByColumn: 'reg_time',
           // isAsc: 'desc'
@@ -884,11 +899,12 @@ import {
 
       /** handling search function */
       handleInputQuery() {
-        if(this.queryParamsByIp.searchValue){
+        if(this.queryParamsByIp.searchValue || this.queryParamsByIp.userName){
           const reg = '^[0-9a-zA-Z_]{1,}$'
-          let flag = this.queryParamsByIp.searchValue.match(reg)
-          if(!flag){
-            this.msgError("search By iP")
+          let userIp = this.queryParamsByIp.searchValue.match(reg)
+          let userName = this.queryParamsByIp.userName.match(reg)
+          if(!userIp || !userName){
+            this.msgError("用户名或ip不正确！")
             return
           }
         }
@@ -899,7 +915,8 @@ import {
       getSearchList() {
         this.loading = true
         this.queryParamsByIp = this.addDateRange(this.queryParamsByIp, this.dateRange);
-        listMemberInfo(this.queryParamsByIp).then(response => {
+        this.queryParamsByUserName = this.addDateRange(this.userName, this.dateRange);
+        listMemberInfo(this.queryParamsByIp,this.queryParamsByUserName).then(response => {
           this.memberByIpAddress = response.rows
           this.total = response.total
           if(this.memberByIpAddress.length>=10){

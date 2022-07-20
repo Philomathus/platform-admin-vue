@@ -948,16 +948,31 @@ import {
         })
       },
 
-      /**click handle clear data from table front end only */
+      /**click to handle clear data from dialog 'only from front end' */
       closeTap(){
-        this.paginationShow = false;
-        this.isActive = false;
-        this.memberByIpAddressListList = false;
-        this.queryParamIp.loginIp = "";
-        this.queryParamIp.userName = ""
-        this.memberByIpAddress  = null;
-        this.queryParamIp.pageNum = null
-        this.loading = false
+          this.paginationShow = false;
+
+          if(this.memberByIpAddressListList===true){
+              this.memberByIpAddressListList = false;
+              this.isActive = false;
+              this.loading = false
+
+              if(this.queryParamIp.loginIp !==null){
+                this.queryParamIp.loginIp = "";
+              }
+
+              if(this.queryParamIp.userName !==null){
+                this.queryParamIp.userName = ""
+              }
+
+              if(this.memberByIpAddress !==null){
+                this.memberByIpAddress  = null;
+              }
+
+              if(this.queryParamIp.pageNum !== null){
+                this.queryParamIp.pageNum = null
+              }
+          }
       },
 
   /** start on click ip status to set 0 panel from here */

@@ -955,11 +955,9 @@ import {
         this.memberByIpAddressListList = false;
         this.queryParamIp.loginIp = "";
         this.queryParamIp.userName = ""
-        listMemberInfo(this.queryParamIp,this.userName).then(response => {
-          this.memberByIpAddress  = null;
-          this.queryParamIp.pageNum = null
-          this.loading = false
-        })
+        this.memberByIpAddress  = null;
+        this.queryParamIp.pageNum = null
+        this.loading = false
       },
 
   /** start on click ip status to set 0 panel from here */

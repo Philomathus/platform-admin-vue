@@ -373,7 +373,7 @@
     </el-dialog>
 
     <!--member by ip address and username start from here-->
-    <el-dialog :close-on-click-modal="false" title="查看会员ip" :visible.sync="memberByIpAddressListList"
+    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="memberByIpAddressListList"
                width="1200px" append-to-body>
       <el-form :model="queryParamIp" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
         <el-form-item label="会员ip" prop="loginIp">
@@ -879,7 +879,7 @@ import {
       /** Handle click on display tab event by ip address */
       memberListAccordingToIp() {
         this.memberByIpAddressListList = true
-        this.title = '查看已封停的ip'
+        this.title = '查看会员'
       },
       /** formatting the 0-1-2 value */
       statusFormat(row, column) {

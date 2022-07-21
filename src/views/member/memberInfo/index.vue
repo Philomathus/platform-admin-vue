@@ -423,7 +423,7 @@
       </div>
 
 <!--      //** handling close button */-->
-      <el-row :gutter="10" class="mb8" style="margin-left: 80%;margin-top: 35px">
+      <el-row :gutter="10" class="mb8" style="margin-left: 85%;margin-top: 35px">
 <!--        handling onclick deactivate user status-->
         <el-col :span="1.5">
           <el-button type="primary" plain style="height: auto" @click = "ipBlockHandler" :disabled = '!isActive'>
@@ -433,7 +433,7 @@
 <!--click on clock member searched panel  -->
         <el-col :span="1.5">
           <el-button type="primary" plain @click="closeTap()" style="height: auto">
-            关闭/Close
+            关闭
           </el-button>
         </el-col>
       </el-row>

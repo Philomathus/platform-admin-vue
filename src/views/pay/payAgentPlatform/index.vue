@@ -84,7 +84,7 @@
     <el-table :stripe="true" v-loading="loading" :data="payAgentPlatformList" >
 <!--      <el-table-column type="selection" width="55" align="center" />-->
       <el-table-column label="ID" align="center" prop="id" width="55" />
-      <el-table-column label="编码" align="center" prop="code" width="90" />
+      <el-table-column label="编码" align="center" prop="code" width="130" />
       <el-table-column label="代付平台名称" align="center" prop="name" />
       <el-table-column label="商户ID" align="center" prop="merId"  width="150"/>
       <el-table-column label="代付下单地址" :show-overflow-tooltip="true" align="center" prop="payOrderAddr" />

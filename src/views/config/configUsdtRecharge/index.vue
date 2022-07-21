@@ -95,7 +95,7 @@
             </el-table-column>-->
       <el-table-column label="渠道名称" align="center" width="300" prop="channelName" />
       <el-table-column label="链名称" align="center" width="300" prop="chainName" />
-      <el-table-column label="状态" align="center" width="300" prop="status">
+      <el-table-column label="状态" align="center" width="100" prop="status">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -105,9 +105,9 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="充值地址" align="center" min-width="300" prop="rechargeAddress" />
-      <el-table-column label="优惠比例" align="center" width="300" prop="discountBill" />
-      <el-table-column label="usdt汇率" align="center" width="300" prop="exchangeRate" />
+      <el-table-column label="充值地址" align="center" min-width="400" prop="rechargeAddress" />
+      <el-table-column label="优惠比例" align="center" width="100" prop="discountBill" />
+      <el-table-column label="usdt汇率" align="center" width="100" prop="exchangeRate" />
       <el-table-column label="操作" align="center" width="300" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button

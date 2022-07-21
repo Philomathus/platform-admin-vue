@@ -319,7 +319,7 @@
         </el-form-item>
       </el-form>
 
-      <el-table :stripe="true" v-loading="loading" :data="speakIpBlackData">
+      <el-table :stripe="true" v-loading="loading" :data="speakIpBlackData" style="margin-bottom: 40px">
         <el-table-column type="selection" width="55" align="center"/>
         <el-table-column label="会员ID" align="center" prop="userId"/>
         <el-table-column label="会员ip" align="center" prop="userIp"/>
@@ -337,6 +337,7 @@
           </template>
         </el-table-column>
       </el-table>
+      <el-button @click="closeIpDialog" style="float: right;margin-top: -25px">取 消</el-button>
       <pagination
         v-show="total>0"
         :total="total"
@@ -601,6 +602,10 @@
       cancel() {
         this.open = false
       },
+      closeIpDialog(){
+        this.speakIpBlackListList = false
+      },
+
       /** 搜索按钮操作 */
       handleQuery() {
         if(this.queryParams.searchValue){

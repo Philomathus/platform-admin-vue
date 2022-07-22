@@ -153,7 +153,7 @@
               <el-input v-model="form.classfy" placeholder="请输入分类id" type="number"/>
             </el-form-item>
           </div>
-          <div class="el-col-lg-10" style="margin-left: -30px">
+          <div class="el-col-lg-10" style="margin-left: -35px">
             <el-form-item label="分类图标" prop="img">
               <imageUpload v-model="form.img" path="give"/>
             </el-form-item>

@@ -168,7 +168,7 @@
           <el-select v-model="form.platformId"
                      filterable
                      clearable
-                     placeholder="请选择">
+                     placeholder="请选择" style="width: 220px">
             <el-option
               v-for="dict in platformNameList"
               :key="dict.id"

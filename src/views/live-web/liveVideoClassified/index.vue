@@ -125,33 +125,40 @@
     />
 
     <!-- 添加或修改分类对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="600px"
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="610px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="分类名称" prop="title">
           <el-input v-model="form.title" placeholder="请输入分类名称"/>
         </el-form-item>
-        <el-form-item label="状态">
-          <el-radio-group v-model="form.isEffect">
-            <el-radio label="0">未启用</el-radio>
-            <el-radio label="1">启用</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="主播端显示">
-          <el-radio-group v-model="form.isHostShow">
-            <el-radio label="0">未启用</el-radio>
-            <el-radio label="1">启用</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="排序" prop="sort">
-          <el-input v-model="form.sort" placeholder="请输入排序"/>
-        </el-form-item>
-        <el-form-item label="分类图标" prop="img">
-          <imageUpload v-model="form.img" path="give"/>
-        </el-form-item>
-        <el-form-item label="分类代号" prop="classfy">
-          <el-input v-model="form.classfy" placeholder="请输入分类id"/>
-        </el-form-item>
+
+        <section class="el-row">
+          <div class="el-col-lg-14">
+            <el-form-item label="状态">
+              <el-radio-group v-model="form.isEffect">
+                <el-radio label="0">未启用</el-radio>
+                <el-radio label="1">启用</el-radio>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="主播端显示">
+              <el-radio-group v-model="form.isHostShow">
+                <el-radio label="0">未启用</el-radio>
+                <el-radio label="1">启用</el-radio>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="排序" prop="sort">
+              <el-input v-model="form.sort" placeholder="请输入排序" type="number"/>
+            </el-form-item>
+            <el-form-item label="分类代号" prop="classfy">
+              <el-input v-model="form.classfy" placeholder="请输入分类id" type="number"/>
+            </el-form-item>
+          </div>
+          <div class="el-col-lg-10" style="margin-left: -30px">
+            <el-form-item label="分类图标" prop="img">
+              <imageUpload v-model="form.img" path="give"/>
+            </el-form-item>
+          </div>
+        </section>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>

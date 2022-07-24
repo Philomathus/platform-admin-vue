@@ -275,9 +275,6 @@ export default {
         name: [
           { required: true, message: '银行名称不能为空', trigger: 'blur' }
         ],
-        url: [
-          { required: true, message: '官网地址不能为空', trigger: 'blur' }
-        ],
         bankAccount: [
           { required: true, message: '银行账号地址不能为空', trigger: 'blur' }
         ],

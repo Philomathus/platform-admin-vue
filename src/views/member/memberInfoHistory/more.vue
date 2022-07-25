@@ -6,7 +6,7 @@
         :close-on-click-modal="false"
         :title="title"
         :visible.sync="visible"
-        width="1000px"
+        width="1200px"
         top="5vh"
         append-to-body>
       <!--顶部按钮-->
@@ -43,10 +43,8 @@
         <button type="button"
                 class="el-button el-button--primary el-button--mini is-plain" @click="change(13,'重置邀请码')">
           <span>重置邀请码</span>
-        </button> <br>
+        </button>
 
-
-        <div class="el-button-group pt5">
           <button type="button"
                   class="el-button el-button--success el-button--mini is-plain" @click="change(2,'资金明细')">
             <span>资金明细</span>
@@ -73,7 +71,6 @@
           </button>
         </div>
 
-      </div>
       <!--积分明细-->
       <el-row v-if="index===1">
         <el-table @row-click="clickRow" ref="table" :data="dbTableList" height="460px" v-loading="loading">

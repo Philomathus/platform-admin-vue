@@ -6,7 +6,7 @@
       :close-on-click-modal="false"
       :title="title"
       :visible.sync="visible"
-      width="1100px"
+      width="1400px"
       top="5vh"
       append-to-body
     >
@@ -32,9 +32,7 @@
             <span>关注主播</span></button>
   <!--End follow members tab here  -->
 
-
-        <div class="el-button-group">
-            <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(2,'资金明细')" style="margin-top: 10px;margin-left: -3px">
+            <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(2,'资金明细')" style="margin-top: 10px;">
               <span>资金明细</span>
             </button>
 
@@ -78,7 +76,6 @@
             </button>
         </div>
 
-      </div>
 
       <!--积分明细-->
       <el-row v-if="index===1">

@@ -32,7 +32,7 @@
             <span>关注主播</span></button>
   <!--End follow members tab here  -->
 
-            <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(2,'资金明细')" style="margin-top: 10px;">
+            <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(2,'资金明细')">
               <span>资金明细</span>
             </button>
 
@@ -40,8 +40,7 @@
               type="button"
               class="el-button el-button--success el-button--mini is-plain"
               @click="change(6,'重置保险箱')"
-              v-has-permi="['member:memberInfo:resetBox']"
-              style="margin-top: 10px;">
+              v-has-permi="['member:memberInfo:resetBox']">
               <span>重置保险箱</span>
             </button>
 
@@ -49,8 +48,7 @@
               type="button"
               class="el-button el-button--success el-button--mini is-plain"
               @click="change(7,'重置提现')"
-              v-has-permi="['member:memberInfo:resetTx']"
-              style="margin-top: 10px;">
+              v-has-permi="['member:memberInfo:resetTx']">
               <span>重置提现</span>
             </button>
 
@@ -58,20 +56,19 @@
               type="button"
               class="el-button el-button--success el-button--mini is-plain"
               @click="change(8,'打码修复')"
-              v-has-permi="['member:memberInfo:bcodeRepair']"
-              style="margin-top: 10px;">
+              v-has-permi="['member:memberInfo:bcodeRepair']">
               <span>打码修复</span>
             </button>
 
-            <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(9,'修改Vip')" style="margin-top: 10px;">
+            <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(9,'修改Vip')">
               <span>修改Vip</span>
             </button>
 
-            <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(12,'IM禁言')" style="margin-top: 10px;">
+            <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(12,'IM禁言')">
               <span>IM禁言</span>
             </button>
 
-            <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(15,'域名展示')"  style="margin-top: 10px;">
+            <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(15,'域名展示')">
               <span>域名展示</span>
             </button>
         </div>

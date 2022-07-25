@@ -203,6 +203,9 @@
             <el-input type="number" class="no-number" v-model="form.rechargeLimitMax" placeholder="请输入最大充值金额"/>
           </el-col>
         </el-form-item>
+        <el-form-item label="省份限制" prop="url">
+          <el-input v-model="form.url" placeholder="使用逗号(,)分割,为空则不限制"/>
+        </el-form-item>
         <el-form-item label="谷歌验证码" prop="googleAuthCode">
           <el-input v-model="form.googleAuthCode" placeholder="请输入谷歌验证码" type="number" class="no-number"/>
         </el-form-item>
@@ -271,9 +274,6 @@ export default {
       rules: {
         name: [
           { required: true, message: '银行名称不能为空', trigger: 'blur' }
-        ],
-        url: [
-          { required: true, message: '官网地址不能为空', trigger: 'blur' }
         ],
         bankAccount: [
           { required: true, message: '银行账号地址不能为空', trigger: 'blur' }

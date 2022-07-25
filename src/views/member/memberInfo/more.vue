@@ -239,13 +239,13 @@
           @selection-change="handleSelectionChange"
           height="460px"
           v-loading="loading">
-          <el-table-column prop="realName" label="真实姓名" :show-overflow-tooltip="true" min-width="100">
+          <el-table-column align="center" prop="realName" label="真实姓名" :show-overflow-tooltip="true" min-width="120">
             <template v-slot="{row}" v-if="index===5">
               <el-input v-model="row.realName"></el-input>
             </template>
           </el-table-column>
 
-          <el-table-column prop="bankName" label="银行名称" :show-overflow-tooltip="true" min-width="135">
+          <el-table-column align="center" prop="bankName" label="银行名称" :show-overflow-tooltip="true" min-width="135">
             <template v-slot="{row}" v-if="index===5">
               <el-input v-model="row.bankName"></el-input>
             </template>
@@ -256,14 +256,14 @@
               <el-input v-model="row.bankAccount"></el-input>
             </template>
           </el-table-column>
-          <el-table-column prop="bankAddress" label="银行地址" :show-overflow-tooltip="true" min-width="120">
+          <el-table-column align="center" prop="bankAddress" label="银行地址" :show-overflow-tooltip="true" min-width="140">
             <template v-slot="{row}" v-if="index===5">
               <el-input v-model="row.bankAddress"></el-input>
             </template>
           </el-table-column>
           <el-table-column prop="createTime" label=" 绑定时间" :show-overflow-tooltip="true" min-width="110"
                            align="center"></el-table-column>
-          <el-table-column label="操作" min-width="140">
+          <el-table-column label="操作" min-width="140" align="center">
             <template v-slot="{row}" v-if="index===5">
               <el-button
                 @click="unbind(row)"

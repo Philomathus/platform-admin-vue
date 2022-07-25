@@ -385,10 +385,10 @@
             @keyup.enter.native="handleInputQuery"/>
         </el-form-item>
 
-        <el-form-item label="用户名" prop="userName">
+        <el-form-item label="真实姓名" prop="realName">
           <el-input
-            v-model="queryParamIp.userName"
-            placeholder="用户名"
+            v-model="queryParamIp.realName"
+            placeholder="真实姓名"
             clearable
             size="small"
             @keyup.enter.native="handleInputQuery"/>
@@ -397,15 +397,14 @@
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" size="mini"
                      @click="handleSearchQueryByIp"
-                     :disabled='!queryParamIp.loginIp ||!queryParamIp.userName'>搜索</el-button>
+                     :disabled='!queryParamIp.loginIp && !queryParamIp.realName'>搜索</el-button>
         </el-form-item>
       </el-form>
 
       <el-table :stripe="true" v-loading="loading" :data="memberByIpAddress" style="margin-bottom: 2px;">
         <el-table-column label="会员ID" align="center" prop="id"/>
-        <el-table-column label="用户名" align="center" prop="userName"/>
-        <el-table-column label="昵称" align="center" prop="nickName"/>
 
+        <el-table-column label="昵称" align="center" prop="nickName"/>
         <el-table-column label="状态" min-width="90" align="center" prop="status" :formatter="statusFormat"/>
 
         <el-table-column label="登录IP" align="center" prop="loginIp"/>
@@ -501,7 +500,7 @@ import {
         userName:'',
         speak: '',
         status: '',
-        nickName: '',
+        realName: '',
 
 
         remark: '',
@@ -583,6 +582,7 @@ import {
           loginIp: '',
           userName:'',
           nickName: '',
+          realName:'',
           orderByColumn: 'reg_time',
           // isAsc: 'desc'
         },
@@ -899,11 +899,11 @@ import {
 
       /** handling search function */
       handleInputQuery() {
-        if(this.queryParamsByIp.searchValue || this.queryParamsByIp.userName){
+        if(this.queryParamsByIp.userIp || this.queryParams.realName){
           const reg = '^[0-9a-zA-Z_]{1,}$'
-          let userIp = this.queryParamsByIp.searchValue.match(reg)
-          let userName = this.queryParamsByIp.userName.match(reg)
-          if(!userIp || !userName){
+          let userIp = this.queryParamsByIp.userIp.match(reg)
+          let realName = this.queryParams.realName.match(reg)
+          if(!userIp || !realName){
             this.msgError("用户名或ip不正确！")
             return
           }
@@ -915,9 +915,10 @@ import {
       getSearchList() {
         this.loading = true
         this.queryParamsByIp = this.addDateRange(this.queryParamsByIp, this.dateRange);
-        this.queryParamsByUserName = this.addDateRange(this.userName, this.dateRange);
-        listMemberInfo(this.queryParamsByIp,this.queryParamsByUserName).then(response => {
+        this.queryParamsByRealName = this.addDateRange(this.realName, this.dateRange);
+        listMemberInfo(this.queryParamsByIp,this.queryParamsByRealName).then(response => {
           this.memberByIpAddress = response.rows
+          console.log(response.rows.realName)
           this.total = response.total
           if(this.memberByIpAddress.length>=10){
             this.paginationShow = true;
@@ -935,7 +936,7 @@ import {
       },
       /** Search Member By Ip Address */
       searchMbyIpList() {
-        listMemberInfo(this.queryParamIp,this.userName).then(response => {
+        listMemberInfo(this.queryParamIp,this.realName).then(response => {
           this.memberByIpAddress = response.rows
           this.total = response.total
           if(this.memberByIpAddress.length>=10){

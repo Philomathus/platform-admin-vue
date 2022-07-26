@@ -372,7 +372,7 @@
       </div>
     </el-dialog>
 
-    <!--member by ip address and username start from here-->
+    <!--member by ip address and realName start from here-->
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="memberByIpAddressListList"
                width="1200px" append-to-body>
       <el-form :model="queryParamIp" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">

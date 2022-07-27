@@ -219,3 +219,21 @@ export function kickOutLiveUser(id){
     method: 'put'
   })
 }
+
+export function listAuth(query) {
+  return request({
+    url: url.platformWeb + '/admin/liveUser/authList',
+    method: 'get',
+    params:query
+  })
+}
+
+// 修改用户状态
+export function changeAuth(query) {
+  return request({
+    url: url.platformWeb + '/admin/liveUser/change_auth',
+    method: 'put',
+    params: query
+  })
+}
+

@@ -13,7 +13,7 @@
       <el-form-item label="银行编码" prop="bankCode">
         <el-input
           v-model="queryParams.bankCode"
-          placeholder="请输入银行编码"
+          placeholder="请输入银行编码1212"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -390,7 +390,7 @@ export default {
       getBankList(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改出款银行列表";
+        this.title = "修改银行列表";
       });
     },
     /** 新增提交按钮 */

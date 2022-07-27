@@ -129,14 +129,34 @@
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column label="认证状态" min-width="120" align="center" prop="isAuthentication">
-        <template slot-scope="scope">
-          <span v-if="scope.row.isAuthentication === 0" style="color: #C0C0C0">未认证</span>
-          <span v-if="scope.row.isAuthentication === 1" style="color: #0000FF">待审核</span>
-          <span v-if="scope.row.isAuthentication === 2" style="color: #5FB878">已认证</span>
-          <span v-if="scope.row.isAuthentication === 3" style="color: #FF5722">审核不通过</span>
+
+
+<!--      <el-table-column label="认证状态" min-width="120" align="center" prop="isAuthentication">-->
+<!--        <template slot-scope="scope">-->
+<!--          <span v-if="scope.row.isAuthentication === 0" style="color: #C0C0C0">未认证</span>-->
+<!--          <span v-if="scope.row.isAuthentication === 1" style="color: #0000FF">待审核</span>-->
+<!--          <span v-if="scope.row.isAuthentication === 2" style="color: #5FB878">已认证</span>-->
+<!--          <span v-if="scope.row.isAuthentication === 3" style="color: #FF5722">审核不通过</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+
+<!--  Authentication fixed here -->
+      <el-table-column label="状态" align="center" min-width="130px">
+        <template v-slot="{row}">
+          <el-select v-model="row.isAuthentication" placeholder="请选择状态" size="small"
+                     @change="changeAuthType(row)">
+            <el-option
+              v-for="(dict,i) in typeAuthList"
+              :key="'B'+ i"
+              :label="dict.dictLabel"
+              :value="parseInt(dict.dictValue)"
+            ></el-option>
+          </el-select>
         </template>
       </el-table-column>
+
+
+
       <el-table-column label="印票" min-width="120" align="center" prop="ticket"/>
       <el-table-column label="时薪" min-width="120" align="center" prop="coin"/>
       <el-table-column label="时薪任务" min-width="120" align="center" prop="weixinPrice"/>
@@ -388,7 +408,9 @@ import {
   getFamiily,
   openLive,
   closeLive,
-  kickOutLiveUser
+  kickOutLiveUser,
+  listAuth,
+  changeAuth,
 } from '@/api/live-web/liveUser'
 import ImageUpload from '@/components/ImageUpload/index'
 import more from './more'
@@ -453,6 +475,10 @@ export default {
 
       //starting live lottery list
       lotteryInfoList: [],
+      typeAuthList: [],
+      remark: '',
+      remarked: '',
+      muteRemark: false,
 
       // 表单参数
       form: {},
@@ -470,6 +496,7 @@ export default {
   created() {
     this.init()
     this.getLotteryList();
+    this.getAuthList();
   },
   activated() {
     this.init()
@@ -747,6 +774,29 @@ export default {
       });
     },
 
-  }
+    /** 查询彩票名称列表 Query Authentication list*/
+    getAuthList() {
+      this.getDicts('live_user_auth_type').then(response => {
+        this.typeAuthList = response.data
+      })
+    },
+
+    changeAuthType(row) {
+      changeAuth({
+        id: row.id,
+        isAuthentication: row.isAuthentication
+      }).then((res) => {
+        if (res.code === 0) {
+          this.$notify.success('状态修改成功')
+        } else {
+          this.$notify.error('状态修改失败')
+        }
+      }).catch(() => {
+        this.$notify.error('网络异常')
+      }).finally(() => {
+        this.getList()
+      })
+  },
+}
 }
 </script>

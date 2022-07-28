@@ -781,6 +781,7 @@ export default {
       })
     },
 
+    /** change isAuthentication type start from here*/
     changeAuthType(row) {
       changeAuth({
         id: row.id,
@@ -797,6 +798,8 @@ export default {
         this.getList()
       })
   },
+    /** end isAuthentication type change here*/
+
 }
 }
 </script>

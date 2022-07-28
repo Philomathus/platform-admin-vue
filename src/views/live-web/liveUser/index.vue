@@ -98,6 +98,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
+<!-- liveUser显示数据表部分从这里开始 liveUser display data table section start from here-->
     <el-table stripe v-loading="loading" :data="liveUserList">
       <el-table-column label="主播ID" min-width="120" align="center" prop="id"/>
       <el-table-column label="主播昵称" min-width="140" :show-overflow-tooltip="true" align="center" prop="nickName"/>
@@ -199,8 +200,7 @@
             @click="() => {openLiveStatus = !openLiveStatus
                            openLiveForm.id = scope.row.id
                            //查询之前的开播信息
-                            getLiveVideo(scope.row.id);
-            }"
+                            getLiveVideo(scope.row.id);}"
             v-hasPermi="['admin:liveUser:edit']"
             v-show="scope.row.roboter == 1 && scope.row.liveIn != 1">开播
           </el-button>
@@ -232,6 +232,7 @@
             <el-table-column label="粉丝" min-width="120" align="center" prop="fansCount"/>
             <el-table-column label="注册时间" min-width="160" :show-overflow-tooltip="true" align="center" prop="createTime"/>-->
     </el-table>
+    <!-- liveUser显示数据表部分到此结束 liveUser display data table section end here-->
 
     <pagination
       v-show="total>0"

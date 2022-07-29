@@ -10,7 +10,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="每秒增加奖池金额" prop="secMoney">
+      <el-form-item label="每秒增加奖池金额" prop="secMoney" label-width="20">
         <el-input
           v-model="queryParams.secMoney"
           placeholder="请输入每秒增加奖池金额"
@@ -198,12 +198,7 @@ export default {
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
-    /** 新增按钮操作 */
-    handleAdd() {
-      this.reset();
-      this.open = true;
-      this.title = "添加【请填写功能名称】";
-    },
+
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
@@ -211,7 +206,7 @@ export default {
       getWheelPool(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = "修改 wheelPool";
       });
     },
     /** 提交按钮 */

@@ -25,7 +25,7 @@
       </el-form-item>
     </el-form>
 
-    <el-table stripe v-loading="loading" :data="wheelPoolHistoryList">
+    <el-table stripe v-loading="loading" :data="wheelPoolHistoryList" class="el-table--border">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="主键" align="center" prop="id" />
       <el-table-column label="会员ID" align="center" prop="memberId" />
@@ -124,7 +124,6 @@ export default {
       this.resetForm("queryForm");
       this.handleQuery();
     },
-
   }
 };
 </script>

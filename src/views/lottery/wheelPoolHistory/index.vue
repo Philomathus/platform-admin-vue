@@ -25,6 +25,7 @@
       </el-form-item>
     </el-form>
 
+    <!-- 轮式台球历史表  wheel pool history table-->
     <el-table stripe v-loading="loading" :data="wheelPoolHistoryList" class="el-table--border">
       <el-table-column label="主键" align="center" prop="id" />
       <el-table-column label="会员ID" align="center" prop="memberId" />
@@ -65,15 +66,12 @@ export default {
       loading: true,
       // 选中数组
       ids: [],
-      // 非单个禁用
-      single: true,
-      // 非多个禁用
-      multiple: true,
-      // 显示搜索条件
+
+      // 显示搜索条件 -
       showSearch: true,
       // 总条数
       total: 0,
-      // 【请填写功能名称】表格数据
+      // 轮池历史列表 wheel pool history list
       wheelPoolHistoryList: [],
       // 弹出层标题
       title: "",
@@ -110,7 +108,7 @@ export default {
     })
   },
   methods: {
-    /** 查询【请填写功能名称】列表 */
+    /** 获取轮池的所有列表 get all list of wheel pool history */
     getList() {
       this.loading = true;
       listWheelPoolHistory(this.queryParams).then(response => {
@@ -120,13 +118,13 @@ export default {
       });
     },
 
-    /** 搜索按钮操作 */
+    /** 搜索按钮操作 handle search query */
     handleQuery() {
       this.queryParams.pageNum = 1;
       this.getList();
     },
 
-    /** 重置按钮操作 */
+    /** 重置按钮操作  Reset button action*/
     resetQuery() {
       this.resetForm("queryForm");
       this.handleQuery();

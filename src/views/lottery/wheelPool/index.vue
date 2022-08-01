@@ -20,7 +20,7 @@
       </el-table-column>
     </el-table>
 
-    <!-- 添加或修改【请填写功能名称】对话框 -->
+    <!-- 修改轮池对话框 modify the wheel pool dialog box -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="名称" prop="name">
@@ -53,17 +53,17 @@ export default {
   },
   data() {
     return {
-      // 遮罩层
+      // 遮罩层 - loading layer
       loading: true,
 
-      // 显示搜索条件
+      // 显示搜索条件 -show search
       showSearch: true,
 
-      // 【请填写功能名称】表格数据
+      //轮池列表 wheel pool list
       wheelPoolList: [],
       // 弹出层标题
       title: "",
-      // 是否显示弹出层
+      // 是否显示弹出层 Whether to show the popup layer
       open: false,
       // 查询参数
       queryParams: {
@@ -83,7 +83,7 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询【请填写功能名称】列表 */
+    /** 获取轮池的所有列表 get all list of wheel pool*/
     getList() {
       this.loading = true;
       listWheelPool(this.queryParams).then(response => {
@@ -108,7 +108,7 @@ export default {
       this.resetForm("form");
     },
 
-    /** 修改按钮操作 */
+    /** 更新轮池查询 update wheel pool query */
     handleUpdate(row) {
       this.reset();
       const id = row.id || this.ids

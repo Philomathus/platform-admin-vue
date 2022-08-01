@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
 
-    <el-table stripe v-loading="loading" :data="wheelPoolList" @selection-change="handleSelectionChange" class="el-table--border">
+    <el-table stripe v-loading="loading" :data="wheelPoolList" class="el-table--border">
       <el-table-column label="主键" align="center" prop="id" />
       <el-table-column label="名称" align="center" prop="name" />
       <el-table-column label="每秒增加奖池金额" align="center" prop="secMoney" />
@@ -55,16 +55,10 @@ export default {
     return {
       // 遮罩层
       loading: true,
-      // 选中数组
-      ids: [],
-      // 非单个禁用
-      single: true,
-      // 非多个禁用
-      multiple: true,
+
       // 显示搜索条件
       showSearch: true,
-      // 总条数
-      total: 0,
+
       // 【请填写功能名称】表格数据
       wheelPoolList: [],
       // 弹出层标题
@@ -94,7 +88,6 @@ export default {
       this.loading = true;
       listWheelPool(this.queryParams).then(response => {
         this.wheelPoolList = response.rows;
-        this.total = response.total;
         this.loading = false;
       });
     },
@@ -113,22 +106,6 @@ export default {
         weight: null
       };
       this.resetForm("form");
-    },
-    /** 搜索按钮操作 */
-    handleQuery() {
-      this.queryParams.pageNum = 1;
-      this.getList();
-    },
-    /** 重置按钮操作 */
-    resetQuery() {
-      this.resetForm("queryForm");
-      this.handleQuery();
-    },
-    // 多选框选中数据
-    handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
-      this.multiple = !selection.length
     },
 
     /** 修改按钮操作 */

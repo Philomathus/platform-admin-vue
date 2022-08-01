@@ -58,7 +58,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table stripe v-loading="loading" :data="wheelPoolList" @selection-change="handleSelectionChange">
+    <el-table stripe v-loading="loading" :data="wheelPoolList" @selection-change="handleSelectionChange" class="el-table--border">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="主键" align="center" prop="id" />
       <el-table-column label="名称" align="center" prop="name" />

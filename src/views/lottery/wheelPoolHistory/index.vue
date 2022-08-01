@@ -34,9 +34,10 @@
       <el-table-column label="奖品" align="center" prop="prize" />
       <el-table-column label="第一" align="center" prop="first" />
       <el-table-column label="地位" align="center" prop="status" />
-      <el-table-column label="奖牌类型" align="center" prop="medalType" />
-      <el-table-column label="绘制类型" align="center" prop="drawType" />
-      <el-table-column label="位置" align="center" prop="position" />
+      <el-table-column label="奖牌类型" align="center" prop="medalType" min-width="100"/>
+      <el-table-column label="绘制类型" align="center" prop="drawType" min-width="100" />
+      <el-table-column label="位置" align="center" prop="position" min-width="100" />
+      <el-table-column label="创建于" align="center" prop="createTime"  min-width="100" />
     </el-table>
 
     <pagination
@@ -90,7 +91,8 @@ export default {
         winId: null,
         medalType:null,
         drawType:null,
-        position:null
+        position:null,
+        createTime : null,
       },
       // 表单参数
       form: {},

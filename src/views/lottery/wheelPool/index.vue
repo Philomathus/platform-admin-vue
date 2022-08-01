@@ -28,9 +28,9 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="中奖比例" prop="weights">
+      <el-form-item label="中奖比例" prop="weight">
         <el-input
-          v-model="queryParams.weights"
+          v-model="queryParams.weight"
           placeholder="请输入中奖比例"
           clearable
           size="small"
@@ -64,7 +64,7 @@
       <el-table-column label="名称" align="center" prop="name" />
       <el-table-column label="每秒增加奖池金额" align="center" prop="secMoney" />
       <el-table-column label="上限金额" align="center" prop="limitMoney" />
-      <el-table-column label="中奖比例" align="center" prop="weights" />
+      <el-table-column label="中奖比例" align="center" prop="weight" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -98,8 +98,8 @@
         <el-form-item label="上限金额" prop="limitMoney">
           <el-input v-model="form.limitMoney" placeholder="请输入上限金额" />
         </el-form-item>
-        <el-form-item label="中奖比例" prop="weights">
-          <el-input v-model="form.weights" placeholder="请输入中奖比例" />
+        <el-form-item label="中奖比例" prop="weight">
+          <el-input v-model="form.weight" placeholder="请输入中奖比例" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -144,7 +144,7 @@ export default {
         name: null,
         secMoney: null,
         limitMoney: null,
-        weights: null
+        weight: null
       },
       // 表单参数
       form: {},
@@ -178,7 +178,7 @@ export default {
         name: null,
         secMoney: null,
         limitMoney: null,
-        weights: null
+        weight: null
       };
       this.resetForm("form");
     },

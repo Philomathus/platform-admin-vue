@@ -26,18 +26,18 @@
     </el-form>
 
     <el-table stripe v-loading="loading" :data="wheelPoolHistoryList" class="el-table--border">
-      <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="主键" align="center" prop="id" />
       <el-table-column label="会员ID" align="center" prop="memberId" />
-      <el-table-column label="获胜者 ID" align="center" prop="winId" />
       <el-table-column label="昵称" align="center" prop="nickName" />
-      <el-table-column label="奖品" align="center" prop="prize" />
-      <el-table-column label="第一" align="center" prop="first" />
-      <el-table-column label="地位" align="center" prop="status" />
-      <el-table-column label="奖牌类型" align="center" prop="medalType" min-width="100"/>
-      <el-table-column label="绘制类型" align="center" prop="drawType" min-width="100" />
-      <el-table-column label="位置" align="center" prop="position" min-width="100" />
-      <el-table-column label="创建于" align="center" prop="createTime"  min-width="100" />
+      <el-table-column label="中奖ID" align="center" prop="winId" />
+      <el-table-column label="中奖金额" align="center" prop="prize" />
+      <el-table-column label="是否首次中奖" align="center" prop="first" />
+      <el-table-column label="状态" align="center" prop="status" :formatter="wheelStatusFormat" /><!-- 0 未中奖 1 已中奖 -->
+      <el-table-column label="中奖牌型" align="center" prop="medalType"/>
+      <el-table-column label="抽奖排序" align="center" prop="drawType" min-width="140" />
+      <el-table-column label="已抽位置" align="center" prop="position" min-width="170" />
+      <el-table-column label="创建时间" align="center" prop="createTime"  min-width="110" />
+      <el-table-column label="更新时间" align="center" prop="updateTime"  min-width="110" />
     </el-table>
 
     <pagination
@@ -77,11 +77,12 @@ export default {
       wheelPoolHistoryList: [],
       // 弹出层标题
       title: "",
+      wheelStatus: [],
 
       // 查询参数
       queryParams: {
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 20,
         memberId : null,
         nickName :null,
         headId : null,
@@ -93,6 +94,7 @@ export default {
         drawType:null,
         position:null,
         createTime : null,
+        updateTime:null
       },
       // 表单参数
       form: {},
@@ -103,6 +105,9 @@ export default {
   },
   created() {
     this.getList();
+    this.getDicts('wheel_pool_status').then(response => {
+      this.wheelStatus = response.data
+    })
   },
   methods: {
     /** 查询【请填写功能名称】列表 */
@@ -125,6 +130,11 @@ export default {
     resetQuery() {
       this.resetForm("queryForm");
       this.handleQuery();
+    },
+
+    // 状态字典翻译
+    wheelStatusFormat(row, column) {
+      return this.selectDictLabel(this.wheelStatus, row.first)
     },
   }
 };

@@ -119,6 +119,7 @@
           <span>{{ parseTime(scope.row.betTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="主播Id" align="center" prop="anchor"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -194,7 +195,8 @@ export default {
         abnormal: false,
         selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
         orderByColumn: 'a.bet_time',
-        isAsc: 'desc'
+        isAsc: 'desc',
+        anchor: null,
       },
       // 表单参数
       form: {},

@@ -33,7 +33,13 @@
       <el-table-column label="中奖ID" align="center" prop="winId" />
       <el-table-column label="中奖金额" align="center" prop="prize" />
       <el-table-column label="是否首次中奖" align="center" prop="first" />
-      <el-table-column label="状态" align="center" prop="status" :formatter="wheelStatusFormat" /><!-- 0 未中奖 1 已中奖 -->
+      <el-table-column label="状态" align="center" prop="status"><!-- 0 未中奖 1 已中奖 2 已放弃-->
+        <template slot-scope="scope">
+          <span :style="{color: (status = wheelStatus[parseInt(scope.row.status)]).color}">
+            {{ status.dictLabel }}
+          </span>
+        </template>
+      </el-table-column>
       <el-table-column label="中奖牌型" align="center" prop="medalType"/>
       <el-table-column label="抽奖排序" align="center" prop="drawType" min-width="140" />
       <el-table-column label="已抽位置" align="center" prop="position" min-width="170" />
@@ -132,7 +138,7 @@ export default {
 
     // 状态字典翻译
     wheelStatusFormat(row, column) {
-      return this.selectDictLabel(this.wheelStatus, row.first)
+      return this.selectDictLabel(this.wheelStatus, row.status)
     },
   }
 };

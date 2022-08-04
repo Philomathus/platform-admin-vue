@@ -1,5 +1,5 @@
 <template>
-
+<!-- fund popup page -->
   <el-dialog :close-on-click-modal="false" title="资金明细" :visible.sync="open" width="800px" append-to-body>
     <div class="memberInfo">
       <div class="title">会员基本信息</div>

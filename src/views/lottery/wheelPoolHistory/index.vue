@@ -27,25 +27,25 @@
 
     <!-- 轮式台球历史表  wheel pool history table-->
     <el-table stripe v-loading="loading" :data="wheelPoolHistoryList" class="el-table--border">
-      <el-table-column label="主键" align="center" prop="id" />
-      <el-table-column label="会员ID" align="center" prop="memberId" min-width="90"/>
-      <el-table-column label="昵称" align="center" prop="nickName" />
-      <el-table-column label="中奖ID" align="center" prop="winId" />
-      <el-table-column label="中奖金额" align="center" prop="prize" />
-      <el-table-column label="是否首次中奖" align="center" prop="first" />
+      <el-table-column label="主键" align="center" prop="id" min-width="100"/>
+      <el-table-column label="会员ID" align="center" prop="memberId" min-width="150"/>
+      <el-table-column label="昵称" align="center" prop="nickName" min-width="150"/>
+      <el-table-column label="中奖ID" align="center" prop="winId" min-width="120"/>
+      <el-table-column label="中奖金额" align="center" prop="prize" min-width="120"/>
+      <el-table-column label="是否首次中奖" align="center" prop="first" min-width="120"/>
 
-      <el-table-column label="状态" align="center" prop="status">  <!-- 0 未中奖 1 已中奖 2 已放弃-->
-        <template slot-scope="scope">
+      <el-table-column label="状态" align="center" prop="status" min-width="120">  <!-- 0 未中奖 1 已中奖 2 已放弃-->
+        <template slot-scope="scope" style="padding: 40px">
           <span :style="{color: (status = wheelStatus[parseInt(scope.row.status)]).color}">
             {{ status.dictLabel }}
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="中奖牌型" align="center" prop="medalType"/>
-      <el-table-column label="抽奖排序" align="center" prop="drawType" min-width="140" />
-      <el-table-column label="已抽位置" align="center" prop="position" min-width="170" />
-      <el-table-column label="创建时间" align="center" prop="createTime"  min-width="110" />
-      <el-table-column label="更新时间" align="center" prop="updateTime"  min-width="120" />
+      <el-table-column label="中奖牌型" align="center" prop="medalType" min-width="180"/>
+      <el-table-column label="抽奖排序" align="center" prop="drawType" min-width="240" />
+      <el-table-column label="已抽位置" align="center" prop="position" min-width="280" />
+      <el-table-column label="创建时间" align="center" prop="createTime"  min-width="180" />
+      <el-table-column label="更新时间" align="center" prop="updateTime"  min-width="180" />
     </el-table>
 
     <pagination
@@ -138,9 +138,13 @@ export default {
     },
 
     // 状态字典翻译
-    wheelStatusFormat(row, column) {
-      return this.selectDictLabel(this.wheelStatus, row.status)
-    },
+    // wheelStatusFormat(row, column) {
+    //   return this.selectDictLabel(this.wheelStatus, row.status)
+    // },
   }
 };
 </script>
+
+<style>
+
+</style>

@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import {url} from '@/utils/url'
 
-// 查询【请填写功能名称】列表
+// 查询wheel pool 列表 - > wheel pool list api
 export function listWheelPool(query) {
   return request({
     url: url.platformWeb + '/admin/wheelPool/list',
@@ -10,7 +10,7 @@ export function listWheelPool(query) {
   })
 }
 
-// 查询【请填写功能名称】详细
+// wheel pool 通过 id 获取 get by id api
 export function getWheelPool(id) {
   return request({
     url: url.platformWeb + '/admin/wheelPool/' + id,
@@ -18,7 +18,7 @@ export function getWheelPool(id) {
   })
 }
 
-// 修改【请填写功能名称】
+// 更新 update wheel pool api
 export function updateWheelPool(data) {
   return request({
     url: url.platformWeb + '/admin/wheelPool/edit',

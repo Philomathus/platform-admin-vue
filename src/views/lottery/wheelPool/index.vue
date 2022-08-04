@@ -1,6 +1,7 @@
 <template>
   <div class="app-container">
 
+    <!--数据列表表 wheel pool data list table-->
     <el-table stripe v-loading="loading" :data="wheelPoolList" class="el-table--border">
       <el-table-column label="主键" align="center" prop="id" />
       <el-table-column label="名称" align="center" prop="name" />

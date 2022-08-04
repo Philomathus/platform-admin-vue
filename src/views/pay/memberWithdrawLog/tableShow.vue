@@ -45,8 +45,8 @@
           <div class="mount" style="width: 45%">
             <div class="font">线上历史充值金额:{{ historyRecharge || 0.00 }}</div>
           </div>
-          <div class="mount" style="width: 12%">
-            <el-button type="primary" plain @click="getHistoryRecharge()">查询</el-button>
+          <div class="mount" style="width: 12%;">
+            <el-button type="primary" plain @click="getHistoryRecharge()" style="height: 40px">查询</el-button>
           </div>
         </div>
         <div class="font">线下充值金额: {{ data.线下充值金额 }}</div>
@@ -223,7 +223,7 @@ div {
 }
 
 .renew-btn2{
-  height: 53px;
+  height: 55px;
 }
 
 .title {

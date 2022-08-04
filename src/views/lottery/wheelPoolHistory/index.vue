@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+<!--    search form 搜索表格 -->
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="会员ID" prop="memberId">
         <el-input
@@ -35,7 +36,7 @@
       <el-table-column label="是否首次中奖" align="center" prop="first" min-width="120"/>
 
       <el-table-column label="状态" align="center" prop="status" min-width="120">  <!-- 0 未中奖 1 已中奖 2 已放弃-->
-        <template slot-scope="scope" style="padding: 40px">
+        <template slot-scope="scope">
           <span :style="{color: (status = wheelStatus[parseInt(scope.row.status)]).color}">
             {{ status.dictLabel }}
           </span>
@@ -144,7 +145,3 @@ export default {
   }
 };
 </script>
-
-<style>
-
-</style>

@@ -33,7 +33,7 @@
         <div class="font">{{ data.登录时间 }}</div>
         <div class="font">{{ data.会员VIP }}</div>
         <div class="font">{{ data.会员注单 }}</div>
-        <div class="font" @click="showAddress" style="background-color: #cccc77">{{ address }}</div>
+        <div class="font" @click="showAddress" id="showAddressBg">{{ address }}</div>
       </div>
     </div>
     <div class="fundsInfo">
@@ -269,6 +269,9 @@ div {
 }
 .col-w28pr{
   width: 28%;
+}
+#showAddressBg{
+  background-color: #cccc77;
 }
 
 </style>

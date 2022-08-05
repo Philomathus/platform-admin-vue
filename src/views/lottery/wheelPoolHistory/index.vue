@@ -76,15 +76,21 @@
         <el-table stripe v-loading="loading" :data="wheelPoolLotteryList" class="el-table--border" style="margin-bottom: 50px">
           <el-table-column label="会员ID" align="center" prop="userId" min-width="150"/>
           <el-table-column label="会员昵称" align="center" prop="nickName" min-width="150"/>
-          <el-table-column label="会员类型" align="center" prop="status" min-width="120">  <!-- 0 未中奖 1 已中奖 2 已放弃-->
+          <el-table-column label="会员类型" align="center" prop="status" min-width="120">
             <template slot-scope="scope">
-            <span :style="{color: (status = wheelStatus[parseInt(scope.row.status)]).color}">
+            <span :style="{color: (status = typeList[parseInt(scope.row.status)]).color}">
               {{ status.dictLabel }}
             </span>
             </template>
           </el-table-column>
           <el-table-column label="会员vip" align="center" prop="vip" min-width="180"/>
-          <el-table-column label="获奖时间" align="center" prop="time" min-width="240" />
+
+          <el-table-column label="开奖时间" align="center" prop="time" width="180">
+            <template slot-scope="scope">
+              <span>{{ parseTime(scope.row.time) }}</span>
+            </template>
+          </el-table-column>
+
         </el-table>
       <el-button type="primary" plain @click="closeTapBtn()"  style="float: right;margin-top: -25px">
         关闭
@@ -120,6 +126,7 @@ export default {
       // 轮池历史列表 wheel pool history list
       wheelPoolHistoryList: [],
       wheelPoolLotteryList: [],
+      typeList : [],
       // 弹出层标题
       title: "",
       wheelStatus: [],
@@ -153,6 +160,9 @@ export default {
     this.getWheelPoolLotteryList();
     this.getDicts('wheel_pool_status').then(response => {
       this.wheelStatus = response.data
+    });
+    this.getDicts('member_type').then(response => {
+      this.typeList = response.data
     })
   },
 

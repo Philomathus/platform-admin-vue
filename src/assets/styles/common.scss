@@ -243,6 +243,8 @@
    because this value used in whole application
    整个应用程序的动态值，请不要更改此值
    因为这个值在整个应用程序中使用 */
+
+ /* col width in px */
 .col-w240{
   width: 240px;
 }
@@ -255,11 +257,18 @@
 .col-w200{
   width: 200px;
 }
+
+ /* col height in px */
+ .col-h40{
+   height: 40px;
+ }
+
+ /* col width in % */
  .col-60pr{
    width: 60%;
  }
 
-.col-80pr{
+.col-w80pr{
   width: 80%;
 }
 .col-83pr{
@@ -277,10 +286,12 @@
   width: 100%;
 }
 
+ /* margin left in px */
 .ml20{
   margin-left: 20px;
 }
 
+ /* margin right in px */
  .mr2{
    margin-right: 2px;
  }
@@ -289,9 +300,12 @@
    margin-right: 15px;
  }
 
+ /* font size in px */
 .fs15{
  font-size: 15px;
 }
+
+ /* padding left in px */
  .pl5{
    padding-left: 5px;
  }

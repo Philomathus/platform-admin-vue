@@ -5,7 +5,7 @@
   >
     <div class="memberInfo">
       <div class="title">会员基本信息</div>
-      <div class="mount" style="width: 12%">
+      <div class="mount col-w12pr">
         <div class="font">会员Id</div>
         <div class="font">注册时间</div>
 <!--        <div class="font">电话号码</div>-->
@@ -13,7 +13,7 @@
         <div class="font">会员打码</div>
         <div class="font">会员IP</div>
       </div>
-      <div class="mount" style="width: 28%">
+      <div class="mount col-w28pr" >
         <div class="font">{{ data.会员编号 }}</div>
         <div class="font">{{ data.会员注册时间 }}</div>
 <!--        <div class="font" @click="showPhone" style="background-color: #cccc77">{{ data.会员名称 }}</div>-->
@@ -21,14 +21,14 @@
         <div class="font">{{ data.会员打码 }}</div>
         <div class="font">{{ data.登陆IP }}</div>
       </div>
-      <div class="mount" style="width: 12%">
+      <div class="mount col-w12pr" >
         <div class="font">当前余额</div>
         <div class="font">登录时间</div>
         <div class="font">VIP等级</div>
         <div class="font">会员注单</div>
         <div class="font">登录地址</div>
       </div>
-      <div class="mount" style="width: 28%">
+      <div class="mount col-w28pr" >
         <div class="font">{{ data.会员积分 }}</div>
         <div class="font">{{ data.登录时间 }}</div>
         <div class="font">{{ data.会员VIP }}</div>
@@ -38,7 +38,7 @@
     </div>
     <div class="fundsInfo">
       <div class="title">会员资金信息</div>
-      <div class="mount" style="width: 80%">
+      <div class="mount col-w80pr">
 
         <div style="display: flex;justify-content: flex-start;">
           <div class="mount" style="width: 43%">
@@ -48,7 +48,7 @@
             <div class="font">线上历史充值金额:{{ historyRecharge || 0.00 }}</div>
           </div>
           <div class="mount" style="width: 12%">
-            <el-button type="success" @click="getHistoryRecharge()">查询</el-button>
+            <el-button type="success" @click="getHistoryRecharge()" class="col-h40">查询</el-button>
           </div>
         </div>
         <div class="font">线下充值金额: {{ data.线下充值金额 }}</div>
@@ -61,7 +61,7 @@
     </div>
     <div class="lotteryInfo">
       <div class="title">会员备注</div>
-      <div class="mount" style="width: 80%">
+      <div class="mount col-w80pr">
         <div class="member-his-note-field">
           <el-input type="textarea" class="font" id="text-area" style="height: auto" v-model.trim="email" maxlength="50" show-word-limit></el-input>
           <el-button type="success" class="renew_btn" @click="updateEmail(email,data.会员编号)">更新</el-button>
@@ -70,13 +70,13 @@
     </div>
     <div class="lotteryInfo">
       <div class="title">彩票检测</div>
-      <div class="mount" style="width: 80%">
+      <div class="mount col-w80pr">
         <div class="font">异常投注次数: {{ data.彩票异常投注次数 }}</div>
       </div>
     </div>
     <div class="playInfo">
       <div class="title" style="border-right:  1px solid rgba(0, 0, 0, 0.10);">游戏盈利(一月内)</div>
-      <div class="mount" style="width: 80%">
+      <div class="mount col-w80pr">
         <div class="font" v-for="item in playData">{{ item }}</div>
       </div>
     </div>
@@ -264,4 +264,11 @@ div {
   flex-direction: column;
   justify-content: flex-start;
 }
+.col-w12pr{
+  width: 12%;
+}
+.col-w28pr{
+  width: 28%;
+}
+
 </style>

@@ -272,7 +272,10 @@
           <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>
         </el-form-item>
         <el-form-item class="edit-close-btn">
-          <el-button type="primary" @click="handlePaypassword()" >确定</el-button>
+          <el-button type="primary"
+                     @click="handlePaypassword()"
+                     v-has-permi="['admin:liveUser:reset']">确定
+          </el-button>
           <el-button @click="visible = false">取 消</el-button>
         </el-form-item>
       </el-form>

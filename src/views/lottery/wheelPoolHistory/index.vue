@@ -26,6 +26,20 @@
       </el-form-item>
     </el-form>
 
+<!--    popup button -->
+    <el-row style="margin-bottom: 5px">
+      <el-col>
+        <el-button
+            type="primary"
+            plain
+            size="mini"
+            class="el-button el-button--primary"
+            @click="showMenuTab()">
+            抽奖资格记录
+        </el-button>
+      </el-col>
+    </el-row>
+
     <!-- 轮式台球历史表  wheel pool history table-->
     <el-table stripe v-loading="loading" :data="wheelPoolHistoryList" class="el-table--border">
       <el-table-column label="主键" align="center" prop="id" min-width="100"/>
@@ -57,12 +71,32 @@
       @pagination="getList"
     />
 
+<!--    在此处显示池彩票兑现选项卡 display while pool lottery cashes tab here -->
+    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="PopUpTable" width="400" style="padding-bottom: 100px"  append-to-body>
+        <el-table stripe v-loading="loading" :data="wheelPoolLotteryList" class="el-table--border" style="margin-bottom: 50px">
+          <el-table-column label="会员ID" align="center" prop="userId" min-width="150"/>
+          <el-table-column label="会员昵称" align="center" prop="nickName" min-width="150"/>
+          <el-table-column label="会员类型" align="center" prop="status" min-width="120">  <!-- 0 未中奖 1 已中奖 2 已放弃-->
+            <template slot-scope="scope">
+            <span :style="{color: (status = wheelStatus[parseInt(scope.row.status)]).color}">
+              {{ status.dictLabel }}
+            </span>
+            </template>
+          </el-table-column>
+          <el-table-column label="会员vip" align="center" prop="vip" min-width="180"/>
+          <el-table-column label="获奖时间" align="center" prop="time" min-width="240" />
+        </el-table>
+      <el-button type="primary" plain @click="closeTapBtn()"  style="float: right;margin-top: -25px">
+        关闭
+      </el-button>
+    </el-dialog>
+
   </div>
 </template>
 
 
 <script>
-import { listWheelPoolHistory} from "@/api/platform-web/lottery/wheelPoolHistory";
+import {getLotteryList, listWheelPoolHistory} from "@/api/platform-web/lottery/wheelPoolHistory";
 
 export default {
   name: "WheelPoolHistory",
@@ -77,10 +111,15 @@ export default {
 
       // 显示搜索条件 -
       showSearch: true,
+
+      //pop table boolean
+      PopUpTable : false,
+
       // 总条数
       total: 0,
       // 轮池历史列表 wheel pool history list
       wheelPoolHistoryList: [],
+      wheelPoolLotteryList: [],
       // 弹出层标题
       title: "",
       wheelStatus: [],
@@ -111,10 +150,12 @@ export default {
   },
   created() {
     this.getList();
+    this.getWheelPoolLotteryList();
     this.getDicts('wheel_pool_status').then(response => {
       this.wheelStatus = response.data
     })
   },
+
   methods: {
     /** 获取轮池的所有列表 get all list of wheel pool history */
     getList() {
@@ -138,10 +179,30 @@ export default {
       this.handleQuery();
     },
 
+    /** start click to display while list caches list pop up tab **/
+    showMenuTab(){
+      this.PopUpTable = true;
+      this.title = "抽奖资格记录"
+    },
+
+    /** get all list of wheel pool lottery caches */
+    getWheelPoolLotteryList() {
+      this.loading = true;
+      getLotteryList().then(response => {
+        this.wheelPoolLotteryList = response.rows;
+        this.loading = false;
+      });
+    },
+
+    closeTapBtn(){
+      this.PopUpTable =false;
+    },
+
     // 状态字典翻译
     // wheelStatusFormat(row, column) {
     //   return this.selectDictLabel(this.wheelStatus, row.status)
     // },
   }
+
 };
 </script>

@@ -18,3 +18,12 @@ export function getLotteryList() {
     method: 'get',
   })
 }
+
+// 统计会员余额保险箱
+export function wheelPoolHistoryListCount(query) {
+  return request({
+    url: url.platformWeb + '/admin/wheelPoolHistory/listCount',
+    method: 'get',
+    params: query
+  })
+}

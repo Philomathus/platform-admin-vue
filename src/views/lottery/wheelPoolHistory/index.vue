@@ -1,7 +1,25 @@
 <template>
   <div class="app-container">
+
+    <div v-loading="totalLoading">
+      <el-button type="primary" @click="copy1">总抽奖人数 {{ this.totalData.totalPeopleCount || 0 }}</el-button>
+      <el-button type="primary" @click="copy2">总抽奖人数 {{ this.totalData.totalCountMoney || 0 }}</el-button>
+      <el-button type="success" @click="copy3">测试抽奖人数 {{ this.totalData.testTotalPeoples || 0 }}</el-button>
+      <el-button type="warning" @click="copy4">测试抽奖金额 {{ this.totalData.testTotalMoney || 0 }}</el-button>
+      <el-button  type="primary" icon="el-icon-search" size="mini" @click="listCount()" style="margin-left: 20px">统计查询</el-button>
+    </div>
+
 <!--    search form 搜索表格 -->
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px" style="margin-top: 15px;">
+
+      <el-form-item label="日期范围" prop="createTime">
+        <el-date-picker type="datetimerange" v-model="dateRange" format="yyyy-MM-dd HH:mm:ss"
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}" start-placeholder="开始时间"
+                        end-placeholder="开始时间"
+                        range-separator="至" clearable :default-time="['00:00:00', '23:59:59']" :picker-options="pickerOptions">
+        </el-date-picker>
+      </el-form-item>
+
       <el-form-item label="会员ID" prop="memberId">
         <el-input
           v-model="queryParams.memberId"
@@ -46,6 +64,15 @@
       <el-table-column label="会员ID" align="center" prop="memberId" min-width="150"/>
       <el-table-column label="昵称" align="center" prop="nickName" min-width="150"/>
       <el-table-column label="中奖ID" align="center" prop="winId" min-width="120"/>
+
+      <el-table-column label="会员类型" align="center" prop="memberStatus" min-width="120">
+        <template slot-scope="scope">
+            <span :style="{color: (status = typeList[parseInt(scope.row.memberStatus)]).color}">
+              {{ status.dictLabel }}
+            </span>
+        </template>
+      </el-table-column>
+
       <el-table-column label="中奖金额" align="center" prop="prize" min-width="120"/>
       <el-table-column label="是否首次中奖" align="center" prop="first" min-width="120"/>
 
@@ -102,7 +129,12 @@
 
 
 <script>
-import {getLotteryList, listWheelPoolHistory} from "@/api/platform-web/lottery/wheelPoolHistory";
+import {
+  getLotteryList,
+  listWheelPoolHistory,
+  wheelPoolHistoryListCount
+} from "@/api/platform-web/lottery/wheelPoolHistory";
+import {pickerDateTimeShortcuts} from "@/utils/dateUtils";
 
 export default {
   name: "WheelPoolHistory",
@@ -121,6 +153,19 @@ export default {
       //pop table boolean
       PopUpTable : false,
 
+      totalLoading: false,
+
+      totalData: {
+        totalPeopleCount: 0,
+        totalCountMoney: 0,
+        testTotalPeoples : 0,
+        testTotalMoney: 0
+      },
+
+      // 日期范围
+      dateRange: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
+      pickerOptions: {shortcuts: pickerDateTimeShortcuts},
+
       // 总条数
       total: 0,
       // 轮池历史列表 wheel pool history list
@@ -130,6 +175,7 @@ export default {
       // 弹出层标题
       title: "",
       wheelStatus: [],
+
 
       // 查询参数
       queryParams: {
@@ -145,8 +191,6 @@ export default {
         medalType:null,
         drawType:null,
         position:null,
-        createTime : null,
-        updateTime:null
       },
       // 表单参数
       form: {},
@@ -170,6 +214,7 @@ export default {
     /** 获取轮池的所有列表 get all list of wheel pool history */
     getList() {
       this.loading = true;
+      this.queryParams = this.addDateRange(this.queryParams, this.dateRange);
       listWheelPoolHistory(this.queryParams).then(response => {
         this.wheelPoolHistoryList = response.rows;
         this.total = response.total;
@@ -212,6 +257,31 @@ export default {
     // wheelStatusFormat(row, column) {
     //   return this.selectDictLabel(this.wheelStatus, row.status)
     // },
+
+    //复制
+    copy1() {
+      this.copyCommand(this.totalData.totalPeopleCount)
+    },
+    copy2() {
+      this.copyCommand(this.totalData.totalCountMoney)
+    },
+    copy3() {
+      this.copyCommand(this.totalData.testTotalPeoples)
+    },
+    copy4() {
+      this.copyCommand(this.totalData.testTotalMoney)
+    },
+    //统计
+    listCount() {
+      this.totalLoading=true
+      this.queryParams = this.addDateRange(this.queryParams, this.dateRange);
+      wheelPoolHistoryListCount(this.queryParams).then((res) => {
+        this.totalData = res
+      }).finally(()=>{
+        this.totalLoading=false
+      })
+    },
+
   }
 
 };

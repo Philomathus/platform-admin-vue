@@ -56,6 +56,18 @@
         >批量关播
         </el-button>
       </el-col>
+
+      <!--      同步主排序按钮 Sync Master Sorting button  -->
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          size="mini"
+          @click="synchronizeOrder"
+          v-hasPermi="['admin:liveVideo:sync']">同步主台排序
+        </el-button>
+      </el-col>
+
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -567,7 +579,24 @@ export default {
         }
         this.getList()
       })
+    },
+
+    /** 同步主台排序 Sync Master Sorting */
+    synchronizeOrder(){
+        this.$confirm('确认同步主台主播排序吗?', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '操作成功!'
+          })
+
+        })
     }
+
+
   }
 }
 </script>

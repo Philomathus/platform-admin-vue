@@ -142,19 +142,22 @@ export default {
   },
   data() {
     return {
-      // 遮罩层
+      /** loading 遮罩层 */
       loading: true,
-      // 选中数组
+
+      /** ids array 选中数组 */
       ids: [],
 
-      // 显示搜索条件 -
+      /**显示搜索条件  Show search criteria */
       showSearch: true,
 
-      //pop table boolean
+      /** pop table boolean*/
       PopUpTable : false,
 
+      /** total loading*/
       totalLoading: false,
 
+      /** 初始值 0 统计总行数和总金额 initial values 0 statistics count total rows and total money  */
       totalData: {
         totalPeopleCount: 0,
         totalCountMoney: 0,
@@ -162,22 +165,24 @@ export default {
         testTotalMoney: 0
       },
 
-      // 日期范围
+      /** date range 日期范围 */
       dateRange: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
       pickerOptions: {shortcuts: pickerDateTimeShortcuts},
 
-      // 总条数
+      /** 总条数 total number*/
       total: 0,
-      // 轮池历史列表 wheel pool history list
+      /**  轮池历史列表 wheel pool history list */
       wheelPoolHistoryList: [],
       wheelPoolLotteryList: [],
       typeList : [],
-      // 弹出层标题
+      /**  弹出层标题 popup title*/
       title: "",
+
+      /**  wheel status array */
       wheelStatus: [],
 
 
-      // 查询参数
+      /** 查询参数 query parameters */
       queryParams: {
         pageNum: 1,
         pageSize: 20,
@@ -192,11 +197,6 @@ export default {
         drawType:null,
         position:null,
       },
-      // 表单参数
-      form: {},
-      // 表单校验
-      rules: {
-      }
     };
   },
   created() {
@@ -211,6 +211,7 @@ export default {
   },
 
   methods: {
+
     /** 获取轮池的所有列表 get all list of wheel pool history */
     getList() {
       this.loading = true;
@@ -253,12 +254,7 @@ export default {
       this.PopUpTable =false;
     },
 
-    // 状态字典翻译
-    // wheelStatusFormat(row, column) {
-    //   return this.selectDictLabel(this.wheelStatus, row.status)
-    // },
-
-    //复制
+    /**复制 copy*/
     copy1() {
       this.copyCommand(this.totalData.totalPeopleCount)
     },
@@ -271,7 +267,8 @@ export default {
     copy4() {
       this.copyCommand(this.totalData.testTotalMoney)
     },
-    //统计
+
+    /** 统计总行数和总金额 statistics count total rows and total money */
     listCount() {
       this.totalLoading=true
       this.queryParams = this.addDateRange(this.queryParams, this.dateRange);

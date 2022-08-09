@@ -256,11 +256,9 @@ import {
   listLiveVideo,
   getLiveVideo,
   updateVideoSort,
-  exportLiveVideo
+  exportLiveVideo, resetSynchronizeOrder
 } from '@/api/live-web/liveVideo/liveVideo'
-import {
-  updateLiveUser
-} from '@/api/live-web/liveUser'
+import { updateLiveUser } from '@/api/live-web/liveUser'
 import request from '@/utils/request'
 import {url} from '@/utils/url'
 
@@ -588,11 +586,9 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$message({
-            type: 'success',
-            message: '操作成功!'
+          resetSynchronizeOrder().then(res=>{
+            this.getList()
           })
-
         })
     }
 

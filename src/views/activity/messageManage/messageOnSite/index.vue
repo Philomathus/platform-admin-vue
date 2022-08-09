@@ -170,6 +170,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitFormUserMessage">确 定</el-button>
+        <el-button @click="closeUserMessage">取 消</el-button>
       </div>
     </el-dialog>
   </div>
@@ -310,6 +311,9 @@ export default {
       this.reset()
       this.openUserMessage = true
       this.title = '单个会员发送消息'
+    },
+    closeUserMessage(){
+      this.openUserMessage = false
     },
 
     /** 修改按钮操作 */

@@ -44,15 +44,15 @@
       </el-form-item>
     </el-form>
 
-<!--    popup button -->
+<!--  点击按钮弹出表缓存 click on button to popup table cache -->
     <el-row style="margin-bottom: 5px">
       <el-col>
         <el-button
             type="primary"
             plain
             size="mini"
-            class="el-button el-button--primary"
-            @click="showMenuTab()">
+            class="el-button el-button--success"
+            @click="showCacheTable()">
             抽奖资格记录
         </el-button>
       </el-col>
@@ -99,7 +99,7 @@
     />
 
 <!--    在此处显示池彩票兑现选项卡 display while pool lottery cashes tab here -->
-    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="PopUpTable" width="400" style="padding-bottom: 100px"  append-to-body>
+    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="PopUpCacheTable" width="400" style="padding-bottom: 100px"  append-to-body>
         <el-table stripe v-loading="loading" :data="wheelPoolLotteryList" class="el-table--border" style="margin-bottom: 50px">
           <el-table-column label="会员ID" align="center" prop="userId" min-width="150"/>
           <el-table-column label="会员昵称" align="center" prop="nickName" min-width="150"/>
@@ -152,7 +152,7 @@ export default {
       showSearch: true,
 
       /** pop table boolean*/
-      PopUpTable : false,
+      PopUpCacheTable : false,
 
       /** total loading*/
       totalLoading: false,
@@ -236,8 +236,8 @@ export default {
     },
 
     /** start click to display while list caches list pop up tab **/
-    showMenuTab(){
-      this.PopUpTable = true;
+    showCacheTable(){
+      this.PopUpCacheTable = true;
       this.title = "抽奖资格记录"
     },
 
@@ -251,7 +251,7 @@ export default {
     },
 
     closeTapBtn(){
-      this.PopUpTable =false;
+      this.PopUpCacheTable =false;
     },
 
     /**复制 copy*/

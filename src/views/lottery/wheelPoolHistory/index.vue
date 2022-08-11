@@ -62,7 +62,7 @@
           plain
           icon="el-icon-download"
           size="mini"
-          @click="openWheelHistoryExport"
+          @click="handleWheelHistoryExport"
         >导出
         </el-button>
       </el-col>
@@ -295,16 +295,11 @@ export default {
       })
     },
 
-    /** open export */
-    openWheelHistoryExport() {
-      this.$refs.excelPrompt.open=true;
-    },
-
-    /** 导出按钮操作 */
-    handleWheelHistoryExport(date) {
-      const queryParams = this.queryParams
+    /** 导出按钮操作 Export button action*/
+    handleWheelHistoryExport() {
+      let queryParams = this.queryParams
       queryParams.params = []
-      queryParams.downLoadDate = date
+      queryParams = this.addDateRange(this.queryParams, this.dateRange);
       this.$confirm('是否确认导出所有车轮历史列表数据项?', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

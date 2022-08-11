@@ -46,7 +46,7 @@
 
 <!--  点击按钮弹出表缓存 click on button to popup table cache -->
     <el-row style="margin-bottom: 5px">
-      <el-col>
+      <el-col :span="1.5">
         <el-button
             type="primary"
             plain
@@ -56,6 +56,17 @@
             抽奖资格记录
         </el-button>
       </el-col>
+      <el-col :span="1.5" class="ml5">
+        <el-button
+          type="warning"
+          plain
+          icon="el-icon-download"
+          size="mini"
+          @click="openWheelHistoryExport"
+        >导出
+        </el-button>
+      </el-col>
+
     </el-row>
 
     <!-- 轮式台球历史表  wheel pool history table-->
@@ -63,6 +74,7 @@
       <el-table-column label="主键" align="center" prop="id" min-width="100"/>
       <el-table-column label="会员ID" align="center" prop="memberId" min-width="150"/>
       <el-table-column label="昵称" align="center" prop="nickName" min-width="150"/>
+
       <el-table-column label="中奖ID" align="center" prop="winId" min-width="120"/>
 
       <el-table-column label="会员类型" align="center" prop="memberStatus" min-width="120">
@@ -124,21 +136,25 @@
       </el-button>
     </el-dialog>
 
+    <ExcelPrompt ref="excelPrompt" @downLoadExcel="handleWheelHistoryExport"></ExcelPrompt>
   </div>
 </template>
 
 
 <script>
 import {
+  exportWheelPoolHistoryInfo,
   getLotteryList,
   listWheelPoolHistory,
   wheelPoolHistoryListCount
 } from "@/api/platform-web/lottery/wheelPoolHistory";
 import {pickerDateTimeShortcuts} from "@/utils/dateUtils";
+import ExcelPrompt from '@/layout/components/prompt/excelPrompt.vue';
 
 export default {
   name: "WheelPoolHistory",
   components: {
+    ExcelPrompt
   },
   data() {
     return {
@@ -278,6 +294,28 @@ export default {
         this.totalLoading=false
       })
     },
+
+    /** open export */
+    openWheelHistoryExport() {
+      this.$refs.excelPrompt.open=true;
+    },
+
+    /** 导出按钮操作 */
+    handleWheelHistoryExport(date) {
+      const queryParams = this.queryParams
+      queryParams.params = []
+      queryParams.downLoadDate = date
+      this.$confirm('是否确认导出所有车轮历史列表数据项?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        return exportWheelPoolHistoryInfo(queryParams)
+      }).then(response => {
+        this.downloadExcel(response, '轮池历史列表')
+      })
+    },
+
 
   }
 

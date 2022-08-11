@@ -27,3 +27,14 @@ export function wheelPoolHistoryListCount(query) {
     params: query
   })
 }
+
+// 导出轮池历史列表 Export wheel pool history list
+export function exportWheelPoolHistoryInfo(query) {
+  return request({
+    url: url.platformWeb + '/admin/wheelPoolHistory/export',
+    method: 'get',
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
+  })
+}

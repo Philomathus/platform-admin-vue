@@ -74,7 +74,7 @@
       <el-table-column label="主键" align="center" prop="id" min-width="100"/>
       <el-table-column label="会员ID" align="center" prop="memberId" min-width="150"/>
       <el-table-column label="昵称" align="center" prop="nickName" min-width="150"/>
-
+      <el-table-column label="中奖次数" align="center" prop="winTimes" min-width="150"/>
       <el-table-column label="中奖ID" align="center" prop="winId" min-width="120"/>
 
       <el-table-column label="会员类型" align="center" prop="memberStatus" min-width="120">

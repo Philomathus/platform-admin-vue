@@ -300,14 +300,14 @@ export default {
       let queryParams = this.queryParams
       queryParams.params = []
       queryParams = this.addDateRange(this.queryParams, this.dateRange);
-      this.$confirm('是否确认导出所有车轮历史列表数据项?', '警告', {
+      this.$confirm('是否确认导出大奖池历史列表数据项?', '警告', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function () {
         return exportWheelPoolHistoryInfo(queryParams)
       }).then(response => {
-        this.downloadExcel(response, '轮池历史列表')
+        this.downloadExcel(response, '大奖池历史列表')
       })
     },
 

@@ -21,7 +21,7 @@
       </el-form-item>
       <el-form-item label="类型" prop="type">
         <el-select v-model="queryParams.type" placeholder="" clearable size="small">
-          <el-option label="全部" value="" />
+          <el-option label="全部" value=""/>
           <el-option label="超管" value="1" />
           <el-option label="房管" value="2" />
         </el-select>
@@ -70,14 +70,12 @@
     <el-table stripe v-loading="loading" :data="liveOfficerList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="ID" align="center" prop="id" />
-      <el-table-column label="类型" align="center" prop="type" />  <!-- 1=超管  , 2=房管 -->
       <el-table-column label="主播ID" align="center" prop="hostId" />
+      <el-table-column label="主播昵称" align="center" prop="hostName" />
       <el-table-column label="用户ID" align="center" prop="puserId" />
-      <el-table-column label="创建时间" align="center" prop="cTime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.cTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
-        </template>
-      </el-table-column>
+      <el-table-column label="用户昵称" align="center" prop="puserName" />
+      <el-table-column label="类型" align="center" prop="type" min-width="60" :formatter="formatterType" />  <!-- 1=超管  , 2=房管 -->
+      <el-table-column label="创建时间" align="center" prop="ctime" min-width="120" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -94,8 +92,7 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="类型" prop="type">
-          <el-select v-model="form.type" placeholder="请选择1=超管2=房管">
-            <el-option label="全部" value="" />
+          <el-select v-model="form.type" placeholder="请选择超管或者房管">
             <el-option label="超管" value="1" />
             <el-option label="房管" value="2" />
           </el-select>
@@ -165,7 +162,7 @@ export default {
         hostId: null,
         pUserId: null,
         upAdmin: null,
-        cTime: null,
+        ctime: null,
         status: null
       },
       // 表单参数
@@ -201,7 +198,7 @@ export default {
         hostId: null,
         pUserId: null,
         upAdmin: null,
-        cTime: null,
+        ctime: null,
         status: 0
       };
       this.resetForm("form");
@@ -286,6 +283,16 @@ export default {
         this.downloadExcel(response, '房管管理');
       }).catch(() => {
       })
+    },
+
+    formatterType(row) {
+      if (row.type ==1) {
+        return '超管'
+      } else if (row.type == 2) {
+        return '房管'
+      } else {
+        return ''
+      }
     },
 
 

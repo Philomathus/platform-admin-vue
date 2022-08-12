@@ -71,11 +71,6 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="ID" align="center" prop="id" />
       <el-table-column label="类型" align="center" prop="type" />  <!-- 1=超管  , 2=房管 -->
-<!--      <el-table-column label="类型" align="center" prop="type" >-->
-<!--            <template v-if="this.liveOfficerList.type===2" v-text="test"/>-->
-<!--      </el-table-column>-->
-
-
       <el-table-column label="主播ID" align="center" prop="hostId" />
       <el-table-column label="用户ID" align="center" prop="puserId" />
       <el-table-column label="创建时间" align="center" prop="cTime" width="180">
@@ -98,9 +93,11 @@
     <!-- 添加或修改房管管理对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="1=超管2=房管" prop="type">
+        <el-form-item label="类型" prop="type">
           <el-select v-model="form.type" placeholder="请选择1=超管2=房管">
-            <el-option label="请选择字典生成" value="" />
+            <el-option label="全部" value="" />
+            <el-option label="超管" value="1" />
+            <el-option label="房管" value="2" />
           </el-select>
         </el-form-item>
         <el-form-item label="主播ID" prop="hostId">
@@ -141,30 +138,30 @@ export default {
   },
   data() {
     return {
-      test : '房管',
+
       // 遮罩层
       loading: true,
-      // 选中数组
+      // 选中数组 selected array
       ids: [],
-      // 非单个禁用
+      /**  非单个禁用 Not single disabled */
       single: true,
-      // 非多个禁用
+      /** 非多个禁用 Not multiple disabled */
       multiple: true,
-      // 显示搜索条件
+      /** 显示搜索条件 Show search criteria */
       showSearch: true,
       // 总条数
       total: 0,
-      // 房管管理表格数据
+      /** 房管管理表格数据 live officer management form data */
       liveOfficerList: [],
-      // 弹出层标题
+      /** 弹出层标题  title  */
       title: "",
-      // 是否显示弹出层
+      /** 是否显示弹出层 Whether to show the popup layer */
       open: false,
-      // 查询参数
+      /** 查询参数 query params */
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        type: null,
+        type: '',
         hostId: null,
         pUserId: null,
         upAdmin: null,
@@ -219,7 +216,7 @@ export default {
       this.resetForm("queryForm");
       this.handleQuery();
     },
-    // 多选框选中数据
+    /** 多选框选中数据 Multi-select box data */
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
       this.single = selection.length!==1

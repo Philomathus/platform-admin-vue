@@ -121,8 +121,8 @@
     />
 
     <!-- 添加或修改中秋博饼对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="150px">
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="570px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="150px" style="padding-right: 20px">
         <el-form-item label="奖项名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入名称" />
         </el-form-item>
@@ -152,7 +152,7 @@
           <el-input v-model="form.odr" type="number" placeholder="请输入排序" />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <div slot="footer" class="dialog-footer" style="padding-right: 20px">
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>

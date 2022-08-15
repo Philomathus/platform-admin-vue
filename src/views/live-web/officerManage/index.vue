@@ -80,7 +80,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <!-- 添加或修改房管管理对话框 -->
+    <!-- 添加房屋管理对话框  Add live officer management dialog -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="主播ID" prop="hostId">
@@ -108,10 +108,8 @@
 <script>
 import {
   listLiveOfficer,
-  getLiveOfficer,
   delLiveOfficer,
   addLiveOfficer,
-  updateLiveOfficer,
   exportLiveOfficer,
 } from "@/api/live-web/liveOfficer/liveOfficer";
 
@@ -211,33 +209,16 @@ export default {
       this.open = true;
       this.title = "添加房管管理";
     },
-    /** 修改按钮操作  Modify button action*/
-    handleUpdate(row) {
-      this.reset();
-      const id = row.id || this.ids
-      getLiveOfficer(id).then(response => {
-        this.form = response.data;
-        this.open = true;
-        this.title = "修改房管管理";
-      });
-    },
+
     /** 提交按钮  submit button*/
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.form.id != null) {
-            updateLiveOfficer(this.form).then(response => {
-              this.msgSuccess("修改成功");
-              this.open = false;
-              this.getList();
-            });
-          } else {
             addLiveOfficer(this.form).then(response => {
               this.msgSuccess("新增成功");
               this.open = false;
               this.getList();
             });
-          }
         }
       });
     },

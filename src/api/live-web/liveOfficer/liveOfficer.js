@@ -10,14 +10,6 @@ export function listLiveOfficer(query) {
   })
 }
 
-// 查询房管管理详细
-export function getLiveOfficer(id) {
-  return request({
-    url: url.platformWeb + '/admin/liveOfficer/' + id,
-    method: 'get'
-  })
-}
-
 // 新增房管管理
 export function addLiveOfficer(data) {
   return request({
@@ -27,14 +19,6 @@ export function addLiveOfficer(data) {
   })
 }
 
-// 修改房管管理
-export function updateLiveOfficer(data) {
-  return request({
-    url: url.platformWeb + '/admin/liveOfficer',
-    method: 'put',
-    data: data
-  })
-}
 
 // 删除房管管理 delete live officer management
 export function delLiveOfficer(id) {

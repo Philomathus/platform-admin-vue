@@ -60,7 +60,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table stripe v-loading="loading" :data="liveOfficerList" @selection-change="handleSelectionChange">
+    <el-table stripe v-loading="loading" :data="liveOfficerList" @selection-change="handleSelectionChange" class="el-table--border">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="ID" align="center" prop="id" />
       <el-table-column label="主播ID" align="center" prop="hostId" />

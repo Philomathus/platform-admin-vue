@@ -61,14 +61,14 @@
     </el-row>
 
     <el-table stripe v-loading="loading" :data="liveOfficerList" @selection-change="handleSelectionChange" class="el-table--border">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="ID" align="center" prop="id" />
-      <el-table-column label="主播ID" align="center" prop="hostId" />
-      <el-table-column label="主播昵称" align="center" prop="hostName" />
-      <el-table-column label="用户ID" align="center" prop="puserId" />
-      <el-table-column label="用户昵称" align="center" prop="puserName" />
-      <el-table-column label="创建时间" align="center" prop="ctime" min-width="120" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column type="selection" width="55" align="center"  min-width="120"/>
+      <el-table-column label="ID" align="center" prop="id"  min-width="150"/>
+      <el-table-column label="主播ID" align="center" prop="hostId"  min-width="120"/>
+      <el-table-column label="主播昵称" align="center" prop="hostName"  min-width="120"/>
+      <el-table-column label="用户ID" align="center" prop="puserId"  min-width="150"/>
+      <el-table-column label="用户昵称" align="center" prop="puserName" min-width="120"/>
+      <el-table-column label="创建时间" align="center" prop="ctime" min-width="170"/>
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width"  min-width="120">
         <template slot-scope="scope">
           <el-button
             size="mini"

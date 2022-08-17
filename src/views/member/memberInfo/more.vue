@@ -614,7 +614,7 @@ export default {
         fullMobile(this.memberId).then((res) => {
           this.mobileForm = res.data
           if(!this.mobileForm.phone){
-            this.$message.error('手机号码不可用。')
+            this.$message.error('手机号码不可用')
           }else{
             this.$message.success('完整手机号码已展示')
           }

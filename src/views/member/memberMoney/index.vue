@@ -93,11 +93,11 @@
     </el-row>
 
     <el-table stripe v-loading="loading" :data="memberMoneyList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="会员id" align="center" prop="memberId"/>
-      <el-table-column label="派送金额" align="center" prop="money"/>
-      <el-table-column label="打码倍数" align="center" prop="beat"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column type="selection" width="55" align="center" min-width="150"/>
+      <el-table-column label="会员id" align="center" prop="memberId" min-width="150"/>
+      <el-table-column label="派送金额" align="center" prop="money" min-width="150"/>
+      <el-table-column label="打码倍数" align="center" prop="beat" min-width="150"/>
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" min-width="150">
 
         <template slot-scope="scope">
           <el-button

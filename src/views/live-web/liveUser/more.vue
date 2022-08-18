@@ -193,6 +193,8 @@
         :page.sync="queryParams.pageNum"
         :limit.sync="queryParams.pageSize"
         @pagination="getList"/>
+
+      <el-button @click="visible = false" style="float: right;margin-top: 35px">取 消</el-button>
     </el-row>
 
     <!--提现比例-->

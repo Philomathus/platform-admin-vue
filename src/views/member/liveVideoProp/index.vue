@@ -75,7 +75,7 @@
       <el-table-column label="礼物名" align="center" prop="propName"/>
       <el-table-column label="礼物金额" align="center" prop="totalDiamonds"/>
       <el-table-column label="主播ID" align="center" prop="toUserId"/>
-      <el-table-column label="主播昵称" align="center" prop="nickName"/>
+      <el-table-column label="主播昵称" align="center" prop="nickName" min-width="100"/>
       <el-table-column label="送礼日期" align="center" prop="createTime" min-width="160"/>
     </el-table>
 

@@ -233,6 +233,7 @@
         </el-form-item>
         <el-form-item style="float: right">
           <el-button type="primary" icon="el-icon-edit" size="mini" @click="editRate">确定修改</el-button>
+          <el-button @click="visible = false">取 消</el-button>
         </el-form-item>
       </el-form>
     </el-row>

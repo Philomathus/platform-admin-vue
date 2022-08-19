@@ -86,28 +86,28 @@
 
     <el-table v-loading="loading" :data="activityInfoList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="标题" align="center" prop="title"/>
-      <el-table-column label="图标" align="center" prop="icon">
+      <el-table-column label="标题" align="center" prop="title" min-width="180"/>
+      <el-table-column label="图标" align="center" prop="icon" min-width="160">
         <template slot-scope="scope">
           <el-image
-            style="height:80px"
+            style="height:60px"
             :src="scope.row.icon"
             fit="contain">
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="活动详情" align="center" prop="content">
+      <el-table-column label="活动详情" align="center" prop="content"  min-width="160">
         <template v-slot="{row}">
           <div v-html="row.content" style="max-height: 80px"></div>
         </template>
       </el-table-column>
-      <el-table-column label="发布时间" align="center" prop="ctime" width="180">
+      <el-table-column label="发布时间" align="center" prop="ctime"  min-width="160">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.ctime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="跳转类型" align="center" prop="type" :formatter="formatterType"/>
-      <el-table-column label="图标跳转链接" align="center" prop="url"/>
+      <el-table-column label="跳转类型" align="center" prop="type" :formatter="formatterType"  min-width="160"/>
+      <el-table-column label="图标跳转链接" align="center" prop="url"  min-width="160"/>
       <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
           <el-switch
@@ -118,8 +118,8 @@
           </el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="排序" align="center" prop="order"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="排序" align="center" prop="order"  min-width="160"/>
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right" min-width="120">
         <template slot-scope="scope">
           <el-button
             size="mini"

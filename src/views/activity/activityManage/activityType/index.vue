@@ -81,6 +81,7 @@
             size="mini"
             type="text"
             icon="el-icon-delete"
+            style="color:#ec9090"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:activityType:remove']"
           >删除

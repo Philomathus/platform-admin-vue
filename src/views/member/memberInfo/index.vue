@@ -316,7 +316,7 @@
     <more ref="more" @refMemeberData="getList()" :member-id="memberId" :member-code="memberCode"
           @memberMore="handleQuery"></more>
 
-    <!--查看封停ip-->
+    <!--查看封停ip View blocked ip -->
     <el-dialog :close-on-click-modal="false" title="查看封停ip" :visible.sync="speakIpBlackListList"
                width="1200px" append-to-body>
       <el-form :model="queryParam" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
@@ -343,7 +343,7 @@
         </el-form-item>
       </el-form>
 
-      <el-table :stripe="true" v-loading="loading" :data="speakIpBlackData">
+      <el-table :stripe="true" v-loading="loading" :data="speakIpBlackData"  style="margin-bottom:30px">
         <el-table-column type="selection" width="55" align="center"/>
         <el-table-column label="会员ID" align="center" prop="userId"/>
         <el-table-column label="会员ip" align="center" prop="userIp"/>
@@ -372,6 +372,11 @@
           @pagination="openIpBlackList"
         />
       </div>
+
+      <el-button type="primary" plain @click="blockedIpCloseBtn()"  style="float: right;margin-top: -15px">
+        关闭
+      </el-button>
+
     </el-dialog>
 
     <!--member by ip address and realName start from here-->
@@ -780,6 +785,14 @@ import {
         this.queryParam.pageNum = 1
         this.searchIpBlackList()
       },
+
+      /** close block view tab  */
+      blockedIpCloseBtn(){
+        this.queryParam.userIp = null;
+        this.queryParam.userId = null;
+        this.speakIpBlackListList = false;
+      },
+
       /** 重置按钮操作 */
       resetQuery() {
         this.resetForm('queryForm')

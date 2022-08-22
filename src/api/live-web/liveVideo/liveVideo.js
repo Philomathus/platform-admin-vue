@@ -69,7 +69,7 @@ export function sendLiveMsg(data){
 // 同步主台排序 Sync Master Sorting sync
 export function resetSynchronizeOrder(){
   return request({
-    url: url.platformWeb + 'admin/liveVideo/sync',
+    url: url.platformWeb + '/admin/liveVideo/sync',
     method: 'get'
   })
 }

@@ -84,7 +84,7 @@
 
     <el-table stripe v-loading="loading" :data="memberGameDatafixList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="会员ID" align="center" prop="userId" />
+      <el-table-column label="会员ID" align="center" prop="userId" min-width="120"/>
       <el-table-column label="游戏开始时间" align="center" prop="gameStartTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.gameStartTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>

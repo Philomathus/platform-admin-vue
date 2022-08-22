@@ -111,7 +111,7 @@
     />
 
 <!--    在此处显示池彩票兑现选项卡 display while pool lottery cashes tab here -->
-    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="PopUpCacheTable" width="400" style="padding-bottom: 100px"  append-to-body>
+    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="popUpCacheTable" width="400" style="padding-bottom: 100px"  append-to-body>
         <el-table stripe v-loading="loading" :data="wheelPoolLotteryList" class="el-table--border" style="margin-bottom: 50px">
           <el-table-column label="会员ID" align="center" prop="userId" min-width="150"/>
           <el-table-column label="会员昵称" align="center" prop="nickName" min-width="150"/>
@@ -168,7 +168,7 @@ export default {
       showSearch: true,
 
       /** pop table boolean*/
-      PopUpCacheTable : false,
+      popUpCacheTable : false,
 
       /** total loading*/
       totalLoading: false,
@@ -253,7 +253,7 @@ export default {
 
     /** start click to display while list caches list pop up tab **/
     showCacheTable(){
-      this.PopUpCacheTable = true;
+      this.popUpCacheTable = true;
       this.title = "抽奖资格记录"
     },
 
@@ -267,7 +267,7 @@ export default {
     },
 
     closeTapBtn(){
-      this.PopUpCacheTable =false;
+      this.popUpCacheTable =false;
     },
 
     /**复制 copy*/

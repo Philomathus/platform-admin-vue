@@ -41,7 +41,7 @@
     </el-row>
     <el-table :stripe="true" v-loading="loading" :data="report" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="游戏名称" align="center" prop="name"/>
+      <el-table-column label="游戏名称" align="center" prop="name" min-width="100"/>
       <el-table-column label="竖版新版图标" align="center" prop="icon">
         <template slot-scope="scope">
           <el-image
@@ -83,14 +83,13 @@
             @change="handleStatusChange(scope.row)"></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right" min-width="140">
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            style="color: #FF5722"
             v-hasPermi="['game:info:edit']">修改
           </el-button>
           <el-button

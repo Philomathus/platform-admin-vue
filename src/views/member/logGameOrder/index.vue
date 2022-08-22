@@ -66,12 +66,12 @@
     </el-row>
 
     <el-table stripe v-loading="loading" :data="logGameOrderList">
-      <el-table-column label="会员ID" align="center" prop="memberId"/>
-      <el-table-column label="订单ID" align="center" prop="id" min-width="180"/>
-      <el-table-column label="游戏平台" align="center" prop="platformName"/>
+      <el-table-column label="会员ID" align="center" prop="memberId" min-width="120"/>
+      <el-table-column label="订单ID" align="center" prop="id" min-width="320" />
+      <el-table-column label="游戏平台" align="center" prop="platformName" min-width="120"/>
       <el-table-column label="金额" align="center" prop="money"/>
-      <el-table-column label="开始时间" align="center" prop="bTime" min-width="120"/>
-      <el-table-column label="结束时间" align="center" prop="eTime" min-width="120"/>
+      <el-table-column label="开始时间" align="center" prop="bTime" min-width="160"/>
+      <el-table-column label="结束时间" align="center" prop="eTime" min-width="160"/>
       <el-table-column label="类型" align="center" prop="type" min-width="60" :formatter="formatterType"/>
       <el-table-column label="状态" align="center" prop="status" min-width="120" :formatter="formatterStatus">
         <template v-slot="{row}">
@@ -81,7 +81,7 @@
           </el-select>
         </template>
       </el-table-column>
-      <el-table-column label="重试次数" align="center" prop="retryCount" min-width="50"/>
+      <el-table-column label="重试次数" align="center" prop="retryCount" min-width="80"/>
     </el-table>
 
     <pagination

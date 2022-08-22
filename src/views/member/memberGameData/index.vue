@@ -59,9 +59,9 @@
     </el-row>
 
     <el-table stripe v-loading="loading" :data="memberGameDataList">
-      <el-table-column label="会员ID" align="center" prop="account"/>
+      <el-table-column label="会员ID" align="center" prop="account" min-width="120"/>
       <el-table-column label="子平台ID" align="center" prop="agent"/>
-      <el-table-column label="游戏ID" align="center"  min-width="160px" prop="gameId"/>
+      <el-table-column label="游戏ID" align="center"  min-width="300px" prop="gameId"/>
       <el-table-column label="游戏局号" align="center"  min-width="160px" :show-overflow-tooltip="true" prop="gameRound">
         <template v-slot="{row}">
           <div v-if="row.platformId == 1 || row.platformId == 15 || row.platformId == 17 || row.platformId == 50 || row.platformId == 51 ">
@@ -80,7 +80,7 @@
       </el-table-column>
       <el-table-column label="平台名称" align="center" prop="platformName"/>
       <el-table-column label="游戏名称" align="center" prop="kindId"/>
-      <el-table-column label="子平台名称" align="center" prop="sonPlatformName"/>
+      <el-table-column label="子平台名称" align="center" prop="sonPlatformName" min-width="120"/>
       <el-table-column label="有效下注" align="center" prop="cell_score"/>
       <el-table-column label="总下注" align="center" prop="all_bet"/>
       <el-table-column label="盈利" align="center" prop="profit"/>

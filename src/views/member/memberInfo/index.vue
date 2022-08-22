@@ -343,7 +343,7 @@
         </el-form-item>
       </el-form>
 
-      <el-table :stripe="true" v-loading="loading" :data="speakIpBlackData"  style="margin-bottom:30px">
+      <el-table :stripe="true" v-loading="loading" :data="speakIpBlackData"  style="margin-bottom:27px">
         <el-table-column type="selection" width="55" align="center"/>
         <el-table-column label="会员ID" align="center" prop="userId"/>
         <el-table-column label="会员ip" align="center" prop="userIp"/>

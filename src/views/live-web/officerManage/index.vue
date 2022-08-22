@@ -71,6 +71,7 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width"  min-width="120">
         <template slot-scope="scope">
           <el-button
+            style="color: #dc5252"
             size="mini"
             type="text"
             icon="el-icon-delete"
@@ -96,7 +97,7 @@
       </div>
     </el-dialog>
     <pagination
-      v-show="total>0"
+      v-show="total>10"
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"

@@ -997,6 +997,7 @@ import {
     /** set Member Status 0, By Ip Address Query Handler*/
         ipBan({
           loginIp: this.queryParamIp.loginIp,
+          realName: this.queryParamIp.realName
         }).then((res) => {
           if (res.code ===0 || res.code >200) {
             this.$notify.error('状态修改失败')

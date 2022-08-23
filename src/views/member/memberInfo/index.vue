@@ -977,8 +977,8 @@ import {
                 this.queryParamIp.loginIp = "";
               }
 
-              if(this.queryParamIp.userName !==null){
-                this.queryParamIp.userName = ""
+              if(this.queryParamIp.realName !==null){
+                this.queryParamIp.realName = ""
               }
 
               if(this.memberByIpAddress !==null){

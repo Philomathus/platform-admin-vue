@@ -331,8 +331,8 @@ export default {
         creator: null,
         updator: null,
         payRate: null,
-        orderByColumn: 'id',
-        isAsc: 'desc'
+        orderByColumn: 'pay_rate',
+        isAsc: 'asc'
       },
       // 表单参数
       form: {},

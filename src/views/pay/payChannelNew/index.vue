@@ -439,7 +439,7 @@ export default {
         id: null,
         name: null,
         payMethod: null,
-        payAttr: null,
+        payAttr: "0",
         failNum: null,
         successNum: null,
         totalSuccessMoney: null,

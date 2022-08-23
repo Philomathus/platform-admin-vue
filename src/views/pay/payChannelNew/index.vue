@@ -331,8 +331,8 @@ export default {
         creator: null,
         updator: null,
         payRate: null,
-        orderByColumn: 'pay_rate',
-        isAsc: 'asc'
+        orderByColumn: 'id',
+        isAsc: 'desc'
       },
       // 表单参数
       form: {},
@@ -490,6 +490,7 @@ export default {
         this.payPlatformOptions = response.data
       })
       this.title = "添加【支付通道】";
+      this.form.payPlatformId = this.queryParams.payPlatformId
     },
     /** 修改按钮操作 */
     handleUpdate(row) {

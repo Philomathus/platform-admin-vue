@@ -32,9 +32,9 @@
     </el-row>
 
     <el-table :stripe="true" v-loading="loading" :data="typeList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="名称" align="center" prop="name"/>
-      <el-table-column label="图标" align="center" prop="icon">
+      <el-table-column type="selection" width="55" align="center" min-width="100"/>
+      <el-table-column label="名称" align="center" prop="name" min-width="100"/>
+      <el-table-column label="图标" align="center" prop="icon" min-width="100">
         <template slot-scope="scope">
           <a :href="scope.row.icon" target="_blank">
             <el-image
@@ -46,8 +46,8 @@
           </a>
         </template>
       </el-table-column>
-      <el-table-column label="图标类型" align="center" prop="iconType" :formatter="iconTypeFormat"/>
-      <el-table-column label="状态" align="center">
+      <el-table-column label="图标类型" align="center" prop="iconType" :formatter="iconTypeFormat" min-width="100"/>
+      <el-table-column label="状态" align="center" min-width="100">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -57,14 +57,13 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="排序号" align="center" prop="indexs"/>
-      <el-table-column label="操作" fixed = "right" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="排序号" align="center" prop="indexs" min-width="100"/>
+      <el-table-column label="操作" fixed = "right" align="center" class-name="small-padding fixed-width" min-width="260">
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
-            style="color: #FF5722"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['game:type:edit']"
           >修改
@@ -79,10 +78,9 @@
           >删除
           </el-button>
           <el-button
-            size="mini"
             type="text"
             icon="el-icon-menu"
-            style="color: #FF5722"
+            size="mini"
             @click="relation_Game(scope.row)"
             v-hasPermi="['game:type:edit']"
           >关联游戏
@@ -160,6 +158,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="relationGameList">确 定</el-button>
+        <el-button type="primary" plain @click="relationGame = false">关闭</el-button>
       </div>
     </el-dialog>
   </div>

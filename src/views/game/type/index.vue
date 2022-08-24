@@ -61,16 +61,18 @@
       <el-table-column label="操作" fixed = "right" align="center" class-name="small-padding fixed-width" min-width="260">
         <template slot-scope="scope">
           <el-button
-            size="mini"
-            type="text"
+            size="small"
+            type="primary"
+            plain
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['game:type:edit']"
           >修改
           </el-button>
           <el-button
-            size="mini"
-            type="text"
+            size="small"
+            type="danger"
+            plain
             icon="el-icon-delete"
             style="color: #FF5722"
             @click="handleDelete(scope.row)"
@@ -78,9 +80,10 @@
           >删除
           </el-button>
           <el-button
-            type="text"
+            type="primary"
+            plain
             icon="el-icon-menu"
-            size="mini"
+            size="small"
             @click="relation_Game(scope.row)"
             v-hasPermi="['game:type:edit']"
           >关联游戏

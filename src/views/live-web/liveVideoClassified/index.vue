@@ -105,6 +105,7 @@
           >修改
           </el-button>
           <el-button
+            style="color: #FF5722"
             size="mini"
             type="text"
             icon="el-icon-delete"

@@ -115,7 +115,7 @@
 
     <el-table v-loading="loading" :data="activityQuestInfoList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="标题" align="center" prop="title"/>
+      <el-table-column label="标题" align="center" prop="title" min-width="140"/>
       <el-table-column label="图标" align="center" prop="icon">
         <template slot-scope="scope">
           <el-image
@@ -132,14 +132,14 @@
       <el-table-column label="描述" align="center" prop="content"/>
       <el-table-column label="任务有效时间" min-width="200" align="center" prop="detail"/>
       <el-table-column label="平台游戏类型" align="center" prop="kindId"/>
-      <el-table-column label="平台类型" align="center" prop="platformName"/>
+      <el-table-column label="平台类型" align="center" prop="platformName" min-width="140"/>
       <el-table-column label="任务模式" align="center" prop="taskMode" :formatter="hasTaskModeFormat"/>
       <el-table-column label="发布时间" align="center" prop="ctime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.ctime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" min-width="140" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -150,6 +150,7 @@
           >修改
           </el-button>
           <el-button
+            style="color: #FF5722"
             size="mini"
             type="text"
             icon="el-icon-delete"

@@ -81,7 +81,6 @@
             size="mini"
             type="text"
             icon="el-icon-edit"
-            style="color: #FF5722"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['game:platform:edit']">修改
           </el-button>

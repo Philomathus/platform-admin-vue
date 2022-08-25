@@ -72,7 +72,6 @@
             size="mini"
             type="text"
             icon="el-icon-edit"
-            style="color: #FF5722"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['game:config-gametype:edit']"
           >修改</el-button>
@@ -231,7 +230,7 @@ export default {
       getConfigGametype(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = "修改游戏配置类型";
       });
     },
     /** 提交按钮 */

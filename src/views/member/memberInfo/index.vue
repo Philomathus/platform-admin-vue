@@ -420,7 +420,7 @@
 
       <div v-if="paginationShow===true">
         <pagination
-          v-show="total>0"
+          v-show="total>10"
           :total="total"
           :page-sizes="[10,20,100]"
           :page.sync="queryParamIp.pageNum"

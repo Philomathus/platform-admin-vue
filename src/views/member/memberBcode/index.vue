@@ -60,7 +60,6 @@
             size="mini"
             type="text"
             icon="el-icon-edit"
-            style="color: #FF5722"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['member:memberBcode:edit']"
           >修改

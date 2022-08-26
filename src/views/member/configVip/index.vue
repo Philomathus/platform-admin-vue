@@ -24,10 +24,10 @@
       <el-table-column label="晋级彩金" align="center" prop="jjcj" />
       <el-table-column label="周俸禄" align="center" prop="zfl" />
       <el-table-column label="月俸禄" align="center" prop="yfl" />
-      <el-table-column label="创建时间" align="center" prop="createTime" />
+      <el-table-column label="创建时间" align="center" prop="createTime" min-width="160"/>
       <el-table-column label="最后更新人" align="center" prop="opName" />
-      <el-table-column label="最后更新时间" align="center" prop="updateTime" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="最后更新时间" align="center" prop="updateTime" min-width="160"/>
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right" min-width="120">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -37,6 +37,7 @@
             v-hasPermi="['admin:configVip:edit']"
           >修改</el-button>
           <el-button
+            style="color: #FF5722"
             size="mini"
             type="text"
             icon="el-icon-delete"

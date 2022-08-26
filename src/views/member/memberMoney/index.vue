@@ -97,7 +97,7 @@
       <el-table-column label="会员id" align="center" prop="memberId" min-width="150"/>
       <el-table-column label="派送金额" align="center" prop="money" min-width="150"/>
       <el-table-column label="打码倍数" align="center" prop="beat" min-width="150"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" min-width="150">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right" min-width="150">
 
         <template slot-scope="scope">
           <el-button

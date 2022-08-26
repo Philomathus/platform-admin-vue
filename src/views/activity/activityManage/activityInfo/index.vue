@@ -129,7 +129,7 @@
             v-hasPermi="['admin:activityInfo:edit']">修改
           </el-button>
           <el-button
-            style="color: #d24141"
+           style="color: #FF5722"
             size="mini"
             type="text"
             icon="el-icon-delete"

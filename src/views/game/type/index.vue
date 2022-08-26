@@ -58,7 +58,7 @@
         </template>
       </el-table-column>
       <el-table-column label="排序号" align="center" prop="indexs" min-width="100"/>
-      <el-table-column label="操作" fixed = "right" align="center" class-name="small-padding fixed-width" min-width="260">
+      <el-table-column label="操作" fixed = "right" align="center" class-name="small-padding fixed-width" min-width="275">
         <template slot-scope="scope">
           <el-button
             size="small"

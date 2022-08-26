@@ -66,7 +66,7 @@
       <el-table-column label="平台名称" align="center" prop="platformName" />
       <el-table-column label="子平台id" align="center" prop="sonPlatformId" />
       <el-table-column label="子平台名称" align="center" prop="sonPlatformName" />
-      <el-table-column label="操作"   align="center" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column label="操作"   align="center" class-name="small-padding fixed-width" fixed="right" width="120">
         <template slot-scope="scope">
           <el-button
             size="mini"

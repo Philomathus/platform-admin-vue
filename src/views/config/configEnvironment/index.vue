@@ -49,7 +49,7 @@
           <el-table :stripe="true" v-loading="loading" :data="configEnvironmentList" width="150px"
                     @selection-change="handleSelectionChange"
           >
-            <el-table-column label="参数名称" align="center">
+            <el-table-column label="参数名称" align="center" min-width="70">
               <template v-slot="{row}">
                 <el-input
                   :class="row.envStatus === 0  ? 'ban' : ''"
@@ -65,7 +65,7 @@
               </template>
             </el-table-column>
 
-            <el-table-column label="参数值" min-width="100" align="center">
+            <el-table-column label="参数值" min-width="80" align="center">
               <template v-slot="{row}">
                 <el-input
                   :class="row.envStatus === 0  ? 'ban' : ''"
@@ -99,7 +99,7 @@
               </template>
             </el-table-column>
 
-            <el-table-column label="所属参数组" align="center" min-width="60px">
+            <el-table-column label="所属参数组" align="center" min-width="40">
               <template v-slot="{row}">
                 <el-select v-model="row.envGroup" placeholder="请选择状态" size="small">
                   <el-option

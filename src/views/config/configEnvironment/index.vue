@@ -20,7 +20,6 @@
               :key="index"
               :label="item.envCode"
               :value="item"
-
             >
             </el-option>
           </el-select>
@@ -47,8 +46,7 @@
       <el-tabs v-model="activeName" @tab-click="handleClick" type="card">
         <el-tab-pane v-for="(item,index) in tabList" :key="index" :label="item.dictLabel" :name="item.dictValue">
           <el-table :stripe="true" v-loading="loading" :data="configEnvironmentList" width="150px"
-                    @selection-change="handleSelectionChange"
-          >
+                    @selection-change="handleSelectionChange">
             <el-table-column label="参数名称" align="center" min-width="70">
               <template v-slot="{row}">
                 <el-input
@@ -90,8 +88,7 @@
             <el-table-column label="状态" width="100" align="center">
               <template v-slot="{row}">
                 <el-select :class="row.envStatus === 0  ? 'ban' : ''"
-                           v-model="row.envStatus" placeholder="请选择状态" size="small" @change="changeStatusButton(row)"
-                >
+                           v-model="row.envStatus" placeholder="请选择状态" size="small" @change="changeStatusButton(row)">
                   <el-option v-for="(item,index) in statusList" :key="index" :label="item.dictLabel"
                              :value="parseInt(item.dictValue)"
                   />
@@ -142,8 +139,7 @@
       </el-tabs>
       <!-- 添加或修改会员上下分对话框  Add or Modify Membership Dialog Box-->
       <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="600px"
-                 append-to-body
-      >
+                 append-to-body>
         <el-form ref="form" :model="form" :rules="rules" label-width="80px">
           <el-row>
             <el-col :span="24">

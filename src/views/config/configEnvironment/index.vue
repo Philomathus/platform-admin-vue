@@ -65,7 +65,7 @@
               </template>
             </el-table-column>
 
-            <el-table-column label="参数值" min-width="150" align="center">
+            <el-table-column label="参数值" min-width="100" align="center">
               <template v-slot="{row}">
                 <el-input
                   :class="row.envStatus === 0  ? 'ban' : ''"
@@ -98,6 +98,20 @@
                 </el-select>
               </template>
             </el-table-column>
+
+            <el-table-column label="所属参数组" align="center" min-width="60px">
+              <template v-slot="{row}">
+                <el-select v-model="row.envGroup" placeholder="请选择状态" size="small">
+                  <el-option
+                    v-for="(dict,i) in tabList"
+                    :key="'A'+ i"
+                    :label="dict.dictLabel"
+                    :value="parseInt(dict.dictValue)"
+                  ></el-option>
+                </el-select>
+              </template>
+            </el-table-column>
+
             <el-table-column label="备注" min-width="100" align="center">
               <template v-slot="{row}">
                 <el-input
@@ -126,7 +140,7 @@
         </el-tab-pane>
 
       </el-tabs>
-      <!-- 添加或修改会员上下分对话框 -->
+      <!-- 添加或修改会员上下分对话框  Add or Modify Membership Dialog Box-->
       <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="600px"
                  append-to-body
       >

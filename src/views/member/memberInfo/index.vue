@@ -147,7 +147,11 @@
     </el-row>
 
     <el-table :stripe="true" v-loading="loading" :data="memberInfoList" @selection-change="handleSelectionChange">
-      <el-table-column label="会员ID" align="center" prop="id" min-width="120px"/>
+      <el-table-column label="会员ID" align="center" prop="id" min-width="120px">
+        <template v-slot="{row}">
+          <a @click="personalReport(row.id)" style="color: #1ab394">{{ row.id }}</a>
+        </template>
+      </el-table-column>
       <el-table-column label="用户名" align="center" prop="userName" min-width="120px"/>
       <el-table-column label="昵称" :show-overflow-tooltip="true" align="center" prop="nickName" min-width="160"/>
       <el-table-column label="会员vip" align="center" prop="vip" min-width="70px"/>
@@ -448,6 +452,24 @@
     </el-dialog>
     <!--member by ip address END here-->
 
+
+<!-- start personal Record dialog pop box from here-->
+<!--    <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="personalReportOpen"-->
+<!--               width="1200px" append-to-body>-->
+<!--      <el-table :stripe="true" v-loading="loading" style="margin-bottom: 50px">-->
+<!--        <el-table-column label="时间选择" align="center"/>-->
+<!--        <el-table-column label="时间选择" align="center"/>-->
+<!--        <el-table-column label="会员ID" align="center"/>-->
+<!--        <el-table-column label="会员ID" align="center"/>-->
+<!--        <el-table-column label="会员ID" align="center"/>-->
+<!--      </el-table>-->
+<!--      <el-button type="primary" plain @click="personalReportOpen=false"  style="float: right;margin-top: -25px">-->
+<!--        关闭-->
+<!--      </el-button>-->
+<!--    </el-dialog>-->
+<!-- end personal Record dialog pop box from here-->
+
+    <PersonalRecordTable ref="tableShow"></PersonalRecordTable>
     <ExcelPrompt ref="excelPrompt" @downLoadExcel="handleExport"></ExcelPrompt>
   </div>
 </template>
@@ -469,12 +491,15 @@ import {
   import {pickerDateShortcuts, pickerDateTimeShortcuts} from '@/utils/dateUtils'
   import {getConfigEnvironment} from "@/api/platform-web/config/configEnvironment";
   import ExcelPrompt from '@/layout/components/prompt/excelPrompt.vue';
+  import PersonalRecordTable from "@/views/member/memberInfo/personalRecordTable";
+import {getMemberWithdrawReport} from "@/api/platform-web/pay/memberWithdrawLog";
 
   export default {
     name: 'MemberInfo',
     components: {
       more: more,
-      ExcelPrompt
+      ExcelPrompt,
+      PersonalRecordTable
     },
     data() {
       return {
@@ -545,6 +570,8 @@ import {
         firstOptions: [],
         first : null,
         //end new data
+
+        personalReportOpen : false,
 
         // 弹出层标题
         title: '',
@@ -1009,9 +1036,16 @@ import {
         }).finally(() => {
           this.searchMbyIpList()
         })
-      }
+      },
 
-/** End Rajesh managed block of code here */
+      personalReport(userId){
+       // userId = "7700_63722";
+        getMemberWithdrawReport(userId).then((res) => {
+          this.fundsData = res.data
+          this.$refs.tableShow.show(res.data);
+        })
+      },
+
 
     },
   }

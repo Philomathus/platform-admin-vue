@@ -1041,7 +1041,7 @@ import {getMemberWithdrawReport} from "@/api/platform-web/pay/memberWithdrawLog"
 
       personalReport(userId){
         getPersonalReport(userId).then((res) => {
-          this.$refs.tableShow.show(res.data);
+          this.$refs.tableShow.showPersonReport(res.data);
         })
       },
 

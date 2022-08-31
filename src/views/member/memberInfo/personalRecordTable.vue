@@ -106,7 +106,7 @@ export default {
   },
   /*method*/
   methods: {
-    show(data) {
+    showPersonReport(data) {
       console.info(data)
       console.info(data.memberId)
       this.open = true

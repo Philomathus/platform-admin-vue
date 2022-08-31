@@ -4,14 +4,14 @@
 
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" style="margin-top: 20px">
       <el-form-item label="日期范围" prop="regTime">
-        <el-date-picker type="datetimerange" v-model="dateRange" format="yyyy-MM-dd HH:mm:ss"
+        <el-date-picker type="datetimerange" v-model="date.dateRange" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}" start-placeholder="开始时间"
                         end-placeholder="开始时间"
                         range-separator="至" clearable :default-time="['00:00:00', '23:59:59']" :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="initData()">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
@@ -20,15 +20,15 @@
 
       <tr>
         <th class="bold">会员ID</th>
-        <td class="bold">12343</td>
+        <td>{{ data.会员编号 }}</td>
         <th class="bold">提款</th>
-        <td class="bold">****</td>
+        <td>{{ data.会员注册时间 }}</td>
       </tr>
       <tr>
         <th class="bold">线上充值</th>
-        <td class="bold">****</td>
+        <td>{{ data.登陆IP }}</td>
         <th class="bold">线下充值</th>
-        <td class="bold">****</td>
+        <td>****</td>
       </tr>
       <tr>
         <th>合计充值</th>
@@ -76,10 +76,7 @@
 </template>
 member
 <script>
-import {checkTwoLogin} from "@/utils/permission";
-import {
-  getMemberInfo, updateEmail, getMemberLoginAddress, getHistoryRecharge
-} from '@/api/platform-web/member/memberInfo'
+import {getPersonalReport} from "@/api/platform-web/member/memberInfo";
 
 export default {
   name: "PersonalRecordTable",
@@ -101,39 +98,44 @@ export default {
       playData: [],
       email: '',
       showSearch: true,
-      dateRange: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
+      personRecordList : [],
+      date:{
+        dateRange: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())]
+      },
     }
   },
   /*method*/
   methods: {
     show(data) {
-      this.address = '******'
-      this.data['会员名称'] = null;
-      this.playData = []
-      data.forEach((value, index, array) => {
-        var classTwoname = value.class_twoname;
-        var tValue = value.t_value;
-        if (tValue && tValue.indexOf('投注:') >= 0) {
-          this.playData.push(classTwoname + tValue)
-        } else {
-          this.data[classTwoname] = tValue
-        }
-      });
+      console.info(data)
+      console.info(data.memberId)
       this.open = true
-      this.historyRecharge = ''
-      // this.data = data;
-      this.email = this.data.会员备注;
-      this.totalRechargeOriginal = this.data.充值总的金额;
-      this.totalRecharge = this.data.充值总的金额;
+
+    },
+
+    initData(){
+       let userId = "7700_73768"
+       var date = this.date
+
+       getPersonalReport(userId,date).then((res) => {
+         this.personRecordList = res.data
+         console.info(res.data)
+         // this.$refs.tableShow.show(res.data);
+       })
     }
+
   },
   /*组件的初始化方法*/
   created() {
-
+   this.initData()
   },
   /*组件的销毁方法*/
   destroyed() {
   },
+}
+
+function initData(){
+
 }
 
 </script>

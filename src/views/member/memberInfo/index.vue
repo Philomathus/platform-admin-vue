@@ -484,7 +484,7 @@ import {
   changeSpeak,
   changeStatus,
   changeStatusBan,
-  listCount, ipBan
+  listCount, ipBan, getPersonalReport
 } from '@/api/platform-web/member/memberInfo'
   import more from './more'
   import {listSpeakIpBlackList, updateSpeakIpBlackList} from '@/api/live-web/chat/speakIpBlackList'
@@ -493,6 +493,7 @@ import {
   import ExcelPrompt from '@/layout/components/prompt/excelPrompt.vue';
   import PersonalRecordTable from "@/views/member/memberInfo/personalRecordTable";
 import {getMemberWithdrawReport} from "@/api/platform-web/pay/memberWithdrawLog";
+
 
   export default {
     name: 'MemberInfo',
@@ -1039,9 +1040,7 @@ import {getMemberWithdrawReport} from "@/api/platform-web/pay/memberWithdrawLog"
       },
 
       personalReport(userId){
-       // userId = "7700_63722";
-        getMemberWithdrawReport(userId).then((res) => {
-          this.fundsData = res.data
+        getPersonalReport(userId).then((res) => {
           this.$refs.tableShow.show(res.data);
         })
       },

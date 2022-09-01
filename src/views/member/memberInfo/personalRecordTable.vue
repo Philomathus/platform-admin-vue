@@ -6,13 +6,12 @@
       <el-form-item label="日期范围" prop="regTime">
         <el-date-picker type="datetimerange" v-model="date.dateRange" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}" start-placeholder="开始时间"
-                        end-placeholder="开始时间"
-                        range-separator="至" clearable :default-time="['00:00:00', '23:59:59']" :picker-options="pickerOptions"
+                        end-placeholder="开始时间" :clearable="false"
+                        range-separator="至" :default-time="['00:00:00', '23:59:59']" :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="initData()">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
@@ -34,7 +33,7 @@
         <th>合计充值</th>
         <td>{{this.totalRechargeCount}}</td>
         <th class="bold">打码量</th>
-        <td>****</td>
+        <td>{{ this.aBet }}</td>
       </tr>
       <tr>
         <td class="bold">送礼</td>
@@ -46,22 +45,14 @@
         <td colspan="8"></td>
       </tr>
       <tr>
-        <td></td>
-        <th class="bold">投注游戏</th>
+        <th class="bold" colspan="2">投注游戏</th>
         <th class="bold">有效投注</th>
         <th class="bold">盈亏</th>
       </tr>
-      <tr>
-        <td></td>
-        <td class="bold">彩票</td>
-        <td>****</td>
-        <td>****</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td class="bold">开元</td>
-        <td>****</td>
-        <td>****</td>
+      <tr v-for="bcList in bCodeList">
+        <td class="bold" colspan="2">{{bcList.platformName}}</td>
+        <td>{{bcList.cellScore}}</td>
+        <td>{{bcList.profit}}</td>
       </tr>
 
     </table>
@@ -90,23 +81,28 @@ export default {
   data() {
     return {
       open: false,
+      memberId: '',
       data: {},
       showSearch: true,
       personRecordList : [],
+      bCodeList : [],
 
       /** recharge data */
       onlineRecharge : 0,
       totalRechargeCount : 0,
       income : 0,
+      aBet : 0,
 
       queryParams:{},
+
       date:{
         dateRange: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())]
       },
+
       pickerOptions: {shortcuts: pickerDateTimeShortcuts},
+
     }
   },
-
 
   methods: {
     showPersonReport(data) {
@@ -122,36 +118,33 @@ export default {
 
         this.data = data;
         this.open = true
+        this.bCodeList = this.data.bcodeList;
+
+        this.aBet = 0;
+        this.bCodeList.forEach((aBet)=>{
+          this.aBet += aBet.allBet;
+        })
       },
 
-
     initData(){
-       let userId = "7700_73768"
        var date = this.date
-
-       getPersonalReport(userId).then((res) => {
-         this.personRecordList = res.data
-         console.info(this.personRecordList)
-         // this.$refs.tableShow.show(res.data);
+        if(!date.dateRange){
+          this.msgError("搜索时间不允许为空");
+          return
+        }
+       getPersonalReport(this.memberId,date).then((res) => {
+         this.showPersonReport(res.data);
        })
     },
 
-    resetQuery(){}
+    show(memberId){
+      this.memberId = memberId;
+      this.open = true;
+      this.initData();
+    }
 
-  },
-  /*组件的初始化方法*/
-  created() {
-    this.initData();
-  },
-  /*组件的销毁方法*/
-  destroyed() {
   },
 }
-
-function initData(){
-
-}
-
 </script>
 
 <style scoped>

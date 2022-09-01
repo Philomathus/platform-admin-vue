@@ -20,27 +20,27 @@
 
       <tr>
         <th class="bold">会员ID</th>
-        <td>{{ data.会员编号 }}</td>
+        <td>{{data.memberId}}</td>
         <th class="bold">提款</th>
-        <td>{{ data.会员注册时间 }}</td>
+        <td>{{data.personalWithdrawRecharge}}</td>
       </tr>
       <tr>
         <th class="bold">线上充值</th>
-        <td>{{ data.登陆IP }}</td>
+        <td>{{this.onlineRecharge}}</td>
         <th class="bold">线下充值</th>
-        <td>****</td>
+        <td>{{data.personalRecharge}}</td>
       </tr>
       <tr>
         <th>合计充值</th>
-        <td>****</td>
+        <td>{{this.totalRechargeCount}}</td>
         <th class="bold">打码量</th>
         <td>****</td>
       </tr>
       <tr>
         <td class="bold">送礼</td>
-        <td>****</td>
+        <td>{{data.personalLiverVideoProp}}</td>
         <td class="bold">盈亏</td>
-        <td>****</td>
+        <td>{{this.income}}</td>
       </tr>
       <tr>
         <td colspan="8"></td>
@@ -71,12 +71,11 @@
     </el-button>
 
 
-
   </el-dialog>
 </template>
-member
 <script>
 import {getPersonalReport} from "@/api/platform-web/member/memberInfo";
+import {pickerDateTimeShortcuts} from "@/utils/dateUtils";
 
 export default {
   name: "PersonalRecordTable",
@@ -91,43 +90,58 @@ export default {
   data() {
     return {
       open: false,
-      address: '******',
-      historyRecharge: "",
-      totalRecharge: "",
       data: {},
-      playData: [],
-      email: '',
       showSearch: true,
       personRecordList : [],
+
+      /** recharge data */
+      onlineRecharge : 0,
+      totalRechargeCount : 0,
+      income : 0,
+
+      queryParams:{},
       date:{
         dateRange: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())]
       },
+      pickerOptions: {shortcuts: pickerDateTimeShortcuts},
     }
   },
-  /*method*/
+
+
   methods: {
     showPersonReport(data) {
-      console.info(data)
-      console.info(data.memberId)
-      this.open = true
 
-    },
+      /** 线上充值 = personalOnlineRecharge + personalAgentRecharge + personalUsdtRecharge */
+        this.onlineRecharge = data.personalOnlineRecharge + data.personalAgentRecharge + data.personalUsdtRecharge ;
+
+      /** 合计充值 = 线上充值+线下充值*/
+         this.totalRechargeCount = this.onlineRecharge + data.personalRecharge;
+
+      /**  盈亏 = 提款 - 合计充值*/
+         this.income = data.personalWithdrawRecharge - this.totalRechargeCount;
+
+        this.data = data;
+        this.open = true
+      },
+
 
     initData(){
        let userId = "7700_73768"
        var date = this.date
 
-       getPersonalReport(userId,date).then((res) => {
+       getPersonalReport(userId).then((res) => {
          this.personRecordList = res.data
-         console.info(res.data)
+         console.info(this.personRecordList)
          // this.$refs.tableShow.show(res.data);
        })
-    }
+    },
+
+    resetQuery(){}
 
   },
   /*组件的初始化方法*/
   created() {
-   this.initData()
+    this.initData();
   },
   /*组件的销毁方法*/
   destroyed() {

@@ -268,7 +268,7 @@ export function ipBan(query) {
   })
 }
 
-// 查询会员提现报告信息详细
+// personal Report data
 export function getPersonalReport(id, date) {
   return request({
     url: url.platformWeb + '/member/memberInfo/personal-report/'+id,

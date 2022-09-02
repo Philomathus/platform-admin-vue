@@ -1,6 +1,6 @@
 <template>
 <!-- Personal Record popup page -->
-  <el-dialog :close-on-click-modal="false" title="个人报表" :visible.sync="open" width="1000px" append-to-body>
+  <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="1000px" append-to-body>
 
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" style="margin-top: 20px">
       <el-form-item label="日期范围" prop="regTime">
@@ -30,7 +30,7 @@
         <td>{{data.personalRecharge}}</td>
       </tr>
       <tr>
-        <th>合计充值</th>
+        <th class="bold">合计充值</th>
         <td>{{this.totalRechargeCount}}</td>
         <th class="bold">打码量</th>
         <td>{{ this.aBet }}</td>
@@ -93,6 +93,7 @@ export default {
       showSearch: true,
       personRecordList : [],
       bCodeList : [],
+      title : '',
 
       /** recharge data */
       onlineRecharge : 0,
@@ -147,9 +148,11 @@ export default {
     },
 
     /** getting show(id) method from memberInfo */
-    show(memberId){
+    show(memberId,title){
       this.memberId = memberId;
       this.open = true;
+      this.title = title;
+      console.log(this.title)
       this.initData();
     }
    /** Personal report end here 个人报告到此结束*/

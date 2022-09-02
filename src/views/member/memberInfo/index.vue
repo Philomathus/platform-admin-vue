@@ -1039,6 +1039,7 @@ import {getMemberWithdrawReport} from "@/api/platform-web/pay/memberWithdrawLog"
         })
       },
 
+    /** click  on ID TO Display show personalRecordTable - personalReport method*/
       personalReport(userId){
           this.$refs.tableShow.show(userId);
       },

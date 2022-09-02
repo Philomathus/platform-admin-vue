@@ -1041,7 +1041,10 @@ import {getMemberWithdrawReport} from "@/api/platform-web/pay/memberWithdrawLog"
 
     /** click  on ID TO Display show personalRecordTable - personalReport method*/
       personalReport(userId){
-          this.$refs.tableShow.show(userId);
+          getMemberInfo(userId).then(res=>{
+            this.title = res.data.nickName + " - 个人报表";
+            this.$refs.tableShow.show(userId,this.title);
+          });
       },
 
 

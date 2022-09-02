@@ -50,7 +50,7 @@
         <th class="bold">盈亏</th>
       </tr>
       <tr v-for="bcList in bCodeList">
-        <td class="bold" colspan="2">{{bcList.platformName}}</td>
+        <td colspan="2">{{bcList.platformName}}</td>
         <td>{{bcList.cellScore}}</td>
         <td>{{bcList.profit}}</td>
       </tr>
@@ -82,7 +82,14 @@ export default {
     return {
       open: false,
       memberId: '',
-      data: {},
+      data: {
+        personalOnlineRecharge : 0,
+        personalAgentRecharge : 0,
+        personalUsdtRecharge : 0,
+        personalWithdrawRecharge:0,
+        personalRecharge:0,
+        personalLiverVideoProp:0,
+      },
       showSearch: true,
       personRecordList : [],
       bCodeList : [],
@@ -105,20 +112,22 @@ export default {
   },
 
   methods: {
+
+    /** personal report start here 个人报告从这里开始 */
     showPersonReport(data) {
 
       /** 线上充值 = personalOnlineRecharge + personalAgentRecharge + personalUsdtRecharge */
         this.onlineRecharge = data.personalOnlineRecharge + data.personalAgentRecharge + data.personalUsdtRecharge ;
 
-      /** 合计充值 = 线上充值+线下充值*/
+      /** 合计充值 = 线上充值+线下充值 this.onlineRecharge + data.personalRecharge */
          this.totalRechargeCount = this.onlineRecharge + data.personalRecharge;
 
-      /**  盈亏 = 提款 - 合计充值*/
+      /**  盈亏 = 提款 - 合计充值 income  =  data.personalWithdrawRecharge - this.totalRechargeCount*/
          this.income = data.personalWithdrawRecharge - this.totalRechargeCount;
 
         this.data = data;
         this.open = true
-        this.bCodeList = this.data.bcodeList;
+        this.bCodeList = this.data.bCodeList;
 
         this.aBet = 0;
         this.bCodeList.forEach((aBet)=>{
@@ -137,11 +146,13 @@ export default {
        })
     },
 
+    /** getting show(id) method from memberInfo */
     show(memberId){
       this.memberId = memberId;
       this.open = true;
       this.initData();
     }
+   /** Personal report end here 个人报告到此结束*/
 
   },
 }

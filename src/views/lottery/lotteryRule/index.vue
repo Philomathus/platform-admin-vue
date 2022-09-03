@@ -72,17 +72,12 @@
 
     <el-table stripe v-loading="loading" :data="lotteryRuleList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="所属彩种类型" align="center" prop="kind">
-        <template v-slot="{row}">
-          <span v-for="dict in kindOptions" :key="dict.dictValue" v-show="dict.dictValue === row.kind"
-                :style="{color: dict.color}">{{ dict.dictLabel }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="彩票类型名称" align="center" prop="name"/>
-      <el-table-column label="开奖说明" align="center" min-width="950px" prop="des"/>
-      <el-table-column label="排序号" align="center" prop="ind"/>
-      <el-table-column label="操作" align="center" min-width="100px" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+      <el-table-column label="所属彩种类型" align="center" prop="kind" width="120px" :formatter="formatterKind"/>
+      <el-table-column label="彩票类型名称" align="center" prop="name" width="120px"/>
+      <el-table-column label="开奖说明" align="center" prop="des"/>
+      <el-table-column label="排序号" align="center" prop="ind" width="80px"/>
+      <el-table-column label="操作" align="center" width="120px" class-name="small-padding fixed-width">
+        <template v-scope="scope">
           <el-button
             size="mini"
             type="text"
@@ -163,23 +158,6 @@ export default {
       //所属彩种字典
       kindOptions: [],
       kind: [],
-      //所属彩种类型下拉框
-      // kind: [{
-      //   value: '0',
-      //   label: '时时彩'
-      // }, {
-      //   value: '1',
-      //   label: '11选5'
-      // }, {
-      //   value: '2',
-      //   label: '快三'
-      // }, {
-      //   value: '3',
-      //   label: '赛车'
-      // }, {
-      //   value: '4',
-      //   label: '六合彩'
-      // }],
       // 遮罩层
       loading: true,
       // 选中数组
@@ -324,6 +302,9 @@ export default {
         (response.msg);
       }).catch(() => {
       })
+    },
+    formatterKind(row) {
+      return this.selectDictLabel(this.kindOptions, row.kind)
     }
   }
 };

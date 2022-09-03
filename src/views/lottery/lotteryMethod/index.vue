@@ -91,6 +91,12 @@ export default {
       }, {
         value: '六合彩',
         label: '六合彩'
+      }, {
+        value: 'baccarat',
+        label: '百家乐'
+      }, {
+        value: '百人牛牛',
+        label: '百人牛牛'
       }],
       // 遮罩层
       loading: true,

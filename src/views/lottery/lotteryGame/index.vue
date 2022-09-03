@@ -11,13 +11,14 @@
         />
       </el-form-item>
       <el-form-item label="类型" prop="type">
-        <el-input
-          v-model="queryParams.type"
-          placeholder="请输入类型"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-select v-model="queryParams.type" placeholder="请选择所属彩种类型" clearable size="small">
+          <el-option
+            v-for="item in lotteryType"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="简介" prop="info">
         <el-input
@@ -132,7 +133,29 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {}
+      rules: {},
+      lotteryType: [{
+        value: '时时彩',
+        label: '时时彩'
+      }, {
+        value: '11选5',
+        label: '11选5'
+      }, {
+        value: '快三',
+        label: '快三'
+      }, {
+        value: '赛车',
+        label: '赛车'
+      }, {
+        value: '六合彩',
+        label: '六合彩'
+      }, {
+        value: 'baccarat',
+        label: '百家乐'
+      }, {
+        value: '百人牛牛',
+        label: '百人牛牛'
+      }],
     };
   },
 /*  created() {

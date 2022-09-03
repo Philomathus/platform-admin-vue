@@ -32,7 +32,8 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['admin:lotteryRule:add']">新增</el-button>
+          v-hasPermi="['admin:lotteryRule:add']">新增
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -42,7 +43,8 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['admin:lotteryRule:edit']">修改</el-button>
+          v-hasPermi="['admin:lotteryRule:edit']">修改
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -52,7 +54,8 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['admin:lotteryRule:remove']">删除</el-button>
+          v-hasPermi="['admin:lotteryRule:remove']">删除
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -61,17 +64,23 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['admin:lotteryRule:export']">导出</el-button>
+          v-hasPermi="['admin:lotteryRule:export']">导出
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="lotteryRuleList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="所属彩种类型" align="center" prop="kind" :formatter="formatterKind"/>
-      <el-table-column label="彩票类型名称" align="center" prop="name" />
-      <el-table-column label="开奖说明" align="center" min-width="950px" prop="des" />
-      <el-table-column label="排序号" align="center" prop="ind" />
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="所属彩种类型" align="center" prop="kind">
+        <template v-scope="scope">
+          <span v-for="dict in kindOptions" :key="dict.dictValue" v-show="dict.dictValue === scope.row.kind"
+                :style="{color: dict.color}">{{ dict.dictLabel }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="彩票类型名称" align="center" prop="name"/>
+      <el-table-column label="开奖说明" align="center" min-width="950px" prop="des"/>
+      <el-table-column label="排序号" align="center" prop="ind"/>
       <el-table-column label="操作" align="center" min-width="100px" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -79,13 +88,15 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['admin:lotteryRule:edit']">修改</el-button>
+            v-hasPermi="['admin:lotteryRule:edit']">修改
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['admin:lotteryRule:remove']">删除</el-button>
+            v-hasPermi="['admin:lotteryRule:remove']">删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -98,7 +109,8 @@
       @pagination="getList"/>
 
     <!-- 添加或修改开奖规则说明对话框 Add or modify lottery rules description dialog-->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="550px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="550px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="所属彩种类型" prop="kind" v-if="form.id == null">
           <el-select
@@ -116,10 +128,10 @@
           </el-select>
         </el-form-item>
         <el-form-item label="彩票类型名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入彩票类型名称" />
+          <el-input v-model="form.name" placeholder="请输入彩票类型名称"/>
         </el-form-item>
         <el-form-item label="排序号" prop="ind">
-          <el-input v-model="form.ind" placeholder="请输入排序号" />
+          <el-input v-model="form.ind" placeholder="请输入排序号"/>
         </el-form-item>
         <el-form-item label="开奖说明" prop="des">
           <el-input v-model="form.des" type="textarea" placeholder="请输入开奖说明"/>
@@ -134,12 +146,18 @@
 </template>
 
 <script>
-import { listLotteryRule, getLotteryRule, delLotteryRule, addLotteryRule, updateLotteryRule, exportLotteryRule } from "@/api/platform-web/lottery/lotteryRule";
+import {
+  listLotteryRule,
+  getLotteryRule,
+  delLotteryRule,
+  addLotteryRule,
+  updateLotteryRule,
+  exportLotteryRule
+} from "@/api/platform-web/lottery/lotteryRule";
 
 export default {
   name: "LotteryRule",
-  components: {
-  },
+  components: {},
   data() {
     return {
       //所属彩种字典
@@ -192,8 +210,7 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {
-      }
+      rules: {}
     };
   },
   created() {
@@ -211,22 +228,6 @@ export default {
         this.total = response.total;
         this.loading = false;
       });
-    },
-    // 0=时时彩,1=11选5,2=快三3=赛车4=六合彩
-    formatterKind(row) {
-      if (row.kind == 0) {
-        return '时时彩'
-      } else if (row.kind == 1) {
-        return '11选5'
-      } else if (row.kind == 2) {
-        return '快三'
-      } else if (row.kind == 3) {
-        return '赛车'
-      } else if (row.kind == 4) {
-        return '六合彩'
-      } else {
-        return ''
-      }
     },
     // 取消按钮
     cancel() {
@@ -255,7 +256,7 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
@@ -270,7 +271,7 @@ export default {
       const id = row.id || this.ids
       getLotteryRule(id).then(response => {
         this.form = response.data;
-        this.form.kind = this.form.kind +''
+        this.form.kind = this.form.kind + ''
         this.open = true;
         this.title = "修改开奖规则说明";
       });
@@ -302,13 +303,13 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
-      }).then(function() {
+      }).then(function () {
         return delLotteryRule(ids);
       }).then(() => {
         this.getList();
         this.msgSuccess("删除成功");
       }).catch(() => {
-	  })
+      })
     },
     /** 导出按钮操作 */
     handleExport() {
@@ -317,7 +318,7 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
-      }).then(function() {
+      }).then(function () {
         return exportLotteryRule(queryParams);
       }).then(response => {
         (response.msg);

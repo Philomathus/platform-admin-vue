@@ -11,15 +11,6 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <!--      <el-form-item label="排序键" prop="order">-->
-      <!--        <el-input-->
-      <!--          v-model="queryParams.order"-->
-      <!--          placeholder="请输入排序键"-->
-      <!--          clearable-->
-      <!--          size="small"-->
-      <!--          @keyup.enter.native="handleQuery"-->
-      <!--        />-->
-      <!--      </el-form-item>-->
       <el-form-item label="投注名称" prop="name">
         <el-input
           v-model="queryParams.name"
@@ -29,27 +20,17 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <!--      <el-form-item label="排序键" prop="ind">-->
-      <!--        <el-input-->
-      <!--          v-model="queryParams.ind"-->
-      <!--          placeholder="请输入排序键"-->
-      <!--          clearable-->
-      <!--          size="small"-->
-      <!--          @keyup.enter.native="handleQuery"-->
-      <!--        />-->
-      <!--      </el-form-item>-->
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
-
-
     <el-table stripe v-loading="loading" :data="lotteryMethodList">
       <el-table-column label="所属彩种类型" align="center" prop="lotteryType"/>
       <el-table-column label="投注名称" align="center" prop="name">
         <template v-slot="{row}">
-          <a @click="$router.push({path: '/lottery/lotteryGame',query: { type: row.name}})" style="color: #00afff"> {{ row.name }}</a>
+          <a @click="$router.push({path: '/lottery/lotteryGame',query: { type: row.name}})" style="color: #00afff">
+            {{ row.name }}</a>
         </template>
       </el-table-column>
       <el-table-column label="ind" align="center" prop="ind"/>
@@ -137,13 +118,13 @@ export default {
       }
     };
   },
-/*  created() {
-    this.getList();
-  },*/
+  /*  created() {
+      this.getList();
+    },*/
   activated() {
-    var lotteryType = this.$route.query.lotteryType;
+    const lotteryType = this.$route.query.lotteryType;
     if (lotteryType) {
-      this.queryParams.lotteryType=lotteryType
+      this.queryParams.lotteryType = lotteryType
     }
     this.getList();
   },

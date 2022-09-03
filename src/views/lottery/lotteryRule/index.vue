@@ -73,8 +73,8 @@
     <el-table stripe v-loading="loading" :data="lotteryRuleList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="所属彩种类型" align="center" prop="kind">
-        <template v-scope="scope">
-          <span v-for="dict in kindOptions" :key="dict.dictValue" v-show="dict.dictValue === scope.row.kind"
+        <template v-slot="{row}">
+          <span v-for="dict in kindOptions" :key="dict.dictValue" v-show="dict.dictValue === row.kind"
                 :style="{color: dict.color}">{{ dict.dictLabel }}</span>
         </template>
       </el-table-column>

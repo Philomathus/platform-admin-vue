@@ -190,7 +190,7 @@
 import { listLive, getLive, delLive, addLive, updateLive, effectLive } from '@/api/platform-web/server/live'
 
 export default {
-  name: 'Live',
+  name: 'serverLive',
   components: {},
   data() {
     return {

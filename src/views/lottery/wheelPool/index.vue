@@ -3,12 +3,12 @@
 
     <!--数据列表表 wheel pool data list table-->
     <el-table stripe v-loading="loading" :data="wheelPoolList" class="el-table--border">
-      <el-table-column label="主键" align="center" prop="id" />
-      <el-table-column label="名称" align="center" prop="name" />
-      <el-table-column label="每秒增加奖池金额" align="center" prop="secMoney" />
-      <el-table-column label="上限金额" align="center" prop="limitMoney" />
-      <el-table-column label="中奖比例" align="center" prop="weight" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="主键" align="center" prop="id"  min-width="120"/>
+      <el-table-column label="名称" align="center" prop="name"  min-width="120"/>
+      <el-table-column label="每秒增加奖池金额" align="center" prop="secMoney"  min-width="120"/>
+      <el-table-column label="上限金额" align="center" prop="limitMoney"  min-width="120"/>
+      <el-table-column label="中奖比例" align="center" prop="weight"  min-width="120"/>
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right" min-width="120">
         <template slot-scope="scope">
           <el-button
             size="mini"

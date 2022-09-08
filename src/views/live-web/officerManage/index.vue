@@ -68,7 +68,7 @@
       <el-table-column label="用户ID" align="center" prop="puserId"  min-width="150"/>
       <el-table-column label="用户昵称" align="center" prop="puserName" min-width="120"/>
       <el-table-column label="创建时间" align="center" prop="ctime" min-width="170"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width"  min-width="120">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right"  min-width="120">
         <template slot-scope="scope">
           <el-button
             style="color: #dc5252"

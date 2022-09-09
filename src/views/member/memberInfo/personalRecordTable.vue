@@ -52,7 +52,7 @@
       <tr v-for="bcList in bCodeList">
         <td colspan="2">{{bcList.platformName}}</td>
         <td>{{bcList.cellScore}}</td>
-        <td>{{bcList.profit}}</td>
+        <td>{{bcList.profit.toFixed(2)}}</td>
       </tr>
 
     </table>
@@ -124,7 +124,14 @@ export default {
          this.totalRechargeCount = this.onlineRecharge + data.personalRecharge;
 
       /**  盈亏 = 提款 - 合计充值 income  =  data.personalWithdrawRecharge - this.totalRechargeCount*/
-         this.income = data.personalWithdrawRecharge - this.totalRechargeCount;
+
+        function ParseFloat(str,val) {
+          str = str.toString();
+          str = str.slice(0, (str.indexOf(".")) + val + 1);
+          return Number(str);
+        }
+        this.income = ParseFloat(data.personalWithdrawRecharge - this.totalRechargeCount).toFixed(2);
+
 
         this.data = data;
         this.open = true
@@ -134,6 +141,8 @@ export default {
         this.bCodeList.forEach((aBet)=>{
           this.aBet += aBet.allBet;
         })
+
+
       },
 
     initData(){

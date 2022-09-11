@@ -1,5 +1,5 @@
 <template>
-<!-- Personal Record popup page -->
+  <!-- Personal Record popup page -->
   <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="1000px" append-to-body>
 
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" style="margin-top: 20px">
@@ -19,27 +19,27 @@
 
       <tr>
         <th class="bold">会员ID</th>
-        <td>{{data.memberId}}</td>
+        <td>{{ data.memberId }}</td>
         <th class="bold">提款</th>
-        <td>{{data.personalWithdrawRecharge}}</td>
+        <td>{{ data.personalWithdrawRecharge }}</td>
       </tr>
       <tr>
         <th class="bold">线上充值</th>
-        <td>{{this.onlineRecharge}}</td>
+        <td>{{ this.onlineRecharge }}</td>
         <th class="bold">线下充值</th>
-        <td>{{data.personalRecharge}}</td>
+        <td>{{ data.personalRecharge }}</td>
       </tr>
       <tr>
         <th class="bold">合计充值</th>
-        <td>{{this.totalRechargeCount}}</td>
+        <td>{{ this.totalRechargeCount }}</td>
         <th class="bold">打码量</th>
         <td>{{ this.aBet }}</td>
       </tr>
       <tr>
         <td class="bold">送礼</td>
-        <td>{{data.personalLiverVideoProp}}</td>
+        <td>{{ data.personalLiverVideoProp }}</td>
         <td class="bold">盈亏</td>
-        <td>{{this.income}}</td>
+        <td>{{ this.income }}</td>
       </tr>
       <tr>
         <td colspan="8"></td>
@@ -50,14 +50,14 @@
         <th class="bold">盈亏</th>
       </tr>
       <tr v-for="bcList in bCodeList">
-        <td colspan="2">{{bcList.platformName}}</td>
-        <td>{{bcList.cellScore}}</td>
-        <td>{{bcList.profit.toFixed(2)}}</td>
+        <td colspan="2">{{ bcList.platformName }}</td>
+        <td>{{ bcList.cellScore }}</td>
+        <td>{{ bcList.profit.toFixed(2) }}</td>
       </tr>
 
     </table>
 
-    <el-button type="primary" plain @click="open=false"  style="float: right;margin-top: -20px">
+    <el-button type="primary" plain @click="open=false" style="float: right;margin-top: -20px">
       关闭
     </el-button>
 
@@ -83,27 +83,27 @@ export default {
       open: false,
       memberId: '',
       data: {
-        personalOnlineRecharge : 0,
-        personalAgentRecharge : 0,
-        personalUsdtRecharge : 0,
-        personalWithdrawRecharge:0,
-        personalRecharge:0,
-        personalLiverVideoProp:0,
+        personalOnlineRecharge: 0,
+        personalAgentRecharge: 0,
+        personalUsdtRecharge: 0,
+        personalWithdrawRecharge: 0,
+        personalRecharge: 0,
+        personalLiverVideoProp: 0,
       },
       showSearch: true,
-      personRecordList : [],
-      bCodeList : [],
-      title : '',
+      personRecordList: [],
+      bCodeList: [],
+      title: '',
 
       /** recharge data */
-      onlineRecharge : 0,
-      totalRechargeCount : 0,
-      income : 0,
-      aBet : 0,
+      onlineRecharge: 0,
+      totalRechargeCount: 0,
+      income: 0,
+      aBet: 0,
 
-      queryParams:{},
+      queryParams: {},
 
-      date:{
+      date: {
         dateRange: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())]
       },
 
@@ -118,53 +118,49 @@ export default {
     showPersonReport(data) {
 
       /** 线上充值 = personalOnlineRecharge + personalAgentRecharge + personalUsdtRecharge */
-        this.onlineRecharge = data.personalOnlineRecharge + data.personalAgentRecharge + data.personalUsdtRecharge ;
+      this.onlineRecharge = data.personalOnlineRecharge + data.personalAgentRecharge + data.personalUsdtRecharge;
 
       /** 合计充值 = 线上充值+线下充值 this.onlineRecharge + data.personalRecharge */
-         this.totalRechargeCount = this.onlineRecharge + data.personalRecharge;
+      this.totalRechargeCount = this.onlineRecharge + data.personalRecharge;
 
       /**  盈亏 = 提款 - 合计充值 income  =  data.personalWithdrawRecharge - this.totalRechargeCount*/
 
-        function ParseFloat(str,val) {
-          str = str.toString();
-          str = str.slice(0, (str.indexOf(".")) + val + 1);
-          return Number(str);
-        }
-        this.income = ParseFloat(data.personalWithdrawRecharge - this.totalRechargeCount).toFixed(2);
+      this.income = (data.personalWithdrawRecharge - this.totalRechargeCount).toFixed(2);
+
+      console.info(this.income)
 
 
-        this.data = data;
-        this.open = true
-        this.bCodeList = this.data.bCodeList;
+      this.data = data;
+      this.open = true
+      this.bCodeList = this.data.bCodeList;
 
-        this.aBet = 0;
-        this.bCodeList.forEach((aBet)=>{
-          this.aBet += aBet.allBet;
-        })
+      this.aBet = 0;
+      this.bCodeList.forEach((aBet) => {
+        this.aBet += aBet.allBet;
+      })
 
 
-      },
+    },
 
-    initData(){
-       var date = this.date
-        if(!date.dateRange){
-          this.msgError("搜索时间不允许为空");
-          return
-        }
-       getPersonalReport(this.memberId,date).then((res) => {
-         this.showPersonReport(res.data);
-       })
+    initData() {
+      var date = this.date
+      if (!date.dateRange) {
+        this.msgError("搜索时间不允许为空");
+        return
+      }
+      getPersonalReport(this.memberId, date).then((res) => {
+        this.showPersonReport(res.data);
+      })
     },
 
     /** getting show(id) method from memberInfo */
-    show(memberId,title){
+    show(memberId, title) {
       this.memberId = memberId;
       this.open = true;
       this.title = title;
-      console.log(this.title)
       this.initData();
     }
-   /** Personal report end here 个人报告到此结束*/
+    /** Personal report end here 个人报告到此结束*/
 
   },
 }
@@ -177,12 +173,12 @@ table, th, td {
   border-collapse: collapse;
 }
 
-td{
+td {
   height: 40px;
   text-align: center;
 }
 
-.bold{
+.bold {
   font-weight: bold;
 }
 

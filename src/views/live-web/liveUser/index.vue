@@ -1,22 +1,24 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+
+      <el-form-item label="主播ID" prop="id">
+        <el-input
+          v-model="queryParams.userIds"
+          placeholder="主播ID,批量搜索请用英文逗号隔开"
+          clearable
+          size="small"
+          type="textarea"
+          class="no-number"
+          oninput="this.value=this.value.replace(/[^\d,]/g,'')" />
+      </el-form-item>
+
       <el-form-item label="注册日期" prop="selectDate">
         <el-date-picker type="daterange" v-model="selectDate" format="yyyy-MM-dd"
                         value-format="yyyy-MM-dd" :style="{width: '240px'}" start-placeholder="开始日期"
                         end-placeholder="结束日期"
                         range-separator="至" clearable :picker-options="pickerOptions">
         </el-date-picker>
-      </el-form-item>
-      <el-form-item prop="id" class="col-w150">
-        <el-input
-          v-model="queryParams.id"
-          placeholder="主播ID"
-          clearable
-          size="small"
-          type="number"
-          class="no-number"
-          @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item prop="nickName" class="col-w150">
         <el-input
@@ -34,6 +36,8 @@
           size="small"
           @keyup.enter.native="handleQuery"/>
       </el-form-item>
+
+
       <el-form-item prop="isBan" class="col-w150">
         <el-select v-model="queryParams.isBan" placeholder="是否禁播" clearable>
           <el-option label="正常" value="0"></el-option>
@@ -99,7 +103,8 @@
     </el-row>
 
 <!-- liveUser显示数据表部分从这里开始 liveUser display data table section start from here-->
-    <el-table stripe v-loading="loading" :data="liveUserList">
+    <el-table stripe v-loading="loading" :data="liveUserList"  @selection-change="handleSelectionChange">
+      <el-table-column type="selection" width="55" align="center" min-width="100"/>
       <el-table-column label="主播ID" min-width="120" align="center" prop="id"/>
       <el-table-column label="主播昵称" min-width="140" :show-overflow-tooltip="true" align="center" prop="nickName"/>
       <el-table-column label="主播名片" min-width="100" align="center" prop="weixinAccount"/>
@@ -455,7 +460,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 20,
-        id: null,
+        userIds: null,
         nickName: null,
         isAuthentication: null,
         isBan: null,
@@ -562,6 +567,14 @@ export default {
         this.$notify.error('修改禁播状态失败')
       })
     },
+
+    /** select more than one rows */
+    handleSelectionChange(selection) {
+      this.ids = selection.map(item => item.id)
+      this.single = selection.length !== 1
+      this.multiple = !selection.length
+    },
+
     /** 查询主播信息列表 */
     getList() {
       this.loading = true

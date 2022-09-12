@@ -3,7 +3,6 @@
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
 
       <div class="el-row">
-
         <div class="el-col-lg-5">
           <el-form-item label="主播ID" prop="id" >
             <el-input
@@ -107,6 +106,15 @@
           size="mini"
           @click="sendRoomMsg"
           v-hasPermi="['admin:liveUser:add']">直播间小助手
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          size="mini"
+          @click="joinFamilyBulk"
+          >批量加入家族
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -812,6 +820,10 @@ export default {
       })
   },
     /** end isAuthentication type change here*/
+
+    joinFamilyBulk(){
+
+    }
 
 }
 }

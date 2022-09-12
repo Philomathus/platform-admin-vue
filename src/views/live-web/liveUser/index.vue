@@ -2,70 +2,80 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
 
-      <el-form-item label="主播ID" prop="id">
-        <el-input
-          v-model="queryParams.userIds"
-          placeholder="主播ID,批量搜索请用英文逗号隔开"
-          clearable
-          size="small"
-          type="textarea"
-          class="no-number"
-          oninput="this.value=this.value.replace(/[^\d,]/g,'')" />
-      </el-form-item>
+      <div class="el-row">
 
-      <el-form-item label="注册日期" prop="selectDate">
-        <el-date-picker type="daterange" v-model="selectDate" format="yyyy-MM-dd"
-                        value-format="yyyy-MM-dd" :style="{width: '240px'}" start-placeholder="开始日期"
-                        end-placeholder="结束日期"
-                        range-separator="至" clearable :picker-options="pickerOptions">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item prop="nickName" class="col-w150">
-        <el-input
-          v-model="queryParams.nickName"
-          placeholder="主播昵称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item prop="mobile" class="col-w150">
-        <el-input
-          v-model="queryParams.mobile"
-          placeholder="手机号"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"/>
-      </el-form-item>
+        <div class="el-col-lg-5">
+          <el-form-item label="主播ID" prop="id" >
+            <el-input
+              rows="4"
+              cols = "30"
+              v-model="queryParams.userIds"
+              placeholder="主播ID,批量搜索请用英文逗号隔开"
+              clearable
+              size="small"
+              type="textarea"
+              class="no-number"
+              id="not-resizable"
+              oninput="this.value=this.value.replace(/[^\d,]/g,'')" />
+          </el-form-item>
+        </div>
 
+        <div class="el-col-lg-18" style="margin-left: 10px">
+          <el-form-item label="注册日期" prop="selectDate">
+            <el-date-picker type="daterange" v-model="selectDate" format="yyyy-MM-dd"
+                            value-format="yyyy-MM-dd" :style="{width: '240px'}" start-placeholder="开始日期"
+                            end-placeholder="结束日期"
+                            range-separator="至" clearable :picker-options="pickerOptions">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="主播昵称" prop="nickName">
+            <el-input
+              v-model="queryParams.nickName"
+              placeholder="主播昵称"
+              clearable
+              size="small"
+              @keyup.enter.native="handleQuery"/>
+          </el-form-item>
+          <el-form-item label="手机号" prop="mobile">
+            <el-input
+              v-model="queryParams.mobile"
+              placeholder="手机号"
+              clearable
+              size="small"
+              @keyup.enter.native="handleQuery"/>
+          </el-form-item>
+        </div>
+        <el-form-item label="是否禁播" prop="isBan" style="margin-left: 10px">
+          <el-select v-model="queryParams.isBan" placeholder="是否禁播" style="width: 240px" clearable>
+            <el-option label="正常" value="0"></el-option>
+            <el-option label="禁播" value="1"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="状态" prop="isAuthentication">
+          <el-select v-model="queryParams.isAuthentication" placeholder="全部状态" clearable>
+            <el-option label="未认证" value="0"></el-option>
+            <el-option label="待审核" value="1"></el-option>
+            <el-option label="已认证" value="2"></el-option>
+            <el-option label="审核不通过" value="3"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="家族ID" prop="mobile">
+          <el-input
+            v-model="queryParams.familyId"
+            placeholder="家族ID"
+            clearable
+            size="small"
+            type="number"
+            class="no-number"
+            @keyup.enter.native="handleQuery"/>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+          <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        </el-form-item>
 
-      <el-form-item prop="isBan" class="col-w150">
-        <el-select v-model="queryParams.isBan" placeholder="是否禁播" clearable>
-          <el-option label="正常" value="0"></el-option>
-          <el-option label="禁播" value="1"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item prop="isAuthentication" class="col-w150">
-        <el-select v-model="queryParams.isAuthentication" placeholder="全部状态" clearable>
-          <el-option label="未认证" value="0"></el-option>
-          <el-option label="待审核" value="1"></el-option>
-          <el-option label="已认证" value="2"></el-option>
-          <el-option label="审核不通过" value="3"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item prop="mobile" class="col-w150">
-        <el-input
-          v-model="queryParams.familyId"
-          placeholder="家族ID"
-          clearable
-          size="small"
-          type="number"
-          class="no-number"
-          @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-      </el-form-item>
+      </div>
+
     </el-form>
 
     <el-row :gutter="10" class="mb8">
@@ -806,3 +816,9 @@ export default {
 }
 }
 </script>
+
+<style>
+  #not-resizable {
+    resize: none;
+  }
+</style>

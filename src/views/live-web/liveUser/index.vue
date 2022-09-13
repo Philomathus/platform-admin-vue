@@ -113,6 +113,7 @@
           type="primary"
           plain
           size="mini"
+          :disabled="multiple"
           @click="joinFamilyBulk"
           >批量加入家族
         </el-button>
@@ -423,7 +424,7 @@ import {
   closeLive,
   kickOutLiveUser,
   listAuth,
-  changeAuth,
+  changeAuth, goFamiily, updateTicket,
 } from '@/api/live-web/liveUser'
 import ImageUpload from '@/components/ImageUpload/index'
 import more from './more'
@@ -821,8 +822,14 @@ export default {
   },
     /** end isAuthentication type change here*/
 
-    joinFamilyBulk(){
 
+    joinFamilyBulk(){
+      this.$prompt('批量加入家族', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /^(\-|\+)?\d+(\.\d+)?$/,
+        inputErrorMessage: '请输入数字类型'
+      })
     }
 
 }

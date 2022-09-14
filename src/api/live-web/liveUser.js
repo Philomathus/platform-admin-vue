@@ -107,11 +107,11 @@ export function getFamiily(query) {
 }
 
 // 加入家族
-export function goFamiily(query) {
+export function goFamiily(data) {
   return request({
     url: url.platformWeb + '/admin/liveUser/gofamiily',
     method: 'put',
-    params: query
+    data: data
   })
 }
 
@@ -217,6 +217,13 @@ export function kickOutLiveUser(id){
   return request({
     url: url.platformWeb + '/admin/liveUser/kickOutLive/' + id,
     method: 'put'
+  })
+}
+export function kickOutFamily(data){
+  return request({
+    url: url.platformWeb + '/admin/liveUser/kickOutLive',
+    method: 'put',
+    data: data
   })
 }
 

@@ -14,8 +14,8 @@
         <span>提现比例</span></button>
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(6,'重置手机号')">
         <span>重置手机号</span></button>
-      <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(4,'加入家族')">
-        <span>加入家族</span></button>
+<!--      <button type="button" class="el-button el-button&#45;&#45;success el-button&#45;&#45;mini is-plain" @click="change(4,'加入家族')">
+        <span>加入家族</span></button>-->
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(7,'银行卡')">
         <span>银行卡</span></button>
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(8,'修改印票')">

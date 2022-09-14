@@ -1,13 +1,12 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-
-      <div class="el-row">
-        <div class="el-col-lg-5">
-          <el-form-item label="主播ID" prop="id" >
+      <el-container>
+        <el-aside width="415px" style="background: white;">
+          <el-form-item label="主播ID" prop="userIds" style="margin-top: 15px">
             <el-input
               rows="4"
-              cols = "30"
+              cols="30"
               v-model="queryParams.userIds"
               placeholder="主播ID,批量搜索请用英文逗号隔开"
               clearable
@@ -15,11 +14,10 @@
               type="textarea"
               class="no-number"
               id="not-resizable"
-              oninput="this.value=this.value.replace(/[^\d,]/g,'')" />
+              oninput="this.value=this.value.replace(/[^\d,]/g,'')"/>
           </el-form-item>
-        </div>
-
-        <div class="el-col-lg-18" style="margin-left: 10px">
+        </el-aside>
+        <el-main>
           <el-form-item label="注册日期" prop="selectDate">
             <el-date-picker type="daterange" v-model="selectDate" format="yyyy-MM-dd"
                             value-format="yyyy-MM-dd" :style="{width: '240px'}" start-placeholder="开始日期"
@@ -27,7 +25,7 @@
                             range-separator="至" clearable :picker-options="pickerOptions">
             </el-date-picker>
           </el-form-item>
-          <el-form-item label="主播昵称" prop="nickName">
+          <el-form-item prop="nickName">
             <el-input
               v-model="queryParams.nickName"
               placeholder="主播昵称"
@@ -35,7 +33,7 @@
               size="small"
               @keyup.enter.native="handleQuery"/>
           </el-form-item>
-          <el-form-item label="手机号" prop="mobile">
+          <el-form-item prop="mobile">
             <el-input
               v-model="queryParams.mobile"
               placeholder="手机号"
@@ -43,38 +41,36 @@
               size="small"
               @keyup.enter.native="handleQuery"/>
           </el-form-item>
-        </div>
-        <el-form-item label="是否禁播" prop="isBan" style="margin-left: 10px">
-          <el-select v-model="queryParams.isBan" placeholder="是否禁播" style="width: 240px" clearable>
-            <el-option label="正常" value="0"></el-option>
-            <el-option label="禁播" value="1"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="状态" prop="isAuthentication">
-          <el-select v-model="queryParams.isAuthentication" placeholder="全部状态" clearable>
-            <el-option label="未认证" value="0"></el-option>
-            <el-option label="待审核" value="1"></el-option>
-            <el-option label="已认证" value="2"></el-option>
-            <el-option label="审核不通过" value="3"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="家族ID" prop="mobile">
-          <el-input
-            v-model="queryParams.familyId"
-            placeholder="家族ID"
-            clearable
-            size="small"
-            type="number"
-            class="no-number"
-            @keyup.enter.native="handleQuery"/>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-          <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-        </el-form-item>
-
-      </div>
-
+          <el-form-item prop="isBan" style="margin-left: 10px">
+            <el-select v-model="queryParams.isBan" placeholder="是否禁播" clearable>
+              <el-option label="正常" value="0"></el-option>
+              <el-option label="禁播" value="1"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item prop="isAuthentication">
+            <el-select v-model="queryParams.isAuthentication" placeholder="全部状态" clearable>
+              <el-option label="未认证" value="0"></el-option>
+              <el-option label="待审核" value="1"></el-option>
+              <el-option label="已认证" value="2"></el-option>
+              <el-option label="审核不通过" value="3"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item prop="mobile">
+            <el-input
+              v-model="queryParams.familyId"
+              placeholder="家族ID"
+              clearable
+              size="small"
+              type="number"
+              class="no-number"
+              @keyup.enter.native="handleQuery"/>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+          </el-form-item>
+        </el-main>
+      </el-container>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
@@ -115,14 +111,24 @@
           size="mini"
           :disabled="multiple"
           @click="joinFamilyBulk"
-          >批量加入家族
+        >批量加入家族
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="danger"
+          plain
+          size="mini"
+          :disabled="multiple"
+          @click="kickOutFamilyBulk"
+        >批量踢出家族
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-<!-- liveUser显示数据表部分从这里开始 liveUser display data table section start from here-->
-    <el-table stripe v-loading="loading" :data="liveUserList"  @selection-change="handleSelectionChange">
+    <!-- liveUser显示数据表部分从这里开始 liveUser display data table section start from here-->
+    <el-table stripe v-loading="loading" :data="liveUserList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" min-width="100"/>
       <el-table-column label="主播ID" min-width="120" align="center" prop="id"/>
       <el-table-column label="主播昵称" min-width="140" :show-overflow-tooltip="true" align="center" prop="nickName"/>
@@ -155,7 +161,7 @@
         </template>
       </el-table-column>
 
-<!--  isAuthentication 选择选项部分从这里开始 isAuthentication select options section start from here -->
+      <!--  isAuthentication 选择选项部分从这里开始 isAuthentication select options section start from here -->
       <el-table-column label="状态" align="center" min-width="130px">
         <template v-slot="{row}">
           <el-select v-model="row.isAuthentication"
@@ -203,7 +209,8 @@
             icon="el-icon-s-check"
             @click="kickOutLive(scope.row)"
             v-hasPermi="['admin:liveUser:edit']"
-            v-show="scope.row.familyId > 0 && (scope.row.familyChieftain === 0 || scope.row.familyChieftain === null)">踢出家族
+            v-show="scope.row.familyId > 0 && (scope.row.familyChieftain === 0 || scope.row.familyChieftain === null)">
+            踢出家族
           </el-button>
           <el-button
             size="small"
@@ -271,19 +278,19 @@
       <el-form ref="form" :model="form" label-width="120px">
 
         <section class="el-row">
-            <div class="el-col-lg-14">
-              <el-form-item label="手机号" prop="mobile">
-                <el-input v-model="form.mobile"/>
-              </el-form-item>
-              <el-form-item label="昵称" prop="nickName">
-                <el-input v-model="form.nickName"/>
-              </el-form-item>
-            </div>
-            <div class="el-col-lg-10">
-              <el-form-item label="用户头像" style="margin-left: -30px">
-                <imageUpload v-model="form.headImage" path="liveVideo"/>
-              </el-form-item>
-            </div>
+          <div class="el-col-lg-14">
+            <el-form-item label="手机号" prop="mobile">
+              <el-input v-model="form.mobile"/>
+            </el-form-item>
+            <el-form-item label="昵称" prop="nickName">
+              <el-input v-model="form.nickName"/>
+            </el-form-item>
+          </div>
+          <div class="el-col-lg-10">
+            <el-form-item label="用户头像" style="margin-left: -30px">
+              <imageUpload v-model="form.headImage" path="liveVideo"/>
+            </el-form-item>
+          </div>
         </section>
 
         <el-form-item label="类型" prop="isAuthentication">
@@ -424,7 +431,7 @@ import {
   closeLive,
   kickOutLiveUser,
   listAuth,
-  changeAuth, goFamiily, updateTicket,
+  changeAuth, goFamiily, updateTicket, kickOutFamily,
 } from '@/api/live-web/liveUser'
 import ImageUpload from '@/components/ImageUpload/index'
 import more from './more'
@@ -656,7 +663,7 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset()
-      const id = row.id || this.ids
+      const id = row.id
       getLiveUser(id).then(response => {
         this.form = response.data
         this.open = true
@@ -788,6 +795,28 @@ export default {
       })
     },
 
+    kickOutFamilyBulk() {
+      this.$confirm('确定批量踢出家族吗?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        kickOutFamily({
+          userIdSet: this.ids
+        }).then(res => {
+          if (res.code === 200) {
+            this.$notify.success(res.msg)
+            this.getList();
+          } else {
+            this.$message.error(res.msg)
+          }
+        }).catch((err) => {
+          this.$notify.error("踢出家族失败")
+        })
+      }).catch(() => {
+      });
+    },
+
     /** 查询彩票名称列表 Query lottery name list*/
     getLotteryList() {
       this.loading = true;
@@ -819,43 +848,40 @@ export default {
       }).finally(() => {
         this.getList()
       })
-  },
+    },
     /** end isAuthentication type change here*/
 
 
-    joinFamilyBulk(){
+    joinFamilyBulk() {
       this.$prompt('批量加入家族', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         inputPattern: /^(\-|\+)?\d+(\.\d+)?$/,
         inputErrorMessage: '请输入数字类型'
       }).then(({value}) => {
-          goFamiily({
-            familyId: value,
-            id: this.userId || this.ids
-          }).then((res) => {
-            if (res.code === 200){
-              this.$message.success('加入家族成功')
-            } else {
-              this.$message.error(res.msg)
-            }
-          }).catch(() => {
-            this.$notify.error('加入家族失败')
-          })
+        goFamiily({
+          familyId: value,
+          userIdSet: this.ids
+        }).then((res) => {
+          if (res.code === 200) {
+            this.$message.success(res.msg)
+            this.getList()
+          } else {
+            this.$message.error(res.msg)
+          }
+        }).catch(() => {
+          this.$notify.error('加入家族失败')
+        })
       }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消输入'
-        });
       });
     }
 
-}
+  }
 }
 </script>
 
 <style>
-  #not-resizable {
-    resize: none;
-  }
+#not-resizable {
+  resize: none;
+}
 </style>

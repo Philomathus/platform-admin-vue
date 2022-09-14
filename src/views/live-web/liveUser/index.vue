@@ -829,7 +829,25 @@ export default {
         cancelButtonText: '取消',
         inputPattern: /^(\-|\+)?\d+(\.\d+)?$/,
         inputErrorMessage: '请输入数字类型'
-      })
+      }).then(({value}) => {
+          goFamiily({
+            familyId: value,
+            id: this.userId || this.ids
+          }).then((res) => {
+            if (res.code === 200){
+              this.$message.success('加入家族成功')
+            } else {
+              this.$message.error(res.msg)
+            }
+          }).catch(() => {
+            this.$notify.error('加入家族失败')
+          })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消输入'
+        });
+      });
     }
 
 }

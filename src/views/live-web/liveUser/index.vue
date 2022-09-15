@@ -129,40 +129,40 @@
 
     <!-- liveUser显示数据表部分从这里开始 liveUser display data table section start from here-->
     <el-table stripe v-loading="loading" :data="liveUserList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" min-width="100"/>
+      <el-table-column type="selection" width="50" align="center"/>
       <el-table-column label="主播ID" min-width="120" align="center" prop="id"/>
       <el-table-column label="主播昵称" min-width="140" :show-overflow-tooltip="true" align="center" prop="nickName"/>
-      <el-table-column label="主播名片" min-width="100" align="center" prop="weixinAccount"/>
-      <el-table-column label="所属家族" min-width="120" align="center" prop="familyName">
-        <template slot-scope="scope">
-          <span v-if="scope.row.familyId === 0">未加入家族</span>
+      <el-table-column label="主播名片" min-width="100" align="center" prop="weixinAccount" :show-overflow-tooltip="true"/>
+      <el-table-column label="所属家族" min-width="100" align="center" prop="familyName" :show-overflow-tooltip="true">
+        <template v-slot="{row}">
+          <span v-if="row.familyId === 0">未加入家族</span>
           <el-popover
             v-else
             placement="top"
-            :title="scope.row.familyName"
+            :title="row.familyName"
             width="200"
             trigger="click">
             <table>
               <tr>
                 <td style="text-align: right">家 族 ID：</td>
-                <td style="text-align: left">{{ scope.row.familyId }}</td>
+                <td style="text-align: left">{{ row.familyId }}</td>
               </tr>
               <tr>
                 <td style="text-align: right">家 族 长 ID：</td>
-                <td style="text-align: left">{{ scope.row.familyUserId }}</td>
+                <td style="text-align: left">{{ row.familyUserId }}</td>
               </tr>
               <tr>
                 <td style="text-align: right">家族长昵称：</td>
-                <td style="text-align: left">{{ scope.row.familyNickName }}</td>
+                <td style="text-align: left">{{ row.familyNickName }}</td>
               </tr>
             </table>
-            <a slot="reference" style="color: #00afff">{{ scope.row.familyName }}</a>
+            <a slot="reference" style="color: #00afff">{{ row.familyName }}</a>
           </el-popover>
         </template>
       </el-table-column>
-
+      <el-table-column label="是否家族长" min-width="150" align="center" prop="familyChieftain" :formatter="fmFamilyChieftain" />
       <!--  isAuthentication 选择选项部分从这里开始 isAuthentication select options section start from here -->
-      <el-table-column label="状态" align="center" min-width="130px">
+      <el-table-column label="状态" align="center" width="135px">
         <template v-slot="{row}">
           <el-select v-model="row.isAuthentication"
                      placeholder="请选择状态" size="small"
@@ -198,18 +198,16 @@
       <el-table-column label="手机号" min-width="100" align="center" prop="mobile"/>
       <el-table-column label="登陆IP" min-width="150" :show-overflow-tooltip="true" align="left" prop="loginIp"/>
       <el-table-column label="禁播原因" min-width="150" align="center" prop="banRemark"/>
-      <el-table-column label="是否家族长" min-width="150" align="center" prop="familyChieftain" v-show="false"/>
-      <el-table-column label="家族ID" min-width="150" align="center" prop="familyId" v-show="false"/>
       <el-table-column label="操作" min-width="200" align="center" class-name="small-padding fixed-width" fixed="right">
-        <template slot-scope="scope">
+        <template v-slot="{row}">
           <el-button
             size="small"
             plain
             type="primary"
             icon="el-icon-s-check"
-            @click="kickOutLive(scope.row)"
+            @click="kickOutLive(row)"
             v-hasPermi="['admin:liveUser:edit']"
-            v-show="scope.row.familyId > 0 && (scope.row.familyChieftain === 0 || scope.row.familyChieftain === null)">
+            v-show="row.familyId > 0 && row.familyChieftain !== 1">
             踢出家族
           </el-button>
           <el-button
@@ -217,9 +215,9 @@
             plain
             type="primary"
             icon="el-icon-s-check"
-            @click="handleAuth(scope.row)"
+            @click="handleAuth(row)"
             v-hasPermi="['admin:liveUser:edit']"
-            v-show="scope.row.isAuthentication === 1">审核
+            v-show="row.isAuthentication === 1">审核
           </el-button>
 
           <!-- click on this button live Launch content dialog-->
@@ -229,11 +227,11 @@
             type="primary"
             icon="el-icon-s-check"
             @click="() => {openLiveStatus = !openLiveStatus
-                           openLiveForm.id = scope.row.id
+                           openLiveForm.id = row.id
                            //查询之前的开播信息
-                            getLiveVideo(scope.row.id);}"
+                            getLiveVideo(row.id);}"
             v-hasPermi="['admin:liveUser:edit']"
-            v-show="scope.row.roboter == 1 && scope.row.liveIn != 1">开播
+            v-show="row.roboter == 1 && row.liveIn != 1">开播
           </el-button>
           <!-- end Launch content dialog button -->
 
@@ -242,16 +240,16 @@
             plain
             type="primary"
             icon="el-icon-s-check"
-            @click="closeLive(scope.row)"
+            @click="closeLive(row)"
             v-hasPermi="['admin:liveUser:edit']"
-            v-show="scope.row.roboter == 1 && scope.row.liveIn == 1">关播
+            v-show="row.roboter == 1 && row.liveIn == 1">关播
           </el-button>
           <el-button
             size="small"
             plain
             type="success"
             icon="el-icon-menu"
-            @click="handleMore(scope.row)">更多
+            @click="handleMore(row)">更多
             <!-- v-hasPermi="['admin:memberInfo:remove']"-->
           </el-button>
         </template>
@@ -874,6 +872,10 @@ export default {
         })
       }).catch(() => {
       });
+    },
+
+    fmFamilyChieftain(row){
+      return row.familyChieftain === 1 ? '是' : '否'
     }
 
   }

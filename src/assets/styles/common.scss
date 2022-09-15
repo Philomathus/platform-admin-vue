@@ -310,6 +310,11 @@
    padding-left: 5px;
  }
 
+ /* not allowed to resize textarea */
+ #not-resizable {
+   resize: none;
+ }
+
 
 
 

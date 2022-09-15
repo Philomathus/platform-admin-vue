@@ -888,9 +888,6 @@ export default {
 </script>
 
 <style>
-#not-resizable {
-  resize: none;
-}
 
 @media only screen and (min-width: 1300px){
   .is-authentication,.phone{

@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
       <el-container>
-        <el-aside width="415px" style="background: white;">
+        <el-aside style="width: auto;background-color: white;margin-left: -40px">
           <el-form-item label="主播ID" prop="userIds" style="margin-top: 15px">
             <el-input
               rows="4"
@@ -17,8 +17,8 @@
               oninput="this.value=this.value.replace(/[^\d,]/g,'')"/>
           </el-form-item>
         </el-aside>
-        <el-main>
-          <el-form-item label="注册日期" prop="selectDate">
+        <el-main style="position: relative">
+          <el-form-item label="注册日期" prop="selectDate" style="margin-left: -20px">
             <el-date-picker type="daterange" v-model="selectDate" format="yyyy-MM-dd"
                             value-format="yyyy-MM-dd" :style="{width: '240px'}" start-placeholder="开始日期"
                             end-placeholder="结束日期"
@@ -33,7 +33,7 @@
               size="small"
               @keyup.enter.native="handleQuery"/>
           </el-form-item>
-          <el-form-item prop="mobile">
+          <el-form-item prop="mobile" class="phone">
             <el-input
               v-model="queryParams.mobile"
               placeholder="手机号"
@@ -41,13 +41,13 @@
               size="small"
               @keyup.enter.native="handleQuery"/>
           </el-form-item>
-          <el-form-item prop="isBan" style="margin-left: 10px">
-            <el-select v-model="queryParams.isBan" placeholder="是否禁播" clearable>
+          <el-form-item prop="isBan" class="is-ban">
+            <el-select v-model="queryParams.isBan" placeholder="是否禁播" class="col-w240" clearable>
               <el-option label="正常" value="0"></el-option>
               <el-option label="禁播" value="1"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item prop="isAuthentication">
+          <el-form-item prop="isAuthentication" class="is-authentication">
             <el-select v-model="queryParams.isAuthentication" placeholder="全部状态" clearable>
               <el-option label="未认证" value="0"></el-option>
               <el-option label="待审核" value="1"></el-option>
@@ -55,7 +55,7 @@
               <el-option label="审核不通过" value="3"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item prop="mobile">
+          <el-form-item prop="mobile" class="mobile">
             <el-input
               v-model="queryParams.familyId"
               placeholder="家族ID"
@@ -65,7 +65,7 @@
               class="no-number"
               @keyup.enter.native="handleQuery"/>
           </el-form-item>
-          <el-form-item>
+          <el-form-item class="handle-btn">
             <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
             <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
           </el-form-item>
@@ -109,6 +109,7 @@
           type="primary"
           plain
           size="mini"
+          class="disabled-btn"
           :disabled="multiple"
           @click="joinFamilyBulk"
         >批量加入家族
@@ -119,6 +120,7 @@
           type="danger"
           plain
           size="mini"
+          class="disabled-btn"
           :disabled="multiple"
           @click="kickOutFamilyBulk"
         >批量踢出家族
@@ -889,4 +891,44 @@ export default {
 #not-resizable {
   resize: none;
 }
+
+@media only screen and (min-width: 1300px){
+  .is-authentication,.phone{
+    margin-left: 47px;
+  }
+}
+
+@media only screen and (min-width: 1400px){
+    .is-ban,.handle-btn{
+      margin-left: 0px;
+    }
+}
+@media only screen and (min-width: 1500px){
+  .is-authentication,.phone{
+    margin-left: 0;
+  }
+  .is-ban,.handle-btn{
+    margin-left: 47px;
+  }
+}
+
+@media only screen and (min-width: 1600px){
+  .is-ban{
+    margin-left: 47px;
+  }
+  .handle-btn{
+    margin-left: 0;
+  }
+}
+
+
+@media only screen and (min-width: 1800px) {
+  .is-authentication,.is-ban{
+    margin-left: 0;
+  }
+  .mobile{
+    margin-left: 47px;
+  }
+}
+
 </style>

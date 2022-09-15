@@ -132,7 +132,8 @@
       <el-table-column type="selection" width="50" align="center"/>
       <el-table-column label="主播ID" min-width="120" align="center" prop="id"/>
       <el-table-column label="主播昵称" min-width="140" :show-overflow-tooltip="true" align="center" prop="nickName"/>
-      <el-table-column label="主播名片" min-width="100" align="center" prop="weixinAccount" :show-overflow-tooltip="true"/>
+      <el-table-column label="主播名片" min-width="100" align="center" prop="weixinAccount"
+                       :show-overflow-tooltip="true"/>
       <el-table-column label="所属家族" min-width="100" align="center" prop="familyName" :show-overflow-tooltip="true">
         <template v-slot="{row}">
           <span v-if="row.familyId === 0">未加入家族</span>
@@ -160,7 +161,8 @@
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column label="是否家族长" min-width="150" align="center" prop="familyChieftain" :formatter="fmFamilyChieftain" />
+      <el-table-column label="是否家族长" min-width="150" align="center" prop="familyChieftain"
+                       :formatter="fmFamilyChieftain"/>
       <!--  isAuthentication 选择选项部分从这里开始 isAuthentication select options section start from here -->
       <el-table-column label="状态" align="center" width="135px">
         <template v-slot="{row}">
@@ -183,21 +185,23 @@
       <el-table-column label="礼物任务" min-width="120" align="center" prop="weiboMoney"/>
       <el-table-column label="彩票抽成" min-width="120" align="center" prop="xpoint"/>
       <el-table-column label="礼物抽成" min-width="120" align="center" prop="ypoint"/>
-      <el-table-column label="是否禁播" min-width="120" align="center" prop="isBan">
+      <el-table-column label="是否禁播" width="80" align="center" prop="isBan">
         <template v-slot="{row}">
-          <el-switch
-            :active-value="0"
-            :inactive-value="1"
-            active-color="#5B7BFA"
-            inactive-color="#dadde5"
-            v-model="row.isBan"
-            @change=displayCheck(row)>
-          </el-switch>
+          <el-tooltip class="item" effect="dark" :content="row.isBan === 0 ? '正常' : '禁播'" placement="top">
+            <el-switch
+              :active-value="0"
+              :inactive-value="1"
+              active-color="#5B7BFA"
+              inactive-color="#dadde5"
+              v-model="row.isBan"
+              @change=displayCheck(row)>
+            </el-switch>
+          </el-tooltip>
         </template>
       </el-table-column>
       <el-table-column label="手机号" min-width="100" align="center" prop="mobile"/>
       <el-table-column label="登陆IP" min-width="150" :show-overflow-tooltip="true" align="left" prop="loginIp"/>
-      <el-table-column label="禁播原因" min-width="150" align="center" prop="banRemark"/>
+      <el-table-column label="禁播原因" min-width="200" align="center" prop="banRemark" :show-overflow-tooltip="true"/>
       <el-table-column label="操作" min-width="200" align="center" class-name="small-padding fixed-width" fixed="right">
         <template v-slot="{row}">
           <el-button
@@ -250,7 +254,6 @@
             type="success"
             icon="el-icon-menu"
             @click="handleMore(row)">更多
-            <!-- v-hasPermi="['admin:memberInfo:remove']"-->
           </el-button>
         </template>
 
@@ -874,7 +877,7 @@ export default {
       });
     },
 
-    fmFamilyChieftain(row){
+    fmFamilyChieftain(row) {
       return row.familyChieftain === 1 ? '是' : '否'
     }
 

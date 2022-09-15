@@ -7,95 +7,108 @@
       <el-button  type="primary" icon="el-icon-search" size="mini" @click="listCount()" style="margin-left: 20px">统计查询</el-button>
     </div>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" style="margin-top: 20px">
-      <el-form-item label="日期范围" prop="regTime">
-        <el-date-picker type="datetimerange" v-model="dateRange" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}" start-placeholder="开始时间"
-                        end-placeholder="开始时间"
-                        range-separator="至" clearable :default-time="['00:00:00', '23:59:59']" :picker-options="pickerOptions"
-        ></el-date-picker>
-      </el-form-item>
-      <el-form-item prop="status" style="width: 110px;">
-        <el-select v-model="queryParams.status" placeholder="全部状态" clearable size="small">
-<!--          <el-option v-for="(item,index) in typeList" :key="index" :label="item.label" :value="item.value"/>-->
-          <el-option
-            v-for="(dict,i) in typeList"
-            :key="i"
-            :label="dict.dictLabel"
-            :value="parseInt(dict.dictValue)"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item prop="searchValue">
-        <el-input
-          v-model.trim="queryParams.searchValue"
-          placeholder="会员ID/账号/手机号"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item prop="inviterCode" style="width: 110px;">
-        <el-input
-          v-model="queryParams.inviterCode"
-          placeholder="邀请码"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item prop="channelcode" style="width: 110px;">
-        <el-select v-model="queryParams.channelcode" placeholder="全部类型" clearable size="small">
-          <el-option
-            v-for="(dict,i) in statusOptions"
-            :key="'A'+ i"
-            :label="dict.dictLabel"
-            :value="dict.dictValue"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item prop="nickName" style="width: 110px;">
-        <el-input
-          v-model="queryParams.nickName"
-          placeholder="昵称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item prop="loginIp" style="width: 110px;">
-        <el-input
-          v-model="queryParams.loginIp"
-          placeholder="登录IP"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item prop="bankAccount" style="width: 155px;">
-        <el-input
-          v-model="queryParams.bankAccount"
-          placeholder="银行卡号/真实姓名"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item prop="email" style="width: 110px;">
-        <el-input
-          v-model="queryParams.email"
-          placeholder="登录备注"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-      </el-form-item>
+      <el-container>
+        <el-aside style="width: auto;background-color: white;">
+          <el-form-item label="搜索成员" prop="searchValue">
+            <el-input
+              v-model.trim="queryParams.searchValue"
+              placeholder="会员ID/账号/手机号 , 逗号分隔的成员搜索"
+              clearable
+              size="small"
+              type="textarea"
+              rows="4"
+              cols="25"
+              id="not-resizable"
+              @keyup.enter.native="handleQuery"
+            />
+          </el-form-item>
+        </el-aside>
+
+        <el-main style="position: relative;margin-left: -20px;margin-top: -20px">
+          <el-form-item label="日期范围" prop="regTime">
+            <el-date-picker type="datetimerange" v-model="dateRange" format="yyyy-MM-dd HH:mm:ss"
+                            value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}" start-placeholder="开始时间"
+                            end-placeholder="开始时间"
+                            range-separator="至" clearable :default-time="['00:00:00', '23:59:59']" :picker-options="pickerOptions"
+            ></el-date-picker>
+          </el-form-item>
+          <el-form-item prop="status" style="width: 110px;margin-left: -40px">
+            <el-select v-model="queryParams.status" placeholder="全部状态" clearable size="small">
+    <!--          <el-option v-for="(item,index) in typeList" :key="index" :label="item.label" :value="item.value"/>-->
+              <el-option
+                v-for="(dict,i) in typeList"
+                :key="i"
+                :label="dict.dictLabel"
+                :value="parseInt(dict.dictValue)"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item prop="inviterCode" style="width: 110px;">
+            <el-input
+              v-model="queryParams.inviterCode"
+              placeholder="邀请码"
+              clearable
+              size="small"
+              @keyup.enter.native="handleQuery"
+            />
+          </el-form-item>
+          <el-form-item prop="channelcode" style="width: 110px;">
+            <el-select v-model="queryParams.channelcode" placeholder="全部类型" clearable size="small">
+              <el-option
+                v-for="(dict,i) in statusOptions"
+                :key="'A'+ i"
+                :label="dict.dictLabel"
+                :value="dict.dictValue"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item prop="nickName" style="width: 110px;">
+            <el-input
+              v-model="queryParams.nickName"
+              placeholder="昵称"
+              clearable
+              size="small"
+              @keyup.enter.native="handleQuery"
+            />
+          </el-form-item>
+          <el-form-item prop="loginIp" style="width: 110px;">
+            <el-input
+              v-model="queryParams.loginIp"
+              placeholder="登录IP"
+              clearable
+              size="small"
+              @keyup.enter.native="handleQuery"
+            />
+          </el-form-item>
+          <el-form-item prop="bankAccount" style="width: 155px;">
+            <el-input
+              v-model="queryParams.bankAccount"
+              placeholder="银行卡号/真实姓名"
+              clearable
+              size="small"
+              @keyup.enter.native="handleQuery"
+            />
+          </el-form-item>
+          <el-form-item prop="email" style="width: 110px;margin-left: 70px">
+            <el-input
+              v-model="queryParams.email"
+              placeholder="登录备注"
+              clearable
+              size="small"
+              @keyup.enter.native="handleQuery"
+            />
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+          </el-form-item>
+        </el-main>
+      </el-container>
+
     </el-form>
 
-    <el-row :gutter="10" class="mb8">
+    <el-row :gutter="10" class="mb8" style="margin-top: -15px">
       <el-col :span="1.5">
         <el-button
           type="primary"

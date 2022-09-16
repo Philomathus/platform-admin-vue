@@ -44,7 +44,7 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item prop="inviterCode" style="width: 110px;">
+          <el-form-item prop="inviterCode" style="width: 110px;" id="inviterCode">
             <el-input
               v-model="queryParams.inviterCode"
               placeholder="邀请码"
@@ -53,7 +53,7 @@
               @keyup.enter.native="handleQuery"
             />
           </el-form-item>
-          <el-form-item prop="channelcode" style="width: 110px;">
+          <el-form-item prop="channelcode" style="width: 110px;" id="channelCode">
             <el-select v-model="queryParams.channelcode" placeholder="全部类型" clearable size="small">
               <el-option
                 v-for="(dict,i) in statusOptions"
@@ -90,7 +90,7 @@
               @keyup.enter.native="handleQuery"
             />
           </el-form-item>
-          <el-form-item prop="email" style="width: 110px;margin-left: 70px">
+          <el-form-item prop="email" style="width: 110px;" class="email">
             <el-input
               v-model="queryParams.email"
               placeholder="登录备注"
@@ -99,7 +99,7 @@
               @keyup.enter.native="handleQuery"
             />
           </el-form-item>
-          <el-form-item>
+          <el-form-item class="submit-btn">
             <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
             <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
           </el-form-item>
@@ -1066,3 +1066,30 @@ import {getMemberWithdrawReport} from "@/api/platform-web/pay/memberWithdrawLog"
 
 
 </script>
+
+
+<style>
+   @media only screen and (min-width: 1200px) and (max-width: 1390px) {
+      #inviterCode{
+        margin-left: 70px;
+      }
+   }
+   @media  only screen and (min-width: 1391px) and (max-width: 1512px){
+       #channelCode{
+         margin-left: 70px;
+       }
+   }
+
+   @media only screen and (min-width: 1330px) and (max-width: 1400px){
+       .email{
+         margin-left: 70px;
+       }
+   }
+
+   @media only screen and (min-width: 1400px) and (max-width: 1512px){
+     .submit-btn{
+       margin-left: 70px;
+     }
+   }
+</style>
+

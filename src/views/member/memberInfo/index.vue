@@ -974,7 +974,6 @@ import {getMemberWithdrawReport} from "@/api/platform-web/pay/memberWithdrawLog"
         this.queryParamsByRealName = this.addDateRange(this.realName, this.dateRange);
         listMemberInfo(this.queryParamsByIp,this.queryParamsByRealName).then(response => {
           this.memberByIpAddress = response.rows
-          console.log(response.rows.realName)
           this.total = response.total
           if(this.memberByIpAddress.length>=10){
             this.paginationShow = true;

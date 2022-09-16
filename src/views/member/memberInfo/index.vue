@@ -63,7 +63,7 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item prop="nickName" style="width: 110px;">
+          <el-form-item prop="nickName" style="width: 110px;" class="nickName">
             <el-input
               v-model="queryParams.nickName"
               placeholder="昵称"
@@ -72,7 +72,7 @@
               @keyup.enter.native="handleQuery"
             />
           </el-form-item>
-          <el-form-item prop="loginIp" style="width: 110px;">
+          <el-form-item prop="loginIp" style="width: 110px;" class="loginIp">
             <el-input
               v-model="queryParams.loginIp"
               placeholder="登录IP"
@@ -1078,6 +1078,9 @@ import {getMemberWithdrawReport} from "@/api/platform-web/pay/memberWithdrawLog"
        #channelCode{
          margin-left: 70px;
        }
+     .email{
+       margin-left: 0;
+     }
    }
 
    @media only screen and (min-width: 1330px) and (max-width: 1400px){
@@ -1090,6 +1093,31 @@ import {getMemberWithdrawReport} from "@/api/platform-web/pay/memberWithdrawLog"
      .submit-btn{
        margin-left: 70px;
      }
+     .email{
+       margin-left: 0;
+     }
    }
+
+   @media only screen and (min-width: 1900px){
+     .email {
+       margin-left: 70px;
+     }
+   }
+
+   @media  only screen and (min-width: 1500px) and (max-width: 1562px){
+     .nickName{
+       margin-left: 70px;
+     }
+     .email{
+       margin-left: 0;
+     }
+   }
+
+   @media  only screen and (min-width: 1562px) and (max-width: 1700px){
+     .loginIp{
+       margin-left: 70px;
+     }
+   }
+
 </style>
 

@@ -20,6 +20,22 @@
           class="col-w240"
           @keyup.enter.native="handleQuery"/>
       </el-form-item>
+
+      <el-form-item label="状态" prop="status">
+        <el-select
+          v-model="queryParams.status"
+          placeholder="状态"
+          clearable
+          size="small"
+          class="col-w240">
+          <el-option
+            v-for="dict in statusOptions"
+            :key="dict.dictValue"
+            :label="dict.dictLabel"
+            :value="dict.dictValue"/>
+        </el-select>
+      </el-form-item>
+
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
       </el-form-item>
@@ -257,6 +273,9 @@ export default {
       isFullList: [],
       // 游戏名称
       platformNameList: [],
+
+      statusOptions: [],
+
       // 表单参数
       form: {},
       // 表单校验
@@ -288,7 +307,8 @@ export default {
         platformName: null,
         name: null,
         orderByColumn: 'indexs',
-        isAsc: 'desc'
+        isAsc: 'desc',
+        status: null,
       }
     }
   },
@@ -302,6 +322,9 @@ export default {
     })
     getGameInfo().then(response => {
       this.platformNameList = response.data
+    })
+    this.getDicts('pay_channel_status').then(response => {
+      this.statusOptions = response.data
     })
   },
 

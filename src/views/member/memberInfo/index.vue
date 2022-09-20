@@ -7,24 +7,17 @@
       <el-button  type="primary" icon="el-icon-search" size="mini" @click="listCount()" style="margin-left: 20px">统计查询</el-button>
     </div>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" style="margin-top: 20px">
-      <el-container>
-        <el-aside style="width: auto;background-color: white;">
           <el-form-item label="搜索成员" prop="searchValue">
             <el-input
               v-model.trim="queryParams.searchValue"
               placeholder="会员ID/账号/手机号 , 逗号分隔的成员搜索"
               clearable
               size="small"
-              type="textarea"
-              rows="4"
-              cols="25"
-              id="not-resizable"
+              type="text"
+              style="width: 400px"
               @keyup.enter.native="handleQuery"
             />
           </el-form-item>
-        </el-aside>
-
-        <el-main style="position: relative;margin-left: -20px;margin-top: -20px">
           <el-form-item label="日期范围" prop="regTime">
             <el-date-picker type="datetimerange" v-model="dateRange" format="yyyy-MM-dd HH:mm:ss"
                             value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}" start-placeholder="开始时间"
@@ -81,7 +74,7 @@
               @keyup.enter.native="handleQuery"
             />
           </el-form-item>
-          <el-form-item prop="bankAccount" style="width: 155px;">
+          <el-form-item prop="bankAccount" style="width: 155px;" class="bankAccount">
             <el-input
               v-model="queryParams.bankAccount"
               placeholder="银行卡号/真实姓名"
@@ -103,12 +96,10 @@
             <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
             <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
           </el-form-item>
-        </el-main>
-      </el-container>
 
     </el-form>
 
-    <el-row :gutter="10" class="mb8" style="margin-top: -15px">
+    <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
           type="primary"
@@ -1073,23 +1064,15 @@ import {getMemberWithdrawReport} from "@/api/platform-web/pay/memberWithdrawLog"
         margin-left: 70px;
       }
    }
-   @media  only screen and (min-width: 1391px) and (max-width: 1512px){
-       #channelCode{
-         margin-left: 70px;
-       }
-     .email{
-       margin-left: 0;
-     }
-   }
 
    @media only screen and (min-width: 1330px) and (max-width: 1400px){
        .email{
-         margin-left: 70px;
+         margin-left: 0;
        }
    }
 
-   @media only screen and (min-width: 1400px) and (max-width: 1512px){
-     .submit-btn{
+   @media  only screen and (min-width: 1350px) and (max-width: 1390px){
+     #channelCode{
        margin-left: 70px;
      }
      .email{
@@ -1097,9 +1080,21 @@ import {getMemberWithdrawReport} from "@/api/platform-web/pay/memberWithdrawLog"
      }
    }
 
-   @media only screen and (min-width: 1900px){
-     .email {
+   @media  only screen and (min-width: 1391px) and (max-width: 1512px){
+     #channelCode{
        margin-left: 70px;
+     }
+     .email{
+       margin-left: 0;
+     }
+   }
+
+   @media only screen and (min-width: 1475px) and (max-width: 1500px){
+     .nickName{
+       margin-left: 70px;
+     }
+     .submit-btn,#channelCode,.email{
+       margin-left: 0;
      }
    }
 
@@ -1107,7 +1102,7 @@ import {getMemberWithdrawReport} from "@/api/platform-web/pay/memberWithdrawLog"
      .nickName{
        margin-left: 70px;
      }
-     .email{
+     .email,.submit-btn,#channelCode{
        margin-left: 0;
      }
    }
@@ -1117,6 +1112,17 @@ import {getMemberWithdrawReport} from "@/api/platform-web/pay/memberWithdrawLog"
        margin-left: 70px;
      }
    }
+
+   @media only screen and (min-width: 1900px)and (max-width: 2000px){
+     .bankAccount{
+       margin-left: 70px;
+     }
+
+     .email {
+       margin-left: 0;
+     }
+   }
+
 
 </style>
 

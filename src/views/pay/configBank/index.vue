@@ -266,7 +266,6 @@ export default {
         pageSize: 10,
         code: null,
         name: null,
-        orderByColumn: 'status desc,create_time desc'
       },
       // 表单参数
       form: {},

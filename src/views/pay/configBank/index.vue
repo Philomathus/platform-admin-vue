@@ -266,6 +266,7 @@ export default {
         pageSize: 10,
         code: null,
         name: null,
+        orderByColumn: 'status desc,indexs asc'
       },
       // 表单参数
       form: {},

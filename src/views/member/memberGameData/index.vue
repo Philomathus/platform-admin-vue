@@ -29,7 +29,7 @@
       </el-form-item><br>
 
       <el-form-item label="平台名称" prop="platformId" id="checkbox">
-        <el-checkbox-group v-model="queryParams.name" size="medium">
+        <el-checkbox-group v-model="queryParams.platformIds" size="medium">
           <el-checkbox v-for="item in platformList" :key="item.id" :label="item.id">{{ item.name }}</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
@@ -177,7 +177,7 @@ export default {
       queryParams: {
         sonPlatformName: null,
         pageNum: 1,
-        name: [],
+        platformIds: [],
         pageSize: 15,
         gameId: null,
         gameRound: null,

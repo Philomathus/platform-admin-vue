@@ -27,16 +27,15 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="platformId">
-        <el-select v-model="queryParams.name" placeholder="请选择平台" :change="selectOne()">
-          <el-option
-            v-for="(item,index) in platformList"
-            :key="index"
-            :label="item.name"
-            :value="item.id"
-          ></el-option>
-        </el-select>
+
+ <br>
+      <el-form-item label="平台名称" prop="platformId" class="checkbox-type">
+        <el-checkbox-group v-model="queryParams.name" size="medium">
+          <el-checkbox v-for="item in platformList" :key="item.id" :label="item.id">{{ item.name }}</el-checkbox>
+        </el-checkbox-group>
       </el-form-item>
+
+
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -180,7 +179,7 @@ export default {
       queryParams: {
         sonPlatformName: null,
         pageNum: 1,
-        name: null,
+        name: [],
         pageSize: 15,
         gameId: null,
         gameRound: null,

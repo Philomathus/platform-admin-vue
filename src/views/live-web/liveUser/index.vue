@@ -1,9 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-container>
-        <el-aside style="width: auto;background-color: white;margin-left: -40px">
-          <el-form-item label="主播ID" prop="userIds" style="margin-top: 10px">
+          <el-form-item label="主播ID" prop="userIds">
             <el-input
               v-model="queryParams.userIds"
               placeholder="主播ID,批量搜索请用英文逗号隔开"
@@ -14,9 +12,8 @@
               id="user-ids"
               oninput="this.value=this.value.replace(/[^\d,]/g,'')"/>
           </el-form-item>
-        </el-aside>
-        <el-main style="position: relative">
-          <el-form-item label="注册日期" prop="selectDate" style="margin-left: -20px">
+
+          <el-form-item label="注册日期" prop="selectDate">
             <el-date-picker type="daterange" v-model="selectDate" format="yyyy-MM-dd"
                             value-format="yyyy-MM-dd" :style="{width: '240px'}" start-placeholder="开始日期"
                             end-placeholder="结束日期"
@@ -53,7 +50,7 @@
               <el-option label="审核不通过" value="3"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item prop="mobile" class="mobile">
+          <el-form-item prop="mobile" class="family-id">
             <el-input
               v-model="queryParams.familyId"
               placeholder="家族ID"
@@ -67,8 +64,6 @@
             <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
             <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
           </el-form-item>
-        </el-main>
-      </el-container>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
@@ -891,43 +886,29 @@ export default {
   width: 300px
 }
 
-@media only screen and (min-width: 1300px){
-  .is-authentication,.phone{
-    margin-left: 47px;
+@media only screen and (min-width: 1300px) and (max-width: 1322px){
+  .phone{
+    margin-left: 66px;
   }
 }
 
-@media only screen and (min-width: 1400px){
-    .is-ban,.handle-btn{
-      margin-left: 0px;
-    }
-}
-@media only screen and (min-width: 1500px){
-  .is-authentication,.phone{
-    margin-left: 0;
-  }
-  .is-ban,.handle-btn{
-    margin-left: 47px;
-  }
-}
-
-@media only screen and (min-width: 1600px){
+@media only screen and (min-width: 1323px) and (max-width: 1572px){
   .is-ban{
-    margin-left: 47px;
-  }
-  .handle-btn{
-    margin-left: 0;
+    margin-left: 66px;
   }
 }
 
-
-@media only screen and (min-width: 1800px) {
-  .is-authentication,.is-ban{
-    margin-left: 0;
-  }
-  .mobile{
-    margin-left: 47px;
+@media only screen and (min-width: 1572px) and (max-width: 1600px){
+  .is-authentication{
+    margin-left: 66px;
   }
 }
+
+@media only screen and (min-width: 1600px) {
+  .family-id{
+    margin-left: 66px;
+  }
+}
+
 
 </style>

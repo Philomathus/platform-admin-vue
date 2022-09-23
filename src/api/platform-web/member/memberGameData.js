@@ -6,7 +6,8 @@ export function listMemberGameData(query) {
   return request({
     url: url.platformWeb + '/member/memberGameData/list',
     method: 'get',
-    params: query
+    params: query,
+    timeout: 60000
   })
 }
 
@@ -15,7 +16,8 @@ export function getCount(query) {
   return request({
     url: url.platformWeb + '/member/memberGameData/getCount',
     method: 'get',
-    params: query
+    params: query,
+    timeout: 60000
   })
 }
 

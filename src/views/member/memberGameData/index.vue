@@ -26,15 +26,13 @@
           clearable
           @keyup.enter.native="handleQuery"
         />
-      </el-form-item>
+      </el-form-item><br>
 
- <br>
-      <el-form-item label="平台名称" prop="platformId" class="checkbox-type">
+      <el-form-item label="平台名称" prop="platformId" id="checkbox">
         <el-checkbox-group v-model="queryParams.name" size="medium">
           <el-checkbox v-for="item in platformList" :key="item.id" :label="item.id">{{ item.name }}</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
-
 
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -441,3 +439,9 @@ export default {
   }
 }
 </script>
+
+<style>
+ #checkbox .el-form-item__content{
+  width: 90%;
+}
+</style>

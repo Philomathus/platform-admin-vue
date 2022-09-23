@@ -297,7 +297,6 @@ export default {
     getPlatformList() {
       gamePlatformList(this.queryParams).then(response => {
           this.platformList = response.data
-          this.platformList[this.platformList.length] = {"agent":null,id:null,name:"全部"}
       })
     },
     // 取消按钮

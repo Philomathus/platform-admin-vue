@@ -3,17 +3,15 @@
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
       <el-container>
         <el-aside style="width: auto;background-color: white;margin-left: -40px">
-          <el-form-item label="主播ID" prop="userIds" style="margin-top: 15px">
+          <el-form-item label="主播ID" prop="userIds" style="margin-top: 10px">
             <el-input
-              rows="4"
-              cols="30"
               v-model="queryParams.userIds"
               placeholder="主播ID,批量搜索请用英文逗号隔开"
               clearable
               size="small"
-              type="textarea"
+              type="text"
               class="no-number"
-              id="not-resizable"
+              id="user-ids"
               oninput="this.value=this.value.replace(/[^\d,]/g,'')"/>
           </el-form-item>
         </el-aside>
@@ -888,6 +886,10 @@ export default {
 </script>
 
 <style>
+
+#user-ids{
+  width: 300px
+}
 
 @media only screen and (min-width: 1300px){
   .is-authentication,.phone{

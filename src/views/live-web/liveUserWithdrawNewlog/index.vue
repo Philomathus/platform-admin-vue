@@ -197,7 +197,7 @@
           <span :style="{color: (wstatus = statusOptions[parseInt(scope.row.wstatus)]).color}">{{ wstatus.dictLabel }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="创建时间" width="160" align="center" prop="createTime"/>
+      <el-table-column label="创建时间" width="120" align="center" prop="createTime"/>
       <el-table-column label="最后修改时间" width="160" align="center" prop="updateTime"/>
       <el-table-column label="审核员" align="center" prop="opName" min-width="100"/>
       <el-table-column label="审核备注" align="center" min-width="200px" prop="remark" />

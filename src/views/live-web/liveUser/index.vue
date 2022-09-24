@@ -10,7 +10,8 @@
               type="text"
               class="no-number"
               id="user-ids"
-              oninput="this.value=this.value.replace(/[^\d,]/g,'')"/>
+              oninput="this.value=this.value.replace(/[^\d,]/g,'')"
+              @keyup.enter.native="handleQuery" />
           </el-form-item>
 
           <el-form-item label="注册日期" prop="selectDate">

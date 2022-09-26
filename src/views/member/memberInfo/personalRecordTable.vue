@@ -33,7 +33,7 @@
         <th class="bold">合计充值</th>
         <td>{{ this.totalRechargeCount }}</td>
         <th class="bold">打码量</th>
-        <td>{{ this.aBet }}</td>
+        <td>{{ this.aBet.toFixed(2) }}</td>
       </tr>
       <tr>
         <td class="bold">送礼</td>
@@ -51,7 +51,7 @@
       </tr>
       <tr v-for="bcList in bCodeList">
         <td colspan="2">{{ bcList.platformName }}</td>
-        <td>{{ bcList.cellScore }}</td>
+        <td>{{ bcList.cellScore.toFixed(2) }}</td>
         <td>{{ bcList.profit.toFixed(2) }}</td>
       </tr>
 

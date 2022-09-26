@@ -151,9 +151,15 @@
     </el-row>
 
     <el-table :stripe="true" v-loading="loading" :data="memberInfoList" @selection-change="handleSelectionChange">
-      <el-table-column label="会员ID" align="center" prop="id" min-width="120px">
+      <el-table-column label="会员ID" align="center" prop="id" min-width="140px">
         <template v-slot="{row}">
           <a @click="personalReport(row.id)" style="color: #1ab394">{{ row.id }}</a>
+          <el-button
+            style="margin-left: 5px"
+            type="text" size="mini"
+            icon="el-icon-copy-document"
+            @click="handleCopy(row.id)"
+          />
         </template>
       </el-table-column>
       <el-table-column label="用户名" align="center" prop="userName" min-width="120px"/>
@@ -480,26 +486,26 @@
 
 <script>
 import {
-  listMemberInfo,
-  getMemberInfo,
   addMemberInfo,
-  updateMemberInfo,
-  exportMemberInfo,
   changeSpeak,
   changeStatus,
   changeStatusBan,
-  listCount, ipBan, getPersonalReport
+  exportMemberInfo,
+  getMemberInfo,
+  ipBan,
+  listCount,
+  listMemberInfo,
+  updateMemberInfo
 } from '@/api/platform-web/member/memberInfo'
-  import more from './more'
-  import {listSpeakIpBlackList, updateSpeakIpBlackList} from '@/api/live-web/chat/speakIpBlackList'
-  import {pickerDateShortcuts, pickerDateTimeShortcuts} from '@/utils/dateUtils'
-  import {getConfigEnvironment} from "@/api/platform-web/config/configEnvironment";
-  import ExcelPrompt from '@/layout/components/prompt/excelPrompt.vue';
-  import PersonalRecordTable from "@/views/member/memberInfo/personalRecordTable";
-import {getMemberWithdrawReport} from "@/api/platform-web/pay/memberWithdrawLog";
+import more from './more'
+import {listSpeakIpBlackList, updateSpeakIpBlackList} from '@/api/live-web/chat/speakIpBlackList'
+import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
+import {getConfigEnvironment} from "@/api/platform-web/config/configEnvironment";
+import ExcelPrompt from '@/layout/components/prompt/excelPrompt.vue';
+import PersonalRecordTable from "@/views/member/memberInfo/personalRecordTable";
 
 
-  export default {
+export default {
     name: 'MemberInfo',
     components: {
       more: more,
@@ -1048,6 +1054,25 @@ import {getMemberWithdrawReport} from "@/api/platform-web/pay/memberWithdrawLog"
             this.title = res.data.nickName + " - 个人报表";
             this.$refs.tableShow.show(userId,this.title);
           });
+      },
+
+      /** click  on copy to copy the id */
+      handleCopy(id) {
+        this.copyData = id
+        console.log(this.copyData)
+        this.copy(this.copyData)
+      },
+      copy(data) {
+        let value = document.createElement('textarea')
+        value.value = data
+        document.body.appendChild(value)
+        value.select()   //select coming value;
+        document.execCommand('Copy') // Execute the browser copy command
+        this.$message({
+          message: '复制成功',
+          type: 'success'
+        })
+        value.remove()
       },
 
 

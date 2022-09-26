@@ -1069,7 +1069,7 @@ export default {
         value.select()   //select coming value;
         document.execCommand('Copy') // Execute the browser copy command
         this.$message({
-          message: '复制成功',
+          message: 'ID复制成功',
           type: 'success'
         })
         value.remove()

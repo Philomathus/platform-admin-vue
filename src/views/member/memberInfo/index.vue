@@ -156,7 +156,8 @@
           <a @click="personalReport(row.id)" style="color: #1ab394">{{ row.id }}</a>
           <el-button
             style="margin-left: 5px"
-            type="text" size="mini"
+            type="text text-info"
+            size="mini"
             icon="el-icon-copy-document"
             @click="handleCopy(row.id)"
           />

@@ -153,14 +153,13 @@
     <el-table :stripe="true" v-loading="loading" :data="memberInfoList" @selection-change="handleSelectionChange">
       <el-table-column label="会员ID" align="center" prop="id" min-width="140px">
         <template v-slot="{row}">
-          <a @click="personalReport(row.id)" style="color: #1ab394">{{ row.id }}</a>
           <el-button
-            style="margin-left: 5px"
             type="text text-info"
             size="mini"
             icon="el-icon-copy-document"
             @click="handleCopy(row.id)"
           />
+          <a  @click="personalReport(row.id)" style="color: #1ab394;margin-left: 5px">{{ row.id }}</a>
         </template>
       </el-table-column>
       <el-table-column label="用户名" align="center" prop="userName" min-width="120px"/>
@@ -1060,7 +1059,6 @@ export default {
       /** click  on copy to copy the id */
       handleCopy(id) {
         this.copyData = id
-        console.log(this.copyData)
         this.copy(this.copyData)
       },
       copy(data) {
@@ -1070,7 +1068,7 @@ export default {
         value.select()   //select coming value;
         document.execCommand('Copy') // Execute the browser copy command
         this.$message({
-          message: 'ID复制成功',
+          message: data+' 复制成功',
           type: 'success'
         })
         value.remove()

@@ -1,14 +1,15 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="copy1">有效下注 {{ this.totalData.totalSuccessBet||0 }}</el-button>
-    <el-button type="success" @click="copy2">总下注 {{this.totalData.totalBet||0 }}</el-button>
-    <el-button type="warning" @click="copy3">盈利 {{ this.totalData.totalIncome||0 }}</el-button>
+    <el-button type="primary" @click="copy1">有效下注 {{ this.totalData.totalSuccessBet || 0 }}</el-button>
+    <el-button type="success" @click="copy2">总下注 {{ this.totalData.totalBet || 0 }}</el-button>
+    <el-button type="warning" @click="copy3">盈利 {{ this.totalData.totalIncome || 0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" style="margin-top: 20px">
       <el-form-item label="日期范围" prop="selectDate">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}" start-placeholder="开始时间"
                         end-placeholder="开始时间"
-                        range-separator="至" clearable :default-time="['00:00:00', '23:59:59']" :picker-options="pickerOptions"
+                        range-separator="至" clearable :default-time="['00:00:00', '23:59:59']"
+                        :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="account">
@@ -26,9 +27,11 @@
           clearable
           @keyup.enter.native="handleQuery"
         />
-      </el-form-item><br>
+      </el-form-item>
+      <br>
 
       <el-form-item label="平台名称" prop="platformId" id="checkbox">
+        <el-checkbox v-model="checkNodeAll" @change="handleCheckedTreeNodeAll()" class="text-info">全选/全不选</el-checkbox>
         <el-checkbox-group v-model="queryParams.platformIds" size="medium">
           <el-checkbox v-for="item in platformList" :key="item.id" :label="item.id">{{ item.name }}</el-checkbox>
         </el-checkbox-group>
@@ -58,17 +61,18 @@
     <el-table stripe v-loading="loading" :data="memberGameDataList">
       <el-table-column label="会员ID" align="center" prop="account" min-width="120"/>
       <el-table-column label="子平台ID" align="center" prop="agent"/>
-      <el-table-column label="游戏ID" align="center"  min-width="300px" prop="gameId"/>
-      <el-table-column label="游戏局号" align="center"  min-width="160px" :show-overflow-tooltip="true" prop="gameRound">
+      <el-table-column label="游戏ID" align="center" min-width="300px" prop="gameId"/>
+      <el-table-column label="游戏局号" align="center" min-width="160px" :show-overflow-tooltip="true" prop="gameRound">
         <template v-slot="{row}">
-          <div v-if="row.platformId == 1 || row.platformId == 15 || row.platformId == 17 || row.platformId == 50 || row.platformId == 51 ">
-            <a style="color: #00afff"  @click="handleRecord(row)">{{ row.gameRound }}</a>
+          <div
+            v-if="row.platformId == 1 || row.platformId == 15 || row.platformId == 17 || row.platformId == 50 || row.platformId == 51 ">
+            <a style="color: #00afff" @click="handleRecord(row)">{{ row.gameRound }}</a>
           </div>
           <div v-else-if="row.platformId == 5">
-            <a style="color: #00afff"  @click="handleAgRecord(row)">{{ row.gameRound }}</a>
+            <a style="color: #00afff" @click="handleAgRecord(row)">{{ row.gameRound }}</a>
           </div>
           <div v-else-if="row.platformId == 14">
-            <a style="color: #00afff"  @click="openRecordLink(row)">{{ row.gameRound }}</a>
+            <a style="color: #00afff" @click="openRecordLink(row)">{{ row.gameRound }}</a>
           </div>
           <div v-else>
             {{ row.gameRound }}
@@ -93,16 +97,16 @@
       @pagination="getList"
     />
 
-    <record ref="record" :game-id="gameId" />
+    <record ref="record" :game-id="gameId"/>
 
-    <AgRecord ref="agRecord" :game-id="gameId" />
+    <AgRecord ref="agRecord" :game-id="gameId"/>
 
     <!-- 游戏对局日志 -->
     <el-dialog title="游戏对局日志" :visible.sync="fundsOpen" width="1500px" style="max-height:100%;overflow-y: scroll;"
                append-to-body>
-<!--      <div v-loading="loading" :style="'height:'+ height">-->
+      <!--      <div v-loading="loading" :style="'height:'+ height">-->
       <div v-loading="loading">
-        <iframe :src="recordLink" frameborder="no" style="width: 100%;height: 600px" scrolling="auto" />
+        <iframe :src="recordLink" frameborder="no" style="width: 100%;height: 600px" scrolling="auto"/>
       </div>
     </el-dialog>
 
@@ -121,25 +125,30 @@
 import {
   listMemberGameData,
   exportMemberGameData,
-  getCount, getLotteryBetData,getKYgameResReport
+  getCount, getLotteryBetData, getKYgameResReport
 } from '@/api/platform-web/member/memberGameData'
 import {pickerDateTimeShortcuts} from "@/utils/dateUtils";
 import record from './record'
-import { gamePlatformList, gameRecordList } from '../../../api/platform-web/member/memberGameData'
+import {gamePlatformList, gameRecordList} from '../../../api/platform-web/member/memberGameData'
 import AgRecord from './agRecord'
 
 
 export default {
   name: 'MemberGameData',
-  components: { AgRecord, record },
+  components: {AgRecord, record},
   data() {
     return {
-      pickerOptions: { shortcuts: pickerDateTimeShortcuts },
+      pickerOptions: {shortcuts: pickerDateTimeShortcuts},
       //统计数据
       totalData: {
         totalSuccessBet: 0,
         totalBet: 0,
         totalIncome: 0
+      },
+      checkNodeAll: false,
+      defaultProps: {
+        children: 'children',
+        label: 'label'
       },
       // 遮罩层
       loading: true,
@@ -203,7 +212,7 @@ export default {
       // 表单校验
       rules: {
         gameId: [
-          { required: true, message: '游戏局号不能为空', trigger: 'blur' }
+          {required: true, message: '游戏局号不能为空', trigger: 'blur'}
         ]
       }
     }
@@ -211,16 +220,16 @@ export default {
   created() {
     this.init()
   },
-  activated(){
+  activated() {
     this.init()
   },
   methods: {
-    init(){
+    init() {
       var userId = this.$route.query.userId
       var createTime = this.$route.query.createTime
       if (createTime) {
         this.queryParams.account = userId
-        this.queryParams.selectDate = [createTime,this.parseTime(this.getTodayEndTime())]
+        this.queryParams.selectDate = [createTime, this.parseTime(this.getTodayEndTime())]
       }
       this.getList()
       this.getPlatformList()
@@ -253,10 +262,10 @@ export default {
         this.loading = false
       })
     },
-    handleRecord(row){
+    handleRecord(row) {
       this.$refs.record.show(row)
     },
-    openRecordLink(row){
+    openRecordLink(row) {
       this.queryParams.gameId = row.gameId;
       this.queryParams.gameRound = row.gameRound;
       this.queryParams.agent = row.agent;
@@ -273,7 +282,7 @@ export default {
         this.loading = false
       })
     },
-    handleAgRecord(row){
+    handleAgRecord(row) {
       this.$refs.agRecord.show(row)
     },
     funds(row) {
@@ -296,7 +305,7 @@ export default {
     /** 查询平台列表 8*/
     getPlatformList() {
       gamePlatformList(this.queryParams).then(response => {
-          this.platformList = response.data
+        this.platformList = response.data
       })
     },
     // 取消按钮
@@ -326,10 +335,10 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      if(this.queryParams.account){
+      if (this.queryParams.account) {
         const reg = '^[0-9a-zA-Z_]{1,}$'
         let flag = this.queryParams.account.match(reg)
-        if(!flag){
+        if (!flag) {
           this.msgError("会员ID只能输入数字及下划线")
           return
         }
@@ -337,7 +346,7 @@ export default {
       this.queryParams.kindId = null
       this.queryParams.pageNum = 1
       this.getList()
-      if(this.queryParams.account){
+      if (this.queryParams.account) {
         this.getCount()
       } else {
         this.totalData.totalSuccessBet = 0
@@ -358,7 +367,7 @@ export default {
         confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportMemberGameData(queryParams)
       }).then(response => {
         this.downloadExcel(response, '会员注单数据')
@@ -417,10 +426,10 @@ export default {
     },
     selectOne() {     //change 触发事件
       let id = this.queryParams.name;
-      if (id != null && id != undefined){
-        if (this.platformList != null && this.platformList != undefined){
+      if (id != null && id != undefined) {
+        if (this.platformList != null && this.platformList != undefined) {
           this.platformList.forEach((value, key) => {
-            if (value.id == id){
+            if (value.id == id) {
               this.queryParams.agent = value.agent
               this.queryParams.platformId = value.id
               this.queryParams.gameId = null
@@ -430,17 +439,32 @@ export default {
             }
           })
         }
-      }else {
+      } else {
         this.queryParams.agent = null
         this.queryParams.platformId = null
       }
-    }
+    },
+
+    handleCheckedTreeNodeAll() {
+      if (this.checkNodeAll) {
+        let arrays = [];
+        for (const platform of this.platformList) {
+          arrays.push(platform.id)
+        }
+        this.queryParams.platformIds = arrays
+        this.checkNodeAll = true
+      } else {
+        this.queryParams.platformIds = []
+        this.checkNodeAll = false
+      }
+    },
+
   }
 }
 </script>
 
 <style>
- #checkbox .el-form-item__content{
+#checkbox .el-form-item__content {
   width: 90%;
 }
 </style>

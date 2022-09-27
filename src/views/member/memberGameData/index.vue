@@ -29,10 +29,9 @@
         />
       </el-form-item>
       <br>
-
       <el-form-item label="平台名称" prop="platformId" id="checkbox">
-        <el-checkbox v-model="checkNodeAll" @change="handleCheckedTreeNodeAll()" class="text-info">全选/全不选</el-checkbox>
-        <el-checkbox-group v-model="queryParams.platformIds" size="medium">
+        <el-checkbox v-model="checkNodeAll" @change="handleCheckedTreeNodeAll()" class="text-info" style="position: absolute">全选/全不选</el-checkbox>
+        <el-checkbox-group v-model="queryParams.platformIds" size="medium" style="position:relative;margin-left: 110px">
           <el-checkbox v-for="item in platformList" :key="item.id" :label="item.id">{{ item.name }}</el-checkbox>
         </el-checkbox-group>
       </el-form-item>

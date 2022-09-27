@@ -21,7 +21,7 @@
                         :picker-options="pickerOptions">
         </el-date-picker>
       </el-form-item>
-      <el-form-item prop="account">
+      <el-form-item prop="account" style="margin-left: -45px">
         <el-input
           v-model.trim="queryParams.account"
           placeholder="请输入会员ID"

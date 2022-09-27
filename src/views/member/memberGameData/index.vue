@@ -3,14 +3,23 @@
     <el-button type="primary" @click="copy1">有效下注 {{ this.totalData.totalSuccessBet || 0 }}</el-button>
     <el-button type="success" @click="copy2">总下注 {{ this.totalData.totalBet || 0 }}</el-button>
     <el-button type="warning" @click="copy3">盈利 {{ this.totalData.totalIncome || 0 }}</el-button>
+
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" style="margin-top: 20px">
+
+      <el-form-item label="平台名称" prop="platformId" id="checkbox">
+        <el-checkbox-group v-model="queryParams.platformIds" size="medium">
+          <el-checkbox v-for="item in platformList" :key="item.id" :label="item.id">{{ item.name }}</el-checkbox>
+        </el-checkbox-group>
+        <el-checkbox v-model="checkNodeAll" @change="handleCheckedTreeNodeAll()" class="text-info" style="position:absolute;margin-left: 73%;margin-top: -40px">全选/全不选</el-checkbox>
+      </el-form-item>
+
       <el-form-item label="日期范围" prop="selectDate">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}" start-placeholder="开始时间"
                         end-placeholder="开始时间"
                         range-separator="至" clearable :default-time="['00:00:00', '23:59:59']"
-                        :picker-options="pickerOptions"
-        ></el-date-picker>
+                        :picker-options="pickerOptions">
+        </el-date-picker>
       </el-form-item>
       <el-form-item prop="account">
         <el-input
@@ -25,17 +34,10 @@
           v-model="queryParams.gameId"
           placeholder="请输入游戏局号"
           clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="平台名称" prop="platformId" id="checkbox" style="margin-top: -10px;">
-        <el-checkbox v-model="checkNodeAll" @change="handleCheckedTreeNodeAll()" class="text-info" style="position: absolute">全选/全不选</el-checkbox>
-        <el-checkbox-group v-model="queryParams.platformIds" size="medium" style="position:relative;margin-left: 110px">
-          <el-checkbox v-for="item in platformList" :key="item.id" :label="item.id">{{ item.name }}</el-checkbox>
-        </el-checkbox-group>
+          @keyup.enter.native="handleQuery"/>
       </el-form-item>
 
-      <el-form-item style=";margin-top: -15px;margin-left: 10.7%">
+      <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>

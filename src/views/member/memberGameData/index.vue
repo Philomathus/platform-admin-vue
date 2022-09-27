@@ -10,7 +10,9 @@
         <el-checkbox-group v-model="queryParams.platformIds" size="medium">
           <el-checkbox v-for="item in platformList" :key="item.id" :label="item.id">{{ item.name }}</el-checkbox>
         </el-checkbox-group>
-        <el-checkbox v-model="checkNodeAll" @change="handleCheckedTreeNodeAll()" class="text-info" style="position:absolute;margin-left: 73%;margin-top: -40px">全选/全不选</el-checkbox>
+        <el-checkbox v-model="checkNodeAll" @change="handleCheckedTreeNodeAll()"
+                     class="selection text-info"
+                     style="">全选/全不选</el-checkbox>
       </el-form-item>
 
       <el-form-item label="日期范围" prop="selectDate">
@@ -465,6 +467,56 @@ export default {
 
 <style>
 #checkbox .el-form-item__content {
-  width:95%;
+  width:90%;
 }
+
+.selection{
+  position:absolute;
+  margin-left: 76%;
+  margin-top: -40px
+}
+
+@media only screen and (min-width: 1300px) and (max-width: 1312px){
+  .selection{
+    margin-left: 84%;
+  }
+}
+
+@media only screen and (min-width: 1313px) and (max-width: 1350px){
+  .selection{
+    margin-left: 84%;
+  }
+}
+
+@media only screen and (min-width: 1350px) and (max-width:1388px){
+  .selection{
+    margin-left: 81%;
+  }
+}
+
+@media only screen and (min-width: 1400px) and (max-width:1449px){
+  .selection{
+    margin-left:69%;
+  }
+}
+
+@media only screen and (min-width: 1450px) and (max-width:1487px){
+  .selection{
+    margin-left: 51%;
+  }
+}
+
+@media only screen and (min-width: 1488px) and (max-width:1600px){
+  .selection{
+    margin-left: 49%;
+  }
+}
+
+@media only screen and (min-width: 1600px) and (max-width:1660px){
+  .selection{
+    margin-left:28%;
+  }
+}
+
+
 </style>

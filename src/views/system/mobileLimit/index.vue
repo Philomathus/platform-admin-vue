@@ -25,7 +25,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:mobileLimit:add']"
-        >新增</el-button>
+        >新增
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -36,7 +37,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:mobileLimit:edit']"
-        >修改</el-button>
+        >修改
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -47,7 +49,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:mobileLimit:remove']"
-        >删除</el-button>
+        >删除
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -57,15 +60,16 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:mobileLimit:export']"
-        >导出</el-button>
+        >导出
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="mobileLimitList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键id" align="center" prop="id" />
-      <el-table-column label="手机号" align="center" prop="mobile" />
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="主键id" align="center" prop="id"/>
+      <el-table-column label="手机号" align="center" prop="mobile"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -74,7 +78,8 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:mobileLimit:edit']"
-          >修改</el-button>
+          >修改
+          </el-button>
           <el-button
             style="color: #FF5722"
             size="mini"
@@ -82,7 +87,8 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:mobileLimit:remove']"
-          >删除</el-button>
+          >删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -96,10 +102,12 @@
     />
 
     <!-- 添加或修改手机号限制对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="手机号" prop="mobile">
-          <el-input v-model="form.mobile" placeholder="请输入手机号" />
+          <el-input type="number" class="no-number" v-model="form.mobile" placeholder="请输入手机号"
+                    @input="form.mobile.length > 11 ? form.mobile = form.mobile.slice(0,11) : form.mobile"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -111,12 +119,18 @@
 </template>
 
 <script>
-import { listMobileLimit, getMobileLimit, delMobileLimit, addMobileLimit, updateMobileLimit, exportMobileLimit } from "@/api/platform-web/system/mobileLimit";
+import {
+  listMobileLimit,
+  getMobileLimit,
+  delMobileLimit,
+  addMobileLimit,
+  updateMobileLimit,
+  exportMobileLimit
+} from "@/api/platform-web/system/mobileLimit";
 
 export default {
   name: "MobileLimit",
-  components: {
-  },
+  components: {},
   data() {
     return {
       // 遮罩层
@@ -147,6 +161,9 @@ export default {
       form: {},
       // 表单校验
       rules: {
+        mobile: [
+          {required: true, message: '手机号不能为空', trigger: 'blur'}
+        ],
       }
     };
   },
@@ -189,7 +206,7 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
@@ -210,8 +227,8 @@ export default {
     },
     /** 提交按钮 */
     submitForm() {
-      var mobile=this.form.mobile;
-      if (mobile==""|| mobile==null ||mobile.length>11){
+      const mobile = this.form.mobile;
+      if (!/^1[3-9]\d{9}$/.test(mobile)) {
         this.$message.error("手机号格式错误")
         return false
       }
@@ -240,13 +257,13 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
-      }).then(function() {
+      }).then(function () {
         return delMobileLimit(ids);
       }).then(() => {
         this.getList();
         this.msgSuccess("删除成功");
       }).catch(() => {
-	  })
+      })
     },
     /** 导出按钮操作 */
     handleExport() {
@@ -255,7 +272,7 @@ export default {
         confirmButtonText: "确认",
         cancelButtonText: "取消",
         type: "warning"
-      }).then(function() {
+      }).then(function () {
         return exportMobileLimit(queryParams);
       }).then(response => {
         this.downloadExcel(response, '手机号限制');

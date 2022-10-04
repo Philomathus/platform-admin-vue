@@ -62,6 +62,18 @@
         >导出
         </el-button>
       </el-col>
+
+<!-- Missing points for adding members - click on button to get member game money -->
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          size="mini"
+          @click="memberGameMoney()"
+          >添加会员上分缺少
+        </el-button>
+      </el-col>
+
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -93,6 +105,25 @@
       @pagination="getList"
     />
 
+<!-- pop up add member game money form dialog box 添加会员游戏金钱表格对话框 -->
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="memberGameMoneyShow" width="500px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="会员ID" prop="memberId">
+          <el-input v-model="form.memberId" placeholder="请输入会员ID" />
+        </el-form-item>
+
+        <el-form-item prop="platformId" label="游戏平台"  label-width="100px">
+          <el-select v-model="form.platformId" placeholder="请选择平台" clearable size="small">
+            <el-option v-for="item in platformList" :label="item.name" :value="item.id"/>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancelMemberGameMoney">取 消</el-button>
+      </div>
+    </el-dialog>
+
     <analyze ref="analyze"></analyze>
   </div>
 </template>
@@ -102,10 +133,11 @@ import {
   listLogGameOrder,
   exportLogGameOrder,
   updateLogGameOrder,
-  listGame
+  listGame, addLogGameOrder, addMemberGameMoney
 } from '@/api/platform-web/member/logGameOrder'
 import { pickerDateShortcuts } from '@/utils/dateUtils'
 import analyze from './analyze'
+import {updateWheelPool} from "@/api/platform-web/lottery/wheelPool";
 
 export default {
   name: 'LogGameOrder',
@@ -191,7 +223,10 @@ export default {
       // 表单校验
       rules: {},
       //颜色
-      colClass: null
+      colClass: null,
+
+      memberGameMoneyShow : false,
+
     }
   },
   watch:{
@@ -346,7 +381,37 @@ export default {
             this.loading = false
           })
       }
+    },
+
+    memberGameMoney(){
+      this.memberGameMoneyShow = true;
+      this.title = "添加会员上分缺少"
+    },
+
+
+    // 取消按钮
+    cancelMemberGameMoney() {
+      this.memberGameMoneyShow = false;
+      this.reset();
+    },
+
+    /** 提交按钮 */
+    submitForm() {
+      console.log("outter")
+      this.$refs["form"].validate(valid => {
+        if (valid) {
+          if (this.form.memberId != null) {
+            addMemberGameMoney(this.form).then(response => {
+              console.log("inner")
+              this.msgSuccess("修改成功");
+              this.open = false;
+              // this.getList();
+            });
+          }
+        }
+      });
     }
+
   }
 }
 </script>

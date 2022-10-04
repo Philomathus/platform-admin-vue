@@ -91,4 +91,13 @@ export function listScoreOrder(query) {
   })
 }
 
+// add member game money
+export function addMemberGameMoney(data) {
+  return request({
+    url: url.platformWeb + '/game/memberGameDatafix/addMemberGameMoney',
+    method: 'post',
+    data: data
+  })
+}
+
 

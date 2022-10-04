@@ -397,12 +397,10 @@ export default {
 
     /** 提交按钮 */
     submitForm() {
-      console.log("outter")
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.memberId != null) {
             addMemberGameMoney(this.form).then(response => {
-              console.log("inner")
               this.msgSuccess("修改成功");
               this.open = false;
               // this.getList();

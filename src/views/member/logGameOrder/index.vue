@@ -401,9 +401,8 @@ export default {
         if (valid) {
           if (this.form.memberId != null) {
             addMemberGameMoney(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess("新增成功");
               this.memberGameMoneyShow = false;
-              // this.getList();
             });
           }
         }

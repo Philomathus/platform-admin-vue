@@ -402,7 +402,7 @@ export default {
           if (this.form.memberId != null) {
             addMemberGameMoney(this.form).then(response => {
               this.msgSuccess("修改成功");
-              this.open = false;
+              this.memberGameMoneyShow = false;
               // this.getList();
             });
           }

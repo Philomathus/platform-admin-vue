@@ -106,14 +106,14 @@
     />
 
 <!-- pop up add member game money form dialog box 添加会员游戏金钱表格对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="memberGameMoneyShow" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="memberGameMoneyShow" width="450px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="会员ID" prop="memberId">
           <el-input v-model="form.memberId" placeholder="请输入会员ID" />
         </el-form-item>
 
-        <el-form-item prop="platformId" label="游戏平台"  label-width="100px">
-          <el-select v-model="form.platformId" placeholder="请选择平台" clearable size="small">
+        <el-form-item prop="platformId" label="游戏平台"  label-width="80px">
+          <el-select v-model="form.platformId" placeholder="请选择平台" clearable size="small" style="width: 328px">
             <el-option v-for="item in platformList" :label="item.name" :value="item.id"/>
           </el-select>
         </el-form-item>

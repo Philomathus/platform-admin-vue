@@ -6,7 +6,7 @@
       <el-button type="primary" @click="copy2">总抽奖金额 {{ this.totalData.totalCountMoney || 0 }}</el-button>
       <el-button type="success" @click="copy3">测试抽奖人数 {{ this.totalData.testTotalPeoples || 0 }}</el-button>
       <el-button type="warning" @click="copy4">测试抽奖金额 {{ this.totalData.testTotalMoney || 0 }}</el-button>
-      <el-button  type="primary" icon="el-icon-search" @click="listCount()" style="margin-left: 20px">统计查询</el-button>
+      <el-button  type="primary" icon="el-icon-search" @click="listCount()" style="margin-left: 15px" plain>统计查询</el-button>
     </div>
 
 <!--    search form 搜索表格 -->

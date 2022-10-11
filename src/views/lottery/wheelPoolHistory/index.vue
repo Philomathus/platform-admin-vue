@@ -48,7 +48,7 @@
     <el-row style="margin-bottom: 5px">
       <el-col :span="1.5">
         <el-button
-            type="primary"
+            type="success"
             plain
             size="mini"
             class="el-button el-button--success"

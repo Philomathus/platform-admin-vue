@@ -897,7 +897,12 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(function () {
-          return exportMemberInfo(queryParams)
+          const exportMemberInfoList = exportMemberInfo(queryParams);
+          queryParams.downLoadDate = null
+          if(exportMemberInfoList ==null){
+            this.msgError("没有数据")
+          }
+          return exportMemberInfoList
         }).then(response => {
           this.downloadExcel(response, '会员列表')
         })

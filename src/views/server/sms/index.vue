@@ -87,6 +87,7 @@
           <span :style="{color: (status = isEffectOptions[parseInt(scope.row.isEffect)]).color}">{{ status.dictLabel }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="请求域名" align="center" prop="endpoint"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
@@ -160,6 +161,9 @@
         </el-form-item>
         <el-form-item label="smsSdkAppid" prop="smsSdkAppid" v-if="form.provider == 0">
           <el-input v-model="form.smsSdkAppid" placeholder="请输入smsSdkAppid"/>
+        </el-form-item>
+        <el-form-item label="请求域名" prop="endpoint" v-if="form.provider === 3">
+          <el-input v-model="form.endpoint" placeholder="请输入请求域名"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

@@ -87,7 +87,7 @@
           <span :style="{color: (status = isEffectOptions[parseInt(scope.row.isEffect)]).color}">{{ status.dictLabel }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="请求域名" align="center" prop="endpoint"/>
+      <el-table-column label="请求域名" align="center" prop="endpoint" min-width="150"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button

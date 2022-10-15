@@ -14,9 +14,9 @@
         <el-select v-model="queryParams.provider" placeholder="请选择服务商" clearable size="small">
           <el-option
             v-for="dict in providerOptions"
-            :key="dict.dictValue"
-            :label="dict.dictLabel"
-            :value="dict.dictValue"
+            :key="dict.value"
+            :label="dict.name"
+            :value="dict.value"
           />
         </el-select>
       </el-form-item>
@@ -84,7 +84,9 @@
       <el-table-column label="模板" align="center" prop="template"/>
       <el-table-column label="状态" align="center" prop="isEffect">
         <template slot-scope="scope">
-          <span :style="{color: (status = isEffectOptions[parseInt(scope.row.isEffect)]).color}">{{ status.dictLabel }}</span>
+          <span :style="{color: (status = isEffectOptions[parseInt(scope.row.isEffect)]).color}">{{
+              status.dictLabel
+            }}</span>
         </template>
       </el-table-column>
       <el-table-column label="请求域名" align="center" prop="endpoint" min-width="150"/>
@@ -129,7 +131,8 @@
     />
 
     <!-- 添加或修改SMS短信服务配置对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入名称"/>
@@ -138,9 +141,9 @@
           <el-select v-model="form.provider" placeholder="请选择服务商">
             <el-option
               v-for="dict in providerOptions"
-              :key="dict.dictValue"
-              :label="dict.dictLabel"
-              :value="parseInt(dict.dictValue)"
+              :key="dict.value"
+              :label="dict.name"
+              :value="dict.value"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -162,7 +165,7 @@
         <el-form-item label="smsSdkAppid" prop="smsSdkAppid" v-if="form.provider == 0">
           <el-input v-model="form.smsSdkAppid" placeholder="请输入smsSdkAppid"/>
         </el-form-item>
-        <el-form-item label="请求域名" prop="endpoint" v-if="form.provider === 3">
+        <el-form-item label="请求域名" prop="endpoint" v-if="form.provider == 3">
           <el-input v-model="form.endpoint" placeholder="请输入请求域名"/>
         </el-form-item>
       </el-form>
@@ -175,7 +178,16 @@
 </template>
 
 <script>
-import { listSms, getSms, delSms, addSms, updateSms, effectSms, noEffectSms, smsTest } from '@/api/platform-web/server/sms'
+import {
+  listSms,
+  getSms,
+  delSms,
+  addSms,
+  updateSms,
+  effectSms,
+  noEffectSms,
+  smsTest
+} from '@/api/platform-web/server/sms'
 
 export default {
   name: 'Sms',
@@ -201,7 +213,19 @@ export default {
       // 是否显示弹出层
       open: false,
       // 服务商字典
-      providerOptions: [],
+      providerOptions: [{
+        name: "腾讯云",
+        value: 0
+      }, {
+        name: "阿里云",
+        value: 1
+      }, {
+        name: "百度云",
+        value: 2
+      }, {
+        name: "华为云",
+        value: 3
+      }],
       // 状态字典
       isEffectOptions: [],
       // 查询参数
@@ -219,31 +243,31 @@ export default {
       // 表单校验
       rules: {
         name: [
-          { required: true, message: 'SMS名称不能为空', trigger: 'blur' }
+          {required: true, message: 'SMS名称不能为空', trigger: 'blur'}
         ],
         provider: [
-          { required: true, message: '服务商不能为空', trigger: 'change' }
+          {required: true, message: '服务商不能为空', trigger: 'change'}
         ],
         appKey: [
-          { required: true, message: 'appKey不能为空', trigger: 'blur' }
+          {required: true, message: 'appKey不能为空', trigger: 'blur'}
         ],
         appAccess: [
-          { required: true, message: 'appAccess不能为空', trigger: 'blur' }
+          {required: true, message: 'appAccess不能为空', trigger: 'blur'}
         ],
         signature: [
-          { required: true, message: '签名不能为空', trigger: 'blur' }
+          {required: true, message: '签名不能为空', trigger: 'blur'}
         ],
         template: [
-          { required: true, message: '模板不能为空', trigger: 'blur' }
+          {required: true, message: '模板不能为空', trigger: 'blur'}
         ]
       }
     }
   },
   created() {
     this.getList()
-    this.getDicts('server_sms_provider').then(response => {
+    /*this.getDicts('server_sms_provider').then(response => {
       this.providerOptions = response.data
-    })
+    })*/
     this.getDicts('server_sms_status').then(response => {
       this.isEffectOptions = response.data
     })
@@ -260,7 +284,12 @@ export default {
     },
     // 服务商字典翻译
     providerFormat(row, column) {
-      return this.selectDictLabel(this.providerOptions, row.provider)
+      for (const providerOption of this.providerOptions) {
+        if (row.provider == providerOption.value) {
+          return providerOption.name;
+        }
+      }
+      return ""
     },
     // 状态字典翻译
     isEffectFormat(row, column) {
@@ -356,7 +385,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return delSms(ids)
       }).then(() => {
         this.getList()
@@ -369,7 +398,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return effectSms(row.id)
       }).then(() => {
         this.getList()
@@ -382,7 +411,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return noEffectSms(row.id)
       }).then(() => {
         this.getList()
@@ -394,7 +423,7 @@ export default {
       this.$prompt('请输入您的手机号', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
-      }).then(({ value }) => {
+      }).then(({value}) => {
         return smsTest(row.id, value).then((res) => {
           if (res.code === 200) {
             this.$notify.success(res.msg)

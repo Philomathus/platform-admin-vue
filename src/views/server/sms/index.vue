@@ -89,7 +89,6 @@
             }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="请求域名" align="center" prop="endpoint" min-width="150"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
@@ -159,7 +158,7 @@
         <el-form-item label="模板" prop="template">
           <el-input v-model="form.template" placeholder="请输入模板"/>
         </el-form-item>
-        <el-form-item label="地区" prop="region">
+        <el-form-item label="地区" prop="region" v-if="form.provider != 3">
           <el-input v-model="form.region" placeholder="请输入地区"/>
         </el-form-item>
         <el-form-item label="smsSdkAppid" prop="smsSdkAppid" v-if="form.provider == 0">

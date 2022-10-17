@@ -536,6 +536,20 @@ export default {
   }
 }
 
+@media only screen and (min-width: 1681px) and (max-width:1750px){
+  .selection{
+    margin-left:10%;
+  }
+}
+
+@media only screen and (min-width: 1751px){
+  .selection{
+    position: relative;
+    float: right;
+    padding-right: 10%;
+  }
+}
+
 
 
 

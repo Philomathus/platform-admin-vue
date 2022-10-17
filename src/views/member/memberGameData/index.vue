@@ -547,7 +547,7 @@ export default {
   .selection{
     position: relative;
     float: right;
-    padding-right: 10%;
+    padding-right: 9%;
   }
 }
 

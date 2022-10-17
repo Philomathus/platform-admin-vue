@@ -530,6 +530,13 @@ export default {
   }
 }
 
+@media only screen and (min-width: 1623px) and (max-width:1680px){
+  .selection{
+    margin-left:20%;
+  }
+}
+
+
 
 
 </style>

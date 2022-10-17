@@ -477,7 +477,17 @@ export default {
   margin-top: -40px
 }
 
-@media only screen and (min-width: 1300px) and (max-width: 1312px){
+@media only screen and (min-width: 1300px) and (max-width: 1309px){
+  .selection{
+    margin-left: 96%;
+    /*margin-left: 50%;*/
+  }
+  .hideSidebar .selection{
+    margin-left: 50%;
+  }
+}
+
+@media only screen and (min-width: 1310px) and (max-width: 1312px){
   .selection{
     margin-left: 84%;
   }
@@ -487,69 +497,111 @@ export default {
   .selection{
     margin-left: 84%;
   }
+  .hideSidebar .selection{
+    margin-left: 50%;
+  }
 }
 
-@media only screen and (min-width: 1350px) and (max-width:1388px){
+@media only screen and (min-width: 1350px) and (max-width:1373px){
   .selection{
     margin-left: 81%;
   }
-}
-
-@media only screen and (min-width: 1400px) and (max-width:1449px){
-  .selection{
-    margin-left:69%;
+  .hideSidebar .selection{
+    margin-left: 50%;
   }
 }
 
-@media only screen and (min-width: 1450px) and (max-width:1487px){
+@media only screen and (min-width: 1374px) and (max-width:1399px){
+  .selection{
+    margin-left: 70%;
+  }
+  .hideSidebar .selection{
+    margin-left: 48%;
+  }
+}
+
+@media only screen and (min-width: 1400px) and (max-width:1430px){
+  .selection{
+    margin-left:67%;
+  }
+  .hideSidebar .selection{
+    margin-left: 38%;
+  }
+}
+
+@media only screen and (min-width: 1431px) and (max-width: 1523px){
   .selection{
     margin-left: 51%;
   }
-}
 
-@media only screen and (min-width: 1488px) and (max-width:1600px){
-  .selection{
-    margin-left: 49%;
+  .hideSidebar .selection{
+    margin-left: 19%;
   }
 }
 
-@media only screen and (min-width: 1525px) and (max-width:1558px){
+@media only screen and (min-width: 1524px) and (max-width: 1559px){
   .selection{
-    margin-left: 40%;
+    margin-left: 39%;
+  }
+
+  .hideSidebar .selection{
+    margin-left: 19%;
   }
 }
 
-@media only screen and (min-width: 1558px) and (max-width:1599px){
+@media only screen and (min-width: 1560px) and (max-width: 1599px){
   .selection{
-    margin-left: 30%;
+    margin-left: 29%;
+  }
+
+  .hideSidebar .selection{
+   margin-left: 10%;
   }
 }
 
-@media only screen and (min-width: 1600px) and (max-width:1622px){
+@media only screen and (min-width: 1600px) and (max-width: 1622px){
   .selection{
-    margin-left:28%;
+    margin-left: 28%;
   }
-}
 
-@media only screen and (min-width: 1623px) and (max-width:1680px){
-  .selection{
-    margin-left:20%;
-  }
-}
-
-@media only screen and (min-width: 1681px) and (max-width:1750px){
-  .selection{
-    margin-left:10%;
-  }
-}
-
-@media only screen and (min-width: 1751px){
-  .selection{
+  .hideSidebar .selection{
+    margin-left: 0;
     position: relative;
-    float: right;
-    padding-right: 9%;
   }
 }
+
+
+@media only screen and (min-width: 1623px) and (max-width: 1656px){
+  .selection{
+    margin-left: 20%;
+  }
+
+  .hideSidebar .selection{
+    margin-left: 0;
+    position: relative;
+  }
+}
+
+@media only screen and (min-width: 1657px) and (max-width: 1670px){
+  .selection{
+    margin-left: 20%;
+  }
+
+  .hideSidebar .selection{
+    margin-left: 90%;
+  }
+}
+
+@media only screen and (min-width: 1671px){
+  .selection{
+    margin-left: 85%;
+  }
+
+  .hideSidebar .selection{
+    margin-left: 65%;
+  }
+}
+
 
 
 

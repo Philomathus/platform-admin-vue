@@ -520,7 +520,7 @@ export default {
   }
 }
 
-@media only screen and (min-width: 1400px) and (max-width:1430px){
+@media only screen and (min-width: 1400px) and (max-width:1413px){
   .selection{
     margin-left:67%;
   }
@@ -529,7 +529,26 @@ export default {
   }
 }
 
-@media only screen and (min-width: 1431px) and (max-width: 1523px){
+@media only screen and (min-width: 1414px) and (max-width:1430px){
+  .selection{
+    margin-left:67%;
+  }
+  .hideSidebar .selection{
+    margin-left: 28%;
+  }
+}
+
+@media only screen and (min-width: 1431px) and (max-width: 1475px){
+  .selection{
+    margin-left: 51%;
+  }
+
+  .hideSidebar .selection{
+    margin-left: 29%;
+  }
+}
+
+@media only screen and (min-width: 1476px) and (max-width: 1523px){
   .selection{
     margin-left: 51%;
   }
@@ -537,6 +556,7 @@ export default {
   .hideSidebar .selection{
     margin-left: 19%;
   }
+
 }
 
 @media only screen and (min-width: 1524px) and (max-width: 1559px){

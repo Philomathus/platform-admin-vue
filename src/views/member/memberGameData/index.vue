@@ -512,11 +512,24 @@ export default {
   }
 }
 
-@media only screen and (min-width: 1600px) and (max-width:1660px){
+@media only screen and (min-width: 1525px) and (max-width:1558px){
+  .selection{
+    margin-left: 40%;
+  }
+}
+
+@media only screen and (min-width: 1558px) and (max-width:1599px){
+  .selection{
+    margin-left: 30%;
+  }
+}
+
+@media only screen and (min-width: 1600px) and (max-width:1622px){
   .selection{
     margin-left:28%;
   }
 }
+
 
 
 </style>

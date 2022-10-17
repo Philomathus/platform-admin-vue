@@ -18,13 +18,13 @@
 
       <el-form-item label="日期范围" prop="selectDate">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}" start-placeholder="开始时间"
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '95%'}" start-placeholder="开始时间"
                         end-placeholder="开始时间"
                         range-separator="至" clearable :default-time="['00:00:00', '23:59:59']"
                         :picker-options="pickerOptions">
         </el-date-picker>
       </el-form-item>
-      <el-form-item prop="account" style="margin-left: -45px">
+      <el-form-item prop="account" style="margin-left: -20px">
         <el-input
           v-model.trim="queryParams.account"
           placeholder="请输入会员ID"

@@ -12,7 +12,8 @@
         </el-checkbox-group>
         <el-checkbox v-model="checkNodeAll" @change="handleCheckedTreeNodeAll()"
                      class="selection text-info"
-                     style="">全选/全不选</el-checkbox>
+                     style="">全选/全不选
+        </el-checkbox>
       </el-form-item>
 
       <el-form-item label="日期范围" prop="selectDate">

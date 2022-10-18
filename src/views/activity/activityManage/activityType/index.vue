@@ -155,7 +155,8 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        name: null
+        name: null,
+        oder: ''
       },
       // 表单参数
       form: {},

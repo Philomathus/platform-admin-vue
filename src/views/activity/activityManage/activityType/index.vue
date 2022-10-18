@@ -67,6 +67,7 @@
 
     <el-table v-loading="loading" :data="activityTypeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="排序" align="center" prop="oder"/>
       <el-table-column label="名称" align="center" prop="name"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -104,6 +105,9 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入名称"/>
+        </el-form-item>
+        <el-form-item label="排序" prop="oder">
+          <el-input v-model="form.oder" placeholder="请输入名称"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -159,6 +163,9 @@ export default {
       rules: {
         name: [
           {required: true, message: '名称不能为空', trigger: 'blur'}
+        ],
+        oder: [
+          {required: true, message: '不能为空', trigger: 'blur'}
         ]
       }
     };

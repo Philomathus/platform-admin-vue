@@ -156,7 +156,7 @@ export default {
         pageNum: 1,
         pageSize: 10,
         name: null,
-        oder: ''
+        oder: null
       },
       // 表单参数
       form: {},

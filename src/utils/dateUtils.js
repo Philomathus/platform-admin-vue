@@ -322,7 +322,7 @@ export const pickerDateTimeMeiDong = [{
     const start = new Date()
     const end = new Date()
     end.setTime(end.getTime() + 3600 * 1000 * 24)
-    picker.$emit('pick', [new Date(start.toLocaleDateString() + ' 12:00:00'), new Date(end.toLocaleDateString() + ' 11:59:59')])
+    picker.$emit('pick', [new Date(start.toLocaleDateString("zh-cn") + ' 12:00:00'), new Date(end.toLocaleDateString("zh-cn") + ' 11:59:59')])
   }
 }, {
   text: '昨日',
@@ -330,7 +330,7 @@ export const pickerDateTimeMeiDong = [{
     const end = new Date()
     const start = new Date()
     start.setTime(start.getTime() - 3600 * 1000 * 24)
-    picker.$emit('pick', [new Date(start.toLocaleDateString() + ' 12:00:00'), new Date(end.toLocaleDateString() + ' 11:59:59')])
+    picker.$emit('pick', [new Date(start.toLocaleDateString("zh-cn") + ' 12:00:00'), new Date(end.toLocaleDateString("zh-cn") + ' 11:59:59')])
   }
 }, {
   text: '前天',
@@ -339,6 +339,6 @@ export const pickerDateTimeMeiDong = [{
     const start = new Date()
     start.setTime(start.getTime() - 3600 * 1000 * 48)
     end.setTime(end.getTime()  - 3600 * 1000 * 24)
-    picker.$emit('pick', [new Date(start.toLocaleDateString() + ' 12:00:00'), new Date(end.toLocaleDateString() + ' 11:59:59')])
+    picker.$emit('pick', [new Date(start.toLocaleDateString("zh-cn") + ' 12:00:00'), new Date(end.toLocaleDateString("zh-cn") + ' 11:59:59')])
   }
 }]

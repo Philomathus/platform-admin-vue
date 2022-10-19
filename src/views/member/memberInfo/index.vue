@@ -225,6 +225,7 @@
             plain
             size="small"
             @click="boxDish(scope.row)"
+            v-hasPermi="['member:memberInfo:boxDish']"
           >保险箱余额提出
           </el-button>
         </template>

@@ -1,5 +1,7 @@
 <template>
   <div class="app-container">
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="会员ID" prop="memberId">
         <el-input
@@ -39,6 +41,18 @@
         <el-button type="primary" size="mini" @click="handleClean">清除数据</el-button>
       </el-form-item>
     </el-form>
+      </el-col>
+
+    <el-col :span="1.5" style="padding-top: 5px">
+      <el-button type="success" size="mini">总派送金额{{totalMoney || 0}}</el-button>
+      <el-button  type="primary"
+                  icon="el-icon-search"
+                  size="mini"
+                  @click="getTotalMoney"
+                  style="margin-left: 20px">统计派送金额
+      </el-button>
+    </el-col>
+    </el-row>
 
     <el-row :gutter="10" class="mb8">
 
@@ -173,7 +187,7 @@ import {
   exportMemberMoney,
   starSend,
   handleClean,
-  uploadFileUrl
+  uploadFileUrl, count
 } from '@/api/platform-web/member/memberMoney'
 import { getToken } from '@/utils/auth'
 
@@ -207,6 +221,7 @@ export default {
       // 是否显示弹出层
       open: false,
       opene: false,
+      totalMoney : 0,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -419,6 +434,12 @@ export default {
       }).then(response => {
         this.downloadExcel(response, '派送彩金暂存表')
       }).catch(() => {
+      })
+    },
+
+    getTotalMoney(){
+      count().then(res=>{
+        this.totalMoney = res.data
       })
     }
   }

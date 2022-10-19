@@ -79,3 +79,10 @@ export function exportMemberMoney(query) {
 export function uploadFileUrl(){
   return url.platformWeb + '/member/memberInfo/batchInsertShops'
 }
+
+export function count() {
+  return request({
+    url: url.platformWeb + '/admin/memberMoney/count' ,
+    method: 'get'
+  })
+}

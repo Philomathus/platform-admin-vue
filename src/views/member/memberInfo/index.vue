@@ -1116,9 +1116,10 @@ export default {
           id: row.id
         }).then((res) => {
           if (res.code === 0) {
-            this.$notify.success('重置提现成功')
+            this.$notify.success('保险箱余额提出成功')
+            this.getList()
           } else {
-            this.$notify.error('重置提现失败')
+            this.$notify.error('保险箱余额提出失败')
           }
         })
       }).catch(() => {

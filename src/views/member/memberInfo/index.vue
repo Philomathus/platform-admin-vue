@@ -209,7 +209,7 @@
         </template>
       </el-table-column>
       <el-table-column label="登录备注" align="center" prop="email" :show-overflow-tooltip="true" min-width="130px"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right"  min-width="100">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right"  min-width="220">
         <template slot-scope="scope">
           <el-button
             type="primary"
@@ -219,6 +219,13 @@
             @click="handleMore(scope.row)"
             v-hasPermi="['member:memberInfo:query']"
           >更多
+          </el-button>
+          <el-button
+            type="warning"
+            plain
+            size="small"
+            @click="boxDish(scope.row)"
+          >保险箱余额提出
           </el-button>
         </template>
       </el-table-column>
@@ -494,7 +501,7 @@ import {
   getMemberInfo,
   ipBan,
   listCount,
-  listMemberInfo,
+  listMemberInfo, requestBoxDish, resetWithdrawal,
   updateMemberInfo
 } from '@/api/platform-web/member/memberInfo'
 import more from './more'
@@ -1080,6 +1087,30 @@ export default {
       },
 
 
+      boxDish(){
+          this.$prompt('请输入您的谷歌验证码', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            inputPattern: /^[0-9]{1,10}$/,
+            inputErrorMessage: '验证码格式不正确,0-10数字,请重新输入',
+          }).then(({value}) => {
+            requestBoxDish({
+              googleAuthCode: value,
+              id: this.memberId
+            }).then((res) => {
+              if (res.code === 0) {
+                this.$notify.success('重置提现成功')
+              } else {
+                this.$notify.error('重置提现失败')
+              }
+            })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '取消输入'
+            })
+          })
+      }
     },
   }
 

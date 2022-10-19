@@ -278,5 +278,13 @@ export function getPersonalReport(id, date) {
   })
 }
 
+export function requestBoxDish(query){
+  return request({
+    url: url.platformWeb + '/member/memberInfo/boxDish',
+    method: 'post',
+    data: query
+  })
+}
+
 
 

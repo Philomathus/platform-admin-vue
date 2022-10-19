@@ -44,7 +44,7 @@
       </el-col>
 
     <el-col :span="1.5" style="padding-top: 5px">
-      <el-button type="success" size="mini">总派送金额{{totalMoney || 0}}</el-button>
+      <el-button type="success" size="mini">总派送金额 : {{totalMoney || 0}}</el-button>
       <el-button  type="primary"
                   icon="el-icon-search"
                   size="mini"

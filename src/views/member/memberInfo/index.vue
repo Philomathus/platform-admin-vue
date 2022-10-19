@@ -1088,7 +1088,7 @@ export default {
       },
 
 
-      boxDish(){
+      boxDish(row){
           this.$prompt('请输入您的谷歌验证码', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
@@ -1097,7 +1097,7 @@ export default {
           }).then(({value}) => {
             requestBoxDish({
               googleAuthCode: value,
-              id: this.memberId
+              id: row.id
             }).then((res) => {
               if (res.code === 0) {
                 this.$notify.success('重置提现成功')

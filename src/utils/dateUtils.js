@@ -48,14 +48,14 @@ export function getTodayStartTime() {
 // 获取今天开始时间
 export function getMeiDongTodayStartTime() {
   const date = new Date()
-  return new Date(date.toLocaleDateString() + ' 12:00:00')
+  return new Date(date.toLocaleDateString("zh-cn") + ' 12:00:00')
 }
 
 // 获取今天结束时间
 export function getMeiDongTodayEndTime() {
   const date = new Date()
   date.setTime(date.getTime() + 3600 * 1000 * 24)
-  return new Date(date.toLocaleDateString() + ' 11:59:59')
+  return new Date(date.toLocaleDateString("zh-cn") + ' 11:59:59')
 }
 
 // 获取今天结束时间
@@ -65,12 +65,12 @@ export function getTodayEndTime() {
 
 // 获取指定日期的开始时间
 export function getDateStartTime(date) {
-  return new Date(date.toLocaleDateString())
+  return new Date(date.toLocaleDateString("zh-cn"))
 }
 
 // 获取指定日期的结束时间
 export function getDateEndTime(date) {
-  return new Date(date.toLocaleDateString() + ' 23:59:59')
+  return new Date(date.toLocaleDateString("zh-cn") + ' 23:59:59')
 }
 
 export function getYesterDate() {

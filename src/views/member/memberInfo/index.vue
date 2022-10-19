@@ -20,12 +20,12 @@
           </el-form-item>
           <el-form-item label="日期范围" prop="regTime">
             <el-date-picker type="datetimerange" v-model="dateRange" format="yyyy-MM-dd HH:mm:ss"
-                            value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}" start-placeholder="开始时间"
+                            value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '95%'}" start-placeholder="开始时间"
                             end-placeholder="开始时间"
                             range-separator="至" clearable :default-time="['00:00:00', '23:59:59']" :picker-options="pickerOptions"
             ></el-date-picker>
           </el-form-item>
-          <el-form-item prop="status" style="width: 110px;margin-left: -40px">
+          <el-form-item prop="status" style="width: 110px;margin-left: -20px">
             <el-select v-model="queryParams.status" placeholder="全部状态" clearable size="small">
     <!--          <el-option v-for="(item,index) in typeList" :key="index" :label="item.label" :value="item.value"/>-->
               <el-option

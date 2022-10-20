@@ -723,13 +723,50 @@ export default {
   }
 }
 
-@media only screen and (min-width: 1671px){
+@media only screen and (min-width: 1670px){
   .selection{
     margin-left: 85%;
   }
 
   .hideSidebar .selection{
     margin-left: 65%;
+  }
+}
+
+@media only screen and (min-width: 1671px) and (max-width: 1745px){
+  .openSidebar .selection{
+    margin-left: 20%;
+  }
+  .hideSidebar .selection{
+    margin-left: 90%;
+  }
+}
+
+@media only screen and (min-width: 1746px) and (max-width: 1799px){
+  .openSidebar .selection{
+    margin-left: 100%;
+  }
+  .hideSidebar .selection{
+    margin-left: 85%;
+  }
+}
+
+@media only screen and (min-width: 1800px) and (max-width: 1802px){
+  .openSidebar .selection{
+    margin-left: 97.5%;
+  }
+  .hideSidebar .selection{
+    margin-left: 75%;
+  }
+}
+
+
+@media only screen and (min-width: 1803px){
+  .openSidebar .selection{
+    margin-left: 85%;
+  }
+  .hideSidebar .selection{
+    margin-left: 72%;
   }
 }
 

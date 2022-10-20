@@ -16,7 +16,7 @@
         </el-checkbox>
       </el-form-item>
 
-      <el-form-item label="日期范围" prop="selectDate">
+      <el-form-item label="日期范围" prop="selectDate" class="small-layout">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '95%'}" start-placeholder="开始时间"
                         end-placeholder="开始时间"
@@ -24,7 +24,7 @@
                         :picker-options="pickerOptions">
         </el-date-picker>
       </el-form-item>
-      <el-form-item prop="account" style="margin-left: -20px">
+      <el-form-item prop="account" style="margin-left: -20px"  class="small-layout">
         <el-input
           v-model.trim="queryParams.account"
           placeholder="请输入会员ID"
@@ -32,7 +32,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="gameId">
+      <el-form-item prop="gameId" class="small-layout">
         <el-input
           v-model="queryParams.gameId"
           placeholder="请输入游戏局号"
@@ -40,7 +40,7 @@
           @keyup.enter.native="handleQuery"/>
       </el-form-item>
 
-      <el-form-item>
+      <el-form-item class="small-layout">
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
@@ -477,9 +477,120 @@ export default {
   margin-top: -40px
 }
 
+@media only screen and (min-width: 1000px) and (max-width: 1027px){
+  .openSidebar .selection{
+    margin-left: 0;
+    float: left;
+    margin-top: 0;
+  }
+  .openSidebar .small-layout{
+    margin-top: 20px;
+  }
+  .hideSidebar .selection{
+    margin-left: 42%;
+  }
+}
+
+@media only screen and (min-width: 1028px) and (max-width: 1112px){
+  .openSidebar .selection{
+    margin-left: 70%
+  }
+  .hideSidebar .selection{
+    margin-left: 29%;
+  }
+
+}
+
+@media only screen and (min-width: 1113px) and (max-width: 1127px){
+  .openSidebar .selection{
+    margin-left: 70%
+  }
+  .hideSidebar .selection{
+    margin-left: 0;
+    float: left;
+    margin-top: 0;
+  }
+  .hideSidebar .small-layout{
+    margin-top: 20px;
+  }
+}
+
+@media only screen and (min-width: 1128px) and (max-width: 1145px){
+  .openSidebar .selection{
+    margin-left: 56%
+  }
+  .hideSidebar .selection{
+    margin-left: 0;
+    float: left;
+    margin-top: 0;
+  }
+  .hideSidebar .small-layout{
+    margin-top: 20px;
+  }
+}
+@media only screen and (min-width: 1146px) and (max-width: 1173px){
+  .openSidebar .selection{
+    margin-left: 42.5%
+  }
+  .hideSidebar .selection{
+    margin-left: 0;
+    float: left;
+    margin-top: 0;
+  }
+  .hideSidebar .small-layout{
+    margin-top: 20px;
+  }
+}
+
+@media only screen and (min-width: 1174px) and (max-width: 1227px){
+  .openSidebar .selection{
+    margin-left: 30%
+  }
+  .hideSidebar .selection{
+    margin-left: 83%;
+  }
+}
+
+@media only screen and (min-width: 1228px) and (max-width: 1258px){
+  .openSidebar .selection{
+    margin-left: 30%
+  }
+  .hideSidebar .selection{
+    margin-left: 68%;
+  }
+}
+
+@media only screen and (min-width: 1259px)  and (max-width: 1284px){
+  .openSidebar .selection{
+    margin-left: 0;
+    margin-top: 0;
+    float: left;
+  }
+  .hideSidebar .selection{
+    margin-left: 68%;
+  }
+  .openSidebar .small-layout{
+    margin-top: 20px;
+  }
+}
+
+@media only screen and (min-width: 1285px) and (max-width: 1300px){
+  .openSidebar .selection{
+    margin-left: 0;
+    margin-top: 0;
+    float: left;
+  }
+  .hideSidebar .selection{
+    margin-left: 52%;
+  }
+  .openSidebar .small-layout{
+    margin-top: 20px;
+  }
+}
+
 @media only screen and (min-width: 1300px) and (max-width: 1309px){
-  .selection{
-    margin-left: 96%;
+  .openSidebar .selection{
+    margin-left: 86%;
     /*margin-left: 50%;*/
   }
   .hideSidebar .selection{

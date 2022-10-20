@@ -143,7 +143,7 @@ export default {
     },
 
     initData() {
-      var date = this.date
+      const date = this.date
       if (!date.dateRange) {
         this.msgError("搜索时间不允许为空");
         return

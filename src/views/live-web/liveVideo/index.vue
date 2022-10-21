@@ -239,7 +239,7 @@
     </el-dialog>
     <pagination
       v-show="total>0"
-      :page-sizes="[50,100,200,500]"
+      :page-sizes="[200,500]"
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"

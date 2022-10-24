@@ -42,8 +42,16 @@
         <td>{{ this.income }}</td>
       </tr>
       <tr>
+        <th class="bold">余额</th>
+        <td>{{ data.totalAccount.box_account }}</td>
+        <th class="bold">保险箱余额</th>
+        <td>{{ data.totalAccount.total_account }}</td>
+      </tr>
+      <tr>
         <td colspan="8"></td>
       </tr>
+
+
       <tr>
         <th class="bold" colspan="2">投注游戏</th>
         <th class="bold">有效投注</th>

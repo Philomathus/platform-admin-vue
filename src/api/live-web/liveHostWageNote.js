@@ -53,7 +53,7 @@ export function exportHostWageNote(query) {
 // 查询主播统计时长明细列表
 export function listHostWageNoteDaysPage(query) {
   return request({
-    url: url.platformWeb + '/admin/liveHostWageDay/lists',
+    url: url.platformWeb + '/admin/liveHostWageDay/list',
     method: 'get',
     params: query
   })

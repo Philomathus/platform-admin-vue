@@ -243,6 +243,7 @@ export default {
         settlementRate: 0.7,
         pageNum: 1,
         pageSize: 100,
+        // orderBy: 'd.end_time desc',
       },
       detailsList: [],
       detailsTotal: 0,
@@ -250,8 +251,8 @@ export default {
         dateDay: this.parseTime(new Date(), '{y}-{m}-{d}'),
         pageNum: 1,
         pageSize: 100,
-        orderByColumn: 'create_time',
-        isAsc: 'desc'
+        // orderByColumn: 'create_time',
+        // isAsc: 'desc'
       },
       // 表单参数
       form: {},

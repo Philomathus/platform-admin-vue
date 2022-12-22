@@ -1,9 +1,11 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px" :rules="queryRule">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px"
+             :rules="queryRule">
       <el-form-item label="日期选择" prop="agenttime">
-        <el-date-picker v-model="queryParams.agenttime" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
-                        :style="{width: '100%'}" placeholder="请选择日期选择" clearable :picker-options="pickerOptions"
+        <el-date-picker type="daterange" v-model="dateRange" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
+                        :style="{width: '250px'}" start-placeholder="开始日期"
+                        end-placeholder="结束日期" clearable :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="agentcode">
@@ -15,19 +17,21 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="agentname">
-        <el-input
-          v-model="queryParams.agentname"
-          placeholder="邀请账号"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+      <!--      <el-form-item prop="agentname">
+              <el-input
+                v-model="queryParams.agentname"
+                placeholder="邀请账号"
+                clearable
+                size="small"
+                @keyup.enter.native="handleQuery"
+              />
+            </el-form-item>-->
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery" :disabled="isDisable">搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery" :disabled="isDisable">搜索
+        </el-button>
       </el-form-item>
-      <span style="position:relative ;color: red ;top:7px;font-size: 15px">友情提示(每日推广数据查询前，请进行一次基础数据的预生成操作)</span>
+      <span
+        style="position:relative ;color: red ;top:7px;font-size: 15px">友情提示(每日推广数据查询前，请进行一次基础数据的预生成操作)</span>
     </el-form>
 
 
@@ -82,21 +86,25 @@
       <el-table v-loading="loading" :data="report" :stripe="true">
         <el-table-column label="渠道编码" align="center" prop="agentcode">
           <template slot-scope="scope">
-            <a style="color: #00afff" @click="jump(scope.row.agentcode,scope.row.agenttime)">{{ scope.row.agentcode }}</a>
+            <a style="color: #00afff" @click="jump(scope.row.agentcode,scope.row.agenttime)">{{
+                scope.row.agentcode
+              }}</a>
           </template>
         </el-table-column>
-
-        <el-table-column label="邀请账号" min-width="150" align="center" prop="agentname"/>
-        <el-table-column label="统计时间" align="center" prop="agenttime" min-width="120"/>
-        <el-table-column label="当日/总(注册人数)" min-width="130" align="center" prop="regisNumber" :formatter="regisNumber"/>
+        <!--        <el-table-column label="邀请账号" min-width="150" align="center" prop="agentname"/>-->
+        <el-table-column label="统计时间" align="center" prop="agenttime" min-width="130"/>
+        <el-table-column label="当日/总(注册人数)" min-width="130" align="center" prop="regisNumber"
+                         :formatter="regisNumber"/>
         <el-table-column label="公司入款（首充）" min-width="130" align="center" prop="gsRukuanjine"/>
         <el-table-column label="线上入款（首充）" min-width="130" align="center" prop="xsRukuanjine"/>
         <el-table-column label="手工入款（首充）" min-width="130" align="center" prop="sgRukuanjine"/>
         <el-table-column label="入款总（首充）" min-width="120" align="center" prop="totalfristRukuanjine"/>
         <el-table-column label="人/笔/金额（出款日总）" min-width="170" align="center" prop="totalChukuanjine"/>
-        <el-table-column label="人/笔/金额（入款日总）" min-width="170" align="center" prop="rukuanjine" :formatter="rukuanjine" fixed="right"/>
+        <el-table-column label="人/笔/金额（入款日总）" min-width="170" align="center" prop="rukuanjine"
+                         :formatter="rukuanjine" fixed="right"/>
         <el-table-column label="送礼次数/金额" min-width="120" align="center" prop="totalGiveprop"/>
-        <el-table-column label="直播间次数/活跃安卓/活跃苹果" min-width="210" align="center" prop="ios" :formatter="ios" fixed="right"/>
+        <el-table-column label="直播间次数/活跃安卓/活跃苹果" min-width="210" align="center" prop="ios" :formatter="ios"
+                         fixed="right"/>
         <!--          <template slot-scope="scope">-->
         <!--            <a style="color: #00afff" @click="jump(scope.row.agentcode,scope.row.agenttime)">{{ scope.row.ios }}</a>-->
         <!--          </template>-->
@@ -164,17 +172,18 @@ import {
   delPromotionCode,
   generatedata
 } from '@/api/platform-web/report/agentCount'
-import { getYesterDate } from '@/utils/dateUtils'
-import { toyesDayshortcuts } from '@/utils/dateUtils'
+import {getYesterDate, parseTime} from '@/utils/dateUtils'
+import {pickerDateShortcuts} from '@/utils/dateUtils'
 
 export default {
   name: 'Agent',
   components: {},
   data() {
     return {
+      dateRange: [parseTime(new Date(), '{y}-{m}-{d}'), parseTime(new Date(), '{y}-{m}-{d}')],
       //日期快捷
-      pickerOptions: { shortcuts: toyesDayshortcuts },
-      interval: { listTime: null },
+      pickerOptions: {shortcuts: pickerDateShortcuts},
+      interval: {listTime: null},
       // 遮罩层
       listLoading: false,
       isDestroyed: false,
@@ -184,7 +193,7 @@ export default {
       ids: [],
       // 非单个禁用
       single: true,
-      isDisable:false,
+      isDisable: false,
       // 非多个禁用
       multiple: true,
       //新增推广码弹框
@@ -214,7 +223,7 @@ export default {
       },
       queryRule: {
         agentcode: [
-          { required: true, message: '推广码不能为空', trigger: 'blur' }
+          {required: true, message: '推广码不能为空', trigger: 'blur'}
         ]
       },
       // 表单参数
@@ -222,7 +231,7 @@ export default {
       // 表单校验
       rules: {
         code: [
-          { required: true, message: '推广码不能为空', trigger: 'blur' }
+          {required: true, message: '推广码不能为空', trigger: 'blur'}
         ]
       }
     }
@@ -239,7 +248,7 @@ export default {
     getList() {
       var that = this
       this.loading = true
-      listReport(this.addDateRange(this.queryParams, this.queryParams.dateRange)).then(response => {
+      listReport(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
         if (response.code == 200) {
           this.report = response.data
           this.loading = false
@@ -248,7 +257,7 @@ export default {
         // that.$loading.hide();
         // that.listLoading = false;
         // that.$rjLoading.hide();
-      }).catch((err)=>{
+      }).catch((err) => {
         //that.$notify.error("预生成数据失败，请重新生成...")
         this.loading = false
       })
@@ -276,7 +285,7 @@ export default {
       })
     },
     jump(agentcode, agenttime) {
-      this.$router.push({ path: '/report/memberAgent', query: { agentcode: agentcode, agenttime: agenttime } })
+      this.$router.push({path: '/report/memberAgent', query: {agentcode: agentcode, agenttime: agenttime}})
     },
     //新增推广码
     handleAdd() {
@@ -290,11 +299,11 @@ export default {
     },
     //预生成数据
     generatedata() {
-      this.isDisable=true;
+      this.isDisable = true;
       const agenttime = this.queryParams.agenttime
       console.info(agenttime)
       if (agenttime == null || agenttime == '') {
-        this.queryParams.agenttime=this.parseTime(getYesterDate(), '{y}-{m}-{d}')
+        this.queryParams.agenttime = this.parseTime(getYesterDate(), '{y}-{m}-{d}')
       }
 
       generatedata({
@@ -303,13 +312,13 @@ export default {
         //this.msgSuccess(response.msg)
         if (response.code == 200) {
           this.msgSuccess(response.msg)
-          this.isDisable=false
+          this.isDisable = false
           this.open = false
           this.getList()
         }
-      }).catch((err)=>{
+      }).catch((err) => {
         //that.$notify.error("预生成数据失败，请重新生成...")
-        this.isDisable=false
+        this.isDisable = false
         this.open = false
         this.loading = false
       })
@@ -404,7 +413,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportReportAgentCount(queryParams)
       }).then(response => {
         this.downloadExcel(response, '推广统计报表')

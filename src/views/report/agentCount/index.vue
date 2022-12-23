@@ -300,15 +300,7 @@ export default {
     //预生成数据
     generatedata() {
       this.isDisable = true;
-      const agenttime = this.queryParams.agenttime
-      console.info(agenttime)
-      if (agenttime == null || agenttime == '') {
-        this.queryParams.agenttime = this.parseTime(getYesterDate(), '{y}-{m}-{d}')
-      }
-
-      generatedata({
-        agenttime: this.queryParams.agenttime
-      }).then(response => {
+      generatedata(this.addDateRange(this.queryParams, this.queryParams.dateRange)).then(response => {
         //this.msgSuccess(response.msg)
         if (response.code == 200) {
           this.msgSuccess(response.msg)

@@ -280,7 +280,7 @@ export default {
     },
     getListstorage() {
       this.loading = true
-      liststorage(this.addDateRange(this.queryParams, this.queryParams.dateRange)).then(response => {
+      liststorage(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
         this.getList()
       })
     },
@@ -300,7 +300,7 @@ export default {
     //预生成数据
     generatedata() {
       this.isDisable = true;
-      generatedata(this.addDateRange(this.queryParams, this.queryParams.dateRange)).then(response => {
+      generatedata(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
         //this.msgSuccess(response.msg)
         if (response.code == 200) {
           this.msgSuccess(response.msg)

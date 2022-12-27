@@ -52,16 +52,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="channelcode" style="width: 110px;" id="channelCode">
-        <el-select v-model="queryParams.channelcode" placeholder="全部类型" clearable size="small">
-          <el-option
-            v-for="(dict,i) in statusOptions"
-            :key="'A'+ i"
-            :label="dict.dictLabel"
-            :value="dict.dictValue"
-          />
-        </el-select>
-      </el-form-item>
       <el-form-item prop="nickName" style="width: 110px;" class="nickName">
         <el-input
           v-model="queryParams.nickName"
@@ -98,6 +88,32 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item prop="channelcode" style="width: 110px;" id="channelCode">
+        <el-select v-model="queryParams.channelcode" placeholder="全部类型" clearable size="small">
+          <el-option
+            v-for="(dict,i) in statusOptions"
+            :key="'A'+ i"
+            :label="dict.dictLabel"
+            :value="dict.dictValue"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item prop="version" style="width: 110px;" id="channelCode">
+        <el-input
+          v-model="queryParams.version"
+          placeholder="客户端版本号"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item prop="loginDev" style="width: 110px;" id="channelCode">
+        <el-select v-model="queryParams.loginDev" placeholder="登录设备" clearable style="width: 110px">
+          <el-option value="1" label="ios"></el-option>
+          <el-option value="2" label="android"></el-option>
+        </el-select>
+      </el-form-item>
+
       <el-form-item class="submit-btn">
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -626,6 +642,7 @@ export default {
         inviterCode: '',
         channelcode: '',
         downLoadDate: [],
+        loginDev: null,
         // orderByColumn: 'reg_time',
         // isAsc: 'desc'
       },

@@ -259,6 +259,16 @@ export function followList(query) {
   })
 }
 
+/** 查询禁止成员 By Ip接口 Query unBlock member By Ip interface */
+export function ipUnBlock(query) {
+  return request({
+    url: url.platformWeb + '/member/memberInfo/unBlock-ip',
+    method: 'put',
+    params: query
+  })
+}
+
+
 // 查询禁止成员 By Ip接口 Query ban member By Ip interface
 export function ipBan(query) {
   return request({

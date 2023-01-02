@@ -155,6 +155,7 @@
         </el-button>
       </el-col>
 
+
       <!--      adding new button ip click get pop up-->
       <el-col :span="1.5">
         <el-button
@@ -482,7 +483,13 @@
       </div>
 
       <!--      //** handling close button */-->
-      <el-row :gutter="10" class="mb8" style="margin-left: 85%;margin-top: 35px">
+      <el-row :gutter="15" class="mb8" style="margin-left: 77%;margin-top: 35px">
+        <!--        handling onclick deactivate user status-->
+        <el-col :span="1.5">
+          <el-button type="primary" plain style="height: auto" @click="ipUnBlockHandler">
+            正常
+          </el-button>
+        </el-col>
         <!--        handling onclick deactivate user status-->
         <el-col :span="1.5">
           <el-button type="primary" plain style="height: auto" @click="ipBlockHandler" :disabled='!isActive'>
@@ -531,7 +538,7 @@ import {
   changeStatusBan,
   exportMemberInfo,
   getMemberInfo,
-  ipBan,
+  ipBan, ipUnBlock,
   listCount,
   listMemberInfo, requestBoxDish, resetWithdrawal,
   updateMemberInfo
@@ -1085,6 +1092,25 @@ export default {
           this.$notify.error('状态修改失败')
         }
         this.$notify.success('状态设置0成功')
+
+      }).catch(() => {
+        this.$notify.error('网络异常error')
+      }).finally(() => {
+        this.searchMbyIpList()
+      })
+    },
+
+    /** start on click ip status to set 0 panel from here */
+    ipUnBlockHandler(){
+      /** set Member Status 0, By Ip Address Query Handler*/
+      ipUnBlock({
+        loginIp: this.queryParamIp.loginIp,
+        realName: this.queryParamIp.realName
+      }).then((res) => {
+        if (res.code === 0 || res.code > 200) {
+          this.$notify.error('状态修改失败')
+        }
+        this.$notify.success('状态设置正常成功')
 
       }).catch(() => {
         this.$notify.error('网络异常error')

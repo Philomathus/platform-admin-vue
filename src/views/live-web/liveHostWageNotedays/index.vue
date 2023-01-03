@@ -155,7 +155,7 @@ export default {
         this.queryParams.selectDate=[this.parseTime(new Date(), '{y}-{m}-{d}'), this.parseTime(new Date(), '{y}-{m}-{d}')]
       }
       listHostWageNoteDaysPage(this.queryParams).then(response => {
-        this.liveHostWageNoteList = response.rows
+        this.liveHostWageNoteList = response.data
         this.loading = false
       })
     },

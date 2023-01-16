@@ -186,7 +186,7 @@ export default {
       // 查询参数
       queryParams: {
         pageNum: 1,
-        pageSize: 50,
+        pageSize: 40,
         puserId: null,
         issue: null,
         status: null,

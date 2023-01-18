@@ -41,27 +41,6 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['activity:userActivity:add']">新增
-        </el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['activity:userActivity:remove']">删除
-        </el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
           type="warning"
           plain
           icon="el-icon-download"
@@ -86,27 +65,6 @@
       <el-table-column label="发布时间" prop="createTime" align="center" min-width="160"/>
       <el-table-column label="修改时间" prop="updateTime" align="center" min-width="160"/>
       <el-table-column label="操作人员" prop="updateBy" align="center" min-width="100"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right" min-width="120">
-        <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['activity:userActivity:edit']"
-            >修改
-          </el-button>
-          <el-button
-            style="color: #FF5722"
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            v-hasPermi="['activity:userActivity:remove']"
-            @click="handleDelete(scope.row)"
-            >删除
-          </el-button>
-        </template>
-      </el-table-column>
     </el-table>
 
     <pagination

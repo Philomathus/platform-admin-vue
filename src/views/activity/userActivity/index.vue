@@ -51,17 +51,6 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['activity:userActivity:edit']">修改
-        </el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
           type="danger"
           plain
           icon="el-icon-delete"
@@ -282,6 +271,7 @@ data(){
 
     /** 修改按钮操作 */
     handleUpdate(row){
+      console.log(row)
       userActivityById(row.id).then(res=>{
         this.form = res.data
         this.title = "updateForm";

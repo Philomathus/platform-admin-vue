@@ -204,7 +204,7 @@ data(){
 
   created() {
     this.getList();
-    this.getDicts('userActivityStatus').then(response => {
+    this.getDicts('user_activity_status').then(response => {
       this.statusOptions = response.data
     })
   },

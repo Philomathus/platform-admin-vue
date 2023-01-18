@@ -109,6 +109,13 @@
       </el-table-column>
     </el-table>
 
+    <pagination
+      v-show="total>0"
+      :total="total"
+      :page.sync="queryParams.pageNum"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"/>
+
 <!--    add or update form -->
     <el-dialog :title="title" :visible.sync="open" width="600" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="90px">

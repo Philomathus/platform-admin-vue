@@ -516,7 +516,7 @@ export default {
     stick(row) {
       updateVideoSort({
         id: row.id,
-        stick: 1
+        stick: true
       }).then(response => {
         if (response.code === 200) {
           this.msgSuccess(response.msg)
@@ -530,7 +530,7 @@ export default {
     closeStick(row) {
       updateVideoSort({
         id: row.id,
-        stick: 0
+        stick: false
       }).then(response => {
         if (response.code === 200) {
           this.msgSuccess(response.msg)

@@ -113,7 +113,25 @@
           <el-option value="2" label="android"></el-option>
         </el-select>
       </el-form-item>
-
+      <el-form-item prop="vipMin" style="width: 110px;" class="vipMin"><!--JAKEEE-->
+        <el-input
+          v-model="queryParams.vipMin"
+          placeholder="min-vip"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item>-</el-form-item>
+      <el-form-item prop="vipMax" style="width: 110px;" class="vipMax">
+        <el-input
+          v-model="queryParams.vipMax"
+          placeholder="max-vip"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item class="submit-btn">
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -584,6 +602,8 @@ export default {
       memberId: null,
       // 日期范围
       dateRange: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
+      minVip : '',
+      maxVip : '',
       //禁言禁用
       id: '',
       userName: '',
@@ -648,6 +668,8 @@ export default {
         nickName: '',
         inviterCode: '',
         channelcode: '',
+        vipMin: '',
+        vipMax: '',
         downLoadDate: [],
         loginDev: null,
         // orderByColumn: 'reg_time',

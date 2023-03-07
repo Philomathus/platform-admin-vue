@@ -894,10 +894,10 @@ export default {
           this.memberWithdrawLog()
           break
         case 5:
-          this.cardList()
           listBankList({}).then(response => {
             this.bankListOptions = response.rows;
           })
+          this.cardList()
           break
         case 12:
           this.getMemberImInfo()

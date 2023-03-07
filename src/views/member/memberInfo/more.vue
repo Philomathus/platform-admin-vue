@@ -245,11 +245,11 @@
           <el-table-column align="center" prop="bankName" label="银行名称" :show-overflow-tooltip="true" min-width="135">
             <template v-slot="{row}" v-if="index===5">
               <el-select filterable
-                         v-model="row.bankName">
+                         v-model="row.bankId">
                 <el-option v-for="dict in bankListOptions"
-                           :key="dict.bankName"
+                           :key="dict.id"
                            :label="dict.bankName"
-                           :value="dict.bankName"/>
+                           :value="dict.id"/>
               </el-select>
             </template>
           </el-table-column>

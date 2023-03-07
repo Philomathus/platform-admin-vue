@@ -245,11 +245,11 @@
           <el-table-column align="center" prop="bankName" label="银行名称" :show-overflow-tooltip="true" min-width="135">
             <template v-slot="{row}" v-if="index===5">
               <el-select filterable
-                         v-model="row.name">
+                         v-model="row.bankName">
                 <el-option v-for="dict in bankListOptions"
-                           :key="dict.name"
-                           :label="dict.name"
-                           :value="dict.name"/>
+                           :key="dict.bankName"
+                           :label="dict.bankName"
+                           :value="dict.bankName"/>
               </el-select>
             </template>
           </el-table-column>
@@ -448,7 +448,7 @@ import TableShow from '@/views/pay/memberWithdrawLog/tableShow.vue';
 import {getMemberWithdrawReport} from "@/api/platform-web/pay/memberWithdrawLog";
 import {positiveInteger, validMobile, validNumber} from '../../../utils/validate'
 import {checkTwoLogin} from "@/utils/permission";
-import { listConfigBank } from "@/api/platform-web/pay/configBank";
+import { listBankList } from "@/api/platform-web/pay/bankList";
 export default {
   props: {
     /*    memberId: {
@@ -1032,7 +1032,7 @@ export default {
         this.$notify.warning('获取银行卡列表失败')
         this.loading = false
       })
-      listConfigBank({}).then(response => {
+      listBankList({}).then(response => {
         this.bankListOptions = response.rows;
         this.loading = false;
       })

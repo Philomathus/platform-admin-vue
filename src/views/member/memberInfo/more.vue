@@ -895,6 +895,9 @@ export default {
           break
         case 5:
           this.cardList()
+          listBankList({}).then(response => {
+            this.bankListOptions = response.rows;
+          })
           break
         case 12:
           this.getMemberImInfo()
@@ -1031,10 +1034,6 @@ export default {
       }).catch((error) => {
         this.$notify.warning('获取银行卡列表失败')
         this.loading = false
-      })
-      listBankList({}).then(response => {
-        this.bankListOptions = response.rows;
-        this.loading = false;
       })
     },
 

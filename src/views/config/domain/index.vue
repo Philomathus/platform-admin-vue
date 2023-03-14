@@ -165,7 +165,7 @@ export default {
     const validUrl = (rule, value, callback) => {
       if (/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/.test(value) === false) {
         callback(new Error('请输入正确的URL'))
-      } else {
+      }/* else {
         if (this.form.dgroup && this.form.id == null) {
           existsDomain({
             dgroup: this.form.dgroup,
@@ -181,7 +181,7 @@ export default {
           callback()
         }
 
-      }
+      }*/
     }
     return {
       // 遮罩层

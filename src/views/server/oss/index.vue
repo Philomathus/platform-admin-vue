@@ -63,7 +63,9 @@
       <!-- <el-table-column label="加速域名" align="center" prop="vhost"/>-->
       <el-table-column label="状态" align="center" prop="isEffect">
         <template slot-scope="scope">
-          <span :style="{color: (status = isEffectOptions[parseInt(scope.row.isEffect)]).color}">{{ status.dictLabel }}</span>
+          <span :style="{color: (status = isEffectOptions[parseInt(scope.row.isEffect)]).color}">{{
+              status.dictLabel
+            }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right">
@@ -99,7 +101,8 @@
     />
 
     <!-- 添加或修改oss文件存储服务配置对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入名称"/>
@@ -126,16 +129,17 @@
             />
           </el-select>
         </el-form-item>
-        <!--        <el-form-item label="加速域名" prop="vhost">-->
-        <!--          <el-input v-model="form.vhost" placeholder="请输入加速域名"/>-->
-        <!--        </el-form-item>-->
+        <el-form-item label="地区" prop="vhost">
+          <el-input v-model="form.vhost" placeholder="请输入地区"/>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="ossTestTitle" :visible.sync="ossTestOpen" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="ossTestTitle" :visible.sync="ossTestOpen"
+               width="500px" append-to-body>
       <el-form ref="ossTestForm" :model="ossTestForm" label-width="80px">
         <el-form-item label="名称" prop="name">
           <el-input v-model="ossTestForm.name" placeholder="请输入名称" readonly/>
@@ -149,12 +153,12 @@
 </template>
 
 <script>
-import { listOss, getOss, delOss, addOss, updateOss, effectOss } from '@/api/platform-web/server/oss'
+import {listOss, getOss, delOss, addOss, updateOss, effectOss} from '@/api/platform-web/server/oss'
 import ImageUpload from '@/components/ImageUpload'
 
 export default {
   name: 'Oss',
-  components: { ImageUpload },
+  components: {ImageUpload},
   data() {
     return {
       // 遮罩层
@@ -194,25 +198,25 @@ export default {
       // 表单校验
       rules: {
         name: [
-          { required: true, message: '名称不能为空', trigger: 'blur' }
+          {required: true, message: '名称不能为空', trigger: 'blur'}
         ],
         accessKey: [
-          { required: true, message: 'accessKey不能为空', trigger: 'blur' }
+          {required: true, message: 'accessKey不能为空', trigger: 'blur'}
         ],
         accessSecret: [
-          { required: true, message: 'accessSecret不能为空', trigger: 'blur' }
+          {required: true, message: 'accessSecret不能为空', trigger: 'blur'}
         ],
         endpoint: [
-          { required: true, message: '访问域名不能为空', trigger: 'blur' }
+          {required: true, message: '访问域名不能为空', trigger: 'blur'}
         ],
         bucket: [
-          { required: true, message: '文件存储不能为空', trigger: 'blur' }
+          {required: true, message: '文件存储不能为空', trigger: 'blur'}
         ],
         // vhost: [
         //   { required: true, message: '加速域名不能为空', trigger: 'blur' }
         // ],
         isEffect: [
-          { required: true, message: '状态不能为空', trigger: 'blur' }
+          {required: true, message: '状态不能为空', trigger: 'blur'}
         ]
       }
     }
@@ -259,7 +263,7 @@ export default {
         createBy: null,
         createTime: null,
         updateBy: null,
-        provider:null,
+        provider: null,
         updateTime: null
       }
       this.resetForm('form')
@@ -331,7 +335,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return delOss(ids)
       }).then(() => {
         this.getList()
@@ -344,7 +348,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return effectOss(row.id)
       }).then(() => {
         this.getList()

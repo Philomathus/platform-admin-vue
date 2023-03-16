@@ -145,7 +145,7 @@
           <el-input v-model="ossTestForm.name" placeholder="请输入名称" readonly/>
         </el-form-item>
         <el-form-item label="图片" prop="image">
-          <imageUpload v-model="ossTestForm.image" mode="test" :mode-id="ossTestForm.id"/>
+          <imageUpload v-model="ossTestForm.image" path="test" :mode-id="ossTestForm.id"/>
         </el-form-item>
       </el-form>
     </el-dialog>

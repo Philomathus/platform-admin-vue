@@ -114,6 +114,36 @@
         </el-select>
       </el-form-item>
 
+<!--   min and max search -->
+      <el-form-item prop="cost">
+        <el-input
+          v-model="queryParams.vipMin"
+          placeholder="min-vip"
+          clearable
+          autocomplete="on"
+          min="0"
+          size="small"
+          style="width: 91px"
+          type="number"
+          class="no-number"
+          @keyup.enter.native="handleQuery"
+        />
+        -
+        <el-input
+          v-model="queryParams.vipMax"
+          placeholder="max-vip"
+          clearable
+          autocomplete="on"
+          min="0"
+          size="small"
+          style="width: 91px"
+          type="number"
+          class="no-number"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+<!--      end min and max search-->
+
       <el-form-item class="submit-btn">
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>

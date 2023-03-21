@@ -11,8 +11,8 @@
           <el-checkbox v-for="item in platformList" :key="item.id" :label="item.id">{{ item.name }}</el-checkbox>
         </el-checkbox-group>
         <el-checkbox v-model="checkNodeAll" @change="handleCheckedTreeNodeAll()"
-                     class="selection text-info"
-                     style="">全选/全不选
+                     class="text-info"
+                     style="margin-right: 30px; float: right">全选/全不选
         </el-checkbox>
       </el-form-item>
 

@@ -694,15 +694,6 @@ export default {
         type: 'warning'
       }).then(() => {
         this.loading = true
-
-        for(let bank of this.bankListOptions) {
-          console.log(bank.bankName)
-          if(row.bankName === bank.bankName) {
-            row.bankId = bank.id
-            break
-          }
-        }
-
         changeBank(row).then((res) => {
           this.msgSuccess(res.msg)
           this.cardList()

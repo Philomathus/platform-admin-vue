@@ -112,6 +112,14 @@
             size="mini"
             type="text"
             icon="el-icon-edit"
+            @click="handleUpdateText(scope.row)"
+            v-hasPermi="['pay:configBank:edit']"
+          >文本
+          </el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['pay:configBank:edit']"
           >修改
@@ -215,6 +223,30 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+
+    <el-dialog :title="title" :visible.sync="openText" width="600px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="文本1" prop="tex1">
+          <el-input v-model="form.tex1" placeholder="请输入文本1"  type="textarea" :rows="4"/>
+        </el-form-item>
+        <el-form-item label="文本2" prop="tex2">
+          <el-input v-model="form.tex2" placeholder="请输入文本2" type="textarea" :rows="4"/>
+        </el-form-item>
+        <el-form-item label="文本3">
+          <el-input v-model="form.tex3" placeholder="请输入文本3"  type="textarea" :rows="4"/>
+        </el-form-item>
+        <el-form-item label="文本4" prop="tex4">
+          <el-input v-model="form.tex4" placeholder="请输入文本4"  type="textarea" :rows="4"/>
+        </el-form-item>
+        <el-form-item label="文本5" prop="tex5">
+          <el-input  v-model="form.tex5" placeholder="请输入文本5"  type="textarea" :rows="4"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitFormText">确 定</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -227,9 +259,12 @@ import {
   updateConfigBank,
   exportConfigBank,
   changeConfigBankStatus,
+  changeConfigBankText,
   bankLists
 } from '@/api/platform-web/pay/configBank'
 import ImageUpload from '@/components/ImageUpload'
+import {getPayType, updatePayType} from "@/api/platform-web/pay/payType";
+import {getConfigGametype, updateConfigGametype} from "@/api/platform-web/game/configGameType";
 
 export default {
   name: 'ConfigBank',
@@ -261,6 +296,7 @@ export default {
       //银行列表
       bankListOptions: [],
       // 查询参数
+      openText:false,
       queryParams: {
         pageNum: 1,
         pageSize: 10,
@@ -312,6 +348,8 @@ export default {
         type: 'warning'
       }).then(function() {
         return changeConfigBankStatus(row.id, row.status)
+      }).then(function() {
+        return changeConfigBankText(row.id, row.status)
       }).then(() => {
         this.msgSuccess(text + '成功')
         this.getList()
@@ -378,6 +416,22 @@ export default {
         this.form = response.data
         this.open = true
         this.title = '修改公司入款银行列表'
+      })
+    },
+    handleUpdateText(row) {
+      this.reset()
+      const id = row.id
+      getConfigBank(id).then(response => {
+        this.form = response.data
+        this.openText = true
+        this.title = '文本编辑'
+      })
+    },
+    submitFormText() {
+      updateConfigBank(this.form).then(response => {
+        this.msgSuccess('修改成功')
+        this.openText = false
+        this.getList()
       })
     },
     /** 提交按钮 */

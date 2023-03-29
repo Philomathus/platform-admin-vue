@@ -29,6 +29,17 @@ export function changeConfigBankStatus(id, status) {
     data: data
   })
 }
+export function changeConfigBankText(id, status) {
+  const data = {
+    id,
+    status
+  }
+  return request({
+    url: url.platformWeb + '/pay/configBank/changeText',
+    method: 'put',
+    data: data
+  })
+}
 // 新增【公司入款银行】
 export function addConfigBank(data) {
   return request({

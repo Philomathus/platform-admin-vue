@@ -454,6 +454,15 @@ export default {
         this.title = '文本编辑'
       })
     },
+
+    submitFormText() {
+      updatePayType(this.form).then(response => {
+        this.msgSuccess('修改成功')
+        this.openText = false
+        this.getList()
+      })
+    },
+
     /** 提交按钮 */
     submitForm() {
       this.$refs['form'].validate(valid => {
@@ -493,13 +502,7 @@ export default {
         }
       })
     },
-    submitFormText() {
-      updatePayType(this.form).then(response => {
-        this.msgSuccess('修改成功')
-        this.openText = false
-        this.getList()
-      })
-    },
+
     /** 删除按钮操作 */
     handleDelete(row) {
       const id = row.id

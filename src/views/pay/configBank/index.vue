@@ -263,8 +263,6 @@ import {
   bankLists
 } from '@/api/platform-web/pay/configBank'
 import ImageUpload from '@/components/ImageUpload'
-import {getPayType, updatePayType} from "@/api/platform-web/pay/payType";
-import {getConfigGametype, updateConfigGametype} from "@/api/platform-web/game/configGameType";
 
 export default {
   name: 'ConfigBank',
@@ -340,6 +338,7 @@ export default {
         this.loading = false
       })
     },
+
     handleStatusChange(row) {
       let text = row.status === '1' ? '启用' : '停用'
       this.$confirm('确认要"' + text + '""' + row.name + '"吗?', '警告', {
@@ -428,7 +427,7 @@ export default {
       })
     },
     submitFormText() {
-      updateConfigBank(this.form).then(response => {
+      changeConfigBankText(this.form).then(response => {
         this.msgSuccess('修改成功')
         this.openText = false
         this.getList()

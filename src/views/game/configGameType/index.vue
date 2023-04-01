@@ -55,7 +55,23 @@
           v-hasPermi="['game:config-gametype:add']"
         >新增</el-button>
       </el-col>
-
+      <el-upload
+        multiple
+        :limit="1"
+        :on-exceed="handleExceed"
+        class="upload-demo"
+        ref="upload"
+        :action="uploadFileUrl"
+        :headers="headers"
+        name="excelFile"
+        :on-preview="handlePreview"
+        :on-remove="handleRemove"
+        :on-error="uploadFalse"
+        :on-success="uploadSuccess"
+        :auto-upload="true"
+        :before-upload="beforeAvatarUpload">
+        <el-button slot="trigger" size="small" type="primary" @click="submitUpload">上传excel</el-button>
+      </el-upload>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -96,7 +112,6 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
-
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="600px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="88px">
@@ -127,13 +142,26 @@
 </template>
 
 <script>
-import { listConfigGametype, getConfigGametype, delConfigGametype, addConfigGametype, updateConfigGametype,getGameTypeInfo } from '@/api/platform-web/game/configGameType';
+import {
+  listConfigGametype,
+  getConfigGametype,
+  delConfigGametype,
+  addConfigGametype,
+  updateConfigGametype,
+  uploadFileUrl,
+  getGameTypeInfo } from '@/api/platform-web/game/configGameType';
+
+import {getToken} from "@/utils/auth";
 export default {
   name: "Confi-gametype",
   components: {
   },
   data() {
     return {
+      uploadFileUrl : uploadFileUrl(),
+      headers: {
+        Authorization: 'Bearer ' + getToken()
+      },
       // 遮罩层
       loading: true,
       // 选中数组
@@ -267,7 +295,48 @@ export default {
         this.msgSuccess("删除成功");
       })
     },
+    /** 导入Excel */
+    uploadSuccess() {
+      this.$message.success('excel上传成功')
+      this.queryParams.memberId = null
+      this.queryParams.pageNum = 1
+      this.getList()
+    },
+    uploadFalse() {
+      this.$message.error('excel上传失败！')
+    },
+    handleExceed() {
+      this.$message.error('只能选取一个excel,如需更换请x掉再选取')
+    },
+    handleRemove() {
+      this.$message.success('移除成功')
+    },
+    handlePreview(file) {
+      console.info(file.response.status)
+      if (file.response.status) {
 
+        this.$message.success('此文件导入成功')
+      } else {
+        this.$message.error('此文件导入失败')
+      }
+    },
+    beforeAvatarUpload(file) {
+      const extension = file.name.split('.')[1] === 'xlsx'
+      const extensionXls = file.name.split('.')[1] === 'xls' //added this new extensionsXsl
+      const isLt2M = file.size / 1024 / 1024 < 10
+      if (!extension && !extensionXls) {
+        this.$message.error('上传模板只能是xlsx or xls 格式的excel文件!')
+        return
+      }
+      if (!isLt2M) {
+        this.$message.error('上传模板大小不能超过10MB!')
+        return
+      }
+    },
+    submitUpload() {
+      //触发组件的action
+      this.$refs.upload.submit()
+    },
   }
 };
 </script>

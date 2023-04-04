@@ -64,13 +64,14 @@
         :action="uploadFileUrl"
         :headers="headers"
         name="excelFile"
+        style="margin-right: 85%"
         :on-preview="handlePreview"
         :on-remove="handleRemove"
         :on-error="uploadFalse"
         :on-success="uploadSuccess"
         :auto-upload="true"
         :before-upload="beforeAvatarUpload">
-        <el-button slot="trigger" size="small" type="primary" @click="submitUpload">上传excel</el-button>
+        <el-button slot="trigger" size="mini" type="primary" @click="submitUpload">上传excel</el-button>
       </el-upload>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>

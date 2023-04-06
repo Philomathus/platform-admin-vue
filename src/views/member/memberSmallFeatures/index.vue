@@ -16,14 +16,13 @@
               />
             </el-form-item>
             <el-form-item prop="password" class="col-100pr">
-              <el-autocomplete
+              <el-input
                 class="inline-input"
-                :fetch-suggestions="querySearch"
                 type="text"
                 clearable
                 v-model="phoneFrom.password"
                 placeholder="请输入更新的密码"
-              ></el-autocomplete>
+              ></el-input>
             </el-form-item>
             <el-form-item prop="googleAuthCode" class="col-100pr">
               <el-input

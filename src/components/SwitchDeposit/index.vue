@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import depositAudio from '../../assets/audio/notif_sound_deposit.wav';
+import depositAudio from '../../assets/audio/deposit_zh.mp3';
 import { listCount as memberPayJourListCount } from '@/api/platform-web/pay/memberPayJour';
 import { listCount as memberRechargeLogListCount } from '@/api/platform-web/pay/memberRechargeLog';
 import { listCount as payUsdtRechargeListCount } from '@/api/platform-web/pay/payUsdtRecharge';
@@ -35,17 +35,16 @@ export default {
   mounted(){
     memberPayJourListCount( this.query ).then( res => {
       this.totals.memberPayJourListCount = res.total;
-    })
+    });
     memberRechargeLogListCount( this.query ).then( res => {
       this.totals.memberRechargeLogListCount = res.total;
-    })
+    });
     payUsdtRechargeListCount( this.query ).then( res => {
       this.totals.payUsdtRechargeListCount = res.total;
-    })
+    });
     payAgentRechargeLogListCount( this.query ).then( res => {
       this.totals.payAgentRechargeLogListCount = res.data.countNumber;
-    })
-
+    });
     this.scheduleReminder();
   },
   methods: {
@@ -84,7 +83,7 @@ export default {
           if ( play ) {
             this.audio.play();
           }
-        }, 3000);
+        }, 5000);
       } else {
         clearInterval( this.reminderInterval );
       }

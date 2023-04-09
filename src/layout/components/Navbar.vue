@@ -7,9 +7,9 @@
     <div class="right-menu">
       <template v-if="device!=='mobile'">
         <label class="right-menu-item" style="font-size: 10px">入款提醒</label>
-        <SwitchDeposit id = "notification-switch" class="right-menu-item"/>
+        <SwitchDeposit id = "notification-switch-deposit" class="right-menu-item"/>
         <label class="right-menu-item" style="font-size: 10px">提现提醒</label>
-        <SwitchWithdraw id = "notification-switch" class="right-menu-item"/>
+        <SwitchWithdraw id = "notification-switch-withdraw" class="right-menu-item"/>
         <search id="header-search" class="right-menu-item" />
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
 

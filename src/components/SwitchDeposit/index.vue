@@ -8,9 +8,9 @@
 </template>
 
 <script>
-import onlineRecharge  from '../../assets/audio/线上充值，请及时处理.mp3';
-import companyDeposit  from '../../assets/audio/公司入款，请及时处理.mp3';
-import usdtDeposit     from '../../assets/audio/USDT入款，请及时处理.mp3';
+import onlineRecharge from '@i/audio/online_deposit_zh.mp3';
+import companyDeposit from '@i/audio/company_deposit_zh.mp3';
+import usdtDeposit from '@i/audio/usdt_deposit_zh.mp3';
 
 import { listCount  as memberPayJourListCount }       from '@/api/platform-web/pay/memberPayJour';
 import { listCount  as memberRechargeLogListCount }   from '@/api/platform-web/pay/memberRechargeLog';

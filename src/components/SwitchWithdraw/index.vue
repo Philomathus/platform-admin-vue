@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import withdrawAudio from '../../assets/audio/会员提现，请及时处理.mp3';
+import withdrawAudio from '@i/audio/withdraw_zh.mp3';
 import {getCountTotal as memberWithdrawLogListCount} from '@/api/platform-web/pay/memberWithdrawLog';
 
 export default {

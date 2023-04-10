@@ -9,7 +9,7 @@
 
 <script>
 import withdrawAudio from '@i/audio/withdraw_zh.mp3';
-import {getCountTotal as memberWithdrawLogListCount} from '@/api/platform-web/pay/memberWithdrawLog';
+import {getCountAll, getCountAll as memberWithdrawLogListCount} from '@/api/platform-web/pay/memberWithdrawLog';
 
 export default {
   data() {
@@ -26,8 +26,8 @@ export default {
     };
   },
   mounted() {
-    memberWithdrawLogListCount(this.query).then(res => {
-      this.totals.memberWithdrawLogListCount = res.data.total;
+    memberWithdrawLogListCount().then(res => {
+      this.totals.memberWithdrawLogListCount = res.data;
     }).then(this.scheduleReminder);
   },
   methods: {
@@ -35,9 +35,9 @@ export default {
       if (this.notifyOnWithdraw) {
         this.reminderInterval = setInterval(() => {
 
-          memberWithdrawLogListCount(this.query).then(res => {
-              if (res.data.total > this.totals.memberWithdrawLogListCount) {
-                this.totals.memberWithdrawLogListCount = res.data.total;
+          memberWithdrawLogListCount().then(res => {
+              if (res.data > this.totals.memberWithdrawLogListCount) {
+                this.totals.memberWithdrawLogListCount = res.data;
                 this.audio.play();
               }
             }

@@ -8,12 +8,13 @@
 </template>
 
 <script>
-import depositAudio from '../../assets/audio/deposit_zh.mp3';
-import { listCount as memberPayJourListCount } from '@/api/platform-web/pay/memberPayJour';
-import { listCount as memberRechargeLogListCount } from '@/api/platform-web/pay/memberRechargeLog';
-import { listCount as payUsdtRechargeListCount } from '@/api/platform-web/pay/payUsdtRecharge';
-import { countMoney as payAgentRechargeLogListCount } from '@/api/platform-web/pay/payAgentRechargeLog';
+import onlineRecharge  from '../../assets/audio/线上充值，请及时处理.mp3';
+import companyDeposit  from '../../assets/audio/公司入款，请及时处理.mp3';
+import usdtDeposit     from '../../assets/audio/USDT入款，请及时处理.mp3';
 
+import { listCount  as memberPayJourListCount }       from '@/api/platform-web/pay/memberPayJour';
+import { listCount  as memberRechargeLogListCount }   from '@/api/platform-web/pay/memberRechargeLog';
+import { listCount  as payUsdtRechargeListCount }     from '@/api/platform-web/pay/payUsdtRecharge';
 
 export default {
   data(){
@@ -25,7 +26,11 @@ export default {
         payUsdtRechargeListCount: 0,
         payAgentRechargeLogListCount: 0
       },
-      audio: new Audio( depositAudio ),
+      audios: {
+        online_recharge: new Audio ( onlineRecharge ),
+        company_deposit: new Audio ( companyDeposit ),
+        usdt_deposit:    new Audio ( usdtDeposit )
+      },
       query: {
         selectDate: [ this.parseTime( this.getTodayStartTime() ), this.parseTime( this.getTodayEndTime() ) ]
       },
@@ -33,56 +38,44 @@ export default {
     };
   },
   mounted(){
-    memberPayJourListCount( this.query ).then( res => {
-      this.totals.memberPayJourListCount = res.total;
-    });
-    memberRechargeLogListCount( this.query ).then( res => {
-      this.totals.memberRechargeLogListCount = res.total;
-    });
-    payUsdtRechargeListCount( this.query ).then( res => {
-      this.totals.payUsdtRechargeListCount = res.total;
-    });
-    payAgentRechargeLogListCount( this.query ).then( res => {
-      this.totals.payAgentRechargeLogListCount = res.data.countNumber;
-    });
-    this.scheduleReminder();
+      memberPayJourListCount( this.query ).then( res => {
+        this.totals.memberPayJourListCount = res.total;
+      });
+      memberRechargeLogListCount( this.query ).then( res => {
+        this.totals.memberRechargeLogListCount = res.total;
+      });
+      payUsdtRechargeListCount( this.query ).then( res => {
+        this.totals.payUsdtRechargeListCount = res.total;
+      });
+      this.scheduleReminder();
   },
   methods: {
     scheduleReminder() {
       if( this.notifyOnDeposit ) {
-        let play = false;
         this.reminderInterval = setInterval(() => {
+
           memberPayJourListCount( this.query ).then( res => {
               if( res.total > this.totals.memberPayJourListCount ) {
                 this.totals.memberPayJourListCount = res.total;
-                play = true;
+                this.audios.online_recharge.play();
               }
             }
           );
           memberRechargeLogListCount( this.query ).then( res => {
               if( res.total > this.totals.memberRechargeLogListCount ) {
                 this.totals.memberRechargeLogListCount = res.total;
-                play = true;
+                this.audios.company_deposit.play();
               }
             }
           );
           payUsdtRechargeListCount( this.query ).then( res => {
               if( res.total > this.totals.payUsdtRechargeListCount ) {
                 this.totals.payUsdtRechargeListCount = res.total;
-                play = true;
+                this.audios.usdt_deposit.play();
               }
             }
           );
-          payAgentRechargeLogListCount( this.query ).then( res => {
-              if( res.data.countNumber > this.totals.payAgentRechargeLogListCount ) {
-                this.totals.payAgentRechargeLogListCount = res.data.countNumber ;
-                play = true;
-              }
-            }
-          );
-          if ( play ) {
-            this.audio.play();
-          }
+
         }, 5000);
       } else {
         clearInterval( this.reminderInterval );

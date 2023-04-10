@@ -8,9 +8,8 @@
 </template>
 
 <script>
-import withdrawAudio from '../../assets/audio/withdraw_zh.mp3';
-import {getCountAll as memberWithdrawLogListCount} from '@/api/platform-web/pay/memberWithdrawLog';
-
+import withdrawAudio from '../../assets/audio/会员提现，请及时处理.mp3';
+import {getCountTotal as memberWithdrawLogListCount} from '@/api/platform-web/pay/memberWithdrawLog';
 
 export default {
   data() {
@@ -27,21 +26,23 @@ export default {
     };
   },
   mounted() {
-    memberWithdrawLogListCount().then(res => {
-      this.totals.memberWithdrawLogListCount = res.data;
+    memberWithdrawLogListCount(this.query).then(res => {
+      this.totals.memberWithdrawLogListCount = res.data.total;
     }).then(this.scheduleReminder);
   },
   methods: {
     scheduleReminder() {
       if (this.notifyOnWithdraw) {
         this.reminderInterval = setInterval(() => {
-          memberWithdrawLogListCount().then(res => {
-              if (res.data > this.totals.memberWithdrawLogListCount) {
-                this.totals.memberWithdrawLogListCount = res.data;
+
+          memberWithdrawLogListCount(this.query).then(res => {
+              if (res.data.total > this.totals.memberWithdrawLogListCount) {
+                this.totals.memberWithdrawLogListCount = res.data.total;
                 this.audio.play();
               }
             }
           );
+
         }, 5000);
       } else {
         clearInterval(this.reminderInterval);

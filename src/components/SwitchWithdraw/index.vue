@@ -9,7 +9,7 @@
 
 <script>
 import withdrawAudio from '@i/audio/withdraw_zh.mp3';
-import {getCountAll, getCountAll as memberWithdrawLogListCount} from '@/api/platform-web/pay/memberWithdrawLog';
+import {getCountAll as memberWithdrawLogListCount} from '@/api/platform-web/pay/memberWithdrawLog';
 
 export default {
   data() {

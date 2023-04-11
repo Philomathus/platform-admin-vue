@@ -15,13 +15,22 @@
         ></el-date-picker>
       </el-form-item>
       <el-form-item label="标题" prop="title">
-        <el-input
+        <el-select
+          filterable
           v-model="queryParams.title"
           placeholder="请输入标题"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
-        />
+          style="width: 240px"
+        >
+<!--          @keyup.enter.native="handleQuery"-->
+          <el-option
+            v-for="dict in titleOptions"
+            :key="dict.id"
+            :label="dict.title"
+            :value="dict.title"
+            />
+        </el-select>
       </el-form-item>
       <el-form-item label="平台游戏类型" prop="kindId">
         <el-select
@@ -489,7 +498,8 @@ import {
   activityQuestTypes,
   gameInfoName,
   kindIdSelect,
-  platformIdSelect
+  platformIdSelect,
+  titleIdSelect,
 } from '@/api/activity/activityQuestInfo'
 import ImageUpload from '@/components/ImageUpload'
 import {pickerDateShortcuts} from "@/utils/dateUtils";
@@ -519,6 +529,7 @@ export default {
         value: 1,
         label: '每日任务'
       }],
+      titleOptions: [],
       //平台游戏类型
       kindIdOptions: [],
       //平台类型
@@ -643,6 +654,11 @@ export default {
     kindIdSelect().then(response => {
       console.info(response.data)
       this.kindIdOptions = response.data
+    })
+
+    titleIdSelect().then(response => {
+      console.info(response.data)
+      this.titleOptions = response.data
     })
     //平台类型
     platformIdSelect().then(response => {

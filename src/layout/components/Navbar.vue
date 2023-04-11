@@ -9,9 +9,11 @@
         <search id="header-search" class="right-menu-item" />
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
 
-        <el-tooltip content="布局大小" effect="dark" placement="bottom">
+        <el-tooltip :content="$t('navbar.size')" effect="dark" placement="bottom">
           <size-select id="size-select" class="right-menu-item hover-effect" />
         </el-tooltip>
+
+        <lang-select class="right-menu-item hover-effect" />
 
       </template>
 
@@ -22,13 +24,13 @@
         </div>
         <el-dropdown-menu slot="dropdown">
           <router-link to="/user/profile">
-            <el-dropdown-item>个人中心</el-dropdown-item>
+            <el-dropdown-item>{{ $t('route.dashboard') }}</el-dropdown-item>
           </router-link>
           <el-dropdown-item @click.native="setting = true">
-            <span>布局设置</span>
+            <span>{{ $t('navbar.layOutSetting') }}</span>
           </el-dropdown-item>
-          <el-dropdown-item divided @click.native="logout">
-            <span>退出登录</span>
+          <el-dropdown-item divided @click.native="logout" >
+            <span>{{ $t('navbar.logOut') }}</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -43,6 +45,7 @@ import Hamburger from '@/components/Hamburger'
 import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
+import LangSelect from '@/components/LangSelect'
 
 export default {
   components: {
@@ -51,6 +54,7 @@ export default {
     Screenfull,
     SizeSelect,
     Search,
+    LangSelect,
   },
   computed: {
     ...mapGetters([
@@ -75,9 +79,9 @@ export default {
       this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
-      this.$confirm('确定注销并退出系统吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm( this.$t('logout.confirm'), this.$t('logout.prompt'), {
+        confirmButtonText: this.$t('permission.confirm'),
+        cancelButtonText: this.$t('permission.cancel'),
         type: 'warning'
       }).then(() => {
         this.$store.dispatch('LogOut').then(() => {

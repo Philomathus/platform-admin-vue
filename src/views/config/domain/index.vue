@@ -166,21 +166,7 @@ export default {
       if (/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/.test(value) === false) {
         callback(new Error('请输入正确的URL'))
       } else {
-        if (this.form.dgroup && this.form.id == null) {
-          existsDomain({
-            dgroup: this.form.dgroup,
-            domain: value.trim()
-          }).then(response => {
-            if (response.data == 1) {
-              callback(new Error('所在分组重复输入URL'))
-            } else {
-              callback()
-            }
-          })
-        } else {
-          callback()
-        }
-
+        callback()
       }
     }
     return {

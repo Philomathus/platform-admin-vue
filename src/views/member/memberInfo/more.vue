@@ -244,7 +244,13 @@
 
           <el-table-column align="center" prop="bankName" label="银行名称" :show-overflow-tooltip="true" min-width="135">
             <template v-slot="{row}" v-if="index===5">
-              <el-input v-model="row.bankName"></el-input>
+              <el-select filterable
+                         v-model="row.bankId">
+                <el-option v-for="dict in bankListOptions"
+                           :key="dict.id"
+                           :label="dict.bankName"
+                           :value="dict.id"/>
+              </el-select>
             </template>
           </el-table-column>
           <el-table-column prop="bankAccount" label="银行卡号" :show-overflow-tooltip="true" min-width="150"
@@ -442,7 +448,7 @@ import TableShow from '@/views/pay/memberWithdrawLog/tableShow.vue';
 import {getMemberWithdrawReport} from "@/api/platform-web/pay/memberWithdrawLog";
 import {positiveInteger, validMobile, validNumber} from '../../../utils/validate'
 import {checkTwoLogin} from "@/utils/permission";
-
+import { listBankList } from "@/api/platform-web/pay/bankList";
 export default {
   props: {
     /*    memberId: {
@@ -482,6 +488,7 @@ export default {
       visible: false,
       // 选中数组值
       tables: [],
+      bankListOptions: [],
       ImList: {
         Member_Account: null,
         nickName: null,
@@ -887,6 +894,9 @@ export default {
           this.memberWithdrawLog()
           break
         case 5:
+          listBankList({}).then(response => {
+            this.bankListOptions = response.rows;
+          })
           this.cardList()
           break
         case 12:
@@ -1024,6 +1034,10 @@ export default {
       }).catch((error) => {
         this.$notify.warning('获取银行卡列表失败')
         this.loading = false
+      })
+      listBankList({}).then(response => {
+        this.bankListOptions = response.rows;
+        this.loading = false;
       })
     },
 

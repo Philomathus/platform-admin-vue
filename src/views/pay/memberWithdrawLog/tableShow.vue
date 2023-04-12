@@ -239,6 +239,25 @@ div {
   align-items: center;
 }
 
+.memberInfo .font {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.memberInfo .font::-webkit-scrollbar{
+  height: 2px;
+}
+
+.memberInfo .font::-webkit-scrollbar-track{
+  -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+}
+
+.memberInfo .font::-webkit-scrollbar-thumb{
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
 .fundsInfo {
   display: flex;
   justify-content: flex-start;

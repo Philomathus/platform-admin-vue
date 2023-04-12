@@ -80,6 +80,13 @@ export function kindIdSelect() {
   })
 }
 
+export function titleIdSelect() {
+  return request({
+    url: url.platformWeb + '/admin/activityQuestInfo/titleSelect',
+    method: 'get'
+  })
+}
+
 //平台游戏类型
 export function platformIdSelect() {
   return request({

@@ -36,6 +36,14 @@ export function getCountTotal(query) {
   })
 }
 
+// 计算所有成员
+export function getCountAll() {
+  return request({
+    url: url.platformWeb + '/pay/memberWithdrawLog/countAll',
+    method: 'get'
+  });
+}
+
 // 新增会员提现信息
 export function addMemberWithdrawLog(data) {
   return request({

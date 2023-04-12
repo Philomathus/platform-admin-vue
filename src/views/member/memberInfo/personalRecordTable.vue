@@ -43,9 +43,9 @@
       </tr>
       <tr>
         <th class="bold">余额</th>
-        <td>{{ data.totalAccount.box_account }}</td>
-        <th class="bold">保险箱余额</th>
         <td>{{ data.totalAccount.total_account }}</td>
+        <th class="bold">保险箱余额</th>
+        <td>{{ data.totalAccount.box_account }}</td>
       </tr>
       <tr>
         <td colspan="8"></td>

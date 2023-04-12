@@ -204,6 +204,7 @@ div {
   font-size: 14px;
   line-height: 300%;
   text-align: center;
+
   /*align-items:center; display: flex;*/
 }
 

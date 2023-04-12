@@ -51,3 +51,7 @@ export function getGameTypeInfo() {
 
   })
 }
+
+export function uploadFileUrl(){
+  return url.platformWeb + '/game/config-gametype/batchInsertExcel'
+}

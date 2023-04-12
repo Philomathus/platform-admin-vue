@@ -308,9 +308,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm(this.$t('activity.deleteConfirm1') + ids
-        + this.$t('activity.deleteConfirm2'),
-        this.$t('activity.deleteConfirmTitle'), {
+      this.$confirm(this.$t('activity.deleteConfirm1') + ids + '"?', this.$t('activity.deleteConfirmTitle'), {
         confirmButtonText: this.$t('activity.confirmButton'),
         cancelButtonText: this.$t('activity.cancelConfirmButton'),
         type: "warning"

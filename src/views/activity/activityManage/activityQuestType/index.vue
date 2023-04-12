@@ -1,27 +1,33 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="88px">
-      <el-form-item label="名称" prop="name">
+      <el-form-item :label="$t('activity.activityManage.activityQuestType.game')" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入名称"
+          :placeholder="$t('activity.activityManage.activityQuestType.gamePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="所属游戏id" prop="gameId">
+      <el-form-item :label="$t('activity.activityManage.activityQuestType.gameId')" prop="gameId">
         <el-input
           v-model="queryParams.gameId"
-          placeholder="请输入所属游戏id"
+          :placeholder="$t('activity.activityManage.activityQuestType.gameIdPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{
+            $t('activity.searchButton')
+          }}
+        </el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{
+            $t('activity.resetButton')
+          }}
+        </el-button>
       </el-form-item>
     </el-form>
 
@@ -34,7 +40,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:activityQuestType:add']"
-        >新增</el-button>
+        >{{ $t('activity.addButton') }}
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -45,7 +52,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:activityQuestType:edit']"
-        >修改</el-button>
+        >{{ $t('activity.editButton') }}
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -56,16 +64,17 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:activityQuestType:remove']"
-        >删除</el-button>
+        >{{ $t('activity.deleteButton') }}
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="activityQuestTypeList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="名称" align="center" prop="name" />
-      <el-table-column label="所属游戏id" align="center" prop="gameId" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column :label="$t('activity.activityManage.activityQuestType.game')" align="center" prop="name"/>
+      <el-table-column :label="$t('activity.activityManage.activityQuestType.gameId')" align="center" prop="gameId"/>
+      <el-table-column :label="$t('activity.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -73,14 +82,16 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:activityQuestType:edit']"
-          >修改</el-button>
+          >{{ $t('activity.editButton') }}
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:activityQuestType:remove']"
-          >删除</el-button>
+          >{{ $t('activity.deleteButton') }}
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -94,30 +105,37 @@
     />
 
     <!-- 添加或修改任务类型对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="450px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="450px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="90px">
-        <el-form-item label="名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入名称" />
+        <el-form-item :label="$t('activity.activityManage.activityQuestType.game')" prop="name">
+          <el-input v-model="form.name" :placeholder="$t('activity.activityManage.activityQuestType.gamePlaceholder')"/>
         </el-form-item>
-<!--        <el-form-item label="所属游戏id" prop="gameId">-->
-<!--          <el-input v-model="form.gameId" placeholder="请输入所属游戏id" />-->
-<!--        </el-form-item>-->
+        <!--        <el-form-item :label="所属游戏id" prop="gameId">-->
+        <!--          <el-input v-model="form.gameId" :placeholder="请输入所属游戏id" />-->
+        <!--        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('activity.submitButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('activity.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { listActivityQuestType, getActivityQuestType, delActivityQuestType, addActivityQuestType, updateActivityQuestType, exportActivityQuestType } from "@/api/activity/activityQuestType";
+import {
+  listActivityQuestType,
+  getActivityQuestType,
+  delActivityQuestType,
+  addActivityQuestType,
+  updateActivityQuestType,
+  exportActivityQuestType
+} from "@/api/activity/activityQuestType";
 
 export default {
   name: "ActivityQuestType",
-  components: {
-  },
+  components: {},
   data() {
     return {
       // 遮罩层
@@ -150,7 +168,7 @@ export default {
       // 表单校验
       rules: {
         name: [
-          {required: true, message: '名称不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('activity.activityManage.activityQuestType.validation.game'), trigger: 'blur'}
         ]
       }
     };
@@ -197,14 +215,14 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加任务类型";
+      this.title = this.$t('activity.activityManage.activityQuestType.addTitle');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -213,7 +231,7 @@ export default {
       getActivityQuestType(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改任务类型";
+        this.title = this.$t('activity.activityManage.activityQuestType.editTitle');
       });
     },
     /** 提交按钮 */
@@ -222,13 +240,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateActivityQuestType(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess(this.$t('activity.editSuccessMsg'));
               this.open = false;
               this.getList();
             });
           } else {
             addActivityQuestType(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess(this.$t('activity.addSuccessMsg'));
               this.open = false;
               this.getList();
             });
@@ -239,29 +257,29 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除"' + row.name + '"?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return delActivityQuestType(ids);
-        }).then(() => {
-          this.getList();
-          this.msgSuccess("删除成功");
-        })
+      this.$confirm(this.$t('activity.deleteConfirm1') + ids + '"?', this.$t('activity.deleteConfirmTitle'), {
+        confirmButtonText: this.$t('activity.confirmButton'),
+        cancelButtonText: this.$t('activity.cancelConfirmButton'),
+        type: "warning"
+      }).then(function () {
+        return delActivityQuestType(ids);
+      }).then(() => {
+        this.getList();
+        this.msgSuccess(this.$t('activity.deleteSuccessMsg'));
+      })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('activity.confirmExport'), this.$t('activity.confirmExportTitle'), {
+        confirmButtonText: this.$t('activity.confirmButton'),
+        cancelButtonText: this.$t('activity.cancelButton'),
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportActivityQuestType(queryParams)
       }).then(response => {
         console.info(response);
-        this.downloadExcel(response, "任务类型")
+        this.downloadExcel(response, this.$t('activity.activityManage.activityInfo.exportResponse'))
       }).catch(() => {
       })
     }

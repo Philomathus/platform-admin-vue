@@ -24,7 +24,7 @@
         </div>
         <el-dropdown-menu slot="dropdown">
           <router-link to="/user/profile">
-            <el-dropdown-item>{{ $t('route.dashboard') }}</el-dropdown-item>
+            <el-dropdown-item>{{ $t('navbar.dashboard') }}</el-dropdown-item>
           </router-link>
           <el-dropdown-item @click.native="setting = true">
             <span>{{ $t('navbar.layOutSetting') }}</span>

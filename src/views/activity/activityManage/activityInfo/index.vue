@@ -4,7 +4,7 @@
       <el-form-item prop="title">
         <el-input
           v-model="queryParams.title"
-          :placeholder="$t('activity.activityManage.activityInfo.tableDialog.titlePlaceholder')"
+          :placeholder="$t('activity.releaseTime')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"/>
@@ -132,7 +132,7 @@
       </el-table-column>
       <el-table-column :label="$t('activity.activityManage.activityInfo.tableDialog.sort')" align="center" prop="order"
                        min-width="160"/>
-      <el-table-column :label="$t('activity.activityManage.activityInfo.tableDialog.operation')" align="center"
+      <el-table-column :label="$t('activity.operation')" align="center"
                        class-name="small-padding fixed-width" fixed="right" min-width="120">
         <template slot-scope="scope">
           <el-button
@@ -140,7 +140,7 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['admin:activityInfo:edit']">{{ $t('activity.activityManage.activityInfo.tableDialog.edit') }}
+            v-hasPermi="['admin:activityInfo:editButton']">{{ $t('activity.edit') }}
           </el-button>
           <el-button
             style="color: #FF5722"
@@ -149,7 +149,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:activityInfo:remove']">{{
-              $t('activity.activityManage.activityInfo.tableDialog.delete')
+              $t('activity.deleteButton')
             }}
           </el-button>
         </template>
@@ -254,11 +254,10 @@ export default {
     return {
       // 1=qq,2=微信
       formatterType(row) {
-
-        if (row.type == 0)  {
-          return this.$t('activity.activityManage.activityInfo.tableDialog.activityDetails')
+        if (row.type == 0) {
+          return '活动详情'
         } else if (row.type == 1) {
-          return this.$t('activity.activityManage.activityInfo.tableDialog.jumpLink')
+          return '跳转链接'
         } else {
           return ''
         }

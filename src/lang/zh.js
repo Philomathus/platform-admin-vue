@@ -1,70 +1,4 @@
 export default {
-  lazy: true,
-  route: {
-    dashboard: '首页',
-    documentation: '文档',
-    guide: '引导页',
-    permission: '权限测试页',
-    rolePermission: '角色权限',
-    pagePermission: '页面权限',
-    directivePermission: '指令权限',
-    icons: '图标',
-    components: '组件',
-    tinymce: '富文本编辑器',
-    markdown: 'Markdown',
-    jsonEditor: 'JSON 编辑器',
-    dndList: '列表拖拽',
-    splitPane: 'Splitpane',
-    avatarUpload: '头像上传',
-    dropzone: 'Dropzone',
-    sticky: 'Sticky',
-    countTo: 'Count To',
-    componentMixin: '小组件',
-    backToTop: '返回顶部',
-    dragDialog: '拖拽 Dialog',
-    dragSelect: '拖拽 Select',
-    dragKanban: '可拖拽看板',
-    charts: '图表',
-    keyboardChart: '键盘图表',
-    lineChart: '折线图',
-    mixChart: '混合图表',
-    example: '综合实例',
-    nested: '路由嵌套',
-    menu1: '菜单1',
-    'menu1-1': '菜单 1-1',
-    'menu1-2': '菜单 1-2',
-    'menu1-2-1': '菜单 1-2-1',
-    'menu1-2-2': '菜单 1-2-2',
-    'menu1-3': '菜单 1-3',
-    menu2: '菜单 2',
-    Table: 'Table',
-    dynamicTable: '动态 Table',
-    dragTable: '拖拽 Table',
-    inlineEditTable: 'Table 内编辑',
-    complexTable: '综合 Table',
-    tab: 'Tab',
-    form: '表单',
-    createArticle: '创建文章',
-    editArticle: '编辑文章',
-    articleList: '文章列表',
-    errorPages: '错误页面',
-    page401: '401',
-    page404: '404',
-    errorLog: '错误日志',
-    excel: 'Excel',
-    exportExcel: '导出 Excel',
-    selectExcel: '导出 已选择项',
-    mergeHeader: '导出 多级表头',
-    uploadExcel: '上传 Excel',
-    zip: 'Zip',
-    pdf: 'PDF',
-    exportZip: 'Export Zip',
-    theme: '换肤',
-    clipboardDemo: 'Clipboard',
-    i18n: '国际化',
-    externalLink: '外链',
-    profile: '个人中心'
-  },
 
   navbar: {
     dashboard: '首页',
@@ -76,96 +10,15 @@ export default {
     layOutSetting: '布局设置',
     homepage: '首页'
   },
-
-  login: {
-    title: '系统登录',
-    logIn: '登录',
-    username: '账号',
-    password: '密码',
-    any: '随便填',
-    thirdparty: '第三方登录',
-    thirdpartyTips: '本地不能模拟，请结合自己业务进行模拟！！！'
-  },
-
-  documentation: {
-    documentation: '文档',
-    github: 'Github 地址'
-  },
-
-  permission: {
-    addRole: '新增角色',
-    editPermission: '编辑权限',
-    roles: '你的权限',
-    switchRoles: '切换权限',
-    tips: '在某些情况下，不适合使用 v-permission。例如：Element-UI 的 el-tab 或 el-table-column 以及其它动态渲染 dom 的场景。你只能通过手动设置 v-if 来实现。',
-    delete: '删除',
-    confirm: '确定',
-    cancel: '取消'
-  },
-
-  guide: {
-    description: '引导页对于一些第一次进入项目的人很有用，你可以简单介绍下项目的功能。本 Demo 是基于',
-    button: '打开引导'
-  },
-
-  components: {
-    documentation: '文档',
-    tinymceTips: '富文本是管理后台一个核心的功能，但同时又是一个有很多坑的地方。在选择富文本的过程中我也走了不少的弯路，市面上常见的富文本都基本用过了，最终权衡了一下选择了Tinymce。更详细的富文本比较和介绍见',
-    dropzoneTips: '由于我司业务有特殊需求，而且要传七牛 所以没用第三方，选择了自己封装。代码非常的简单，具体代码你可以在这里看到 @/components/Dropzone',
-    stickyTips: '当页面滚动到预设的位置会吸附在顶部',
-    backToTopTips1: '页面滚动到指定位置会在右下角出现返回顶部按钮',
-    backToTopTips2: '可自定义按钮的样式、show/hide、出现的高度、返回的位置 如需文字提示，可在外部使用Element的el-tooltip元素',
-    imageUploadTips: '由于我在使用时它只有vue@1版本，而且和mockjs不兼容，所以自己改造了一下，如果大家要使用的话，优先还是使用官方版本。'
-  },
-
-  table: {
-    dynamicTips1: '固定表头, 按照表头顺序排序',
-    dynamicTips2: '不固定表头, 按照点击顺序排序',
-    dragTips1: '默认顺序',
-    dragTips2: '拖拽后顺序',
-    title: '标题',
-    importance: '重要性',
-    type: '类型',
-    remark: '点评',
-    search: '搜索',
-    add: '添加',
-    export: '导出',
-    reviewer: '审核人',
-    id: '序号',
-    date: '时间',
-    author: '作者',
-    readings: '阅读数',
-    status: '状态',
-    actions: '操作',
-    edit: '编辑',
-    publish: '发布',
-    draft: '草稿',
-    delete: '删除',
-    cancel: '取 消',
-    confirm: '确 定'
-  },
-
-  example: {
-    warning: '创建和编辑页面是不能被 keep-alive 缓存的，因为keep-alive 的 include 目前不支持根据路由来缓存，所以目前都是基于 component name 来进行缓存的。如果你想类似的实现缓存效果，可以使用 localStorage 等浏览器缓存方案。或者不要使用 keep-alive 的 include，直接缓存所有页面。详情见'
-  },
-
-  errorLog: {
-    tips: '请点击右上角bug小图标',
-    description: '现在的管理后台基本都是spa的形式了，它增强了用户体验，但同时也会增加页面出问题的可能性，可能一个小小的疏忽就导致整个页面的死锁。好在 Vue 官网提供了一个方法来捕获处理异常，你可以在其中进行错误处理或者异常上报。',
-    documentation: '文档介绍'
-  },
-
   theme: {
     change: '换肤',
     documentation: '换肤文档',
     tips: 'Tips: 它区别于 navbar 上的 theme-pick, 是两种不同的换肤方法，各自有不同的应用场景，具体请参考文档。'
   },
-
   logout: {
     confirm: '确定注销并退出系统吗',
     prompt: '提示'
   },
-
   excel: {
     export: '导出',
     selectedExport: '导出已选择项',
@@ -179,7 +32,6 @@ export default {
     cancelButton: '取 消',
     submitButton: '确 定'
   },
-
   settings: {
     title: '主题风格设置',
     themeColor: '主题颜色',
@@ -214,6 +66,7 @@ export default {
     confirmButton: '确定',
     cancelButton: '取 消',
     cancelConfirmButton: '取 消',
+    operation: '操作',
     editSuccessMsg: '修改成功',
     editFailMsg: '',
     addSuccessMsg: '新增成功',
@@ -288,7 +141,81 @@ export default {
           typeId: '活动类型不能为空',
           type: '跳转类型不能为空'
         }
-      }
+      },
+      activityQuestInfo: {
+        // title: '标题',
+        // titlePlaceholder: '请输入标题',
+        // platformGameType: '平台游戏类型',
+        // platformGameTypePlaceholder: '请选择平台游戏类型',
+        // platformId: '平台类型',
+        // platformIdPlaceholder: '请选择平台类型',
+        dailyTask: '每日任务',
+        permanentTask: '永久任务',
+        addTitle: '添加任务信息',
+        editTitle: '修改任务信息',
+        tableDialog: {
+          title: '标题',
+          titlePlaceholder: '请输入标题',
+          icon: '图标',
+          index: '排序号',
+          indexPlaceholder: '请输入排序号',
+          typeId: '任务类型',
+          typeIdPlaceholder: '请选择任务类型',
+          gameId: '所属游戏',
+          gameIdPlaceholder: '请选择所属游戏',
+          target: '目标任务量',
+          reward: '完成后增加的资金',
+          rewardPlaceholder: '请输入完成后增加的资金',
+          content: '描述',
+          contentPlaceholder: '请输入内容',
+          detail: '任务有效时间',
+          detailPlaceholder: '请输入内容',
+          kindId: '平台游戏类型',
+          kindIdPlaceholder: '请选择平台游戏类型',
+          platformId: '平台类型',
+          platformIdPlaceholder: '请选择平台类型',
+          taskMode: '任务模式',
+          taskModePlaceholder: '任务模式',
+          ctime: '发布时间',
+          operation: '操作',
+          edit: '修改',
+          delete: '删除',
+        },
+        validation: {
+          icon: '图标不能不上传',
+          title: '标题不能为空',
+          index: '排序号不能为空',
+          typeId: '任务类型不能为空',
+          target: '目标任务量不能为空',
+          reward: '完成后增加的资金不能为空',
+          detail: '任务有效时间不能为空',
+          gameId: '所属游戏不能为空',
+          kindId: '平台游戏类型不能为空',
+          platformId: '平台类型不能为空',
+          taskMode: '任务模式不能为空',
+
+        }
+      },
+      activityQuestType: {
+        game: '名称',
+        gamePlaceholder: '请输入名称',
+        gameId: '所属游戏id',
+        gameIdPlaceholder: '请输入所属游戏id',
+        addTitle: '添加任务类型',
+        editTitle: '修改任务类型',
+        tableDialog: {
+        },
+        validation: {
+          game: '名称不能为空'
+        }
+      },
+      activityQuestTypebak: {
+        tableDialog: {
+        },
+        validation: {
+
+        }
+      },
     }
   },
 

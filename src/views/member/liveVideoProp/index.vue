@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="copy">送礼金额 {{ this.totalData.countTotal || 0 }}</el-button>
+    <el-button type="primary" @click="copy">{{ this.$t('members.liveVideoProp.form.giftAmt') }} {{ this.totalData.countTotal || 0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" style="margin-top: 20px"
              label-width="68px"
     >
-      <el-form-item label="日期范围" prop="selectDate">
+      <el-form-item :label=" $t('members.liveVideoProp.form.date.label') " prop="selectDate">
         <el-date-picker
           type="daterange"
           v-model="queryParams.selectDate"
@@ -12,7 +12,7 @@
           value-format="yyyy-MM-dd"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
-          range-separator="至"
+          :range-separator=" $t('members.liveVideoProp.form.date.sep') "
           clearable
           :picker-options="pickerOptions"
           style="width: 280px"
@@ -21,7 +21,7 @@
       <el-form-item prop="pUserId">
         <el-input
           v-model="queryParams.pUserId"
-          placeholder="会员ID"
+          :placeholder=" $t('members.liveVideoProp.form.memId') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -30,7 +30,7 @@
       <el-form-item prop="toUserId">
         <el-input
           v-model="queryParams.toUserId"
-          placeholder="主播ID"
+          :placeholder=" $t('members.liveVideoProp.form.hostId') "
           clearable
           size="small"
           type="number"
@@ -38,8 +38,8 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('members.liveVideoProp.form.search') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('members.liveVideoProp.form.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -52,7 +52,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:liveVideoProp:export']"
-        >导出
+        >{{ $t('members.liveVideoProp.form.export') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -63,34 +63,34 @@
           size="mini"
           @click="testAccountPorp()"
           v-hasPermi="['admin:liveVideoProp:list']"
-        >测试号送礼明细
+        >{{ $t('members.liveVideoProp.form.testGift') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="liveProplogList">
-      <el-table-column label="会员ID" align="center" prop="perUserId" width="120"/>
-      <el-table-column label="状态" align="center" min-width="110px" prop="isPrivate" :formatter="callbackStatusFormat"/>
-      <el-table-column label="礼物名" align="center" prop="propName"/>
-      <el-table-column label="礼物金额" align="center" prop="totalDiamonds"/>
-      <el-table-column label="主播ID" align="center" prop="toUserId"/>
-      <el-table-column label="主播昵称" align="center" prop="nickName" min-width="100"/>
-      <el-table-column label="送礼日期" align="center" prop="createTime" min-width="160"/>
+      <el-table-column :label=" $t('members.liveVideoProp.form.hostId') " align="center" prop="perUserId" width="120"/>
+      <el-table-column :label=" $t('members.liveVideoProp.form.status') " align="center" min-width="110px" prop="isPrivate" :formatter="callbackStatusFormat"/>
+      <el-table-column :label=" $t('members.liveVideoProp.form.giftName') " align="center" prop="propName"/>
+      <el-table-column :label=" $t('members.liveVideoProp.form.giftAmt') " align="center" prop="totalDiamonds"/>
+      <el-table-column :label=" $t('members.liveVideoProp.form.hostId') " align="center" prop="toUserId"/>
+      <el-table-column :label=" $t('members.liveVideoProp.form.hostNn') " align="center" prop="nickName" min-width="100"/>
+      <el-table-column :label=" $t('members.liveVideoProp.form.giftDate') " align="center" prop="createTime" min-width="160"/>
     </el-table>
 
-    <el-dialog v-dialogDrag title="测试号送礼明细" :visible.sync="testAccountPorpList" width="1200px" append-to-body>
+    <el-dialog v-dialogDrag :title=" $t('members.liveVideoProp.form.testAcct') " :visible.sync="testAccountPorpList" width="1200px" append-to-body>
       <el-form :model="queryParam" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-        <el-form-item label="日期选择" prop="testAccountCreateTime">
+        <el-form-item :label=" $t('members.liveVideoProp.form.date.sel') " prop="testAccountCreateTime">
           <el-date-picker v-model="queryParam.testAccountCreateTime" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
-                          :style="{width: '100%'}" placeholder="请选择日期选择" clearable
+                          :style="{width: '100%'}" :placeholder=" $t('members.liveVideoProp.form.date.sel2') " clearable
                           :picker-options="pickerOptionsTestAccount"
           ></el-date-picker>
         </el-form-item>
         <el-form-item prop="toUserId">
           <el-input
             v-model="queryParam.toUserId"
-            placeholder="主播ID"
+            :placeholder=" $t('members.liveVideoProp.form.hostId') "
             clearable
             size="small"
             type="number"
@@ -98,11 +98,11 @@
             @keyup.enter.native="handleQuery"/>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" size="mini" @click="testAccountPorp()">搜索</el-button>
+          <el-button type="primary" icon="el-icon-search" size="mini" @click="testAccountPorp()">{{  $t('members.liveVideoProp.form.search')  }}</el-button>
         </el-form-item>
       </el-form>
       <el-row :gutter="10" class="mb8">
-        <el-button type="primary" @click="copy1">送礼金额 {{ this.totalData.testAccountPorpTotal || 0 }}</el-button>
+        <el-button type="primary" @click="copy1">{{  $t('members.liveVideoProp.form.giftAmt')  }} {{ this.totalData.testAccountPorpTotal || 0 }}</el-button>
         <el-col :span="1.5">
           <el-button
             type="warning"
@@ -111,7 +111,7 @@
             size="small"
             @click="handleExportTestAccount"
             v-hasPermi="['admin:liveVideoProp:export']"
-          >导出
+          >{{  $t('members.liveVideoProp.form.export')  }}
           </el-button>
         </el-col>
         <right-toolbar :showSearch.sync="showSearch" @queryTable="testAccountPorp"></right-toolbar>
@@ -119,10 +119,10 @@
 
       <el-table :stripe="true" v-loading="loading" :data="testAccountPorpData">
         <el-table-column type="selection" align="center"/>
-        <el-table-column label="会员ID" align="center" prop="puserId"/>
-        <el-table-column label="会员昵称" show-overflow-tooltip align="center" prop="puserName"/>
-        <el-table-column label="送礼金额" show-overflow-tooltip align="center" prop="totalDiamonds"/>
-        <el-table-column label="主播ID" align="center" prop="toUserId"/>
+        <el-table-column :label=" $t('members.liveVideoProp.form.memId') " align="center" prop="puserId"/>
+        <el-table-column :label=" $t('members.liveVideoProp.form.memNn') " show-overflow-tooltip align="center" prop="puserName"/>
+        <el-table-column :label=" $t('members.liveVideoProp.form.giftAmt') " show-overflow-tooltip align="center" prop="totalDiamonds"/>
+        <el-table-column :label=" $t('members.liveVideoProp.form.hostId') " align="center" prop="toUserId"/>
       </el-table>
       <pagination
         v-show="total>0"
@@ -230,14 +230,14 @@ export default {
         });
         this.total = response.total
       }).catch(() => {
-        this.$notify.error('网络异常')
+        this.$notify.error(this.$t('members.liveVideoProp.form.netErr'))
       }).finally(() => {
         this.loading = false
       })
     },
     testAccountPorp() {
       this.testAccountPorpList = true
-      this.title = '测试号送礼明细'
+      this.title = this.$t('members.liveVideoProp.form.testGift')
       testAccountPorpList(this.queryParam).then(response => {
         this.testAccountPorpData = response.rows
         this.total = response.total
@@ -290,7 +290,7 @@ export default {
         const reg = '^[0-9a-zA-Z_]{1,}$'
         let flag = this.queryParams.pUserId.match(reg)
         if(!flag){
-          this.msgError("会员ID只能输入数字及下划线")
+          this.msgError(this.$t('members.liveVideoProp.form.memIdErr'))
           return
         }
       }
@@ -306,28 +306,28 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('members.liveVideoProp.form.excelErr'), this.$t('members.liveVideoProp.form.warning'), {
+        confirmButtonText: this.$t('members.liveVideoProp.form.confirm'),
+        cancelButtonText: this.$t('members.liveVideoProp.form.cancel'),
         type: 'warning'
       }).then(function () {
         return exportLiveProplog(queryParams)
       }).then(response => {
-        this.downloadExcel(response, '用户送礼日志')
+        this.downloadExcel(response, this.$t('members.liveVideoProp.form.giftLog'))
       }).catch(() => {
       })
     },
     /** 导出按钮操作 */
     handleExportTestAccount() {
       const queryParams = this.queryParam
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('members.liveVideoProp.form.excelErr'), this.$t('members.liveVideoProp.form.warning'), {
+        confirmButtonText: this.$t('members.liveVideoProp.form.confirm'),
+        cancelButtonText: this.$t('members.liveVideoProp.form.cancel'),
         type: 'warning'
       }).then(function () {
         return exportTestAccountProplog(queryParams)
       }).then(response => {
-        this.downloadExcel(response, '用户送礼日志')
+        this.downloadExcel(response, this.$t('members.liveVideoProp.form.giftLog'))
       }).catch(() => {
       })
     }

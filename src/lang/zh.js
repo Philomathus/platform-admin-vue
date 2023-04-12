@@ -65,6 +65,7 @@ export default {
     externalLink: '外链',
     profile: '个人中心'
   },
+
   navbar: {
     dashboard: '首页',
     github: '项目地址',
@@ -75,6 +76,7 @@ export default {
     layOutSetting: '布局设置',
     homepage: '首页'
   },
+
   login: {
     title: '系统登录',
     logIn: '登录',
@@ -84,10 +86,12 @@ export default {
     thirdparty: '第三方登录',
     thirdpartyTips: '本地不能模拟，请结合自己业务进行模拟！！！'
   },
+
   documentation: {
     documentation: '文档',
     github: 'Github 地址'
   },
+
   permission: {
     addRole: '新增角色',
     editPermission: '编辑权限',
@@ -98,10 +102,12 @@ export default {
     confirm: '确定',
     cancel: '取消'
   },
+
   guide: {
     description: '引导页对于一些第一次进入项目的人很有用，你可以简单介绍下项目的功能。本 Demo 是基于',
     button: '打开引导'
   },
+
   components: {
     documentation: '文档',
     tinymceTips: '富文本是管理后台一个核心的功能，但同时又是一个有很多坑的地方。在选择富文本的过程中我也走了不少的弯路，市面上常见的富文本都基本用过了，最终权衡了一下选择了Tinymce。更详细的富文本比较和介绍见',
@@ -111,6 +117,7 @@ export default {
     backToTopTips2: '可自定义按钮的样式、show/hide、出现的高度、返回的位置 如需文字提示，可在外部使用Element的el-tooltip元素',
     imageUploadTips: '由于我在使用时它只有vue@1版本，而且和mockjs不兼容，所以自己改造了一下，如果大家要使用的话，优先还是使用官方版本。'
   },
+
   table: {
     dynamicTips1: '固定表头, 按照表头顺序排序',
     dynamicTips2: '不固定表头, 按照点击顺序排序',
@@ -137,23 +144,28 @@ export default {
     cancel: '取 消',
     confirm: '确 定'
   },
+
   example: {
     warning: '创建和编辑页面是不能被 keep-alive 缓存的，因为keep-alive 的 include 目前不支持根据路由来缓存，所以目前都是基于 component name 来进行缓存的。如果你想类似的实现缓存效果，可以使用 localStorage 等浏览器缓存方案。或者不要使用 keep-alive 的 include，直接缓存所有页面。详情见'
   },
+
   errorLog: {
     tips: '请点击右上角bug小图标',
     description: '现在的管理后台基本都是spa的形式了，它增强了用户体验，但同时也会增加页面出问题的可能性，可能一个小小的疏忽就导致整个页面的死锁。好在 Vue 官网提供了一个方法来捕获处理异常，你可以在其中进行错误处理或者异常上报。',
     documentation: '文档介绍'
   },
+
   theme: {
     change: '换肤',
     documentation: '换肤文档',
     tips: 'Tips: 它区别于 navbar 上的 theme-pick, 是两种不同的换肤方法，各自有不同的应用场景，具体请参考文档。'
   },
+
   logout: {
     confirm: '确定注销并退出系统吗',
     prompt: '提示'
   },
+
   excel: {
     export: '导出',
     selectedExport: '导出已选择项',
@@ -167,6 +179,7 @@ export default {
     cancelButton: '取 消',
     submitButton: '确 定'
   },
+
   settings: {
     title: '主题风格设置',
     themeColor: '主题颜色',
@@ -177,6 +190,7 @@ export default {
     closeAllTags: '',
     closeOthersTags: ''
   },
+
   tagsView: {
     closeOthersTags: '关闭其他',
     closeAllTags: '关闭所有',
@@ -185,6 +199,7 @@ export default {
     closeOthers: '关闭所有',
     closeAll: '关闭其他'
   },
+
   activity: {
     startDatePlaceholder: '开始时间',
     endDatePlaceholder: '结束时间',
@@ -276,11 +291,108 @@ export default {
       }
     }
   },
+
   members: {
     configVip: {
       home: '',
       table: {
-        vipLvl: 'vip等级'
+        vipLvl: 'vip等级',
+        demandCodingValue: '需求打码量',
+        advancementJackpot: '晋级彩金',
+        weeklySalary: '周俸禄',
+        monthlySalary: '月俸禄',
+        creationTime: '创建时间',
+        lastUpdateBy: '最后更新人',
+        lastUpdateAt: '最后更新时间',
+        operation: '操作',
+        edit: '修改',
+        delete: '删除',
+        submit: '确 定',
+        cancel: '取 消',
+      },
+      dialog: {
+        vipLvlreq: '请输入vip等级',
+        demCodereq: '请输入需求打码量',
+        advJackpotreq: '请输入晋级彩金',
+        weeklySalreq: '请输入周俸禄',
+        monthlySalreq: '请输入月俸禄'
+      },
+      rules: {
+        vipRule: 'vip等级不能为空只能是数字',
+        demandRule: '需求打码不能为空只能是数字',
+        promoteRule: '晋级彩金不能为空只能是数字',
+        weekSalaryRule: '周俸禄不能为空只能是数字',
+        monthSalaryRule: '月俸禄不能为空只能是数字'
+      },
+      queries: {
+        addQuery: '添加vip配置',
+        updateQuery: '修改vip等级设置',
+        delQuery: '是否确认删除vip',
+        delQuery2: '的数据项',
+        warning: '警告',
+        sure: '确定',
+        cancel: '取消',
+        delSuccess: '删除成功',
+        confExcel: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+        confirm: '确认',
+        function: '请填写功能名称'
+      }
+    },
+    liveVideoProp: {
+      form: {
+        giftAmt: '送礼金额',
+        dateRange: {
+          label: '日期范围',
+          sep: '至',
+          sel: '日期选择',
+          sel2: '请选择日期选择'
+        },
+        memId: '会员ID',
+        memNn: '会员昵称',
+        hostId: '主播ID',
+        search: '搜索',
+        reset: '重置',
+        export: '导出',
+        testGift: '测试号送礼明细',
+        status: '状态',
+        giftName: '礼物名',
+        hostNn: '主播昵称',
+        giftDate: '送礼日期',
+        testAcct: '测试号送礼明细',
+        netErr: '网络异常',
+        memIdErr: '会员ID只能输入数字及下划线',
+        excelErr: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+        warning: '警告',
+        confirm: '确认',
+        cancel: '取消',
+        giftLog: '用户送礼日志',
+      }
+    },
+    logGameOrder: {
+      analyze: {
+        date: {
+          range: '日期范围',
+          start: '开始日期',
+          end: '结束日期'
+        },
+        memIdAcc: '会员ID/会员账号',
+        plat: '请选择平台',
+        types: '全部类型',
+        search: '搜索',
+        reset: '重置',
+        batch: '批量处理上下分',
+        memId: '会员ID',
+        orderId: '订单ID',
+        gamePlat: '游戏平台',
+        amt: '金额',
+        type: '类型',
+        opt: '操作',
+        bckUp: '回退上分',
+        nxtPoint: '补发下分',
+      },
+      index: {
+        allStat: '全部状态',
+        analysis: '分析上下分',
       }
     }
   }

@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="日期范围" prop="selectDate">
+      <el-form-item :label=" $t('members.logGameOrder.analyze.date.range') " prop="selectDate">
         <el-date-picker type="daterange" v-model="queryParams.selectDate" format="yyyy-MM-dd"
-                        value-format="yyyy-MM-dd" start-placeholder="开始日期"
-                        end-placeholder="结束日期"
+                        value-format="yyyy-MM-dd" :start-placeholder=" $t('members.logGameOrder.analyze.date.start') "
+                        :end-placeholder=" $t('members.logGameOrder.analyze.date.end') "
                         range-separator="-" clearable
                         :picker-options="pickerOptions"
         ></el-date-picker>
@@ -12,31 +12,31 @@
       <el-form-item prop="searchValue">
         <el-input
           v-model.trim="queryParams.searchValue"
-          placeholder="会员ID/会员账号"
+          :placeholder=" $t('members.logGameOrder.analyze.memIdAcc') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item prop="platformId">
-        <el-select v-model="queryParams.platformId" placeholder="请选择平台" clearable size="small" style="width: 110px;">
+        <el-select v-model="queryParams.platformId" :placeholder=" $t('members.logGameOrder.analyze.plat') " clearable size="small" style="width: 110px;">
           <el-option v-for="item in platformList" :label="item.name" :value="item.id"/>
         </el-select>
       </el-form-item>
       <el-form-item prop="type">
-        <el-select v-model="queryParams.type" placeholder="全部类型" @change="handleType()"  clearable size="small" style="width: 110px;">
+        <el-select v-model="queryParams.type" :placeholder=" $t('members.logGameOrder.analyze.types') " @change="handleType()"  clearable size="small" style="width: 110px;">
           <el-option v-for="item in typeList" :label="item.label" :value="item.value"/>
         </el-select>
         <span>-</span>
       </el-form-item>
       <el-form-item prop="status">
-        <el-select clearable multiple collapse-tags  v-model="stateList" placeholder="全部状态" clearable size="small" style="width: 150px;">
+        <el-select clearable multiple collapse-tags  v-model="stateList" :placeholder=" $t('members.logGameOrder.index.allStat') " clearable size="small" style="width: 150px;">
           <el-option v-for="item in statusList" :label="item.label" :value="item.value"/>
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('members.logGameOrder.analyze.search') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('members.logGameOrder.analyze.reset') }}</el-button>
       </el-form-item>
     </el-form>
     <el-row :gutter="10" class="mb8">
@@ -48,7 +48,7 @@
           size="mini"
           @click="handleScore(1)"
           v-hasPermi="['member:logGameOrder:analyze']"
-        >分析上下分
+        >{{ $t('members.logGameOrder.index.analysis') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">

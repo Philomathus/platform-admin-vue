@@ -76,6 +76,7 @@ export default {
     homepage: 'Home Page'
 
   },
+
   login: {
     title: 'Login Form',
     logIn: 'Login',
@@ -85,10 +86,12 @@ export default {
     thirdparty: 'Or connect with',
     thirdpartyTips: 'Can not be simulated on local, so please combine you own business simulation! ! !'
   },
+
   documentation: {
     documentation: 'Documentation',
     github: 'Github Repository'
   },
+
   permission: {
     addRole: 'New Role',
     editPermission: 'Edit',
@@ -99,10 +102,12 @@ export default {
     confirm: 'Confirm',
     cancel: 'Cancel'
   },
+
   guide: {
     description: 'The guide page is useful for some people who entered the project for the first time. You can briefly introduce the features of the project. Demo is based on ',
     button: 'Show Guide'
   },
+
   components: {
     documentation: 'Documentation',
     tinymceTips: 'Rich text is a core feature of the management backend, but at the same time it is a place with lots of pits. In the process of selecting rich texts, I also took a lot of detours. The common rich texts on the market have been basically used, and I finally chose Tinymce. See the more detailed rich text comparison and introduction.',
@@ -112,6 +117,7 @@ export default {
     backToTopTips2: 'You can customize the style of the button, show / hide, height of appearance, height of the return. If you need a text prompt, you can use element-ui el-tooltip elements externally',
     imageUploadTips: 'Since I was using only the vue@1 version, and it is not compatible with mockjs at the moment, I modified it myself, and if you are going to use it, it is better to use official version.'
   },
+
   table: {
     dynamicTips1: 'Fixed header, sorted by header order',
     dynamicTips2: 'Not fixed header, sorted by click order',
@@ -138,9 +144,11 @@ export default {
     cancel: 'Cancel',
     confirm: 'Confirm'
   },
+
   example: {
     warning: 'Creating and editing pages cannot be cached by keep-alive because keep-alive include does not currently support caching based on routes, so it is currently cached based on component name. If you want to achieve a similar caching effect, you can use a browser caching scheme such as localStorage. Or do not use keep-alive include to cache all pages directly. See details'
   },
+
   errorLog: {
     tips: 'Please click the bug icon in the upper right corner',
     description: 'Now the management system are basically the form of the spa, it enhances the user experience, but it also increases the possibility of page problems, a small negligence may lead to the entire page deadlock. Fortunately Vue provides a way to catch handling exceptions, where you can handle errors or report exceptions.',
@@ -152,6 +160,7 @@ export default {
     documentation: 'Theme documentation',
     tips: 'Tips: It is different from the theme-pick on the navbar is two different skinning methods, each with different application scenarios. Refer to the documentation for details.'
   },
+
   logout: {
     confirm: 'Are you sure to log out and exit the system?',
     prompt: 'Confirm'
@@ -170,6 +179,7 @@ export default {
     cancelButton: 'Cancel',
     submitButton: 'Confirm'
   },
+
   settings: {
     title: 'Theme Style Settings',
     themeColor: 'Theme Color',
@@ -178,6 +188,7 @@ export default {
     fixedHeader: 'Fixed Header',
     sidebarLogo: 'Display Logo'
   },
+
   tagsView: {
     closeOthersTags: 'Close Other',
     closeAllTags: 'Close All',
@@ -186,6 +197,7 @@ export default {
     closeOthers: 'Close Other',
     closeAll: 'Close All'
   },
+
   activity: {
     startDatePlaceholder: 'Start Date',
     endDatePlaceholder: 'End Date',
@@ -277,14 +289,118 @@ export default {
         }
       }
     },
+  },
 
-  }
-  ,
   members :{
     configVip: {
-      home: ''
+      home: '',
+      table: {
+        vipLvl: 'VIP Level',
+        demandCodingValue: 'Demand Coding Value',
+        advancementJackpot: 'Advancement Jackpot',
+        weeklySalary: 'Weekly Salary',
+        monthlySalary: 'Monthly Salary',
+        creationTime: 'Creation Time',
+        lastUpdateBy: 'Last Updated by',
+        lastUpdateAt: 'Last Updated at',
+        operation: 'Operation',
+        edit: 'Edit',
+        delete: 'Delete',
+        submit: 'Submit',
+        cancel: 'Cancel',
+      },
+      dialog: {
+        vipLvlreq: 'Please enter VIP level',
+        demCodereq: 'Please enter the amount of demand coding',
+        advJackpotreq: 'Please enter the promotion bonus',
+        weeklySalreq: 'Please enter the weekly salary',
+        monthlySalreq: 'Please enter monthly salary'
+      },
+      rules: {
+        vipRule: 'The vip level cannot be empty and can only be a number',
+        demandRule: 'Requirement coding cannot be empty and can only be a number',
+        promoteRule: 'The promotion bonus cannot be empty and can only be a number',
+        weekSalaryRule:  'Weekly salary can not be empty and can only be a number',
+        monthSalaryRule: 'Monthly salary cannot be empty and can only be a number'
+      },
+      queries: {
+        addQuery: 'Add VIP configuration',
+        updateQuery: 'Modify vip level settings',
+        delQuery: 'Are you sure to delete vip',
+        delQuery2: 'data item',
+        warning: 'Warning',
+        sure: 'Sure',
+        cancel: 'Cancel',
+        delSuccess: 'Deleted Successfully',
+        confExcel: 'Confirm processing Excel and downloading, it will be delayed when the amount of data is large, please wait patiently...',
+        confirm: 'Confirm',
+        function: 'Please fill in the function name'
+
+
+      }
+    },
+    liveVideoProp: {
+      form: {
+        giftAmt: 'Gift Amount',
+        date: {
+          label: 'Date Range',
+          sep: 'To',
+          sel: 'Date Selection',
+          sel2: 'Please select a date selection'
+        },
+        memId: 'Member ID',
+        memNn: 'Member Nickname',
+        hostId: 'Host ID',
+        search: 'Search',
+        reset: 'Reset',
+        export: 'Export',
+        testGift: 'Test account gift details',
+        status: 'Status',
+        giftName: 'Gift Name',
+        hostNn: 'Host Nickname',
+        giftDate: 'Gift Date',
+        testAcct: 'Test account gift details',
+        netErr: 'Network Anomaly',
+        memIdErr: 'Member ID can only enter numbers and underscores',
+        excelErr: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+        warning: 'Warning',
+        confirm: 'Confirmation',
+        cancel: 'Cancel',
+        giftLog: 'User Gift Log',
+
+      }
+    },
+    logGameOrder: {
+      analyze: {
+        date: {
+          range: 'Date Range',
+          start: 'Start',
+          end: 'End Date'
+        },
+        memIdAcc: 'Member ID / Member Account Number',
+        plat: 'Please select a platform',
+        types: 'All Types',
+        search: 'Search',
+        reset: 'Reset',
+        batch: 'Batch processing up and down',
+        memId: 'Member ID',
+        orderId: 'Order ID',
+        gamePlat: 'Game Platform',
+        amt: 'Amount',
+        type: 'Type',
+        opt: 'Operation',
+        bckUp: 'Back up',
+        nxtPoint: 'Reissue the next point',
+
+      },
+      index: {
+        allStat: 'All Status',
+        analysis: 'Analysis',
+      }
     }
   }
+
+
 }
 
 // this.$t('activity.activityManage.activityInfo.tableDialog.title')

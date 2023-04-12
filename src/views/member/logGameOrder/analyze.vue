@@ -11,10 +11,10 @@
       append-to-body
     >
       <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-        <el-form-item label="日期范围" prop="selectDate">
+        <el-form-item :label=" $t('members.logGameOrder.analyze.date.range') " prop="selectDate">
           <el-date-picker type="daterange" v-model="queryParams.selectDate" format="yyyy-MM-dd"
-                          value-format="yyyy-MM-dd" start-placeholder="开始日期"
-                          end-placeholder="结束日期"
+                          value-format="yyyy-MM-dd" :start-placeholder=" $t('members.logGameOrder.analyze.date.start') "
+                          :end-placeholder=" $t('members.logGameOrder.analyze.date.end') "
                           range-separator="-" clearable
                           :picker-options="pickerOptions"
           ></el-date-picker>
@@ -22,25 +22,25 @@
         <el-form-item prop="searchValue">
           <el-input
             v-model.trim="queryParams.searchValue"
-            placeholder="会员ID/会员账号"
+            :placeholder=" $t('members.logGameOrder.analyze.memIdAcc') "
             clearable
             size="small"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
         <el-form-item prop="platformId">
-          <el-select v-model="queryParams.platformId" placeholder="请选择平台" clearable size="small" >
+          <el-select v-model="queryParams.platformId" :placeholder=" $t('members.logGameOrder.analyze.plat') " clearable size="small" >
             <el-option v-for="item in platformList" :label="item.name" :value="item.id"/>
           </el-select>
         </el-form-item>
         <el-form-item prop="type">
-          <el-select v-model="queryParams.type" placeholder="全部类型" clearable size="small" >
+          <el-select v-model="queryParams.type" :placeholder=" $t('members.logGameOrder.analyze.types') " clearable size="small" >
             <el-option v-for="item in typeList" :label="item.label" :value="item.value"/>
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-          <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery"> {{ $t('members.logGameOrder.analyze.search') }} </el-button>
+          <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('members.logGameOrder.analyze.reset') }}</el-button>
         </el-form-item>
       </el-form>
       <el-row :gutter="10" class="mb8">
@@ -52,7 +52,7 @@
             size="mini"
             @click="handleScore"
             v-hasPermi="['member:logGameOrder:backScore']"
-          >批量处理上下分
+          >{{ $t('members.logGameOrder.analyze.batch') }}
           </el-button>
         </el-col>
         <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -60,19 +60,20 @@
 
       <el-table stripe v-loading="loading" :data="scoreList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
-        <el-table-column label="会员ID" align="center" prop="memberId"/>
-        <el-table-column label="订单ID" align="center" prop="id" min-width="150"/>
-        <el-table-column label="游戏平台" align="center" prop="platformName"/>
-        <el-table-column label="金额" align="center" prop="money"/>
-        <el-table-column label="类型" align="center" prop="type" min-width="60" :formatter="formatterType"/>
-        <el-table-column label="操作" min-width="150" align="center" class-name="small-padding fixed-width" fixed="right">
+        <el-table-column :label="$t('members.logGameOrder.analyze.memId')" align="center" prop="memberId"/>
+        <el-table-column :label="$t('members.logGameOrder.analyze.orderId')" align="center" prop="id" min-width="150"/>
+        <el-table-column :label="$t('members.logGameOrder.analyze.gamePlat')" align="center" prop="platformName"/>
+        <el-table-column :label="$t('members.logGameOrder.analyze.amt')" align="center" prop="money"/>
+        <el-table-column :label="$t('members.logGameOrder.analyze.type')" align="center" prop="type" min-width="60" :formatter="formatterType"/>
+        <el-table-column :label="$t('members.logGameOrder.analyze.opt')" min-width="150" align="center" class-name="small-padding fixed-width" fixed="right">
           <template slot-scope="scope">
             <el-button
               type="success"
               plain
               size="small"
               @click="handleBackScore(scope.row)"
-            >{{scope.row.type == 1 ? '回退上分':'补发下分'}}金额
+            >{{scope.row.type == 1 ? this.$t('members.logGameOrder.analyze.bckUp') : this.$t('members.logGameOrder.analyze.nxtPoint')}}
+              {{ $t('members.logGameOrder.analyze.amt') }}
             </el-button>
           </template>
         </el-table-column>

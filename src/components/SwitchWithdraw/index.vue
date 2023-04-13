@@ -31,7 +31,6 @@ export default {
     };
   },
   mounted() {
-    console.log("mounting")
     checkPermissions( 'pay:memberPayJour:list','pay:memberWithdrawLog:list','pay:memberRechargeLog:list','admin:payUsdtRecharge:list' )
       .then( hasPermissions => {
         if (!hasPermissions) {

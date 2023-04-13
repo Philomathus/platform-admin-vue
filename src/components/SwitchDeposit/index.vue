@@ -15,6 +15,14 @@ import usdtDeposit from '@i/audio/usdt_deposit_zh.mp3';
 import { listCount  as memberPayJourListCount }       from '@/api/platform-web/pay/memberPayJour';
 import { listCount  as memberRechargeLogListCount }   from '@/api/platform-web/pay/memberRechargeLog';
 import { listCount  as payUsdtRechargeListCount }     from '@/api/platform-web/pay/payUsdtRecharge';
+import { getToken } from '@/utils/auth';
+import { checkPermissions } from "@/api/platform-web/system/login";
+import { startInterval, killInterval } from "@/utils/scheduledTask";
+
+
+
+const StorageKey = 'notifyOnDeposit';
+const IntervalMillis = 5000;
 
 export default {
   data(){
@@ -37,22 +45,40 @@ export default {
       reminderInterval: null
     };
   },
-  mounted(){
-      memberPayJourListCount( this.query ).then( res => {
-        this.totals.memberPayJourListCount = res.total;
-      });
-      memberRechargeLogListCount( this.query ).then( res => {
-        this.totals.memberRechargeLogListCount = res.total;
-      });
-      payUsdtRechargeListCount( this.query ).then( res => {
-        this.totals.payUsdtRechargeListCount = res.total;
-      });
-      this.scheduleReminder();
+  mounted() {
+    checkPermissions( 'pay:memberPayJour:list','pay:memberWithdrawLog:list','pay:memberRechargeLog:list','admin:payUsdtRecharge:list' )
+      .then( hasPermissions => {
+        if(!hasPermissions) {
+          return;
+        }
+
+        let storedNotifyOnDeposit = localStorage.getItem( StorageKey );
+
+        if( storedNotifyOnDeposit !== null ) {
+          this.notifyOnDeposit = storedNotifyOnDeposit === "true";
+        }
+
+        memberPayJourListCount( this.query ).then( res => {
+          this.totals.memberPayJourListCount = res.total;
+        });
+        memberRechargeLogListCount( this.query ).then( res => {
+          this.totals.memberRechargeLogListCount = res.total;
+        });
+        payUsdtRechargeListCount( this.query ).then( res => {
+          this.totals.payUsdtRechargeListCount = res.total;
+        });
+        this.scheduleReminder();
+      } );
   },
   methods: {
     scheduleReminder() {
+      localStorage.setItem( StorageKey, this.notifyOnDeposit.toString() );
+
       if( this.notifyOnDeposit ) {
-        this.reminderInterval = setInterval(() => {
+        this.reminderInterval = startInterval(() => {
+          if( !getToken()  ) {
+            return;
+          }
 
           memberPayJourListCount( this.query ).then( res => {
               if( res.total > this.totals.memberPayJourListCount ) {
@@ -76,9 +102,9 @@ export default {
             }
           );
 
-        }, 5000);
+        }, IntervalMillis );
       } else {
-        clearInterval( this.reminderInterval );
+        killInterval( this.reminderInterval );
       }
     }
   }

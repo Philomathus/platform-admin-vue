@@ -6,72 +6,84 @@
       :close-on-click-modal="false"
       :title="title"
       :visible.sync="visible"
-      width="1365px"
+      width="1435px"
       top="5vh"
       append-to-body
     >
       <!--顶部按钮-->
       <div class="page-tab" style="margin-bottom: 20px">
-          <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(3,'加分')">
-            <span>加分</span></button>
-          <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(1,'三方游戏')">
-            <span>三方游戏</span></button>
-          <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(5,'银行卡')">
-            <span>银行卡</span></button>
-          <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(10,'发送短信')">
-            <span>发送短信</span></button>
-          <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(4,'重置密码')">
-            <span>重置密码</span></button>
-          <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(11,'重置手机号')">
-            <span>重置手机号</span></button>
-          <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(13,'重置邀请码')">
-            <span>重置邀请码</span></button>
+        <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(3,'加分')">
+          <span>加分</span></button>
+        <button type="button" class="el-button el-button--primary el-button--mini is-plain"
+                @click="change(1,'三方游戏')">
+          <span>三方游戏</span></button>
+        <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(5,'银行卡')">
+          <span>银行卡</span></button>
+        <button type="button" class="el-button el-button--primary el-button--mini is-plain"
+                @click="change(10,'发送短信')">
+          <span>发送短信</span></button>
+        <button type="button" class="el-button el-button--primary el-button--mini is-plain"
+                @click="change(11,'重置手机号')">
+          <span>重置手机号</span></button>
+        <button type="button" class="el-button el-button--primary el-button--mini is-plain"
+                @click="change(13,'重置邀请码')">
+          <span>重置邀请码</span></button>
 
-  <!--Follow Members tab added by rajesh index:16 represent follow members-->
-          <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(16,'关注主播')">
-            <span>关注主播</span></button>
-  <!--End follow members tab here  -->
+        <!--Follow Members tab added by rajesh index:16 represent follow members-->
+        <button type="button" class="el-button el-button--primary el-button--mini is-plain"
+                @click="change(16,'关注主播')">
+          <span>关注主播</span></button>
+        <!--End follow members tab here  -->
 
-            <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(2,'资金明细')">
-              <span>资金明细</span>
-            </button>
+        <button type="button" class="el-button el-button--success el-button--mini is-plain"
+                @click="change(2,'资金明细')">
+          <span>资金明细</span>
+        </button>
 
-            <button
-              type="button"
-              class="el-button el-button--success el-button--mini is-plain"
-              @click="change(6,'重置保险箱')"
-              v-has-permi="['member:memberInfo:resetBox']">
-              <span>重置保险箱</span>
-            </button>
+        <button
+          type="button"
+          class="el-button el-button--success el-button--mini is-plain"
+          @click="change(6,'重置保险箱密码')"
+          v-has-permi="['member:memberInfo:resetBox']">
+          <span>重置保险箱密码</span>
+        </button>
 
-            <button
-              type="button"
-              class="el-button el-button--success el-button--mini is-plain"
-              @click="change(7,'重置提现')"
-              v-has-permi="['member:memberInfo:resetTx']">
-              <span>重置提现</span>
-            </button>
+        <button
+          type="button"
+          class="el-button el-button--success el-button--mini is-plain"
+          @click="change(7,'重置提现密码')"
+          v-has-permi="['member:memberInfo:resetTx']">
+          <span>重置提现密码</span>
+        </button>
 
-            <button
-              type="button"
-              class="el-button el-button--success el-button--mini is-plain"
-              @click="change(8,'打码修复')"
-              v-has-permi="['member:memberInfo:bcodeRepair']">
-              <span>打码修复</span>
-            </button>
+        <button type="button"
+                class="el-button el-button--primary el-button--mini is-plain"
+                @click="change(4,'重置登入密码')">
+          <span>重置登入密码</span></button>
 
-            <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(9,'修改Vip')">
-              <span>修改Vip</span>
-            </button>
+        <button
+          type="button"
+          class="el-button el-button--success el-button--mini is-plain"
+          @click="change(8,'打码修复')"
+          v-has-permi="['member:memberInfo:bcodeRepair']">
+          <span>打码修复</span>
+        </button>
 
-            <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(12,'IM禁言')">
-              <span>IM禁言</span>
-            </button>
+        <button type="button" class="el-button el-button--success el-button--mini is-plain"
+                @click="change(9,'修改Vip')">
+          <span>修改Vip</span>
+        </button>
 
-            <button type="button" class="el-button el-button--success el-button--mini is-plain" @click="change(15,'域名展示')">
-              <span>域名展示</span>
-            </button>
-        </div>
+        <button type="button" class="el-button el-button--success el-button--mini is-plain"
+                @click="change(12,'IM禁言')">
+          <span>IM禁言</span>
+        </button>
+
+        <button type="button" class="el-button el-button--success el-button--mini is-plain"
+                @click="change(15,'域名展示')">
+          <span>域名展示</span>
+        </button>
+      </div>
 
 
       <!--积分明细-->
@@ -194,10 +206,10 @@
           <el-form-item label="google验证码" prop="googleAuthCode">
             <el-input v-model="mobileForm.googleAuthCode" placeholder="请输入google验证码"/>
           </el-form-item>
-<!--          <el-form-item>-->
-<!--            <el-button type="primary" @click="updateMobile()" v-has-permi="['member:memberInfo:updateMobile']">确 定-->
-<!--            </el-button>-->
-<!--          </el-form-item>-->
+          <!--          <el-form-item>-->
+          <!--            <el-button type="primary" @click="updateMobile()" v-has-permi="['member:memberInfo:updateMobile']">确 定-->
+          <!--            </el-button>-->
+          <!--          </el-form-item>-->
         </el-form>
       </el-row>
 
@@ -218,10 +230,10 @@
       <el-row v-if="index===15">
         <el-form label-width="110px">
           <el-form-item label="登录域名">
-              {{this.registerDomain}}
+            {{ this.registerDomain }}
           </el-form-item>
           <el-form-item label="注册域名">
-            {{this.LoginDomain}}
+            {{ this.LoginDomain }}
           </el-form-item>
         </el-form>
       </el-row>
@@ -236,13 +248,15 @@
           @selection-change="handleSelectionChange"
           height="460px"
           v-loading="loading">
-          <el-table-column align="center" prop="realName" label="真实姓名" :show-overflow-tooltip="true" min-width="120">
+          <el-table-column align="center" prop="realName" label="真实姓名" :show-overflow-tooltip="true"
+                           min-width="120">
             <template v-slot="{row}" v-if="index===5">
               <el-input v-model="row.realName"></el-input>
             </template>
           </el-table-column>
 
-          <el-table-column align="center" prop="bankName" label="银行名称" :show-overflow-tooltip="true" min-width="135">
+          <el-table-column align="center" prop="bankName" label="银行名称" :show-overflow-tooltip="true"
+                           min-width="135">
             <template v-slot="{row}" v-if="index===5">
               <el-select filterable
                          v-model="row.bankId">
@@ -259,7 +273,8 @@
               <el-input v-model="row.bankAccount"></el-input>
             </template>
           </el-table-column>
-          <el-table-column align="center" prop="bankAddress" label="银行地址" :show-overflow-tooltip="true" min-width="140">
+          <el-table-column align="center" prop="bankAddress" label="银行地址" :show-overflow-tooltip="true"
+                           min-width="140">
             <template v-slot="{row}" v-if="index===5">
               <el-input v-model="row.bankAddress"></el-input>
             </template>
@@ -301,11 +316,11 @@
           :total="total"
           :page.sync="queryParams.pageNum"
           :limit.sync="queryParams.pageSize"
-          @pagination="getList" />
+          @pagination="getList"/>
       </el-row>
 
 
-<!--   关注主播- Follow the anchor created by Rajesh-->
+      <!--   关注主播- Follow the anchor created by Rajesh-->
       <el-row v-if="index===16">
         <el-table
           @row-click="clickRow"
@@ -318,9 +333,9 @@
           <el-table-column label="主播昵称" align="center" prop="nickName" min-width="120px"/>
         </el-table>
       </el-row>
-<!--  END 关注主播- Follow the anchor function created by Rajesh -->
+      <!--  END 关注主播- Follow the anchor function created by Rajesh -->
 
-<!-- footer slots adding to all models -->
+      <!-- footer slots adding to all models -->
       <div slot="footer" class="dialog-footer">
         <el-button
           type="primary"
@@ -337,12 +352,12 @@
         >确 定
         </el-button>
 
-          <el-button
-            type="primary" @click="updateMobile()"
-            v-show="index ===11"
-            v-has-permi="['member:memberInfo:updateMobile']">
-            确 定
-          </el-button>
+        <el-button
+          type="primary" @click="updateMobile()"
+          v-show="index ===11"
+          v-has-permi="['member:memberInfo:updateMobile']">
+          确 定
+        </el-button>
 
         <el-button
           type="primary"
@@ -361,7 +376,7 @@
 
         <el-button @click="visible = false">取 消</el-button>
       </div>
-<!--  end footer slots for all dialog models-->
+      <!--  end footer slots for all dialog models-->
 
     </el-dialog>
     <!-- 修改vip等级 -->
@@ -440,7 +455,7 @@ import {
   changeBank,
   getMemberInfo,
   resetWithdrawal, memberBcodeRepair, updateVip,
-  sendMsg, updateMobile, fullMobile, imDelete, updateInviterCode,followList
+  sendMsg, updateMobile, fullMobile, imDelete, updateInviterCode, followList
 } from '@/api/platform-web/member/memberInfo'
 import {userImMute} from '@/api/platform-web/live-web/ImMute'
 // import { hideKMobile } from '@/utils/mobile.js'
@@ -448,7 +463,8 @@ import TableShow from '@/views/pay/memberWithdrawLog/tableShow.vue';
 import {getMemberWithdrawReport} from "@/api/platform-web/pay/memberWithdrawLog";
 import {positiveInteger, validMobile, validNumber} from '../../../utils/validate'
 import {checkTwoLogin} from "@/utils/permission";
-import { listBankList } from "@/api/platform-web/pay/bankList";
+import {listBankList} from "@/api/platform-web/pay/bankList";
+
 export default {
   props: {
     /*    memberId: {
@@ -569,10 +585,16 @@ export default {
           {required: true, message: '入款备注不能为空', trigger: 'blur'}
         ],
         mk: [
-          {required: true, message: '备注信息不能为空', trigger: 'blur'}, {max: 200, message: "备注信息长度不能超过200位"}
+          {required: true, message: '备注信息不能为空', trigger: 'blur'}, {
+            max: 200,
+            message: "备注信息长度不能超过200位"
+          }
         ],
         ordermk: [
-          {required: true, message: '订单备注不能为空', trigger: 'blur'}, {max: 200, message: "备注信息长度不能超过200位"}
+          {required: true, message: '订单备注不能为空', trigger: 'blur'}, {
+            max: 200,
+            message: "备注信息长度不能超过200位"
+          }
         ],
         googleAuthCode: [
           {required: true, message: 'google验证码不能为空', trigger: 'blur'},
@@ -620,9 +642,9 @@ export default {
       if (checkTwoLogin()) {
         fullMobile(this.memberId).then((res) => {
           this.mobileForm = res.data
-          if(!this.mobileForm.phone){
+          if (!this.mobileForm.phone) {
             this.$message.error('手机号码不可用')
-          }else{
+          } else {
             this.$message.success('完整手机号码已展示')
           }
         })
@@ -831,27 +853,28 @@ export default {
     },
     updateVip() {
       var that = this
-      if(that.vip > 50){
+      if (that.vip > 50) {
         this.$message.error("vip等级最大为50级")
-      } else if(that.vip < this.oldVip) {
+      } else if (that.vip < this.oldVip) {
         this.$message.error("vip等级修改不能小于之前的等级")
-      } else { updateVip({
-        nickName: that.nickName,
-        vip: that.vip,
-        id: that.memberId
-      }).then((res) => {
-        console.info(res)
-        if (res.code === 0) {
-          that.oldVip = that.vip
-          that.$message.success(res.data)
-          that.showVip = false
-          that.$emit('refMemeberData')
-        } else if (res.code === 1) {
-          that.$message.error(res.data)
-        } else {
-          that.$notify.error('vip等级修改失败')
-        }
-      })
+      } else {
+        updateVip({
+          nickName: that.nickName,
+          vip: that.vip,
+          id: that.memberId
+        }).then((res) => {
+          console.info(res)
+          if (res.code === 0) {
+            that.oldVip = that.vip
+            that.$message.success(res.data)
+            that.showVip = false
+            that.$emit('refMemeberData')
+          } else if (res.code === 1) {
+            that.$message.error(res.data)
+          } else {
+            that.$notify.error('vip等级修改失败')
+          }
+        })
       }
     },
     updateIm() {
@@ -1049,8 +1072,8 @@ export default {
         id: this.memberId,
         // _: new Date().getTime()
       }).then((res) => {
-          this.dbTableList = res.data
-          this.loading = false
+        this.dbTableList = res.data
+        this.loading = false
       }).catch((error) => {
         this.$notify.warning('获取关注列表失败')
         this.loading = false

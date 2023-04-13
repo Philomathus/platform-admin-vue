@@ -26,6 +26,10 @@ export function getInfo() {
   })
 }
 
+export function checkPermissions(...perms) {
+  return getInfo().then( res => perms.every( value => res.permissions.includes( value ) ) );
+}
+
 // 退出方法
 export function logout() {
   return request({

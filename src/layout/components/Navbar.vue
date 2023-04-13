@@ -5,11 +5,15 @@
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
 
     <div class="right-menu">
+      <span v-if="notifyOnDepositOrWithdraw">
+        <label           class="right-menu-item" style="font-size: 10px">入款提醒</label>
+        <SwitchDeposit   id = "notification-switch-deposit" class="right-menu-item" />
+        <label           class="right-menu-item" style="font-size: 10px">提现提醒</label>
+        <SwitchWithdraw  id = "notification-switch-withdraw" class="right-menu-item"/>
+      </span>
+
       <template v-if="device!=='mobile'">
-        <label class="right-menu-item" style="font-size: 10px">入款提醒</label>
-        <SwitchDeposit id = "notification-switch-deposit" class="right-menu-item"/>
-        <label class="right-menu-item" style="font-size: 10px">提现提醒</label>
-        <SwitchWithdraw id = "notification-switch-withdraw" class="right-menu-item"/>
+
         <search id="header-search" class="right-menu-item" />
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
 
@@ -49,8 +53,14 @@ import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
 import SwitchDeposit from "@/components/SwitchDeposit/index.vue";
 import SwitchWithdraw from "@/components/SwitchWithdraw/index.vue";
+import { checkPermissions } from "@/api/platform-web/system/login";
 
 export default {
+  data() {
+    return {
+      notifyOnDepositOrWithdraw: false
+    }
+  },
   components: {
     Breadcrumb,
     Hamburger,
@@ -77,6 +87,10 @@ export default {
         })
       }
     }
+  },
+  mounted() {
+    checkPermissions( 'pay:memberPayJour:list','pay:memberWithdrawLog:list','pay:memberRechargeLog:list','admin:payUsdtRecharge:list' )
+      .then( hasPermissions => this.notifyOnDepositOrWithdraw = hasPermissions );
   },
   methods: {
     toggleSideBar() {

@@ -336,9 +336,9 @@ export default {
         type: 'warning'
       }).then(function() {
         return changeConfigBankStatus(row.id, row.status)
-      }).then(function() {
+      })/*.then(function() {
         return changeConfigBankTextv1(row.id, row.status)
-      }).then(() => {
+      })*/.then(() => {
         this.msgSuccess(text + '成功')
         this.getList()
       }).catch(function() {

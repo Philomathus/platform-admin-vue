@@ -9,8 +9,13 @@
 
 <script>
 import withdrawAudio from '@i/audio/withdraw_zh.mp3';
-import {getCountAll as memberWithdrawLogListCount} from '@/api/platform-web/pay/memberWithdrawLog';
+import { getCountAll as memberWithdrawLogListCount } from '@/api/platform-web/pay/memberWithdrawLog';
+import { getToken } from "@/utils/auth";
+import { checkPermissions } from "@/api/platform-web/system/login";
+import { startInterval, killInterval } from "@/utils/scheduledTask";
 
+const StorageKey = 'notifyWithdraw';
+const IntervalMillis = 5000;
 export default {
   data() {
     return {
@@ -26,14 +31,32 @@ export default {
     };
   },
   mounted() {
-    memberWithdrawLogListCount().then(res => {
-      this.totals.memberWithdrawLogListCount = res.data;
-    }).then(this.scheduleReminder);
+    checkPermissions( 'pay:memberPayJour:list','pay:memberWithdrawLog:list','pay:memberRechargeLog:list','admin:payUsdtRecharge:list' )
+      .then( hasPermissions => {
+        if (!hasPermissions) {
+          return;
+        }
+
+        let storedNotifyOnWithdraw = localStorage.getItem(StorageKey);
+
+        if (storedNotifyOnWithdraw !== null) {
+          this.notifyOnWithdraw = storedNotifyOnWithdraw === "true";
+        }
+
+        memberWithdrawLogListCount().then(res => {
+          this.totals.memberWithdrawLogListCount = res.data;
+        }).then(this.scheduleReminder);
+      } );
   },
   methods: {
     scheduleReminder() {
+      localStorage.setItem( StorageKey, this.notifyOnWithdraw.toString() );
+
       if (this.notifyOnWithdraw) {
-        this.reminderInterval = setInterval(() => {
+        this.reminderInterval = startInterval(() => {
+          if( !getToken() ) {
+            return;
+          }
 
           memberWithdrawLogListCount().then(res => {
               if (res.data > this.totals.memberWithdrawLogListCount) {
@@ -43,9 +66,9 @@ export default {
             }
           );
 
-        }, 5000);
+        }, IntervalMillis );
       } else {
-        clearInterval(this.reminderInterval);
+        killInterval(this.reminderInterval);
       }
     }
   }

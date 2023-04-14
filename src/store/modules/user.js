@@ -1,5 +1,6 @@
 import { login, logout, getInfo } from '@/api/platform-web/system/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
+import { killIntervals } from "@/utils/scheduledTask";
 
 const user = {
   state: {
@@ -75,6 +76,7 @@ const user = {
           commit('SET_ROLES', [])
           commit('SET_PERMISSIONS', [])
           removeToken()
+          killIntervals()
           resolve()
         }).catch(error => {
           reject(error)

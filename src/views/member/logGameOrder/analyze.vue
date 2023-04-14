@@ -113,33 +113,32 @@ export default {
       platformList:[],
       //状态集合列表
       stateCollection: [[
-                        { label: '入厅失败', value: '-1' },
-                        { label: '入厅开始', value: '0' },
-                        { label: '注册失败', value: '1' },
-                        { label: '上分成功', value: '2' },
-                        { label: '上分扣款异常', value: '3' },
-                        { label: '上分扣款失败', value: '4' },
-                        { label: '上分失败', value: '5' },
-                        { label: '上分超时', value: '6' },
-                        { label: '查询余额失败', value: '7' },
-                        { label: '上分查询明细失败', value: '8' },
-                        { label: '上分查询明细超时', value: '9' },
-                        { label: '上分交易不存在', value: '10' },
-                        { label: '获取游戏失败', value: '11' },
-                        { label: '未知异常', value: '12' },
-                        { label: '回退上分', value: '13' }
-
+                        { label: this.$t('members.logGameOrder.analyze.fHall'), value: '-1' },
+                        { label: this.$t('members.logGameOrder.analyze.eHall'), value: '0' },
+                        { label: this.$t('members.logGameOrder.analyze.regFail'), value: '1' },
+                        { label: this.$t('members.logGameOrder.analyze.scoreSuc'), value: '2' },
+                        { label: this.$t('members.logGameOrder.analyze.credEx'), value: '3' },
+                        { label: this.$t('members.logGameOrder.analyze.scoreDec'), value: '4' },
+                        { label: this.$t('members.logGameOrder.analyze.failScr'), value: '5' },
+                        { label: this.$t('members.logGameOrder.analyze.tmoutScr'), value: '6' },
+                        { label: this.$t('members.logGameOrder.analyze.blncInq'), value: '7' },
+                        { label: this.$t('members.logGameOrder.analyze.failUpscr'), value: '8' },
+                        { label: this.$t('members.logGameOrder.analyze.tmoutUpscr'), value: '9' },
+                        { label: this.$t('members.logGameOrder.analyze.upScrnotex'), value: '10' },
+                        { label: this.$t('members.logGameOrder.analyze.getGfail'), value: '11' },
+                        { label: this.$t('members.logGameOrder.analyze.unkAnom'), value: '12' },
+                        { label: this.$t('members.logGameOrder.analyze.bnkScr'), value: '13' }
       ],[
-        { label: '出厅失败', value: '-1' },
-        { label: '下分开始', value: '0' },
-        { label: '下分成功', value: '2' },
-        { label: '下分失败', value: '5' },
-        { label: '下分超时', value: '6' },
-        { label: '查询余额失败', value: '7' },
-        { label: '下分查询明细失败', value: '8' },
-        { label: '下分查询明细超时', value: '9' },
-        { label: '下分交易不存在', value: '10' },
-        { label: '未知异常', value: '12' }
+        { label: this.$t('members.logGameOrder.analyze.fexHall'), value: '-1' },
+        { label: this.$t('members.logGameOrder.analyze.sNextscr'), value: '0' },
+        { label: this.$t('members.logGameOrder.analyze.dScoresucc'), value: '2' },
+        { label: this.$t('members.logGameOrder.analyze.fScore'), value: '5' },
+        { label: this.$t('members.logGameOrder.analyze.dTime'), value: '6' },
+        { label: this.$t('members.logGameOrder.analyze.bInqf'), value: '7' },
+        { label: this.$t('members.logGameOrder.analyze.fQuery'), value: '8' },
+        { label: this.$t('members.logGameOrder.analyze.tmoutQuery'), value: '9' },
+        { label: this.$t('members.logGameOrder.analyze.lScore'), value: '10' },
+        { label: this.$t('members.logGameOrder.analyze.unkAnom'), value: '12' }
       ]],
       visible: false,
       //状态列表
@@ -197,47 +196,47 @@ export default {
   methods: {
     formatterType(row) {
       if (row.type == 1) {
-        return '上分'
+        return this.$t('members.logGameOrder.analyze.tScore')
       } else if (row.type == 2) {
-        return '下分'
+        return this.$t('members.logGameOrder.analyze.lDiv')
       } else {
-        return '未知'
+        return this.$t('members.logGameOrder.analyze.unk')
       }
     },
     formatterStatus(row) {
-      const scoreName = row.type == 1 ? '上分' :'下分';
+      const scoreName = row.type == 1 ? this.$t('members.logGameOrder.analyze.tScore') :this.$t('members.logGameOrder.analyze.lDiv');
       if (row.status == -1) {
-        return '失败' + (row.type == 1 ? '入厅' : '出厅');
+        return this.$t('members.logGameOrder.analyze.unk') + (row.type == 1 ? this.$t('members.logGameOrder.analyze.enHall') : this.$t('members.logGameOrder.analyze.exHall'));
       }else if (row.status == 0) {
-        return '开始' + (row.type == 1 ? '入厅' : '出厅');
+        return this.$t('members.logGameOrder.analyze.start') + (row.type == 1 ? this.$t('members.logGameOrder.analyze.enHall') : this.$t('members.logGameOrder.analyze.exHall'));
       }else if (row.status == 1) {
-        return '注册失败'
+        return this.$t('members.logGameOrder.analyze.regFail')
       } else if (row.status == 2) {
-        return '成功' + scoreName
+        return this.$t('members.logGameOrder.analyze.success') + scoreName
       } else if (row.status == 3) {
-        return '异常' + '上分扣款异常'
+        return this.$t('members.logGameOrder.analyze.anom') + this.$t('members.logGameOrder.analyze.credEx')
       } else if (row.status == 4) {
-        return '异常' + '上分扣款失败'
+        return this.$t('members.logGameOrder.analyze.anom') + this.$t('members.logGameOrder.analyze.scoreDec')
       } else if (row.status == 5) {
-        return '失败' + scoreName
+        return this.$t('members.logGameOrder.analyze.failure') + scoreName
       } else if (row.status == 6) {
-        return '超时' + scoreName
+        return this.$t('members.logGameOrder.analyze.tmOut') + scoreName
       } else if (row.status == 7) {
-        return '查询余额失败'
+        return this.$t('members.logGameOrder.analyze.bInqf')
       } else if (row.status == 8) {
-        return '查询明细失败' + scoreName
+        return this.$t('members.logGameOrder.analyze.fChk') + scoreName
       } else if (row.status == 9) {
-        return '查询明细超时' + scoreName
+        return this.$t('members.logGameOrder.analyze.tmoutQueryDetails') + scoreName
       } else if (row.status == 10) {
-        return '交易不存在' + scoreName
+        return this.$t('members.logGameOrder.analyze.trnsctNot') + scoreName
       } else if (row.status == 11) {
-        return '获取游戏失败'
+        return this.$t('members.logGameOrder.analyze.getGame')
       } else if (row.status == 12) {
-        return '未知异常'
+        return this.$t('members.logGameOrder.analyze.unkAnom')
       }else if (row.status == 13){
-        return '回退' + scoreName
+        return this.$t('members.logGameOrder.analyze.rollback') + scoreName
       } else {
-        return '未知'
+        return this.$t('members.logGameOrder.analyze.unk')
       }
     },
     show(){
@@ -286,13 +285,13 @@ export default {
     /** 上下分按钮操作 */
     handleScore() {
       if (this.scoreList.length == 0) {
-        this.$confirm('请选中会员', '提示', {
-          confirmButtonText: '确定',
+        this.$confirm(this.$t('members.logGameOrder.analyze.slctMem'), this.$t('members.logGameOrder.analyze.tips'), {
+          confirmButtonText: this.$t('members.logGameOrder.analyze.determine'),
           type: 'warning'
         })
       }else {
         handleBackScore(this.selectionList).then(response => {
-          this.msgSuccess("资金回退成功");
+          this.msgSuccess(this.$t('members.logGameOrder.analyze.succFund'));
           this.getList()
         })
       }
@@ -305,7 +304,7 @@ export default {
     handleBackScore(row){
       this.selectionList[0] = row
       handleBackScore(this.selectionList).then(response => {
-        this.msgSuccess("资金回退成功");
+        this.msgSuccess(this.$t('members.logGameOrder.analyze.succFund'));
         this.getList()
       })
     },

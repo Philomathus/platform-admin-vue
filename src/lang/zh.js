@@ -209,11 +209,25 @@ export default {
           game: '名称不能为空'
         }
       },
-      activityQuestTypebak: {
+      wheelDiceConfig :{
+        addTitle: "添加【抽奖配置】",
+        editTitle: "修改【抽奖配置】",
         tableDialog: {
+          id: '主键id',
+          idPlaceholder: '',
+          depositTotalMin: '当日存款总额最小值',
+          depositTotalMinPlaceholder: '请输入当日存款总额最小值',
+          depositTotalMax: '当日存款总额最大值',
+          depositTotalMaxPlaceholder: '请输入当日存款总额最大值',
+          lotteryTimes: '抽奖次数',
+          lotteryTimesPlaceholder: '请输入抽奖次数',
+          status: '状态',
+          statusPlaceholder: '请选择状态'
         },
         validation: {
-
+          depositTotalMin: '名称不能为空',
+          depositTotalMax: '当日存款总额最大值不能不上传',
+          lotteryTimes: '抽奖次数不能为空'
         }
       },
     }

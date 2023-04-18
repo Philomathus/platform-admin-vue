@@ -1,8 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item  prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small">
+      <el-form-item prop="status">
+        <el-select v-model="queryParams.status"
+                   :placeholder="$t('activity.activityManage.wheelDiceConfig.statusPlaceholder')" clearable
+                   size="small">
           <el-option
             v-for="dict in statusOptions"
             :key="dict.dictValue"
@@ -12,8 +14,11 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{
+            $t('activity.searchButton')
+          }}
+        </el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('activity.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -26,7 +31,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:wheelDiceConfig:add']"
-        >新增</el-button>
+        >{{ $t('activity.addButton') }}
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -37,7 +43,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:wheelDiceConfig:edit']"
-        >修改</el-button>
+        >{{ $t('activity.editButton') }}
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -48,7 +55,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:wheelDiceConfig:remove']"
-        >删除</el-button>
+        >{{ $t('activity.deleteutton') }}
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -58,18 +66,23 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:wheelDiceConfig:export']"
-        >导出</el-button>
+        >{{ $t('activity.exportButton') }}
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="wheelDiceConfigList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键id" align="center" prop="id" />
-      <el-table-column label="当日存款总额最小值" align="center" prop="depositTotalMin" />
-      <el-table-column label="当日存款总额最大值" align="center" prop="depositTotalMax" />
-      <el-table-column label="抽奖次数" align="center" prop="lotteryTimes" />
-      <el-table-column label="状态" align="center" prop="status" >
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column :label="$t('activity.activityManage.wheelDiceConfig.statusPlaceholder')" align="center"
+                       prop="id"/>
+      <el-table-column :label="$t('activity.activityManage.wheelDiceConfig.depositTotalMin')" align="center"
+                       prop="depositTotalMin"/>
+      <el-table-column :label="$t('activity.activityManage.wheelDiceConfig.depositTotalMax')" align="center"
+                       prop="depositTotalMax"/>
+      <el-table-column :label="$t('activity.activityManage.wheelDiceConfig.lotteryTimes')" align="center"
+                       prop="lotteryTimes"/>
+      <el-table-column :label="$t('activity.activityManage.wheelDiceConfig.status')" align="center" prop="status">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -79,7 +92,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('activity.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -87,14 +100,18 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:wheelDiceConfig:edit']"
-          >修改</el-button>
+          >{{ $t('activity.editButton') }}
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:wheelDiceConfig:remove']"
-          >删除</el-button>
+          >{{
+              $t('activity.deleteButton')
+            }}
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -108,33 +125,41 @@
     />
 
     <!-- 添加或修改【抽奖配置】对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="150px">
-        <el-form-item label="当日存款总额最小值" prop="depositTotalMin">
-          <el-input v-model="form.depositTotalMin" type="number" placeholder="请输入当日存款总额最小值" />
+        <el-form-item :label="$t('activity.activityManage.wheelDiceConfig.depositTotalMin')" prop="depositTotalMin">
+          <el-input v-model="form.depositTotalMin" type="number" :placeholder="$t('activity.activityManage.wheelDiceConfig.depositTotalMinPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="当日存款总额最大值" prop="depositTotalMax">
-          <el-input v-model="form.depositTotalMax" type="number" placeholder="请输入当日存款总额最大值" />
+        <el-form-item :label="$t('activity.activityManage.wheelDiceConfig.depositTotalMax')" prop="depositTotalMax">
+          <el-input v-model="form.depositTotalMax" type="number" :placeholder="$t('activity.activityManage.wheelDiceConfig.depositTotalMaxPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="抽奖次数" prop="lotteryTimes">
-          <el-input v-model="form.lotteryTimes" type="number" placeholder="请输入抽奖次数" />
+        <el-form-item :label="$t('activity.activityManage.wheelDiceConfig.lotteryTimes')" prop="lotteryTimes">
+          <el-input v-model="form.lotteryTimes" type="number" :placeholder="$t('activity.activityManage.wheelDiceConfig.lotteryTimesPlaceholder')"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('activity.submitButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('activity.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { listWheelDiceConfig, getWheelDiceConfig, delWheelDiceConfig, addWheelDiceConfig, updateWheelDiceConfig, exportWheelDiceConfig ,changeLotteryInfoStatus} from "@/api/activity/wheelDiceConfig";
+import {
+  listWheelDiceConfig,
+  getWheelDiceConfig,
+  delWheelDiceConfig,
+  addWheelDiceConfig,
+  updateWheelDiceConfig,
+  exportWheelDiceConfig,
+  changeLotteryInfoStatus
+} from "@/api/activity/wheelDiceConfig";
 
 export default {
   name: "WheelDiceConfig",
-  components: {
-  },
+  components: {},
   data() {
     return {
       // 遮罩层
@@ -170,13 +195,13 @@ export default {
       // 表单校验
       rules: {
         depositTotalMin: [
-          {required: true, message: "当日存款总额最小值不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.activityManage.validation.depositTotalMin'), trigger: "blur"}
         ],
         depositTotalMax: [
-          {required: true, message: "当日存款总额最大值不能不上传", trigger: "blur"}
+          {required: true, message: this.$t('activity.activityManage.validation.depositTotalMax'), trigger: "blur"}
         ],
         lotteryTimes: [
-          {required: true, message: "抽奖次数不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.activityManage.validation.lotteryTimes'), trigger: "blur"}
         ],
       }
     };
@@ -226,14 +251,14 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【抽奖配置】";
+      this.title = this.$t('activity.activityManage.wheelDiceConfig.addTitle');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -242,7 +267,7 @@ export default {
       getWheelDiceConfig(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【抽奖配置】";
+        this.title = this.$t('activity.activityManage.wheelDiceConfig.editTitle');
       });
     },
     /** 提交按钮 */
@@ -251,13 +276,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateWheelDiceConfig(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess(this.$t('activity.editSuccessMsg'));
               this.open = false;
               this.getList();
             });
           } else {
             addWheelDiceConfig(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess(this.$t('activity.addSuccessMsg'));
               this.open = false;
               this.getList();
             });
@@ -268,29 +293,36 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除【抽奖配置】编号为"' + ids + '"?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('activity.deleteConfirm1') + row.name + '"?', this.$t('activity.deleteConfirmTitle'), {
+        confirmButtonText: this.$t('activity.confirmButton'),
+        cancelButtonText: this.$t('activity.cancelConfirmButton'),
         type: "warning"
-      }).then(function() {
+      }).then(function () {
         return delWheelDiceConfig(ids);
       }).then(() => {
         this.getList();
         this.msgSuccess("删除成功");
       }).catch(() => {
-	  })
+      })
     },
     //修改状态
     handleStatusChange(row) {
-      let text = row.status === '1' ? '启用' : '停用'
-      this.$confirm('确认要"' + text + '""' + this.title + '"吗?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
+      let text = row.status === '1'
+        ? this.$t('activity.statusEnable')
+        : this.$t('activity.statusDisable')
+      this.$confirm(this.$t('activity.statusEditSuccess')
+        + text
+        + '""'
+        + this.title
+        + this.$t('activity.statusConfirmQuestion'),
+        this.$t('activity.statusConfirmTitle'), {
+          confirmButtonText: this.$t('activity.confirmButton'),
+          cancelButtonText: this.$t('activity.cancelButton'),
+          type: 'warning'
       }).then(function () {
         return changeLotteryInfoStatus(row.id, row.status)
       }).then(() => {
-        this.msgSuccess(text + '成功')
+        this.msgSuccess(text + this.$t('activity.statusEditSuccess'))
       }).catch(function () {
         row.status = row.status === '0' ? '1' : '0'
       })
@@ -298,14 +330,14 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(function() {
+      this.$confirm(this.$t('activity.confirmExport'), this.$t('activity.confirmExportTitle'), {
+        confirmButtonText: this.$t('activity.confirmButton'),
+        cancelButtonText: this.$t('activity.cancelButton'),
+        type: 'warning'
+      }).then(function () {
         return exportWheelDiceConfig(queryParams);
       }).then(response => {
-        this.downloadExcel(response, '【抽奖配置】');
+        this.downloadExcel(response, this.$t('activity.activityManage.activityCashBack.exportResponse'));
       }).catch(() => {
       })
     }

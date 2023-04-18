@@ -200,10 +200,27 @@ export default {
           game: 'Game must not be empty.'
         }
       },
+    }, wheelDiceConfig: {
+      addTitle: "Add Lottery Allocation", editTitle: "Edit Lottery Allocation", tableDialog: {
+        id: 'Id',
+        idPlaceholder: '',
+        depositTotalMin: 'Daily Minimum Deposit',
+        depositTotalMinPlaceholder: 'Please Enter Daily Minimum Deposit',
+        depositTotalMax: 'Daily Maximum Deposit',
+        depositTotalMaxPlaceholder: 'Please Enter Daily Maximum Deposit',
+        lotteryTimes: 'Number of Lotteries',
+        lotteryTimesPlaceholder: 'Please enter the Number of Lotteries',
+        status: 'Status',
+        statusPlaceholder: 'Please select status'
+      }, validation: {
+        depositTotalMin: 'Daily Minimum Deposit must not be empty',
+        depositTotalMax: 'Daily Maximum Deposit must not be empty',
+        lotteryTimes: 'Lottery draws must not be empty'
+      }
     },
   },
 
-  members :{
+  members: {
     configVip: {
       home: '',
       table: {
@@ -232,7 +249,7 @@ export default {
         vipRule: 'The vip level cannot be empty and can only be a number',
         demandRule: 'Requirement coding cannot be empty and can only be a number',
         promoteRule: 'The promotion bonus cannot be empty and can only be a number',
-        weekSalaryRule:  'Weekly salary can not be empty and can only be a number',
+        weekSalaryRule: 'Weekly salary can not be empty and can only be a number',
         monthSalaryRule: 'Monthly salary cannot be empty and can only be a number'
       },
       queries: {
@@ -346,7 +363,6 @@ export default {
         tips: 'Tips',
         determine: 'Determine',
         succFund: 'Successful refund of funds',
-
 
 
       },

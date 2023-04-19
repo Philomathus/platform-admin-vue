@@ -364,11 +364,21 @@ export default {
         determine: 'Determine',
         succFund: 'Successful refund of funds',
 
-
       },
       index: {
         allStat: 'All Status',
         analysis: 'Analysis',
+        stTime: 'Start Time',
+        endTime: 'Ending Time',
+        status: 'Status',
+        numRet: 'Number of Retries',
+        plsMemId: 'Please enter your Member ID',
+        plsPlat: 'Please select a platform',
+        determ: 'Determine',
+        cancel: 'Cancel',
+        retFunds: 'Return of Funds',
+
+
       }
     }
   }

@@ -1,14 +1,23 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="copy1">总投注金额: {{ this.data.countBetMoney || 0 }}</el-button>
-    <el-button type="success" @click="copy2">总投注人数: {{ this.data.countBetPeople || 0 }}</el-button>
-    <el-button type="success">会员盈利: {{ this.data.memberProfit || 0 }}</el-button>
+    <el-button type="primary" @click="copy1">总投注金额: {{ this.countBetMoney || 0 }}</el-button>
+    <el-button type="success" @click="copy2">总投注人数: {{ this.countBetPeople || 0 }}</el-button>
+    <el-button type="success">会员盈利: {{ this.memberProfit || 0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" label-width="68px"
              v-show="showSearch"
     >
-      <el-form-item label="日期选择" prop="begindate">
-        <el-date-picker v-model="queryParams.begindate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
-                        :style="{width: '100%'}" placeholder="请选择日期选择" clearable :picker-options="pickerOptions"
+      <el-form-item label="日期选择" prop="selectDate">
+        <el-date-picker type="datetimerange"
+                        v-model="queryParams.dateRange"
+                        format="yyyy-MM-dd"
+                        value-format="yyyy-MM-dd"
+                        :style="{ width: '95%' }"
+                        start-placeholder="开始时间"
+                        end-placeholder="开始时间"
+                        range-separator="至"
+                        clearable
+                        :default-time="getDefaultTime()"
+                        :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item label="平台名称" prop="gameplame">
@@ -44,7 +53,7 @@
 
 
       <el-table v-loading="loading"
-                :data="list"
+                :data="dataList"
                 style="width: 100%;"
                 :stripe="true"
       >
@@ -62,22 +71,35 @@
         <el-table-column label="比例" align="center" prop="bili"/>
         <el-table-column label="日期" align="center" prop="begindate"/>
       </el-table>
+      <pagination
+        v-show="total>0"
+        :total="total"
+        :page-sizes="[20,50,100,200]"
+        :page.sync="queryParams.pageNum"
+        :limit.sync="queryParams.pageSize"
+        layout="prev, pager, next"
+        @pagination="getList"
+      />
     </div>
-    <!--    <pagination v-show="total>0" :total="total" :page.sync="pageNum" :limit.sync="pageSize"/>-->
+
   </div>
 </template>
 
 <script>
-import { list, count, liststorage, exportReportPlamGames } from '@/api/platform-web/report/gameBet'
-import { getYesterDate } from '@/utils/dateUtils'
-import { toyesDayshortcuts } from '@/utils/dateUtils'
+import {
+  count,
+  liststorage,
+  exportReportPlamGames,
+  listGameBet,
+} from '@/api/platform-web/report/gameBet'
+import { getDefaultTime, pickerDateShortcuts } from '@/utils/dateUtils'
 
 export default {
   name: 'GameBet',
   data() {
     return {
       //日期快捷
-      pickerOptions: { shortcuts: toyesDayshortcuts },
+      pickerOptions: { shortcuts: pickerDateShortcuts },
       interval: { listTime: null },
       // 遮罩层
       loading: true,
@@ -94,9 +116,13 @@ export default {
       // 表格数据
       list: [],
       data: {},
+      dataList: [],
       // 查询参数
       queryParams: {
-        begindate: this.parseTime(getYesterDate(), '{y}-{m}-{d}'),
+        rows: [],
+        pageNum: 1,
+        pageSize: 20,
+        dateRange: [ this.parseTime( this.getTodayStartTime() ), this.parseTime( this.getTodayEndTime() ) ],
         gameplame: null
       }
     }
@@ -112,20 +138,29 @@ export default {
     this.listLoading = false
   },
   methods: {
+    getDefaultTime,
     getList() {
-      var that = this
+      // console.log(rows.)
       this.loading = true
-      list(this.queryParams).then(response => {
-        that.list = response.rows
-        // this.total = response.total
-        that.listLoading = false
-        that.$rjLoading.hide()
+      if ( this.queryParams.dateRange ){
+        this.queryParams.begindate = this.queryParams.dateRange[0];
+        this.queryParams.endDate   = this.queryParams.dateRange[1];
+      } else {
+        this.queryParams.begindate = null;
+        this.queryParams.endDate   = null;
+      }
+
+      listGameBet(this.queryParams).then(response => {
+        this.dataList = response.rows
+        this.total = response.total
+        this.listLoading = false
+        this.$rjLoading.hide()
         this.count()
       }).catch((err) => {
         if (err == 'Error: 报表正在生成，请稍后...') {
-          if (!that.listLoading) {
-            that.listLoading = true
-            that.$rjLoading.show('报表正在生成', that)
+          if (!this.listLoading) {
+            this.listLoading = true
+            this.$rjLoading.show('报表正在生成', that)
           }
           if (!this.isDestroyed) {
             setTimeout(() => {
@@ -151,20 +186,35 @@ export default {
       this.copyCommand(this.data.countBetPeople)
     },
     jump(begindate, gameplame) {
-      this.$router.push({ path: '/report/gameBetJump', query: { begindate: begindate, gameplame: gameplame } })
+      let startDate = this.queryParams.dateRange ? this.queryParams.dateRange[0]: null;
+      let endDate = this.queryParams.dateRange ? this.queryParams.dateRange[1] : null;
+
+      if ( this.queryParams.dateRange != null ){
+        begindate = startDate;
+      }
+      this.$router.push(
+        {
+          path: '/report/gameBetJump',
+          query: {
+            gameplame: gameplame,
+            begindate: begindate,
+            startDate: startDate,
+            endDate:   endDate
+          }
+       })
     },
     //统计
     count() {
       this.loading = true
       count(this.queryParams).then(response => {
-          this.data = response.data
+        this.data = response.rows
         this.loading = false
       })
     },
     /** 搜索按钮操作 */
     handleQuery() {
 
-      this.pageNum = 1
+      this.queryParams.pageNum = 1
       this.getList()
       this.count();
 
@@ -172,6 +222,7 @@ export default {
     /** 重置按钮操作 */
     resetQuery() {
       this.resetForm('queryForm')
+      this.queryParams.dateRange = [ this.parseTime( this.getTodayStartTime() ), this.parseTime( this.getTodayEndTime() ) ];
       this.handleQuery()
     },
     /** 导出按钮操作 */

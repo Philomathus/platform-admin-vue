@@ -5,12 +5,14 @@
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
 
     <div class="right-menu">
-      <span v-if="notifyOnDepositOrWithdraw">
-        <label           class="right-menu-item" style="font-size: 10px">入款提醒</label>
-        <SwitchDeposit   id = "notification-switch-deposit" class="right-menu-item" />
-        <label           class="right-menu-item" style="font-size: 10px">提现提醒</label>
-        <SwitchWithdraw  id = "notification-switch-withdraw" class="right-menu-item"/>
-      </span>
+<!--      <span v-if="notifyOnDepositOrWithdraw">-->
+<!--        <label           class="right-menu-item" style="font-size: 10px">入款提醒</label>-->
+<!--        <SwitchDeposit   id = "notification-switch-deposit" class="right-menu-item" />-->
+<!--        <label           class="right-menu-item" style="font-size: 10px">提现提醒</label>-->
+<!--        <SwitchWithdraw  id = "notification-switch-withdraw" class="right-menu-item"/>-->
+<!--      </span>-->
+
+      <DropDownSwitch id = dropDownSwitch class="right-menu-item" />
 
       <template v-if="device!=='mobile'">
 
@@ -54,6 +56,7 @@ import Search from '@/components/HeaderSearch'
 import SwitchDeposit from "@/components/SwitchDeposit/index.vue";
 import SwitchWithdraw from "@/components/SwitchWithdraw/index.vue";
 import { checkPermissions } from "@/api/platform-web/system/login";
+import DropDownSwitch from "@/components/DropDownSwitch/index.vue";
 
 export default {
   data() {
@@ -67,8 +70,9 @@ export default {
     Screenfull,
     SizeSelect,
     Search,
-    SwitchDeposit,
-    SwitchWithdraw
+    DropDownSwitch,
+    // SwitchDeposit,
+    // SwitchWithdraw
   },
   computed: {
     ...mapGetters([

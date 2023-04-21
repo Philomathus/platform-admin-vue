@@ -95,7 +95,8 @@ export default {
         pageSize: 10,
         agentchildname: null,
         gameplame: null
-      }
+      },
+      backupDateTimeRange: null
     }
   },
   created() {
@@ -128,9 +129,10 @@ export default {
       if (this.queryParams.dateRange) {
         this.queryParams.begindate = this.queryParams.dateRange[0];
         this.queryParams.endDate   = this.queryParams.dateRange[1];
+        this.backupDateTimeRange   = this.queryParams.dateRange;
       } else {
-          this.queryParams.begindate = null;
-          this.queryParams.endDate   = null;
+        this.msgError("日期是必需的");
+        this.queryParams.dateRange = this.backupDateTimeRange;
         }
       list(this.queryParams).then(response => {
         this.list = response.rows

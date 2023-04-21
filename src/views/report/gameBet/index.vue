@@ -124,7 +124,8 @@ export default {
         pageSize: 20,
         dateRange: [ this.parseTime( this.getTodayStartTime() ), this.parseTime( this.getTodayEndTime() ) ],
         gameplame: null
-      }
+      },
+      backupDateTimeRange: null
     }
   },
   created() {
@@ -140,14 +141,14 @@ export default {
   methods: {
     getDefaultTime,
     getList() {
-      // console.log(rows.)
       this.loading = true
       if ( this.queryParams.dateRange ){
         this.queryParams.begindate = this.queryParams.dateRange[0];
         this.queryParams.endDate   = this.queryParams.dateRange[1];
+        this.backupDateTimeRange   = this.queryParams.dateRange;
       } else {
-        this.queryParams.begindate = null;
-        this.queryParams.endDate   = null;
+        this.msgError("日期是必需的");
+        this.queryParams.dateRange = this.backupDateTimeRange;
       }
 
       listGameBet(this.queryParams).then(response => {

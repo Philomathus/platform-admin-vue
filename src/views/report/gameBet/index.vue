@@ -16,7 +16,7 @@
                         end-placeholder="开始时间"
                         range-separator="至"
                         clearable
-                        :default-time="getDefaultTime()"
+                        :default-time="['00:00:00', '23:59:59']"
                         :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
@@ -92,7 +92,7 @@ import {
   exportReportPlamGames,
   listGameBet,
 } from '@/api/platform-web/report/gameBet'
-import { getDefaultTime, pickerDateShortcuts } from '@/utils/dateUtils'
+import { pickerDateShortcuts } from '@/utils/dateUtils'
 
 export default {
   name: 'GameBet',
@@ -139,7 +139,6 @@ export default {
     this.listLoading = false
   },
   methods: {
-    getDefaultTime,
     getList() {
       this.loading = true
       if ( this.queryParams.dateRange ){

@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" label-width="68px" v-show="showSearch">
       <el-form-item label="日期选择" prop="begindate">
-        <el-date-picker type="datetimerange"
+        <el-date-picker type="daterange"
                         v-model="queryParams.dateRange"
                         format="yyyy-MM-dd"
                         value-format="yyyy-MM-dd"

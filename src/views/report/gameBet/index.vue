@@ -7,7 +7,7 @@
              v-show="showSearch"
     >
       <el-form-item label="日期选择" prop="selectDate">
-        <el-date-picker type="datetimerange"
+        <el-date-picker type="daterange"
                         v-model="queryParams.dateRange"
                         format="yyyy-MM-dd"
                         value-format="yyyy-MM-dd"
@@ -16,7 +16,6 @@
                         end-placeholder="开始时间"
                         range-separator="至"
                         clearable
-                        :default-time="['00:00:00', '23:59:59']"
                         :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>

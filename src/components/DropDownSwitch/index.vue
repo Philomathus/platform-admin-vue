@@ -145,15 +145,14 @@ export default {
     },
 
     scheduleReminder(type) {
-      localStorage.setItem(type.storageKey, type.switchValue)
+      localStorage.setItem(type.storageKey, type.switchValue);
       if (type.switchValue) {
         type.interval = startInterval(() => {
           if(!getToken()) {
             return;
           }
           type.countMethod(this.query).then(res => {
-              let total = type !== this.memberWithdrawal ? res.total : res.data;
-              total += type.totalCount + 1;
+            let total = type !== this.memberWithdrawal ? res.total : res.data;
               if(total > type.totalCount) {
                 type.totalCount = total;
                 type.ringtone.play();

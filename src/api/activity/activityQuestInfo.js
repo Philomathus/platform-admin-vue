@@ -80,9 +80,9 @@ export function kindIdSelect() {
   })
 }
 
-export function titleIdSelect() {
+export function nameSelect() {
   return request({
-    url: url.platformWeb + '/admin/activityQuestInfo/titleSelect',
+    url: url.platformWeb + '/admin/activityQuestInfo/nameSelect',
     method: 'get'
   })
 }

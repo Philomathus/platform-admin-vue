@@ -12,7 +12,7 @@
 <!--        <SwitchWithdraw  id = "notification-switch-withdraw" class="right-menu-item"/>-->
 <!--      </span>-->
 
-      <DropDownSwitch id = dropDownSwitch class="right-menu-item" />
+      <DropDownSwitch v-if="showDropDownNotification" id = dropDownSwitch class="right-menu-item" />
 
       <template v-if="device!=='mobile'">
 
@@ -61,7 +61,7 @@ import DropDownSwitch from "@/components/DropDownSwitch/index.vue";
 export default {
   data() {
     return {
-      notifyOnDepositOrWithdraw: false
+      showDropDownNotification: false
     }
   },
   components: {
@@ -94,7 +94,7 @@ export default {
   },
   mounted() {
     checkPermissions( 'pay:memberPayJour:list','pay:memberWithdrawLog:list','pay:memberRechargeLog:list','admin:payUsdtRecharge:list' )
-      .then( hasPermissions => this.notifyOnDepositOrWithdraw = hasPermissions );
+      .then( hasPermissions => this.showDropDownNotification = hasPermissions );
   },
   methods: {
     toggleSideBar() {

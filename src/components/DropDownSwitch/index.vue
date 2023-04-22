@@ -80,7 +80,7 @@ export default {
     return {
       onlineRecharge: new NotificationType(
         memberPayJourListCount,
-        new Audio ( onlineRecharge ),
+        new Audio (onlineRecharge),
         'pay:memberPayJour:list',
         'key_onlineRecharge',
         true,
@@ -89,7 +89,7 @@ export default {
       ),
       memberWithdrawal: new NotificationType(
         memberWithdrawLogListCount,
-        new Audio ( memberWithdrawal ),
+        new Audio (memberWithdrawal),
         'pay:memberWithdrawLog:list',
         'key_memberWithdrawal',
         true,
@@ -98,7 +98,7 @@ export default {
       ),
       companyDeposit: new NotificationType(
         memberRechargeLogListCount,
-        new Audio ( companyDeposit ),
+        new Audio (companyDeposit),
         'pay:memberRechargeLog:list',
         'key_companyDeposit',
         true,
@@ -108,7 +108,7 @@ export default {
       ),
       usdtTopUp: new NotificationType(
         payUsdtRechargeListCount,
-        new Audio ( usdtDeposit ),
+        new Audio (usdtDeposit),
         'admin:payUsdtRecharge:list',
         'key_usdtTopUp',
         true,
@@ -116,7 +116,7 @@ export default {
         null
       ),
       query: {
-        selectDate: [ this.parseTime( this.getTodayStartTime() ), this.parseTime( this.getTodayEndTime() ) ]
+        selectDate: [ this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime()) ]
       },
     };
   },

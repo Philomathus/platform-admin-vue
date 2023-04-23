@@ -27,7 +27,7 @@ export function getInfo() {
 }
 
 export function checkPermissions(...perms) {
-  return getInfo().then( res => perms.every( value => res.permissions.includes( value ) ) );
+  return getInfo().then( res => perms.some( value => res.permissions.includes( value ) ) );
 }
 
 // 退出方法

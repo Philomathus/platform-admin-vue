@@ -5,7 +5,7 @@
       <span class="el-dropdown-link">通知<i class="el-icon-arrow-down el-icon--right"></i></span>
       <el-dropdown-menu>
 
-        <el-dropdown-item>
+        <el-dropdown-item v-if="this.onlineRecharge.isVisible">
           <div class = "switch-container">
             <span class="switch-label">线上充值信息</span>
             <el-switch @click.native.stop v-model="onlineRecharge.switchValue"
@@ -13,7 +13,7 @@
           </div>
         </el-dropdown-item>
 
-        <el-dropdown-item>
+        <el-dropdown-item v-if="this.memberWithdrawal.isVisible">
           <div class = "switch-container">
             <span class="switch-label">会员提现信息</span>
            <el-switch @click.native.stop v-model="memberWithdrawal.switchValue"
@@ -21,7 +21,7 @@
           </div>
         </el-dropdown-item>
 
-        <el-dropdown-item>
+        <el-dropdown-item v-if="this.companyDeposit.isVisible">
           <div class = "switch-container">
             <span class="switch-label">公司入款信息</span>
            <el-switch @click.native.stop v-model="companyDeposit.switchValue"
@@ -29,7 +29,7 @@
           </div>
         </el-dropdown-item>
 
-        <el-dropdown-item>
+        <el-dropdown-item v-if="this.usdtTopUp.isVisible">
           <div class = "switch-container">
            <span class="switch-label" style="margin-right: 5px">USDT充值信息</span>
            <el-switch @click.native.stop v-model="usdtTopUp.switchValue"
@@ -62,7 +62,7 @@ import { checkPermissions            } from "@/api/platform-web/system/login";
 import { startInterval, killInterval } from "@/utils/scheduledTask";
 
 class NotificationType {
-  constructor(countMethod, ringtone, permission, storageKey, switchValue, totalCount, interval) {
+  constructor(countMethod, ringtone, permission, storageKey, switchValue, totalCount, interval, isVisible) {
     this.countMethod = countMethod;
     this.ringtone    = ringtone;
     this.permission  = permission;
@@ -70,6 +70,7 @@ class NotificationType {
     this.switchValue = switchValue;
     this.totalCount  = totalCount;
     this.interval    = interval;
+    this.isVisible   = isVisible;
   }
 }
 
@@ -85,7 +86,8 @@ export default {
         'key_onlineRecharge',
         true,
         0,
-        null
+        null,
+        true
       ),
       memberWithdrawal: new NotificationType(
         memberWithdrawLogListCount,
@@ -94,7 +96,8 @@ export default {
         'key_memberWithdrawal',
         true,
         0,
-        null
+        null,
+        true
       ),
       companyDeposit: new NotificationType(
         memberRechargeLogListCount,
@@ -103,7 +106,9 @@ export default {
         'key_companyDeposit',
         true,
         0,
-        null
+        null,
+        true
+
 
       ),
       usdtTopUp: new NotificationType(
@@ -113,7 +118,8 @@ export default {
         'key_usdtTopUp',
         true,
         0,
-        null
+        null,
+        true
       ),
       query: {
         selectDate: [ this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime()) ]
@@ -129,7 +135,9 @@ export default {
   methods: {
     getCurrentCount(type) {
       checkPermissions(type.permission).then(hasPermission => {
+        console.log(type.storageKey,hasPermission)
         if (!hasPermission) {
+          type.isVisible = false;
           return;
         }
         let storedSwitchValue = localStorage.getItem(type.storageKey)

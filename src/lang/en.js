@@ -9,14 +9,16 @@ export default {
     layOutSetting: 'Lay Out Setting',
     homepage: 'Home Page'
 
-  }, theme: {
+  },
+  theme: {
     change: 'Change Theme',
     documentation: 'Theme documentation',
     tips: 'Tips: It is different from the theme-pick on the navbar is two different skinning methods, each with different application scenarios. Refer to the documentation for details.'
   },
 
   logout: {
-    confirm: 'Are you sure to log out and exit the system?', prompt: 'Confirm'
+    confirm: 'Are you sure to log out and exit the system?',
+    prompt: 'Confirm'
   },
 
   excel: {
@@ -111,7 +113,8 @@ export default {
           depositTotalMax: 'Daily Maximum Deposit must not be empty',
           rebate: 'Cash Rebate must not be empty'
         },
-      }, activityInfo: {
+      },
+      activityInfo: {
         title: 'Please enter Activity Title',
         addActivityTitle: 'Add Activity Information',
         editActivityTitle: 'Edit Activity Information',
@@ -140,7 +143,8 @@ export default {
           typeId: 'The Activity Type must not be empty',
           type: 'URL must not be empty'
         }
-      }, activityQuestInfo: {
+      },
+      activityQuestInfo: {
         dailyTask: 'Daily Task',
         permanentTask: 'Permanent task',
         addTitle: 'Add Quest Information',
@@ -233,108 +237,12 @@ export default {
         }
       },
     },
-    activityMemberInfo: {
-      addTitle: 'Add Member Information',
-      editTitle: 'Update Member Information',
-      tableDialog: {
-        inviterCode: 'Inviter Code',
-        inviterCodePlaceholder: 'Please enter Inviter Code',
-        loginIp: 'Login IP',
-        loginIpPlaceholder: 'Please enter Login IP',
-        selectDate: 'Select Date',
-        selectDateStartPlaceholder: 'Start Time',
-        selectDateEndPlaceholder: 'End Time',
-        selectDateRangeSeparator: 'to',
-        id: 'ID',
-        regTime: 'Registration Time',
-        regTimePlaceholder: 'Please enter Registration Time',
-        loginTime: 'Login Time',
-        loginTimePlaceholder: 'Please enter Login Time',
-        phone: 'Mobile Phone',
-        phonePlaceholder: 'Please enter Mobile Phone',
-        vip: 'Member VIP',
-        vipPlaceholder: 'Please enter Member VIP',
-        count: 'Count',
-        memberCode: 'Member Code',
-        memberCodePlaceholder: 'Please enter Member Code',
-        cxAgent: 'Agent Number',
-        cxAgentPlaceholder: 'Please enter Agent Number',
-        userName: 'User Name',
-        userNamePlaceholder: 'Please enter User Name',
-        realName: 'Real Name',
-        realNamePlaceholder: 'Please enter Real Name',
-        status: 'Status (0 = Disabled 1 = Normal 2 = Test User 3 = Super User)',
-        statusRadio: 'Please select Status',
-        totalAccount: 'Account Balance',
-        totalAccountPlaceholder: 'Please enter Account Balance',
-        email: 'Email',
-        emailPlaceholder: 'Please enter Email',
-        isOnline: 'Online (1 = Yes or 0 = No)',
-        isOnlinePlaceholder: 'Please enter Online (1 = Yes or 0 = No)',
-        sex: 'Gender (1 male 0 female)',
-        sexPlaceholder: 'Select Gender (1 male 0 female)',
-        sexSelect: 'Please select Gender',
-        registIp: 'Registration IP',
-        registIpPlaceholder: 'Please enter Registration IP',
-        loginAddress: 'Login Address',
-        loginAddressPlaceholder: 'Please enter Login Address',
-        loginDev: 'Device (1 = IOS or 2 = Android)',
-        loginDevPlceholder: 'Please enter Device (1 = IOS or 2 = Android)',
-        nickName: 'Nickname',
-        nickNamePlaceholder: 'Please enter Nickname',
-        birthDay: 'Birth Date',
-        birthDayPlaceholder: 'Please enter Birth Date',
-        qq: 'qq',
-        qqPlaceholder: 'Please enter qq',
-        wechat: 'WeChat',
-        wechatPlaceholder: 'Please enter WeChat',
-        headImg: 'Display Photo',
-        headImgPlaceholder: 'Please enter Display Photo',
-        onlineTime: 'Online Duration',
-        onlineTimePlaceholder: 'Please enter Online Duration',
-        linkUrl: 'URL',
-        linkUrlPlaceholder: 'Please enter URL',
-        boxAccount: 'Safety Deposit Box Balance',
-        boxAccountPlaceholder: 'Please enter Safety Deposit Box Balance',
-        boxPass: 'Safety Deposit Box Password',
-        boxPassPlaceholder: 'Please enter Safety Deposit Box Password',
-        cleanTime: 'Clean Time',
-        cleanTimePlaceholder: 'Please enter Clean Time',
-        levelIntegral: 'Top Up Amount',
-        levelIntegralPlaceholder: 'Please enter Top Up Amount',
-        inviteMoney: 'Commission',
-        inviteMoneyPlaceholder: 'Please enter Commission',
-        codeAccount: 'Coding Account',
-        codeAccountPlaceholder: 'Please enter Coding Account',
-        pid: 'Player\'s Game Platform',
-        pidPlaceholder: 'Please enter Player\'s Game Platform',
-        codeTotal: 'Total Bets',
-        codeTotalPlaceholder: 'Please enter Total Bets',
-        channelcode: 'Channel Code',
-        channelcodePlaceholder: 'Please enter Channel Code',
-        speak: '0 = Normal 1 = Banned',
-        speakPlaceholder: 'Please enter 0 = Normal 1 = Ban',
-        loginNum: 'Number of Logins',
-        loginNumPlaceholder: 'Please enter Number of Logins',
-        version: 'Client version number',
-        versionPlaceholder: 'Please enter Client version number',
-        withdrawalPass: 'Withdrawal Password (md5 encryption)',
-        withdrawalPassPlaceholder: 'Please enter Withdrawal Password (md5 encryption)',
-        deviceId: 'Device ID',
-        deviceIdPlaceholder: 'Please enter Device ID',
-      },
-      validation: {
-        memberCode: 'Member number cannot be empty',
-        cxAgent: 'Agent number cannot be empty',
-        userName: 'Account cannot be empty',
-        loginNum: 'The number of Logins cannot be empty',
-      }
-    }
   },
 
   members: {
     configVip: {
-      home: '', table: {
+      home: '',
+      table: {
         vipLvl: 'VIP Level',
         demandCodingValue: 'Demand Coding Value',
         advancementJackpot: 'Advancement Jackpot',
@@ -348,19 +256,22 @@ export default {
         delete: 'Delete',
         submit: 'Submit',
         cancel: 'Cancel',
-      }, dialog: {
+      },
+      dialog: {
         vipLvlreq: 'Please enter VIP level',
         demCodereq: 'Please enter the amount of demand coding',
         advJackpotreq: 'Please enter the promotion bonus',
         weeklySalreq: 'Please enter the weekly salary',
         monthlySalreq: 'Please enter monthly salary'
-      }, rules: {
+      },
+      rules: {
         vipRule: 'The vip level cannot be empty and can only be a number',
         demandRule: 'Requirement coding cannot be empty and can only be a number',
         promoteRule: 'The promotion bonus cannot be empty and can only be a number',
         weekSalaryRule: 'Weekly salary can not be empty and can only be a number',
         monthSalaryRule: 'Monthly salary cannot be empty and can only be a number'
-      }, queries: {
+      },
+      queries: {
         addQuery: 'Add VIP configuration',
         updateQuery: 'Modify vip level settings',
         delQuery: 'Are you sure to delete vip',
@@ -375,11 +286,15 @@ export default {
 
 
       }
-    }, liveVideoProp: {
+    },
+    liveVideoProp: {
       form: {
         giftAmt: 'Gift Amount',
         date: {
-          label: 'Date Range', sep: 'To', sel: 'Date Selection', sel2: 'Please select a date selection'
+          label: 'Date Range',
+          sep: 'To',
+          sel: 'Date Selection',
+          sel2: 'Please select a date selection'
         },
         memId: 'Member ID',
         memNn: 'Member Nickname',
@@ -402,10 +317,13 @@ export default {
         giftLog: 'User Gift Log',
 
       }
-    }, logGameOrder: {
+    },
+    logGameOrder: {
       analyze: {
         date: {
-          range: 'Date Range', start: 'Start', end: 'End Date'
+          range: 'Date Range',
+          start: 'Start',
+          end: 'End Date'
         },
         memIdAcc: 'Member ID / Member Account Number',
         plat: 'Please select a platform',
@@ -465,9 +383,21 @@ export default {
         determine: 'Determine',
         succFund: 'Successful refund of funds',
 
+      },
+      index: {
+        allStat: 'All Status',
+        analysis: 'Analysis',
+        stTime: 'Start Time',
+        endTime: 'Ending Time',
+        status: 'Status',
+        numRet: 'Number of Retries',
+        plsMemId: 'Please enter your Member ID',
+        plsPlat: 'Please select a platform',
+        determ: 'Determine',
+        cancel: 'Cancel',
+        retFunds: 'Return of Funds',
 
-      }, index: {
-        allStat: 'All Status', analysis: 'Analysis',
+
       }
     }
   }

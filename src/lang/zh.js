@@ -491,10 +491,22 @@ export default {
         succFund: '资金回退成功',
 
 
+
       },
       index: {
         allStat: '全部状态',
         analysis: '分析上下分',
+        stTime: '开始时间',
+        endTime: '结束时间',
+        status: '状态',
+        numRet: '重试次数',
+        plsMemId: '请输入会员ID',
+        plsPlat: '请选择平台',
+        determ: '确 定',
+        cancel: '取 消',
+        retFunds: '资金回退',
+
+
       }
     }
   }

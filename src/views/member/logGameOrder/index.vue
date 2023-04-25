@@ -78,14 +78,14 @@
     </el-row>
 
     <el-table stripe v-loading="loading" :data="logGameOrderList">
-      <el-table-column label="会员ID" align="center" prop="memberId" min-width="120"/>
-      <el-table-column label="订单ID" align="center" prop="id" min-width="320" />
-      <el-table-column label="游戏平台" align="center" prop="platformName" min-width="120"/>
-      <el-table-column label="金额" align="center" prop="money"/>
-      <el-table-column label="开始时间" align="center" prop="bTime" min-width="160"/>
-      <el-table-column label="结束时间" align="center" prop="eTime" min-width="160"/>
-      <el-table-column label="类型" align="center" prop="type" min-width="60" :formatter="formatterType"/>
-      <el-table-column label="状态" align="center" prop="status" min-width="120" :formatter="formatterStatus">
+      <el-table-column :label=" $t('members.logGameOrder.analyze.memId') " align="center" prop="memberId" min-width="120"/>
+      <el-table-column :label=" $t('members.logGameOrder.analyze.orderId') " align="center" prop="id" min-width="320" />
+      <el-table-column :label=" $t('members.logGameOrder.analyze.gamePlat') " align="center" prop="platformName" min-width="120"/>
+      <el-table-column :label=" $t('members.logGameOrder.analyze.amt') " align="center" prop="money"/>
+      <el-table-column :label=" $t('members.logGameOrder.index.stTime') " align="center" prop="bTime" min-width="160"/>
+      <el-table-column :label=" $t('members.logGameOrder.index.endTime') " align="center" prop="eTime" min-width="160"/>
+      <el-table-column :label=" $t('members.logGameOrder.analyze.type') " align="center" prop="type" min-width="60" :formatter="formatterType"/>
+      <el-table-column :label=" $t('members.logGameOrder.index.status') "  align="center" prop="status" min-width="120" :formatter="formatterStatus">
         <template v-slot="{row}">
           <el-select v-model="row.stateName" label-in-value :value="formatterStatus(row)" @change="initChange($event,row)" @focus="formatterStatus(row)" placeholder="请选择" filterable allow-create>
             <el-option v-for="item in stateCollection[row.type -1] " :key="item.label" :label="item.label" :value="item.value">
@@ -93,7 +93,7 @@
           </el-select>
         </template>
       </el-table-column>
-      <el-table-column label="重试次数" align="center" prop="retryCount" min-width="80"/>
+      <el-table-column :label=" $t('members.logGameOrder.index.numRet') " align="center" prop="retryCount" min-width="80"/>
     </el-table>
 
     <pagination
@@ -108,19 +108,19 @@
 <!-- pop up add member game money form dialog box 添加会员游戏金钱表格对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="memberGameMoneyShow" width="450px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="会员ID" prop="memberId">
-          <el-input v-model="form.memberId" placeholder="请输入会员ID" />
+        <el-form-item :label=" $t('members.logGameOrder.analyze.memId') " prop="memberId">
+          <el-input v-model="form.memberId" :placeholder=" $t('members.logGameOrder.index.plsMemId') " />
         </el-form-item>
 
-        <el-form-item prop="platformId" label="游戏平台"  label-width="80px">
-          <el-select v-model="form.platformId" placeholder="请选择平台" clearable size="small" style="width: 328px">
+        <el-form-item prop="platformId" :label=" $t('members.logGameOrder.analyze.gamePlat') "  label-width="80px">
+          <el-select v-model="form.platformId" :placeholder=" $t('members.logGameOrder.index.plsPlat') " clearable size="small" style="width: 328px">
             <el-option v-for="item in platformList" :label="item.name" :value="item.id"/>
           </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancelMemberGameMoney">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('members.logGameOrder.index.determ') }}</el-button>
+        <el-button @click="cancelMemberGameMoney">{{ $t('members.logGameOrder.index.cancel') }}</el-button>
       </div>
     </el-dialog>
 
@@ -153,33 +153,33 @@ export default {
       platformList:[],
       //状态集合列表
       stateCollection: [[
-                        { label: '入厅失败', value: '-1' },
-                        { label: '入厅开始', value: '0' },
-                        { label: '注册失败', value: '1' },
-                        { label: '上分成功', value: '2' },
-                        { label: '上分扣款异常', value: '3' },
-                        { label: '上分扣款失败', value: '4' },
-                        { label: '上分失败', value: '5' },
-                        { label: '上分超时', value: '6' },
-                        { label: '查询余额失败', value: '7' },
-                        { label: '上分查询明细失败', value: '8' },
-                        { label: '上分查询明细超时', value: '9' },
-                        { label: '上分交易不存在', value: '10' },
-                        { label: '获取游戏失败', value: '11' },
-                        { label: '未知异常', value: '12' },
-                        { label: '资金回退',value: '13'}
+                        { label: this.$t('members.logGameOrder.analyze.fHall') , value: '-1' },
+                        { label: this.$t('members.logGameOrder.analyze.eHall') , value: '0' },
+                        { label: this.$t('members.logGameOrder.analyze.regFail') , value: '1' },
+                        { label: this.$t('members.logGameOrder.analyze.scoreSuc') , value: '2' },
+                        { label: this.$t('members.logGameOrder.analyze.credEx') , value: '3' },
+                        { label: this.$t('members.logGameOrder.analyze.scoreDec') , value: '4' },
+                        { label: this.$t('members.logGameOrder.analyze.failScr') , value: '5' },
+                        { label: this.$t('members.logGameOrder.analyze.tmoutScr') , value: '6' },
+                        { label: this.$t('members.logGameOrder.analyze.blncInq'), value: '7' },
+                        { label: this.$t('members.logGameOrder.analyze.failUpscr') , value: '8' },
+                        { label: this.$t('members.logGameOrder.analyze.tmoutUpscr') , value: '9' },
+                        { label: this.$t('members.logGameOrder.analyze.upScrnotex') , value: '10' },
+                        { label: this.$t('members.logGameOrder.analyze.getGfail') , value: '11' },
+                        { label: this.$t('members.logGameOrder.analyze.unkAnom') , value: '12' },
+                        { label: this.$t('members.logGameOrder.index.retFunds') ,value: '13'}
 
       ],[
-        { label: '出厅失败', value: '-1' },
-        { label: '下分开始', value: '0' },
-        { label: '下分成功', value: '2' },
-        { label: '下分失败', value: '5' },
-        { label: '下分超时', value: '6' },
-        { label: '查询余额失败', value: '7' },
-        { label: '下分查询明细失败', value: '8' },
-        { label: '下分查询明细超时', value: '9' },
-        { label: '下分交易不存在', value: '10' },
-        { label: '未知异常', value: '12' }
+        { label: this.$t('members.logGameOrder.analyze.fexHall') , value: '-1' },
+        { label: this.$t('members.logGameOrder.analyze.sNextscr') , value: '0' },
+        { label: this.$t('members.logGameOrder.analyze.dScoresucc') , value: '2' },
+        { label: this.$t('members.logGameOrder.analyze.fScore') , value: '5' },
+        { label: this.$t('members.logGameOrder.analyze.dTime') , value: '6' },
+        { label: this.$t('members.logGameOrder.analyze.bInqf') , value: '7' },
+        { label: this.$t('members.logGameOrder.analyze.fQuery') , value: '8' },
+        { label: this.$t('members.logGameOrder.analyze.tmoutQuery') , value: '9' },
+        { label: this.$t('members.logGameOrder.analyze.lScore') , value: '10' },
+        { label: this.$t('members.logGameOrder.analyze.unkAnom') , value: '12' }
       ]],
       //状态列表
       stateList: [],
@@ -241,11 +241,11 @@ export default {
   methods: {
     formatterType(row) {
       if (row.type == 1) {
-        return '上分'
+        return this.$t('members.logGameOrder.analyze.tScore')
       } else if (row.type == 2) {
-        return '下分'
+        return this.$t('members.logGameOrder.analyze.lDiv')
       } else {
-        return '未知'
+        return this.$t('members.logGameOrder.analyze.unk')
       }
     },
     formatterStatus(row) {

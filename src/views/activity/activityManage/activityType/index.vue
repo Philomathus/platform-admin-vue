@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item :label="$t('activity.activityManage.activityType.name')" prop="name">
+      <el-form-item :label="$t('activity.activityManage.activityType.tableDialog.name')" prop="name">
         <el-input
           v-model="queryParams.name"
-          :placeholder="$t('activity.activityManage.activityType.namePlaceholder')"
+          :placeholder="$t('activity.activityManage.activityType.tableDialog.namePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"

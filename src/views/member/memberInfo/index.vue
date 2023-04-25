@@ -242,6 +242,18 @@
       <el-table-column label="登录ip" :show-overflow-tooltip="true" align="center" prop="loginIp" width="180"/>
       <el-table-column label="注册IP" :show-overflow-tooltip="true" align="center" prop="registIp" width="180"/>
       <el-table-column label="限制地区" :show-overflow-tooltip="true" align="center" prop="qq" width="180"/>
+
+      <el-table-column label="出款限制" align="center" prop="speak">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.speak"
+            active-value="1"
+            inactive-value="0"
+            @change="handleStatusChange(scope.row)"
+          ></el-switch>
+        </template>
+      </el-table-column>
+
       <el-table-column label="是否禁言" align="center" prop="speak">
         <template slot-scope="scope">
           <el-switch

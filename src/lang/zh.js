@@ -87,6 +87,10 @@ export default {
     deleteConfirm1: '是否确认删除【充值返现】编号为"',
     deleteConfirm2: '"的数据项?',
     deleteConfirmTitle: '警告',
+    releaseTime: '释放时间',
+    ipDuplicateCheckButton: 'ip重复检查',
+    mobilePhoneSerialNumberCheckButton: '手机序列号检查',
+    displayMobilePhoneNumberButton: '显示手机号',
     activityManage: {
       activityCashBack: {
         title: '充值返现',
@@ -164,6 +168,7 @@ export default {
           gameId: '所属游戏',
           gameIdPlaceholder: '请选择所属游戏',
           target: '目标任务量',
+          targetPlaceholder: '请输入目标任务数量',
           reward: '完成后增加的资金',
           rewardPlaceholder: '请输入完成后增加的资金',
           content: '描述',
@@ -203,13 +208,26 @@ export default {
         gameIdPlaceholder: '请输入所属游戏id',
         addTitle: '添加任务类型',
         editTitle: '修改任务类型',
-        tableDialog: {
-        },
+        tableDialog: {},
         validation: {
           game: '名称不能为空'
         }
       },
-      wheelDiceConfig :{
+      activityType: {
+        addTitle: '添加活动类型',
+        editTitle: '修改活动类型',
+        tableDialog: {
+          name: '名称',
+          namePlaceholder: '请输入名称',
+          oder: '排序',
+          oderPlaceholder: '请输入名称',
+        },
+        validation: {
+          name: '名称不能为空',
+          oder: '不能为空'
+        }
+      },
+      wheelDiceConfig: {
         addTitle: "添加【抽奖配置】",
         editTitle: "修改【抽奖配置】",
         tableDialog: {
@@ -230,6 +248,104 @@ export default {
           lotteryTimes: '抽奖次数不能为空'
         }
       },
+    },
+    activityMemberInfo: {
+      addTitle: '添加会员推广管理',
+      editTitle: '修改会员推广管理',
+      tableDialog: {
+        inviterCode: '邀请码',
+        inviterCodePlaceholder: '请输入邀请码',
+        loginIp: '登录ip',
+        loginIpPlaceholder: '请输入登录ip',
+        selectDate: '日期范围',
+        selectDateStartPlaceholder: '开始时间',
+        selectDateEndPlaceholder: '开始时间',
+        selectDateRangeSeparator: '至',
+        id: '系统编号',
+        idPlaceholder: '',
+        regTime: '注册时间',
+        regTimePlaceholder: '选择注册时间',
+        loginTime: '上次登录时间',
+        loginTimePlaceholder: '选择登录时间',
+        phone: '手机',
+        phonePlaceholder: '请输入手机',
+        vip: '会员vip',
+        vipPlaceholder: '请输入会员vip',
+        count: '重复次数',
+        memberCode: '会员编号',
+        memberCodePlaceholder: '请输入会员编号',
+        cxAgent: '代理编号',
+        cxAgentPlaceholder: '请输入代理编号',
+        userName: '账号',
+        userNamePlaceholder: '请输入账号',
+        realName: '姓名',
+        realNamePlaceholder: '请输入姓名',
+        status: '状态(0= 禁用 1=正常 2=测试号3=超管号)',
+        statusRadio: '请选择字典生成',
+        totalAccount: '余额',
+        totalAccountPlaceholder: '请输入余额',
+        email: '邮箱',
+        emailPlaceholder: '请输入邮箱',
+        isOnline: '是否在线(1是0否)',
+        isOnlinePlaceholder: '请输入是否在线(1是0否)',
+        sex: '性别(1男0女)',
+        sexPlaceholder: '请选择性别(1男0女)',
+        sexSelect: '请选择字典生成',
+        registIp: '注册ip',
+        registIpPlaceholder: '请输入注册ip',
+        loginAddress: '登录地址',
+        loginAddressPlaceholder: '请输入登录地址',
+        loginDev: '登录设备(1 ios 2 android)',
+        loginDevPlceholder: '请输入登录设备(1 ios 2 android)',
+        nickName: '昵称',
+        nickNamePlaceholder: '请输入昵称',
+        birthDay: '生日',
+        birthDayPlaceholder: '请输入生日',
+        qq: 'qq',
+        qqPlaceholder: '请输入qq',
+        wechat: '微信',
+        wechatPlaceholder: '请输入微信',
+        headImg: '头像',
+        headImgPlaceholder: '请输入头像',
+        onlineTime: '在线时长',
+        onlineTimePlaceholder: '请输入在线时长',
+        linkUrl: '股东网址',
+        linkUrlPlaceholder: '请输入股东网址',
+        boxAccount: '保险箱余额',
+        boxAccountPlaceholder: '请输入保险箱余额',
+        boxPass: '保险箱密码',
+        boxPassPlaceholder: '请输入保险箱密码',
+        cleanTime: '总的充值金额',
+        cleanTimePlaceholder: '请输入总的充值金额',
+        levelIntegral: '总的充值金额',
+        levelIntegralPlaceholder: '请输入总的充值金额',
+        inviteMoney: '佣金',
+        inviteMoneyPlaceholder: '请输入佣金',
+        codeAccount: '打码账户',
+        codeAccountPlaceholder: '请输入打码账户',
+        pid: '玩家所在游戏平台',
+        pidPlaceholder: '请输入玩家所在游戏平台',
+        codeTotal: '累计有效投注',
+        codeTotalPlaceholder: '请输入累计有效投注',
+        channelcode: '渠道号',
+        channelcodePlaceholder: '请输入渠道号',
+        speak: '0=正常 1 =禁言',
+        speakPlaceholder: '请输入0=正常 1 =禁言',
+        loginNum: '登陆次数',
+        loginNumPlaceholder: '请输入登陆次数',
+        version: '客户端版本号',
+        versionPlaceholder: '请输入客户端版本号',
+        withdrawalPass: '提现密码(md5加密)',
+        withdrawalPassPlaceholder: '请输入提现密码(md5加密)',
+        deviceId: '设备ID',
+        deviceIdPlaceholder: '请输入设备ID',
+      },
+      validation: {
+        memberCode: '会员编号不能为空',
+        cxAgent: '代理编号不能为空',
+        userName: '账号不能为空',
+        loginNum: '登陆次数不能为空',
+      }
     }
   },
 
@@ -373,9 +489,6 @@ export default {
         tips: '提示',
         determine: '确定',
         succFund: '资金回退成功',
-
-
-
 
 
       },

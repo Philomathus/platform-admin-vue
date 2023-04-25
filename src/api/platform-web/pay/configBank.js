@@ -29,14 +29,6 @@ export function changeConfigBankStatus(id, status) {
     data: data
   })
 }
-
-export function changeConfigBankTextv1(id, status) {
-  const data = {
-    id,
-    status
-  }
-  changeConfigBankText(data)
-}
 export function changeConfigBankText(data) {
   return request({
     url: url.platformWeb + '/pay/configBank/changeText',

@@ -9,7 +9,7 @@ export function liststorage(query) {
   })
 }
 // 查询【请填写功能名称】列表
-export function list(query) {
+export function listGameBet(query) {
   return request({
     url: url.platformWeb + '/admin/report-plam-games/list',
     method: 'get',

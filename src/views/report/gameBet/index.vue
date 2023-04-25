@@ -6,9 +6,17 @@
     <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" label-width="68px"
              v-show="showSearch"
     >
-      <el-form-item label="日期选择" prop="begindate">
-        <el-date-picker v-model="queryParams.begindate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
-                        :style="{width: '100%'}" placeholder="请选择日期选择" clearable :picker-options="pickerOptions"
+      <el-form-item label="日期选择" prop="selectDate">
+        <el-date-picker type="daterange"
+                        v-model="queryParams.dateRange"
+                        format="yyyy-MM-dd"
+                        value-format="yyyy-MM-dd"
+                        :style="{ width: '95%' }"
+                        start-placeholder="开始时间"
+                        end-placeholder="开始时间"
+                        range-separator="至"
+                        clearable
+                        :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item label="平台名称" prop="gameplame">
@@ -44,14 +52,16 @@
 
 
       <el-table v-loading="loading"
-                :data="list"
+                :data="dataList"
                 style="width: 100%;"
                 :stripe="true"
       >
         <el-table-column label="平台编号" align="center" prop="gameagent" :show-overflow-tooltip="true"/>
         <el-table-column label="名称-详情" align="center" prop="gameplame">
           <template slot-scope="scope">
-            <a style="color: #00afff" @click="jump(scope.row.begindate,scope.row.gameplame)">{{ scope.row.gameplame }}</a>
+            <a style="color: #00afff" @click="jump(scope.row.begindate,scope.row.gameplame)">{{
+                scope.row.gameplame
+              }}</a>
           </template>
         </el-table-column>
         <el-table-column label="投注人数" align="center" prop="gamepepole"/>
@@ -62,23 +72,36 @@
         <el-table-column label="比例" align="center" prop="bili"/>
         <el-table-column label="日期" align="center" prop="begindate"/>
       </el-table>
+      <pagination
+        v-show="total>0"
+        :total="total"
+        :page-sizes="[20,50,100,200]"
+        :page.sync="queryParams.pageNum"
+        :limit.sync="queryParams.pageSize"
+        layout="prev, pager, next"
+        @pagination="getList"
+      />
     </div>
-    <!--    <pagination v-show="total>0" :total="total" :page.sync="pageNum" :limit.sync="pageSize"/>-->
+
   </div>
 </template>
 
 <script>
-import { list, count, liststorage, exportReportPlamGames } from '@/api/platform-web/report/gameBet'
-import { getYesterDate } from '@/utils/dateUtils'
-import { toyesDayshortcuts } from '@/utils/dateUtils'
+import {
+  count,
+  liststorage,
+  exportReportPlamGames,
+  listGameBet,
+} from '@/api/platform-web/report/gameBet'
+import {pickerDateShortcuts} from '@/utils/dateUtils'
 
 export default {
   name: 'GameBet',
   data() {
     return {
       //日期快捷
-      pickerOptions: { shortcuts: toyesDayshortcuts },
-      interval: { listTime: null },
+      pickerOptions: {shortcuts: pickerDateShortcuts},
+      interval: {listTime: null},
       // 遮罩层
       loading: true,
       // 遮罩层
@@ -88,17 +111,22 @@ export default {
       // 显示搜索条件
       showSearch: true,
       isDestroyed: false,
-      countBetMoney:null,
-      countBetPeople:null,
-      memberProfit:null,
+      countBetMoney: null,
+      countBetPeople: null,
+      memberProfit: null,
       // 表格数据
       list: [],
       data: {},
+      dataList: [],
       // 查询参数
       queryParams: {
-        begindate: this.parseTime(getYesterDate(), '{y}-{m}-{d}'),
+        rows: [],
+        pageNum: 1,
+        pageSize: 20,
+        dateRange: [this.parseTime(new Date(), '{y}-{m}-{d}'), this.parseTime(new Date(), '{y}-{m}-{d}')],
         gameplame: null
-      }
+      },
+      backupDateTimeRange: null
     }
   },
   created() {
@@ -113,19 +141,27 @@ export default {
   },
   methods: {
     getList() {
-      var that = this
       this.loading = true
-      list(this.queryParams).then(response => {
-        that.list = response.rows
-        // this.total = response.total
-        that.listLoading = false
-        that.$rjLoading.hide()
+      if (this.queryParams.dateRange) {
+        this.queryParams.begindate = this.queryParams.dateRange[0];
+        this.queryParams.endDate = this.queryParams.dateRange[1];
+        this.backupDateTimeRange = this.queryParams.dateRange;
+      } else {
+        this.msgError("日期是必需的");
+        this.queryParams.dateRange = this.backupDateTimeRange;
+      }
+
+      listGameBet(this.queryParams).then(response => {
+        this.dataList = response.rows
+        this.total = response.total
+        this.listLoading = false
+        this.$rjLoading.hide()
         this.count()
       }).catch((err) => {
         if (err == 'Error: 报表正在生成，请稍后...') {
-          if (!that.listLoading) {
-            that.listLoading = true
-            that.$rjLoading.show('报表正在生成', that)
+          if (!this.listLoading) {
+            this.listLoading = true
+            this.$rjLoading.show('报表正在生成', that)
           }
           if (!this.isDestroyed) {
             setTimeout(() => {
@@ -151,20 +187,35 @@ export default {
       this.copyCommand(this.data.countBetPeople)
     },
     jump(begindate, gameplame) {
-      this.$router.push({ path: '/report/gameBetJump', query: { begindate: begindate, gameplame: gameplame } })
+      let startDate = this.queryParams.dateRange ? this.queryParams.dateRange[0] : null;
+      let endDate = this.queryParams.dateRange ? this.queryParams.dateRange[1] : null;
+
+      if (this.queryParams.dateRange != null) {
+        begindate = startDate;
+      }
+      this.$router.push(
+        {
+          path: '/report/gameBetJump',
+          query: {
+            gameplame: gameplame,
+            begindate: begindate,
+            startDate: startDate,
+            endDate: endDate
+          }
+        })
     },
     //统计
     count() {
       this.loading = true
       count(this.queryParams).then(response => {
-          this.data = response.data
+        this.data = response.data
         this.loading = false
       })
     },
     /** 搜索按钮操作 */
     handleQuery() {
 
-      this.pageNum = 1
+      this.queryParams.pageNum = 1
       this.getList()
       this.count();
 
@@ -172,6 +223,7 @@ export default {
     /** 重置按钮操作 */
     resetQuery() {
       this.resetForm('queryForm')
+      this.queryParams.dateRange = [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())];
       this.handleQuery()
     },
     /** 导出按钮操作 */
@@ -181,7 +233,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportReportPlamGames(queryParams)
       }).then(response => {
         this.downloadExcel(response, '游戏投注报表')

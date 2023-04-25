@@ -248,7 +248,6 @@ import {
   exportConfigBank,
   changeConfigBankStatus,
   changeConfigBankText,
-  changeConfigBankTextv1,
   bankLists
 } from '@/api/platform-web/pay/configBank'
 import ImageUpload from '@/components/ImageUpload'
@@ -336,9 +335,13 @@ export default {
         type: 'warning'
       }).then(function() {
         return changeConfigBankStatus(row.id, row.status)
-      })/*.then(function() {
-        return changeConfigBankTextv1(row.id, row.status)
-      })*/.then(() => {
+      }).then(function() {
+        const data = {
+          id: row.id,
+          status: row.status
+        }
+        return changeConfigBankText(data)
+      }).then(() => {
         this.msgSuccess(text + '成功')
         this.getList()
       }).catch(function() {

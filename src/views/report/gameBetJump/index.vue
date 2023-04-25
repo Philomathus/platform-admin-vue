@@ -2,8 +2,16 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" label-width="68px" v-show="showSearch">
       <el-form-item label="日期选择" prop="begindate">
-        <el-date-picker v-model="queryParams.begindate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
-                        :style="{width: '100%'}" placeholder="请选择日期选择" clearable
+        <el-date-picker type="daterange"
+                        v-model="queryParams.dateRange"
+                        format="yyyy-MM-dd"
+                        value-format="yyyy-MM-dd"
+                        :style="{ width: '95%' }"
+                        start-placeholder="开始时间"
+                        end-placeholder="开始时间"
+                        range-separator="至"
+                        clearable
+                        :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item label="子平台名" prop="agentchildname">
@@ -15,11 +23,13 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="gameplame" v-show="false">
+      <el-form-item label="平台名称" prop="gameplame">
         <el-input
           v-model="queryParams.gameplame"
-          v-show="false"
-          @keyup.enter.native="handleQuery"
+          placeholder="请输入平台名称"
+          clearable
+          size="small"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item>
@@ -48,13 +58,21 @@
       <el-table-column label="比例" align="center" prop="bili"/>
       <el-table-column label="日期" align="center" prop="begindate"/>
     </el-table>
-    <!--    <pagination v-show="total>0" :total="total" :page.sync="pageNum" :limit.sync="pageSize"/>-->
+    <pagination
+      v-show="total>0"
+      :total="total"
+      :page-sizes="[20,50,100,200]"
+      :page.sync="queryParams.pageNum"
+      :limit.sync="queryParams.pageSize"
+      layout="prev, pager, next"
+      @pagination="getList"
+    />
   </div>
 </template>
 
 <script>
 import { list } from '@/api/platform-web/report/gameBetJump'
-import { getYesterDate } from '@/utils/dateUtils'
+import { pickerDateShortcuts } from '@/utils/dateUtils'
 
 export default {
   name: 'GameBetJump',
@@ -69,28 +87,53 @@ export default {
       // 表格数据
       list: [],
       data: {},
+      pickerOptions: { shortcuts: pickerDateShortcuts },
       // 查询参数
       queryParams: {
+        dateRange: [],
+        pageNum: 1,
+        pageSize: 10,
         agentchildname: null,
-        begindate: null,
         gameplame: null
-      }
+      },
+      backupDateTimeRange: null
     }
   },
-  activated() {
-    var begindate = this.$route.query.begindate;
-    var gameplame = this.$route.query.gameplame;
-    if(gameplame!=null) {
-      this.queryParams.gameplame = gameplame
-    }
-    if(begindate!=null) {
-      this.queryParams.begindate = begindate
-    }
-    this.getList()
+  created() {
+    this.init()
+  },
+  activated(){
+    this.init()
   },
   methods: {
+
+    init(){
+
+      var begindate = this.$route.query.begindate;
+      var endDate   = this.$route.query.endDate;
+      var gameplame = this.$route.query.gameplame;
+      var startDate = this.$route.query.startDate;
+
+      if (startDate != null && endDate != null){
+        this.queryParams.dateRange = [ begindate, endDate ];
+      }
+
+      if(gameplame!=null) {
+        this.queryParams.gameplame = gameplame;
+      }
+      this.getList()
+    },
+
     getList() {
       this.loading = true
+      if (this.queryParams.dateRange) {
+        this.queryParams.begindate = this.queryParams.dateRange[0];
+        this.queryParams.endDate   = this.queryParams.dateRange[1];
+        this.backupDateTimeRange   = this.queryParams.dateRange;
+      } else {
+        this.msgError("日期是必需的");
+        this.queryParams.dateRange = this.backupDateTimeRange;
+        }
       list(this.queryParams).then(response => {
         this.list = response.rows
         this.total = response.total

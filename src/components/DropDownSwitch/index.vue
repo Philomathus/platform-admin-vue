@@ -99,7 +99,6 @@ export default {
         true,
         null,
         0
-
       ),
       memberWithdrawal: new NotificationType(
         new Audio (memberWithdrawal),
@@ -120,8 +119,6 @@ export default {
         true,
         null,
         0
-
-
       ),
       usdtTopUp: new NotificationType(
         new Audio (usdtDeposit),

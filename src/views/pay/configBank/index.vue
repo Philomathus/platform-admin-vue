@@ -226,8 +226,8 @@
 
     <el-dialog :title="title" :visible.sync="openText" width="600px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="文本2" prop="tex2">
-          <el-input v-model="form.tex2" placeholder="请输入文本2" type="textarea" :rows="4"/>
+        <el-form-item label="文本2" prop="text2">
+          <el-input v-model="form.text2" placeholder="请输入文本2" type="textarea" :rows="4"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

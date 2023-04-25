@@ -44,23 +44,22 @@
 </template>
 
 <script>
-//AUDIOS
-import onlineRecharge   from '@i/audio/online_deposit_zh.mp3';
-import memberWithdrawal from '@i/audio/withdraw_zh.mp3';
-import companyDeposit   from '@i/audio/company_deposit_zh.mp3';
-import usdtDeposit      from '@i/audio/usdt_deposit_zh.mp3';
-
 //COUNTER
 import { listCount   as memberPayJourListCount     } from '@/api/platform-web/pay/memberPayJour';
 import { getCountAll as memberWithdrawLogListCount } from '@/api/platform-web/pay/memberWithdrawLog';
 import { listCount   as memberRechargeLogListCount } from '@/api/platform-web/pay/memberRechargeLog';
 import { listCount   as payUsdtRechargeListCount   } from '@/api/platform-web/pay/payUsdtRecharge';
 
-
 //CACHING & LOOP
 import { startInterval, killInterval } from "@/utils/scheduledTask";
 import { checkPath                   } from "@/api/platform-web/system/login";
 import { getToken                    } from '@/utils/auth';
+
+//AUDIOS
+import onlineRecharge   from '@i/audio/online_deposit_zh.mp3';
+import memberWithdrawal from '@i/audio/withdraw_zh.mp3';
+import companyDeposit   from '@i/audio/company_deposit_zh.mp3';
+import usdtDeposit      from '@i/audio/usdt_deposit_zh.mp3';
 
 //PATH
 const path_onlineRecharge   = 'memberPayJour';

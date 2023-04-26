@@ -1,18 +1,18 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="copy1">总充值 {{ this.totalData.total.toFixed(2) }}</el-button>
-    <el-button type="success" @click="copy2">总打码 {{ this.totalData.countCur.toFixed(2) }}</el-button>
-    <el-button type="warning" @click="copy3">还需打码 {{ (this.totalData.total - this.totalData.countCur).toFixed(2) }}</el-button>
+    <el-button type="primary" @click="copy1">{{ $t('members.memberBcode.index.totalRech') }} {{ this.totalData.total.toFixed(2) }}</el-button>
+    <el-button type="success" @click="copy2">{{ $t('members.memberBcode.index.totalCode') }} {{ this.totalData.countCur.toFixed(2) }}</el-button>
+    <el-button type="warning" @click="copy3">{{ $t('members.memberBcode.index.codReq') }} {{ (this.totalData.total - this.totalData.countCur).toFixed(2) }}</el-button>
     <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" v-show="showSearch" label-width="100px">
-      <el-form-item label="日期范围" prop="selectDate">
+      <el-form-item :label="$t('members.memberBcode.index.datRang')" prop="selectDate">
         <el-date-picker
           type="daterange"
           v-model="queryParams.selectDate"
           format="yyyy-MM-dd"
           value-format="yyyy-MM-dd"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-          range-separator="至"
+          :start-placeholder=" $t('members.memberBcode.index.sDate') "
+          :end-placeholder=" $t('members.memberBcode.index.eDate') "
+          :range-separator=" $t('members.memberBcode.index.to') "
           clearable
           :picker-options="pickerOptions"
         />
@@ -20,15 +20,15 @@
       <el-form-item prop="userId">
         <el-input
           v-model.trim="queryParams.userId"
-          placeholder="会员ID"
+          :placeholder=" $t('members.memberBcode.index.memId') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('members.memberBcode.index.search') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('members.memberBcode.index.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -41,20 +41,20 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['member:memberBcode:export']"
-        >导出
+        >{{ $t('members.memberBcode.index.export') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="memberBcodeList">
-      <el-table-column label="会员ID" align="center" prop="userId"/>
-      <el-table-column label="收入" align="center" prop="income"/>
-      <el-table-column label="描述" align="center" prop="des"/>
-      <el-table-column label="是否打码" align="center" prop="status" :formatter="formatterStatus"/>
-      <el-table-column label="当前打码量" align="center" prop="cur"/>
-      <el-table-column label="创建时间" align="center" prop="createTime" min-width="160"/>
-      <el-table-column label="操作" width="220" align="center" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column :label=" $t('members.memberBcode.index.memId') " align="center" prop="userId"/>
+      <el-table-column :label=" $t('members.memberBcode.index.rev') " align="center" prop="income"/>
+      <el-table-column :label=" $t('members.memberBcode.index.desc') " align="center" prop="des"/>
+      <el-table-column :label=" $t('members.memberBcode.index.wCode') " align="center" prop="status" :formatter="formatterStatus"/>
+      <el-table-column :label=" $t('members.memberBcode.index.ccVol') " align="center" prop="cur"/>
+      <el-table-column :label=" $t('members.memberBcode.index.cTime') " align="center" prop="createTime" min-width="160"/>
+      <el-table-column :label=" $t('members.memberBcode.index.opt') " width="220" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -62,7 +62,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['member:memberBcode:edit']"
-          >修改
+          >{{ $t('members.memberBcode.index.mod') }}
           </el-button>
         </template>
       </el-table-column>
@@ -81,16 +81,16 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-        <el-form-item label="当前打码量" prop="cur">
-          <el-input v-model="form.cur" placeholder="请输入当前打码量" />
+        <el-form-item :label=" $t('members.memberBcode.index.ccVol') " prop="cur">
+          <el-input v-model="form.cur" :placeholder=" $t('members.memberBcode.index.pccVol') " />
         </el-form-item>
-        <el-form-item label="Google验证码" prop="googleAuthCode">
-          <el-input v-model="form.googleAuthCode" placeholder="请输入Google验证码"/>
+        <el-form-item :label=" $t('members.memberBcode.index.gCaptcha') " prop="googleAuthCode">
+          <el-input v-model="form.googleAuthCode" :placeholder=" $t('members.memberBcode.index.pGverifcode') "/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确定</el-button>
-        <el-button @click="cancel">取消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('members.memberBcode.index.det') }}</el-button>
+        <el-button @click="cancel">{{ $t('members.memberBcode.index.canc') }}</el-button>
       </div>
     </el-dialog>
 
@@ -150,10 +150,10 @@ export default {
       // 表单校验
       rules: {
         cur: [
-          {required: true, message: '当前打码量不能为空,且数值大于等于0', trigger: 'blur', pattern:'^0\\.\\d+$|^[0-9]+(\\.\\d+)?$'}
+          {required: true, message: this.$t('members.memberBcode.index.codingEmpty') , trigger: 'blur', pattern:'^0\\.\\d+$|^[0-9]+(\\.\\d+)?$'}
         ],
         googleAuthCode: [
-          {required: true, message: 'google验证码不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('members.memberBcode.index.gCaptchaEmpt') , trigger: 'blur'}
         ],
       }
     }
@@ -177,17 +177,17 @@ export default {
       getTotalData(this.queryParams).then((res) => {
         this.totalData = res.data
       }).catch(() => {
-        this.$notify.error('网络异常')
+        this.$notify.error( this.$t('members.memberBcode.index.netAnom') )
       })
     },
     // 0:未洗码1已经洗码
     formatterStatus(row) {
       if (row.status == 0) {
-        return '未打码'
+        return this.$t('members.memberBcode.index.unc')
       } else if (row.status == 1) {
-        return '已打码'
+        return this.$t('members.memberBcode.index.coded')
       } else {
-        return '未知'
+        return this.$t('members.memberBcode.index.unk')
       }
     },
     /** 查询会员打码数据列表 */
@@ -223,7 +223,7 @@ export default {
         const reg = '^[0-9a-zA-Z_]{1,}$'
         let flag = this.queryParams.userId.match(reg)
         if(!flag){
-          this.msgError("会员ID只能输入数字及下划线")
+          this.msgError( this.$t('members.memberBcode.index.memNum') )
           return
         }
       }
@@ -245,7 +245,7 @@ export default {
         this.form = response.data;
         this.form.cur = this.form.cur + '';
         this.open = true;
-        this.title = "修改会员打码数据";
+        this.title = this.$t('members.memberBcode.index.modCod');
       });
     },
     /** 提交按钮 */
@@ -255,11 +255,11 @@ export default {
           if (this.pageType === 1) {
             let cur = parseFloat(this.form.cur);
             if(cur>this.form.income){
-              this.msgError("当前打码量数值不能大于收入")
+              this.msgError( this.$t('members.memberBcode.index.codingNotGreater') )
               return;
             }
             updateMemberBcode(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess( this.$t('members.memberBcode.index.modSuc') );
               this.open = false;
               this.getList();
             });
@@ -270,14 +270,14 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+      this.$confirm( this.$t('members.memberBcode.index.confEx') ,  this.$t('members.memberBcode.index.warn') , {
+        confirmButtonText: this.$t('members.memberBcode.index.confirmation') ,
+        cancelButtonText: this.$t('members.memberBcode.index.canc') ,
         type: 'warning'
       }).then(function() {
         return exportMemberBcode(queryParams)
       }).then(response => {
-        this.downloadExcel(response, '会员打码数据')
+        this.downloadExcel(response, this.$t('members.memberBcode.index.memData') )
       }).catch(() => {
       })
     }

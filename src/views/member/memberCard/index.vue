@@ -1,77 +1,77 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="姓名" prop="realName">
+      <el-form-item :label=" $t('members.memberCard.index.name') " prop="realName">
         <el-input
           v-model="queryParams.realName"
-          placeholder="请输入姓名"
+          :placeholder=" $t('members.memberCard.index.pName') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="银行名称" prop="bankName">
+      <el-form-item :label=" $t('members.memberCard.index.bName') " prop="bankName">
         <el-input
           v-model="queryParams.bankName"
-          placeholder="请输入银行名称"
+          :placeholder=" $t('members.memberCard.index.pbName') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="银行编码" prop="bankCode">
+      <el-form-item :label=" $t('members.memberCard.index.bCode') " prop="bankCode">
         <el-input
           v-model="queryParams.bankCode"
-          placeholder="请输入银行编码"
+          :placeholder=" $t('members.memberCard.index.pbCode') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="银行账号" prop="bankAccount">
+      <el-form-item :label=" $t('members.memberCard.index.bAccnum') " prop="bankAccount">
         <el-input
           v-model="queryParams.bankAccount"
-          placeholder="请输入银行账号"
+          :placeholder=" $t('members.memberCard.index.pbAccnum') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="银行地址" prop="bankAddress">
+      <el-form-item :label=" $t('members.memberCard.index.bAdd') " prop="bankAddress">
         <el-input
           v-model="queryParams.bankAddress"
-          placeholder="请输入银行地址"
+          :placeholder=" $t('members.memberCard.index.pbAdd') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="会员ID" prop="memberId">
+      <el-form-item :label=" $t('members.memberCard.index.memId') " prop="memberId">
         <el-input
           v-model.trim="queryParams.memberId"
-          placeholder="请输入会员ID"
+          :placeholder=" $t('members.memberCard.index.pmemId') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="卡片类型1=银行卡2=支付宝" prop="type">
-        <el-select v-model="queryParams.type" placeholder="请选择卡片类型1=银行卡2=支付宝" clearable size="small">
-          <el-option label="请选择字典生成" value=""/>
+      <el-form-item :label=" $t('members.memberCard.index.cType') " prop="type">
+        <el-select v-model="queryParams.type" :placeholder=" $t('members.memberCard.index.scType') " clearable size="small">
+          <el-option :label=" $t('members.memberCard.index.pDict') " value=""/>
         </el-select>
       </el-form-item>
-      <el-form-item label="是否默认" prop="dv">
+      <el-form-item :label=" $t('members.memberCard.index.default') " prop="dv">
         <el-input
           v-model="queryParams.dv"
-          placeholder="请输入是否默认"
+          :placeholder=" $t('members.memberCard.index.pdef') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('members.memberCard.index.search') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('members.memberCard.index.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -84,7 +84,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:memberCard:add']"
-        >新增
+        >{{ $t('members.memberCard.index.new') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -96,7 +96,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:memberCard:edit']"
-        >修改
+        >{{ $t('members.memberCard.index.mod') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -108,7 +108,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:memberCard:remove']"
-        >删除
+        >{{ $t('members.memberCard.index.del') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -119,7 +119,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:memberCard:export']"
-        >导出
+        >{{ $t('members.memberCard.index.exp') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -127,16 +127,16 @@
 
     <el-table v-loading="loading" :data="memberCardList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="系统编号" align="center" prop="id"/>
-      <el-table-column label="姓名" align="center" prop="realName"/>
-      <el-table-column label="银行名称" align="center" prop="bankName"/>
-      <el-table-column label="银行编码" align="center" prop="bankCode"/>
-      <el-table-column label="银行账号" align="center" prop="bankAccount"/>
-      <el-table-column label="银行地址" align="center" prop="bankAddress"/>
-      <el-table-column label="会员ID" align="center" prop="memberId"/>
-      <el-table-column label="卡片类型1=银行卡2=支付宝" align="center" prop="type"/>
-      <el-table-column label="是否默认" align="center" prop="dv"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label=" $t('members.memberCard.index.sysNum') " align="center" prop="id"/>
+      <el-table-column :label=" $t('members.memberCard.index.name') " align="center" prop="realName"/>
+      <el-table-column :label=" $t('members.memberCard.index.bName') " align="center" prop="bankName"/>
+      <el-table-column :label=" $t('members.memberCard.index.bCode') " align="center" prop="bankCode"/>
+      <el-table-column :label=" $t('members.memberCard.index.bAccnum') " align="center" prop="bankAccount"/>
+      <el-table-column :label=" $t('members.memberCard.index.bAdd') " align="center" prop="bankAddress"/>
+      <el-table-column :label=" $t('members.memberCard.index.memId') " align="center" prop="memberId"/>
+      <el-table-column :label=" $t('members.memberCard.index.cType') " align="center" prop="type"/>
+      <el-table-column :label=" $t('members.memberCard.index.default') " align="center" prop="dv"/>
+      <el-table-column :label=" $t('members.memberCard.index.opt') " align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -144,7 +144,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:memberCard:edit']"
-          >修改
+          >{{ $t('members.memberCard.index.mod') }}
           </el-button>
           <el-button
             size="mini"
@@ -152,7 +152,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:memberCard:remove']"
-          >删除
+          >{{ $t('members.memberCard.index.del') }}
           </el-button>
         </template>
       </el-table-column>
@@ -170,23 +170,23 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="姓名" prop="realName">
-          <el-input v-model="form.realName" placeholder="请输入姓名"/>
+        <el-form-item :label=" $t('members.memberCard.index.name') " prop="realName">
+          <el-input v-model="form.realName" :placeholder=" $t('members.memberCard.index.pName') "/>
         </el-form-item>
-        <el-form-item label="银行名称" prop="bankName">
-          <el-input v-model="form.bankName" placeholder="请输入银行名称"/>
+        <el-form-item :label=" $t('members.memberCard.index.bName') " prop="bankName">
+          <el-input v-model="form.bankName" :placeholder=" $t('members.memberCard.index.pbName') "/>
         </el-form-item>
-        <el-form-item label="银行编码" prop="bankCode">
-          <el-input v-model="form.bankCode" placeholder="请输入银行编码"/>
+        <el-form-item :label=" $t('members.memberCard.index.bCode') " prop="bankCode">
+          <el-input v-model="form.bankCode" :placeholder=" $t('members.memberCard.index.pbCode') "/>
         </el-form-item>
-        <el-form-item label="银行账号" prop="bankAccount">
-          <el-input v-model="form.bankAccount" placeholder="请输入银行账号"/>
+        <el-form-item :label=" $t('members.memberCard.index.bAccnum') " prop="bankAccount">
+          <el-input v-model="form.bankAccount" :placeholder=" $t('members.memberCard.index.pbAccnum') "/>
         </el-form-item>
-        <el-form-item label="银行地址" prop="bankAddress">
-          <el-input v-model="form.bankAddress" placeholder="请输入银行地址"/>
+        <el-form-item :label=" $t('members.memberCard.index.bAdd') " prop="bankAddress">
+          <el-input v-model="form.bankAddress" :placeholder=" $t('members.memberCard.index.pbAdd') "/>
         </el-form-item>
-        <el-form-item label="会员ID" prop="memberId">
-          <el-input v-model="form.memberId" placeholder="请输入会员ID"/>
+        <el-form-item :label=" $t('members.memberCard.index.memId') " prop="memberId">
+          <el-input v-model="form.memberId" :placeholder=" $t('members.memberCard.index.pmemId') "/>
         </el-form-item>
         <el-form-item label="卡片类型1=银行卡2=支付宝" prop="type">
           <el-select v-model="form.type" placeholder="请选择卡片类型1=银行卡2=支付宝">

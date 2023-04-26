@@ -59,7 +59,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['member:logGameOrder:export']"
-        >导出
+        >{{ $t('members.logGameOrder.index.expo') }}
         </el-button>
       </el-col>
 
@@ -70,7 +70,7 @@
           plain
           size="mini"
           @click="memberGameMoney()"
-          >添加会员上分缺少
+          >{{ $t('members.logGameOrder.index.addMem') }}
         </el-button>
       </el-col>
 
@@ -249,39 +249,39 @@ export default {
       }
     },
     formatterStatus(row) {
-      const scoreName = row.type == 1 ? '上分' :'下分';
+      const scoreName = row.type == 1 ? this.$t('members.logGameOrder.analyze.tScore') : this.$t('members.logGameOrder.analyze.lDiv');
       if (row.status == -1) {
-        return '失败' + (row.type == 1 ? '入厅' : '出厅');
+        return this.$t('members.logGameOrder.analyze.failure') + (row.type == 1 ? this.$t('members.logGameOrder.analyze.enHall') : this.$t('members.logGameOrder.analyze.exHall'));
       }else if (row.status == 0) {
-        return '开始' + (row.type == 1 ? '入厅' : '出厅');
+        return this.$t('members.logGameOrder.analyze.start') + (row.type == 1 ? this.$t('members.logGameOrder.analyze.enHall') : this.$t('members.logGameOrder.analyze.exHall') );
       }else if (row.status == 1) {
-        return '注册失败'
+        return this.$t('members.logGameOrder.analyze.regFail')
       } else if (row.status == 2) {
-        return '成功' + scoreName
+        return this.$t('members.logGameOrder.analyze.success') + scoreName
       } else if (row.status == 3) {
-        return '异常' + '上分扣款异常'
+        return this.$t('members.logGameOrder.analyze.anom') + this.$t('members.logGameOrder.analyze.credEx')
       } else if (row.status == 4) {
-        return '异常' + '上分扣款失败'
+        return this.$t('members.logGameOrder.analyze.anom') + this.$t('members.logGameOrder.analyze.scoreDec')
       } else if (row.status == 5) {
-        return scoreName + '失败'
+        return scoreName + this.$t('members.logGameOrder.analyze.failure')
       } else if (row.status == 6) {
-        return scoreName + '超时'
+        return scoreName + this.$t('members.logGameOrder.analyze.tmOut')
       } else if (row.status == 7) {
-        return '查询余额失败'
+        return this.$t('members.logGameOrder.analyze.bInqf')
       } else if (row.status == 8) {
-        return scoreName + '查询明细失败'
+        return scoreName + this.$t('members.logGameOrder.analyze.fChk')
       } else if (row.status == 9) {
-        return scoreName + '查询明细超时'
+        return scoreName + this.$t('members.logGameOrder.analyze.tmOutQueryDetails')
       } else if (row.status == 10) {
-        return scoreName+ '交易不存在'
+        return scoreName+ this.$t('members.logGameOrder.analyze.trnsctNot')
       } else if (row.status == 11) {
-        return '获取游戏失败'
+        return this.$t('members.logGameOrder.analyze.getGame')
       } else if (row.status == 12) {
-        return '未知异常'
+        return this.$t('members.logGameOrder.analyze.unkAnom')
       } else if (row.status == 13) {
-        return '资金回退'
+        return this.$t('members.logGameOrder.index.retFunds')
       } else {
-        return '未知'
+        return this.$t('members.logGameOrder.analyze.unk')
       }
     },
     /** 查询会员上下分列表 */
@@ -324,7 +324,7 @@ export default {
         const reg = '^[0-9a-zA-Z_]{1,}$'
         let flag = this.queryParams.searchValue.match(reg)
         if(!flag){
-          this.msgError("会员ID/会员账号只能输入数字及下划线")
+          this.msgError( this.$t('members.logGameOrder.index.conf') )
           return
         }
       }
@@ -339,14 +339,14 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('members.logGameOrder.index.confEx'), this.$t('members.logGameOrder.index.warn'), {
+        confirmButtonText: this.$t('members.logGameOrder.index.confirm'),
+        cancelButtonText: this.$t('members.logGameOrder.index.cancellation'),
         type: 'warning'
       }).then(function() {
         return exportLogGameOrder(queryParams)
       }).then(response => {
-        this.downloadExcel(response, '会员上下分')
+        this.downloadExcel(response, this.$t('members.logGameOrder.index.mUpdown'))
       }).catch(() => {
       })
     },
@@ -368,16 +368,16 @@ export default {
     initChange(selectOption,row){
       if(selectOption) {
           //修改状态
-          this.$confirm('确认要修改状态为"' + this.formatterStatus(row) + '"吗?', '警告', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
+          this.$confirm(this.$t('members.logGameOrder.index.confStat') + this.formatterStatus(row) + '"吗?', this.$t('members.logGameOrder.index.warn'), {
+            confirmButtonText: this.$t('members.logGameOrder.index.determ'),
+            cancelButtonText: this.$t('members.logGameOrder.index.cancellation'),
             type: 'warning'
           }).then(function () {
             row.status = selectOption
             return updateLogGameOrder(row)
           }).then(() => {
             this.getList()
-            this.msgSuccess('修改成功')
+            this.msgSuccess(this.$t('members.logGameOrder.index.modSuc'))
             this.loading = false
           })
       }
@@ -385,7 +385,7 @@ export default {
 
     memberGameMoney(){
       this.memberGameMoneyShow = true;
-      this.title = "添加会员上分缺少"
+      this.title = this.$t('members.logGameOrder.index.addScore')
     },
 
 
@@ -401,7 +401,7 @@ export default {
         if (valid) {
           if (this.form.memberId != null) {
             addMemberGameMoney(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess(this.$t('members.logGameOrder.index.addSucc'));
               this.memberGameMoneyShow = false;
             });
           }

@@ -1,4 +1,5 @@
 export default {
+
   navbar: {
     dashboard: 'Dashboard',
     github: 'Github',
@@ -10,6 +11,7 @@ export default {
     homepage: 'Home Page'
 
   },
+
   theme: {
     change: 'Change Theme',
     documentation: 'Theme documentation',
@@ -93,6 +95,10 @@ export default {
     ipDuplicateCheckButton: 'IP Duplicate Check',
     mobilePhoneSerialNumberCheckButton: 'Mobile Phone Serial Number Check',
     displayMobilePhoneNumberButton: 'Display Mobile Phone Number',
+    selectDate: 'Select Date',
+    selectDateStartPlaceholder: 'Start Time',
+    selectDateEndPlaceholder: 'End Time',
+    selectDateRangeSeparator: 'to',
     activityManage: {
       activityCashBack: {
         title: 'Top Up and Rebates',
@@ -219,7 +225,9 @@ export default {
         }
       },
       wheelDiceConfig: {
-        addTitle: "Add Lottery Allocation", editTitle: "Edit Lottery Allocation", tableDialog: {
+        addTitle: "Add Lottery Allocation",
+        editTitle: "Edit Lottery Allocation",
+        tableDialog: {
           id: 'Id',
           idPlaceholder: '',
           depositTotalMin: 'Daily Minimum Deposit',
@@ -230,12 +238,139 @@ export default {
           lotteryTimesPlaceholder: 'Please enter the Number of Lotteries',
           status: 'Status',
           statusPlaceholder: 'Please select status'
-        }, validation: {
+        },
+        validation: {
           depositTotalMin: 'Daily Minimum Deposit must not be empty',
           depositTotalMax: 'Daily Maximum Deposit must not be empty',
           lotteryTimes: 'Lottery draws must not be empty'
         }
       },
+    },
+    activityMemberInfo: {
+      addTitle: 'Add Member Information',
+      editTitle: 'Update Member Information',
+      tableDialog: {
+        inviterCode: 'Inviter Code',
+        inviterCodePlaceholder: 'Please enter Inviter Code',
+        loginIp: 'Login IP',
+        loginIpPlaceholder: 'Please enter Login IP',
+        id: 'ID',
+        regTime: 'Registration Time',
+        regTimePlaceholder: 'Please enter Registration Time',
+        loginTime: 'Login Time',
+        loginTimePlaceholder: 'Please enter Login Time',
+        phone: 'Mobile Phone',
+        phonePlaceholder: 'Please enter Mobile Phone',
+        vip: 'Member VIP',
+        vipPlaceholder: 'Please enter Member VIP',
+        count: 'Count',
+        memberCode: 'Member Code',
+        memberCodePlaceholder: 'Please enter Member Code',
+        cxAgent: 'Agent Number',
+        cxAgentPlaceholder: 'Please enter Agent Number',
+        userName: 'User Name',
+        userNamePlaceholder: 'Please enter User Name',
+        realName: 'Real Name',
+        realNamePlaceholder: 'Please enter Real Name',
+        status: 'Status (0 = Disabled 1 = Normal 2 = Test User 3 = Super User)',
+        statusRadio: 'Please select Status',
+        totalAccount: 'Account Balance',
+        totalAccountPlaceholder: 'Please enter Account Balance',
+        email: 'Email',
+        emailPlaceholder: 'Please enter Email',
+        isOnline: 'Online (1 = Yes or 0 = No)',
+        isOnlinePlaceholder: 'Please enter Online (1 = Yes or 0 = No)',
+        sex: 'Gender (1 male 0 female)',
+        sexPlaceholder: 'Select Gender (1 male 0 female)',
+        sexSelect: 'Please select Gender',
+        registIp: 'Registration IP',
+        registIpPlaceholder: 'Please enter Registration IP',
+        loginAddress: 'Login Address',
+        loginAddressPlaceholder: 'Please enter Login Address',
+        loginDev: 'Device (1 = IOS or 2 = Android)',
+        loginDevPlceholder: 'Please enter Device (1 = IOS or 2 = Android)',
+        nickName: 'Nickname',
+        nickNamePlaceholder: 'Please enter Nickname',
+        birthDay: 'Birth Date',
+        birthDayPlaceholder: 'Please enter Birth Date',
+        qq: 'qq',
+        qqPlaceholder: 'Please enter qq',
+        wechat: 'WeChat',
+        wechatPlaceholder: 'Please enter WeChat',
+        headImg: 'Display Photo',
+        headImgPlaceholder: 'Please enter Display Photo',
+        onlineTime: 'Online Duration',
+        onlineTimePlaceholder: 'Please enter Online Duration',
+        linkUrl: 'URL',
+        linkUrlPlaceholder: 'Please enter URL',
+        boxAccount: 'Safety Deposit Box Balance',
+        boxAccountPlaceholder: 'Please enter Safety Deposit Box Balance',
+        boxPass: 'Safety Deposit Box Password',
+        boxPassPlaceholder: 'Please enter Safety Deposit Box Password',
+        cleanTime: 'Clean Time',
+        cleanTimePlaceholder: 'Please enter Clean Time',
+        levelIntegral: 'Top Up Amount',
+        levelIntegralPlaceholder: 'Please enter Top Up Amount',
+        inviteMoney: 'Commission',
+        inviteMoneyPlaceholder: 'Please enter Commission',
+        codeAccount: 'Coding Account',
+        codeAccountPlaceholder: 'Please enter Coding Account',
+        pid: 'Player\'s Game Platform',
+        pidPlaceholder: 'Please enter Player\'s Game Platform',
+        codeTotal: 'Total Bets',
+        codeTotalPlaceholder: 'Please enter Total Bets',
+        channelcode: 'Channel Code',
+        channelcodePlaceholder: 'Please enter Channel Code',
+        speak: '0 = Normal 1 = Banned',
+        speakPlaceholder: 'Please enter 0 = Normal 1 = Ban',
+        loginNum: 'Number of Logins',
+        loginNumPlaceholder: 'Please enter Number of Logins',
+        version: 'Client version number',
+        versionPlaceholder: 'Please enter Client version number',
+        withdrawalPass: 'Withdrawal Password (md5 encryption)',
+        withdrawalPassPlaceholder: 'Please enter Withdrawal Password (md5 encryption)',
+        deviceId: 'Device ID',
+        deviceIdPlaceholder: 'Please enter Device ID',
+      },
+      validation: {
+        memberCode: 'Member number cannot be empty',
+        cxAgent: 'Agent number cannot be empty',
+        userName: 'Account cannot be empty',
+        loginNum: 'The number of Logins cannot be empty',
+      },
+    },
+    chatComplaint: {
+      addTitle: 'Add customer service complaint',
+      editTitle: '',
+      exportResponse: 'Customer Service Complaint',
+      updateChatComplaintSuccess: 'Complaint Processed Successfully',
+      updateChatComplaintError: 'Cancel Complaint',
+      updateChatComplaintPrompt: 'Please enter comments for review.',
+
+      tableDialog: {
+        remark: 'Complaint',
+        remarkPlaceholder: 'Please enter Complaint',
+        userId: 'User ID',
+        userIdPlaceholder: 'Please enter  User ID',
+        kfId: 'Customer Service ID',
+        kfIdPlaceholder: 'Please enter Customer Service ID',
+        processingTime: 'Processing Time',
+        processingTimePlaceholder: 'Please enter Processing Time',
+        accountPlaceholder: 'Please enter Customer Service Account Number',
+        approver: 'Approver',
+        approverPlaceholder: 'Please enter  Approver',
+        statusPlaceholder: 'Please enter  Status',
+        createTime: 'Create Time',
+        comments: 'Comments',
+        commentsPlaceholder: 'Please enter  Comments',
+        status: 'Status',
+        statusOptions: 'Processing status (0 = unprocessed 1 = Processed 2 = rejected)',
+      },
+      statusOptions: {
+        unprocessed: '未处理',
+        processed: '已处理',
+        rejected: '驳回',
+      }
     },
   },
 
@@ -283,8 +418,6 @@ export default {
         confExcel: 'Confirm processing Excel and downloading, it will be delayed when the amount of data is large, please wait patiently...',
         confirm: 'Confirm',
         function: 'Please fill in the function name'
-
-
       }
     },
     liveVideoProp: {
@@ -382,7 +515,6 @@ export default {
         tips: 'Tips',
         determine: 'Determine',
         succFund: 'Successful refund of funds',
-
       },
       index: {
         allStat: 'All Status',
@@ -396,6 +528,97 @@ export default {
         determ: 'Determine',
         cancel: 'Cancel',
         retFunds: 'Return of Funds',
+        conf: 'Only numbers and underscores can be entered for member ID/member account',
+        confEx: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+        warn: 'Warning',
+        confirm: 'Confirmation',
+        cancellation: 'Cancellation',
+        mUpdown: 'Member up/down points',
+        confStat: 'Confirm that you want to change the status to',
+        modSuc: 'Modified Succesfully',
+        addScore: 'Add members on the score missing',
+        addSucc: 'Add Success',
+        expo: 'Export',
+        addMem: 'Add members on the score missing',
+      }
+    },
+    memberBcode: {
+      index: {
+        totalRech: 'Total Recharge',
+        totalCode: 'Total Coding',
+        codReq: 'Coding is also Required',
+        datRange: 'Date Range',
+        sDate: 'Start Date',
+        eDate: 'End Date',
+        to: 'To',
+        memId: 'Member ID',
+        search: 'Search',
+        reset: 'Reset',
+        export: 'Export',
+        rev: 'Revenue',
+        desc: 'Description',
+        wCode: 'Whether to code',
+        ccVol: 'Current coding volume',
+        cTime: 'Creation Time',
+        opt: 'Operation',
+        mod: 'Modification',
+        pccVol: 'Please enter the current coding volume',
+        gCaptcha: 'Google Captcha',
+        pGverifcode: 'Please enter Google verification code',
+        det: 'Determine',
+        canc: 'Cancellation',
+        codingEmpty: 'The current coding amount cannot be empty, and the value is greater than or equal to 0',
+        gCaptchaEmpt: 'Google captcha cannot be empty',
+        netAnom: 'Network Anomaly',
+        unc: 'Uncoded',
+        coded: 'Coded',
+        unk: 'Unknown',
+        memNum: 'Member IDs can only be entered as numbers and underscores',
+        modCod: 'Modify member coding data',
+        codingNotGreater: 'The current coding volume value cannot be greater than the income',
+        modSuc: 'Modified Successfully',
+        confEx: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+        warn: 'Warning',
+        confirmation: 'Confrimation',
+        memData: 'Member coding data'
+      }
+    },
+    memberCard: {
+      index: {
+        name: 'Name',
+        pName: 'Please enter your name',
+        bName: 'Bank Name',
+        pbName: 'Please enter the name of your bank',
+        bCode: 'Bank Code',
+        pbCode: 'Please enter the bank code',
+        bAccnum: 'Bank Account Number',
+        pbAccnum: 'Please enter your bank account number',
+        bAdd: 'Bank Address',
+        pbAdd: 'Please enter your bank address',
+        memId: 'Member ID',
+        pmemId: 'Please enter your member ID',
+        cType: 'Card type 1=Bank card 2=Paypal',
+        scType: 'Please select card type 1=Bank Card 2=Paypal',
+        pDict: 'Please select dictionary generation',
+        default: 'Default or not',
+        pdef: 'Please enter if default or not',
+        search: 'Search',
+        reset: 'Reset',
+        new: 'New',
+        mod: 'Edit',
+        del: 'Delete',
+        exp: 'Export',
+        sysNum: 'System Number',
+        opt: 'Operation',
+
+
+
+
+
+
+
+
+
 
 
       }
@@ -403,7 +626,3 @@ export default {
   }
 }
 
-// this.$t('activity.activityManage.activityInfo.tableDialog.title')
-// this.$t('activity.exportResponse')
-// $t('activity.activityManage.activityCashBack.title')
-// label="$t('activity.activityManage.activityInfo.tableDialog.title')"

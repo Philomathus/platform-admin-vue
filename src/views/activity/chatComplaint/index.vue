@@ -1,23 +1,23 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="创建时间" prop="selectDate">
+      <el-form-item :label="$t('activity.selectDate')" prop="selectDate">
         <el-date-picker
           v-model="queryParams.selectDate"
           size="small"
           style="width: 240px"
           value-format="yyyy-MM-dd"
           type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :range-separator="$t('activity.selectDateRangeSeparator')"
+          :start-:placeholder="$t('activity.selectDateStartPlaceholder')"
+          :end-:placeholder="$t('activity.selectDateEndPlaceholder')"
           :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="userId">
         <el-input
           v-model.trim="queryParams.userId"
-          placeholder="请输入发起人id"
+          :placeholder="$t('activity.chatComplaint.tableDialog.userIdPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -26,7 +26,7 @@
       <el-form-item prop="kfId">
         <el-input
           v-model="queryParams.kfId"
-          placeholder="请输入客服id"
+          :placeholder="$t('activity.chatComplaint.tableDialog.kfIdPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -35,7 +35,7 @@
       <el-form-item prop="account">
         <el-input
           v-model="queryParams.account"
-          placeholder="请输入客服代充账号"
+          :placeholder="$t('activity.chatComplaint.tableDialog.accountPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -44,70 +44,70 @@
       <el-form-item prop="approver">
         <el-input
           v-model="queryParams.approver"
-          placeholder="请输入审批人"
+          :placeholder="$t('activity.chatComplaint.tableDialog.approverPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-<!--      <el-form-item label="审批备注" prop="comments">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.comments"-->
-<!--          placeholder="请输入审批备注"-->
-<!--          clearable-->
-<!--          size="small"-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
+      <!--      <el-form-item :label="审批备注" prop="comments">-->
+      <!--        <el-input-->
+      <!--          v-model="queryParams.comments"-->
+      <!--          :placeholder="请输入审批备注"-->
+      <!--          clearable-->
+      <!--          size="small"-->
+      <!--          @keyup.enter.native="handleQuery"-->
+      <!--        />-->
+      <!--      </el-form-item>-->
       <el-form-item prop="status">
-          <el-select v-model="queryParams.status" placeholder="请选择处理状态" size="small" clearable>
-            <el-option
-              v-for="item in statusOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
+        <el-select v-model="queryParams.status" :placeholder="$t('activity.chatComplaint.tableDialog.statusPlaceholder')" size="small" clearable>
+          <el-option
+            v-for="item in statusOptions"
+            :key="item.value"
+            ::label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-<!--        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>-->
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('activity.searchButton') }}</el-button>
+        <!--        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>-->
       </el-form-item>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
-<!--      <el-col :span="1.5">-->
-<!--        <el-button-->
-<!--          type="primary"-->
-<!--          plain-->
-<!--          icon="el-icon-plus"-->
-<!--          size="mini"-->
-<!--          @click="handleAdd"-->
-<!--          v-hasPermi="['admin:chatComplaint:add']"-->
-<!--        >新增</el-button>-->
-<!--      </el-col>-->
-<!--      <el-col :span="1.5">-->
-<!--        <el-button-->
-<!--          type="success"-->
-<!--          plain-->
-<!--          icon="el-icon-edit"-->
-<!--          size="mini"-->
-<!--          :disabled="single"-->
-<!--          @click="handleUpdate"-->
-<!--          v-hasPermi="['admin:chatComplaint:edit']"-->
-<!--        >修改</el-button>-->
-<!--      </el-col>-->
-<!--      <el-col :span="1.5">-->
-<!--        <el-button-->
-<!--          type="danger"-->
-<!--          plain-->
-<!--          icon="el-icon-delete"-->
-<!--          size="mini"-->
-<!--          :disabled="multiple"-->
-<!--          @click="handleDelete"-->
-<!--          v-hasPermi="['admin:chatComplaint:remove']"-->
-<!--        >删除</el-button>-->
-<!--      </el-col>-->
+      <!--      <el-col :span="1.5">-->
+      <!--        <el-button-->
+      <!--          type="primary"-->
+      <!--          plain-->
+      <!--          icon="el-icon-plus"-->
+      <!--          size="mini"-->
+      <!--          @click="handleAdd"-->
+      <!--          v-hasPermi="['admin:chatComplaint:add']"-->
+      <!--        >新增</el-button>-->
+      <!--      </el-col>-->
+      <!--      <el-col :span="1.5">-->
+      <!--        <el-button-->
+      <!--          type="success"-->
+      <!--          plain-->
+      <!--          icon="el-icon-edit"-->
+      <!--          size="mini"-->
+      <!--          :disabled="single"-->
+      <!--          @click="handleUpdate"-->
+      <!--          v-hasPermi="['admin:chatComplaint:edit']"-->
+      <!--        >修改</el-button>-->
+      <!--      </el-col>-->
+      <!--      <el-col :span="1.5">-->
+      <!--        <el-button-->
+      <!--          type="danger"-->
+      <!--          plain-->
+      <!--          icon="el-icon-delete"-->
+      <!--          size="mini"-->
+      <!--          :disabled="multiple"-->
+      <!--          @click="handleDelete"-->
+      <!--          v-hasPermi="['admin:chatComplaint:remove']"-->
+      <!--        >删除</el-button>-->
+      <!--      </el-col>-->
       <el-col :span="1.5">
         <el-button
           type="warning"
@@ -116,31 +116,32 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:chatComplaint:export']"
-        >导出</el-button>
+        >{{ $t('activity.exportButton') }}
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="chatComplaintList">
-      <el-table-column label="投诉内容" align="center" prop="remark" />
-      <el-table-column label="发起人id" align="center" prop="userId" />
-      <el-table-column label="客服id" align="center" prop="kfId" />
-      <el-table-column label="客服代充账号" align="center" prop="account" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      <el-table-column :label="$t('activity.chatComplaint.tableDialog.remark')" align="center" prop="remark"/>
+      <el-table-column :label="$t('activity.chatComplaint.tableDialog.userId')" align="center" prop="userId"/>
+      <el-table-column :label="$t('activity.chatComplaint.tableDialog.kfId')" align="center" prop="kfId"/>
+      <el-table-column :label="$t('activity.chatComplaint.tableDialog.account')" align="center" prop="account"/>
+      <el-table-column :label="$t('activity.chatComplaint.tableDialog.createTime')" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="审批人" align="center" prop="approver" />
-      <el-table-column label="审批备注" align="center" prop="comments" />
-      <el-table-column label="审批时间" align="center" prop="processingTime" width="180">
+      <el-table-column :label="$t('activity.chatComplaint.tableDialog.approver')" align="center" prop="approver"/>
+      <el-table-column :label="$t('activity.chatComplaint.tableDialog.comments')" align="center" prop="comments"/>
+      <el-table-column :label="$t('activity.chatComplaint.tableDialog.processingTime')" align="center" prop="processingTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.processingTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="处理状态" align="center" prop="status" :formatter="formatterStatus"/>
+      <el-table-column :label="$t('activity.chatComplaint.tableDialog.status')" align="center" prop="status" :formatter="formatterStatus"/>
 
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('activity.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="small"
@@ -149,7 +150,7 @@
             v-show="scope.row.status == 0"
             @click="handleUpdate(scope.row,1)"
             v-hasPermi="['admin:chatComplaint:edit']"
-          >处理
+          >{{ $t('activity.editButton') }}
           </el-button>
           <el-button
             size="small"
@@ -158,25 +159,27 @@
             v-show="scope.row.status == 0"
             @click="handleUpdate(scope.row,2)"
             v-hasPermi="['admin:chatComplaint:edit']"
-          >驳回
+          >{{
+              $t('activity.deleteButton')
+            }}
           </el-button>
         </template>
-<!--        <template slot-scope="scope">-->
-<!--          <el-button-->
-<!--            size="mini"-->
-<!--            type="text"-->
-<!--            icon="el-icon-edit"-->
-<!--            @click="handleUpdate(scope.row)"-->
-<!--            v-hasPermi="['admin:chatComplaint:edit']"-->
-<!--          >修改</el-button>-->
-<!--          <el-button-->
-<!--            size="mini"-->
-<!--            type="text"-->
-<!--            icon="el-icon-delete"-->
-<!--            @click="handleDelete(scope.row)"-->
-<!--            v-hasPermi="['admin:chatComplaint:remove']"-->
-<!--          >删除</el-button>-->
-<!--        </template>-->
+        <!--        <template slot-scope="scope">-->
+        <!--          <el-button-->
+        <!--            size="mini"-->
+        <!--            type="text"-->
+        <!--            icon="el-icon-edit"-->
+        <!--            @click="handleUpdate(scope.row)"-->
+        <!--            v-hasPermi="['admin:chatComplaint:edit']"-->
+        <!--          >修改</el-button>-->
+        <!--          <el-button-->
+        <!--            size="mini"-->
+        <!--            type="text"-->
+        <!--            icon="el-icon-delete"-->
+        <!--            @click="handleDelete(scope.row)"-->
+        <!--            v-hasPermi="['admin:chatComplaint:remove']"-->
+        <!--          >删除</el-button>-->
+        <!--        </template>-->
       </el-table-column>
     </el-table>
 
@@ -189,64 +192,72 @@
     />
 
     <!-- 添加或修改客服投诉对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="投诉内容" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+        <el-form-item :label="$t('activity.chatComplaint.tableDialog.remark')" prop="remark">
+          <el-input v-model="form.remark" type="textarea"
+                    :placeholder="$t('activity.chatComplaint.tableDialog.remarkPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="发起人id" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入发起人id" />
+        <el-form-item :label="$t('activity.chatComplaint.tableDialog.userId')" prop="userId">
+          <el-input v-model="form.userId" :placeholder="$t('activity.chatComplaint.tableDialog.userIdPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="客服id" prop="kfId">
-          <el-input v-model="form.kfId" placeholder="请输入客服id" />
+        <el-form-item :label="$t('activity.chatComplaint.tableDialog.kfid')" prop="kfId">
+          <el-input v-model="form.kfId" :placeholder="$t('activity.chatComplaint.tableDialog.kfidPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="审批时间" prop="processingTime">
+        <el-form-item :label="$t('activity.chatComplaint.tableDialog.processingTime')" prop="processingTime">
           <el-date-picker clearable size="small"
-            v-model="form.processingTime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择审批时间">
+                          v-model="form.processingTime"
+                          type="date"
+                          value-format="yyyy-MM-dd"
+                          :placeholder="$t('activity.chatComplaint.tableDialog.processingTime')">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="审批人" prop="approver">
-          <el-input v-model="form.approver" placeholder="请输入审批人" />
+        <el-form-item :label="$t('activity.chatComplaint.tableDialog.approver')" prop="approver">
+          <el-input v-model="form.approver" :placeholder="$t('activity.chatComplaint.tableDialog.approverPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="审批备注" prop="comments">
-          <el-input v-model="form.comments" placeholder="请输入审批备注" />
+        <el-form-item :label="$t('activity.chatComplaint.tableDialog.comments')" prop="comments">
+          <el-input v-model="form.comments" :placeholder="$t('activity.chatComplaint.tableDialog.commentsPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="处理状态(0未处理 1已处理 2驳回)">
+        <el-form-item :label="$t('activity.chatComplaint.tableDialog.statusOptions')">
           <el-radio-group v-model="form.status">
-            <el-radio label="1">请选择字典生成</el-radio>
+            <el-radio :label="1">$t('activity.chatComplaint.tableDialog.statusPlaceholder')</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('activity.submitButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('activity.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { listChatComplaint, getChatComplaint, delChatComplaint, addChatComplaint, updateChatComplaint, exportChatComplaint } from "@/api/activity/chatComplaint";
+import {
+  listChatComplaint,
+  getChatComplaint,
+  delChatComplaint,
+  addChatComplaint,
+  updateChatComplaint,
+  exportChatComplaint
+} from "@/api/activity/chatComplaint";
 import {pickerDateShortcuts} from "@/utils/dateUtils";
 
 export default {
   name: "ChatComplaint",
-  components: {
-  },
+  components: {},
   data() {
     return {
       statusOptions: [{
         value: '0',
-        label: '未处理'
+        label: this.$t('activity.chatComplaint.statusOptions.unprocessed')
       }, {
         value: '1',
-        label: '已处理'
+        label: this.$t('activity.chatComplaint.statusOptions.processed')
       }, {
         value: '2',
-        label: '驳回'
+        label: this.$t('activity.chatComplaint.statusOptions.rejected')
       }],
       // 日期范围
       selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
@@ -287,8 +298,7 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {
-      }
+      rules: {}
     };
   },
   created() {
@@ -312,11 +322,11 @@ export default {
     // 处理状态
     formatterStatus(row) {
       if (row.status == 0) {
-        return '未处理'
+        return this.$t('activity.chatComplaint.statusOptions.unprocessed')
       } else if (row.status == 1) {
-        return '已处理'
-      } else if (row.status == 2){
-        return '驳回'
+        return this.$t('activity.chatComplaint.statusOptions.processed')
+      } else if (row.status == 2) {
+        return this.$t('activity.chatComplaint.statusOptions.rejected')
       }
     },
     // 表单重置
@@ -348,33 +358,32 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加客服投诉";
+      this.title = this.$t('activity.chatComplaint.addTitle');
     },
     /** 处理驳回按钮操作 */
-    handleUpdate(row,status) {
-      this.$prompt('请输入审核备注', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
-      }).then(({ value }) => {
+    handleUpdate(row, status) {
+      this.$prompt(this.$t('activity.chatComplaint.updateChatComplaintPrompt', this.$t('activity.confirmExportTitle'), {
+        confirmButtonText: this.$t('activity.confirmButton'),
+        cancelButtonText: this.$t('activity.cancelButton'),
+      }).then(({value}) => {
         const id = row.id
-        updateChatComplaint(id,value,status).then(response => {
-          this.msgSuccess("审核处理成功");
+        updateChatComplaint(id, value, status).then(response => {
+          this.msgSuccess(this.$t('activity.updateChatComplaintSuccess'));
           this.getList();
         });
       }).catch(() => {
         this.$message({
           type: 'info',
-          message: '取消输入'
+          message: this.$t('activity.updateChatComplaintError')
         });
-      });
-
+      }));
     },
     /** 提交按钮 */
     submitForm() {
@@ -382,13 +391,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateChatComplaint(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess(this.$t('activity.editSuccessMsg'))
               this.open = false;
               this.getList();
             });
           } else {
             addChatComplaint(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess(this.$t('activity.addSuccessMsg'));
               this.open = false;
               this.getList();
             });
@@ -399,29 +408,29 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除客服投诉编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('activity.deleteConfirm1') + row.title + '"?', this.$t('activity.deleteConfirmTitle'), {
+        confirmButtonText: this.$t('activity.confirmButton'),
+        cancelButtonText: this.$t('activity.cancelConfirmButton'),
         type: "warning"
-      }).then(function() {
+      }).then(function () {
         return delChatComplaint(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess(this.$t('activity.deleteSuccessMsg'));
       }).catch(() => {
-	  })
+      })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('activity.confirmExport'), this.$t('activity.confirmExportTitle'), {
+        confirmButtonText: this.$t('activity.confirmButton'),
+        cancelButtonText: this.$t('activity.cancelButton'),
         type: "warning"
-      }).then(function() {
+      }).then(function () {
         return exportChatComplaint(queryParams);
       }).then(response => {
-        this.downloadExcel(response, '客服投诉');
+        this.downloadExcel(response, this.$t('activity.chatComplaint.exportResponse'))
       }).catch(() => {
       })
     }

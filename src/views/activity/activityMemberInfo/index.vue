@@ -19,12 +19,12 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item :label="$t('activity.activityMemberInfo.tableDialog.selectDate')" prop="selectDate">
+      <el-form-item :label="$t('activity.selectDate')" prop="selectDate">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}"
-                        :start-placeholder="$t('activity.activityMemberInfo.tableDialog.selectDateStartPlaceholder')"
-                        :end-placeholder="$t('activity.activityMemberInfo.tableDialog.selectDateEndPlaceholder')"
-                        :range-separator="$t('activity.activityMemberInfo.tableDialog.selectDateRangeSeparator')"
+                        :start-placeholder="$t('activity.selectDateStartPlaceholder')"
+                        :end-placeholder="$t('activity.selectDateEndPlaceholder')"
+                        :range-separator="$t('activity.selectDateRangeSeparator')"
                         clearable :default-time="['00:00:00', '23:59:59']" :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>

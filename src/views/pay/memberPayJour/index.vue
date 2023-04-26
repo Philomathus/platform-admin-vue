@@ -294,7 +294,8 @@ export default {
       this.totalLoading=true
       listCount(this.queryParams).then((res) => {
         this.totalData = res
-      }).finally(()=>{this.totalLoading=false})
+        this.totalLoading=false
+      })
     },
     //复制
     copy1() {

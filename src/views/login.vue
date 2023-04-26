@@ -99,7 +99,11 @@ export default {
           this.$store.dispatch('Login', this.loginForm).then(() => {
             this.$router.push({ path: this.redirect || '/' }).catch(() => {
             })
-          }).catch(() => {
+          }).catch((error) => {
+            console.log("error.response.status " + error.response.status)
+            if (error.response.status == 403) {
+              this.$message.error("您的IP地址被屏蔽");
+            }
             this.loading = false
           })
         }

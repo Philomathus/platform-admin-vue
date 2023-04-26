@@ -23,12 +23,11 @@
           size="small"
           style="width: 240px"
         >
-<!--          @keyup.enter.native="handleQuery"-->
           <el-option
-            v-for="dict in titleOptions"
+            v-for="dict in nameOptions"
             :key="dict.id"
-            :label="dict.title"
-            :value="dict.title"
+            :label="dict.name"
+            :value="dict.name"
             />
         </el-select>
       </el-form-item>
@@ -516,7 +515,7 @@ import {
   gameInfoName,
   kindIdSelect,
   platformIdSelect,
-  titleIdSelect,
+  nameSelect,
 } from '@/api/activity/activityQuestInfo'
 import ImageUpload from '@/components/ImageUpload'
 import {pickerDateShortcuts} from "@/utils/dateUtils";
@@ -546,7 +545,7 @@ export default {
         value: 1,
         label: '每日任务'
       }],
-      titleOptions: [],
+      nameOptions: [],
       //平台游戏类型
       kindIdOptions: [],
       //平台类型
@@ -673,9 +672,9 @@ export default {
       this.kindIdOptions = response.data
     })
 
-    titleIdSelect().then(response => {
+    nameSelect().then(response => {
       console.info(response.data)
-      this.titleOptions = response.data
+      this.nameOptions = response.data
     })
     //平台类型
     platformIdSelect().then(response => {

@@ -79,6 +79,12 @@ export function getYesterDate() {
   return date;
 }
 
+export function getDefaultTime() {
+  const startTime = new Date(new Date().setHours(0, 0, 0, 0))
+  const endTime = new Date(new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000 - 1)
+  return [startTime, endTime]
+}
+
 export function getYesterDateStart() {
   const start = new Date()
   start.setTime(start.getTime() - 3600 * 1000 * 24)

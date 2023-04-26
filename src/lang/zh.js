@@ -509,5 +509,131 @@ export default {
 
       }
     }
+  },
+
+  common: {
+    searchButton: '搜索',
+    resetButton: '重置',
+    exportButton: '导出',
+    confirmButton: '确认',
+    cancelButton: '取消',
+    operationColumn: '操作'
+  },
+
+  liveWeb: {
+    anchorAward: {
+      queryForm: {
+        updateTimeLabel: '日期范围',
+        updateTimePlaceholder: '请选择日期选择',
+        idPlaceholder: '主播ID',
+        nickNamePlaceholder: '主播昵称',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      actions: {
+        exportButton: '@:common.exportButton'
+      },
+      table: {
+        anchor: '主播ID',
+        nickName: '主播昵称',
+        cost: '投注',
+        prize: '派奖',
+        prizeSixThousand: '派奖千六',
+        updateTime: '修改时间'
+      },
+      exportDialog: {
+        title: '警告',
+        message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+        confirmButton: '@:common.confirmButton',
+        cancelButton: '@:common.cancelButton'
+      }
+    },
+    chat: {
+      queryForm: {
+        fromPlatformPlaceholder: '会员ID',
+        userNicknamePlaceholder: '会员昵称',
+        poscatIdPlaceholder: '主播ID',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      actions: {
+        viewBlackListButton: '查看封停ip'
+      },
+      refresh: {
+        title: '记录刷新',
+        placeholder: '时间间隔',
+        startButton: '开始刷新',
+        stopButton: '停止刷新'
+      },
+      table: {
+        fromPlatform: '平台会员ID',
+        userNickName: '用户昵称',
+        type: '消息类型',
+        msg: '消息内容',
+        poscatId: '主播ID',
+        poscatNickName: '主播昵称',
+        noSpeaking: '是否封停',
+        noSpeakingTrue: '已封停',
+        noSpeakingFalse: '正常',
+        forbid: '是否禁言',
+        forbidTrue: '禁言',
+        forbidFalse: '正常',
+        userIp: '发言ip',
+        createTimes: '发送时间',
+        operation: '@:common.operationColumn',
+        muteButton: '封停',
+        unmuteButton: '解封',
+        forbidButton: '禁言'
+      },
+      suspendUserDialog: {
+        titleAdd: '添加会员发言',
+        titleUpdate: '封停用户',
+        fromPlatformLabel: '平台会员ID',
+        fromPlatformPlaceholder: '请输入平台会员ID',
+        userNickNameLabel: '发送者昵称',
+        userNickNamePlaceholder: '请输入发送者昵称',
+        msgLabel: '消息内容',
+        userIpLabel: '封停ip',
+        confirmButton: '确 定',
+        cancelButton: '取 消'
+      },
+      banRemarksDialog: {
+        title: '备注禁言原因',
+        remarkPlaceholder: '请选择禁言原因',
+        remarkedPlaceholder: '请输入禁言原因'
+      },
+      buttons: {
+        mute: '封停',
+        unmute: '解封',
+        forbid: '禁言',
+        ok: '确 定',
+        cancel: '取 消',
+        submit: '立即提交'
+      },
+      dialog: {
+        titleAdd: '添加会员发言',
+        titleUpdate: '封停用户',
+        titleBan: '备注禁言原因',
+        titleBlockedIp: '查看封停ip',
+        titleViewBlockedIp: '查看已封停的ip',
+        form: {
+
+          muteRemarkPlaceholder: '请选择禁言原因',
+          remarkedPlaceholder: '请输入禁言原因'
+        },
+        filter: {
+          userIdLabel: '会员id',
+          userIdPlaceholder: '会员id',
+          userIpLabel: '会员ip',
+          userIpPlaceholder: '会员ip'
+        },
+        table: {
+          userId: '会员ID',
+          userIp: '封停ip',
+          msg: '封停备注',
+          createTime: '封停时间'
+        }
+      }
+    }
   }
 }

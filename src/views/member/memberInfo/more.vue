@@ -35,6 +35,11 @@
           <span>关注主播</span></button>
         <!--End follow members tab here  -->
 
+        <button type="button" class="el-button el-button--primary el-button--mini is-plain"
+                @click="change(17,'守护主播')">
+          <span>守护主播</span>
+        </button>
+
         <button type="button" class="el-button el-button--success el-button--mini is-plain"
                 @click="change(2,'资金明细')">
           <span>资金明细</span>
@@ -335,6 +340,18 @@
       </el-row>
       <!--  END 关注主播- Follow the anchor function created by Rajesh -->
 
+      <el-row v-if="index===17">
+        <el-table
+          @click="clickRow"
+          :data="guard"
+          height="460px"
+          v-loading="loading">
+          <el-table-column label="主播ID"  align="center" prop="anchorId"     min-width="120px"/>
+          <el-table-column label="守护类型" align="center" prop="type"         min-width="120px"/>
+          <el-table-column label="到期时间" align="center" prop="guardEndTime" min-width="120px"/>
+        </el-table>
+      </el-row>
+
       <!-- footer slots adding to all models -->
       <div slot="footer" class="dialog-footer">
         <el-button
@@ -455,7 +472,7 @@ import {
   changeBank,
   getMemberInfo,
   resetWithdrawal, memberBcodeRepair, updateVip,
-  sendMsg, updateMobile, fullMobile, imDelete, updateInviterCode, followList
+  sendMsg, updateMobile, fullMobile, imDelete, updateInviterCode, followList, listLiveGuard
 } from '@/api/platform-web/member/memberInfo'
 import {userImMute} from '@/api/platform-web/live-web/ImMute'
 // import { hideKMobile } from '@/utils/mobile.js'
@@ -537,6 +554,12 @@ export default {
       total: 0,
       // 表数据
       dbTableList: [],
+      guard: [],
+      queryLiveGuardParams: {
+        pageNum: 1,
+        pageSize: 10,
+        userId: null,
+      },
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -931,6 +954,9 @@ export default {
         case 16:                     //added case 16 by rajesh
           this.followList()
           break
+        case 17:
+          this.queryLiveGuard()
+          break
       }
     },
     //获取详细信息
@@ -1126,6 +1152,13 @@ export default {
       if (betMoney != "" && betMoney != null) {
         this.form.beatNum = (betMoney / score).toFixed(2);
       }
+    },
+    queryLiveGuard(){
+      this.queryLiveGuardParams.userId = this.memberId;
+      listLiveGuard(this.queryLiveGuardParams).then(res => {
+        this.guard = res.rows;
+        this.loading = false;
+      })
     }
   }
 }

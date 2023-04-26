@@ -107,11 +107,11 @@
         <el-form-item label="名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入名称"/>
         </el-form-item>
-        <el-form-item label="accessKey" prop="accessKey">
-          <el-input v-model="form.accessKey" placeholder="请输入accessKey"/>
+        <el-form-item label="accessKey" prop="accessKey" form>
+          <el-input v-model="form.accessKey" placeholder="请输入accessKey" show-password/>
         </el-form-item>
         <el-form-item label="accessSecret" prop="accessSecret">
-          <el-input v-model="form.accessSecret" placeholder="请输入accessSecret"/>
+          <el-input v-model="form.accessSecret" placeholder="请输入accessSecret" show-password/>
         </el-form-item>
         <el-form-item label="访问域名" prop="endpoint">
           <el-input v-model="form.endpoint" placeholder="请输入访问域名"/>
@@ -360,6 +360,24 @@ export default {
       this.ossTestForm.name = row.name
       this.ossTestForm.id = row.id
       this.ossTestOpen = true
+    },
+    maskValueRow(row, column, cellValue) {
+      const name = this.maskValue(row.value, row.activeSwitch);
+      return `${name}`;
+    }
+    ,
+    maskValue(input, activeSwitch) {
+      if (input == null || input.length <= 2) {
+        return input;
+      }
+      let mask = input.length > 10 ? 5 : 3;
+      if (input.length / 2 <= mask) {
+        mask = input.length / 4;
+      }
+      const first = input.substring(0, mask);
+      const last = input.substring(input.length - mask);
+      const asterisks = "*".repeat(input.length - (mask * 2));
+      return first + asterisks + last;
     }
   }
 }

@@ -862,7 +862,7 @@ export default {
       },
       actions: {
         add: '新增',
-        update: '修改',
+        edit: '修改',
         remove: '删除'
       },
       table: {
@@ -912,9 +912,84 @@ export default {
         cancelButton: '@:common.cancelButton1'
       },
       messageBox: {
-        updateLiveGuardConfigSuccess: '修改成功',
+        editLiveGuardConfigSuccess: '修改成功',
         addLiveGuardConfigSuccess: '新增成功',
         removeLiveGuardConfigSuccess: '删除成功'
+      }
+    },
+    h5: {
+      queryForm: {
+        nameLabel: '名称',
+        namePlaceholder: '请输入名称',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      actions: {
+        add: '新增',
+        edit: '修改',
+        remove: '删除'
+      },
+      table: {
+        id: '编号',
+        name: '插件名称',
+        status: '状态',
+        status0: '停用',
+        status1: '启用',
+        conUrl: '地址',
+        iconUrl: '图标',
+        operation: '@:common.operation',
+        editButton: '修改',
+        removeButton: '删除'
+      },
+      validations: {
+        name: '名称不能为空',
+        id: '编号不能为空'
+      },
+      addDialog: {
+        title: '添加h5插件',
+        idLabel: '编号',
+        idPlaceholder: '请输入编号',
+        nameLabel: '插件名称',
+        namePlaceholder: '请输入名称',
+        conUrlLabel: '内容地址',
+        conUrlPlaceholder: '请输入内容地址',
+        iconUrlLabel: '图标地址',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton2'
+      },
+      editDialog: {
+        title: '修改h5插件',
+        nameLabel: '插件名称',
+        namePlaceholder: '请输入名称',
+        conUrlLabel: '内容地址',
+        conUrlPlaceholder: '请输入内容地址',
+        iconUrlLabel: '图标地址',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton2'
+      },
+      confirmRemoveDialog: {
+        title: '@:common.titleDialog',
+        message: '是否确认删除h5插件编号为"{ids}"的数据项?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      confirmStatusChangeDialog: {
+        title: '@:common.titleDialog',
+        message: '确认要{text}"{name}"吗?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      confirmExportDialog: {
+        title: '@:common.titleDialog',
+        message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      messageBox: {
+        addSuccess: '新增成功',
+        editSuccess: '修改成功',
+        removeSuccess: '删除成功',
+        statusChangeSuccess: '{text}成功'
       }
     }
   }

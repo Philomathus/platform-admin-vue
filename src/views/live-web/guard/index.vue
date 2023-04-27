@@ -37,7 +37,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:liveGuardConfig:edit']"
-        >{{$t('liveWeb.guard.actions.update')}}
+        >{{$t('liveWeb.guard.actions.edit')}}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -281,7 +281,7 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateLiveGuardConfig(this.form).then(response => {
-              this.msgSuccess(this.$t('liveWeb.guard.messageBox.updateLiveGuardConfigSuccess'));
+              this.msgSuccess(this.$t('liveWeb.guard.messageBox.editLiveGuardConfigSuccess'));
               this.open = false;
               this.getList();
             });

@@ -1,18 +1,18 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="名称" prop="name">
+      <el-form-item :label="$t('liveWeb.h5.queryForm.nameLabel')" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入名称"
+          :placeholder="$t('liveWeb.h5.queryForm.namePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('liveWeb.h5.queryForm.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('liveWeb.h5.queryForm.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -25,7 +25,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:h5Plugin:add']"
-        >新增</el-button>
+        >{{$t('liveWeb.h5.actions.add')}}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -36,7 +36,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:h5Plugin:edit']"
-        >修改</el-button>
+        >{{$t('liveWeb.h5.actions.edit')}}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -47,26 +47,16 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:h5Plugin:remove']"
-        >删除</el-button>
+        >{{$t('liveWeb.h5.actions.remove')}}</el-button>
       </el-col>
-<!--      <el-col :span="1.5">-->
-<!--        <el-button-->
-<!--          type="warning"-->
-<!--          plain-->
-<!--          icon="el-icon-download"-->
-<!--          size="mini"-->
-<!--          @click="handleExport"-->
-<!--          v-hasPermi="['admin:h5Plugin:export']"-->
-<!--        >导出</el-button>-->
-<!--      </el-col>-->
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="h5PluginList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="编号" align="center" prop="id" />
-      <el-table-column label="插件名称" align="center" prop="name" />
-      <el-table-column label="状态" align="center" key="status" v-if="columns[0].visible">
+      <el-table-column :label="$t('liveWeb.h5.table.id')" align="center" prop="id" />
+      <el-table-column :label="$t('liveWeb.h5.table.name')" align="center" prop="name" />
+      <el-table-column :label="$t('liveWeb.h5.table.status')" align="center" key="status" v-if="columns[0].visible">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -76,8 +66,8 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="地址" width="305px" align="center" prop="conUrl" />
-      <el-table-column label="图标" align="center" prop="iconUrl">
+      <el-table-column :label="$t('liveWeb.h5.table.conUrl')" width="305px" align="center" prop="conUrl" />
+      <el-table-column :label="$t('liveWeb.h5.table.iconUrl')" align="center" prop="iconUrl">
         <template slot-scope="scope">
           <el-image
             style="width: 50px;"
@@ -87,7 +77,7 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('liveWeb.h5.table.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -95,7 +85,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:h5Plugin:edit']"
-          >修改</el-button>
+          >{{$t('liveWeb.h5.table.editButton')}}</el-button>
           <el-button
             style="color: #FF5722"
             size="mini"
@@ -103,7 +93,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:h5Plugin:remove']"
-          >删除</el-button>
+          >{{$t('liveWeb.h5.table.removeButton')}}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -119,41 +109,41 @@
     <!-- 添加h5插件对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="opene" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="编号" prop="id">
-          <el-input v-model="form.id" placeholder="请输入编号" />
+        <el-form-item :label="$t('liveWeb.h5.addDialog.idLabel')" prop="id">
+          <el-input v-model="form.id" :placeholder="$t('liveWeb.h5.addDialog.idPlaceholder')" />
         </el-form-item>
-        <el-form-item label="插件名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入名称" />
+        <el-form-item :label="$t('liveWeb.h5.addDialog.nameLabel')" prop="name">
+          <el-input v-model="form.name" :placeholder="$t('liveWeb.h5.addDialog.namePlaceholder')" />
         </el-form-item>
-        <el-form-item label="内容地址" prop="conUrl">
-          <el-input v-model="form.conUrl" placeholder="请输入内容地址" />
+        <el-form-item :label="$t('liveWeb.h5.addDialog.conUrlLabel')" prop="conUrl">
+          <el-input v-model="form.conUrl" :placeholder="$t('liveWeb.h5.addDialog.conUrlPlaceholder')" />
         </el-form-item>
-        <el-form-item label="图标地址" prop="iconUrl">
+        <el-form-item :label="$t('liveWeb.h5.addDialog.iconUrlLabel')" prop="iconUrl">
           <imageUpload v-model="form.iconUrl" path="give"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitFormAdd">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitFormAdd">{{$t('liveWeb.h5.addDialog.confirmButton')}}</el-button>
+        <el-button @click="cancel">{{$t('liveWeb.h5.addDialog.cancelButton')}}</el-button>
       </div>
     </el-dialog>
 
     <!-- 修改h5插件对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="插件名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入名称" />
+        <el-form-item :label="$t('liveWeb.h5.editDialog.nameLabel')" prop="name">
+          <el-input v-model="form.name" :placeholder="$t('liveWeb.h5.editDialog.namePlaceholder')" />
         </el-form-item>
-        <el-form-item label="内容地址" prop="conUrl">
-          <el-input v-model="form.conUrl" placeholder="请输入内容地址" />
+        <el-form-item :label="$t('liveWeb.h5.editDialog.conUrlLabel')" prop="conUrl">
+          <el-input v-model="form.conUrl" :placeholder="$t('liveWeb.h5.editDialog.conUrlPlaceholder')" />
         </el-form-item>
-        <el-form-item label="图标地址" prop="iconUrl">
+        <el-form-item :label="$t('liveWeb.h5.editDialog.iconUrlLabel')" prop="iconUrl">
           <imageUpload v-model="form.iconUrl" path="give"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{$t('liveWeb.h5.editDialog.confirmButton')}}</el-button>
+        <el-button @click="cancel">{{$t('liveWeb.h5.editDialog.cancelButton')}}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -207,10 +197,10 @@ export default {
       // 表单校验
       rules: {
         name: [
-          { required: true, message: "名称不能为空", trigger: "blur" }
+          { required: true, message: this.$t('liveWeb.h5.validations.name'), trigger: "blur" }
         ],
         id: [
-          { required: true, message: "编号不能为空", trigger: "blur" }
+          { required: true, message: this.$t('liveWeb.h5.validations.id'), trigger: "blur" }
         ],
       }
     };
@@ -265,7 +255,7 @@ export default {
     handleAdd() {
       this.reset();
       this.opene = true;
-      this.title = "添加h5插件";
+      this.title = this.$t('liveWeb.h5.addDialog.title');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -274,7 +264,7 @@ export default {
       getH5Plugin(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改h5插件";
+        this.title = this.$t('liveWeb.h5.editDialog.title');
       });
     },
     /** 新增页面提交按钮 */
@@ -285,7 +275,7 @@ export default {
               if(response.code === 0){
                 this.$message.error(response.msg)
               } else {
-              this.msgSuccess("新增成功");
+              this.msgSuccess(this.$t('liveWeb.h5.messageBox.addSuccess'));
               this.opene = false;
               this.getList();
               }
@@ -298,7 +288,7 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
             updateH5Plugin(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess(this.$t('liveWeb.h5.messageBox.editSuccess'));
               this.open = false;
               this.getList();
           });
@@ -308,23 +298,25 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除h5插件编号为"' + ids + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
+
+      this.$confirm(this.$t('liveWeb.h5.confirmRemoveDialog.message', {ids: ids}), this.$t('liveWeb.h5.confirmRemoveDialog.title'), {
+          confirmButtonText: this.$t('liveWeb.h5.confirmRemoveDialog.confirmButton'),
+          cancelButtonText: this.$t('liveWeb.h5.confirmRemoveDialog.cancelButton'),
           type: "warning"
         }).then(function() {
           return delH5Plugin(ids);
         }).then(() => {
           this.getList();
-          this.msgSuccess("删除成功");
+          this.msgSuccess(this.$t('liveWeb.h5.messageBox.removeSuccess'));
         })
     },
     // 状态修改
     handleStatusChange(row) {
-      let text = row.status === '0' ? '停用' : '启用'
-      this.$confirm('确认要' + text + '"' + row.name + '"吗?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      let text = row.status === '0' ? this.$t('liveWeb.h5.table.status0') : this.$t('liveWeb.h5.table.status1')
+
+      this.$confirm(this.$t('liveWeb.h5.confirmStatusChangeDialog.message', {text: text, name: row.name}), this.$t('liveWeb.h5.confirmStatusChangeDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.h5.confirmStatusChangeDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.h5.confirmStatusChangeDialog.cancelButton'),
         type: 'warning'
       }).then(function () {
         var data={};
@@ -332,7 +324,7 @@ export default {
         data.status=row.status;
         return updateH5Plugin(data)
       }).then(() => {
-        this.msgSuccess(text + '成功')
+        this.msgSuccess(this.$t('liveWeb.h5.messageBox.statusChangeSuccess', {text: text}))
       }).catch(function () {
         row.status = row.status === '0' ? '1' : '0'
       })
@@ -340,9 +332,10 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+
+      this.$confirm(this.$t('liveWeb.h5.confirmExportDialog.message'), this.$t('liveWeb.h5.confirmExportDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.h5.confirmExportDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.h5.confirmExportDialog.cancelButton'),
         type: 'warning'
         }).then(function() {
           return exportH5Plugin(queryParams);

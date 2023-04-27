@@ -935,7 +935,7 @@ export default {
       },
       actions: {
         add: 'Add',
-        update: 'Update',
+        edit: 'Edit',
         remove: 'Remove'
       },
       table: {
@@ -985,7 +985,7 @@ export default {
         cancelButton: '@:common.cancelButton1'
       },
       messageBox: {
-        updateLiveGuardConfigSuccess: 'Updated successfully',
+        editLiveGuardConfigSuccess: 'Updated successfully',
         addLiveGuardConfigSuccess: 'Added successfully',
         removeLiveGuardConfigSuccess: 'Removed successfully'
       }

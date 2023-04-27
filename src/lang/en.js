@@ -370,7 +370,21 @@ export default {
         unprocessed: '未处理',
         processed: '已处理',
         rejected: '驳回',
-      }
+      },
+    },
+    commonProblem: {
+      addTitle: 'Add FAQs',
+      editTitle: 'Update FAQs',
+      tableDialog: {
+        title: 'Title',
+        titlePlaceholder: 'Please enter Title',
+        status: 'Status',
+        statusPlaceholder: 'Please enter Status',
+        content: 'Content',
+        contentPlaceholder: 'Please enter Content',
+        index: 'Index',
+        indexPlaceholder: 'Please enter Index',
+      },
     },
   },
 

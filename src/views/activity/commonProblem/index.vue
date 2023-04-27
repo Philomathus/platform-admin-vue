@@ -1,28 +1,30 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="标题" prop="title">
+      <el-form-item :label="$t('activity.commonProblem.tableDialog.title')" prop="title">
         <el-input
           v-model="queryParams.title"
-          placeholder="请输入标题"
+          :placeholder="$t('activity.commonProblem.tableDialog.titlePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small">
+      <el-form-item :label="$t('activity.commonProblem.tableDialog.status')" prop="status">
+        <el-select v-model="queryParams.status" :placeholder="$t('activity.commonProblem.tableDialog.statusPlaceholder')" clearable size="small">
           <el-option
             v-for="dict in statusOptions"
             :key="dict.dictValue"
-            :label="dict.dictLabel"
+            ::label="dict.dictLabel"
             :value="dict.dictValue"
           />
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{
+            $t('activity.searchButton')
+          }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('activity.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -35,7 +37,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['activity:commonProblem:add']"
-        >新增
+        >{{ $t('activity.addButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -47,7 +49,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['activity:commonProblem:edit']"
-        >修改
+        >{{ $t('activity.editButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -59,7 +61,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['activity:commonProblem:remove']"
-        >删除
+        >{{ $t('activity.deleteButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -70,7 +72,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['activity:commonProblem:export']"
-        >导出
+        >{{ $t('activity.exportButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -78,19 +80,19 @@
 
     <el-table stripe v-loading="loading" :data="commonProblemList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="标题" align="center" prop="title"/>
-      <el-table-column label="内容" :show-tooltip-when-overflow="true" :show-overflow-tooltip="true" align="center" prop="content">
+      <el-table-column :label="$t('activity.commonProblem.tableDialog.title')" align="center" prop="title"/>
+      <el-table-column :label="内容" :show-tooltip-when-overflow="true" :show-overflow-tooltip="true" align="center" prop="content">
         <template v-slot="{row}">
           <div v-html="row.content" style="max-height: 120px"></div>
         </template>
       </el-table-column>
-      <el-table-column label="排序" align="center" prop="indexs"/>
-      <el-table-column label="状态" align="center" prop="status">
+      <el-table-column :label="$t('activity.commonProblem.tableDialog.index')" align="center" prop="indexs"/>
+      <el-table-column :label="$t('activity.commonProblem.tableDialog.status')" align="center" prop="status">
         <template slot-scope="scope">
           <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">{{ status.dictLabel }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('activity.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -98,7 +100,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['activity:commonProblem:edit']"
-          >修改
+          >{{ $t('activity.edit') }}
           </el-button>
           <el-button
             size="mini"
@@ -106,7 +108,9 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['activity:commonProblem:remove']"
-          >删除
+          >{{
+              $t('activity.deleteButton')
+            }}
           </el-button>
         </template>
       </el-table-column>
@@ -124,29 +128,29 @@
     <!-- 添加或修改常见问题对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="标题" prop="title">
-          <el-input v-model="form.title" placeholder="请输入标题"/>
+        <el-form-item :label="$t('activity.commonProblem.tableDialog.title')" prop="title">
+          <el-input v-model="form.title" :placeholder="$t('activity.commonProblem.tableDialog.titlePlaceholder')"/>
         </el-form-item>
-        <el-form-item label="内容">
-          <el-input v-model="form.content" type="textarea" placeholder="请输入内容" rows="5" />
+        <el-form-item :label="$t('activity.commonProblem.tableDialog.content')">
+          <el-input v-model="form.content" type="textarea" :placeholder="$t('activity.commonProblem.tableDialog.contentPlaceholder')" rows="5" />
         </el-form-item>
-        <el-form-item label="排序" prop="indexs">
-          <el-input type="number" v-model="form.indexs" placeholder="请输入排序"/>
+        <el-form-item :label="$t('activity.commonProblem.tableDialog.index')" prop="indexs">
+          <el-input type="number" v-model="form.indexs" :placeholder="$t('activity.commonProblem.tableDialog.indexPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="状态">
+        <el-form-item :label="$t('activity.commonProblem.tableDialog.status')">
           <el-radio-group v-model="form.status">
             <el-radio
               v-for="dict in statusOptions"
               :key="dict.dictValue"
-              :label="parseInt(dict.dictValue)"
+              ::label="parseInt(dict.dictValue)"
             >{{ dict.dictLabel }}
             </el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('activity.submitButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('activity.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -259,7 +263,7 @@ export default {
     handleAdd() {
       this.reset()
       this.open = true
-      this.title = '添加常见问题'
+      this.title = this.$t('activity.commonProblem.addTitle')
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -268,7 +272,7 @@ export default {
       getCommonProblem(id).then(response => {
         this.form = response.data
         this.open = true
-        this.title = '修改常见问题'
+        this.title = this.$t('activity.commonProblem.editTitle')
       })
     },
     /** 提交按钮 */
@@ -277,13 +281,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateCommonProblem(this.form).then(response => {
-              this.msgSuccess('修改成功')
+              this.msgSuccess(this.$t('activity.editSuccessMsg'));
               this.open = false
               this.getList()
             })
           } else {
             addCommonProblem(this.form).then(response => {
-              this.msgSuccess('新增成功')
+              this.msgSuccess(this.$t('activity.addSuccessMsg'));
               this.open = false
               this.getList()
             })
@@ -294,24 +298,24 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids
-      this.$confirm('是否确认删除常见问题编号为"' + ids + '"的数据项?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('activity.deleteConfirm1') + row.title + '"?', this.$t('activity.deleteConfirmTitle'), {
+        confirmButtonText: this.$t('activity.confirmButton'),
+        cancelButtonText: this.$t('activity.cancelConfirmButton'),
         type: 'warning'
       }).then(function() {
         return delCommonProblem(ids)
       }).then(() => {
         this.getList()
-        this.msgSuccess('删除成功')
+        this.msgSuccess(this.$t('activity.deleteSuccessMsg'));
       }).catch(() => {
       })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('是否确认导出所有常见问题数据项?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('activity.confirmExport'), this.$t('activity.confirmExportTitle'), {
+        confirmButtonText: this.$t('activity.confirmButton'),
+        cancelButtonText: this.$t('activity.cancelButton'),
         type: 'warning'
       }).then(function() {
         return exportCommonProblem(queryParams)

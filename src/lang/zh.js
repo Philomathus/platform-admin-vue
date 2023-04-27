@@ -345,8 +345,56 @@ export default {
         cxAgent: '代理编号不能为空',
         userName: '账号不能为空',
         loginNum: '登陆次数不能为空',
-      }
-    }
+      },
+    },
+
+    chatComplaint: {
+      addTitle: '添加客服投诉',
+      editTitle: '',
+      exportResponse: '客服投诉',
+      updateChatComplaintSuccess: '审核处理成功',
+      updateChatComplaintError: '取消输入',
+      updateChatComplaintPrompt: '请输入审核备注',
+
+      tableDialog: {
+        remark: '投诉内容',
+        remarkPlaceholder: '请输入内容',
+        userId: '发起人id',
+        userIdPlaceholder: '请输入发起人id',
+        kfId: '客服id',
+        kfIdPlaceholder: '请输入客服id',
+        processingTime: '选择审批时间',
+        processingTimePlaceholder: '选择审批时间',
+        accountPlaceholder: '请输入客服代充账号',
+        approver: '审批人',
+        approverPlaceholder: '请输入审批人',
+        statusPlaceholder: '请选择处理状态',
+        createTime: '创建时间',
+        comments: '审批备注',
+        commentsPlaceholder: '请输入审批备注',
+        status: '处理状态',
+        statusOptions: '处理状态(0未处理 1已处理 2驳回)',
+      },
+      statusOptions: {
+        unprocessed: '未处理',
+        processed: '已处理',
+        rejected: '驳回',
+      },
+    },
+    commonProblem: {
+      addTitle: '添加常见问题',
+      editTitle: '修改常见问题',
+      tableDialog: {
+        title: '标题',
+        titlePlaceholder: '请输入标题',
+        status: '状态',
+        statusPlaceholder: '请选择状态',
+        content: '内容',
+        contentPlaceholder: '请输入内容',
+        index: '排序',
+        indexPlaceholder: '请输入排序',
+      },
+    },
   },
 
   members: {
@@ -489,7 +537,6 @@ export default {
         tips: '提示',
         determine: '确定',
         succFund: '资金回退成功',
-
 
 
       },

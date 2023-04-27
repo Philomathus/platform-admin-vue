@@ -296,5 +296,11 @@ export function requestBoxDish(query){
   })
 }
 
-
+export function listLiveGuard(query) {
+  return request({
+    url: url.platformWeb + '/member/memberInfo/liveGuardUser/list',
+    method: 'get',
+    params: query
+  })
+}
 

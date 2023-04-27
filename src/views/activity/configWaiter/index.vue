@@ -1,18 +1,20 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="昵称" prop="name">
+      <el-form-item :label="$t('activity.configWaiter.tableDialog.name')" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入昵称"
+          :placeholder="$t('activity.configWaiter.tableDialog.namePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{
+            $t('activity.searchButton')
+          }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('activity.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -25,7 +27,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:configWaiter:add']"
-        >新增
+        >{{ $t('activity.addButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -37,7 +39,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:configWaiter:edit']"
-        >修改
+        >{{ $t('activity.editButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -49,7 +51,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:configWaiter:remove']"
-        >删除
+        >{{ $t('activity.deleteButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -60,7 +62,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:configWaiter:export']"
-        >导出
+        >{{ $t('activity.exportButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -68,10 +70,10 @@
 
     <el-table stripe v-loading="loading" :data="configWaiterList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="类型" align="center" prop="type" :formatter="formatterType"/>
-      <el-table-column label="微信或者QQ号等" align="center" prop="code"/>
-      <el-table-column label="昵称" align="center" prop="name"/>
-      <el-table-column label="图标" align="center" prop="icon">
+      <el-table-column :label="$t('activity.configWaiter.tableDialog.type')" align="center" prop="type" :formatter="formatterType"/>
+      <el-table-column :label="$t('activity.configWaiter.tableDialog.code')" align="center" prop="code"/>
+      <el-table-column :label="$t('activity.configWaiter.tableDialog.name')" align="center" prop="name"/>
+      <el-table-column :label="$t('activity.configWaiter.tableDialog.icon')" align="center" prop="icon">
         <template slot-scope="scope">
           <el-image
             style="width: 50px; height: 50px"
@@ -80,7 +82,7 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="状态" align="center" prop="status">
+      <el-table-column :label="$t('activity.configWaiter.tableDialog.status')" align="center" prop="status">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -90,15 +92,15 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="备注信息" align="center" prop="remark"/>
-      <el-table-column label="更新人" align="center" prop="updateBy"/>
-      <el-table-column label="更新时间" align="center" prop="updateTime">
+      <el-table-column :label="$t('activity.configWaiter.tableDialog.remark')" align="center" prop="remark"/>
+      <el-table-column :label="$t('activity.configWaiter.tableDialog.updateBy')" align="center" prop="updateBy"/>
+      <el-table-column :label="$t('activity.configWaiter.tableDialog.updateTime')" align="center" prop="updateTime">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="排序" align="center" prop="indexs"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('activity.configWaiter.tableDialog.index')" align="center" prop="indexs"/>
+      <el-table-column :label="$t('activity.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -106,7 +108,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:configWaiter:edit']"
-          >修改
+          >{{ $t('activity.editButton') }}
           </el-button>
           <el-button
             size="mini"
@@ -114,7 +116,9 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:configWaiter:remove']"
-          >删除
+          >{{
+              $t('activity.deleteButton')
+            }}
           </el-button>
         </template>
       </el-table-column>
@@ -132,35 +136,35 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="类型" prop="type">
-          <el-select v-model="form.type" placeholder="请选择">
+        <el-form-item :label="$t('activity.configWaiter.tableDialog.type')" prop="type">
+          <el-select v-model="form.type" :placeholder="$t('activity.configWaiter.tableDialog.typePlaceholder')">
             <el-option
               v-for="dict in qqwechatType"
               :key="dict.dictValue"
-              :label="dict.dictLabel"
+              ::label="dict.dictLabel"
               :value="dict.dictValue"
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="账号" prop="code">
-          <el-input v-model="form.code" placeholder="请输入微信或QQ号"/>
+        <el-form-item :label="$t('activity.configWaiter.tableDialog.code')" prop="code">
+          <el-input v-model="form.code" :placeholder="$t('activity.configWaiter.tableDialog.codePlaceholder')"/>
         </el-form-item>
-        <el-form-item label="昵称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入昵称"/>
+        <el-form-item :label="$t('activity.configWaiter.tableDialog.name')" prop="name">
+          <el-input v-model="form.name" :placeholder="$t('activity.configWaiter.tableDialog.namePlaceholder')"/>
         </el-form-item>
-        <el-form-item label="图标" prop="icon">
+        <el-form-item :label="$t('activity.configWaiter.tableDialog.icon')" prop="icon">
           <imageUpload v-model="form.icon" path="configWaiter"/>
         </el-form-item>
-        <el-form-item label="排序" prop="indexs">
-          <el-input v-model="form.indexs" placeholder="请输入排序"/>
+        <el-form-item :label="$t('activity.configWaiter.tableDialog.index')" prop="indexs">
+          <el-input v-model="form.indexs" :placeholder="$t('activity.configWaiter.tableDialog.indexPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="备注信息" prop="remark">
-          <el-input v-model="form.remark" placeholder="请输入备注信息"/>
+        <el-form-item :label="$t('activity.configWaiter.tableDialog.remark')" prop="remark">
+          <el-input v-model="form.remark" :placeholder="$t('activity.configWaiter.tableDialog.remarkPlaceholder')"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('activity.submitButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('activity.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -188,9 +192,9 @@ export default {
       // 1=qq,2=微信
       formatterType(row) {
         if (row.type == 1) {
-          return 'qq'
+          return this.$t('activity.qq')
         } else if (row.type == 2) {
-          return '微信'
+          return this.$t('activity.wechat')
         } else {
           return ''
         }
@@ -253,15 +257,22 @@ export default {
     },
     // 状态修改
     handleStatusChange(row) {
-      let text = row.status === '1' ? '启用' : '停用'
-      this.$confirm('确认要"' + text + '""' + row.name + '"吗?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      let text = row.status === '1'
+        ? this.$t('activity.statusEnable')
+        : this.$t('activity.statusDisable')
+      this.$confirm(this.$t('activity.statusEditSuccess')
+        + text
+        + '""'
+        + this.title
+        + this.$t('activity.statusConfirmQuestion'),
+        this.$t('activity.statusConfirmTitle'), {
+          confirmButtonText: this.$t('activity.confirmButton'),
+          cancelButtonText: this.$t('activity.cancelButton'),
         type: 'warning'
       }).then(function () {
         return changeStatus(row.id, row.status)
       }).then(() => {
-        this.msgSuccess(text + '成功')
+        this.msgSuccess(text + this.$t('activity.statusEditSuccess'))
       }).catch(function () {
         row.status = row.status === '0' ? '1' : '0'
       })
@@ -326,13 +337,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateConfigWaiter(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess(this.$t('activity.editSuccessMsg'));
               this.open = false;
               this.getList();
             });
           } else {
             addConfigWaiter(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess(this.$t('activity.addSuccessMsg'));
               this.open = false;
               this.getList();
             });
@@ -343,24 +354,24 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除客服管理编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('activity.deleteConfirm1') + row.title + '"?', this.$t('activity.deleteConfirmTitle'), {
+        confirmButtonText: this.$t('activity.confirmButton'),
+        cancelButtonText: this.$t('activity.cancelConfirmButton'),
         type: "warning"
       }).then(function () {
         return delConfigWaiter(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess(this.$t('activity.deleteSuccessMsg'));
       }).catch(() => {
       })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有客服管理数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('activity.confirmExport'), this.$t('activity.confirmExportTitle'), {
+        confirmButtonText: this.$t('activity.confirmButton'),
+        cancelButtonText: this.$t('activity.cancelButton'),
         type: "warning"
       }).then(function () {
         return exportConfigWaiter(queryParams);

@@ -4,7 +4,7 @@
       <el-form-item prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="名称"
+          :placeholder="$t('liveWeb.family.queryForm.namePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -15,7 +15,7 @@
           type="number"
           class="no-number"
           v-model.trim="queryParams.userId"
-          placeholder="族长ID"
+          :placeholder="$t('liveWeb.family.queryForm.userIdPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -26,25 +26,25 @@
           type="number"
           class="no-number"
           v-model="queryParams.id"
-          placeholder="家族ID"
+          :placeholder="$t('liveWeb.family.queryForm.idPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-select v-model="queryParams.status" placeholder="全部状态" clearable>
-          <el-option label="未审核" value="0"></el-option>
-          <el-option label="审核通过" value="1"></el-option>
-          <el-option label="审核拒绝" value="2"></el-option>
-          <el-option label="封停中" value="3"></el-option>
-          <el-option label="解散" value="4"></el-option>
+        <el-select v-model="queryParams.status" :placeholder="$t('liveWeb.family.queryForm.statusPlaceholder')" clearable>
+          <el-option :label="$t('liveWeb.family.queryForm.status0')" value="0"></el-option>
+          <el-option :label="$t('liveWeb.family.queryForm.status1')" value="1"></el-option>
+          <el-option :label="$t('liveWeb.family.queryForm.status2')" value="2"></el-option>
+          <el-option :label="$t('liveWeb.family.queryForm.status3')" value="3"></el-option>
+          <el-option :label="$t('liveWeb.family.queryForm.status4')" value="4"></el-option>
         </el-select>
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('liveWeb.family.queryForm.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('liveWeb.family.queryForm.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -57,7 +57,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:liveFamily:add']"
-        >新增家族
+        >{{$t('liveWeb.family.actions.add')}}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -69,40 +69,30 @@
           <a style="color: #00afff" @click="familyShow(row.id)">{{ row.id }}</a>
         </template>
       </el-table-column>
-      <!--      <el-table-column label="家族LOGO" align="center" prop="logo"/>
-            <el-table-column label="图标" align="center" prop="logo">
-              <template slot-scope="scope">
-                <el-image
-                  style="width: 50px; height: 50px"
-                  :src="scope.row.logo"
-                >
-                </el-image>
-              </template>
-            </el-table-column>-->
-      <el-table-column label="家族名称" :show-overflow-tooltip="true" min-width="120" align="center" prop="name"/>
-      <el-table-column label="公告" :show-overflow-tooltip="true" min-width="120" align="center" prop="notice"/>
-      <el-table-column label="家族宣言" :show-overflow-tooltip="true" min-width="150" align="center" prop="manifesto"/>
-      <el-table-column label="族推荐号" min-width="120" align="center" prop="nickName"/>
-      <el-table-column label="家族长ID" min-width="120" align="center" prop="userId"/>
-      <el-table-column label="成员数量" min-width="120" align="center" prop="userCount"/>
-      <el-table-column label="创建时间" width="160" align="center" prop="createTimes">
+      <el-table-column :label="$t('liveWeb.family.table.name')" :show-overflow-tooltip="true" min-width="120" align="center" prop="name"/>
+      <el-table-column :label="$t('liveWeb.family.table.notice')" :show-overflow-tooltip="true" min-width="120" align="center" prop="notice"/>
+      <el-table-column :label="$t('liveWeb.family.table.manifesto')" :show-overflow-tooltip="true" min-width="150" align="center" prop="manifesto"/>
+      <el-table-column :label="$t('liveWeb.family.table.nickName')" min-width="120" align="center" prop="nickName"/>
+      <el-table-column :label="$t('liveWeb.family.table.userId')" min-width="120" align="center" prop="userId"/>
+      <el-table-column :label="$t('liveWeb.family.table.userCount')" min-width="120" align="center" prop="userCount"/>
+      <el-table-column :label="$t('liveWeb.family.table.createTimes')" width="160" align="center" prop="createTimes">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTimes, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="状态" min-width="120" align="center" prop="status">
+      <el-table-column :label="$t('liveWeb.family.table.status')" min-width="120" align="center" prop="status">
         <template slot-scope="scope">
-          <span v-if="scope.row.status === 0" style="color: #0000FF">未审核</span>
-          <span v-if="scope.row.status === 1" style="color: #5FB878">审核通过</span>
-          <span v-if="scope.row.status === 2" style="color: #FF5722">拒绝通过</span>
-          <span v-if="scope.row.status === 3" style="color: #FF5722">封停中</span>
-          <span v-if="scope.row.status === 4" style="color: #C0C0C0">解散</span>
+          <span v-if="scope.row.status === 0" style="color: #0000FF">{{$t('liveWeb.family.table.status0')}}</span>
+          <span v-if="scope.row.status === 1" style="color: #5FB878">{{$t('liveWeb.family.table.status1')}}</span>
+          <span v-if="scope.row.status === 2" style="color: #FF5722">{{$t('liveWeb.family.table.status2')}}</span>
+          <span v-if="scope.row.status === 3" style="color: #FF5722">{{$t('liveWeb.family.table.status3')}}</span>
+          <span v-if="scope.row.status === 4" style="color: #C0C0C0">{{$t('liveWeb.family.table.status4')}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="家族成员的贡献" min-width="120" align="center" prop="contribution"/>
-      <el-table-column label="直播时间" min-width="120" align="center" prop="videoTime"/>
-      <el-table-column label="备注" :show-overflow-tooltip="true" min-width="220" align="center" prop="memo"/>
-      <el-table-column label="操作" min-width="280" align="center" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column :label="$t('liveWeb.family.table.contribution')" min-width="120" align="center" prop="contribution"/>
+      <el-table-column :label="$t('liveWeb.family.table.videoTime')" min-width="120" align="center" prop="videoTime"/>
+      <el-table-column :label="$t('liveWeb.family.table.memo')" :show-overflow-tooltip="true" min-width="220" align="center" prop="memo"/>
+      <el-table-column :label="$t('liveWeb.family.table.operation')" min-width="280" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="small"
@@ -111,7 +101,7 @@
             v-show="scope.row.status != 4"
             @click="handleUpdateFamily(scope.row)"
             v-hasPermi="['admin:liveFamily:edit']"
-          >修改
+          >{{$t('liveWeb.family.table.updateFamilyButton')}}
           </el-button>
           <el-button
             size="small"
@@ -120,7 +110,7 @@
             v-show="scope.row.status != 4"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:liveFamily:remove']"
-          >解散
+          >{{$t('liveWeb.family.table.removeButton')}}
           </el-button>
           <el-button
             size="small"
@@ -129,7 +119,7 @@
             v-show="scope.row.status == 1"
             @click="handleUpdate(scope.row,2)"
             v-hasPermi="['admin:liveFamily:edit']"
-          >封停
+          >{{$t('liveWeb.family.table.updateFlag2Button')}}
           </el-button>
           <el-button
             size="small"
@@ -138,7 +128,7 @@
             v-show="scope.row.status == 3"
             @click="handleUpdate(scope.row,3)"
             v-hasPermi="['admin:liveFamily:edit']"
-          >解封
+          >{{$t('liveWeb.family.table.updateFlag3Button')}}
           </el-button>
           <el-button
             size="small"
@@ -146,7 +136,7 @@
             plain
             v-show="scope.row.status ==0"
             @click="handleUpdate(scope.row,1)"
-          >通过
+          >{{$t('liveWeb.family.table.updateFlag1Button')}}
           </el-button>
           <el-button
             size="small"
@@ -154,7 +144,7 @@
             plain
             v-show="scope.row.status ==0"
             @click="handleUpdate(scope.row,0)"
-          >不通过
+          >{{$t('liveWeb.family.table.updateFlag0Button')}}
           </el-button>
         </template>
       </el-table-column>
@@ -172,37 +162,37 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <div class="el-row">
           <div class="el-col-lg-14">
-            <el-form-item label="家族名称" prop="name" v-if="form.id == null">
-              <el-input v-model="form.name" placeholder="请输入家族名称"/>
+            <el-form-item :label="$t('liveWeb.family.addUpdateDialog.nameLabel')" prop="name" v-if="form.id == null">
+              <el-input v-model="form.name" :placeholder="$t('liveWeb.family.addUpdateDialog.namePlaceholder')"/>
             </el-form-item>
-            <el-form-item label="家族长ID" prop="userId">
-              <el-input v-model="form.userId" placeholder="请输入家族长ID"/>
+            <el-form-item :label="$t('liveWeb.family.addUpdateDialog.userIdLabel')" prop="userId">
+              <el-input v-model="form.userId" :placeholder="$t('liveWeb.family.addUpdateDialog.userIdPlaceholder')"/>
             </el-form-item>
-            <el-form-item label="家族长昵称" prop="nickName">
-              <el-input v-model="form.nickName" placeholder="请输入家族长昵称"/>
+            <el-form-item :label="$t('liveWeb.family.addUpdateDialog.nickNameLabel')" prop="nickName">
+              <el-input v-model="form.nickName" :placeholder="$t('liveWeb.family.addUpdateDialog.nickNamePlaceholder')"/>
             </el-form-item>
           </div>
           <div class="el-col-lg-10">
-            <el-form-item label="家族LOGO" prop="logo">
+            <el-form-item :label="$t('liveWeb.family.addUpdateDialog.logoLabel')" prop="logo">
               <imageUpload v-model="form.logo" path="liveFamily"/>
             </el-form-item>
           </div>
 
         </div>
 
-        <el-form-item label="家族宣言" prop="manifesto">
-          <el-input v-model="form.manifesto" placeholder="请输入家族宣言"/>
+        <el-form-item :label="$t('liveWeb.family.addUpdateDialog.manifestoLabel')" prop="manifesto">
+          <el-input v-model="form.manifesto" :placeholder="$t('liveWeb.family.addUpdateDialog.manifestoPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="公告" prop="notice">
-          <el-input v-model="form.notice" type="textarea" placeholder="请输入内容"/>
+        <el-form-item :label="$t('liveWeb.family.addUpdateDialog.noticeLabel')" prop="notice">
+          <el-input v-model="form.notice" type="textarea" :placeholder="$t('liveWeb.family.addUpdateDialog.noticePlaceholder')"/>
         </el-form-item>
-        <el-form-item label="备注" prop="memo">
-          <el-input v-model="form.memo" type="textarea" placeholder="请输入内容"/>
+        <el-form-item :label="$t('liveWeb.family.addUpdateDialog.memoLabel')" prop="memo">
+          <el-input v-model="form.memo" type="textarea" :placeholder="$t('liveWeb.family.addUpdateDialog.memoPlaceholder')"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{$t('liveWeb.family.addUpdateDialog.confirmButton')}}</el-button>
+        <el-button @click="cancel">{{$t('liveWeb.family.addUpdateDialog.cancelButton')}}</el-button>
       </div>
     </el-dialog>
 
@@ -274,25 +264,25 @@ export default {
       // 表单校验
       rules: {
         logo: [
-          {required: true, message: '请上传家族LOGO', trigger: 'change'}
+          {required: true, message: this.$t('liveWeb.family.addUpdateDialog.validation.logo'), trigger: 'change'}
         ],
         name: [
-          {required: true, message: "请输入家族名称", trigger: "blur"}
+          {required: true, message: this.$t('liveWeb.family.addUpdateDialog.validation.name'), trigger: "blur"}
         ],
         userId: [
-          {required: true, message: "请输入家族长ID", trigger: "blur"}
+          {required: true, message: this.$t('liveWeb.family.addUpdateDialog.validation.userId'), trigger: "blur"}
         ],
         nickName: [
-          {required: true, message: "请输入家族长昵称", trigger: "blur"}
+          {required: true, message: this.$t('liveWeb.family.addUpdateDialog.validation.nickName'), trigger: "blur"}
         ],
         manifesto: [
-          {required: true, message: "请输入家族宣言", trigger: "blur"}
+          {required: true, message: this.$t('liveWeb.family.addUpdateDialog.validation.manifesto'), trigger: "blur"}
         ],
         notice: [
-          {required: true, message: "请输入公告", trigger: "blur"}
+          {required: true, message: this.$t('liveWeb.family.addUpdateDialog.validation.notice'), trigger: "blur"}
         ],
         memo: [
-          {required: true, message: "请输入备注", trigger: "blur"}
+          {required: true, message: this.$t('liveWeb.family.addUpdateDialog.validation.memo'), trigger: "blur"}
         ]
       }
     }
@@ -369,7 +359,7 @@ export default {
     handleAdd() {
       this.reset()
       this.open = true
-      this.title = '添加家族'
+      this.title = this.$t('liveWeb.family.addUpdateDialog.titleAdd')
     },
     /** 修改按钮操作 */
     handleUpdateFamily(row) {
@@ -378,7 +368,7 @@ export default {
       getLiveFamily(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改家族";
+        this.title = this.$t('liveWeb.family.addUpdateDialog.titleUpdate');
       });
     },
     /** 通过按钮操作 */
@@ -387,66 +377,66 @@ export default {
       data.id = row.id
       if (flag == 1) {
         data.status = 1
-        this.$confirm('是否确认通过审核家族名称"' + row.name + '"的数据项?', '警告', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm(this.$t('liveWeb.family.confirmUpdateFlag1Dialog.message', {name: row.name}), this.$t('liveWeb.family.confirmUpdateFlag1Dialog.title'), {
+          confirmButtonText: this.$t('liveWeb.family.confirmUpdateFlag1Dialog.confirmButton'),
+          cancelButtonText: this.$t('liveWeb.family.confirmUpdateFlag1Dialog.cancelButton'),
           type: 'warning'
         }).then(function () {
           return updateLiveFamily(data)
         }).then(() => {
           this.getList()
-          this.msgSuccess('审核通过')
+          this.msgSuccess(this.$t('liveWeb.family.messageBox.updateFlag1Success'))
         })
       } else if (flag == 0) {
         data.status = 2
-        this.$confirm('是否确认拒绝家族名称"' + row.name + '"的数据项?', '警告', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm(this.$t('liveWeb.family.confirmUpdateFlag0Dialog.message', {name: row.name}), this.$t('liveWeb.family.confirmUpdateFlag0Dialog.title'), {
+          confirmButtonText: this.$t('liveWeb.family.confirmUpdateFlag0Dialog.confirmButton'),
+          cancelButtonText: this.$t('liveWeb.family.confirmUpdateFlag0Dialog.cancelButton'),
           type: 'warning'
         }).then(function () {
           return updateLiveFamily(data)
         }).then(() => {
           this.getList()
-          this.msgSuccess('审核拒绝成功')
+          this.msgSuccess(this.$t('liveWeb.family.messageBox.updateFlag0Success'))
         })
       } else if (flag == 2) {
         data.status = 8
-        this.$prompt('请输入封停原因', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$prompt(this.$t('liveWeb.family.confirmUpdateFlag2Prompt.message'), this.$t('liveWeb.family.confirmUpdateFlag2Prompt.title'), {
+          confirmButtonText: this.$t('liveWeb.family.confirmUpdateFlag2Prompt.confirmButton'),
+          cancelButtonText: this.$t('liveWeb.family.confirmUpdateFlag2Prompt.cancelButton'),
           inputPattern: /\S/,
-          inputErrorMessage: '封停原因不能为空',
+          inputErrorMessage: this.$t('liveWeb.family.confirmUpdateFlag2Prompt.inputErrorMessage'),
           type: 'warning'
         }).then(({value}) => {
             data.memo = value
             updateLiveFamily(data).then(response => {
-              this.msgSuccess('封停成功')
+              this.msgSuccess(this.$t('liveWeb.family.messageBox.updateFlag2Success'))
               this.getList()
             })
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '取消输入'
+            message: this.$t('liveWeb.family.messageBox.updateFlag2Cancel')
           });
         })
       } else if (flag == 3) {
         data.status = 9
-        this.$prompt('请输入解封原因', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$prompt(this.$t('liveWeb.family.confirmUpdateFlag3Prompt.message'), this.$t('liveWeb.family.confirmUpdateFlag3Prompt.title'), {
+          confirmButtonText: this.$t('liveWeb.family.confirmUpdateFlag3Prompt.confirmButton'),
+          cancelButtonText: this.$t('liveWeb.family.confirmUpdateFlag3Prompt.cancelButton'),
           inputPattern: /\S/,
-          inputErrorMessage: '解封原因不能为空',
+          inputErrorMessage: this.$t('liveWeb.family.confirmUpdateFlag3Prompt.inputErrorMessage'),
           type: 'warning'
         }).then(({value}) => {
             data.memo = value
           updateLiveFamily(data).then(response => {
-            this.msgSuccess('解封成功')
+            this.msgSuccess(this.$t('liveWeb.family.messageBox.updateFlag3Success'))
             this.getList()
           })
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '取消输入'
+            message: this.$t('liveWeb.family.messageBox.updateFlag3Cancel')
           });
         })
       }
@@ -482,23 +472,23 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const id = row.id
-      this.$confirm('是否确认解散"' + row.name + '"家族?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('liveWeb.family.confirmRemoveDialog.message', {name: row.name}), this.$t('liveWeb.family.confirmRemoveDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.family.confirmRemoveDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.family.confirmRemoveDialog.cancelButton'),
         type: 'warning'
       }).then(function () {
         return delLiveFamily(id)
       }).then(() => {
         this.getList()
-        this.msgSuccess('删除成功')
+        this.msgSuccess(this.$t('liveWeb.family.messageBox.removeSuccess'))
       })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('是否确认导出所有家族数据项?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('liveWeb.family.confirmExportDialog.message'), this.$t('liveWeb.family.confirmExportDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.family.confirmExportDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.family.confirmExportDialog.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportLiveFamily(queryParams)

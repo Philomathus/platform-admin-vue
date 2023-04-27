@@ -99,6 +99,8 @@ export default {
     selectDateStartPlaceholder: 'Start Time',
     selectDateEndPlaceholder: 'End Time',
     selectDateRangeSeparator: 'to',
+    qq: 'qq',
+    wechat: 'WeChat',
     activityManage: {
       activityCashBack: {
         title: 'Top Up and Rebates',
@@ -250,6 +252,7 @@ export default {
       addTitle: 'Add Member Information',
       editTitle: 'Update Member Information',
       tableDialog: {
+        duplicateIpHeader: 'Duplicate IPs',
         inviterCode: 'Inviter Code',
         inviterCodePlaceholder: 'Please enter Inviter Code',
         loginIp: 'Login IP',
@@ -370,8 +373,42 @@ export default {
         unprocessed: '未处理',
         processed: '已处理',
         rejected: '驳回',
-      }
+      },
     },
+    commonProblem: {
+      addTitle: 'Add FAQs',
+      editTitle: 'Update FAQs',
+      tableDialog: {
+        title: 'Title',
+        titlePlaceholder: 'Please enter Title',
+        status: 'Status',
+        statusPlaceholder: 'Please enter Status',
+        content: 'Content',
+        contentPlaceholder: 'Please enter Content',
+        index: 'Index',
+        indexPlaceholder: 'Please enter Index',
+      },
+    },
+    configWaiter: {
+      addTitle: 'Add Customer Service Management',
+      editTitle: 'Update Customer Service Management',
+      tableDialog: {
+        status: 'Status',
+        name: 'Nickname',
+        namePlaceholder: 'Please enter Nickname',
+        type: 'Type',
+        typePlaceholder: 'Please enter Type',
+        code: 'WeChat or QQ number',
+        codePlaceholder: 'Please enter your WeChat or QQ number',
+        icon: 'Icon',
+        iconPlaceholder: 'Please enter Icon',
+        remark: 'Remarks',
+        remarkPlaceholder: 'Please enter Remarks',
+        updateBy: 'Updated By',
+        updateTime: 'Last Update Time',
+        index: 'Index',
+      }
+    }
   },
 
   members: {
@@ -710,6 +747,336 @@ export default {
 
 
 
+      }
+    }
+  },
+
+  common: {
+    titleDialog: 'Warning',
+    titlePrompt: 'Tips',
+    searchButton: 'Search',
+    resetButton: 'Rename',
+    exportButton: 'Export',
+    confirmButton: 'Confirm',
+    cancelButton: 'Cancel',
+    operationColumn: 'Operation'
+  },
+
+  liveWeb: {
+    anchorAward: {
+      queryForm: {
+        updateTimeLabel: 'Date range',
+        updateTimePlaceholder: 'Please select a date range',
+        idPlaceholder: 'Anchor ID',
+        nickNamePlaceholder: 'Anchor nickname',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      actions: {
+        exportButton: '@:common.exportButton'
+      },
+      table: {
+        anchor: 'Anchor ID',
+        nickName: 'Anchor nickname',
+        cost: 'Bet',
+        prize: 'Prize',
+        prizeSixThousand: 'Prize six thousand',
+        updateTime: 'Update time'
+      },
+      exportDialog: {
+        title: 'Warning',
+        message: 'Confirm processing excel and download, there will be a delay when there is a large amount of data, please be patient...',
+        confirmButton: '@:common.confirmButton',
+        cancelButton: '@:common.cancelButton'
+      }
+    },
+    chat: {
+      queryForm: {
+        fromPlatformPlaceholder: 'Member ID',
+        userNicknamePlaceholder: 'Member nickname',
+        poscatIdPlaceholder: 'Anchor ID',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      actions: {
+        viewBlackListButton: 'View blocked IPs'
+      },
+      refresh: {
+        title: 'Record refresh',
+        placeholder: 'Time interval',
+        description: 'Refresh after {secs} seconds',
+        interval: '{secs} seconds',
+        startButton: 'Start refreshing',
+        stopButton: 'Stop refreshing'
+      },
+      table: {
+        fromPlatform: 'Platform member ID',
+        userNickName: 'User nickname',
+        type: 'Message type',
+        type0: 'General message',
+        type1: 'Pop-up message',
+        msg: 'Message content',
+        poscatId: 'Anchor ID',
+        poscatNickName: 'Anchor nickname',
+        noSpeaking: 'Is blocked',
+        noSpeakingTrue: 'Blocked',
+        noSpeakingFalse: 'Normal',
+        forbid: 'Is banned',
+        forbidTrue: 'Banned',
+        forbidFalse: 'Normal',
+        userIp: 'User IP',
+        createTimes: 'Send time',
+        operation: '@:common.operationColumn',
+        muteButton: 'Block',
+        unmuteButton: 'Unblock',
+        forbidButton: 'Ban'
+      },
+      confirmUpdateDialog: {
+        title: 'Warning',
+        message: 'Sure you want {fromPlatform} unblocked?',
+        confirmButton: '@:common.confirmButton',
+        cancelButton: '@:common.cancelButton'
+      },
+      messageBox: {
+        fromPlatformError: 'Member IDs can only be entered as numbers and underscores',
+        unblockSuccess: 'Unblocked successfully'
+      },
+      suspendUserDialog: {
+        titleAdd: 'Add member statement',
+        titleUpdate: 'Blocking users',
+        fromPlatformLabel: 'Platform member ID',
+        fromPlatformPlaceholder: 'Please enter the platform member ID',
+        userNickNameLabel: 'User\'s nickname',
+        userNickNamePlaceholder: 'Please enter the user\'s nickname',
+        msgLabel: 'Message content',
+        userIpLabel: 'Blocking IP',
+        confirmButton: 'Confirm',
+        cancelButton: 'Cancel',
+        validation: {
+          postcatId: 'Anchor ID cannot be empty'
+        },
+        messageBox: {
+          suspendSuccess: 'Blocked successfully'
+        }
+      },
+      banRemarksDialog: {
+        title: 'Remark ban reason',
+        remarkPlaceholder: 'Please select the reason for the ban',
+        remarkedPlaceholder: 'Please enter the reason for the ban',
+        submitButton: 'Submit',
+        messageBox: {
+          forbidSuccess: 'Banned successfully'
+        }
+      },
+      viewBlackListDialog: {
+        title1: 'View blocked ip',
+        title2: 'View blocked ip',
+        queryForm: {
+          userIdLabel: 'Member ID',
+          userIdPlaceholder: 'Member ID',
+          userIpLabel: 'Member IP',
+          userIpPlaceholder: 'Member IP',
+          searchButton: '@:common.searchButton'
+        },
+        table: {
+          userId: 'Member ID',
+          userIp: 'Member IP',
+          msg: 'Blocking remarks',
+          createTime: 'Closing time',
+          operation: '@:common.operationColumn',
+          unblockButton: 'Unblock'
+        },
+        confirmUpdateDialog: {
+          title: 'Warning',
+          message: 'Sure you want {userId} unblocked?',
+          confirmButton: '@:common.confirmButton',
+          cancelButton: '@:common.cancelButton'
+        },
+        messageBox: {
+          unblockSuccess: 'Unblocked successfully'
+        }
+      }
+    },
+    family: {
+      queryForm: {
+        namePlaceholder: 'Name',
+        userIdPlaceholder: 'Leader ID',
+        idPlaceholder: 'Family ID',
+        statusPlaceholder: 'Status',
+        status0: 'Not audited',
+        status1: 'Audited',
+        status2: 'Rejected',
+        status3: 'Closed',
+        status4: 'Dismissed',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      actions: {
+        add: 'Add family'
+      },
+      table: {
+        name: 'Family name',
+        notice: 'Announcement',
+        manifesto: 'Family declaration',
+        nickName: 'Clan referral number',
+        userId: 'Leader ID',
+        userCount: 'Number of members',
+        createTimes: 'Create time',
+        status: 'Status',
+        status0: 'Not audited',
+        status1: 'Audited',
+        status2: 'Rejected',
+        status3: 'Closed',
+        status4: 'Dismissed',
+        contribution: 'Contribution of family members',
+        videoTime: 'Live broadcast time',
+        memo: 'Remarks',
+        operation: '@:common.operationColumn',
+        updateFamilyButton: 'Modify',
+        removeButton: 'Remove',
+        updateFlag0Button: 'No pass',
+        updateFlag1Button: 'Pass',
+        updateFlag2Button: 'Block',
+        updateFlag3Button: 'Unblock'
+      },
+      addUpdateDialog: {
+        titleAdd: 'Add family',
+        titleUpdate: 'Update family',
+        nameLabel: 'Family name',
+        namePlaceholder: 'Please enter the family name',
+        userIdLabel: 'Leader ID',
+        userIdPlaceholder: 'Please enter the family leader ID',
+        nickNameLabel: 'Leader nickname',
+        nickNamePlaceholder: 'Please enter the nickname of the leader',
+        logoLabel: 'Family logo',
+        manifestoLabel: 'Family declaration',
+        manifestoPlaceholder: 'Please enter a family declaration',
+        noticeLabel: 'Announcement',
+        noticePlaceholder: 'Please enter content',
+        memoLabel: 'Remarks',
+        memoPlaceholder: 'Please enter content',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton2',
+        validation: {
+          logo: 'Please upload the family logo',
+          name: 'Please enter the family name',
+          userId: 'Please enter the leader ID',
+          nickName: 'Please enter the nickname of the leader',
+          manifesto: 'Please enter a family declaration',
+          notice: 'Please enter an announcement',
+          memo: 'Please enter a memo'
+        }
+      },
+      confirmUpdateFlag0Dialog: {
+        title: '@:common.titleDialog',
+        message: 'Is it confirmed that the data item with the family name "{name}" is rejected?',
+        confirmButton: '@:common:confirmButton1',
+        cancelButton: '@:common:cancelButton1'
+      },
+      confirmUpdateFlag1Dialog: {
+        title: '@:common.titleDialog',
+        message: 'Is it confirmed that the data item with the family name "{name}" is approved?',
+        confirmButton: '@:common:confirmButton1',
+        cancelButton: '@:common:cancelButton1'
+      },
+      confirmUpdateFlag2Prompt: {
+        title: '@:common.titlePrompt',
+        message: 'Please enter the reason for blocking',
+        confirmButton: '@:common:confirmButton1',
+        cancelButton: '@:common:cancelButton1',
+        inputErrorMessage: 'The reason for blocking cannot be empty'
+      },
+      confirmUpdateFlag3Prompt: {
+        title: '@:common.titlePrompt',
+        message: 'Please enter the reason for unblocking',
+        confirmButton: '@:common:confirmButton1',
+        cancelButton: '@:common:cancelButton1',
+        inputErrorMessage: 'Reason for unblock cannot be empty'
+      },
+      confirmRemoveDialog: {
+        title: '@:common.titleDialog',
+        message: 'Is it confirmed that the "{name}" family is disbanded?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      confirmExportDialog: {
+        title: '@:common.titleDialog',
+        message: 'Is it confirmed that all family data items are exported?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      messageBox: {
+        updateFlag0Success: 'Audit rejection successful',
+        updateFlag1Success: 'Audit approved',
+        updateFlag2Success: 'Blocked successfully',
+        updateFlag2Cancel: 'Cancel input',
+        updateFlag3Success: 'Unblocked successfully',
+        updateFlag3Cancel: 'Cancel input',
+        removeSuccess: 'Deleted successfully'
+      }
+    },
+    guard: {
+      queryForm: {
+        specificationsLabel: 'Specification',
+        specificationsPlaceholder: 'Please enter specifications',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      actions: {
+        add: 'Add',
+        edit: 'Edit',
+        remove: 'Remove'
+      },
+      table: {
+        specifications: 'Specification',
+        month: 'Months of guardianship',
+        price: 'Price',
+        type: 'Guardian type',
+        type1: 'Guardian of silver',
+        typeOthers: 'Guardian of the stars',
+        propId: 'Gift id',
+        discountPrice: 'Discounted price',
+        giveday: 'Number of complimentary days',
+        operation: '@:common.operation',
+        editButton: 'Edit',
+        removeButton: 'Remove'
+      },
+      addUpdateDialog: {
+        titleAdd: 'Add',
+        titleUpdate: 'Update',
+        specificationsLabel: 'Specification',
+        specificationsPlaceholder: 'Please select specifications',
+        monthLabel: 'Months of guardianship',
+        monthPlaceholder: 'Please enter the number of months of guardianship',
+        priceLabel: 'Price',
+        pricePlaceholder: 'Please enter the price',
+        typeLabel: 'Guardian type',
+        typePlaceholder: 'Please select',
+        propIdLabel: 'Associated gifts',
+        propIdPlaceholder: 'Please select',
+        discountPriceLabel: 'Discounted price',
+        discountPricePlaceholder: 'Please enter the discounted price',
+        givedayLabel: '赠送天数',
+        givedayPlaceholder: 'Please enter the number of days of gift',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton2'
+      },
+      confirmRemoveDialog: {
+        title: '@:common.titleDialog',
+        message: 'Is it confirmed that the data item with the number "{ids}" is deleted?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      confirmExportDialog: {
+        title: '@:common.titleDialog',
+        message: 'Is it confirmed that all data items are exported?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      messageBox: {
+        editLiveGuardConfigSuccess: 'Updated successfully',
+        addLiveGuardConfigSuccess: 'Added successfully',
+        removeLiveGuardConfigSuccess: 'Removed successfully'
       }
     }
   }

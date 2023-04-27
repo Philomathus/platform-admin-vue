@@ -99,6 +99,8 @@ export default {
     selectDateStartPlaceholder: '开始时间',
     selectDateEndPlaceholder: '开始时间',
     selectDateRangeSeparator: '至',
+    qq: 'qq',
+    wechat: '微信',
     activityManage: {
       activityCashBack: {
         title: '充值返现',
@@ -261,10 +263,15 @@ export default {
       addTitle: '添加会员推广管理',
       editTitle: '修改会员推广管理',
       tableDialog: {
+        duplicateIpHeader: '重复次数超过两次',
         inviterCode: '邀请码',
         inviterCodePlaceholder: '请输入邀请码',
         loginIp: '登录ip',
         loginIpPlaceholder: '请输入登录ip',
+        selectDate: '日期范围',
+        selectDateStartPlaceholder: '开始时间',
+        selectDateEndPlaceholder: '开始时间',
+        selectDateRangeSeparator: '至',
         id: '系统编号',
         idPlaceholder: '',
         regTime: '注册时间',
@@ -349,9 +356,10 @@ export default {
         cxAgent: '代理编号不能为空',
         userName: '账号不能为空',
         loginNum: '登陆次数不能为空',
-      }
+      },
     },
-    chatComplaint:{
+
+    chatComplaint: {
       addTitle: '添加客服投诉',
       editTitle: '',
       exportResponse: '客服投诉',
@@ -382,8 +390,44 @@ export default {
         unprocessed: '未处理',
         processed: '已处理',
         rejected: '驳回',
-      }
+      },
     },
+    commonProblem: {
+      addTitle: '添加常见问题',
+      editTitle: '修改常见问题',
+      tableDialog: {
+        title: '标题',
+        titlePlaceholder: '请输入标题',
+        status: '状态',
+        statusPlaceholder: '请选择状态',
+        content: '内容',
+        contentPlaceholder: '请输入内容',
+        index: '排序',
+        indexPlaceholder: '请输入排序',
+      },
+    },
+    configWaiter: {
+      addTitle: '添加客服管理',
+      editTitle: '修改客服管理',
+      tableDialog: {
+        status: '状态',
+        nickname: '昵称',
+        nicknamePlaceholder: '请输入昵称',
+        type: '类型',
+        typePlaceholder: '请选择',
+        code: '账号',
+        codePlaceholder: '请输入微信或QQ号',
+        name: '昵称',
+        namePlaceholder: '请输入昵称',
+        icon: '图标',
+        iconPlaceholder: '请输入排序',
+        remark: '备注信息',
+        remarkPlaceholder: '请输入备注信息',
+        updateBy: '更新人',
+        updateTime: '更新时间',
+        index: '排序',
+      }
+    }
   },
 
   members: {
@@ -526,6 +570,8 @@ export default {
         tips: '提示',
         determine: '确定',
         succFund: '资金回退成功',
+
+
       },
       index: {
         allStat: '全部状态',
@@ -725,11 +771,15 @@ export default {
   },
 
   common: {
+    titleDialog: '警告',
+    titlePrompt: '提示',
     searchButton: '搜索',
     resetButton: '重置',
     exportButton: '导出',
-    confirmButton: '确认',
-    cancelButton: '取消',
+    confirmButton1: '确认',
+    confirmButton2: '确 定',
+    cancelButton1: '取消',
+    cancelButton2: '取 消',
     operationColumn: '操作'
   },
 
@@ -754,11 +804,11 @@ export default {
         prizeSixThousand: '派奖千六',
         updateTime: '修改时间'
       },
-      exportDialog: {
-        title: '警告',
+      confirmExportDialog: {
+        title: '@:common.titleDialog',
         message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
-        confirmButton: '@:common.confirmButton',
-        cancelButton: '@:common.cancelButton'
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
       }
     },
     chat: {
@@ -775,6 +825,8 @@ export default {
       refresh: {
         title: '记录刷新',
         placeholder: '时间间隔',
+        description: '{secs}秒后开始刷新',
+        interval: '{secs}秒',
         startButton: '开始刷新',
         stopButton: '停止刷新'
       },
@@ -782,6 +834,8 @@ export default {
         fromPlatform: '平台会员ID',
         userNickName: '用户昵称',
         type: '消息类型',
+        type0: '普通消息',
+        type1: '弹幕消息',
         msg: '消息内容',
         poscatId: '主播ID',
         poscatNickName: '主播昵称',
@@ -798,6 +852,16 @@ export default {
         unmuteButton: '解封',
         forbidButton: '禁言'
       },
+      confirmUpdateDialog: {
+        title: '@:common.titleDialog',
+        message: '确定要{fromPlatform}解封吗?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      messageBox: {
+        fromPlatformError: '会员ID只能输入数字及下划线',
+        unblockSuccess: '解封成功'
+      },
       suspendUserDialog: {
         titleAdd: '添加会员发言',
         titleUpdate: '封停用户',
@@ -807,45 +871,308 @@ export default {
         userNickNamePlaceholder: '请输入发送者昵称',
         msgLabel: '消息内容',
         userIpLabel: '封停ip',
-        confirmButton: '确 定',
-        cancelButton: '取 消'
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton2',
+        validation: {
+          postcatId: '主播ID不能为空'
+        },
+        messageBox: {
+          suspendSuccess: '封停成功'
+        }
       },
       banRemarksDialog: {
         title: '备注禁言原因',
         remarkPlaceholder: '请选择禁言原因',
-        remarkedPlaceholder: '请输入禁言原因'
+        remarkedPlaceholder: '请输入禁言原因',
+        submitButton: '立即提交',
+        messageBox: {
+          forbidSuccess: '禁言成功'
+        }
       },
-      buttons: {
-        mute: '封停',
-        unmute: '解封',
-        forbid: '禁言',
-        ok: '确 定',
-        cancel: '取 消',
-        submit: '立即提交'
-      },
-      dialog: {
-        titleAdd: '添加会员发言',
-        titleUpdate: '封停用户',
-        titleBan: '备注禁言原因',
-        titleBlockedIp: '查看封停ip',
-        titleViewBlockedIp: '查看已封停的ip',
-        form: {
-
-          muteRemarkPlaceholder: '请选择禁言原因',
-          remarkedPlaceholder: '请输入禁言原因'
-        },
-        filter: {
+      viewBlackListDialog: {
+        title1: '查看封停ip',
+        title2: '查看已封停的ip',
+        queryForm: {
           userIdLabel: '会员id',
           userIdPlaceholder: '会员id',
           userIpLabel: '会员ip',
-          userIpPlaceholder: '会员ip'
+          userIpPlaceholder: '会员ip',
+          searchButton: '@:common.searchButton'
         },
         table: {
           userId: '会员ID',
           userIp: '封停ip',
           msg: '封停备注',
-          createTime: '封停时间'
+          createTime: '封停时间',
+          operation: '@:common.operationColumn',
+          unblockButton: '解封'
+        },
+        confirmUpdateDialog: {
+          title: '@:common.titleDialog',
+          message: '确定要{userId}解封吗?',
+          confirmButton: '@:common.confirmButton1',
+          cancelButton: '@:common.cancelButton1'
+        },
+        messageBox: {
+          unblockSuccess: '解封成功'
         }
+      }
+    },
+    family: {
+      queryForm: {
+        namePlaceholder: '名称',
+        userIdPlaceholder: '族长ID',
+        idPlaceholder: '家族ID',
+        statusPlaceholder: '全部状态',
+        status0: '未审核',
+        status1: '审核通过',
+        status2: '审核拒绝',
+        status3: '封停中',
+        status4: '解散',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      actions: {
+        add: '新增家族'
+      },
+      table: {
+        name: '家族名称',
+        notice: '公告',
+        manifesto: '家族宣言',
+        nickName: '族推荐号',
+        userId: '家族长ID',
+        userCount: '成员数量',
+        createTimes: '创建时间',
+        status: '状态',
+        status0: '未审核',
+        status1: '审核通过',
+        status2: '审核拒绝',
+        status3: '封停中',
+        status4: '解散',
+        contribution: '家族成员的贡献',
+        videoTime: '直播时间',
+        memo: '备注',
+        operation: '@:common.operationColumn',
+        updateFamilyButton: '修改',
+        removeButton: '解散',
+        updateFlag0Button: '不通过',
+        updateFlag1Button: '通过',
+        updateFlag2Button: '封停',
+        updateFlag3Button: '解封'
+      },
+      addUpdateDialog: {
+        titleAdd: '添加家族',
+        titleUpdate: '修改家族',
+        nameLabel: '家族名称',
+        namePlaceholder: '请输入家族名称',
+        userIdLabel: '家族长ID',
+        userIdPlaceholder: '请输入家族长ID',
+        nickNameLabel: '家族长昵称',
+        nickNamePlaceholder: '请输入家族长昵称',
+        logoLabel: '家族LOGO',
+        manifestoLabel: '家族宣言',
+        manifestoPlaceholder: '请输入家族宣言',
+        noticeLabel: '公告',
+        noticePlaceholder: '请输入内容',
+        memoLabel: '备注',
+        memoPlaceholder: '请输入内容',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton2',
+        validation: {
+          logo: '请上传家族LOGO',
+          name: '请输入家族名称',
+          userId: '请输入家族长ID',
+          nickName: '请输入家族长昵称',
+          manifesto: '请输入家族宣言',
+          notice: '请输入公告',
+          memo: '请输入备注'
+        }
+      },
+      confirmUpdateFlag0Dialog: {
+        title: '@:common.titleDialog',
+        message: '是否确认拒绝家族名称"{name}"的数据项?',
+        confirmButton: '@:common:confirmButton1',
+        cancelButton: '@:common:cancelButton1'
+      },
+      confirmUpdateFlag1Dialog: {
+        title: '@:common.titleDialog',
+        message: '是否确认通过审核家族名称"{name}"的数据项?',
+        confirmButton: '@:common:confirmButton1',
+        cancelButton: '@:common:cancelButton1'
+      },
+      confirmUpdateFlag2Prompt: {
+        title: '@:common.titlePrompt',
+        message: '请输入封停原因',
+        confirmButton: '@:common:confirmButton1',
+        cancelButton: '@:common:cancelButton1',
+        inputErrorMessage: '封停原因不能为空'
+      },
+      confirmUpdateFlag3Prompt: {
+        title: '@:common.titlePrompt',
+        message: '请输入解封原因',
+        confirmButton: '@:common:confirmButton1',
+        cancelButton: '@:common:cancelButton1',
+        inputErrorMessage: '解封原因不能为空'
+      },
+      confirmRemoveDialog: {
+        title: '@:common.titleDialog',
+        message: '是否确认解散"{name}"家族?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      confirmExportDialog: {
+        title: '@:common.titleDialog',
+        message: '是否确认导出所有家族数据项?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      messageBox: {
+        updateFlag0Success: '审核拒绝成功',
+        updateFlag1Success: '审核通过',
+        updateFlag2Success: '封停成功',
+        updateFlag2Cancel: '取消输入',
+        updateFlag3Success: '解封成功',
+        updateFlag3Cancel: '取消输入',
+        removeSuccess: '删除成功'
+      }
+    },
+    guard: {
+      queryForm: {
+        specificationsLabel: '规格',
+        specificationsPlaceholder: '请输入规格',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      actions: {
+        add: '新增',
+        edit: '修改',
+        remove: '删除'
+      },
+      table: {
+        specifications: '规格',
+        month: '守护月数',
+        price: '价格',
+        type: '守护类型',
+        type1: '银之守护',
+        typeOthers: '星之守护',
+        propId: '礼物id',
+        discountPrice: '优惠价格',
+        giveday: '赠送天数',
+        operation: '@:common.operation',
+        editButton: '修改',
+        removeButton: '删除'
+      },
+      addUpdateDialog: {
+        titleAdd: '添加',
+        titleUpdate: '修改',
+        specificationsLabel: '规格',
+        specificationsPlaceholder: '请选择规格',
+        monthLabel: '守护月数',
+        monthPlaceholder: '请输入守护月数',
+        priceLabel: '价格',
+        pricePlaceholder: '请输入价格',
+        typeLabel: '守护类型',
+        typePlaceholder: '请选择',
+        propIdLabel: '关联礼物',
+        propIdPlaceholder: '请选择',
+        discountPriceLabel: '优惠价格',
+        discountPricePlaceholder: '请输入优惠价格',
+        givedayLabel: '赠送天数',
+        givedayPlaceholder: '请输入赠送天数',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton2'
+      },
+      confirmRemoveDialog: {
+        title: '@:common.titleDialog',
+        message: '是否确认删除编号为"{ids}"的数据项?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      confirmExportDialog: {
+        title: '@:common.titleDialog',
+        message: '是否确认导出所有数据项?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      messageBox: {
+        editLiveGuardConfigSuccess: '修改成功',
+        addLiveGuardConfigSuccess: '新增成功',
+        removeLiveGuardConfigSuccess: '删除成功'
+      }
+    },
+    h5: {
+      queryForm: {
+        nameLabel: '名称',
+        namePlaceholder: '请输入名称',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      actions: {
+        add: '新增',
+        edit: '修改',
+        remove: '删除'
+      },
+      table: {
+        id: '编号',
+        name: '插件名称',
+        status: '状态',
+        status0: '停用',
+        status1: '启用',
+        conUrl: '地址',
+        iconUrl: '图标',
+        operation: '@:common.operation',
+        editButton: '修改',
+        removeButton: '删除'
+      },
+      validations: {
+        name: '名称不能为空',
+        id: '编号不能为空'
+      },
+      addDialog: {
+        title: '添加h5插件',
+        idLabel: '编号',
+        idPlaceholder: '请输入编号',
+        nameLabel: '插件名称',
+        namePlaceholder: '请输入名称',
+        conUrlLabel: '内容地址',
+        conUrlPlaceholder: '请输入内容地址',
+        iconUrlLabel: '图标地址',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton2'
+      },
+      editDialog: {
+        title: '修改h5插件',
+        nameLabel: '插件名称',
+        namePlaceholder: '请输入名称',
+        conUrlLabel: '内容地址',
+        conUrlPlaceholder: '请输入内容地址',
+        iconUrlLabel: '图标地址',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton2'
+      },
+      confirmRemoveDialog: {
+        title: '@:common.titleDialog',
+        message: '是否确认删除h5插件编号为"{ids}"的数据项?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      confirmStatusChangeDialog: {
+        title: '@:common.titleDialog',
+        message: '确认要{text}"{name}"吗?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      confirmExportDialog: {
+        title: '@:common.titleDialog',
+        message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      messageBox: {
+        addSuccess: '新增成功',
+        editSuccess: '修改成功',
+        removeSuccess: '删除成功',
+        statusChangeSuccess: '{text}成功'
       }
     }
   }

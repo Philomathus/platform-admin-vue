@@ -140,7 +140,7 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['admin:activityInfo:editButton']">{{ $t('activity.edit') }}
+            v-hasPermi="['admin:activityInfo:editButton']">{{ $t('activity.editButton') }}
           </el-button>
           <el-button
             style="color: #FF5722"

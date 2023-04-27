@@ -4,7 +4,7 @@
       <el-form-item prop="fromPlatform">
         <el-input
           v-model="queryParams.fromPlatform"
-          placeholder="会员ID"
+          :placeholder="$t('liveWeb.chat.queryForm.fromPlatformPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -14,7 +14,7 @@
       <el-form-item prop="userNickName">
         <el-input
           v-model="queryParams.userNickName"
-          placeholder="会员昵称"
+          :placeholder="$t('liveWeb.chat.queryForm.userNicknamePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -24,7 +24,7 @@
       <el-form-item prop="poscatId">
         <el-input
           v-model="queryParams.poscatId"
-          placeholder="主播ID"
+          :placeholder="$t('liveWeb.chat.queryForm.poscatIdPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -32,8 +32,8 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('liveWeb.chat.queryForm.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('liveWeb.chat.queryForm.resetButton')}}</el-button>
       </el-form-item>
 
     </el-form>
@@ -46,17 +46,17 @@
           icon="el-icon-plus"
           size="mini"
           @click="openIpBlackList()"
-        >查看封停ip
+        >{{$t('liveWeb.chat.actions.viewBlackListButton')}}
         </el-button>
       </el-col>
       <el-col :span="10" style="margin-left: 10px">
-        <span style="font-size: 16px;margin-right: 10px">记录刷新</span>
-        <el-select v-model="refreshSec" placeholder="时间间隔" style="width: 110px">
-          <el-option value="5" label="5秒"></el-option>
-          <el-option value="10" label="10秒"></el-option>
-          <el-option value="15" label="15秒"></el-option>
-          <el-option value="20" label="20秒"></el-option>
-          <el-option value="30" label="30秒"></el-option>
+        <span style="font-size: 16px;margin-right: 10px">{{$t('liveWeb.chat.refresh.title')}}</span>
+        <el-select v-model="refreshSec" :placeholder="$t('liveWeb.chat.refresh.placeholder')" style="width: 110px">
+          <el-option value="5" :label="$t('liveWeb.chat.refresh.interval', {secs: 5})"></el-option>
+          <el-option value="10" :label="$t('liveWeb.chat.refresh.interval', {secs: 10})"></el-option>
+          <el-option value="15" :label="$t('liveWeb.chat.refresh.interval', {secs: 15})"></el-option>
+          <el-option value="20" :label="$t('liveWeb.chat.refresh.interval', {secs: 20})"></el-option>
+          <el-option value="30" :label="$t('liveWeb.chat.refresh.interval', {secs: 30})"></el-option>
         </el-select>
         <div style="width: 120px;display: inline-block;text-align: center">
           <span>{{ refreshDesc }}</span>
@@ -70,39 +70,35 @@
     </el-row>
 
     <el-table stripe v-loading="loading" :data="liveVideoChatList">
-      <el-table-column label="平台会员ID" min-width="130" align="center" prop="fromPlatform"/>
-      <el-table-column label="用户昵称" :show-overflow-tooltip="true" width="120" align="center" prop="userNickName"/>
-      <el-table-column label="消息类型" width="90" align="center" prop="type" :formatter="typeFormat"/>
-      <el-table-column label="消息内容" :show-overflow-tooltip="true" min-width="350" align="center" prop="msg"/>
-      <!--      <el-table-column label="会员ID" align="center" prop="id" />-->
-      <el-table-column label="主播ID" min-width="120" align="center" prop="poscatId"/>
-      <!--      <el-table-column label="消息所在聊天组" align="center" prop="group" />-->
-      <!--      <el-table-column label="发送者id" align="center" prop="userId" />-->
-
-      <el-table-column label="主播昵称" :show-overflow-tooltip="true" width="120" align="center" prop="poscatNickName"/>
-      <el-table-column label="是否封停" width="80" align="center" prop="noSpeaking">
+      <el-table-column :label="$t('liveWeb.chat.table.fromPlatform')" min-width="130" align="center" prop="fromPlatform"/>
+      <el-table-column :label="$t('liveWeb.chat.table.userNickName')" :show-overflow-tooltip="true" width="120" align="center" prop="userNickName"/>
+      <el-table-column :label="$t('liveWeb.chat.table.type')" width="90" align="center" prop="type" :formatter="typeFormat"/>
+      <el-table-column :label="$t('liveWeb.chat.table.msg')" :show-overflow-tooltip="true" min-width="350" align="center" prop="msg"/>
+      <el-table-column :label="$t('liveWeb.chat.table.postcatId')" min-width="120" align="center" prop="poscatId"/>
+      <el-table-column :label="$t('liveWeb.chat.table.poscatNickName')" :show-overflow-tooltip="true" width="120" align="center" prop="poscatNickName"/>
+      <el-table-column :label="$t('liveWeb.chat.table.noSpeaking')" width="80" align="center" prop="noSpeaking">
         <template slot-scope="scope">
           <span v-if="scope.row.noSpeaking" style="color: #FF5722">
-            已封停
+            {{$t('liveWeb.chat.table.noSpeakingTrue')}}
           </span>
           <span v-else style="color: #5FB878">
-            正常
+            {{$t('liveWeb.chat.table.noSpeakingFalse')}}
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="是否禁言" width="80" align="center" prop="forbid">
+      <el-table-column :label="$t('liveWeb.chat.table.forbid')" width="80" align="center" prop="forbid">
         <template slot-scope="scope">
           <span v-if="scope.row.forbid" style="color: #FF5722">
-            禁言
+            {{$t('liveWeb.chat.table.forbidTrue')}}
           </span>
           <span v-else style="color: #5FB878">
-            正常
+            {{$t('liveWeb.chat.table.forbidFalse')}}
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="发言ip" width="160" align="center" prop="userIp"/>
-      <el-table-column label="发送时间" width="160" align="center" prop="createTimes"/>
-      <el-table-column label="操作" width="145" align="center" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column :label="$t('liveWeb.chat.table.userIp')" width="160" align="center" prop="userIp"/>
+      <el-table-column :label="$t('liveWeb.chat.table.createTimes')" width="160" align="center" prop="createTimes"/>
+      <el-table-column :label="$t('liveWeb.chat.table.operation')" width="145" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             v-show="!scope.row.noSpeaking"
@@ -111,7 +107,7 @@
             @click="handleUpdateStop(scope.row)"
             v-if="scope.row.type == '0' || scope.row.type == '1'"
             v-hasPermi="['admin:liveVideoChat:edit']"
-          >封停
+          >{{$t('liveWeb.chat.table.muteButton')}}
           </el-button>
           <el-button
             v-show="scope.row.noSpeaking"
@@ -121,7 +117,7 @@
             v-if="scope.row.type == '0' || scope.row.type == '1'"
             v-hasPermi="['admin:liveVideoChat:edit']"
             style="margin-left: 0px"
-          >解封
+          >{{$t('liveWeb.chat.table.unmuteButton')}}
           </el-button>
           <el-button
             size="small"
@@ -129,7 +125,7 @@
             @click="handleForbid(scope.row)"
             v-if="scope.row.type == '0' || scope.row.type == '1'"
             v-hasPermi="['admin:liveVideoChat:edit']"
-          >禁言
+          >{{$t('liveWeb.chat.table.forbidButton')}}
           </el-button>
         </template>
       </el-table-column>
@@ -147,24 +143,24 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
 
-        <el-form-item label="平台会员ID" prop="fromPlatform">
-          <el-input v-model="form.fromPlatform" placeholder="请输入平台会员ID" readonly disabled/>
+        <el-form-item :label="$t('liveWeb.chat.suspendUserDialog.fromPlatformLabel')" prop="fromPlatform">
+          <el-input v-model="form.fromPlatform" :placeholder="$t('liveWeb.chat.suspendUserDialog.fromPlatformPlaceholder')" readonly disabled/>
         </el-form-item>
 
-        <el-form-item label="发送者昵称" prop="userNickName">
-          <el-input v-model="form.userNickName" placeholder="请输入发送者昵称" readonly disabled/>
+        <el-form-item :label="$t('liveWeb.chat.suspendUserDialog.userNickNameLabel')" prop="userNickName">
+          <el-input v-model="form.userNickName" :placeholder="$t('liveWeb.chat.suspendUserDialog.userNickNamePlaceholder')" readonly disabled/>
         </el-form-item>
 
-        <el-form-item label="消息内容" prop="msg">
+        <el-form-item :label="$t('liveWeb.chat.suspendUserDialog.msgLabel')" prop="msg">
           <el-input v-model="form.msg" readonly disabled/>
         </el-form-item>
-        <el-form-item label="封停ip" prop="userIp">
+        <el-form-item :label="$t('liveWeb.chat.suspendUserDialog.userIpLabel')" prop="userIp">
           <el-input v-model="form.userIp" readonly disabled/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="suspendUser('',true,1,form.userIp,form.msg)">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="suspendUser('',true,1,form.userIp,form.msg)">{{$t('liveWeb.chat.suspendUserDialog.confirmButton')}}</el-button>
+        <el-button @click="cancel">{{$t('liveWeb.chat.suspendUserDialog.cancelButton')}}</el-button>
       </div>
     </el-dialog>
 
@@ -172,7 +168,7 @@
     <el-dialog
       v-dialogDrag
       :close-on-click-modal="false"
-      title="备注禁言原因"
+      :title="$t('liveWeb.chat.banRemarksDialog.title')"
       :visible.sync="muteRemarkSpeak"
       width="400px"
       append-to-body
@@ -181,7 +177,7 @@
       <el-input v-model="poscatId" v-show="false"/>
       <el-select
         v-model="remark"
-        placeholder="请选择禁言原因"
+        :placeholder="$t('liveWeb.chat.banRemarksDialog.remarkPlaceholder')"
         clearable
         style="min-width: 360px"
       >
@@ -192,52 +188,52 @@
           :value="dict.dictValue"
         />
       </el-select>
-      <el-input v-model="remarked" placeholder="请输入禁言原因" v-if="this.remark == '其他'"/>
+      <el-input v-model="remarked" :placeholder="$t('liveWeb.chat.banRemarksDialog.remarkedPlaceholder')" v-if="this.remark == '其他'"/>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitMuteRemarkSpeak">立即提交</el-button>
+        <el-button type="primary" @click="submitMuteRemarkSpeak">{{ $t('liveWeb.chat.banRemarksDialog.submitButton') }}</el-button>
       </div>
     </el-dialog>
 
     <!--查看封停ip-->
-    <el-dialog title="查看封停ip" :visible.sync="speakIpBlackListList" width="1200px" append-to-body>
+    <el-dialog :title="$t('liveWeb.chat.viewBlackListDialog.title1')" :visible.sync="speakIpBlackListList" width="1200px" append-to-body>
       <el-form :model="queryParam" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-        <el-form-item label="会员id" prop="userId">
+        <el-form-item :label="$t('liveWeb.chat.viewBlackListDialog.queryForm.userIdLabel')" prop="userId">
           <el-input
             v-model="queryParam.userId"
-            placeholder="会员id"
+            :placeholder="$t('liveWeb.chat.viewBlackListDialog.queryForm.userIdPlaceholder')"
             clearable
             size="small"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
-        <el-form-item label="会员ip" prop="userIp">
+        <el-form-item :label="$t('liveWeb.chat.viewBlackListDialog.queryForm.userIpLabel')" prop="userIp">
           <el-input
             v-model="queryParam.userIp"
-            placeholder="会员ip"
+            :placeholder="$t('liveWeb.chat.viewBlackListDialog.queryForm.userIpPlaceholder')"
             clearable
             size="small"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQueryIpBlack">搜索</el-button>
+          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQueryIpBlack">{{$t('liveWeb.chat.viewBlackListDialog.queryForm.searchButton')}}</el-button>
         </el-form-item>
       </el-form>
 
       <el-table :stripe="true" v-loading="loading" :data="speakIpBlackData">
         <el-table-column type="selection" width="55" align="center"/>
-        <el-table-column label="会员ID" align="center" prop="userId" width="130"/>
-        <el-table-column label="封停ip" show-overflow-tooltip align="center" prop="userIp" width="150"/>
-        <el-table-column label="封停备注" show-overflow-tooltip align="center" prop="msg"/>
-        <el-table-column label="封停时间" align="center" prop="createTime" width="160"/>
-        <el-table-column label="操作" width="80" align="center" class-name="small-padding fixed-width" fixed="right">
+        <el-table-column :label="$t('liveWeb.chat.viewBlackListDialog.table.userId')" align="center" prop="userId" width="130"/>
+        <el-table-column :label="$t('liveWeb.chat.viewBlackListDialog.table.userIp')" show-overflow-tooltip align="center" prop="userIp" width="150"/>
+        <el-table-column :label="$t('liveWeb.chat.viewBlackListDialog.table.msg')" show-overflow-tooltip align="center" prop="msg"/>
+        <el-table-column :label="$t('liveWeb.chat.viewBlackListDialog.table.createTime')" align="center" prop="createTime" width="160"/>
+        <el-table-column :label="$t('liveWeb.chat.viewBlackListDialog.table.operation')" width="80" align="center" class-name="small-padding fixed-width" fixed="right">
           <template slot-scope="scope">
             <el-button
               size="mini"
               type="text"
               icon="el-icon-edit"
               @click="handleUpdateIpBlack(scope.row)"
-            >解封
+            >{{$t('liveWeb.chat.viewBlackListDialog.table.unblockButton')}}
             </el-button>
           </template>
         </el-table-column>
@@ -279,7 +275,7 @@ export default {
       refreshSec: '5',
       refreshType: 'primary',
       refreshIcon: 'el-icon-refresh',
-      refreshLabel: '开始刷新',
+      refreshLabel: this.$t('liveWeb.chat.refresh.startButton'),
       refreshDesc: '',
       // 遮罩层
       loading: true,
@@ -334,7 +330,7 @@ export default {
       // 表单校验
       rules: {
         poscatId: [
-          { required: true, message: '主播ID不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('liveWeb.chat.suspendUserDialog.validation.postcatId'), trigger: 'blur' }
         ]
       }
     }
@@ -348,7 +344,7 @@ export default {
   activated() {
     this.refreshType = 'primary'
     this.refreshIcon = 'el-icon-refresh'
-    this.refreshLabel = '开始刷新'
+    this.refreshLabel = this.$t('liveWeb.chat.refresh.startButton')
     this.refreshDesc = ''
 
     this.stopRefresh()
@@ -365,7 +361,7 @@ export default {
     },
     openIpBlackList() {
       this.speakIpBlackListList = true
-      this.title = '查看已封停的ip'
+      this.title = this.$t('liveWeb.chat.viewBlackListDialog.title2')
       listSpeakIpBlackList(this.queryParam).then(response => {
         this.speakIpBlackData = response.rows
         this.total = response.total
@@ -411,7 +407,7 @@ export default {
         const reg = '^[0-9a-zA-Z_]{1,}$'
         let flag = this.queryParams.fromPlatform.match(reg)
         if(!flag){
-          this.msgError("会员ID只能输入数字及下划线")
+          this.msgError(this.$t('liveWeb.chat.messageBox.fromPlatformError'))
           return
         }
       }
@@ -437,7 +433,7 @@ export default {
     handleAdd() {
       this.reset()
       this.open = true
-      this.title = '添加会员发言'
+      this.title = this.$t('liveWeb.chat.suspendUserDialog.titleAdd')
     },
     /** 修改按钮操作 */
     handleUpdateStop(row) {
@@ -445,28 +441,30 @@ export default {
       getLiveVideoChat(id).then(response => {
         this.form = response.data
         this.open = true
-        this.title = '封停用户'
+        this.title = this.$t('liveWeb.chat.suspendUserDialog.titleUpdate')
       })
     },
     handleUpdate(row) {
       var that = this
-      this.$confirm('确定要' + row.fromPlatform + '解封吗?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+
+      this.$confirm(this.$t('liveWeb.chat.confirmUpdateDialog.message', { fromPlatform: row.fromPlatform }), this.$t('liveWeb.chat.confirmUpdateDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.chat.confirmUpdateDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.chat.confirmUpdateDialog.cancelButton'),
         type: 'warning'
       }).then(function() {
         return that.suspendUser(row.fromPlatform, false, 0, row.userIp, row.msg)
       }).then(() => {
-        that.msgSuccess('解封成功')
+        that.msgSuccess(this.$t('liveWeb.chat.messageBox.unblockSuccess'))
         this.getList()
       })
     },
     /** 修改按钮操作 */
     handleUpdateIpBlack(row) {
       var that = this
-      this.$confirm('确定要' + row.userId + '解封吗?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+
+      this.$confirm(this.$t('liveWeb.chat.viewBlackListDialog.confirmUpdateDialog.message', { userId: row.userId }), this.$t('liveWeb.chat.viewBlackListDialog.confirmUpdateDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.chat.viewBlackListDialog.confirmUpdateDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.chat.viewBlackListDialog.confirmUpdateDialog.cancelButton'),
         type: 'warning'
       }).then(function() {
         var data = {}
@@ -474,7 +472,7 @@ export default {
         data.userId = row.userId
         return updateSpeakIpBlackList(data)
       }).then(() => {
-        that.msgSuccess('解封成功')
+        that.msgSuccess(this.$t('liveWeb.chat.viewBlackListDialog.messageBox.unblockSuccess'))
         this.openIpBlackList()
         that.getList()
       })
@@ -517,7 +515,7 @@ export default {
         method: 'post',
         data: data
       })
-      this.msgSuccess('禁言成功')
+      this.msgSuccess(this.$t('liveWeb.chat.banRemarksDialog.messageBox.forbidSuccess'))
       this.muteRemarkSpeak = false
       this.getList()
     },
@@ -538,7 +536,7 @@ export default {
         data: data
       })
       if (falg == 1) {
-        this.msgSuccess('封停成功')
+        this.msgSuccess(this.$t('liveWeb.chat.suspendUserDialog.messageBox.suspendSuccess'))
       }
       this.open = false
       this.getList()
@@ -579,9 +577,9 @@ export default {
     },
     typeFormat(row, column) {
       if (row.type == '0') {
-        return '普通消息'
+        return this.$t('liveWeb.chat.table.type0')
       } else if (row.type == '1'){
-        return '弹幕消息'
+        return this.$t('liveWeb.chat.table.type1')
       }
     },
     speakFormat(row, column) {
@@ -615,7 +613,7 @@ export default {
       if (this.refreshType === 'primary') {
         this.refreshType = 'danger'
         this.refreshIcon = 'el-icon-circle-close'
-        this.refreshLabel = '停止刷新'
+        this.refreshLabel = this.$t('liveWeb.chat.refresh.stopButton')
         this.refreshDesc = ''
 
         this.stopRefresh()
@@ -624,7 +622,7 @@ export default {
       } else {
         this.refreshType = 'primary'
         this.refreshIcon = 'el-icon-refresh'
-        this.refreshLabel = '开始刷新'
+        this.refreshLabel = this.$t('liveWeb.chat.refresh.startButton')
         this.refreshDesc = ''
 
         this.stopRefresh()
@@ -638,7 +636,7 @@ export default {
           thet.getList()
           secs = thet.refreshSec
         }
-        thet.refreshDesc = secs + '秒后开始刷新'
+        thet.refreshDesc = this.$t('liveWeb.chat.refresh.description', { secs: secs })
         secs--
       }, 1000)
     },

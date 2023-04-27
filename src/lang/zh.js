@@ -10,18 +10,15 @@ export default {
     layOutSetting: '布局设置',
     homepage: '首页'
   },
-
   theme: {
     change: '换肤',
     documentation: '换肤文档',
     tips: 'Tips: 它区别于 navbar 上的 theme-pick, 是两种不同的换肤方法，各自有不同的应用场景，具体请参考文档。'
   },
-
   logout: {
     confirm: '确定注销并退出系统吗',
     prompt: '提示'
   },
-
   excel: {
     export: '导出',
     selectedExport: '导出已选择项',
@@ -35,7 +32,6 @@ export default {
     cancelButton: '取 消',
     submitButton: '确 定'
   },
-
   settings: {
     title: '主题风格设置',
     themeColor: '主题颜色',
@@ -95,10 +91,6 @@ export default {
     ipDuplicateCheckButton: 'ip重复检查',
     mobilePhoneSerialNumberCheckButton: '手机序列号检查',
     displayMobilePhoneNumberButton: '显示手机号',
-    selectDate: '日期范围',
-    selectDateStartPlaceholder: '开始时间',
-    selectDateEndPlaceholder: '开始时间',
-    selectDateRangeSeparator: '至',
     activityManage: {
       activityCashBack: {
         title: '充值返现',
@@ -265,6 +257,10 @@ export default {
         inviterCodePlaceholder: '请输入邀请码',
         loginIp: '登录ip',
         loginIpPlaceholder: '请输入登录ip',
+        selectDate: '日期范围',
+        selectDateStartPlaceholder: '开始时间',
+        selectDateEndPlaceholder: '开始时间',
+        selectDateRangeSeparator: '至',
         id: '系统编号',
         idPlaceholder: '',
         regTime: '注册时间',
@@ -350,40 +346,7 @@ export default {
         userName: '账号不能为空',
         loginNum: '登陆次数不能为空',
       }
-    },
-    chatComplaint:{
-      addTitle: '添加客服投诉',
-      editTitle: '',
-      exportResponse: '客服投诉',
-      updateChatComplaintSuccess: '审核处理成功',
-      updateChatComplaintError: '取消输入',
-      updateChatComplaintPrompt: '请输入审核备注',
-
-      tableDialog: {
-        remark: '投诉内容',
-        remarkPlaceholder: '请输入内容',
-        userId: '发起人id',
-        userIdPlaceholder: '请输入发起人id',
-        kfId: '客服id',
-        kfIdPlaceholder: '请输入客服id',
-        processingTime: '选择审批时间',
-        processingTimePlaceholder: '选择审批时间',
-        accountPlaceholder: '请输入客服代充账号',
-        approver: '审批人',
-        approverPlaceholder: '请输入审批人',
-        statusPlaceholder: '请选择处理状态',
-        createTime: '创建时间',
-        comments: '审批备注',
-        commentsPlaceholder: '请输入审批备注',
-        status: '处理状态',
-        statusOptions: '处理状态(0未处理 1已处理 2驳回)',
-      },
-      statusOptions: {
-        unprocessed: '未处理',
-        processed: '已处理',
-        rejected: '驳回',
-      }
-    },
+    }
   },
 
   members: {
@@ -526,6 +489,9 @@ export default {
         tips: '提示',
         determine: '确定',
         succFund: '资金回退成功',
+
+
+
       },
       index: {
         allStat: '全部状态',
@@ -539,95 +505,6 @@ export default {
         determ: '确 定',
         cancel: '取 消',
         retFunds: '资金回退',
-        conf: '会员ID/会员账号只能输入数字及下划线',
-        confEx: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
-        warn: '警告',
-        confirm: '确认',
-        cancellation: '取消',
-        mUpdown: '会员上下分',
-        confStat: '确认要修改状态为',
-        modSuc: '修改成功',
-        addScore: '添加会员上分缺少',
-        addSucc: '新增成功',
-        expo: '导出',
-        addMem: '添加会员上分缺少',
-      }
-    },
-    memberBcode: {
-      index: {
-        totalRech: '总充值',
-        totalCode: '总打码',
-        codReq: '还需打码',
-        datRange: '日期范围',
-        sDate: '开始日期',
-        eDate: '结束日期',
-        to: '至',
-        memId: '会员ID',
-        search: '搜索',
-        reset: '重置',
-        export: '导出',
-        rev: '收入',
-        desc: '描述',
-        wCode: '是否打码',
-        ccVol: '当前打码量',
-        cTime: '创建时间',
-        opt: '操作',
-        mod: '修改',
-        pccVol: '请输入当前打码量',
-        gCaptcha: 'Google验证码',
-        pGverifcode: '请输入Google验证码',
-        det: '确定',
-        canc: '取消',
-        codingEmpty: '当前打码量不能为空,且数值大于等于0',
-        gCaptchaEmpt: 'google验证码不能为空',
-        netAnom: '网络异常',
-        unc: '未打码',
-        coded: '已打码',
-        unk: '未知',
-        memNum: '会员ID只能输入数字及下划线',
-        modCod: '修改会员打码数据',
-        codingNotGreater: '当前打码量数值不能大于收入',
-        modSuc: '修改成功',
-        confEx: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
-        warn: '警告',
-        confirmation: '确认',
-        memData: '会员打码数据'
-      }
-    },
-    memberCard: {
-      index: {
-        name: '姓名',
-        pName: '请输入姓名',
-        bName: '银行名称',
-        pbName: '请输入银行名称',
-        bCode: '银行编码',
-        pbCode: '请输入银行编码',
-        bAccnum: '银行账号',
-        pbAccnum: '请输入银行账号',
-        bAdd: '银行地址',
-        pbAdd: '请输入银行地址',
-        memId: '会员ID',
-        pmemId: '请输入会员ID',
-        cType: '卡片类型1=银行卡2=支付宝',
-        scType: '请选择卡片类型1=银行卡2=支付宝',
-        pDict: '请选择字典生成',
-        default: '是否默认',
-        pdef: '请输入是否默认',
-        search: '搜索',
-        reset: '重置',
-        new: '新增',
-        mod: '修改',
-        del: '删除',
-        exp: '导出',
-        sysNum: '系统编号',
-        opt: '操作',
-
-
-
-
-
-
-
 
 
       }
@@ -685,6 +562,7 @@ export default {
       refresh: {
         title: '记录刷新',
         placeholder: '时间间隔',
+        description: '{secs}秒后开始刷新',
         startButton: '开始刷新',
         stopButton: '停止刷新'
       },
@@ -692,6 +570,8 @@ export default {
         fromPlatform: '平台会员ID',
         userNickName: '用户昵称',
         type: '消息类型',
+        type0: '普通消息',
+        type1: '弹幕消息',
         msg: '消息内容',
         poscatId: '主播ID',
         poscatNickName: '主播昵称',
@@ -708,6 +588,16 @@ export default {
         unmuteButton: '解封',
         forbidButton: '禁言'
       },
+      updateConfirmationDialog: {
+        title: '警告',
+        message: '确定要{fromPlatform}解封吗?',
+        confirmButton: '@:common.confirmButton',
+        cancelButton: '@:common.cancelButton'
+      },
+      messageBox: {
+        fromPlatformError: '会员ID只能输入数字及下划线',
+        unblockSuccess: '解封成功'
+      },
       suspendUserDialog: {
         titleAdd: '添加会员发言',
         titleUpdate: '封停用户',
@@ -718,43 +608,49 @@ export default {
         msgLabel: '消息内容',
         userIpLabel: '封停ip',
         confirmButton: '确 定',
-        cancelButton: '取 消'
+        cancelButton: '取 消',
+        validation: {
+          postcatIdError: '主播ID不能为空'
+        },
+        messageBox: {
+          suspendSuccess: '封停成功'
+        }
       },
       banRemarksDialog: {
         title: '备注禁言原因',
         remarkPlaceholder: '请选择禁言原因',
-        remarkedPlaceholder: '请输入禁言原因'
+        remarkedPlaceholder: '请输入禁言原因',
+        submitButton: '立即提交',
+        messageBox: {
+          forbidSuccess: '禁言成功'
+        }
       },
-      buttons: {
-        mute: '封停',
-        unmute: '解封',
-        forbid: '禁言',
-        ok: '确 定',
-        cancel: '取 消',
-        submit: '立即提交'
-      },
-      dialog: {
-        titleAdd: '添加会员发言',
-        titleUpdate: '封停用户',
-        titleBan: '备注禁言原因',
-        titleBlockedIp: '查看封停ip',
-        titleViewBlockedIp: '查看已封停的ip',
-        form: {
-
-          muteRemarkPlaceholder: '请选择禁言原因',
-          remarkedPlaceholder: '请输入禁言原因'
-        },
-        filter: {
+      viewBlackListDialog: {
+        title1: '查看封停ip',
+        title2: '查看已封停的ip',
+        queryForm: {
           userIdLabel: '会员id',
           userIdPlaceholder: '会员id',
           userIpLabel: '会员ip',
-          userIpPlaceholder: '会员ip'
+          userIpPlaceholder: '会员ip',
+          searchButton: '@:common.searchButton'
         },
         table: {
           userId: '会员ID',
           userIp: '封停ip',
           msg: '封停备注',
-          createTime: '封停时间'
+          createTime: '封停时间',
+          operation: '@:common.operationColumn',
+          unblockButton: '解封'
+        },
+        updateConfirmationDialog: {
+          title: '警告',
+          message: '确定要{userId}解封吗?',
+          confirmButton: '@:common.confirmButton',
+          cancelButton: '@:common.cancelButton'
+        },
+        messageBox: {
+          unblockSuccess: '解封成功'
         }
       }
     }

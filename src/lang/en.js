@@ -623,6 +623,151 @@ export default {
 
       }
     }
+  },
+
+  common: {
+    searchButton: 'Search',
+    resetButton: 'Rename',
+    exportButton: 'Export',
+    confirmButton: 'Confirm',
+    cancelButton: 'Cancel',
+    operationColumn: 'Operation'
+  },
+
+  liveWeb: {
+    anchorAward: {
+      queryForm: {
+        updateTimeLabel: 'Date range',
+        updateTimePlaceholder: 'Please select a date range',
+        idPlaceholder: 'Anchor ID',
+        nickNamePlaceholder: 'Anchor nickname',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      actions: {
+        exportButton: '@:common.exportButton'
+      },
+      table: {
+        anchor: 'Anchor ID',
+        nickName: 'Anchor nickname',
+        cost: 'Bet',
+        prize: 'Prize',
+        prizeSixThousand: 'Prize six thousand',
+        updateTime: 'Update time'
+      },
+      exportDialog: {
+        title: 'Warning',
+        message: 'Confirm processing excel and download, there will be a delay when there is a large amount of data, please be patient...',
+        confirmButton: '@:common.confirmButton',
+        cancelButton: '@:common.cancelButton'
+      }
+    },
+    chat: {
+      queryForm: {
+        fromPlatformPlaceholder: 'Member ID',
+        userNicknamePlaceholder: 'Member nickname',
+        poscatIdPlaceholder: 'Anchor ID',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      actions: {
+        viewBlackListButton: 'View blocked IPs'
+      },
+      refresh: {
+        title: 'Record refresh',
+        placeholder: 'Time interval',
+        description: 'Refresh after {secs} seconds',
+        startButton: 'Start refreshing',
+        stopButton: 'Stop refreshing'
+      },
+      table: {
+        fromPlatform: 'Platform member ID',
+        userNickName: 'User nickname',
+        type: 'Message type',
+        type0: 'General message',
+        type1: 'Pop-up message',
+        msg: 'Message content',
+        poscatId: 'Anchor ID',
+        poscatNickName: 'Anchor nickname',
+        noSpeaking: 'Is blocked',
+        noSpeakingTrue: 'Blocked',
+        noSpeakingFalse: 'Normal',
+        forbid: 'Is banned',
+        forbidTrue: 'Banned',
+        forbidFalse: 'Normal',
+        userIp: 'User IP',
+        createTimes: 'Send time',
+        operation: '@:common.operationColumn',
+        muteButton: 'Block',
+        unmuteButton: 'Unblock',
+        forbidButton: 'Ban'
+      },
+      updateConfirmationDialog: {
+        title: 'Warning',
+        message: 'Sure you want {fromPlatform} unblocked?',
+        confirmButton: '@:common.confirmButton',
+        cancelButton: '@:common.cancelButton'
+      },
+      messageBox: {
+        fromPlatformError: 'Member IDs can only be entered as numbers and underscores',
+        unblockSuccess: 'Unblocked successfully'
+      },
+      suspendUserDialog: {
+        titleAdd: 'Add member statement',
+        titleUpdate: 'Blocking users',
+        fromPlatformLabel: 'Platform member ID',
+        fromPlatformPlaceholder: 'Please enter the platform member ID',
+        userNickNameLabel: 'User\'s nickname',
+        userNickNamePlaceholder: 'Please enter the user\'s nickname',
+        msgLabel: 'Message content',
+        userIpLabel: 'Blocking IP',
+        confirmButton: 'Confirm',
+        cancelButton: 'Cancel',
+        validation: {
+          postcatIdError: 'Anchor ID cannot be empty'
+        },
+        messageBox: {
+          suspendSuccess: 'Blocked successfully'
+        }
+      },
+      banRemarksDialog: {
+        title: 'Remark ban reason',
+        remarkPlaceholder: 'Please select the reason for the ban',
+        remarkedPlaceholder: 'Please enter the reason for the ban',
+        submitButton: 'Submit',
+        messageBox: {
+          forbidSuccess: 'Banned successfully'
+        }
+      },
+      viewBlackListDialog: {
+        title1: 'View blocked ip',
+        title2: 'View blocked ip',
+        queryForm: {
+          userIdLabel: 'Member ID',
+          userIdPlaceholder: 'Member ID',
+          userIpLabel: 'Member IP',
+          userIpPlaceholder: 'Member IP',
+          searchButton: '@:common.searchButton'
+        },
+        table: {
+          userId: 'Member ID',
+          userIp: 'Member IP',
+          msg: 'Blocking remarks',
+          createTime: 'Closing time',
+          operation: '@:common.operationColumn',
+          unblockButton: 'Unblock'
+        },
+        updateConfirmationDialog: {
+          title: 'Warning',
+          message: 'Sure you want {userId} unblocked?',
+          confirmButton: '@:common.confirmButton',
+          cancelButton: '@:common.cancelButton'
+        },
+        messageBox: {
+          unblockSuccess: 'Unblocked successfully'
+        }
+      }
+    }
   }
 }
 

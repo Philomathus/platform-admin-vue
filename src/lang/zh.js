@@ -91,6 +91,12 @@ export default {
     ipDuplicateCheckButton: 'ip重复检查',
     mobilePhoneSerialNumberCheckButton: '手机序列号检查',
     displayMobilePhoneNumberButton: '显示手机号',
+    selectDate: '日期范围',
+    selectDateStartPlaceholder: '开始时间',
+    selectDateEndPlaceholder: '开始时间',
+    selectDateRangeSeparator: '至',
+    qq: 'qq',
+    wechat: '微信',
     activityManage: {
       activityCashBack: {
         title: '充值返现',
@@ -253,6 +259,7 @@ export default {
       addTitle: '添加会员推广管理',
       editTitle: '修改会员推广管理',
       tableDialog: {
+        duplicateIpHeader: '重复次数超过两次',
         inviterCode: '邀请码',
         inviterCodePlaceholder: '请输入邀请码',
         loginIp: '登录ip',
@@ -395,6 +402,28 @@ export default {
         indexPlaceholder: '请输入排序',
       },
     },
+    configWaiter: {
+      addTitle: '添加客服管理',
+      editTitle: '修改客服管理',
+      tableDialog: {
+        status: '状态',
+        nickname: '昵称',
+        nicknamePlaceholder: '请输入昵称',
+        type: '类型',
+        typePlaceholder: '请选择',
+        code: '账号',
+        codePlaceholder: '请输入微信或QQ号',
+        name: '昵称',
+        namePlaceholder: '请输入昵称',
+        icon: '图标',
+        iconPlaceholder: '请输入排序',
+        remark: '备注信息',
+        remarkPlaceholder: '请输入备注信息',
+        updateBy: '更新人',
+        updateTime: '更新时间',
+        index: '排序',
+      }
+    }
   },
 
   members: {

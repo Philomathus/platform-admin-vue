@@ -194,7 +194,7 @@
     />
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="ipOpen" width="500px"
                append-to-body>
-      <h3>重复次数超过两次</h3>
+      <h3>{{ $t('activity.activityMemberInfo.tableDialog.duplicateIpHeader') }}</h3>
       <div style="max-height: 600px; overflow-y: scroll">
         <el-table stripe v-loading="loading" :data="ipList" @selection-change="handleSelectionChange">
           <el-table-column :label="$t('activity.activityMemberInfo.tableDialog.inviterCode')" align="center"

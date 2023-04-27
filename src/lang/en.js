@@ -99,6 +99,8 @@ export default {
     selectDateStartPlaceholder: 'Start Time',
     selectDateEndPlaceholder: 'End Time',
     selectDateRangeSeparator: 'to',
+    qq: 'qq',
+    wechat: 'WeChat',
     activityManage: {
       activityCashBack: {
         title: 'Top Up and Rebates',
@@ -250,6 +252,7 @@ export default {
       addTitle: 'Add Member Information',
       editTitle: 'Update Member Information',
       tableDialog: {
+        duplicateIpHeader: 'Duplicate IPs',
         inviterCode: 'Inviter Code',
         inviterCodePlaceholder: 'Please enter Inviter Code',
         loginIp: 'Login IP',
@@ -386,6 +389,26 @@ export default {
         indexPlaceholder: 'Please enter Index',
       },
     },
+    configWaiter: {
+      addTitle: 'Add Customer Service Management',
+      editTitle: 'Update Customer Service Management',
+      tableDialog: {
+        status: 'Status',
+        name: 'Nickname',
+        namePlaceholder: 'Please enter Nickname',
+        type: 'Type',
+        typePlaceholder: 'Please enter Type',
+        code: 'WeChat or QQ number',
+        codePlaceholder: 'Please enter your WeChat or QQ number',
+        icon: 'Icon',
+        iconPlaceholder: 'Please enter Icon',
+        remark: 'Remarks',
+        remarkPlaceholder: 'Please enter Remarks',
+        updateBy: 'Updated By',
+        updateTime: 'Last Update Time',
+        index: 'Index',
+      }
+    }
   },
 
   members: {

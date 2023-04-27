@@ -100,7 +100,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['activity:commonProblem:edit']"
-          >{{ $t('activity.edit') }}
+          >{{ $t('activity.editButton') }}
           </el-button>
           <el-button
             size="mini"
@@ -142,7 +142,7 @@
             <el-radio
               v-for="dict in statusOptions"
               :key="dict.dictValue"
-              ::label="parseInt(dict.dictValue)"
+              :label="parseInt(dict.dictValue)"
             >{{ dict.dictLabel }}
             </el-radio>
           </el-radio-group>

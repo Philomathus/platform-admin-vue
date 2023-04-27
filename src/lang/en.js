@@ -902,6 +902,70 @@ export default {
         updateFlag3Cancel: 'Cancel input',
         removeSuccess: 'Deleted successfully'
       }
+    },
+    guard: {
+      queryForm: {
+        specificationsLabel: 'Specification',
+        specificationsPlaceholder: 'Please enter specifications',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      actions: {
+        add: 'Add',
+        update: 'Update',
+        remove: 'Remove'
+      },
+      table: {
+        specifications: 'Specification',
+        month: 'Months of guardianship',
+        price: 'Price',
+        type: 'Guardian type',
+        type1: 'Guardian of silver',
+        typeOthers: 'Guardian of the stars',
+        propId: 'Gift id',
+        discountPrice: 'Discounted price',
+        giveday: 'Number of complimentary days',
+        operation: '@:common.operation',
+        editButton: 'Edit',
+        removeButton: 'Remove'
+      },
+      addUpdateDialog: {
+        titleAdd: 'Add',
+        titleUpdate: 'Update',
+        specificationsLabel: 'Specification',
+        specificationsPlaceholder: 'Please select specifications',
+        monthLabel: 'Months of guardianship',
+        monthPlaceholder: 'Please enter the number of months of guardianship',
+        priceLabel: 'Price',
+        pricePlaceholder: 'Please enter the price',
+        typeLabel: 'Guardian type',
+        typePlaceholder: 'Please select',
+        propIdLabel: 'Associated gifts',
+        propIdPlaceholder: 'Please select',
+        discountPriceLabel: 'Discounted price',
+        discountPricePlaceholder: 'Please enter the discounted price',
+        givedayLabel: '赠送天数',
+        givedayPlaceholder: 'Please enter the number of days of gift',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton2'
+      },
+      confirmRemoveDialog: {
+        title: '@:common.titleDialog',
+        message: 'Is it confirmed that the data item with the number "{ids}" is deleted?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      confirmExportDialog: {
+        title: '@:common.titleDialog',
+        message: 'Is it confirmed that all data items are exported?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      messageBox: {
+        updateLiveGuardConfigSuccess: 'Updated successfully',
+        addLiveGuardConfigSuccess: 'Added successfully',
+        removeLiveGuardConfigSuccess: 'Removed successfully'
+      }
     }
   }
 }

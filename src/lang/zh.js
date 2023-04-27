@@ -823,6 +823,70 @@ export default {
         updateFlag3Cancel: '取消输入',
         removeSuccess: '删除成功'
       }
+    },
+    guard: {
+      queryForm: {
+        specificationsLabel: '规格',
+        specificationsPlaceholder: '请输入规格',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      actions: {
+        add: '新增',
+        update: '修改',
+        remove: '删除'
+      },
+      table: {
+        specifications: '规格',
+        month: '守护月数',
+        price: '价格',
+        type: '守护类型',
+        type1: '银之守护',
+        typeOthers: '星之守护',
+        propId: '礼物id',
+        discountPrice: '优惠价格',
+        giveday: '赠送天数',
+        operation: '@:common.operation',
+        editButton: '修改',
+        removeButton: '删除'
+      },
+      addUpdateDialog: {
+        titleAdd: '添加',
+        titleUpdate: '修改',
+        specificationsLabel: '规格',
+        specificationsPlaceholder: '请选择规格',
+        monthLabel: '守护月数',
+        monthPlaceholder: '请输入守护月数',
+        priceLabel: '价格',
+        pricePlaceholder: '请输入价格',
+        typeLabel: '守护类型',
+        typePlaceholder: '请选择',
+        propIdLabel: '关联礼物',
+        propIdPlaceholder: '请选择',
+        discountPriceLabel: '优惠价格',
+        discountPricePlaceholder: '请输入优惠价格',
+        givedayLabel: '赠送天数',
+        givedayPlaceholder: '请输入赠送天数',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton2'
+      },
+      confirmRemoveDialog: {
+        title: '@:common.titleDialog',
+        message: '是否确认删除编号为"{ids}"的数据项?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      confirmExportDialog: {
+        title: '@:common.titleDialog',
+        message: '是否确认导出所有数据项?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      messageBox: {
+        updateLiveGuardConfigSuccess: '修改成功',
+        addLiveGuardConfigSuccess: '新增成功',
+        removeLiveGuardConfigSuccess: '删除成功'
+      }
     }
   }
 }

@@ -663,6 +663,8 @@ export default {
   },
 
   common: {
+    titleDialog: 'Warning',
+    titlePrompt: 'Tips',
     searchButton: 'Search',
     resetButton: 'Rename',
     exportButton: 'Export',
@@ -714,6 +716,7 @@ export default {
         title: 'Record refresh',
         placeholder: 'Time interval',
         description: 'Refresh after {secs} seconds',
+        interval: '{secs} seconds',
         startButton: 'Start refreshing',
         stopButton: 'Stop refreshing'
       },
@@ -739,7 +742,7 @@ export default {
         unmuteButton: 'Unblock',
         forbidButton: 'Ban'
       },
-      updateConfirmationDialog: {
+      confirmUpdateDialog: {
         title: 'Warning',
         message: 'Sure you want {fromPlatform} unblocked?',
         confirmButton: '@:common.confirmButton',
@@ -761,7 +764,7 @@ export default {
         confirmButton: 'Confirm',
         cancelButton: 'Cancel',
         validation: {
-          postcatIdError: 'Anchor ID cannot be empty'
+          postcatId: 'Anchor ID cannot be empty'
         },
         messageBox: {
           suspendSuccess: 'Blocked successfully'
@@ -794,7 +797,7 @@ export default {
           operation: '@:common.operationColumn',
           unblockButton: 'Unblock'
         },
-        updateConfirmationDialog: {
+        confirmUpdateDialog: {
           title: 'Warning',
           message: 'Sure you want {userId} unblocked?',
           confirmButton: '@:common.confirmButton',
@@ -803,6 +806,124 @@ export default {
         messageBox: {
           unblockSuccess: 'Unblocked successfully'
         }
+      }
+    },
+    family: {
+      queryForm: {
+        namePlaceholder: 'Name',
+        userIdPlaceholder: 'Leader ID',
+        idPlaceholder: 'Family ID',
+        statusPlaceholder: 'Status',
+        status0: 'Not audited',
+        status1: 'Audited',
+        status2: 'Rejected',
+        status3: 'Closed',
+        status4: 'Dismissed',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      actions: {
+        add: 'Add family'
+      },
+      table: {
+        name: 'Family name',
+        notice: 'Announcement',
+        manifesto: 'Family declaration',
+        nickName: 'Clan referral number',
+        userId: 'Leader ID',
+        userCount: 'Number of members',
+        createTimes: 'Create time',
+        status: 'Status',
+        status0: 'Not audited',
+        status1: 'Audited',
+        status2: 'Rejected',
+        status3: 'Closed',
+        status4: 'Dismissed',
+        contribution: 'Contribution of family members',
+        videoTime: 'Live broadcast time',
+        memo: 'Remarks',
+        operation: '@:common.operationColumn',
+        updateFamilyButton: 'Modify',
+        removeButton: 'Remove',
+        updateFlag0Button: 'No pass',
+        updateFlag1Button: 'Pass',
+        updateFlag2Button: 'Block',
+        updateFlag3Button: 'Unblock'
+      },
+      addUpdateDialog: {
+        titleAdd: 'Add family',
+        titleUpdate: 'Update family',
+        nameLabel: 'Family name',
+        namePlaceholder: 'Please enter the family name',
+        userIdLabel: 'Leader ID',
+        userIdPlaceholder: 'Please enter the family leader ID',
+        nickNameLabel: 'Leader nickname',
+        nickNamePlaceholder: 'Please enter the nickname of the leader',
+        logoLabel: 'Family logo',
+        manifestoLabel: 'Family declaration',
+        manifestoPlaceholder: 'Please enter a family declaration',
+        noticeLabel: 'Announcement',
+        noticePlaceholder: 'Please enter content',
+        memoLabel: 'Remarks',
+        memoPlaceholder: 'Please enter content',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton2',
+        validation: {
+          logo: 'Please upload the family logo',
+          name: 'Please enter the family name',
+          userId: 'Please enter the leader ID',
+          nickName: 'Please enter the nickname of the leader',
+          manifesto: 'Please enter a family declaration',
+          notice: 'Please enter an announcement',
+          memo: 'Please enter a memo'
+        }
+      },
+      confirmUpdateFlag0Dialog: {
+        title: '@:common.titleDialog',
+        message: 'Is it confirmed that the data item with the family name "{name}" is rejected?',
+        confirmButton: '@:common:confirmButton1',
+        cancelButton: '@:common:cancelButton1'
+      },
+      confirmUpdateFlag1Dialog: {
+        title: '@:common.titleDialog',
+        message: 'Is it confirmed that the data item with the family name "{name}" is approved?',
+        confirmButton: '@:common:confirmButton1',
+        cancelButton: '@:common:cancelButton1'
+      },
+      confirmUpdateFlag2Prompt: {
+        title: '@:common.titlePrompt',
+        message: 'Please enter the reason for blocking',
+        confirmButton: '@:common:confirmButton1',
+        cancelButton: '@:common:cancelButton1',
+        inputErrorMessage: 'The reason for blocking cannot be empty'
+      },
+      confirmUpdateFlag3Prompt: {
+        title: '@:common.titlePrompt',
+        message: 'Please enter the reason for unblocking',
+        confirmButton: '@:common:confirmButton1',
+        cancelButton: '@:common:cancelButton1',
+        inputErrorMessage: 'Reason for unblock cannot be empty'
+      },
+      confirmRemoveDialog: {
+        title: '@:common.titleDialog',
+        message: 'Is it confirmed that the "{name}" family is disbanded?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      confirmExportDialog: {
+        title: '@:common.titleDialog',
+        message: 'Is it confirmed that all family data items are exported?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      messageBox: {
+        updateFlag0Success: 'Audit rejection successful',
+        updateFlag1Success: 'Audit approved',
+        updateFlag2Success: 'Blocked successfully',
+        updateFlag2Cancel: 'Cancel input',
+        updateFlag3Success: 'Unblocked successfully',
+        updateFlag3Cancel: 'Cancel input',
+        removeSuccess: 'Deleted successfully'
       }
     }
   }

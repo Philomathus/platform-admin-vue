@@ -610,14 +610,103 @@ export default {
         exp: 'Export',
         sysNum: 'System Number',
         opt: 'Operation',
+        det: 'Determine',
+        cnc: 'Cancel',
+        addFnc: 'Add [Please fill in the function name]',
+        modFnc: 'Modify [please fill in the function name]',
+        modSucc: 'Modified Successfully',
+        addSucc: 'Add Success',
+        conDel: 'Whether to confirm the deletion of [please fill in the function name] number',
+        datItem: 'The Data Item?',
+        warn: 'Warning',
+        cancellation: 'Cancellation',
+        delSucc: 'Deleted Successfully',
+        exDown: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+        confirmation: 'Confirmation',
+        memBank: 'Member Bank Card'
+      }
+    },
+    memberGameData: {
+      common: {
 
+      },
+      agRecord: {
+        buttons: {
+          more: 'More',
+        },
+        table: {
+          title: 'Note Data Details',
+          ordNum: 'Order Number',
+          userName: 'User Name',
+          buNum: 'Bureau Number',
+          payAmt: 'Payment Amount',
+          plBets: 'Place your bets at',
+          gType: 'Game Type',
+          gTypes: {
+            bacc: 'Baccarat',
+            dt: 'Dragon and Tiger',
+          },
+          tBet: 'Total Bet',
+          vBet: 'Valid Bets',
+          oStat: 'Order Status',
+          anom: 'Anomalies',
+          pOut: 'Paid Out',
+          canc: 'Cancelled',
+          howTo: 'How to Play',
+          howtos: {
+            banker: 'Banker',
+            casual: 'Casual',
+            sum: 'Sum',
+            dragon: 'Dragon',
+            tiger: 'Tiger'
+          },
+          tNum: 'Table Number',
+          pTime: 'Payout Time',
+          bal: 'Balance',
+          betIp: 'Betting on IP',
+          det: 'Details'
 
+        },
+        data: {
+          title: 'Game Match List',
+          vipLvl: 'The vip level can only be greater than the previous level',
 
+        }
+      },
+      detail: {
+        title: 'Game Match Details',
+        vipLvl: 'The vip level can only be greater than the previous level',
+      },
+      index: {
+        button: {
+          vBets: 'Valid Bets',
+          tBets: 'Total Bets',
+          profit: 'Profit',
+          search: 'Search',
+          reset: 'Reset',
+          exp: 'Export',
 
-
-
-
-
+        },
+        pName: 'Platform Name',
+        sel: 'Select All/Select None',
+        date: {
+          datRange: 'Date Range',
+          sTime: 'Start Time',
+          eTime: 'End Time',
+          to: 'To'
+        },
+        entMemid: 'Please enter your member ID',
+        entbNum: 'Please enter the game bureau number',
+        memId: 'Member ID',
+        subId: 'Subplatform ID',
+        gameId: 'Game ID',
+        gbNum: 'Game Bureau Number',
+        gName: 'Game Name',
+        subName: 'Sub-Platform Name',
+        vBets: 'Valid Bets',
+        tBets: 'Total Bets',
+        profit: 'Profit',
+        setTime: 'Settlement Time',
 
 
 

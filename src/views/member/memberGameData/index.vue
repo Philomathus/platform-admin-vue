@@ -1,33 +1,33 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="copy1">有效下注 {{ this.totalData.totalSuccessBet || 0 }}</el-button>
-    <el-button type="success" @click="copy2">总下注 {{ this.totalData.totalBet || 0 }}</el-button>
-    <el-button type="warning" @click="copy3">盈利 {{ this.totalData.totalIncome || 0 }}</el-button>
+    <el-button type="primary" @click="copy1">{{ $t('members.memberGameData.index.button.vBets') }} {{ this.totalData.totalSuccessBet || 0 }}</el-button>
+    <el-button type="success" @click="copy2">{{ $t('members.memberGameData.index.button.tBets') }} {{ this.totalData.totalBet || 0 }}</el-button>
+    <el-button type="warning" @click="copy3">{{ $t('members.memberGameData.index.button.profit') }} {{ this.totalData.totalIncome || 0 }}</el-button>
 
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" style="margin-top: 20px">
 
-      <el-form-item label="平台名称" prop="platformId" id="checkbox">
+      <el-form-item :label=" $t('members.memberGameData.index.pName') " prop="platformId" id="checkbox">
         <el-checkbox-group v-model="queryParams.platformIds" size="medium">
           <el-checkbox v-for="item in platformList" :key="item.id" :label="item.id">{{ item.name }}</el-checkbox>
         </el-checkbox-group>
         <el-checkbox v-model="checkNodeAll" @change="handleCheckedTreeNodeAll()"
                      class="text-info"
-                     style="margin-right: 30px; float: right">全选/全不选
+                     style="margin-right: 30px; float: right">{{ $t('members.memberGameData.index.sel') }}
         </el-checkbox>
       </el-form-item>
 
-      <el-form-item label="日期范围" prop="selectDate" class="small-layout">
+      <el-form-item :label=" $t('members.memberGameData.index.date.datRange') " prop="selectDate" class="small-layout">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '95%'}" start-placeholder="开始时间"
-                        end-placeholder="开始时间"
-                        range-separator="至" clearable :default-time="['00:00:00', '23:59:59']"
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '95%'}" :start-placeholder=" $t('members.memberGameData.index.date.sTime') "
+                        :end-placeholder=" $t('members.memberGameData.index.date.eTime') "
+                        :range-separator=" $t('members.memberGameData.index.date.to') " clearable :default-time="['00:00:00', '23:59:59']"
                         :picker-options="pickerOptions">
         </el-date-picker>
       </el-form-item>
       <el-form-item prop="account" style="margin-left: -20px"  class="small-layout">
         <el-input
           v-model.trim="queryParams.account"
-          placeholder="请输入会员ID"
+          :placeholder=" $t('members.memberGameData.index.entMemid') "
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -35,14 +35,14 @@
       <el-form-item prop="gameId" class="small-layout">
         <el-input
           v-model="queryParams.gameId"
-          placeholder="请输入游戏局号"
+          :placeholder=" $t('members.memberGameData.index.entbNum') "
           clearable
           @keyup.enter.native="handleQuery"/>
       </el-form-item>
 
       <el-form-item class="small-layout">
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('members.memberGameData.index.button.search') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('members.memberGameData.index.button.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -55,17 +55,17 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['member:memberGameData:export']"
-        >导出
+        >{{ $t('members.memberGameData.index.button.exp') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="memberGameDataList">
-      <el-table-column label="会员ID" align="center" prop="account" min-width="120"/>
-      <el-table-column label="子平台ID" align="center" prop="agent"/>
-      <el-table-column label="游戏ID" align="center" min-width="300px" prop="gameId"/>
-      <el-table-column label="游戏局号" align="center" min-width="160px" :show-overflow-tooltip="true" prop="gameRound">
+      <el-table-column :label=" $t('members.memberGameData.index.memId') " align="center" prop="account" min-width="120"/>
+      <el-table-column :label=" $t('members.memberGameData.index.subId') " align="center" prop="agent"/>
+      <el-table-column :label=" $t('members.memberGameData.index.gameId') " align="center" min-width="300px" prop="gameId"/>
+      <el-table-column :label=" $t('members.memberGameData.index.gbNum') " align="center" min-width="160px" :show-overflow-tooltip="true" prop="gameRound">
         <template v-slot="{row}">
           <div
             v-if="row.platformId == 1 || row.platformId == 15 || row.platformId == 17 || row.platformId == 50 || row.platformId == 51 ">
@@ -82,13 +82,13 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="平台名称" align="center" prop="platformName"/>
-      <el-table-column label="游戏名称" align="center" prop="kindId"/>
-      <el-table-column label="子平台名称" align="center" prop="sonPlatformName" min-width="120"/>
-      <el-table-column label="有效下注" align="center" prop="cell_score"/>
-      <el-table-column label="总下注" align="center" prop="all_bet"/>
-      <el-table-column label="盈利" align="center" prop="profit"/>
-      <el-table-column label="结算时间" align="center" width="150px" prop="game_end_time"/>
+      <el-table-column :label=" $t('members.memberGameData.index.pName') " align="center" prop="platformName"/>
+      <el-table-column :label=" $t('members.memberGameData.index.gName') " align="center" prop="kindId"/>
+      <el-table-column :label=" $t('members.memberGameData.index.subName') " align="center" prop="sonPlatformName" min-width="120"/>
+      <el-table-column :label=" $t('members.memberGameData.index.vBets') " align="center" prop="cell_score"/>
+      <el-table-column :label=" $t('members.memberGameData.index.tBets') " align="center" prop="all_bet"/>
+      <el-table-column :label=" $t('members.memberGameData.index.profit') " align="center" prop="profit"/>
+      <el-table-column :label=" $t('members.memberGameData.index.setTime') " align="center" width="150px" prop="game_end_time"/>
     </el-table>
 
     <pagination

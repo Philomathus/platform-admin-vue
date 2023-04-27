@@ -188,18 +188,18 @@
         <el-form-item :label=" $t('members.memberCard.index.memId') " prop="memberId">
           <el-input v-model="form.memberId" :placeholder=" $t('members.memberCard.index.pmemId') "/>
         </el-form-item>
-        <el-form-item label="卡片类型1=银行卡2=支付宝" prop="type">
-          <el-select v-model="form.type" placeholder="请选择卡片类型1=银行卡2=支付宝">
-            <el-option label="请选择字典生成" value=""/>
+        <el-form-item :label=" $t('members.memberCard.index.cType') " prop="type">
+          <el-select v-model="form.type" :placeholder=" $t('members.memberCard.index.scType') ">
+            <el-option :label=" $t('members.memberCard.index.pDict') " value=""/>
           </el-select>
         </el-form-item>
-        <el-form-item label="是否默认" prop="dv">
-          <el-input v-model="form.dv" placeholder="请输入是否默认"/>
+        <el-form-item :label=" $t('members.memberCard.index.default') " prop="dv">
+          <el-input v-model="form.dv" :placeholder=" $t('members.memberCard.index.pdef') "/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('members.memberCard.index.det') }}</el-button>
+        <el-button @click="cancel">{{ $t('members.memberCard.index.cnc') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -311,7 +311,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【请填写功能名称】";
+      this.title = this.$t('members.memberCard.index.addFnc');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -320,7 +320,7 @@ export default {
       getMemberCard(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = this.$t('members.memberCard.index.modFnc');
       });
     },
     /** 提交按钮 */
@@ -329,13 +329,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateMemberCard(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess( this.$t('members.memberCard.index.modSucc') );
               this.open = false;
               this.getList();
             });
           } else {
             addMemberCard(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess( this.$t('members.memberCard.index.addSucc') );
               this.open = false;
               this.getList();
             });
@@ -346,29 +346,29 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm( this.$t('members.memberCard.index.conDel')  + ids + this.$t('members.memberCard.index.datItem') , this.$t('members.memberCard.index.warn'), {
+        confirmButtonText: this.$t('members.memberCard.index.det'),
+        cancelButtonText: this.$t('members.memberCard.index.cancellation'),
         type: "warning"
       }).then(function () {
         return delMemberCard(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess( this.$t('members.memberCard.index.delSucc') );
       }).catch(() => {
       })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+      this.$confirm( this.$t('members.memberCard.index.exDown') ,  this.$t('members.memberCard.index.warn') , {
+        confirmButtonText: this.$t('members.memberCard.index.confirmation') ,
+        cancelButtonText: this.$t('members.memberCard.index.cancellation') ,
         type: 'warning'
       }).then(function () {
         return exportMemberCard(queryParams);
       }).then(response => {
-        this.downloadExcel(response, '会员银行卡')
+        this.downloadExcel(response, this.$t('members.memberCard.index.memBank') )
       })
     }
   }

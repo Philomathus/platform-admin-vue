@@ -621,13 +621,103 @@ export default {
         exp: '导出',
         sysNum: '系统编号',
         opt: '操作',
+        det: '确 定',
+        cnc: '取 消',
+        addFnc: '添加【请填写功能名称】',
+        modFnc: '修改【请填写功能名称】',
+        modSucc: '修改成功',
+        addSucc: '新增成功',
+        conDel: '是否确认删除【请填写功能名称】编号为"',
+        datItem: '的数据项?',
+        warn: '警告',
+        cancellation: '取消',
+        delSucc: '删除成功',
+        exDown: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+        confirmation: '确认',
+        memBank: '会员银行卡'
+      }
+    },
+    memberGameData: {
+      common: {
 
+      },
+      agRecord: {
+        buttons: {
+          more: '更多',
+        },
+        table: {
+          title: '注单数据详情',
+          ordNum: '订单号',
+          userName: '用户名',
+          buNum: '局号',
+          payAmt: '派彩额度',
+          plBets: '下注时间',
+          gType: '游戏类型',
+          gTypes: {
+            bacc: '百家乐',
+            dt: '龙虎',
+          },
+          tBet: '总投注',
+          vBet: '有效投注',
+          oStat: '订单状态',
+          anom: '异常',
+          pOut: '已派彩',
+          canc: '已取消',
+          howTo: '玩法',
+          howtos: {
+            banker: '庄',
+            casual: '闲',
+            sum: '和',
+            dragon: '龙',
+            tiger: '虎'
+          },
+          tNum: '桌台号',
+          pTime: '派彩时间',
+          bal: '余额',
+          betIp: '投注IP',
+          det: '详情',
 
+        },
+        data: {
+          title: '游戏对局列表',
+          vipLvl: 'vip等级只能大于之前的等级',
 
+        }
+      },
+      detail: {
+        title: '游戏对局详情',
+        vipLvl: 'vip等级只能大于之前的等级',
+      },
+      index: {
+        button: {
+          vBets: '有效下注',
+          tBets: '总下注',
+          profit: '盈利',
+          search: '搜索',
+          reset: '重置',
+          exp: '导出',
 
-
-
-
+        },
+        pName: '平台名称',
+        sel: '全选/全不选',
+        date: {
+          datRange: '日期范围',
+          sTime: '开始时间',
+          eTime: '结束时间',
+          to: '至'
+        },
+        entMemid: '请输入会员ID',
+        entbNum: '请输入游戏局号',
+        memId: '会员ID',
+        subId: '子平台ID',
+        gameId: '游戏ID',
+        gbNum: '游戏局号',
+        gName: '游戏名称',
+        subName: '子平台名称',
+        vBets: '有效下注',
+        tBets: '总下注',
+        profit: '盈利',
+        setTime: '结算时间',
 
 
       }

@@ -37,7 +37,7 @@ export default {
       // 遮罩层
       loading: true,
       //弹出框标题
-      title: '游戏对局详情',
+      title: this.$t('members.memberGameData.detail.title') ,
       //页面编码
       index: 1,
       // 遮罩层
@@ -76,7 +76,7 @@ export default {
   watch: {
     vip: function(newVal, oldVal) {
       if (newVal < this.oldVip) {
-        this.$notify.error('vip等级只能大于之前的等级')
+        this.$notify.error( this.$t('members.memberGameData.detail.vipLvl') )
         this.showVipDisabled = true
       } else {
         this.showVipDisabled = false

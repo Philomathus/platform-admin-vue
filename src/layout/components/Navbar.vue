@@ -5,12 +5,6 @@
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
 
     <div class="right-menu">
-<!--      <span v-if="notifyOnDepositOrWithdraw">-->
-<!--        <label           class="right-menu-item" style="font-size: 10px">入款提醒</label>-->
-<!--        <SwitchDeposit   id = "notification-switch-deposit" class="right-menu-item" />-->
-<!--        <label           class="right-menu-item" style="font-size: 10px">提现提醒</label>-->
-<!--        <SwitchWithdraw  id = "notification-switch-withdraw" class="right-menu-item"/>-->
-<!--      </span>-->
 
       <DropDownSwitch v-if="showDropDownNotification" id = dropDownSwitch class="right-menu-item" />
 
@@ -53,15 +47,13 @@ import Hamburger from '@/components/Hamburger'
 import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
-import SwitchDeposit from "@/components/SwitchDeposit/index.vue";
-import SwitchWithdraw from "@/components/SwitchWithdraw/index.vue";
-import { checkPermissions } from "@/api/platform-web/system/login";
 import DropDownSwitch from "@/components/DropDownSwitch/index.vue";
+import { checkPaths } from "@/api/platform-web/system/login";
 
 export default {
   data() {
     return {
-      showDropDownNotification: false
+      showDropDownNotification: true
     }
   },
   components: {
@@ -71,8 +63,6 @@ export default {
     SizeSelect,
     Search,
     DropDownSwitch,
-    // SwitchDeposit,
-    // SwitchWithdraw
   },
   computed: {
     ...mapGetters([
@@ -93,8 +83,8 @@ export default {
     }
   },
   mounted() {
-    checkPermissions( 'pay:memberPayJour:list','pay:memberWithdrawLog:list','pay:memberRechargeLog:list','admin:payUsdtRecharge:list' )
-      .then( hasPermissions => this.showDropDownNotification = hasPermissions );
+    checkPaths('memberPayJour','memberWithdrawLog','memberRechargeLog','payUsdtRecharge')
+      .then( hasPermission => this.showDropDownNotification = hasPermission);
   },
   methods: {
     toggleSideBar() {

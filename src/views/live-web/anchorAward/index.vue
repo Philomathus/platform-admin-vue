@@ -161,9 +161,9 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm( this.$t('liveWeb.anchorAward.exportDialog.message'), this.$t('liveWeb.anchorAward.exportDialog.title'), {
-        confirmButtonText: this.$t('liveWeb.anchorAward.exportDialog.confirmButton'),
-        cancelButtonText: this.$t('liveWeb.anchorAward.exportDialog.cancelButton'),
+      this.$confirm( this.$t('liveWeb.anchorAward.confirmExportDialog.message'), this.$t('liveWeb.anchorAward.confirmExportDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.anchorAward.confirmExportDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.anchorAward.confirmExportDialog.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportAnchorAward(queryParams)

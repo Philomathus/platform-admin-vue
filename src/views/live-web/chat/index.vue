@@ -52,11 +52,11 @@
       <el-col :span="10" style="margin-left: 10px">
         <span style="font-size: 16px;margin-right: 10px">{{$t('liveWeb.chat.refresh.title')}}</span>
         <el-select v-model="refreshSec" :placeholder="$t('liveWeb.chat.refresh.placeholder')" style="width: 110px">
-          <el-option value="5" label="5秒"></el-option>
-          <el-option value="10" label="10秒"></el-option>
-          <el-option value="15" label="15秒"></el-option>
-          <el-option value="20" label="20秒"></el-option>
-          <el-option value="30" label="30秒"></el-option>
+          <el-option value="5" :label="$t('liveWeb.chat.refresh.interval', {secs: 5})"></el-option>
+          <el-option value="10" :label="$t('liveWeb.chat.refresh.interval', {secs: 10})"></el-option>
+          <el-option value="15" :label="$t('liveWeb.chat.refresh.interval', {secs: 15})"></el-option>
+          <el-option value="20" :label="$t('liveWeb.chat.refresh.interval', {secs: 20})"></el-option>
+          <el-option value="30" :label="$t('liveWeb.chat.refresh.interval', {secs: 30})"></el-option>
         </el-select>
         <div style="width: 120px;display: inline-block;text-align: center">
           <span>{{ refreshDesc }}</span>
@@ -330,7 +330,7 @@ export default {
       // 表单校验
       rules: {
         poscatId: [
-          { required: true, message: this.$t('liveWeb.chat.suspendUserDialog.validation.postcatIdError'), trigger: 'blur' }
+          { required: true, message: this.$t('liveWeb.chat.suspendUserDialog.validation.postcatId'), trigger: 'blur' }
         ]
       }
     }
@@ -447,9 +447,9 @@ export default {
     handleUpdate(row) {
       var that = this
 
-      this.$confirm(this.$t('liveWeb.chat.updateConfirmationDialog.message', { fromPlatform: row.fromPlatform }), this.$t('liveWeb.chat.updateConfirmationDialog.title'), {
-        confirmButtonText: this.$t('liveWeb.chat.updateConfirmationDialog.confirmButton'),
-        cancelButtonText: this.$t('liveWeb.chat.updateConfirmationDialog.cancelButton'),
+      this.$confirm(this.$t('liveWeb.chat.confirmUpdateDialog.message', { fromPlatform: row.fromPlatform }), this.$t('liveWeb.chat.confirmUpdateDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.chat.confirmUpdateDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.chat.confirmUpdateDialog.cancelButton'),
         type: 'warning'
       }).then(function() {
         return that.suspendUser(row.fromPlatform, false, 0, row.userIp, row.msg)
@@ -462,9 +462,9 @@ export default {
     handleUpdateIpBlack(row) {
       var that = this
 
-      this.$confirm(this.$t('liveWeb.chat.viewBlackListDialog.updateConfirmationDialog.message', { userId: row.userId }), this.$t('liveWeb.chat.viewBlackListDialog.updateConfirmationDialog.title'), {
-        confirmButtonText: this.$t('liveWeb.chat.viewBlackListDialog.updateConfirmationDialog.confirmButton'),
-        cancelButtonText: this.$t('liveWeb.chat.viewBlackListDialog.updateConfirmationDialog.cancelButton'),
+      this.$confirm(this.$t('liveWeb.chat.viewBlackListDialog.confirmUpdateDialog.message', { userId: row.userId }), this.$t('liveWeb.chat.viewBlackListDialog.confirmUpdateDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.chat.viewBlackListDialog.confirmUpdateDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.chat.viewBlackListDialog.confirmUpdateDialog.cancelButton'),
         type: 'warning'
       }).then(function() {
         var data = {}

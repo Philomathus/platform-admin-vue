@@ -512,11 +512,15 @@ export default {
   },
 
   common: {
+    titleDialog: '警告',
+    titlePrompt: '提示',
     searchButton: '搜索',
     resetButton: '重置',
     exportButton: '导出',
-    confirmButton: '确认',
-    cancelButton: '取消',
+    confirmButton1: '确认',
+    confirmButton2: '确 定',
+    cancelButton1: '取消',
+    cancelButton2: '取 消',
     operationColumn: '操作'
   },
 
@@ -541,11 +545,11 @@ export default {
         prizeSixThousand: '派奖千六',
         updateTime: '修改时间'
       },
-      exportDialog: {
-        title: '警告',
+      confirmExportDialog: {
+        title: '@:common.titleDialog',
         message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
-        confirmButton: '@:common.confirmButton',
-        cancelButton: '@:common.cancelButton'
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
       }
     },
     chat: {
@@ -563,6 +567,7 @@ export default {
         title: '记录刷新',
         placeholder: '时间间隔',
         description: '{secs}秒后开始刷新',
+        interval: '{secs}秒',
         startButton: '开始刷新',
         stopButton: '停止刷新'
       },
@@ -588,11 +593,11 @@ export default {
         unmuteButton: '解封',
         forbidButton: '禁言'
       },
-      updateConfirmationDialog: {
-        title: '警告',
+      confirmUpdateDialog: {
+        title: '@:common.titleDialog',
         message: '确定要{fromPlatform}解封吗?',
-        confirmButton: '@:common.confirmButton',
-        cancelButton: '@:common.cancelButton'
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
       },
       messageBox: {
         fromPlatformError: '会员ID只能输入数字及下划线',
@@ -607,10 +612,10 @@ export default {
         userNickNamePlaceholder: '请输入发送者昵称',
         msgLabel: '消息内容',
         userIpLabel: '封停ip',
-        confirmButton: '确 定',
-        cancelButton: '取 消',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton2',
         validation: {
-          postcatIdError: '主播ID不能为空'
+          postcatId: '主播ID不能为空'
         },
         messageBox: {
           suspendSuccess: '封停成功'
@@ -643,15 +648,133 @@ export default {
           operation: '@:common.operationColumn',
           unblockButton: '解封'
         },
-        updateConfirmationDialog: {
-          title: '警告',
+        confirmUpdateDialog: {
+          title: '@:common.titleDialog',
           message: '确定要{userId}解封吗?',
-          confirmButton: '@:common.confirmButton',
-          cancelButton: '@:common.cancelButton'
+          confirmButton: '@:common.confirmButton1',
+          cancelButton: '@:common.cancelButton1'
         },
         messageBox: {
           unblockSuccess: '解封成功'
         }
+      }
+    },
+    family: {
+      queryForm: {
+        namePlaceholder: '名称',
+        userIdPlaceholder: '族长ID',
+        idPlaceholder: '家族ID',
+        statusPlaceholder: '全部状态',
+        status0: '未审核',
+        status1: '审核通过',
+        status2: '审核拒绝',
+        status3: '封停中',
+        status4: '解散',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      actions: {
+        add: '新增家族'
+      },
+      table: {
+        name: '家族名称',
+        notice: '公告',
+        manifesto: '家族宣言',
+        nickName: '族推荐号',
+        userId: '家族长ID',
+        userCount: '成员数量',
+        createTimes: '创建时间',
+        status: '状态',
+        status0: '未审核',
+        status1: '审核通过',
+        status2: '审核拒绝',
+        status3: '封停中',
+        status4: '解散',
+        contribution: '家族成员的贡献',
+        videoTime: '直播时间',
+        memo: '备注',
+        operation: '@:common.operationColumn',
+        updateFamilyButton: '修改',
+        removeButton: '解散',
+        updateFlag0Button: '不通过',
+        updateFlag1Button: '通过',
+        updateFlag2Button: '封停',
+        updateFlag3Button: '解封'
+      },
+      addUpdateDialog: {
+        titleAdd: '添加家族',
+        titleUpdate: '修改家族',
+        nameLabel: '家族名称',
+        namePlaceholder: '请输入家族名称',
+        userIdLabel: '家族长ID',
+        userIdPlaceholder: '请输入家族长ID',
+        nickNameLabel: '家族长昵称',
+        nickNamePlaceholder: '请输入家族长昵称',
+        logoLabel: '家族LOGO',
+        manifestoLabel: '家族宣言',
+        manifestoPlaceholder: '请输入家族宣言',
+        noticeLabel: '公告',
+        noticePlaceholder: '请输入内容',
+        memoLabel: '备注',
+        memoPlaceholder: '请输入内容',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton2',
+        validation: {
+          logo: '请上传家族LOGO',
+          name: '请输入家族名称',
+          userId: '请输入家族长ID',
+          nickName: '请输入家族长昵称',
+          manifesto: '请输入家族宣言',
+          notice: '请输入公告',
+          memo: '请输入备注'
+        }
+      },
+      confirmUpdateFlag0Dialog: {
+        title: '@:common.titleDialog',
+        message: '是否确认拒绝家族名称"{name}"的数据项?',
+        confirmButton: '@:common:confirmButton1',
+        cancelButton: '@:common:cancelButton1'
+      },
+      confirmUpdateFlag1Dialog: {
+        title: '@:common.titleDialog',
+        message: '是否确认通过审核家族名称"{name}"的数据项?',
+        confirmButton: '@:common:confirmButton1',
+        cancelButton: '@:common:cancelButton1'
+      },
+      confirmUpdateFlag2Prompt: {
+        title: '@:common.titlePrompt',
+        message: '请输入封停原因',
+        confirmButton: '@:common:confirmButton1',
+        cancelButton: '@:common:cancelButton1',
+        inputErrorMessage: '封停原因不能为空'
+      },
+      confirmUpdateFlag3Prompt: {
+        title: '@:common.titlePrompt',
+        message: '请输入解封原因',
+        confirmButton: '@:common:confirmButton1',
+        cancelButton: '@:common:cancelButton1',
+        inputErrorMessage: '解封原因不能为空'
+      },
+      confirmRemoveDialog: {
+        title: '@:common.titleDialog',
+        message: '是否确认解散"{name}"家族?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      confirmExportDialog: {
+        title: '@:common.titleDialog',
+        message: '是否确认导出所有家族数据项?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      messageBox: {
+        updateFlag0Success: '审核拒绝成功',
+        updateFlag1Success: '审核通过',
+        updateFlag2Success: '封停成功',
+        updateFlag2Cancel: '取消输入',
+        updateFlag3Success: '解封成功',
+        updateFlag3Cancel: '取消输入',
+        removeSuccess: '删除成功'
       }
     }
   }

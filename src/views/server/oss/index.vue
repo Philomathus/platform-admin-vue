@@ -30,18 +30,6 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['server:oss:edit']"
-        >修改
-        </el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
           type="danger"
           plain
           icon="el-icon-delete"
@@ -107,11 +95,11 @@
         <el-form-item label="名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入名称"/>
         </el-form-item>
-        <el-form-item label="accessKey" prop="accessKey" form>
-          <el-input v-model="form.accessKey" placeholder="请输入accessKey" show-password/>
+        <el-form-item label="accessKey" prop="accessKey" >
+          <el-input v-model="form.accessKey" placeholder="请输入accessKey" />
         </el-form-item>
-        <el-form-item label="accessSecret" prop="accessSecret">
-          <el-input v-model="form.accessSecret" placeholder="请输入accessSecret" show-password/>
+        <el-form-item label="accessSecret" prop="accessSecret" >
+          <el-input v-model="form.accessSecret" placeholder="请输入accessSecret" />
         </el-form-item>
         <el-form-item label="访问域名" prop="endpoint">
           <el-input v-model="form.endpoint" placeholder="请输入访问域名"/>
@@ -179,6 +167,8 @@ export default {
       title: '',
       // 是否显示弹出层
       open: false,
+      // On Edit
+      isEdit: false,
       // 状态字典
       isEffectOptions: [],
       providerDictionary: [],
@@ -288,6 +278,7 @@ export default {
     handleAdd() {
       this.reset()
       this.open = true
+      this.isEdit = false;
       this.title = '添加oss文件存储服务配置'
     },
     /** 修改按钮操作 */
@@ -297,6 +288,7 @@ export default {
       getOss(id).then(response => {
         this.form = response.data
         this.open = true
+        this.isEdit = true;
         this.title = '修改oss文件存储服务配置'
       })
     },

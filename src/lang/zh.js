@@ -101,6 +101,17 @@ export default {
     selectDateRangeSeparator: '至',
     qq: 'qq',
     wechat: '微信',
+    tableDialog: {
+      name: '名称',
+      namePlaceholder: '请输入名称',
+      status: '状态',
+      statusPlaceholder: '请选择状态',
+    },
+    validation: {
+      name: '名称不能为空',
+      sort: '排序号不能为空',
+      coverImg: '图片不能为空',
+    },
     activityManage: {
       activityCashBack: {
         title: '充值返现',
@@ -226,6 +237,7 @@ export default {
       activityType: {
         addTitle: '添加活动类型',
         editTitle: '修改活动类型',
+        exportTile: '活动类型',
         tableDialog: {
           name: '名称',
           namePlaceholder: '请输入名称',
@@ -426,7 +438,17 @@ export default {
         updateBy: '更新人',
         updateTime: '更新时间',
         index: '排序',
-      }
+      },
+    },
+    homeBanner: {
+      addTitle: '添加首页轮播图',
+      editTitle: '修改首页轮播图',
+      tableDialog: {
+        sort: '排序号',
+        sortPlaceholder: '请输入排序号',
+        coverImg: '图片',
+        coverImgPlaceholder: '',
+      },
     }
   },
 

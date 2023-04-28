@@ -101,6 +101,17 @@ export default {
     selectDateRangeSeparator: 'to',
     qq: 'qq',
     wechat: 'WeChat',
+    tableDialog: {
+      name: 'Name',
+      namePlaceholder: 'Please enter Name',
+      status: 'Status',
+      statusPlaceholder: 'Please enter Status',
+    },
+    validation: {
+      name: 'Name must not be empty',
+      sort: 'Index must not be empty',
+      coverImg: 'Image must not be empty',
+    },
     activityManage: {
       activityCashBack: {
         title: 'Top Up and Rebates',
@@ -408,8 +419,23 @@ export default {
         updateTime: 'Last Update Time',
         index: 'Index',
       }
+    },
+    homeBanner: {
+      addTitle: 'Add Home Page Image',
+      editTitle: 'Update Home Page Image',
+      tableDialog: {
+        sort: 'Index',
+        sortPlaceholder: 'Please enter Index',
+        coverImg: 'Display Photo',
+        coverImgPlaceholder: '',
+      },
     }
   },
+
+
+
+
+
 
   members: {
     configVip: {

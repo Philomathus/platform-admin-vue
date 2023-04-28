@@ -1,28 +1,30 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="名称" prop="name">
+      <el-form-item :label="$t('activity.tableDialog.name')" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入名称"
+          :placeholder="$t('activity.tableDialog.namePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small">
+      <el-form-item :label="$t('activity.tableDialog.status')" prop="status">
+        <el-select v-model="queryParams.status" :placeholder="$t('activity.tableDialog.statusPlaceholder')" clearable size="small">
           <el-option
             v-for="dict in statusOptions"
             :key="dict.dictValue"
-            :label="dict.dictLabel"
+            ::label="dict.dictLabel"
             :value="dict.dictValue"
           />
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{
+            $t('activity.searchButton')
+          }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('activity.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -35,7 +37,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['activity:homeBanner:add']"
-        >新增
+        >{{ $t('activity.addButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -47,7 +49,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['activity:homeBanner:edit']"
-        >修改
+        >{{ $t('activity.editButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -59,7 +61,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['activity:homeBanner:remove']"
-        >删除
+        >{{ $t('activity.deleteButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -70,7 +72,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['activity:homeBanner:export']"
-        >导出
+        >{{ $t('activity.exportButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -78,8 +80,8 @@
 
     <el-table stripe v-loading="loading" :data="homeBannerList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="名称" align="center" prop="name"/>
-      <el-table-column label="图片" align="center" prop="coverImg">
+      <el-table-column :label="名称" align="center" prop="name"/>
+      <el-table-column :label="图片" align="center" prop="coverImg">
         <template slot-scope="scope">
           <el-image
             style="height: 80px"
@@ -89,15 +91,15 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="排序号" align="center" prop="indexs"/>
-      <el-table-column label="状态" align="center" prop="status">
+      <el-table-column :label="排序号" align="center" prop="indexs"/>
+      <el-table-column :label="状态" align="center" prop="status">
         <template slot-scope="scope">
           <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">{{
               status.dictLabel
             }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -131,29 +133,29 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入名称"/>
+        <el-form-item :label="$t('activity.tableDialog.name')" prop="name">
+          <el-input v-model="form.name" :placeholder="$t('activity.tableDialog.namePlaceholder')"/>
         </el-form-item>
-        <el-form-item label="排序号" prop="indexs">
-          <el-input v-model="form.indexs" placeholder="请输入排序号"/>
+        <el-form-item :label="$t('activity.tableDialog.sort')" prop="indexs">
+          <el-input v-model="form.indexs" :placeholder="$t('activity.tableDialog.sortPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="图片">
+        <el-form-item :label="$t('activity.homeBanner.tableDialog.coverImg')">
           <imageUpload v-model="form.coverImg"/>
         </el-form-item>
-        <el-form-item label="状态">
+        <el-form-item :label="$t('activity.tableDialog.status')">
           <el-radio-group v-model="form.status">
             <el-radio
               v-for="dict in statusOptions"
               :key="dict.dictValue"
-              :label="parseInt(dict.dictValue)"
+              ::label="parseInt(dict.dictValue)"
             >{{ dict.dictLabel }}
             </el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('activity.submitButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('activity.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -211,13 +213,13 @@ export default {
       // 表单校验
       rules: {
         name: [
-          {required: true, message: '名称不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('activity.validation.name'), trigger: 'blur'}
         ],
         indexs: [
-          {required: true, message: '排序号不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('activity.validation.sort'), trigger: 'blur'}
         ],
         coverImg: [
-          {required: true, message: '图片不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('activity.validation.coverImg'), trigger: 'blur'}
         ]
       }
     }
@@ -279,7 +281,7 @@ export default {
     handleAdd() {
       this.reset()
       this.open = true
-      this.title = '添加首页轮播图'
+      this.title = this.$t('activity.activityManage.homeBanner.addTitle');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -288,7 +290,7 @@ export default {
       getHomeBanner(id).then(response => {
         this.form = response.data
         this.open = true
-        this.title = '修改首页轮播图'
+        this.title = this.$t('activity.activityManage.homeBanner.editTitle');
       })
     },
     /** 提交按钮 */
@@ -297,13 +299,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateHomeBanner(this.form).then(response => {
-              this.msgSuccess('修改成功')
+              this.msgSuccess(this.$t('activity.editSuccessMsg'));
               this.open = false
               this.getList()
             })
           } else {
             addHomeBanner(this.form).then(response => {
-              this.msgSuccess('新增成功')
+              this.msgSuccess(this.$t('activity.addSuccessMsg'));
               this.open = false
               this.getList()
             })
@@ -314,9 +316,9 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids
-      this.$confirm('是否确认删除首页轮播图编号为"' + ids + '"的数据项?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('activity.deleteConfirm1') + row.name + '"?', this.$t('activity.deleteConfirmTitle'), {
+        confirmButtonText: this.$t('activity.confirmButton'),
+        cancelButtonText: this.$t('activity.cancelConfirmButton'),
         type: 'warning'
       }).then(function () {
         return delHomeBanner(ids)
@@ -329,14 +331,14 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('activity.confirmExport'), this.$t('activity.confirmExportTitle'), {
+        confirmButtonText: this.$t('activity.confirmButton'),
+        cancelButtonText: this.$t('activity.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportHomeBanner(queryParams)
       }).then(response => {
-        this.downloadExcel(response, '首页轮播图')
+        this.downloadExcel(response, this.$t('activity.activityManage.homeBanner.exportTitle'))
       }).catch(() => {
       })
     }

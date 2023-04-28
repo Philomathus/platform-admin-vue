@@ -773,6 +773,9 @@ export default {
   common: {
     titleDialog: '警告',
     titlePrompt: '提示',
+    addButton: '新增',
+    editButton: '修改',
+    removeButton: '删除',
     searchButton: '搜索',
     resetButton: '重置',
     exportButton: '导出',
@@ -1044,9 +1047,9 @@ export default {
         resetButton: '@:common.resetButton'
       },
       actions: {
-        add: '新增',
-        edit: '修改',
-        remove: '删除'
+        add: '@:common.addButton',
+        edit: '@:common.editButton',
+        remove: '@:common.removeButton'
       },
       table: {
         specifications: '规格',
@@ -1108,9 +1111,9 @@ export default {
         resetButton: '@:common.resetButton'
       },
       actions: {
-        add: '新增',
-        edit: '修改',
-        remove: '删除'
+        add: '@:common.addButton',
+        edit: '@:common.editButton',
+        remove: '@:common.removeButton'
       },
       table: {
         id: '编号',
@@ -1173,6 +1176,195 @@ export default {
         editSuccess: '修改成功',
         removeSuccess: '删除成功',
         statusChangeSuccess: '{text}成功'
+      }
+    },
+    imMute: {
+      queryForm: {
+        userIdLabel: '会员ID',
+        userIdPlaceholder: '请输入会员ID',
+        nickNameLabel: '会员昵称',
+        nickNamePlaceholder: '请输入会员昵称',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      table: {
+        memberAccount: '用户Id',
+        nickName: '用户昵称',
+        shuttedUntil: '截止时间',
+        shuttedUntilNegative1: '永久',
+        shuttedUntil0: '未封停'
+      },
+      messageBox: {
+        userIdAndNickNameEmptyWarning: '当主播Id和主播昵称不能同时为空',
+        userIdFormatError: '会员ID只能输入数字及下划线'
+      }
+    },
+    liveBlack: {
+      queryForm: {
+        hostIdLabel: '主播ID',
+        hostIdPlaceholder: '请输入主播ID',
+        blackUserIdLabel: '会员ID',
+        blackUserIdPlaceholder: '请输入被设置的用户ID',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      table: {
+        blackUserId: '会员ID',
+        nickName: '会员昵称',
+        hostId: '主播ID',
+        hostName: '主播昵称',
+        remark: '封停备注',
+        createTime: '封停时间',
+        operation: '@:common.operationColumn',
+        removeButton: '移除黑名单禁言'
+      },
+      messageBox: {
+        memberIdFormatError: '会员ID只能输入数字及下划线',
+        removeSuccess: '删除成功'
+      },
+      confirmRemoveDialog: {
+        title: '@:common.titleDialog',
+        message: '是否确认删除拉黑编号为"{ids}"的数据项?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      }
+    },
+    liveComplaint: {
+      queryForm: {
+        selectDateLabel: '创建时间',
+        selectDateStartPlaceholder: '开始日期',
+        selectDateEndPlaceholder: '结束日期',
+        userIdPlaceholder: '请输入会员ID',
+        anchorPlaceholder: '请输入主播ID',
+        statusPlaceholder: '请选择处理状态',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      actions: {
+        export: '@:common.exportButton'
+      },
+      table: {
+        content: '投诉内容',
+        mobile: '会员手机号',
+        roomName: '房间名称',
+        userId: '会员ID',
+        anchor: '主播',
+        createTime: '创建时间',
+        approver: '审批人',
+        remark: '审批备注',
+        processingTime: '审批时间',
+        status: '处理状态',
+        status0: '未处理',
+        status1: '已处理',
+        status2: '驳回',
+        operation: '@:common.operationColumn',
+        processButton: '处理',
+        rejectButton: '驳回'
+      },
+      addDialog: {
+        title: '添加主播投诉记录',
+        remarkLabel: '投诉内容',
+        remarkPlaceholder: '请输入内容',
+        userIdLabel: '会员ID',
+        userIdPlaceholder: '请输入会员ID',
+        anchorLabel: '主播',
+        anchorPlaceholder: '请输入主播',
+        approverLabel: '审批人',
+        approverPlaceholder: '请输入审批人',
+        processingTimeLabel: '审批时间',
+        processingTimePlaceholder: '选择审批时间',
+        statusLabel: '状态(0待处理 1审核通过 2驳回)',
+        statusPlaceholder: '请选择字典生成',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton2'
+      },
+      confirmEditConfirmationPrompt: {
+        title: '@:common.titlePrompt',
+        message: '请输入审核备注',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      confirmExportDialog: {
+        title: '@:common.titleDialog',
+        message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      messageBox: {
+        userIdFormatError: '会员ID只能输入数字及下划线',
+        editSuccess: '审核处理成功',
+        editCancel: '取消输入',
+        updateLiveComplaintSuccess: '修改成功',
+        addLiveComplaintSuccess: '新增成功'
+      }
+    },
+    liveHostPre: {
+      queryForm: {
+        dateDayPlaceholder: '选择日期',
+        livePlaceholder: '预约时间(可多选)',
+        liveLabel: '{num}点',
+        familyIdPlaceholder: '请输入家族ID',
+        hostId: '请输入主播ID',
+        hostName: '请输入直播昵称',
+        statusPlaceholder: '全部状态',
+        searchButton: '@:common.searchButton'
+      },
+      actions: {
+        export: '@:common.exportButton'
+      },
+      table: {
+        id: '日期+主播ID',
+        familyId: '家族ID',
+        hostId: '主播ID',
+        hostName: '直播昵称',
+        status: '状态',
+        live: '{num}点',
+        remark: '备注',
+        createTime: '创建时间',
+        operation: '@:common.operationColumn',
+        passButton: '通过',
+        rejectButton: '驳回'
+      },
+      addDialog: {
+        title: '添加主播开播时间预约',
+        familyIdLabel: '家族ID',
+        familyIdPlaceholder: '请输入家族ID',
+        hostIdLabel: '主播ID',
+        hostIdPlaceholder: '请输入主播ID',
+        hostNameLabel: '直播昵称',
+        hostNamePlaceholder: '请输入直播昵称',
+        statusLabel: '0=申请1通过2=驳回',
+        statusPlaceholder: '请选择字典生成',
+        liveLabel: '直播时间',
+        livePlaceholder: '请输入直播时间',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton2'
+      },
+      confirmUpdateStatusFlag1Dialog: {
+        title: '@:common.titleDialog',
+        message: '是否确认通过"{hostName}"的申请?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      confirmUpdateStatusFlag2Prompt: {
+        title: '@:common.titlePrompt',
+        message: '请输入驳回原因',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1',
+        inputErrorMessage: '驳回原因不能为空'
+      },
+      confirmExportDialog: {
+        title: '@:common.titleDialog',
+        message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      messageBox: {
+        updateStatusFlag1Success: '审核通过',
+        updateStatusFlag2Success: '驳回成功',
+        updateStatusFlag2Cancel: '取消输入',
+        updateLiveHostPreSuccess: '修改成功',
+        addLiveHostPreSuccess: '新增成功'
       }
     }
   }

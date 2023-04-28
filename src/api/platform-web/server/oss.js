@@ -6,10 +6,7 @@ export function listOss(query) {
   return request({
     url: url.platformWeb + '/server/oss/list',
     method: 'get',
-    params: query,
-    headers: {
-      hideAccess: 'true'
-    }
+    params: query
   })
 }
 

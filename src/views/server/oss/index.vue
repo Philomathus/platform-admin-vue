@@ -137,7 +137,7 @@
 </template>
 
 <script>
-import {listOss, delOss, addOss, updateOss, effectOss} from '@/api/platform-web/server/oss'
+import {listOss, getOss, delOss, addOss, updateOss, effectOss} from '@/api/platform-web/server/oss'
 import ImageUpload from '@/components/ImageUpload'
 
 export default {
@@ -265,6 +265,16 @@ export default {
       this.reset()
       this.open = true
       this.title = '添加oss文件存储服务配置'
+    },
+    /** 修改按钮操作 */
+    handleUpdate(row) {
+      this.reset()
+      const id = row.id || this.ids
+      getOss(id).then(response => {
+        this.form = response.data
+        this.open = true
+        this.title = '修改oss文件存储服务配置'
+      })
     },
     /** 提交按钮 */
     submitForm() {

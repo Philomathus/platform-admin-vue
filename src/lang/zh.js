@@ -1366,6 +1366,43 @@ export default {
         updateLiveHostPreSuccess: '修改成功',
         addLiveHostPreSuccess: '新增成功'
       }
+    },
+    liveHostWageNote: {
+      queryForm: {
+        dateDayPlaceholder: '选择日期',
+        settlementRateLabel: '散户结算率',
+        settlementRatePlaceholder: '请输入散户结算率',
+        familyIdPlaceholder: '家族ID',
+        familyNamePlaceholder: '家族名称',
+        familyNickNamePlaceholder: '族长昵称',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      actions: {
+        export: '@:common.exportButton',
+        familyShow: '所有主播'
+      },
+      table: {
+        familyId: '家族ID',
+        familyName: '家族名称',
+        familyId0Name: '散户',
+        familyUserId: '族长ID',
+        familyNickName: '族长昵称',
+        livetime: '直播时长',
+        livetimejiesuan: '时长结算',
+        liwu: '礼物金额',
+        liwujiesuan: '礼物结算',
+        lotteryCost: '彩票投注',
+        costQianliu: '彩票结算',
+        times: '开播次数',
+        totalsettle: '结算总计'
+      },
+      confirmExportDialog: {
+        title: '@:common.titleDialog',
+        message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      }
     }
   }
 }

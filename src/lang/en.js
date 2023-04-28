@@ -1345,6 +1345,43 @@ export default {
         updateLiveHostPreSuccess: 'Modified successfully',
         addLiveHostPreSuccess: 'Added successfully'
       }
+    },
+    liveHostWageNote: {
+      queryForm: {
+        dateDayPlaceholder: 'Select date',
+        settlementRateLabel: 'Retail settlement rate',
+        settlementRatePlaceholder: 'Please enter the retail settlement rate',
+        familyIdPlaceholder: 'Family ID',
+        familyNamePlaceholder: 'Family name',
+        familyNickNamePlaceholder: 'Leader nickname',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      actions: {
+        export: '@:common.exportButton',
+        familyShow: 'All anchors'
+      },
+      table: {
+        familyId: 'Family ID',
+        familyName: 'Family name',
+        familyId0Name: 'Retailer',
+        familyUserId: 'Leader ID',
+        familyNickName: 'Leader nickname',
+        livetime: 'Length of live broadcast',
+        livetimejiesuan: 'Hourly billing',
+        liwu: 'Gift amount',
+        liwujiesuan: 'Gift settlement',
+        lotteryCost: 'Lottery betting',
+        costQianliu: 'Lottery settlement',
+        times: 'Number of starts',
+        totalsettle: 'Total settlement'
+      },
+      confirmExportDialog: {
+        title: '@:common.titleDialog',
+        message: 'Confirm processing excel and download, there will be a delay when there is a large amount of data, please be patient...',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      }
     }
   }
 }

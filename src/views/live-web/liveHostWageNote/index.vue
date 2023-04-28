@@ -7,15 +7,15 @@
                         type="date"
                         format="yyyy-MM-dd"
                         value-format="yyyy-MM-dd"
-                        placeholder="选择日期"
+                        :placeholder="$t('liveWeb.liveHostWageNote.queryForm.dateDayPlaceholder')"
                         style="width: 140px"
                         :picker-options="pickerOptions">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="散户结算率" prop="settlementRate" label-width="85px">
+      <el-form-item :label="$t('liveWeb.liveHostWageNote.queryForm.settlementRateLabel')" prop="settlementRate" label-width="85px">
         <el-input
           v-model="queryParams.settlementRate"
-          placeholder="请输入散户结算率"
+          :placeholder="$t('liveWeb.liveHostWageNote.queryForm.settlementRatePlaceholder')"
           size="small"
           type="number"
           class="no-number"
@@ -26,7 +26,7 @@
       <el-form-item prop="familyId" style="width: 150px">
         <el-input
           v-model="queryParams.familyId"
-          placeholder="家族ID"
+          :placeholder="$t('liveWeb.liveHostWageNote.queryForm.familyIdPlaceholder')"
           clearable
           size="small"
           type="number"
@@ -37,7 +37,7 @@
       <el-form-item prop="familyName" style="width: 150px">
         <el-input
           v-model="queryParams.familyName"
-          placeholder="家族名称"
+          :placeholder="$t('liveWeb.liveHostWageNote.queryForm.familyNamePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -46,15 +46,15 @@
       <el-form-item prop="familyNickName" style="width: 150px">
         <el-input
           v-model="queryParams.familyNickName"
-          placeholder="族长昵称"
+          :placeholder="$t('liveWeb.liveHostWageNote.queryForm.familyNickNamePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('liveWeb.liveHostWageNote.queryForm.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('liveWeb.liveHostWageNote.queryForm.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -67,7 +67,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:liveHostWageNote:export']"
-        >导出
+        >{{$t('liveWeb.liveHostWageNote.actions.export')}}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -77,7 +77,7 @@
           icon="el-icon-crop"
           size="mini"
           @click="familyShow()"
-        >所有主播
+        >{{$t('liveWeb.liveHostWageNote.actions.familyShow')}}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -85,27 +85,27 @@
 
     <el-table id="out-table" stripe v-loading="loading" :data="liveHostWageNoteList"
     >
-      <el-table-column label="家族ID" align="center" prop="familyId">
+      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.familyId')" align="center" prop="familyId">
         <template v-slot="{row}">
           <a style="color: #00afff" @click="familyShow(row.familyId)">{{ row.familyId }}</a>
         </template>
       </el-table-column>
-      <el-table-column label="家族名称" align="center" prop="familyName">
+      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.familyName')" align="center" prop="familyName">
         <template v-slot="{row}">
-          <span v-if="row.familyId === 0">散户</span>
+          <span v-if="row.familyId === 0">{{$t('liveWeb.liveHostWageNote.table.familyId0Name')}}</span>
           <span v-else>{{ row.familyName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="族长ID" align="center" prop="familyUserId"/>
-      <el-table-column label="族长昵称" align="center" prop="familyNickName"/>
-      <el-table-column label="直播时长" align="center" prop="livetime"/>
-      <el-table-column label="时长结算" align="center" prop="livetimejiesuan"/>
-      <el-table-column label="礼物金额" align="center" prop="liwu"/>
-      <el-table-column label="礼物结算" align="center" prop="liwujiesuan"/>
-      <el-table-column label="彩票投注" align="center" prop="lotteryCost"/>
-      <el-table-column label="彩票结算" align="center" prop="costQianliu"/>
-      <el-table-column label="开播次数" align="center" prop="times"/>
-      <el-table-column label="结算总计" align="center" prop="totalsettle"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.familyUserId')" align="center" prop="familyUserId"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.familyNickName')" align="center" prop="familyNickName"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.livetime')" align="center" prop="livetime"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.livetimejiesuan')" align="center" prop="livetimejiesuan"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.liwu')" align="center" prop="liwu"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.liwujiesuan')" align="center" prop="liwujiesuan"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.lotteryCost')" align="center" prop="lotteryCost"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.costQianliu')" align="center" prop="costQianliu"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.times')" align="center" prop="times"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.totalsettle')" align="center" prop="totalsettle"/>
     </el-table>
 
     <pagination
@@ -225,9 +225,9 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('liveWeb.liveHostWageNote.confirmExportDialog.message'), this.$t('liveWeb.liveHostWageNote.confirmExportDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.liveHostWageNote.confirmExportDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.liveHostWageNote.confirmExportDialog.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportFamilyWageNote(queryParams)

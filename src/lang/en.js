@@ -780,6 +780,9 @@ export default {
   common: {
     titleDialog: 'Warning',
     titlePrompt: 'Tips',
+    addButton: 'Add',
+    editButton: 'Edit',
+    removeButton: 'Remove',
     searchButton: 'Search',
     resetButton: 'Rename',
     exportButton: 'Export',
@@ -1049,9 +1052,9 @@ export default {
         resetButton: '@:common.resetButton'
       },
       actions: {
-        add: 'Add',
-        edit: 'Edit',
-        remove: 'Remove'
+        add: '@:common.addButton',
+        edit: '@:common.editButton',
+        remove: '@:common.removeButton'
       },
       table: {
         specifications: 'Specification',
@@ -1103,6 +1106,270 @@ export default {
         editLiveGuardConfigSuccess: 'Updated successfully',
         addLiveGuardConfigSuccess: 'Added successfully',
         removeLiveGuardConfigSuccess: 'Removed successfully'
+      }
+    },
+    h5: {
+      queryForm: {
+        nameLabel: 'Name',
+        namePlaceholder: 'Please enter a name',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      actions: {
+        add: '@:common.addButton',
+        edit: '@:common.editButton',
+        remove: '@:common.removeButton'
+      },
+      table: {
+        id: 'ID',
+        name: 'Plugin name',
+        status: 'Status',
+        status0: 'Disabled',
+        status1: 'Enabled',
+        conUrl: 'Address',
+        iconUrl: 'Icon',
+        operation: '@:common.operation',
+        editButton: 'Edit',
+        removeButton: 'Remove'
+      },
+      validations: {
+        name: 'Name cannot be empty',
+        id: 'ID cannot be empty'
+      },
+      addDialog: {
+        title: 'Add h5 plugin',
+        idLabel: 'ID',
+        idPlaceholder: 'Please enter the ID',
+        nameLabel: 'Plugin name',
+        namePlaceholder: 'Please enter a name',
+        conUrlLabel: 'Content address',
+        conUrlPlaceholder: 'Please enter the content address',
+        iconUrlLabel: 'Icon address',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton2'
+      },
+      editDialog: {
+        title: 'Modify h5 plugin',
+        nameLabel: 'Plugin name',
+        namePlaceholder: 'Please enter a name',
+        conUrlLabel: 'Content address',
+        conUrlPlaceholder: 'Please enter the content address',
+        iconUrlLabel: 'Icon address',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton2'
+      },
+      confirmRemoveDialog: {
+        title: '@:common.titleDialog',
+        message: 'Is it confirmed that the data item with the h5 plugin number "{ids}" is deleted?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      confirmStatusChangeDialog: {
+        title: '@:common.titleDialog',
+        message: 'Confirm you want {text} "{name}"?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      confirmExportDialog: {
+        title: '@:common.titleDialog',
+        message: 'Confirm processing excel and download, there will be a delay when there is a large amount of data, please be patient...',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      messageBox: {
+        addSuccess: 'Added successfully',
+        editSuccess: 'Edited successfully',
+        removeSuccess: 'Deleted successfully',
+        statusChangeSuccess: '{text} successfully'
+      }
+    },
+    imMute: {
+      queryForm: {
+        userIdLabel: 'Member ID',
+        userIdPlaceholder: 'Please enter your member ID',
+        nickNameLabel: 'Member nickname',
+        nickNamePlaceholder: 'Please enter member nickname',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      table: {
+        memberAccount: 'User Id',
+        nickName: 'User nickname',
+        shuttedUntil: 'Cutoff time',
+        shuttedUntilNegative1: 'Permanent',
+        shuttedUntil0: 'Not closed'
+      },
+      messageBox: {
+        userIdAndNickNameEmptyWarning: 'The host Id and host nickname cannot be empty at the same time',
+        userIdFormatError: 'Member IDs can only be entered as numbers and underscores'
+      }
+    },
+    liveBlack: {
+      queryForm: {
+        hostIdLabel: 'Anchor ID',
+        hostIdPlaceholder: 'Please enter the anchor ID',
+        blackUserIdLabel: 'Member ID',
+        blackUserIdPlaceholder: 'Please enter the user ID to be set',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      table: {
+        blackUserId: 'Member ID',
+        nickName: 'Member nickname',
+        hostId: 'Anchor ID',
+        hostName: 'Anchor nickname',
+        remark: 'Blocking remarks',
+        createTime: 'Closing time',
+        operation: '@:common.operationColumn',
+        removeButton: 'Remove blacklist ban'
+      },
+      messageBox: {
+        memberIdFormatError: 'Member IDs can only be entered as numbers and underscores',
+        removeSuccess: 'Removed successfully'
+      },
+      confirmRemoveDialog: {
+        title: '@:common.titleDialog',
+        message: 'Do you want to confirm the deletion of the data item with the number "{ids}"?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      }
+    },
+    liveComplaint: {
+      queryForm: {
+        selectDateLabel: 'Creation time',
+        selectDateStartPlaceholder: 'Starting date',
+        selectDateEndPlaceholder: 'End date',
+        userIdPlaceholder: 'Please enter your member ID',
+        anchorPlaceholder: 'Please enter the anchor ID',
+        statusPlaceholder: 'Please select the processing status',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      actions: {
+        export: '@:common.exportButton'
+      },
+      table: {
+        content: 'Complaint content',
+        mobile: 'Member cell phone number',
+        roomName: 'Room name',
+        userId: 'Member ID',
+        anchor: 'Anchor',
+        createTime: 'Creation time',
+        approver: 'Approver',
+        remark: 'Approval remarks',
+        processingTime: 'Approval time',
+        status: 'Processing status',
+        status0: 'Pending',
+        status1: 'Reviewed',
+        status2: 'Rejected',
+        operation: '@:common.operationColumn',
+        processButton: 'Process',
+        rejectButton: 'Reject'
+      },
+      addDialog: {
+        title: 'Add anchor complaint record',
+        remarkLabel: 'Complaint content',
+        remarkPlaceholder: 'Please enter content',
+        userIdLabel: 'Member ID',
+        userIdPlaceholder: 'Please enter your member ID',
+        anchorLabel: 'Anchor',
+        anchorPlaceholder: 'Please enter anchor',
+        approverLabel: 'Approver',
+        approverPlaceholder: 'Please enter the approver',
+        processingTimeLabel: 'Approval time',
+        processingTimePlaceholder: 'Select approval time',
+        statusLabel: 'Status (0 Pending 1 Reviewed 2 Rejected)',
+        statusPlaceholder: 'Please select dictionary generation',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton2'
+      },
+      confirmEditConfirmationPrompt: {
+        title: '@:common.titlePrompt',
+        message: 'Please enter a note for review',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      confirmExportDialog: {
+        title: '@:common.titleDialog',
+        message: 'Confirm processing excel and download, there will be a delay when there is a large amount of data, please be patient...',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      messageBox: {
+        userIdFormatError: 'Member IDs can only be entered as numbers and underscores',
+        editSuccess: 'Audit processing successful',
+        editCancel: 'Cancel input',
+        updateLiveComplaintSuccess: 'Edited successfully',
+        addLiveComplaintSuccess: 'Added successfully'
+      }
+    },
+    liveHostPre: {
+      queryForm: {
+        dateDayPlaceholder: 'Select date',
+        livePlaceholder: 'Appointment time (multiple options available)',
+        liveLabel: '{num} points',
+        familyIdPlaceholder: 'Please enter the family ID',
+        hostId: 'Please enter the anchor ID',
+        hostName: 'Please enter a live nickname',
+        statusPlaceholder: 'All states',
+        searchButton: '@:common.searchButton'
+      },
+      actions: {
+        export: '@:common.exportButton'
+      },
+      table: {
+        id: 'Date + Anchor ID',
+        familyId: 'Family ID',
+        hostId: 'Anchor ID',
+        hostName: 'Anchor nickname',
+        status: 'Status',
+        live: '{num} points',
+        remark: 'Remarks',
+        createTime: 'Creation time',
+        operation: '@:common.operationColumn',
+        passButton: 'Pass',
+        rejectButton: 'Reject'
+      },
+      addDialog: {
+        title: 'Add anchor start time reservation',
+        familyIdLabel: 'Family ID',
+        familyIdPlaceholder: 'Please enter the family ID',
+        hostIdLabel: 'Anchor ID',
+        hostIdPlaceholder: 'Please enter the anchor ID',
+        hostNameLabel: 'Anchor nickname',
+        hostNamePlaceholder: 'Please enter an anchor nickname',
+        statusLabel: '0=Pending 1=Reviewed 2=Rejected',
+        statusPlaceholder: 'Please select dictionary generation',
+        liveLabel: 'Live broadcast time',
+        livePlaceholder: 'Please enter the live time',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton2'
+      },
+      confirmUpdateStatusFlag1Dialog: {
+        title: '@:common.titleDialog',
+        message: 'Is the application for "{hostName}" confirmed?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      confirmUpdateStatusFlag2Prompt: {
+        title: '@:common.titlePrompt',
+        message: 'Please enter the reason for rejection',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1',
+        inputErrorMessage: 'Reason for rejection cannot be empty'
+      },
+      confirmExportDialog: {
+        title: '@:common.titleDialog',
+        message: 'Confirm processing excel and download, there will be a delay when there is a large amount of data, please be patient...',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      messageBox: {
+        updateStatusFlag1Success: 'Audit approved',
+        updateStatusFlag2Success: 'Successful rejection',
+        updateStatusFlag2Cancel: 'Cancel input',
+        updateLiveHostPreSuccess: 'Modified successfully',
+        addLiveHostPreSuccess: 'Added successfully'
       }
     }
   }

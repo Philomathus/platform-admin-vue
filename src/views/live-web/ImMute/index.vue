@@ -1,120 +1,40 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="会员ID" prop="userId">
+      <el-form-item :label="$t('liveWeb.imMute.queryForm.userIdLabel')" prop="userId">
         <el-input
           v-model.trim="queryParams.userId"
-          placeholder="请输入会员ID"
+          :placeholder="$t('liveWeb.imMute.queryForm.userPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="会员昵称" prop="nickName">
+      <el-form-item :label="$t('liveWeb.imMute.queryForm.nickNameLabel')" prop="nickName">
         <el-input
           v-model="queryParams.nickName"
-          placeholder="请输入会员昵称"
+          :placeholder="$t('liveWeb.imMute.queryForm.nickNamePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-<!--      <el-form-item label="主播昵称" prop="hostNickName">
-        <el-input
-          v-model="queryParams.hostNickName"
-          placeholder="请输入会员昵称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>-->
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('liveWeb.imMute.queryForm.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('liveWeb.imMute.queryForm.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
-<!--    <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['live-web:ImMute:add']"
-        >新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['live-web:ImMute:edit']"
-        >修改</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['live-web:ImMute:remove']"
-        >删除</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['live-web:ImMute:export']"
-        >导出</el-button>
-      </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-    </el-row>-->
-
     <el-table stripe v-loading="loading" :data="ImMuteList">
-      <el-table-column label="用户Id" align="center" prop="Member_Account" />
-      <el-table-column label="用户昵称" align="center" prop="nickName" />
-      <el-table-column label="截止时间" align="center" prop="ShuttedUntil" >
+      <el-table-column :label="$t('liveWeb.imMute.table.memberAccount')" align="center" prop="Member_Account" />
+      <el-table-column :label="$t('liveWeb.imMute.table.nickName')" align="center" prop="nickName" />
+      <el-table-column :label="$t('liveWeb.imMute.table.shuttedUntil')" align="center" prop="ShuttedUntil" >
         <template slot-scope="scope" >
-          <span v-if="scope.row.ShuttedUntil == -1">永久</span>
-          <span v-else-if="scope.row.ShuttedUntil == 0">未封停</span>
+          <span v-if="scope.row.ShuttedUntil == -1">{{$t('liveWeb.imMute.table.shuttedUntilNegative1')}}</span>
+          <span v-else-if="scope.row.ShuttedUntil == 0">{{$t('liveWeb.imMute.table.shuttedUntil0')}}</span>
           <span v-else>{{ parseTime(scope.row.ShuttedUntil, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-<!--      <el-table-column label="真实姓名" align="center" prop="realName" />
-      <el-table-column label="银行类型id" align="center" prop="bankTypeId" />
-      <el-table-column label="银行账号" align="center" prop="bankAccount" />
-      <el-table-column label="开户行" align="center" prop="bankAddress" />
-      <el-table-column label="卡片类型1=银行卡2=支付宝" align="center" prop="type" />
-      <el-table-column label="是否默认 1是，0否" align="center" prop="dv" />
-      <el-table-column label="是否默认 1是，0否" align="center" prop="realBankAddress" />-->
-  <!--    <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['live-web:ImMute:edit']"
-          >修改</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['live-web:ImMute:remove']"
-          >删除</el-button>
-        </template>
-      </el-table-column>-->
     </el-table>
 
     <pagination
@@ -124,42 +44,6 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
-
-    <!-- 添加或修改腾讯IM禁言查询对话框 -->
-   <!-- <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="会员编号" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入会员编号" />
-        </el-form-item>
-        <el-form-item label="真实姓名" prop="realName">
-          <el-input v-model="form.realName" placeholder="请输入真实姓名" />
-        </el-form-item>
-        <el-form-item label="银行类型id" prop="bankTypeId">
-          <el-input v-model="form.bankTypeId" placeholder="请输入银行类型id" />
-        </el-form-item>
-        <el-form-item label="银行账号" prop="bankAccount">
-          <el-input v-model="form.bankAccount" placeholder="请输入银行账号" />
-        </el-form-item>
-        <el-form-item label="开户行" prop="bankAddress">
-          <el-input v-model="form.bankAddress" placeholder="请输入开户行" />
-        </el-form-item>
-        <el-form-item label="卡片类型1=银行卡2=支付宝" prop="type">
-          <el-select v-model="form.type" placeholder="请选择卡片类型1=银行卡2=支付宝">
-            <el-option label="请选择字典生成" value="" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="是否默认 1是，0否" prop="dv">
-          <el-input v-model="form.dv" placeholder="请输入是否默认 1是，0否" />
-        </el-form-item>
-        <el-form-item label="是否默认 1是，0否" prop="realBankAddress">
-          <el-input v-model="form.realBankAddress" placeholder="请输入是否默认 1是，0否" />
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
-      </div>
-    </el-dialog>-->
   </div>
 </template>
 
@@ -218,7 +102,7 @@ export default {
       if (this.queryParams.userId || this.queryParams.nickName) {
         return true
       }else {
-        this.$notify.warning("当主播Id和主播昵称不能同时为空");
+        this.$notify.warning(this.$t('liveWeb.imMute.messageBox.userIdAndNickNameEmptyWarning'));
         return false
       }
     },
@@ -259,7 +143,7 @@ export default {
         const reg = '^[0-9a-zA-Z_]{1,}$'
         let flag = this.queryParams.userId.match(reg)
         if(!flag){
-          this.msgError("会员ID只能输入数字及下划线")
+          this.msgError(this.$t('liveWeb.imMute.messageBox.userIdFormatError'))
           return
         }
       }

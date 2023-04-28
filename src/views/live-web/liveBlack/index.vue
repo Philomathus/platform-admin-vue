@@ -1,28 +1,28 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="主播ID" prop="hostId">
+      <el-form-item :label="$t('liveWeb.liveBlack.queryForm.hostIdLabel')" prop="hostId">
         <el-input
           v-model="queryParams.hostId"
-          placeholder="请输入主播ID"
+          :placeholder="$t('liveWeb.liveBlack.queryForm.hostIdPlaceholder')"
           clearable
           size="small"
           type="number"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="会员ID" prop="blackUserId">
+      <el-form-item :label="$t('liveWeb.liveBlack.queryForm.blackUserIdLabel')" prop="blackUserId">
         <el-input
           v-model="queryParams.blackUserId"
-          placeholder="请输入被设置的用户ID"
+          :placeholder="$t('liveWeb.liveBlack.queryForm.blackUserIdPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('liveWeb.liveBlack.queryForm.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('liveWeb.liveBlack.queryForm.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -32,13 +32,13 @@
 
     <el-table stripe v-loading="loading" :data="liveBlackList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="会员ID" align="center" prop="blackUserId"/>
-      <el-table-column label="会员昵称" align="center" prop="nickName"/>
-      <el-table-column label="主播ID" align="center" prop="hostId"/>
-      <el-table-column label="主播昵称" align="center" prop="hostName"/>
-      <el-table-column label="封停备注" align="center" prop="remark"/>
-      <el-table-column label="封停时间" align="center" width="170"  prop="createTime"/>
-      <el-table-column label="操作" min-width="60" align="center" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column :label="$t('liveWeb.liveBlack.table.blackUserId')" align="center" prop="blackUserId"/>
+      <el-table-column :label="$t('liveWeb.liveBlack.table.nickName')" align="center" prop="nickName"/>
+      <el-table-column :label="$t('liveWeb.liveBlack.table.hostId')" align="center" prop="hostId"/>
+      <el-table-column :label="$t('liveWeb.liveBlack.table.hostName')" align="center" prop="hostName"/>
+      <el-table-column :label="$t('liveWeb.liveBlack.table.remark')" align="center" prop="remark"/>
+      <el-table-column :label="$t('liveWeb.liveBlack.table.createTime')" align="center" width="170"  prop="createTime"/>
+      <el-table-column :label="$t('liveWeb.liveBlack.table.operation')" min-width="60" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -46,7 +46,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:liveBlack:remove']"
-          >移除黑名单禁言</el-button>
+          >{{$t('liveWeb.liveBlack.table.removeButton')}}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -134,7 +134,7 @@ export default {
         const reg = '^[0-9a-zA-Z_]{1,}$'
         let flag = this.queryParams.blackUserId.match(reg)
         if(!flag){
-          this.msgError("会员ID只能输入数字及下划线")
+          this.msgError(this.$t('liveWeb.liveBlack.messageBox.memberIdFormatError'))
           return
         }
       }
@@ -162,15 +162,16 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除拉黑编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$t('liveWeb.liveBlack.confirmRemoveDialog.title')
+      this.$confirm(this.$t('liveWeb.liveBlack.confirmRemoveDialog.message', {ids: ids}), this.$t('liveWeb.liveBlack.confirmRemoveDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.liveBlack.confirmRemoveDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.liveBlack.confirmRemoveDialog.cancelButton'),
         type: "warning"
       }).then(function() {
         return delLiveBlack(row);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess(this.$t('liveWeb.liveBlack.messageBox.removeSuccess'));
       }).catch(() => {
       })
     },

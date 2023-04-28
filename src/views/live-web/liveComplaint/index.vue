@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="创建时间" prop="selectDate">
+      <el-form-item :label="$t('liveWeb.liveComplaint.queryForm.selectDateLabel')" prop="selectDate">
         <el-date-picker
           v-model="queryParams.selectDate"
           size="small"
@@ -9,15 +9,15 @@
           value-format="yyyy-MM-dd"
           type="daterange"
           range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :start-placeholder="$t('liveWeb.liveComplaint.queryForm.selectDateStartPlaceholder')"
+          :end-placeholder="$t('liveWeb.liveComplaint.queryForm.selectDateEndPlaceholder')"
           :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="userId">
         <el-input
           v-model.trim="queryParams.userId"
-          placeholder="请输入会员ID"
+          :placeholder="$t('liveWeb.liveComplaint.queryForm.userIdPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -26,14 +26,14 @@
       <el-form-item prop="anchor">
         <el-input
           v-model="queryParams.anchor"
-          placeholder="请输入主播ID"
+          :placeholder="$t('liveWeb.liveComplaint.queryForm.anchorPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择处理状态" size="small" clearable>
+        <el-select v-model="queryParams.status" :placeholder="$t('liveWeb.liveComplaint.queryForm.statusPlaceholder')" size="small" clearable>
           <el-option
             v-for="item in statusOptions"
             :key="item.value"
@@ -43,44 +43,12 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('liveWeb.liveComplaint.queryForm.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('liveWeb.liveComplaint.queryForm.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
-<!--      <el-col :span="1.5">-->
-<!--        <el-button-->
-<!--          type="primary"-->
-<!--          plain-->
-<!--          icon="el-icon-plus"-->
-<!--          size="mini"-->
-<!--          @click="handleAdd"-->
-<!--          v-hasPermi="['admin:liveComplaint:add']"-->
-<!--        >新增</el-button>-->
-<!--      </el-col>-->
-<!--      <el-col :span="1.5">-->
-<!--        <el-button-->
-<!--          type="success"-->
-<!--          plain-->
-<!--          icon="el-icon-edit"-->
-<!--          size="mini"-->
-<!--          :disabled="single"-->
-<!--          @click="handleUpdate"-->
-<!--          v-hasPermi="['admin:liveComplaint:edit']"-->
-<!--        >修改</el-button>-->
-<!--      </el-col>-->
-<!--      <el-col :span="1.5">-->
-<!--        <el-button-->
-<!--          type="danger"-->
-<!--          plain-->
-<!--          icon="el-icon-delete"-->
-<!--          size="mini"-->
-<!--          :disabled="multiple"-->
-<!--          @click="handleDelete"-->
-<!--          v-hasPermi="['admin:liveComplaint:remove']"-->
-<!--        >删除</el-button>-->
-<!--      </el-col>-->
       <el-col :span="1.5">
         <el-button
           type="warning"
@@ -89,31 +57,31 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:liveComplaint:export']"
-        >导出</el-button>
+        >{{$t('liveWeb.liveComplaint.actions.export')}}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="liveComplaintList">
-      <el-table-column label="投诉内容" align="center" prop="content" />
-      <el-table-column label="会员手机号" align="center" prop="mobile" />
-      <el-table-column label="房间名称" align="center" prop="roomName" />
-      <el-table-column label="会员ID" align="center" prop="userId" />
-      <el-table-column label="主播" align="center" prop="anchor" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      <el-table-column :label="$t('liveWeb.liveComplaint.table.content')" align="center" prop="content" />
+      <el-table-column :label="$t('liveWeb.liveComplaint.table.mobile')" align="center" prop="mobile" />
+      <el-table-column :label="$t('liveWeb.liveComplaint.table.roomName')" align="center" prop="roomName" />
+      <el-table-column :label="$t('liveWeb.liveComplaint.table.userId')" align="center" prop="userId" />
+      <el-table-column :label="$t('liveWeb.liveComplaint.table.anchor')" align="center" prop="anchor" />
+      <el-table-column :label="$t('liveWeb.liveComplaint.table.createTime')" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="审批人" align="center" prop="approver" />
-      <el-table-column label="审批备注" align="center" prop="remark" />
-      <el-table-column label="审批时间" align="center" prop="processingTime" width="180">
+      <el-table-column :label="$t('liveWeb.liveComplaint.table.approver')" align="center" prop="approver" />
+      <el-table-column :label="$t('liveWeb.liveComplaint.table.remark')" align="center" prop="remark" />
+      <el-table-column :label="$t('liveWeb.liveComplaint.table.processingTime')" align="center" prop="processingTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.processingTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="处理状态" align="center" prop="status" :formatter="formatterStatus"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('liveWeb.liveComplaint.table.status')" align="center" prop="status" :formatter="formatterStatus"/>
+      <el-table-column :label="$t('liveWeb.liveComplaint.table.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="small"
@@ -122,7 +90,7 @@
             v-show="scope.row.status == 0"
             @click="handleUpdate(scope.row,1)"
             v-hasPermi="['admin:liveComplaint:edit']"
-          >处理
+          >{{$t('liveWeb.liveComplaint.table.processButton')}}
           </el-button>
           <el-button
             size="small"
@@ -131,25 +99,9 @@
             v-show="scope.row.status == 0"
             @click="handleUpdate(scope.row,2)"
             v-hasPermi="['admin:liveComplaint:edit']"
-          >驳回
+          >{{$t('liveWeb.liveComplaint.table.rejectButton')}}
           </el-button>
         </template>
-<!--        <template slot-scope="scope">-->
-<!--          <el-button-->
-<!--            size="mini"-->
-<!--            type="text"-->
-<!--            icon="el-icon-edit"-->
-<!--            @click="handleUpdate(scope.row)"-->
-<!--            v-hasPermi="['admin:liveComplaint:edit']"-->
-<!--          >修改</el-button>-->
-<!--          <el-button-->
-<!--            size="mini"-->
-<!--            type="text"-->
-<!--            icon="el-icon-delete"-->
-<!--            @click="handleDelete(scope.row)"-->
-<!--            v-hasPermi="['admin:liveComplaint:remove']"-->
-<!--          >删除</el-button>-->
-<!--        </template>-->
       </el-table-column>
     </el-table>
 
@@ -164,35 +116,35 @@
     <!-- 添加或修改主播投诉记录对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="投诉内容" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+        <el-form-item :label="$t('liveWeb.liveComplaint.addDialog.remarkLabel')" prop="remark">
+          <el-input v-model="form.remark" type="textarea" :placeholder="$t('liveWeb.liveComplaint.addDialog.remarkPlaceholder')" />
         </el-form-item>
-        <el-form-item label="会员ID" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入会员ID" />
+        <el-form-item :label="$t('liveWeb.liveComplaint.addDialog.userIdLabel')" prop="userId">
+          <el-input v-model="form.userId" :placeholder="$t('liveWeb.liveComplaint.addDialog.userIdPlaceholder')" />
         </el-form-item>
-        <el-form-item label="主播" prop="anchor">
-          <el-input v-model="form.anchor" placeholder="请输入主播" />
+        <el-form-item :label="$t('liveWeb.liveComplaint.addDialog.anchorLabel')" prop="anchor">
+          <el-input v-model="form.anchor" :placeholder="$t('liveWeb.liveComplaint.addDialog.anchorPlaceholder')" />
         </el-form-item>
-        <el-form-item label="审批人" prop="approver">
-          <el-input v-model="form.approver" placeholder="请输入审批人" />
+        <el-form-item :label="$t('liveWeb.liveComplaint.addDialog.approverLabel')" prop="approver">
+          <el-input v-model="form.approver" :placeholder="$t('liveWeb.liveComplaint.addDialog.approverPlaceholder')" />
         </el-form-item>
-        <el-form-item label="审批时间" prop="processingTime">
+        <el-form-item :label="$t('liveWeb.liveComplaint.addDialog.processingTimeLabel')" prop="processingTime">
           <el-date-picker clearable size="small"
             v-model="form.processingTime"
             type="date"
             value-format="yyyy-MM-dd"
-            placeholder="选择审批时间">
+            :placeholder="$t('liveWeb.liveComplaint.addDialog.processingTimePlaceholder')">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="状态(0待处理 1审核通过 2驳回)">
+        <el-form-item :label="$t('liveWeb.liveComplaint.addDialog.statusLabel')">
           <el-radio-group v-model="form.status">
-            <el-radio label="1">请选择字典生成</el-radio>
+            <el-radio label="1">{{$t('liveWeb.liveComplaint.addDialog.statusPlaceholder')}}</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{$t('liveWeb.liveComplaint.addDialog.confirmButton')}}</el-button>
+        <el-button @click="cancel">{{$t('liveWeb.liveComplaint.addDialog.cancelButton')}}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -210,13 +162,13 @@ export default {
     return {
       statusOptions: [{
         value: '0',
-        label: '未处理'
+        label: this.$t('liveWeb.liveComplaint.table.status0')
       }, {
         value: '1',
-        label: '已处理'
+        label: this.$t('liveWeb.liveComplaint.table.status1')
       }, {
         value: '2',
-        label: '驳回'
+        label: this.$t('liveWeb.liveComplaint.table.status2')
       }],
       // 日期范围
       selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
@@ -280,11 +232,11 @@ export default {
     // 处理状态
     formatterStatus(row) {
       if (row.status == 0) {
-        return '未处理'
+        return this.$t('liveWeb.liveComplaint.table.status0')
       } else if (row.status == 1) {
-        return '已处理'
+        return this.$t('liveWeb.liveComplaint.table.status1')
       } else if (row.status == 2){
-        return '驳回'
+        return this.$t('liveWeb.liveComplaint.table.status2')
       }
     },
     // 表单重置
@@ -307,7 +259,7 @@ export default {
         const reg = '^[0-9a-zA-Z_]{1,}$'
         let flag = this.queryParams.userId.match(reg)
         if(!flag){
-          this.msgError("会员ID只能输入数字及下划线")
+          this.msgError(this.$t('liveWeb.liveComplaint.messageBox.userIdFormatError'))
           return
         }
       }
@@ -329,33 +281,23 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加主播投诉记录";
+      this.title = this.$t('liveWeb.liveComplaint.addDialog.title');
     },
-    // /** 修改按钮操作 */
-    // handleUpdate(row) {
-    //   this.reset();
-    //   const id = row.id || this.ids
-    //   getLiveComplaint(id).then(response => {
-    //     this.form = response.data;
-    //     this.open = true;
-    //     this.title = "修改主播投诉记录";
-    //   });
-    // },
     /** 处理驳回按钮操作 */
     handleUpdate(row,status) {
-      this.$prompt('请输入审核备注', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
+      this.$prompt(this.$t('liveWeb.liveComplaint.confirmEditConfirmationPrompt.message'), this.$t('liveWeb.liveComplaint.confirmEditConfirmationPrompt.title'), {
+        confirmButtonText: this.$t('liveWeb.liveComplaint.confirmEditConfirmationPrompt.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.liveComplaint.confirmEditConfirmationPrompt.cancelButton')
       }).then(({ value }) => {
         const id = row.id
         updateLiveComplaint(id,value,status).then(response => {
-          this.msgSuccess("审核处理成功");
+          this.msgSuccess(this.$t('liveWeb.liveComplaint.messageBox.editSuccess'));
           this.getList();
         });
       }).catch(() => {
         this.$message({
           type: 'info',
-          message: '取消输入'
+          message: this.$t('liveWeb.liveComplaint.messageBox.editCancel')
         });
       });
 
@@ -366,13 +308,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateLiveComplaint(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess(this.$t('liveWeb.liveComplaint.messageBox.updateLiveComplaintSuccess'));
               this.open = false;
               this.getList();
             });
           } else {
             addLiveComplaint(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess(this.$t('liveWeb.liveComplaint.messageBox.addLiveComplaintSuccess'));
               this.open = false;
               this.getList();
             });
@@ -398,9 +340,9 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('liveWeb.liveComplaint.confirmExportDialog.message'), this.$t('liveWeb.liveComplaint.confirmExportDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.liveComplaint.confirmExportDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.liveComplaint.confirmExportDialog.cancelButton'),
         type: "warning"
       }).then(function() {
         return exportLiveComplaint(queryParams);

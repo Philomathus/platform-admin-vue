@@ -645,7 +645,7 @@ export default {
     handleAdd() {
       this.reset()
       this.addopen = true
-      this.title = this.$t('liveWeb.liveUser')
+      this.title = this.$t('liveWeb.liveUser.addDialog.title')
     },
     sendRoomMsg() {
       this.reset()
@@ -659,7 +659,7 @@ export default {
       getLiveUser(id).then(response => {
         this.form = response.data
         this.open = true
-        this.title = '修改主播信息'
+        this.title = this.$t('liveWeb.liveUser.editDialog.title')
       })
     },
     /** 提交按钮 */

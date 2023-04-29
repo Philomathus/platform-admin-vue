@@ -105,7 +105,7 @@
     <AgRecord ref="agRecord" :game-id="gameId"/>
 
     <!-- 游戏对局日志 -->
-    <el-dialog title="游戏对局日志" :visible.sync="fundsOpen" width="1500px" style="max-height:100%;overflow-y: scroll;"
+    <el-dialog :title=" $t('members.memberGameData.index.gLog') " :visible.sync="fundsOpen" width="1500px" style="max-height:100%;overflow-y: scroll;"
                append-to-body>
       <!--      <div v-loading="loading" :style="'height:'+ height">-->
       <div v-loading="loading">
@@ -114,10 +114,10 @@
     </el-dialog>
 
     <!--会员注单数据详情-->
-    <el-dialog v-dialogDrag title="注单数据详情" :visible.sync="openBetData" width="450px" append-to-body>
+    <el-dialog v-dialogDrag :title=" $t('members.memberGameData.index.nData') " :visible.sync="openBetData" width="450px" append-to-body>
       <el-table :stripe="true" v-loading="loading" :data="betData">
-        <el-table-column label="项目名称" align="center" width="120px" prop="label"/>
-        <el-table-column label="项目值" align="center" prop="value"/>
+        <el-table-column :label=" $t('members.memberGameData.index.proName') " align="center" width="120px" prop="label"/>
+        <el-table-column :label=" $t('members.memberGameData.index.proVal') " align="center" prop="value"/>
       </el-table>
     </el-dialog>
 
@@ -215,7 +215,7 @@ export default {
       // 表单校验
       rules: {
         gameId: [
-          {required: true, message: '游戏局号不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('members.memberGameData.index.gbNotemp') , trigger: 'blur'}
         ]
       }
     }
@@ -250,11 +250,11 @@ export default {
     // 0:未洗码1已经洗码
     formatterStatus(row) {
       if (row.status == 0) {
-        return '未洗码'
+        return this.$t('members.memberGameData.index.script.uCode')
       } else if (row.status == 1) {
-        return '已洗码'
+        return this.$t('members.memberGameData.index.script.wCode')
       } else {
-        return '未知'
+        return this.$t('members.memberGameData.index.script.unk')
       }
     },
     getCount() {
@@ -342,7 +342,7 @@ export default {
         const reg = '^[0-9a-zA-Z_]{1,}$'
         let flag = this.queryParams.account.match(reg)
         if (!flag) {
-          this.msgError("会员ID只能输入数字及下划线")
+          this.msgError( this.$t('members.memberGameData.index.script.memNum') )
           return
         }
       }
@@ -366,14 +366,14 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+      this.$confirm( this.$t('members.memberGameData.index.script.conEx') , '警告', {
+        confirmButtonText: this.$t('members.memberGameData.index.script.warn') ,
+        cancelButtonText: this.$t('members.memberGameData.index.script.canc') ,
         type: 'warning'
       }).then(function () {
         return exportMemberGameData(queryParams)
       }).then(response => {
-        this.downloadExcel(response, '会员注单数据')
+        this.downloadExcel(response, this.$t('members.memberGameData.index.script.mNote') )
       }).catch(() => {
       })
     },
@@ -395,36 +395,36 @@ export default {
         var item6 = {}
         var item7 = {}
         var item8 = {}
-        item.label = '会员平台ID'
+        item.label = this.$t('members.memberGameData.index.script.mPlat')
         item.value = data.userid
         this.betData.push(item)
-        item2.label = '期数'
+        item2.label = this.$t('members.memberGameData.index.script.nPer')
         item2.value = data.issue
         this.betData.push(item2)
-        item3.label = '彩票金额'
+        item3.label = this.$t('members.memberGameData.index.script.lAm')
         item3.value = data.bet_amount
         this.betData.push(item3)
-        item4.label = '金额'
+        item4.label = this.$t('members.memberGameData.index.script.amt')
         if (data.prize > 0) {
-          item4.value = data.prize + '  已中奖'
+          item4.value = data.prize +  this.$t('members.memberGameData.index.script.won')
         } else {
-          item4.value = data.prize + '  未中奖'
+          item4.value = data.prize + this.$t('members.memberGameData.index.script.unwin')
         }
         this.betData.push(item4)
-        item5.label = '彩票名称'
+        item5.label = this.$t('members.memberGameData.index.script.lName')
         item5.value = data.son_platform_name
         this.betData.push(item5)
-        item6.label = '下注时间'
+        item6.label = this.$t('members.memberGameData.index.script.pBet')
         item6.value = data.bet_time
         this.betData.push(item6)
-        item7.label = '彩票码'
+        item7.label = this.$t('members.memberGameData.index.script.lCode')
         item7.value = data.code
         this.betData.push(item7)
-        item8.label = '下注内容'
+        item8.label = this.$t('members.memberGameData.index.script.cNote')
         item8.value = data.bet_select
         this.betData.push(item8)
         this.openBetData = true
-        this.title = '注单数据'
+        this.title = this.$t('members.memberGameData.index.script.nData')
       })
     },
     selectOne() {     //change 触发事件

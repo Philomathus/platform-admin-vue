@@ -706,15 +706,12 @@ export default {
       }
     },
     memberGameData: {
-      common: {
-
-      },
       agRecord: {
         buttons: {
           more: '更多',
         },
         table: {
-          title: '注单数据详情',
+          titles: '注单数据详情',
           ordNum: '订单号',
           userName: '用户名',
           buNum: '局号',
@@ -786,6 +783,211 @@ export default {
         tBets: '总下注',
         profit: '盈利',
         setTime: '结算时间',
+        gLog: '游戏对局日志',
+        nData: '注单数据详情',
+        proName: '项目名称',
+        proVal: '项目值',
+        gbNotemp: '游戏局号不能为空',
+        script: {
+          uCode: '未洗码',
+          wCode: '已洗码',
+          unk: '未知',
+          memNum: '会员ID只能输入数字及下划线',
+          conEx: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+          warn: '警告',
+          canc: '取消',
+          mNote: '会员注单数据',
+          mPlat: '会员平台ID',
+          nPer: '期数',
+          lAm: '彩票金额',
+          amt: '金额',
+          won: '  已中奖',
+          unwin: '  未中奖',
+          lName: '彩票名称',
+          pBet: '下注时间',
+          lCode: '彩票码',
+          cNote: '下注内容',
+          nData: '注单数据'
+        },
+      },
+      record: {
+        div: {
+          button: {
+            more: '更多',
+
+          },
+          gbNum: '游戏局号',
+          pAcc: '玩家帐号',
+          rId: '房间ID',
+          gId: '游戏ID',
+          tNum: '桌子号',
+          cNo: '椅子号',
+          nPlayers: '玩家数量',
+          hPub: '手牌公共牌',
+          vBets: '有效下注',
+          wPump: '抽水',
+          setTime: '结算时间',
+          proxy: '代理ID',
+          affState: '所属站点',
+          det: '详情',
+          gMatch: '游戏对局日志',
+          cMatch: '点击打开对局详情'
+        },
+        data: {
+          gList: '游戏对局列表',
+          vipLvl: 'vip等级只能大于之前的等级'
+        }
+      }
+    },
+    memberGameDataMin: {
+      index: {
+        div: {
+          date: {
+            dRange: '日期范围',
+            sTime: '开始时间',
+            eTime: '结束时间',
+            to: '至'
+          },
+          button: {
+            search: '搜索',
+            reset: '重置',
+
+          },
+          entMemid: '请输入会员ID',
+          entbNum: '请输入游戏局号',
+          sBet: '请选择投注状态',
+          memId: '会员ID',
+          proxyId: '代理ID',
+          trnsctNum: '交易订单号',
+          gbNum: '游戏局号',
+          bStat: '下注状态',
+          pname: '平台名称',
+          vBets: '有效下注',
+          tBets: '总下注',
+          profit: '盈利',
+          pBets: '下注时间',
+          sportBet: '体育投注明细'
+        },
+        data: {
+          gbNum: '游戏局号不能为空',
+          entMemid: '会员ID只能输入数字及下划线',
+        }
+      }
+    },
+    memberGameTransfer: {
+      index: {
+        div: {
+          btn: {
+            search: '搜索',
+            reset: '重置'
+          },
+          date: {
+            dRange: '日期范围',
+            sDate: '开始日期',
+            eDate: '结束日期',
+          },
+          template: {
+            kChess: '开元棋牌',
+            ppFish: 'PP捕鱼',
+            lot77: '77彩票',
+            agPlat: 'AG平台',
+            mgPlat: 'MG平台',
+            ngElec: 'NG电子',
+            bbinV: 'BBIN视讯',
+            bbinS: 'BBIN体育',
+            bbinE: 'BBIN电子',
+            bbinF: 'BBIN捕鱼',
+            sabS: '沙巴体育',
+            mChess: '美天棋牌',
+            tChess: '凯旋棋牌',
+            lChess: '乐游棋牌',
+            nwChess: '新世界棋牌',
+            afbEl: 'AFB电子',
+            panSport: '泛亚电竞',
+            bgVid: 'BG视讯',
+            bgFish: 'BG捕鱼',
+            bgGame: 'BG电游',
+            tChessx: '凯旋棋牌X'
+          },
+          entPid: '请输入玩家ID',
+          entPod: '请输入订单ID',
+          selTstat: '请选择交易状态',
+          selTtype: '请选择交易类型',
+          tId: '交易ID',
+          pId: '玩家ID',
+          proxy: '代理ID',
+          plat: '平台ID',
+          ordId: '订单ID',
+          pType: '产品类型',
+          tStat: '交易状态',
+          succ: '成功',
+          tobe: '待处理',
+          nConf: '未确认',
+          fail: '失败',
+          unk: '未知',
+          tType: '交易类型',
+          tQuota: '额度转出',
+          cTrans: '额度转入',
+          tAmt: '交易金额',
+          tHours: '交易时间',
+
+        }
+      }
+    },
+    memberInfo: {
+      index: {
+        button: {
+          numMem: '会员人数',
+          totBal: '余额总计',
+          totDep: '保险箱余额总计',
+          statQ: '统计查询',
+          search: '搜索',
+          reset: '重置',
+          new: '新增',
+          exp: '导出',
+          ip: '查看封停ip',
+          bBlock: '批量封禁',
+
+        },
+        date: {
+          range: '日期范围',
+          sTime: '开始时间',
+          eTime: '结束时间',
+          to: '至'
+        },
+        invCode: '邀请码',
+        aState: '全部状态',
+        nick: '昵称',
+        lIp: '登录IP',
+        bName: '银行卡号/真实姓名',
+        logRem: '登录备注',
+        aType: '全部类型',
+        cvNum: '客户端版本号',
+        lDev: '登录设备',
+        memId: '会员ID',
+        uName: '用户名',
+        nName: '昵称',
+        mVip: '会员vip',
+        points: '积分',
+        sDeposit: '保险箱余额',
+        status: '状态',
+        selStat: '请选择状态',
+        memSearch: '会员ID/账号/手机号 , 逗号分隔的成员搜索',
+        regTime: '注册时间',
+        logTime: '登录时间',
+        numLog: '登陆次数',
+        logIp: '登录ip',
+        regIp: '注册IP',
+        restArea: '限制地区',
+        wRest: '出款限制',
+        ban: '是否禁言',
+        codeAcc: '打码账户',
+        valBets: '累计有效投注',
+        uType: '用户类型',
+
+
+
+
 
 
       }

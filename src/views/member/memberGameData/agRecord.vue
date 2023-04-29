@@ -65,7 +65,7 @@
 
     <!--会员Ag视讯注单数据详情-->
     <el-dialog
-      :title=" $t('members.memberGameData.agRecord.table.title') "
+      title=" $t('members.memberGameData.agRecord.table.titles') "
       v-dialogDrag
       :close-on-click-modal="false"
       :title="title"

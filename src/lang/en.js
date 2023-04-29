@@ -432,11 +432,6 @@ export default {
     }
   },
 
-
-
-
-
-
   members: {
     configVip: {
       home: '',
@@ -690,15 +685,12 @@ export default {
       }
     },
     memberGameData: {
-      common: {
-
-      },
       agRecord: {
         buttons: {
           more: 'More',
         },
         table: {
-          title: 'Note Data Details',
+          titles: 'Note Data Details',
           ordNum: 'Order Number',
           userName: 'User Name',
           buNum: 'Bureau Number',
@@ -770,6 +762,210 @@ export default {
         tBets: 'Total Bets',
         profit: 'Profit',
         setTime: 'Settlement Time',
+        gLog: 'Game Match Log',
+        nData: 'Note Data Details',
+        proName: 'Project Name',
+        proVal: 'Project Value',
+        gbNotemp: 'The Game Bureau number cannot be empty',
+        script: {
+          uCode: 'Unwashed Code',
+          wCode: 'Washed Code',
+          unk: 'Unknown',
+          memNum: 'Member IDs can only be entered as numbers and underscores',
+          conEx: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+          warn: 'Warning',
+          canc: 'Cancellation',
+          mNote: 'Member Note Data',
+          mPlat: 'Member Platform ID',
+          nPer: 'Number of Periods',
+          lAm: 'Lottery Amount',
+          amt: 'Amount',
+          won: '  Won',
+          unwin: '  Unwinned',
+          lName: 'Lottery Name',
+          pBet: 'Place your bets at',
+          lCode: 'Lottery Code',
+          cNote: 'Content of the following note',
+          nData: 'Note List Data'
+        },
+      },
+      record: {
+        div: {
+          button: {
+            more: 'More',
+
+          },
+          gbNum: 'Game Bureau Number',
+          pAcc: 'Player Account',
+          rId: 'Room ID',
+          gId: 'Game ID',
+          tNum: 'Table Number',
+          cNo: 'Chair No.',
+          nPlayers: 'Number of Players',
+          hPub: 'Hand Public',
+          vBets: 'Valid Bets',
+          tBets: 'Total Bets',
+          prof: 'Profit',
+          wPump: 'Water Pumping',
+          setTime: 'Settlement Time',
+          proxy: 'Proxy ID',
+          affState: 'Affiliated States',
+          det: 'Details',
+          gMatch: 'Game Match Log',
+          cMatch: 'Click to open match details'
+        },
+        data: {
+          gList: 'Game Match List',
+          vipLvl: 'The vip level can only be greater than the previous level'
+        }
+      }
+    },
+    memberGameDataMin: {
+      index: {
+        div: {
+          date: {
+            dRange: 'Date Range',
+            sTime: 'Start Time',
+            eTime: 'End Time',
+            to: 'To'
+          },
+          button: {
+            search: 'Search',
+            reset: 'Reset',
+          },
+          entMemid: 'Please enter your Member ID',
+          entbNum: 'Please enter the Game Bureau Number',
+          sBet: 'Please select a betting status',
+          memId: 'Member ID',
+          proxyId: 'Proxy ID',
+          trnsctNum: 'Transaction Order Number',
+          gbNum: 'Game Bureau Number',
+          bStat: 'Bet Status',
+          pName: 'Platform Name',
+          vBets: 'Valid Bets',
+          tBets: 'Total Bets',
+          profit: 'Profit',
+          pBets: 'Place your bets at',
+          sportBet: 'Sports Betting Details'
+        },
+        data: {
+          gbNum: 'The Game Bureau number cannot be empty',
+          entMemid: 'Member IDs can only be entered as numbers and underscores',
+        }
+      }
+    },
+    memberGameTransfer: {
+      index: {
+        div: {
+          btn: {
+            search: 'Search',
+            reset: 'Reset'
+          },
+          date: {
+            dRange: 'Date Range',
+            sDate: 'Start Date',
+            eDate: 'End Date',
+          },
+          template: {
+            kChess: 'Kaiyuan Chess',
+            ppFish: 'PP Fishing',
+            lot77: '77 Lottery',
+            agPlat: 'AG Platform',
+            mgPlat: 'MG Platform',
+            ngElec: 'NG Electronics',
+            bbinV: 'BBIN Video',
+            bbinS: 'BBIN Sports',
+            bbinE: 'BBIN Electronics',
+            bbinF: 'BBIN Fishing',
+            sabS: 'Sabah Sports',
+            mChess: 'Meitian Chess',
+            tChess: 'Triumph Chess',
+            lChess: 'Leyou Chess',
+            nwChess: 'New World Chess',
+            afbEl: 'AFB Electronics',
+            panSport: 'Pan-Asian E-Sports',
+            bgVid: 'BG Video',
+            bgFish: 'BG Fishing',
+            bgGame: 'BG E-Gaming',
+            tChessx: 'Triumph Chess X'
+          },
+          entPid: 'Please enter the player ID',
+          entPod: 'Please enter the order ID',
+          selTstat: 'Please select transaction status',
+          selTtype: 'Please select the transaction type',
+          tId: 'Transaction ID',
+          pId: 'Player ID',
+          proxy: 'Proxy ID',
+          plat: 'Platform ID',
+          ordId: 'Order ID',
+          pType: 'Product Type',
+          tStat: 'Transaction Status',
+          succ: 'Success',
+          tobe: 'To be processed',
+          nConf: 'Not confirmed',
+          fail: 'Failure',
+          unk: 'Unknown',
+          tType: 'Transaction Type',
+          tQuota: 'Transfer of Quota',
+          cTrans: 'Credit Transfer',
+          tAmt: 'Transaction Amount',
+          tHours: 'Trading Hours',
+
+        }
+      }
+    },
+    memberInfo: {
+      index: {
+        button: {
+          numMem: 'Number of Members',
+          totBal: 'Total Balance',
+          totDep: 'Total Safe Deposit box balance',
+          statQ: 'Statistical Queries',
+          search: 'Search',
+          reset: 'Reset',
+          new: 'New',
+          exp: 'Export',
+          ip: 'View blocked IP',
+          bBlock: 'Batch blocking',
+
+        },
+        date: {
+          range: 'Date Range',
+          sTime: 'Start Time',
+          eTime: 'End Time',
+          to: 'to'
+        },
+        invCode: 'Invitation Code',
+        aState: 'All States',
+        nick: 'Nickname',
+        lIp: 'Login IP',
+        bName: 'Bank Card Number / Real Name',
+        logRem: 'Login Remarks',
+        aType: 'All Types',
+        cvNum: 'Client version number',
+        lDev: 'Login Device',
+        memId: 'Member ID',
+        uName: 'Username',
+        nName: 'Nickname',
+        mVip: 'Member VIP',
+        points: 'Points',
+        sDeposit: 'Safe deposit box balance',
+        status: 'Status',
+        selStat: 'Please select the status',
+        memSearch: 'Member ID/account number/mobile phone number , comma-separated member search',
+        regTime: 'Registration Time',
+        logTime: 'Login Time',
+        numLog: 'Number of logins',
+        logIp: 'Login IP',
+        regIp: 'Registered IP',
+        restArea: 'Restricted Area',
+        wRest: 'Withdrawal Restriction',
+        ban: 'Banned or Not',
+        codeAcc: 'Coding Account',
+        valBets: 'Cumulative valid bets',
+        uType: 'User Type',
+
+
 
 
 
@@ -1411,4 +1607,3 @@ export default {
     }
   }
 }
-

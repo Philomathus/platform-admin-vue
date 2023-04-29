@@ -11,22 +11,22 @@
       append-to-body
     >
       <el-table stripe v-loading="loading" :data="memberGameDataRecordList">
-        <el-table-column label="游戏局号" align="center" prop="gameID"/>
-        <el-table-column label="玩家帐号" align="center" prop="accounts"/>
-        <el-table-column label="房间ID" align="center" prop="serverID"/>
-        <el-table-column label="游戏ID" align="center" prop="kindID"/>
-        <el-table-column label="桌子号" align="center" prop="tableID"/>
-        <el-table-column label="椅子号" align="center" prop="chairID"/>
-        <el-table-column label="玩家数量" align="center" prop="userCount"/>
-        <el-table-column label="手牌公共牌" align="center" prop="cardValue"/>
-        <el-table-column label="有效下注" align="center" prop="cellScore"/>
-        <el-table-column label="总下注" align="center" prop="allBet"/>
-        <el-table-column label="盈利" align="center" prop="profit"/>
-        <el-table-column label="抽水" align="center" prop="revenue"/>
-        <el-table-column label="结算时间" align="center" prop="gameEndTime"/>
-        <el-table-column label="代理ID" align="center" prop="channelID"/>
-        <el-table-column label="所属站点" align="center" prop="lineCode"/>
-        <el-table-column label="详情" align="center" class-name="small-padding fixed-width" fixed="right">
+        <el-table-column :label=" $t('members.memberGameData.record.div.gbNum') " align="center" prop="gameID"/>
+        <el-table-column :label=" $t('members.memberGameData.record.div.pAcc') " align="center" prop="accounts"/>
+        <el-table-column :label=" $t('members.memberGameData.record.div.rId') " align="center" prop="serverID"/>
+        <el-table-column :label=" $t('members.memberGameData.record.div.gId') " align="center" prop="kindID"/>
+        <el-table-column :label=" $t('members.memberGameData.record.div.tNum') " align="center" prop="tableID"/>
+        <el-table-column :label=" $t('members.memberGameData.record.div.cNo') " align="center" prop="chairID"/>
+        <el-table-column :label=" $t('members.memberGameData.record.div.nPlayers') " align="center" prop="userCount"/>
+        <el-table-column :label=" $t('members.memberGameData.record.div.hPub') " align="center" prop="cardValue"/>
+        <el-table-column :label=" $t('members.memberGameData.record.div.vBets') " align="center" prop="cellScore"/>
+        <el-table-column :label=" $t('members.memberGameData.record.div.tBets') " align="center" prop="allBet"/>
+        <el-table-column :label=" $t('members.memberGameData.record.div.prof') " align="center" prop="profit"/>
+        <el-table-column :label=" $t('members.memberGameData.record.div.wPump') " align="center" prop="revenue"/>
+        <el-table-column :label=" $t('members.memberGameData.record.div.setTime') " align="center" prop="gameEndTime"/>
+        <el-table-column :label=" $t('members.memberGameData.record.div.proxy') " align="center" prop="channelID"/>
+        <el-table-column :label=" $t('members.memberGameData.record.div.affState') " align="center" prop="lineCode"/>
+        <el-table-column :label=" $t('members.memberGameData.record.div.det') " align="center" class-name="small-padding fixed-width" fixed="right">
           <template slot-scope="scope">
             <el-button
               type="primary"
@@ -35,7 +35,7 @@
               size="small"
               @click="handleDetail(scope.row)"
               v-hasPermi="['member:memberGameData:detailList']"
-            >更多
+            > {{ $t('members.memberGameData.record.div.button.more') }}
             </el-button>
           </template>
         </el-table-column>
@@ -44,7 +44,7 @@
     <detail ref="detail" :record-id="recordID"/>
 
     <!-- 游戏对局日志 -->
-    <el-dialog title="游戏对局日志" :visible.sync="detailOpen" width="1500px" style="max-height:100%;overflow-y: scroll;"
+    <el-dialog :title=" $t('members.memberGameData.record.div.gMatch') " :visible.sync="detailOpen" width="1500px" style="max-height:100%;overflow-y: scroll;"
                append-to-body>
 
 <!--      <div v-loading="loading" :style="'height:'+ height">-->
@@ -52,7 +52,7 @@
         <iframe :src="detailLink" frameborder="no" style="width: 100%;height: 650px" scrolling="auto" />
       </div>
 
-      <a style="color: #00afff"  :href="detailLink" target="_blank">点击打开对局详情</a>
+      <a style="color: #00afff"  :href="detailLink" target="_blank">{{ $t('members.memberGameData.record.div.cMatch') }}</a>
 <!--      <div v-loading="loading" :style="'height:'+ height">-->
 <!--        <iframe :src="detailLink" frameborder="no" style="width: 100%;height: 650px" scrolling="auto" />-->
 <!--      </div>-->
@@ -81,7 +81,7 @@ export default {
       // 遮罩层
       loading: true,
       //弹出框标题
-      title: '游戏对局列表',
+      title: this.$t('members.memberGameData.record.data.gList'),
       //页面编码
       index: 1,
       // 遮罩层
@@ -130,7 +130,7 @@ export default {
   watch: {
     vip: function(newVal, oldVal) {
       if (newVal < this.oldVip) {
-        this.$notify.error('vip等级只能大于之前的等级')
+        this.$notify.error( this.$t('members.memberGameData.record.data.vipLvl') )
         this.showVipDisabled = true
       } else {
         this.showVipDisabled = false

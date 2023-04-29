@@ -9,7 +9,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:liveMsgEngage:add']"
-        >新增</el-button>
+        >{{$t('liveWeb.liveMsgEngage.actions.add')}}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -17,8 +17,8 @@
     <el-table stripe v-loading="loading" :data="liveMsgEngageList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="id" align="center" prop="id" />
-      <el-table-column label="互动信息" align="center" prop="msg" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('liveWeb.liveMsgEngage.table.msg')" align="center" prop="msg" />
+      <el-table-column :label="$t('liveWeb.liveMsgEngage.table.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -26,14 +26,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:liveMsgEngage:edit']"
-          >修改</el-button>
+          >{{$t('liveWeb.liveMsgEngage.table.editButton')}}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:liveMsgEngage:remove']"
-          >删除</el-button>
+          >{{$t('liveWeb.liveMsgEngage.table.removeButton')}}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -49,26 +49,23 @@
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-<!--        <el-form-item label="id" prop="id">-->
-<!--          <el-input v-model="form.id" placeholder="请输入id" />-->
-<!--        </el-form-item>-->
-        <el-form-item label="互动消息" prop="msg">
-          <el-input v-model="form.msg" placeholder="请输入互动信息" />
+        <el-form-item :label="$t('liveWeb.liveMsgEngage.addEditDialog.msgLabel')" prop="msg">
+          <el-input v-model="form.msg" :placeholder="$t('liveWeb.liveMsgEngage.addEditDialog.msgPlaceholder')" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button type="primary" @click="submitForm">{{$t('liveWeb.liveMsgEngage.addEditDialog.confirmButton')}}</el-button>
       </div>
     </el-dialog>
 
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="openAdd" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="互动消息" prop="msg">
-          <el-input v-model="form.msg" placeholder="请输入互动信息" />
+        <el-form-item :label="$t('liveWeb.liveMsgEngage.addEditDialog.msgLabel')" prop="msg">
+          <el-input v-model="form.msg" :placeholder="$t('liveWeb.liveMsgEngage.addEditDialog.msgPlaceholder')" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button type="primary" @click="submitForm">{{$t('liveWeb.liveMsgEngage.addEditDialog.confirmButton')}}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -113,10 +110,10 @@ export default {
       // 表单校验
       rules: {
         id: [
-          {required: true, message: "id不能为空只能是数字", trigger: "number"},
+          {required: true, message: this.$t('liveWeb.liveMsgEngage.addEditDialog.validations.id'), trigger: "number"},
         ],
          msg: [
-          { required: true, message: '互动消息不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('liveWeb.liveMsgEngage.addEditDialog.validations.msg'), trigger: 'blur' }
          ]
       }
     };
@@ -167,7 +164,7 @@ export default {
     handleAdd() {
       this.reset();
       this.openAdd = true;
-      this.title = "添加主播互动消息";
+      this.title = this.$t('liveWeb.liveMsgEngage.addEditDialog.titleAdd');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -176,7 +173,7 @@ export default {
       getLiveMsgEngage(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改主播互动消息";
+        this.title = this.$t('liveWeb.liveMsgEngage.addEditDialog.titleEdit');
       });
     },
     /** 提交按钮 */
@@ -203,15 +200,16 @@ export default {
     handleDelete(row) {
       const ids = row.id || this.ids;
       const  msg=row.msg;
-      this.$confirm('是否确认删除消息为为"' + msg + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+
+      this.$confirm(this.$t('liveWeb.liveMsgEngage.confirmRemoveDialog.message', {msg: msg}), this.$t('liveWeb.liveMsgEngage.confirmRemoveDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.liveMsgEngage.confirmRemoveDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.liveMsgEngage.confirmRemoveDialog.cancelButton'),
         type: "warning"
       }).then(function() {
         return delLiveMsgEngage(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess(this.$t('liveWeb.liveMsgEngage.messageBox.removeSuccess'));
       }).catch(() => {
       })
     },

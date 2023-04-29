@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="VIP等级" prop="gvip">
+      <el-form-item :label="$t('liveWeb.liveMount.queryForm.gvipLabel')" prop="gvip">
         <el-input
           v-model="queryParams.gvip"
-          placeholder="VIP等级"
+          :placeholder="$t('liveWeb.liveMount.queryForm.gvipPlaceholder')"
           clearable
           size="small"
           type="number"
@@ -12,18 +12,18 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="坐骑名" prop="name">
+      <el-form-item :label="$t('liveWeb.liveMount.queryForm.nameLabel')" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入坐骑名"
+          :placeholder="$t('liveWeb.liveMount.queryForm.namePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('liveWeb.liveMount.queryForm.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('liveWeb.liveMount.queryForm.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -36,7 +36,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:liveMount:add']"
-        >新增
+        >{{$t('liveWeb.liveMount.actions.add')}}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -48,7 +48,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:liveMount:edit']"
-        >修改
+        >{{$t('liveWeb.liveMount.actions.edit')}}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -60,28 +60,18 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:liveMount:remove']"
-        >删除
+        >{{$t('liveWeb.liveMount.actions.remove')}}
         </el-button>
       </el-col>
-      <!--      <el-col :span="1.5">-->
-      <!--        <el-button-->
-      <!--          type="warning"-->
-      <!--          plain-->
-      <!--          icon="el-icon-download"-->
-      <!--          size="mini"-->
-      <!--          @click="handleExport"-->
-      <!--          v-hasPermi="['admin:liveMount:export']"-->
-      <!--        >导出</el-button>-->
-      <!--      </el-col>-->
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="liveMountList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="坐骑id" align="center" prop="id"/>
-      <el-table-column label="vip等级" align="center" prop="gvip"/>
-      <el-table-column label="坐骑名" align="center" prop="name"/>
-      <el-table-column label="状态" align="center" key="status" v-if="columns[0].visible">
+      <el-table-column :label="$t('liveWeb.liveMount.table.id')" align="center" prop="id"/>
+      <el-table-column :label="$t('liveWeb.liveMount.table.gvip')" align="center" prop="gvip"/>
+      <el-table-column :label="$t('liveWeb.liveMount.table.name')" align="center" prop="name"/>
+      <el-table-column :label="$t('liveWeb.liveMount.table.status')" align="center" key="status" v-if="columns[0].visible">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -91,7 +81,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="图标" align="center" prop="iconUrl">
+      <el-table-column :label="$t('liveWeb.liveMount.table.iconUrl')" align="center" prop="iconUrl">
         <template slot-scope="scope">
           <el-image
             style="width: 50px;"
@@ -101,11 +91,11 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="价格" align="center" prop="price"/>
-      <el-table-column label="折扣价格" align="center" prop="disPrice"/>
-      <el-table-column label="有效天数" align="center" prop="vday"/>
-      <el-table-column label="排序" align="center" prop="oder"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('liveWeb.liveMount.table.price')" align="center" prop="price"/>
+      <el-table-column :label="$t('liveWeb.liveMount.table.disPrice')" align="center" prop="disPrice"/>
+      <el-table-column :label="$t('liveWeb.liveMount.table.vday')" align="center" prop="vday"/>
+      <el-table-column :label="$t('liveWeb.liveMount.table.oder')" align="center" prop="oder"/>
+      <el-table-column :label="$t('liveWeb.liveMount.table.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -113,7 +103,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:liveMount:edit']"
-          >修改
+          >{{$t('liveWeb.liveMount.table.editButton')}}
           </el-button>
           <el-button
             style="color: #FF5722"
@@ -122,7 +112,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:liveMount:remove']"
-          >删除
+          >{{$t('liveWeb.liveMount.table.removeButton')}}
           </el-button>
         </template>
       </el-table-column>
@@ -142,66 +132,61 @@
 
         <div class="el-row">
           <div class="el-col-lg-12">
-            <el-form-item label="vip等级" prop="gvip">
-              <el-input v-model="form.gvip" placeholder="请输入免费领取VIP(-1只能买)"/>
+            <el-form-item :label="$t('liveWeb.liveMount.addEditDialog.gvipLabel')" prop="gvip">
+              <el-input v-model="form.gvip" :placeholder="$t('liveWeb.liveMount.addEditDialog.gvipPlaceholder')"/>
             </el-form-item>
-            <el-form-item label="坐骑名" prop="name">
-              <el-input v-model="form.name" placeholder="请输入坐骑名"/>
+            <el-form-item :label="$t('liveWeb.liveMount.addEditDialog.nameLabel')" prop="name">
+              <el-input v-model="form.name" :placeholder="$t('liveWeb.liveMount.addEditDialog.namePlaceholder')"/>
             </el-form-item>
-            <el-form-item label="状态">
+            <el-form-item :label="$t('liveWeb.liveMount.addEditDialog.statusLabel')">
               <el-radio-group v-model="form.status">
-                <el-radio label="0">未启用</el-radio>
-                <el-radio label="1">启用</el-radio>
+                <el-radio label="0">{{$t('liveWeb.liveMount.addEditDialog.status0')}}</el-radio>
+                <el-radio label="1">{{$t('liveWeb.liveMount.addEditDialog.status1')}}</el-radio>
               </el-radio-group>
             </el-form-item>
           </div>
           <div class="el-col-lg-12">
-            <el-form-item label="图标" prop="iconUrl">
+            <el-form-item :label="$t('liveWeb.liveMount.addEditDialog.iconUrlLabel')" prop="iconUrl">
               <imageUpload v-model="form.iconUrl" path="mount"/>
             </el-form-item>
           </div>
 
         </div>
 
-        <el-form-item label="svga动画" prop="svgUrl">
+        <el-form-item :label="$t('liveWeb.liveMount.addEditDialog.svgUrlLabel')" prop="svgUrl">
           <fileUpload v-model="form.svgUrl" path="mount"/>
         </el-form-item>
 
         <div class="el-row">
           <div class="el-col-lg-12">
-            <el-form-item label="价格" prop="price">
-              <el-input v-model="form.price" placeholder="请输入价格"/>
+            <el-form-item :label="$t('liveWeb.liveMount.addEditDialog.priceLabel')" prop="price">
+              <el-input v-model="form.price" :placeholder="$t('liveWeb.liveMount.addEditDialog.pricePlaceholder')"/>
             </el-form-item>
           </div>
           <div class="el-col-lg-12">
-            <el-form-item label="折扣价格" prop="disPrice">
-              <el-input v-model="form.disPrice" placeholder="请输入折扣价格"/>
+            <el-form-item :label="$t('liveWeb.liveMount.addEditDialog.disPriceLabel')" prop="disPrice">
+              <el-input v-model="form.disPrice" :placeholder="$t('liveWeb.liveMount.addEditDialog.disPricePlaceholder')"/>
             </el-form-item>
           </div>
         </div>
 
         <div class="el-row">
           <div class="el-col-lg-12">
-            <el-form-item label="有效天数" prop="vday">
-              <el-input v-model="form.vday" placeholder="请输入有效天数"/>
+            <el-form-item :label="$t('liveWeb.liveMount.addEditDialog.vdayLabel')" prop="vday">
+              <el-input v-model="form.vday" :placeholder="$t('liveWeb.liveMount.addEditDialog.vdayPlaceholder')"/>
             </el-form-item>
           </div>
           <div class="el-col-lg-12">
-            <el-form-item label="排序" prop="oder">
+            <el-form-item :label="$t('liveWeb.liveMount.addEditDialog.oderLabel')" prop="oder">
               <el-input type="number" v-model="form.oder"/>
             </el-form-item>
           </div>
         </div>
 
-
-
-
-
-
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{$t('liveWeb.liveMount.addEditDialog.confirmButton')}}</el-button>
+        <el-button @click="cancel">{{$t('liveWeb.liveMount.addEditDialog.cancelButton')}}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -268,30 +253,30 @@ export default {
       // 表单校验
       rules: {
         id: [
-          {required: true, message: 'ID不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('liveWeb.liveMount.addEditDialog.validations.id'), trigger: 'blur'}
         ],
         name: [
-          {required: true, message: '坐骑名不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('liveWeb.liveMount.addEditDialog.validations.name'), trigger: 'blur'}
         ],
         status: [
-          {required: true, message: '状态不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('liveWeb.liveMount.addEditDialog.validations.status'), trigger: 'blur'}
         ],
         iconUrl: [
-          {required: true, message: 'PC端图标不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('liveWeb.liveMount.addEditDialog.validations.iconUrl'), trigger: 'blur'}
         ],
         gvip: [
-          {required: true, message: 'vip等级不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('liveWeb.liveMount.addEditDialog.validations.gvip'), trigger: 'blur'}
         ], svgUrl: [
-          {required: true, message: 'svgUrl动画不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('liveWeb.liveMount.addEditDialog.validations.svgUrl'), trigger: 'blur'}
         ], price: [
-          {required: true, message: '价格不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('liveWeb.liveMount.addEditDialog.validations.price'), trigger: 'blur'}
         ], disPrice: [
-          {required: true, message: '折扣价格不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('liveWeb.liveMount.addEditDialog.validations.disPrice'), trigger: 'blur'}
         ], vday: [
-          {required: true, message: '赠送天数不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('liveWeb.liveMount.addEditDialog.validations.vday'), trigger: 'blur'}
         ],
         oder: [
-          {required: true, message: '不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('liveWeb.liveMount.addEditDialog.validations.oder'), trigger: 'blur'}
         ]
 
       }
@@ -351,7 +336,7 @@ export default {
     handleAdd() {
       this.reset()
       this.open = true
-      this.title = '添加礼物'
+      this.title = this.$t('liveWeb.liveMount.addEditDialog.titleAdd')
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -360,7 +345,7 @@ export default {
       getLiveMount(id).then(response => {
         this.form = response.data
         this.open = true
-        this.title = '修改礼物'
+        this.title = this.$t('liveWeb.liveMount.addEditDialog.titleEdit')
       })
     },
     /** 提交按钮 */
@@ -369,13 +354,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateLiveMount(this.form).then(response => {
-              this.msgSuccess('修改成功')
+              this.msgSuccess(this.$t('liveWeb.liveMount.messageBox.updateLiveMountSuccess'))
               this.open = false
               this.getList()
             })
           } else {
             addLiveMount(this.form).then(response => {
-              this.msgSuccess('新增成功')
+              this.msgSuccess(this.$t('liveWeb.liveMount.messageBox.addLiveMountSuccess'))
               this.open = false
               this.getList()
             })
@@ -386,23 +371,25 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids
-      this.$confirm('是否确认删除礼物列编号为"' + ids + '"的数据项?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+
+      this.$confirm(this.$t('liveWeb.liveMount.confirmRemoveDialog.message', {ids: ids}), this.$t('liveWeb.liveMount.confirmRemoveDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.liveMount.confirmRemoveDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.liveMount.confirmRemoveDialog.cancelButton'),
         type: 'warning'
       }).then(function () {
         return delLiveMount(ids)
       }).then(() => {
         this.getList()
-        this.msgSuccess('删除成功')
+        this.msgSuccess(this.$t('liveWeb.liveMount.messageBox.removeSuccess'))
       })
     },
     // 状态修改
     handleStatusChange(row) {
-      let text = row.status === '0' ? '停用' : '启用'
-      this.$confirm('确认要' + text + '"' + row.name + '"吗?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      let text = row.status === '0' ? this.$t('liveWeb.liveMount.table.status0') : this.$t('liveWeb.liveMount.table.status1')
+
+      this.$confirm(this.$t('liveWeb.liveMount.confirmStatusChangeDialog.message', {text: text, name: row.name}), this.$t('liveWeb.liveMount.confirmStatusChangeDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.liveMount.confirmStatusChangeDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.liveMount.confirmStatusChangeDialog.cancelButton'),
         type: 'warning'
       }).then(function () {
         var data = {}
@@ -410,7 +397,7 @@ export default {
         data.status = row.status
         return updateLiveMount(data)
       }).then(() => {
-        this.msgSuccess(text + '成功')
+        this.msgSuccess(this.$t('liveWeb.liveMount.messageBox.statusChangeSuccess', {text: text}))
       }).catch(function () {
         row.status = row.status === '0' ? '1' : '0'
       })

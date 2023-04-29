@@ -7,15 +7,15 @@
                         type="date"
                         format="yyyy-MM-dd"
                         value-format="yyyy-MM-dd"
-                        placeholder="选择日期"
+                        :placeholder="$t('liveWeb.liveHostWageNoteJump.queryForm.dateDayPlaceholder')"
                         style="width: 140px"
                         :picker-options="pickerOptions">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="散户结算率" prop="settlementRate" label-width="85px">
+      <el-form-item :label="$t('liveWeb.liveHostWageNoteJump.queryForm.settlementRateLabel')" prop="settlementRate" label-width="85px">
         <el-input
           v-model="queryParams.settlementRate"
-          placeholder="请输入散户结算率"
+          :placeholder="$t('liveWeb.liveHostWageNoteJump.queryForm.settlementRatePlaceholder')"
           size="small"
           type="number"
           class="no-number"
@@ -26,7 +26,7 @@
       <el-form-item prop="hostId" style="width: 150px">
         <el-input
           v-model="queryParams.hostId"
-          placeholder="主播ID"
+          :placeholder="$t('liveWeb.liveHostWageNoteJump.queryForm.hostIdPlaceholder')"
           clearable
           size="small"
           type="number"
@@ -37,7 +37,7 @@
       <el-form-item prop="nickName" style="width: 150px">
         <el-input
           v-model="queryParams.nickName"
-          placeholder="主播昵称"
+          :placeholder="$t('liveWeb.liveHostWageNoteJump.queryForm.nickNamePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -46,7 +46,7 @@
       <el-form-item prop="familyId" style="width: 150px">
         <el-input
           v-model="queryParams.familyId"
-          placeholder="家族ID"
+          :placeholder="$t('liveWeb.liveHostWageNoteJump.queryForm.familyIdPlaceholder')"
           clearable
           size="small"
           type="number"
@@ -55,8 +55,8 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('liveWeb.liveHostWageNoteJump.queryForm.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('liveWeb.liveHostWageNoteJump.queryForm.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -69,13 +69,13 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:liveHostWageNote:export']"
-        >导出
+        >{{$t('liveWeb.liveHostWageNoteJump.actions.export')}}
         </el-button>
       </el-col>
       <el-col :span="1.5" style="width: 140px">
         <el-input
           v-model="this.totalsettleTotal"
-          placeholder="结算总计统计"
+          :placeholder="$t('liveWeb.liveHostWageNoteJump.statistics.totalsettleTotalPlaceholder')"
           readonly
           clearable
           size="small"
@@ -88,13 +88,9 @@
 
     <el-table id="out-table" stripe v-loading="loading" :data="liveHostWageNoteList"
     >
-      <el-table-column label="主播ID" align="center" prop="hostId"/>
-      <!--        <template slot-scope="scope">-->
-      <!--          <a style="color: #00afff" @click="openQuerDetails(scope.row)">{{ scope.row.hostId }}</a>-->
-      <!--        </template>-->
-      <!--      </el-table-column>-->
-      <el-table-column label="主播昵称" :show-overflow-tooltip="true" align="center" prop="nickName" min-width="100"/>
-      <el-table-column label="家族ID" align="center" prop="familyId">
+      <el-table-column :label="$t('liveWeb.liveHostWageNoteJump.table.hostId')" align="center" prop="hostId"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNoteJump.table.nickName')" :show-overflow-tooltip="true" align="center" prop="nickName" min-width="100"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNoteJump.table.familyId')" align="center" prop="familyId">
         <template slot-scope="scope">
           <span v-if="scope.row.familyId === 0">{{ scope.row.familyId }}</span>
           <el-popover
@@ -106,15 +102,15 @@
           >
             <table>
               <tr>
-                <td style="text-align: right">家 族 ID：</td>
+                <td style="text-align: right">{{$t('liveWeb.liveHostWageNoteJump.table.familyIdPopover')}}</td>
                 <td style="text-align: left">{{ scope.row.familyId }}</td>
               </tr>
               <tr>
-                <td style="text-align: right">家 族 长 ID：</td>
+                <td style="text-align: right">{{$t('liveWeb.liveHostWageNoteJump.table.familyUserIdPopover')}}</td>
                 <td style="text-align: left">{{ scope.row.familyUserId }}</td>
               </tr>
               <tr>
-                <td style="text-align: right">家族长昵称：</td>
+                <td style="text-align: right">{{$t('liveWeb.liveHostWageNoteJump.table.familyNickName')}}</td>
                 <td style="text-align: left">{{ scope.row.familyNickName }}</td>
               </tr>
             </table>
@@ -122,22 +118,22 @@
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column label="家族名称" :show-overflow-tooltip="true" align="center" prop="familyName" min-width="100"/>
-      <el-table-column label="直播开始时间" align="center" prop="startTime" min-width="150"/>
-      <el-table-column label="直播结束时间" align="center" prop="endTime" min-width="150"/>
-      <el-table-column label="直播时长" align="center" prop="livetime" />
-      <el-table-column label="礼物任务" align="center" prop="lwrenwu"/>
-      <el-table-column label="时长任务" align="center" prop="screnwu"/>
-      <el-table-column label="时薪" align="center" prop="coin"/>
-      <el-table-column label="时长结算" align="center" prop="livetimejiesuan"/>
-      <el-table-column label="收礼金额" align="center" prop="liwu"/>
-      <el-table-column label="礼物提成" align="center" prop="liwujiesuanbili"/>
-      <el-table-column label="礼物结算" align="center" prop="ticket"/>
-      <el-table-column label="彩票投注" align="center" prop="lotteryCost"/>
-      <el-table-column label="彩票提成" align="center" prop="lotteryBili"/>
-      <el-table-column label="彩票结算" align="center" prop="costQianliu"/>
-      <el-table-column label="开播次数" align="center" prop="times"/>
-      <el-table-column label="结算总计" align="center" prop="totalsettle"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNoteJump.table.familyName')" :show-overflow-tooltip="true" align="center" prop="familyName" min-width="100"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNoteJump.table.startTime')" align="center" prop="startTime" min-width="150"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNoteJump.table.endTime')" align="center" prop="endTime" min-width="150"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNoteJump.table.livetime')" align="center" prop="livetime" />
+      <el-table-column :label="$t('liveWeb.liveHostWageNoteJump.table.lwrenwu')" align="center" prop="lwrenwu"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNoteJump.table.screnwu')" align="center" prop="screnwu"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNoteJump.table.coin')" align="center" prop="coin"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNoteJump.table.livetimejiesuan')" align="center" prop="livetimejiesuan"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNoteJump.table.liwu')" align="center" prop="liwu"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNoteJump.table.liwujiesuanbili')" align="center" prop="liwujiesuanbili"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNoteJump.table.ticket')" align="center" prop="ticket"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNoteJump.table.lotteryCost')" align="center" prop="lotteryCost"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNoteJump.table.lotteryBili')" align="center" prop="lotteryBili"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNoteJump.table.costQianliu')" align="center" prop="costQianliu"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNoteJump.table.times')" align="center" prop="times"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNoteJump.table.totalsettle')" align="center" prop="totalsettle"/>
     </el-table>
 
     <pagination
@@ -148,53 +144,6 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
-
-    <!--主播时长详情-->
-    <!--    <el-dialog :close-on-click-modal="false" title="主播时长详情" :visible.sync="open"-->
-    <!--               width="1250px" append-to-body-->
-    <!--    >-->
-    <!--      <el-form :model="queryDetailsParams" ref="queryDetailsParams" :inline="true" label-width="68px">-->
-    <!--        <el-form-item prop="dateDay">-->
-    <!--          <el-date-picker clearable size="small"-->
-    <!--                          v-model="queryDetailsParams.dateDay"-->
-    <!--                          type="date"-->
-    <!--                          format="yyyy-MM-dd"-->
-    <!--                          value-format="yyyy-MM-dd"-->
-    <!--                          placeholder="选择日期"-->
-    <!--                          :style="{width: '100%'}"-->
-    <!--                          :picker-options="pickerOptions">-->
-    <!--          </el-date-picker>-->
-    <!--        </el-form-item>-->
-    <!--        <el-form-item>-->
-    <!--          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuerDetails">搜索</el-button>-->
-    <!--        </el-form-item>-->
-    <!--      </el-form>-->
-
-    <!--      <el-table :stripe="true" v-loading="loading" :data="detailsList">-->
-    <!--        <el-table-column label="主播ID" align="center" prop="hostId" min-width="100"/>-->
-    <!--        <el-table-column label="主播昵称" show-overflow-tooltip align="center" prop="nickName" min-width="120"/>-->
-    <!--        <el-table-column label="直播开始时间" align="center" prop="startTime" width="160"/>-->
-    <!--        <el-table-column label="直播结束时间" align="center" prop="endTime" width="160"/>-->
-    <!--        <el-table-column label="直播时长（小时）" align="center" prop="liveTimeSec" width="130">-->
-    <!--          <template v-slot="{row}">-->
-    <!--            {{(row.liveTimeSec/3600).toFixed(2)}}-->
-    <!--          </template>-->
-    <!--        </el-table-column>-->
-    <!--        <el-table-column label="主播结算印票" align="center" prop="ticket" width="130"/>-->
-    <!--        <el-table-column label="彩票投注" align="center" prop="cpCost" min-width="120"/>-->
-    <!--       <el-table-column label="彩票派奖" align="center" prop="cpPrize" min-width="120"/>-->
-    <!--        <el-table-column label="备注" align="center" prop="remark" min-width="120"/>-->
-    <!--        <el-table-column label="创建日期" align="center" prop="createTimes" width="160"/>-->
-    <!--      </el-table>-->
-    <!--      <pagination-->
-    <!--        v-show="detailsTotal>0"-->
-    <!--        :total="detailsTotal"-->
-    <!--        :page-sizes="[10,20,100]"-->
-    <!--        :page.sync="queryDetailsParams.pageNum"-->
-    <!--        :limit.sync="queryDetailsParams.pageSize"-->
-    <!--        @pagination="getDetailsList"-->
-    <!--      />-->
-    <!--    </el-dialog>-->
   </div>
 </template>
 
@@ -359,9 +308,9 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('是否确认导出所有主播时长数据项?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('liveWeb.liveHostWageNoteJump.confirmExportDialog.message'), this.$t('liveWeb.liveHostWageNoteJump.confirmExportDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.liveHostWageNoteJump.confirmExportDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.liveHostWageNoteJump.confirmExportDialog.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportHostWageNote(queryParams)

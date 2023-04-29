@@ -706,15 +706,12 @@ export default {
       }
     },
     memberGameData: {
-      common: {
-
-      },
       agRecord: {
         buttons: {
           more: '更多',
         },
         table: {
-          title: '注单数据详情',
+          titles: '注单数据详情',
           ordNum: '订单号',
           userName: '用户名',
           buNum: '局号',
@@ -786,6 +783,211 @@ export default {
         tBets: '总下注',
         profit: '盈利',
         setTime: '结算时间',
+        gLog: '游戏对局日志',
+        nData: '注单数据详情',
+        proName: '项目名称',
+        proVal: '项目值',
+        gbNotemp: '游戏局号不能为空',
+        script: {
+          uCode: '未洗码',
+          wCode: '已洗码',
+          unk: '未知',
+          memNum: '会员ID只能输入数字及下划线',
+          conEx: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+          warn: '警告',
+          canc: '取消',
+          mNote: '会员注单数据',
+          mPlat: '会员平台ID',
+          nPer: '期数',
+          lAm: '彩票金额',
+          amt: '金额',
+          won: '  已中奖',
+          unwin: '  未中奖',
+          lName: '彩票名称',
+          pBet: '下注时间',
+          lCode: '彩票码',
+          cNote: '下注内容',
+          nData: '注单数据'
+        },
+      },
+      record: {
+        div: {
+          button: {
+            more: '更多',
+
+          },
+          gbNum: '游戏局号',
+          pAcc: '玩家帐号',
+          rId: '房间ID',
+          gId: '游戏ID',
+          tNum: '桌子号',
+          cNo: '椅子号',
+          nPlayers: '玩家数量',
+          hPub: '手牌公共牌',
+          vBets: '有效下注',
+          wPump: '抽水',
+          setTime: '结算时间',
+          proxy: '代理ID',
+          affState: '所属站点',
+          det: '详情',
+          gMatch: '游戏对局日志',
+          cMatch: '点击打开对局详情'
+        },
+        data: {
+          gList: '游戏对局列表',
+          vipLvl: 'vip等级只能大于之前的等级'
+        }
+      }
+    },
+    memberGameDataMin: {
+      index: {
+        div: {
+          date: {
+            dRange: '日期范围',
+            sTime: '开始时间',
+            eTime: '结束时间',
+            to: '至'
+          },
+          button: {
+            search: '搜索',
+            reset: '重置',
+
+          },
+          entMemid: '请输入会员ID',
+          entbNum: '请输入游戏局号',
+          sBet: '请选择投注状态',
+          memId: '会员ID',
+          proxyId: '代理ID',
+          trnsctNum: '交易订单号',
+          gbNum: '游戏局号',
+          bStat: '下注状态',
+          pname: '平台名称',
+          vBets: '有效下注',
+          tBets: '总下注',
+          profit: '盈利',
+          pBets: '下注时间',
+          sportBet: '体育投注明细'
+        },
+        data: {
+          gbNum: '游戏局号不能为空',
+          entMemid: '会员ID只能输入数字及下划线',
+        }
+      }
+    },
+    memberGameTransfer: {
+      index: {
+        div: {
+          btn: {
+            search: '搜索',
+            reset: '重置'
+          },
+          date: {
+            dRange: '日期范围',
+            sDate: '开始日期',
+            eDate: '结束日期',
+          },
+          template: {
+            kChess: '开元棋牌',
+            ppFish: 'PP捕鱼',
+            lot77: '77彩票',
+            agPlat: 'AG平台',
+            mgPlat: 'MG平台',
+            ngElec: 'NG电子',
+            bbinV: 'BBIN视讯',
+            bbinS: 'BBIN体育',
+            bbinE: 'BBIN电子',
+            bbinF: 'BBIN捕鱼',
+            sabS: '沙巴体育',
+            mChess: '美天棋牌',
+            tChess: '凯旋棋牌',
+            lChess: '乐游棋牌',
+            nwChess: '新世界棋牌',
+            afbEl: 'AFB电子',
+            panSport: '泛亚电竞',
+            bgVid: 'BG视讯',
+            bgFish: 'BG捕鱼',
+            bgGame: 'BG电游',
+            tChessx: '凯旋棋牌X'
+          },
+          entPid: '请输入玩家ID',
+          entPod: '请输入订单ID',
+          selTstat: '请选择交易状态',
+          selTtype: '请选择交易类型',
+          tId: '交易ID',
+          pId: '玩家ID',
+          proxy: '代理ID',
+          plat: '平台ID',
+          ordId: '订单ID',
+          pType: '产品类型',
+          tStat: '交易状态',
+          succ: '成功',
+          tobe: '待处理',
+          nConf: '未确认',
+          fail: '失败',
+          unk: '未知',
+          tType: '交易类型',
+          tQuota: '额度转出',
+          cTrans: '额度转入',
+          tAmt: '交易金额',
+          tHours: '交易时间',
+
+        }
+      }
+    },
+    memberInfo: {
+      index: {
+        button: {
+          numMem: '会员人数',
+          totBal: '余额总计',
+          totDep: '保险箱余额总计',
+          statQ: '统计查询',
+          search: '搜索',
+          reset: '重置',
+          new: '新增',
+          exp: '导出',
+          ip: '查看封停ip',
+          bBlock: '批量封禁',
+
+        },
+        date: {
+          range: '日期范围',
+          sTime: '开始时间',
+          eTime: '结束时间',
+          to: '至'
+        },
+        invCode: '邀请码',
+        aState: '全部状态',
+        nick: '昵称',
+        lIp: '登录IP',
+        bName: '银行卡号/真实姓名',
+        logRem: '登录备注',
+        aType: '全部类型',
+        cvNum: '客户端版本号',
+        lDev: '登录设备',
+        memId: '会员ID',
+        uName: '用户名',
+        nName: '昵称',
+        mVip: '会员vip',
+        points: '积分',
+        sDeposit: '保险箱余额',
+        status: '状态',
+        selStat: '请选择状态',
+        memSearch: '会员ID/账号/手机号 , 逗号分隔的成员搜索',
+        regTime: '注册时间',
+        logTime: '登录时间',
+        numLog: '登陆次数',
+        logIp: '登录ip',
+        regIp: '注册IP',
+        restArea: '限制地区',
+        wRest: '出款限制',
+        ban: '是否禁言',
+        codeAcc: '打码账户',
+        valBets: '累计有效投注',
+        uType: '用户类型',
+
+
+
+
 
 
       }
@@ -805,7 +1007,10 @@ export default {
     confirmButton2: '确 定',
     cancelButton1: '取消',
     cancelButton2: '取 消',
-    operationColumn: '操作'
+    operationColumn: '操作',
+    dateTimePickerStartTime: '开始时间',
+    dateTimePickerEndTime: '结束时间',
+    dateTimePickerRangeSeparator: '至'
   },
 
   liveWeb: {
@@ -1803,6 +2008,184 @@ export default {
           investorSendInfo: '拒绝理由不能为空'
         }
       }
-    }
+    },
+
+    //TODO: lotteryBet -> Luis
+    lotteryBet: {
+      totalCostButton: '投注金额',
+      totalPrizeButton: '中奖金额',
+      totalCountButton: '统计查询',
+      exportButton: '@:common.exportButton',
+      form: {
+        lotteryFormLabel: '下注时间',
+        startTimePlaceholder: '@:common.dateTimePickerStartTime',
+        endTimePlaceholder: '@:common.dateTimePickerEndTime',
+        rangeSeparator: '@:common.dateTimePickerRangeSeparator',
+        puserIdPlaceholder: '会员ID',
+        issuePlaceholder: '下注期数',
+        lotteryNamePlaceholder: '请选择彩票名称',
+        priceMinPlaceholder: '投注￥',
+        priceMaxPlaceholder: '金额￥',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton',
+      },
+      tableColumns: {
+        puserId: '用户ID',
+        lotteryName: '彩票名称',
+        issue: '下注期数',
+        code: '开奖号码',
+        chip: '投注筹码',
+        cost: '投注金额',
+        betSelect: '下注选择',
+        status: '中奖状态',
+        prize: '中奖金额',
+        betTime: '下注时间',
+        anchor: '主播Id',
+        operation: '@:common.operationColumn'
+      },
+      responseMessages: {
+        memberIdFormatError: '会员ID只能输入数字及下划线',
+        priceLimitWarning: '请输入正确的投注金额区间值',
+        abnormalQueryError: '查询异常投注核对记录必须传入会员ID',
+        repairLotteryBetSuccess: '补单成功'
+
+      },
+      confirmExportDialog: {
+        message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+        title: '@:common.titleDialog',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+    },
+
+    //TODO: lotteryCount -> Luis
+    lotteryCount: {
+      form: {
+        puserIdLabel: '会员ID',
+        puserIdPlaceholder: '请输入会员ID',
+        betInfoLabel: '下注内容',
+        betInfoPlaceholder: '下注内容',
+        issueLabel: '期数',
+        issuePlaceholder: '期数',
+        lotteryNamePlaceholder: '请选择彩票名称',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton',
+      },
+      tableColumns: {
+        id: '主键',
+        lotteryName: '彩票名称',
+        puserId: '会员ID',
+        issue: '期数',
+        betInfo: '下注内容',
+        chip: '下注金额',
+        ip: '下注IP',
+      }
+    },
+
+    //TODO: lotteryDice -> Luis
+    lotteryDice: {
+      form: {
+        nameLabel: '名称',
+        namePlaceholder: '请输入名称',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton',
+      },
+      rows: {
+        addButton: '@:common.addButton',
+        editButton: '@:common.editButton',
+        deleteButton: '@:common.removeButton',
+        exportButton: '@:common.exportButton',
+      },
+      tableColumns: {
+        id: '编号',
+        name: '名称',
+        prize: {
+          label: '奖励',
+          spanName: '奖励',
+          tooltipContent: '返现金额或坐骑ID',
+        },
+        type: '类型',
+        description: {
+          label: '描述',
+          spanName: '描述',
+          tooltipContent: '坐骑天数或是打码倍数',
+        },
+        weight: '权重',
+        sort: '排序',
+        operation: {
+          label: '操作',
+          editButton: '@:common.editButton',
+          deleteButton: '@:common.removeButton',
+        }
+      },
+      dialogForm: {
+        nameLabel: '奖项名称',
+        namePlaceholder: '请输入名称',
+        prizeLabel: '奖励',
+        prizePlaceholder: '请输入奖励',
+        weightLabel: '权重',
+        weightPlaceholder: '请输入权重',
+        typeLabel: '奖励类型',
+        typePlaceholder: '请选择类型',
+        descriptionLabel: '描述',
+        descriptionPlaceholder: '请输入坐骑天数或是打码倍数',
+        diceValueLabel: '奖励对应的图示',
+        diceValuePlaceholder: '请输入奖励对应的图示',
+        sortLabel: '排序',
+        sortPlaceholder: '请输入排序',
+      },
+      dialogFooter: {
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton1'
+      },
+      validationMessages: {
+        emptyName: '奖项名称不能为空',
+        emptyPrize: '奖励不能为空',
+        emptyWeight: '权重不能为空',
+        emptySort: '排序不能为空',
+        emptyDescription: '描述不能为空',
+        emptyDiceValue: '骰子数值不能为空',
+        emptyType: '类型不能为空',
+      },
+      popUpTitle: {
+        addTitle: '添加中秋博饼',
+        editTitle: '修改中秋博饼',
+      },
+      responseMessages: {
+        editSuccess: '修改成功',
+        addedSuccess: '新增成功',
+        deleteSuccess: '删除成功',
+      },
+      confirmDeleteDialog: {
+        message: '是否确认删除中秋博饼编号为{ids}的数据项?',
+        title: '@:common.titleDialog',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton1'
+      },
+      confirmExportDialog: {
+        message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+        title: '@:common.titleDialog',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton1'
+      }
+    },
+
+    //TODO: lotteryDiceHistory  -> Luis
+    //TODO: lotteryGame         -> Luis
+    //TODO: lotteryHistory      -> Luis
+    //TODO: lotteryInfo         -> Luis
+    //TODO: lotteryMethod       -> Luis
+    //TODO: lotteryPrizeconfig  -> Luis
+    //TODO: lotteryPrizepool    -> Luis
+    //TODO: lotteryRule         -> Luis
+    //TODO: lotteryTemp         -> Luis
+    //TODO: wheelHistory        -> Luis
+    //TODO: wheelLottery        -> Luis
+    //TODO: wheelPool           -> Luis
+    //TODO: wheelPoolHistory    -> Luis
+    //TODO: wheelPrize          -> Luis
+    //TODO: wheelSkin           -> Luis
+    //TODO: wheelSkinReceived   -> Luis
+
   }
 }

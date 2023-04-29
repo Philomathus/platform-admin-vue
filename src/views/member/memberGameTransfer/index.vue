@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="日期范围" prop="selectDate">
+      <el-form-item :label=" $t('members.memberGameTransfer.index.div.date.dRange') " prop="selectDate">
         <el-date-picker type="daterange" v-model="queryParams.selectDate" format="yyyy-MM-dd"
-                        value-format="yyyy-MM-dd" start-placeholder="开始日期"
-                        end-placeholder="结束日期"
+                        value-format="yyyy-MM-dd" :start-placeholder=" $t('members.memberGameTransfer.index.div.date.sDate') "
+                        :end-placeholder=" $t('members.memberGameTransfer.index.div.date.eDate') "
                         range-separator="-" clearable
                         :picker-options="pickerOptions"
         ></el-date-picker>
@@ -12,7 +12,7 @@
       <el-form-item prop="searchValue" style="width: 130px;">
         <el-input
           v-model.trim="queryParams.userId"
-          placeholder="请输入玩家ID"
+          :placeholder=" $t('members.memberGameTransfer.index.div.entPid') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -21,14 +21,14 @@
       <el-form-item prop="transferId">
         <el-input
           v-model="queryParams.transferId"
-          placeholder="请输入订单ID"
+          :placeholder=" $t('members.memberGameTransfer.index.div.entPod') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item  prop="transferState">
-        <el-select v-model="queryParams.transferState" placeholder="请选择交易状态" clearable size="small" style="width: 150px;">
+        <el-select v-model="queryParams.transferState" :placeholder=" $t('members.memberGameTransfer.index.div.selStat') " clearable size="small" style="width: 150px;">
           <el-option
             v-for="(item,index) in transferStateList"
             :key="index"
@@ -38,7 +38,7 @@
         </el-select>
       </el-form-item>
       <el-form-item  prop="transferType">
-        <el-select v-model="queryParams.transferType" placeholder="请选择交易类型" clearable size="small" style="width: 150px;">
+        <el-select v-model="queryParams.transferType" :placeholder=" $t('members.memberGameTransfer.index.div.selTtype') " clearable size="small" style="width: 150px;">
           <el-option
             v-for="(item,index) in transferTypeList"
             :key="index"
@@ -48,61 +48,61 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('members.memberGameTransfer.index.div.btn.search') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('members.memberGameTransfer.index.div.btn.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
     <el-table stripe v-loading="loading" :data="memberGameTransferList">
-      <el-table-column label="交易ID" align="center" prop="id" width="180"/>
-      <el-table-column label="玩家ID" align="center" prop="userId" />
-      <el-table-column label="代理ID" align="center" prop="agent" />
-      <el-table-column label="平台ID" align="center" prop="platformId">
+      <el-table-column :label=" $t('members.memberGameTransfer.index.div.tId') " align="center" prop="id" width="180"/>
+      <el-table-column :label=" $t('members.memberGameTransfer.index.div.pId') " align="center" prop="userId" />
+      <el-table-column :label=" $t('members.memberGameTransfer.index.div.proxy') " align="center" prop="agent" />
+      <el-table-column :label=" $t('members.memberGameTransfer.index.div.plat') " align="center" prop="platformId">
         <template slot-scope="scope">
-          <span v-if="scope.row.platformId == '1'">开元棋牌</span>
-          <span v-if="scope.row.platformId == '2'">PP捕鱼</span>
-          <span v-if="scope.row.platformId == '4'">77彩票</span>
-          <span v-if="scope.row.platformId == '5'">AG平台</span>
-          <span v-if="scope.row.platformId == '6'">MG平台</span>
-          <span v-if="scope.row.platformId == '7'">NG电子</span>
-          <span v-if="scope.row.platformId == '8'">BBIN视讯</span>
-          <span v-if="scope.row.platformId == '9'">BBIN体育</span>
-          <span v-if="scope.row.platformId == '10'">BBIN电子</span>
-          <span v-if="scope.row.platformId == '11'">BBIN捕鱼</span>
-          <span v-if="scope.row.platformId == '12'">沙巴体育</span>
-          <span v-if="scope.row.platformId == '14'">美天棋牌</span>
-          <span v-if="scope.row.platformId == '15'">凯旋棋牌</span>
-          <span v-if="scope.row.platformId == '16'">乐游棋牌</span>
-          <span v-if="scope.row.platformId == '17'">新世界棋牌</span>
-          <span v-if="scope.row.platformId == '18'">AFB电子</span>
-          <span v-if="scope.row.platformId == '19'">泛亚电竞</span>
+          <span v-if="scope.row.platformId == '1'">{{ $t('members.memberGameTransfer.index.div.template.kChess') }}</span>
+          <span v-if="scope.row.platformId == '2'">{{ $t('members.memberGameTransfer.index.div.template.ppFish') }}</span>
+          <span v-if="scope.row.platformId == '4'">{{ $t('members.memberGameTransfer.index.div.template.lot77') }}</span>
+          <span v-if="scope.row.platformId == '5'">{{ $t('members.memberGameTransfer.index.div.template.agPlat') }}</span>
+          <span v-if="scope.row.platformId == '6'">{{ $t('members.memberGameTransfer.index.div.template.mgPlat') }}</span>
+          <span v-if="scope.row.platformId == '7'">{{ $t('members.memberGameTransfer.index.div.template.ngElec') }}</span>
+          <span v-if="scope.row.platformId == '8'">{{ $t('members.memberGameTransfer.index.div.template.bbinV') }}</span>
+          <span v-if="scope.row.platformId == '9'">{{ $t('members.memberGameTransfer.index.div.template.bbinS') }}</span>
+          <span v-if="scope.row.platformId == '10'">{{ $t('members.memberGameTransfer.index.div.template.bbinE') }}</span>
+          <span v-if="scope.row.platformId == '11'">{{ $t('members.memberGameTransfer.index.div.template.bbinF') }}</span>
+          <span v-if="scope.row.platformId == '12'">{{ $t('members.memberGameTransfer.index.div.template.sabS') }}</span>
+          <span v-if="scope.row.platformId == '14'">{{ $t('members.memberGameTransfer.index.div.template.mChess') }}</span>
+          <span v-if="scope.row.platformId == '15'">{{ $t('members.memberGameTransfer.index.div.template.tChess') }}</span>
+          <span v-if="scope.row.platformId == '16'">{{ $t('members.memberGameTransfer.index.div.template.lChess') }}</span>
+          <span v-if="scope.row.platformId == '17'">{{ $t('members.memberGameTransfer.index.div.template.nwChess') }}</span>
+          <span v-if="scope.row.platformId == '18'">{{ $t('members.memberGameTransfer.index.div.template.afbEl') }}</span>
+          <span v-if="scope.row.platformId == '19'">{{ $t('members.memberGameTransfer.index.div.template.panSport') }}</span>
           <span v-if="scope.row.platformId == '20'">PragmaticPlay</span>
-          <span v-if="scope.row.platformId == '21'">BG视讯</span>
-          <span v-if="scope.row.platformId == '22'">BG捕鱼</span>
-          <span v-if="scope.row.platformId == '23'">BG电游</span>
-          <span v-if="scope.row.platformId == '51'">凯旋棋牌X</span>
+          <span v-if="scope.row.platformId == '21'">{{ $t('members.memberGameTransfer.index.div.template.bgVid') }}</span>
+          <span v-if="scope.row.platformId == '22'">{{ $t('members.memberGameTransfer.index.div.template.bgFish') }}</span>
+          <span v-if="scope.row.platformId == '23'">{{ $t('members.memberGameTransfer.index.div.template.bgGame') }}</span>
+          <span v-if="scope.row.platformId == '51'">{{ $t('members.memberGameTransfer.index.div.template.tChessx') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="订单ID" align="center" prop="transferId" min-width="100"/>
-      <el-table-column label="产品类型" align="center" prop="product" />
-      <el-table-column label="交易状态" align="center" prop="transferState">
+      <el-table-column :label=" $t('members.memberGameTransfer.index.div.ordId') " align="center" prop="transferId" min-width="100"/>
+      <el-table-column :label=" $t('members.memberGameTransfer.index.div.pType') " align="center" prop="product" />
+      <el-table-column :label=" $t('members.memberGameTransfer.index.div.tStat') " align="center" prop="transferState">
         <template slot-scope="scope">
-          <span v-if="scope.row.transferState == 'Succeeded'" :style="{'color': '#5FB878'}">成功</span>
-          <span v-else-if="scope.row.transferType == 'Inprogress'" :style="{'color': 'rgb(245 86 11)'}">待处理</span>
-          <span v-else-if="scope.row.transferType == 'Unconfirmed'" :style="{'color': 'rgb(245 86 11)'}">未确认</span>
-          <span v-else-if="scope.row.transferType == 'Failed'" :style="{'color': 'rgb(245 86 11)'}">失败</span>
-          <span v-else>未知</span>
+          <span v-if="scope.row.transferState == 'Succeeded'" :style="{'color': '#5FB878'}">{{ $t('members.memberGameTransfer.index.div.succ') }}</span>
+          <span v-else-if="scope.row.transferType == 'Inprogress'" :style="{'color': 'rgb(245 86 11)'}">{{ $t('members.memberGameTransfer.index.div.tobe') }}</span>
+          <span v-else-if="scope.row.transferType == 'Unconfirmed'" :style="{'color': 'rgb(245 86 11)'}">{{ $t('members.memberGameTransfer.index.div.nConf') }}</span>
+          <span v-else-if="scope.row.transferType == 'Failed'" :style="{'color': 'rgb(245 86 11)'}">{{ $t('members.memberGameTransfer.index.div.fail') }}</span>
+          <span v-else>{{ $t('members.memberGameTransfer.index.div.unk') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="交易类型" align="center" prop="transferType">
+      <el-table-column :label=" $t('members.memberGameTransfer.index.div.tType') " align="center" prop="transferType">
           <template slot-scope="scope">
-            <span v-if="scope.row.transferType == 'Deposit'" :style="{'color': '#5FB878'}">额度转出</span>
-            <span v-else-if="scope.row.transferType == 'Withdraw'" :style="{'color': 'rgb(245 86 11)'}">额度转入</span>
-            <span v-else>未知</span>
+            <span v-if="scope.row.transferType == 'Deposit'" :style="{'color': '#5FB878'}">{{ $t('members.memberGameTransfer.index.div.tQuota') }}</span>
+            <span v-else-if="scope.row.transferType == 'Withdraw'" :style="{'color': 'rgb(245 86 11)'}">{{ $t('members.memberGameTransfer.index.div.cTrans') }}</span>
+            <span v-else>{{ $t('members.memberGameTransfer.index.div.unk') }}</span>
           </template>
       </el-table-column>
-      <el-table-column label="交易金额" align="center" prop="transferAmount" />
-      <el-table-column label="交易时间" align="center" prop="transferTime" width="180">
+      <el-table-column :label=" $t('members.memberGameTransfer.index.div.tAmt') " align="center" prop="transferAmount" />
+      <el-table-column :label=" $t('members.memberGameTransfer.index.div.tAmt') " align="center" prop="transferTime" width="180">
         <template slot-scope="scope">
           <span>{{ scope.row.transferTime  }}</span>
         </template>

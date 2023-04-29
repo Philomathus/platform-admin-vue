@@ -1,18 +1,18 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="名称" prop="name">
+      <el-form-item :label="$t('lotteryDice.form.nameLabel')" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入名称"
+          :placeholder="$t('lotteryDice.form.namePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('lotteryDice.form.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('lotteryDice.form.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -25,7 +25,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:wheelDice:add']"
-        >新增</el-button>
+        >{{$t('lotteryDice.rows.addButton')}}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -36,7 +36,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:wheelDice:edit']"
-        >修改</el-button>
+        >{{$t('lotteryDice.rows.editButton')}}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -47,7 +47,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:wheelDice:remove']"
-        >删除</el-button>
+        >{{$t('lotteryDice.rows.deleteButton')}}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -57,42 +57,42 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:wheelDice:export']"
-        >导出</el-button>
+        >{{$t('lotteryDice.rows.exportButton')}}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="wheelDiceList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="编号" align="center" prop="id" />
-      <el-table-column label="名称" align="center" prop="name" />
-      <el-table-column label="奖励" align="center" prop="prize" >
+      <el-table-column :label="$t('lotteryDice.tableColumns.id')" align="center" prop="id" />
+      <el-table-column :label="$t('lotteryDice.tableColumns.name')" align="center" prop="name" />
+      <el-table-column :label="$t('lotteryDice.tableColumns.prize.label')" align="center" prop="prize" >
         <template slot="header">
-          <span>奖励</span>
+          <span>{{$t('lotteryDice.tableColumns.prize.spanName')}}</span>
           <el-tooltip popper-class="tooltip" placement="top">
             <i class="el-icon-question"></i>
             <div slot="content" class="tooltip-content">
-              <div>返现金额或坐骑ID</div>
+              <div>{{$t('lotteryDice.tableColumns.prize.tooltipContent')}}</div>
             </div>
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column label="类型" align="center" prop="type" :formatter="typeFormat" >
+      <el-table-column :label="$t('lotteryDice.tableColumns.type')" align="center" prop="type" :formatter="typeFormat" >
       </el-table-column>
-      <el-table-column label="描述" align="center" prop="des" >
+      <el-table-column :label="$t('lotteryDice.tableColumns.description.label')" align="center" prop="des" >
         <template slot="header">
-          <span>描述</span>
+          <span>{{$t('lotteryDice.tableColumns.description.spanName')}}</span>
           <el-tooltip popper-class="tooltip" placement="top">
             <i class="el-icon-question"></i>
             <div slot="content" class="tooltip-content">
-              <div>坐骑天数或是打码倍数</div>
+              <div>{{$t('lotteryDice.tableColumns.description.tooltipContent')}}</div>
             </div>
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column label="权重" align="center" prop="weight" />
-      <el-table-column label="排序" align="center" prop="odr" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('lotteryDice.tableColumns.weight')" align="center" prop="weight" />
+      <el-table-column :label="$t('lotteryDice.tableColumns.sort')" align="center" prop="odr" />
+      <el-table-column :label="$t('lotteryDice.tableColumns.operation.label')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -100,7 +100,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:wheelDice:edit']"
-          >修改</el-button>
+          >{{$t('lotteryDice.tableColumns.operation.editButton')}}</el-button>
           <el-button
             style="color: #FF5722"
             size="mini"
@@ -108,7 +108,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:wheelDice:remove']"
-          >删除</el-button>
+          >{{$t('lotteryDice.tableColumns.operation.deleteButton')}}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -124,17 +124,17 @@
     <!-- 添加或修改中秋博饼对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="570px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="150px" style="padding-right: 20px">
-        <el-form-item label="奖项名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入名称" />
+        <el-form-item :label="$t('lotteryDice.dialogForm.nameLabel')" prop="name">
+          <el-input v-model="form.name" :placeholder="$t('lotteryDice.dialogForm.namePlaceholder')" />
         </el-form-item>
-        <el-form-item label="奖励" prop="prize">
-          <el-input v-model="form.prize" type="number" placeholder="请输入奖励" />
+        <el-form-item :label="$t('lotteryDice.dialogForm.prizeLabel')" prop="prize">
+          <el-input v-model="form.prize" type="number" :placeholder="$t('lotteryDice.dialogForm.prizePlaceholder')" />
         </el-form-item>
-        <el-form-item label="权重" prop="weight">
-          <el-input v-model="form.weight" type="number" placeholder="请输入权重" />
+        <el-form-item :label="$t('lotteryDice.dialogForm.weightLabel')" prop="weight">
+          <el-input v-model="form.weight" type="number" :placeholder="$t('lotteryDice.dialogForm.weightPlaceholder')" />
         </el-form-item>
-        <el-form-item label="奖励类型" prop="type">
-          <el-select v-model="form.type" placeholder="请选择类型">
+        <el-form-item :label="$t('lotteryDice.dialogForm.typeLabel')" prop="type">
+          <el-select v-model="form.type" :placeholder="$t('lotteryDice.dialogForm.typePlaceholder')">
             <el-option
               v-for="dict in typeOptions"
               :key="dict.dictValue"
@@ -143,19 +143,19 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="描述" prop="des">
-          <el-input v-model="form.des"  type="number" placeholder="请输入坐骑天数或是打码倍数" />
+        <el-form-item :label="$t('lotteryDice.dialogForm.descriptionLabel')" prop="des">
+          <el-input v-model="form.des"  type="number" :placeholder="$t('lotteryDice.dialogForm.descriptionPlaceholder')" />
         </el-form-item>
-        <el-form-item label="奖励对应的图示" prop="diceValue">
-          <el-input v-model="form.diceValue" placeholder="请输入奖励对应的图示" />
+        <el-form-item :label="$t('lotteryDice.dialogForm.diceValueLabel')" prop="diceValue">
+          <el-input v-model="form.diceValue" :placeholder="$t('lotteryDice.dialogForm.diceValuePlaceholder')" />
         </el-form-item>
-        <el-form-item label="排序" prop="odr">
-          <el-input v-model="form.odr" type="number" placeholder="请输入排序" />
+        <el-form-item :label="$t('lotteryDice.dialogForm.sortLabel')" prop="odr">
+          <el-input v-model="form.odr" type="number" :placeholder="$t('lotteryDice.dialogForm.sortPlaceholder')" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer" style="padding-right: 20px">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{$t('lotteryDice.dialogFooter.confirmButton')}}</el-button>
+        <el-button @click="cancel">{{$t('lotteryDice.dialogFooter.cancelButton')}}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -201,25 +201,25 @@ export default {
       // 表单校验
       rules: {
         name: [
-          {required: true, message: "奖项名称不能为空", trigger: "blur"}
+          {required: true, message: this.$t('lotteryBet.validationMessages.emptyName') , trigger: "blur"}
         ],
         prize: [
-          {required: true, message: "奖励不能为空", trigger: "blur"}
+          {required: true, message: this.$t('lotteryBet.validationMessages.emptyPrize'), trigger: "blur"}
         ],
         weight: [
-          {required: true, message: "权重不能为空", trigger: "blur"}
+          {required: true, message: this.$t('lotteryBet.validationMessages.emptyWeight'), trigger: "blur"}
         ],
         odr: [
-          {required: true, message: "排序不能为空", trigger: "blur"}
+          {required: true, message: this.$t('lotteryBet.validationMessages.emptySort'), trigger: "blur"}
         ],
         des: [
-          {required: true, message: "类型不能为空", trigger: "blur"}
+          {required: true, message: this.$t('lotteryBet.validationMessages.emptyDescription'), trigger: "blur"}
         ],
         diceValue: [
-          {required: true, message: "骰子数值不能为空", trigger: "blur"}
+          {required: true, message: this.$t('lotteryBet.validationMessages.emptyDiceValue'), trigger: "blur"}
         ],
         type: [
-          {required: true, message: "类型不能为空", trigger: "blur"}
+          {required: true, message: this.$t('lotteryBet.validationMessages.emptyType'), trigger: "blur"}
         ],
       }
     };
@@ -280,7 +280,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加中秋博饼";
+      this.title = this.$t('lotteryBet.popUpTitle.addTitle');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -289,7 +289,7 @@ export default {
       getWheelDice(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改中秋博饼";
+        this.title = this.$t('lotteryBet.popUpTitle.editTitle');
       });
     },
     /** 提交按钮 */
@@ -298,13 +298,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateWheelDice(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess(this.$t('lotteryBet.responseMessages.editSuccess'));
               this.open = false;
               this.getList();
             });
           } else {
             addWheelDice(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess(this.$t('lotteryBet.responseMessages.addedSuccess'));
               this.open = false;
               this.getList();
             });
@@ -315,24 +315,25 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除中秋博饼编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+
+      this.$confirm(this.$t('lotteryDice.confirmDeleteDialog.message', {ids: row.ids}), this.$t('lotteryBet.confirmDeleteDialog.title'), {
+        confirmButtonText: this.$t('lotteryBet.confirmDeleteDialog.confirmButton'),
+        cancelButtonText: this.$t('lotteryBet.confirmDeleteDialog.cancelButton'),
         type: "warning"
       }).then(function() {
         return delWheelDice(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess(this.$t('lotteryBet.responseMessages.deleteSuccess'));
       }).catch(() => {
 	  })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('lotteryBet.confirmExportDialog.message'), this.$t('lotteryBet.confirmExportDialog.title'), {
+        confirmButtonText: this.$t('lotteryBet.confirmExportDialog.confirmButton'),
+        cancelButtonText: this.$t('lotteryBet.confirmExportDialog.cancelButton'),
         type: "warning"
       }).then(function() {
         return exportWheelDice(queryParams);

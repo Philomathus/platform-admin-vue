@@ -805,7 +805,10 @@ export default {
     confirmButton2: '确 定',
     cancelButton1: '取消',
     cancelButton2: '取 消',
-    operationColumn: '操作'
+    operationColumn: '操作',
+    dateTimePickerStartTime: '开始时间',
+    dateTimePickerEndTime: '结束时间',
+    dateTimePickerRangeSeparator: '至'
   },
 
   liveWeb: {
@@ -1803,6 +1806,184 @@ export default {
           investorSendInfo: '拒绝理由不能为空'
         }
       }
-    }
+    },
+
+    //TODO: lotteryBet -> Luis
+    lotteryBet: {
+      totalCostButton: '投注金额',
+      totalPrizeButton: '中奖金额',
+      totalCountButton: '统计查询',
+      exportButton: '@:common.exportButton',
+      form: {
+        lotteryFormLabel: '下注时间',
+        startTimePlaceholder: '@:common.dateTimePickerStartTime',
+        endTimePlaceholder: '@:common.dateTimePickerEndTime',
+        rangeSeparator: '@:common.dateTimePickerRangeSeparator',
+        puserIdPlaceholder: '会员ID',
+        issuePlaceholder: '下注期数',
+        lotteryNamePlaceholder: '请选择彩票名称',
+        priceMinPlaceholder: '投注￥',
+        priceMaxPlaceholder: '金额￥',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton',
+      },
+      tableColumns: {
+        puserId: '用户ID',
+        lotteryName: '彩票名称',
+        issue: '下注期数',
+        code: '开奖号码',
+        chip: '投注筹码',
+        cost: '投注金额',
+        betSelect: '下注选择',
+        status: '中奖状态',
+        prize: '中奖金额',
+        betTime: '下注时间',
+        anchor: '主播Id',
+        operation: '@:common.operationColumn'
+      },
+      responseMessages: {
+        memberIdFormatError: '会员ID只能输入数字及下划线',
+        priceLimitWarning: '请输入正确的投注金额区间值',
+        abnormalQueryError: '查询异常投注核对记录必须传入会员ID',
+        repairLotteryBetSuccess: '补单成功'
+
+      },
+      confirmExportDialog: {
+        message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+        title: '@:common.titleDialog',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+    },
+
+    //TODO: lotteryCount -> Luis
+    lotteryCount: {
+      form: {
+        puserIdLabel: '会员ID',
+        puserIdPlaceholder: '请输入会员ID',
+        betInfoLabel: '下注内容',
+        betInfoPlaceholder: '下注内容',
+        issueLabel: '期数',
+        issuePlaceholder: '期数',
+        lotteryNamePlaceholder: '请选择彩票名称',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton',
+      },
+      tableColumns: {
+        id: '主键',
+        lotteryName: '彩票名称',
+        puserId: '会员ID',
+        issue: '期数',
+        betInfo: '下注内容',
+        chip: '下注金额',
+        ip: '下注IP',
+      }
+    },
+
+    //TODO: lotteryDice -> Luis
+    lotteryDice: {
+      form: {
+        nameLabel: '名称',
+        namePlaceholder: '请输入名称',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton',
+      },
+      rows: {
+        addButton: '@:common.addButton',
+        editButton: '@:common.editButton',
+        deleteButton: '@:common.removeButton',
+        exportButton: '@:common.exportButton',
+      },
+      tableColumns: {
+        id: '编号',
+        name: '名称',
+        prize: {
+          label: '奖励',
+          spanName: '奖励',
+          tooltipContent: '返现金额或坐骑ID',
+        },
+        type: '类型',
+        description: {
+          label: '描述',
+          spanName: '描述',
+          tooltipContent: '坐骑天数或是打码倍数',
+        },
+        weight: '权重',
+        sort: '排序',
+        operation: {
+          label: '操作',
+          editButton: '@:common.editButton',
+          deleteButton: '@:common.removeButton',
+        }
+      },
+      dialogForm: {
+        nameLabel: '奖项名称',
+        namePlaceholder: '请输入名称',
+        prizeLabel: '奖励',
+        prizePlaceholder: '请输入奖励',
+        weightLabel: '权重',
+        weightPlaceholder: '请输入权重',
+        typeLabel: '奖励类型',
+        typePlaceholder: '请选择类型',
+        descriptionLabel: '描述',
+        descriptionPlaceholder: '请输入坐骑天数或是打码倍数',
+        diceValueLabel: '奖励对应的图示',
+        diceValuePlaceholder: '请输入奖励对应的图示',
+        sortLabel: '排序',
+        sortPlaceholder: '请输入排序',
+      },
+      dialogFooter: {
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton1'
+      },
+      validationMessages: {
+        emptyName: '奖项名称不能为空',
+        emptyPrize: '奖励不能为空',
+        emptyWeight: '权重不能为空',
+        emptySort: '排序不能为空',
+        emptyDescription: '描述不能为空',
+        emptyDiceValue: '骰子数值不能为空',
+        emptyType: '类型不能为空',
+      },
+      popUpTitle: {
+        addTitle: '添加中秋博饼',
+        editTitle: '修改中秋博饼',
+      },
+      responseMessages: {
+        editSuccess: '修改成功',
+        addedSuccess: '新增成功',
+        deleteSuccess: '删除成功',
+      },
+      confirmDeleteDialog: {
+        message: '是否确认删除中秋博饼编号为{ids}的数据项?',
+        title: '@:common.titleDialog',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton1'
+      },
+      confirmExportDialog: {
+        message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+        title: '@:common.titleDialog',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton1'
+      }
+    },
+
+    //TODO: lotteryDiceHistory  -> Luis
+    //TODO: lotteryGame         -> Luis
+    //TODO: lotteryHistory      -> Luis
+    //TODO: lotteryInfo         -> Luis
+    //TODO: lotteryMethod       -> Luis
+    //TODO: lotteryPrizeconfig  -> Luis
+    //TODO: lotteryPrizepool    -> Luis
+    //TODO: lotteryRule         -> Luis
+    //TODO: lotteryTemp         -> Luis
+    //TODO: wheelHistory        -> Luis
+    //TODO: wheelLottery        -> Luis
+    //TODO: wheelPool           -> Luis
+    //TODO: wheelPoolHistory    -> Luis
+    //TODO: wheelPrize          -> Luis
+    //TODO: wheelSkin           -> Luis
+    //TODO: wheelSkinReceived   -> Luis
+
   }
 }

@@ -1,21 +1,29 @@
 <template>
   <div class="app-container">
     <div v-loading="totalLoading">
-    <el-button type="primary" @click="copy1">投注金额 {{ this.totalData.totalCost||0 }}</el-button>
-    <el-button type="success" @click="copy2">中奖金额 {{this.totalData.totalPrize||0 }}</el-button>
-    <el-button  type="primary" icon="el-icon-search" size="mini" @click="getCountTotal()" style="margin-left: 20px">统计查询</el-button>
+    <el-button type="primary" @click="copy1">{{$t('lotteryBet.totalCostButton')}} {{ this.totalData.totalCost||0 }}</el-button>
+    <el-button type="success" @click="copy2">{{$t('lotteryBet.totalPrizeButton')}} {{this.totalData.totalPrize||0 }}</el-button>
+    <el-button  type="primary" icon="el-icon-search" size="mini" @click="getCountTotal()" style="margin-left: 20px">{{$t('lotteryBet.totalCountButton')}}</el-button>
     </div>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px" style="margin-top: 20px">
-      <el-form-item label="下注时间" prop="betTime">
-        <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" style="width: 360px" start-placeholder="开始时间"
-                        end-placeholder="结束时间" range-separator="至" :default-time="['00:00:00', '23:59:59']" clearable :picker-options="pickerOptions"
+      <el-form-item :label="$t('lotteryBet.form.lotteryFormLabel')" prop="betTime">
+        <el-date-picker type="datetimerange"
+                        v-model="queryParams.selectDate"
+                        format="yyyy-MM-dd HH:mm:ss"
+                        value-format="yyyy-MM-dd HH:mm:ss"
+                        style="width: 360px"
+                        :start-placeholder="$t('lotteryBet.form.startTimePlaceholder')"
+                        :end-placeholder="$t('lotteryBet.form.endTimePlaceholder')"
+                        :range-separator="$t('lotteryBet.form.rangeSeparator')"
+                        default-time="['00:00:00', '23:59:59']"
+                        clearable
+                        :picker-options="pickerOptions"
         />
       </el-form-item>
       <el-form-item prop="puserId">
         <el-input
           v-model="queryParams.puserId"
-          placeholder="会员ID"
+          :placeholder="$t('lotteryBet.form.puserIdPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -24,7 +32,7 @@
       <el-form-item prop="issue" style="width: 150px;">
         <el-input
           v-model="queryParams.issue"
-          placeholder="下注期数"
+          :placeholder="$t('lotteryBet.form.issuePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -33,7 +41,7 @@
       <el-form-item prop="lotteryName">
         <el-select
           v-model="queryParams.lotteryName"
-          placeholder="请选择彩票名称"
+          :placeholder="$t('lotteryBet.form.lotteryNamePlaceholder')"
           clearable
           size="small"
           style="width: 240px"
@@ -49,7 +57,7 @@
       <el-form-item prop="cost">
         <el-input
           v-model="queryParams.priceMin"
-          placeholder="投注￥"
+          :placeholder="$t('lotteryBet.form.priceMinPlaceholder')"
           clearable
           autocomplete="on"
           min="0"
@@ -62,7 +70,7 @@
         -
         <el-input
           v-model="queryParams.priceMax"
-          placeholder="金额￥"
+          :placeholder="$t('lotteryBet.form.priceMaxPlaceholder')"
           clearable
           autocomplete="on"
           min="0"
@@ -74,8 +82,8 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('lotteryBet.form.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('lotteryBet.form.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -88,39 +96,39 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:lotteryBet:list']"
-        >导出
+        >{{$t('lotteryBet.exportButton')}}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="lotteryBet0List">
-      <el-table-column label="用户ID" align="center" prop="puserId"/>
-      <el-table-column label="彩票名称" align="center" prop="lotteryName"/>
-      <el-table-column label="下注期数" align="center" prop="issue"/>
-      <el-table-column label="开奖号码" align="center" prop="code"/>
-      <el-table-column label="投注筹码" align="center" prop="chip"/>
-      <el-table-column label="投注金额" align="center" prop="cost"/>
-      <el-table-column label="下注选择" align="center" prop="betSelect"/>
-      <el-table-column label="中奖状态" align="center" prop="status">
+      <el-table-column :label="$t('lotteryBet.tableColumns.puserId')" align="center" prop="puserId"/>
+      <el-table-column :label="$t('lotteryBet.tableColumns.lotteryName')" align="center" prop="lotteryName"/>
+      <el-table-column :label="$t('lotteryBet.tableColumns.issue')" align="center" prop="issue"/>
+      <el-table-column :label="$t('lotteryBet.tableColumns.code')" align="center" prop="code"/>
+      <el-table-column :label="$t('lotteryBet.tableColumns.chip')" align="center" prop="chip"/>
+      <el-table-column :label="$t('lotteryBet.tableColumns.cost')" align="center" prop="cost"/>
+      <el-table-column :label="$t('lotteryBet.tableColumns.betSelect')" align="center" prop="betSelect"/>
+      <el-table-column :label="$t('lotteryBet.tableColumns.status')" align="center" prop="status">
         <template slot-scope="scope">
           <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">
             {{ status.dictLabel }}
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="中奖金额" align="center" prop="prize"/>
+      <el-table-column :label="$t('lotteryBet.tableColumns.prize')" align="center" prop="prize"/>
       <!--      <el-table-column label="下注选择菜单" align="center" prop="methodId" />-->
       <!--      <el-table-column label="下注索引" align="center" prop="betIds" />-->
       <!--      <el-table-column label="下注彩种id" align="center" prop="lotteryId" />-->
       <!--      <el-table-column label="主播ID" align="center" prop="anchor" />-->
-      <el-table-column label="下注时间" align="center" min-width="120px" prop="betTime" width="180">
+      <el-table-column :label="$t('lotteryBet.tableColumns.betTime')" align="center" min-width="120px" prop="betTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.betTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="主播Id" align="center" prop="anchor"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('lotteryBet.tableColumns.anchor')" align="center" prop="anchor"/>
+      <el-table-column :label="$t('lotteryBet.tableColumns.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -280,7 +288,7 @@ export default {
         const reg = '^[0-9a-zA-Z_]{1,}$'
         let flag = this.queryParams.puserId.match(reg)
         if(!flag){
-          this.msgError("会员ID只能输入数字及下划线")
+          this.msgError(this.$t('lotteryBet.responseMessages.memberIdFormatError'))
           return
         }
       }
@@ -289,17 +297,17 @@ export default {
       var max=this.queryParams.priceMax
       if ((min!=="" || min!=null) && (max!=="" || max!=null)){
         if (parseInt(min)>parseInt(max)){
-          this.$message.warning("请输入正确的投注金额区间值")
+          this.$message.warning(this.$t('lotteryBet.responseMessages.priceLimitWarning'))
         }else {
           this.getList()
         }
       }else if ((min==="" || min==null) && (max==="" || max==null)){
         this.getList()
       }else {
-        this.$message.warning("请输入正确的投注金额区间值")
+        this.$message.warning(this.$t('lotteryBet.responseMessages.priceLimitWarning'))
       }
       if (this.queryParams.abnormal && !this.queryParams.puserId) {
-        this.$message.error(`查询异常投注核对记录必须传入会员ID`)
+        this.$message.error(this.$t('lotteryBet.responseMessages.abnormalQueryError'))
         return
       }
       this.getList()
@@ -313,9 +321,9 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('lotteryBet.confirmExportDialog.message'), this.$t('lotteryBet.confirmExportDialog.title'), {
+        confirmButtonText: this.$t('lotteryBet.confirmExportDialog.confirmButton'),
+        cancelButtonText: this.$t('lotteryBet.confirmExportDialog.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportLotteryBet0(queryParams);
@@ -327,7 +335,7 @@ export default {
     /** 补单 **/
     handleRepairLotteryBet0(row) {
       repaireLotteryBet0(row).then(response => {
-        this.msgSuccess("补单成功");
+        this.msgSuccess(this.$t('lotteryBet.responseMessages.repairLotteryBetSuccess'));
         this.open = false;
         this.getList();
       });

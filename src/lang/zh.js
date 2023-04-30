@@ -1005,12 +1005,15 @@ export default {
     exportButton: '导出',
     confirmButton1: '确认',
     confirmButton2: '确 定',
+    confirmButton3: '确定',
     cancelButton1: '取消',
     cancelButton2: '取 消',
     operationColumn: '操作',
     dateTimePickerStartTime: '开始时间',
     dateTimePickerEndTime: '结束时间',
-    dateTimePickerRangeSeparator: '至'
+    dateTimePickerRangeSeparator: '至',
+    datePickerStartDate: '开始日期',
+    datePickerEndDate: '结束日期'
   },
 
   liveWeb: {
@@ -2171,21 +2174,383 @@ export default {
     },
 
     //TODO: lotteryDiceHistory  -> Luis
+    lotteryDiceHistory: {
+      form: {
+        datePickerPlaceholder: '选择日期',
+        pUserIdPlaceholder: '请输入会员ID',
+        namePlaceholder: '请输入昵称',
+        diceNamePlaceholder: '请输入奖项',
+        diceIdPlaceholder: '请输入奖项id',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton',
+      },
+      exportButton: '@:common.exportButton',
+      tableColumns: {
+        id: 'id',
+        pUserId: '会员ID',
+        name: '昵称',
+        diceName: '奖项',
+        diceValue: '骰数值',
+        diceId: '奖项id',
+        cTime: '时间',
+      },
+      dialogForm: {
+        pUserIdLabel: '会员ID',
+        pUserIdPlaceholder: '请输入会员ID',
+        nameLabel: '昵称',
+        namePlaceholder: '请输入昵称',
+        diceNameLabel: '奖项',
+        diceNamePlaceholder: '请输入奖项',
+        cTimeLabel: '时间',
+        datePickerPlaceholder: '选择时间',
+        diceValueLabel: '骰数值',
+        diceValuePlaceholder: '请输入骰数值',
+        diceIdLabel: '奖项id',
+        diceIdPlaceholder: '请输入奖项id',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton1',
+      },
+      responseMessages: {
+        pUserIdFormatError: '会员ID只能输入数字及下划线',
+        updateWheelHistoryDiceSuccess: '修改成功',
+        addWheelHistoryDiceSuccess: '新增成功',
+        deleteWheelHistoryDiceSuccess: '删除成功'
+      },
+      titleMessages: {
+        add: '添加博饼中奖记录',
+        update: '修改博饼中奖记录'
+      },
+      confirmDeleteDialog:{
+        message: '是否确认删除博饼中奖记录编号为"{ids}"的数据项?',
+        title: '@:common.titleDialog',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton1'
+      },
+      confirmExportDialog: {
+        message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+        title: '@:common.titleDialog',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      }
+    },
+
     //TODO: lotteryGame         -> Luis
+    lotteryGame: {
+      form: {
+        methodIdLabel: '菜单id',
+        methodIdPlaceholder: '请输入菜单id',
+        typeLabel: '类型',
+        typePlaceholder: '请选择所属彩种类型',
+        infoLabel: '简介',
+        infoPlaceholder: '请输入简介',
+        victoryRuleLabel: '获奖规则',
+        victoryRulePlaceholder: '请输入获奖规则',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton',
+      },
+      tableColumns: {
+        methodId: '菜单id',
+        type: '类型',
+        info: '简介',
+        odds: '赔率',
+        victoryRule: '获奖规则',
+        ind: '唯一编号',
+        operationLabel: '操作',
+        editButton: '修改赔率',
+      },
+      dialogForm: {
+        oddsLabel: '赔率',
+        oddsPlaceholder: '请输入赔率',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton1'
+      },
+      lotteryType: {
+        timeShareLabel: '时时彩',
+        timeShareValue: '时时彩',
+        '11select5Label': '11选5',
+        '11select5Value': '11选5',
+        fastThreeLabel: '快三',
+        fastThreeValue: '快三',
+        racingLabel: '赛车',
+        racingValue: '赛车',
+        markSixLabel: '六合彩',
+        markSixValue: '六合彩',
+        baccaratLabel: '百家乐',
+        baccaratValue: 'baccarat',
+        hundredBullsLabel: '百人牛牛',
+        hundredBullsValue: '百人牛牛'
+      },
+      updateOddsTitle: '修改赔率',
+      updateSuccessMessage: '修改成功',
+    },
+
     //TODO: lotteryHistory      -> Luis
+    lotteryHistory:{
+      form: {
+        namePlaceholder: '请选择彩种',
+        statusPlaceholder: '全部状态',
+        issuePlaceholder: '请输入期数',
+        datePickerStartDate: '@:common.datePickerStartDate',
+        datePickerEndDate: '@:common.datePickerEndDate',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton',
+        addIssueButton: '补期'
+      },
+      tableColumns:{
+        name: '彩票名称',
+        issue: '期数',
+        code: '开奖号码',
+        ktime: '开奖时间',
+        totalBet: '总投注',
+        killRate: '杀率',
+        totalPrize: '派奖',
+        status: '状态',
+        operationLabel: '@:common.operationColumn',
+        repaymentButton: '重新派奖',
+      },
+      dialogForm:{
+        gameStartTimeLabel: '开始期数',
+        startIssuePlaceholder: '请输入开始期数',
+        gameEndTimeLabel: '结束期数',
+        endIssuePlaceholder: '请输入结束期数',
+        nameLabel: '彩票名称',
+        namePlaceholder: '请选择彩种'
+      },
+      dialogFooter:{
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton1'
+      },
+      rulesMessage:{
+        ktime: '开奖时间不能为空',
+        name: '彩种不能为空',
+        startIssue: '开始期数不能为空',
+        endIssue: '结束期数不能为空',
+      },
+      status:{
+        bettingIn: '投注中',
+        prizeDrawn: '已开奖',
+        prizePaid: '已派奖',
+        lotteryFailure: '开奖失败'
+      },
+      rePayoutSuccessMessage: '重新派奖成功',
+      addIssueSuccessMessage: '新增成功',
+      issueTitle: '补开奖'
+    },
+
     //TODO: lotteryInfo         -> Luis
+    lotteryInfo:{
+      form: {
+        nameLabel: '彩种名称',
+        namePlaceholder: '请输入彩种名称',
+        statusLabel: '状态',
+        statusPlaceholder: '请选择状态',
+        typeLabel: '所属彩种类型',
+        typePlaceholder: '请选择所属彩种类型',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      tableColumns:{
+        name: '彩票名称',
+        type: '所属彩种类型',
+        icon: '图标',
+        status: '状态',
+        killRate: '杀率',
+        cycle: '周期',
+        minCost: '最小投注金额',
+        order: '排序',
+        operationLabel: '操作',
+        editButton: '@:common.editButton',
+      },
+      dialogForm:{
+        title: '修改',
+        iconLabel: '图标',
+        orderLabel: '排序',
+        orderPlaceholder: '请输入排序'
+      } ,
+      dialogFooter:{
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton1'
+      },
+      statusLabel:{
+        enable: '启用',
+        disable: '禁用'
+      },
+      officialLabel:{
+        official: '官方',
+        selfOpeningDatabase: '自开(数据库)',
+        selfOpeningProgram: '自开(程序)'
+      },
+      type:{
+        timeShareValue: '时时彩',
+        timeShareLabel: '时时彩',
+        '11select5Value': '11选5',
+        '11select5Label': '11选5',
+        fastThreeValue: '快三',
+        fastThreeLabel: '快三',
+        racingValue: '赛车',
+        racingLabel: '赛车',
+        markSixValue: '六合彩',
+        markSixLabel: '六合彩'
+      },
+      rulesNameMessage: '彩种名称不能为空',
+      updateSuccessMessage: '修改成功',
+      updateBanErrorMessage: '修改禁播状态失败',
+      promptOpensDialog: {
+        title: '@:common.titlePrompt',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton1'
+      }
+    },
+
     //TODO: lotteryMethod       -> Luis
-    //TODO: lotteryPrizeconfig  -> Luis
+    lotteryMethod:{
+      form:{
+        lotteryTypeLabel: '所属彩种类型',
+        lotteryTypePlaceholder: '请选择所属彩种类型',
+        nameLabel: '投注名称',
+        namePlaceholder: '请输入投注名称',
+      },
+      tableColumns: {
+        lotteryType: '所属彩种类型',
+        name: '投注名称',
+        order: '排序键order',
+      },
+      lotteryType:{
+        timeShareValue: '时时彩',
+        timeShareLabel: '时时彩',
+        '11select5Value': '11选5',
+        '11select5Label': '11选5',
+        fastThreeValue: '快三',
+        fastThreeLabel: '快三',
+        racingValue: '赛车',
+        racingLabel: '赛车',
+        markSixValue: '六合彩',
+        markSixLabel: '六合彩',
+        baccaratValue: 'baccarat',
+        baccaratLabel: '百家乐',
+        hundredBullsValue: '百人牛牛',
+        hundredBullsLabel: '百人牛牛'
+      },
+      lotteryTypeRuleMessage: '所属彩种类型不能为空'
+    },
+
+
+    //TODO: lotteryPrizeConfig  -> Luis
+    lotteryPrizeConfig:{
+      form:{
+        lotteryNamePlaceholder: '',
+        searchButton: '',
+        resetButton: ''
+      },
+      addButton: '',
+      exportButton: '',
+      tableColumns:{
+        lotteryId: '',
+        lotteryName: '',
+        lotteryKillrate: '',
+        lotteryNokillratehour: '',
+        lotteryRandom: '',
+        operationLabel: '',
+        updateButton: '',
+      },
+      AddConfigDialogForm:{
+        lotteryId: '',
+        lotteryName: '',
+        lotteryKillrate: '',
+        lotteryRandom: '',
+        lotteryNokillratehourLabel: '',
+        lotteryNokillratehourPlaceholder: '',
+      },
+      dialogConfirmButton: '',
+      dialogCancelButton: '',
+      updateConfigDialogForm:{
+        lotteryIdLabel: '',
+        lotteryIdPlaceholder: '',
+        lotteryNameLabel: '',
+        lotteryNamePlaceholder: '',
+        lotteryKillrateLabel: '',
+        lotteryKillratePlaceholder: '',
+        lotteryRandomLabel: '',
+        lotteryRandomPlaceholder: '',
+        lotteryNokillratehourLabel: '',
+        lotteryNokillratehourPlaceholder: '',
+      },
+      dialogFooter:{
+        confirmButton: '',
+        cancelButton: ''
+      },
+      optionUnit: '',
+      lotteryIdRuleMessage: '',
+      addTitle: '',
+      updateTitle: '',
+      updateSuccessMessage: '',
+      addedSuccessMessage: '',
+      deleteSuccessMessage: '',
+      confirmDeleteDialog:{
+        message: '',
+        title: '',
+        confirmButton: '',
+        cancelButton: ''
+      },
+      confirmExportDialog:{
+        message: '',
+        title: '',
+        confirmButton: '',
+        cancelButton: ''
+      }
+
+    },
+
     //TODO: lotteryPrizepool    -> Luis
+    lotteryPrizepool:{
+
+    },
+
     //TODO: lotteryRule         -> Luis
+    lotteryRule:{
+
+    },
+
     //TODO: lotteryTemp         -> Luis
+    lotteryTemp:{
+
+    },
+
     //TODO: wheelHistory        -> Luis
+    wheelHistory:{
+
+    },
+
     //TODO: wheelLottery        -> Luis
+    wheelLottery:{
+
+    },
+
     //TODO: wheelPool           -> Luis
+    wheelPool:{
+
+    },
+
     //TODO: wheelPoolHistory    -> Luis
+    wheelPoolHistory:{
+
+    },
+
     //TODO: wheelPrize          -> Luis
+    wheelPrize:{
+
+    },
+
     //TODO: wheelSkin           -> Luis
+    wheelSkin:{
+
+    },
+
     //TODO: wheelSkinReceived   -> Luis
+    wheelSkinReceived:{
+
+    },
+
 
   }
 }

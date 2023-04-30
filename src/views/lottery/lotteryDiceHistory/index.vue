@@ -7,7 +7,7 @@
                         type="date"
                         format="yyyy-MM-dd"
                         value-format="yyyy-MM-dd"
-                        placeholder="选择日期"
+                        :placeholder="$t('lotteryDiceHistory.form.datePickerPlaceholder')"
                         style="width: 140px"
                         :picker-options="pickerOptions">
         </el-date-picker>
@@ -15,7 +15,7 @@
       <el-form-item  prop="pUserId">
         <el-input
           v-model="queryParams.pUserId"
-          placeholder="请输入会员ID"
+          :placeholder="$t('lotteryDiceHistory.form.pUserIdPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -24,7 +24,7 @@
       <el-form-item  prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入昵称"
+          :placeholder="$t('lotteryDiceHistory.form.namePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -33,7 +33,7 @@
       <el-form-item  prop="diceName">
         <el-input
           v-model="queryParams.diceName"
-          placeholder="请输入奖项"
+          :placeholder="$t('lotteryDiceHistory.form.diceNamePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -42,15 +42,15 @@
       <el-form-item  prop="diceId">
         <el-input
           v-model="queryParams.diceId"
-          placeholder="请输入奖项id"
+          :placeholder="$t('lotteryDiceHistory.form.diceIdPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('lotteryDiceHistory.form.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('lotteryDiceHistory.form.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -63,20 +63,20 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:wheelHistoryDice:export']"
-        >导出</el-button>
+        >{{$t('lotteryDiceHistory.exportButton')}}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="wheelHistoryDiceList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="id" align="center" prop="id" />
-      <el-table-column label="会员ID" align="center" prop="puserId" />
-      <el-table-column label="昵称" align="center" prop="name" />
-      <el-table-column label="奖项" align="center" prop="diceName" />
-      <el-table-column label="骰数值" align="center" prop="diceValue" />
-      <el-table-column label="奖项id" align="center" prop="diceId" />
-      <el-table-column label="时间" align="center" prop="cTime" width="180">
+      <el-table-column :label="$t('lotteryDiceHistory.tableColumns.id')" align="center" prop="id" />
+      <el-table-column :label="$t('lotteryDiceHistory.tableColumns.pUserId')" align="center" prop="puserId" />
+      <el-table-column :label="$t('lotteryDiceHistory.tableColumns.name')" align="center" prop="name" />
+      <el-table-column :label="$t('lotteryDiceHistory.tableColumns.diceName')" align="center" prop="diceName" />
+      <el-table-column :label="$t('lotteryDiceHistory.tableColumns.diceValue')" align="center" prop="diceValue" />
+      <el-table-column :label="$t('lotteryDiceHistory.tableColumns.diceId')" align="center" prop="diceId" />
+      <el-table-column :label="$t('lotteryDiceHistory.tableColumns.cTime')" align="center" prop="cTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.cTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
@@ -94,33 +94,33 @@
     <!-- 添加或修改博饼中奖记录对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="会员ID" prop="pUserId">
-          <el-input v-model="form.puserId" placeholder="请输入会员ID" />
+        <el-form-item :label="$t('lotteryDiceHistory.dialogForm.pUserIdLabel')" prop="pUserId">
+          <el-input v-model="form.puserId" :placeholder="$t('lotteryDiceHistory.dialogForm.pUserIdPlaceholder')" />
         </el-form-item>
-        <el-form-item label="昵称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入昵称" />
+        <el-form-item :label="$t('lotteryDiceHistory.dialogForm.nameLabel')" prop="name">
+          <el-input v-model="form.name" :placeholder="$t('lotteryDiceHistory.dialogForm.namePlaceholder')" />
         </el-form-item>
-        <el-form-item label="奖项" prop="diceName">
-          <el-input v-model="form.diceName" placeholder="请输入奖项" />
+        <el-form-item :label="$t('lotteryDiceHistory.dialogForm.diceNameLabel')" prop="diceName">
+          <el-input v-model="form.diceName" :placeholder="$t('lotteryDiceHistory.dialogForm.diceNamePlaceholder')" />
         </el-form-item>
-        <el-form-item label="时间" prop="cTime">
+        <el-form-item :label="$t('lotteryDiceHistory.dialogForm.cTimeLabel')" prop="cTime">
           <el-date-picker clearable size="small"
             v-model="form.cTime"
             type="date"
             value-format="yyyy-MM-dd"
-            placeholder="选择时间">
+            :placeholder="$t('lotteryDiceHistory.dialogForm.datePickerPlaceholder')">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="骰数值" prop="diceValue">
-          <el-input v-model="form.diceValue" placeholder="请输入骰数值" />
+        <el-form-item :label="$t('lotteryDiceHistory.dialogForm.diceValueLabel')" prop="diceValue">
+          <el-input v-model="form.diceValue" :placeholder="$t('lotteryDiceHistory.dialogForm.diceValuePlaceholder')" />
         </el-form-item>
-        <el-form-item label="奖项id" prop="diceId">
-          <el-input v-model="form.diceId" placeholder="请输入奖项id" />
+        <el-form-item :label="$t('lotteryDiceHistory.dialogForm.diceIdLabel')" prop="diceId">
+          <el-input v-model="form.diceId" :placeholder="$t('lotteryDiceHistory.dialogForm.diceIdPlaceholder')" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{$t('lotteryDiceHistory.dialogForm.confirmButton')}}</el-button>
+        <el-button @click="cancel">{{$t('lotteryDiceHistory.dialogForm.cancelButton')}}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -208,7 +208,7 @@ export default {
         const reg = '^[0-9a-zA-Z_]{1,}$'
         let flag = this.queryParams.pUserId.match(reg)
         if(!flag){
-          this.msgError("会员ID只能输入数字及下划线")
+          this.msgError(this.$t('lotteryDiceHistory.responseMessages.pUserIdFormatError'))
           return
         }
       }
@@ -230,7 +230,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加博饼中奖记录";
+      this.title = this.$t('lotteryDiceHistory.titleMessages.add');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -239,7 +239,7 @@ export default {
       getWheelHistoryDice(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改博饼中奖记录";
+        this.title = this.$t('lotteryDiceHistory.titleMessages.update');
       });
     },
     /** 提交按钮 */
@@ -248,13 +248,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateWheelHistoryDice(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess(this.$t('lotteryDiceHistory.responseMessages.updateWheelHistoryDiceSuccess'));
               this.open = false;
               this.getList();
             });
           } else {
             addWheelHistoryDice(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess(this.$t('lotteryDiceHistory.responseMessages.addWheelHistoryDiceSuccess'));
               this.open = false;
               this.getList();
             });
@@ -265,24 +265,24 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除博饼中奖记录编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('lotteryDiceHistory.confirmDeleteDialog.message', {ids: row.id}), this.$t('lotteryDiceHistory.confirmDeleteDialog.title'), {
+        confirmButtonText: this.$t('lotteryDiceHistory.confirmDeleteDialog.confirmButton'),
+        cancelButtonText: this.$t('lotteryDiceHistory.confirmDeleteDialog.cancelButton'),
         type: "warning"
       }).then(function() {
         return delWheelHistoryDice(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess(this.$t('lotteryDiceHistory.responseMessages.deleteWheelHistoryDiceSuccess'));
       }).catch(() => {
 	  })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('lotteryDiceHistory.confirmExportDialog.message'), this.$t('lotteryDiceHistory.confirmExportDialog.title'), {
+        confirmButtonText: this.$t('lotteryDiceHistory.confirmExportDialog.confirmButton'),
+        cancelButtonText: this.$t('lotteryDiceHistory.confirmExportDialog.cancelButton'),
         type: "warning"
       }).then(function() {
         return exportWheelHistoryDice(queryParams);

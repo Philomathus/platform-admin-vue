@@ -514,12 +514,6 @@ export default {
       moneydesOptions: [{
         value: '1',
         label: '人工入款'
-      }, {
-        value: '2',
-        label: '线上入款'
-      }, {
-        value: '3',
-        label: '线下入款'
       }],
       //加分提交的数据
       form: {

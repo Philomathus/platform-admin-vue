@@ -230,7 +230,7 @@
         <el-form-item label="提交IP" prop="ip">
           <el-input v-model="form.ip" placeholder="请输入提交IP" />
         </el-form-item>
-        <el-form-item label="备注字典(1 人工入款 2线上入款 3线下入款)" prop="moneydes">
+        <el-form-item label="备注字典(1 人工入款)" prop="moneydes">
           <el-input v-model="form.moneydes" placeholder="请输入备注字典(1 人工入款 2线上入款 3线下入款)" />
         </el-form-item>
       </el-form>
@@ -257,12 +257,6 @@ export default {
       moneydesOptions: [{
         value: '1',
         label: '人工入款'
-      }, {
-        value: '2',
-        label: '线上入款'
-      }, {
-        value: '3',
-        label: '线下入款'
       }],
       // 遮罩层
       loading: true,
@@ -420,10 +414,6 @@ export default {
     moneydesFormat(row, column) {
       if (row.moneydes === "1") {
         return '人工入款'
-      } else if (row.moneydes === "2") {
-        return '线上入款'
-      } else if (row.moneydes === "3") {
-        return '线下入款'
       }
     },
     /** 导出按钮操作 */

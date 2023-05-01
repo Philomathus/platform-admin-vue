@@ -11,7 +11,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:configVip:add']"
-        >新增</el-button>
+        >{{$t('global.addButton')}}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -20,14 +20,14 @@
       <el-table-column type="selection" width="55" align="center" />
 
       <el-table-column :label="$t('members.configVip.table.vipLvl')" align="center" prop="levelFlag" />
-      <el-table-column :label="$t('members.configVip.table.demandCodingValue')" align="center" prop="levelMoney" />
-      <el-table-column :label="$t('members.configVip.table.advancementJackpot')" align="center" prop="jjcj" />
+      <el-table-column :label="$t('members.configVip.table.demandCodingValue')" align="center" prop="levelMoney" min-width="120"/>
+      <el-table-column :label="$t('members.configVip.table.advancementJackpot')" align="center" prop="jjcj" min-width="120" />
       <el-table-column :label="$t('members.configVip.table.weeklySalary')" align="center" prop="zfl" />
       <el-table-column :label="$t('members.configVip.table.monthlySalary')" align="center" prop="yfl" />
       <el-table-column :label="$t('members.configVip.table.creationTime')" align="center" prop="createTime" min-width="160"/>
       <el-table-column :label="$t('members.configVip.table.lastUpdateBy')" align="center" prop="opName" />
       <el-table-column :label="$t('members.configVip.table.lastUpdateAt')" align="center" prop="updateTime" min-width="160"/>
-      <el-table-column :label="$t('members.configVip.table.operation')" align="center" class-name="small-padding fixed-width" fixed="right" min-width="120">
+      <el-table-column :label="$t('global.operation')" align="center" class-name="small-padding fixed-width" fixed="right" min-width="120">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -35,7 +35,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:configVip:edit']"
-          >{{ $t('members.configVip.table.edit') }}</el-button>
+          >{{ $t('global.edit') }}</el-button>
           <el-button
             style="color: #FF5722"
             size="mini"
@@ -43,7 +43,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:configVip:remove']"
-          >{{ $t('members.configVip.table.delete') }}</el-button>
+          >{{ $t('global.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

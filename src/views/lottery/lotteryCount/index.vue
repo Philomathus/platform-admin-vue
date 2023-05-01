@@ -3,7 +3,7 @@
     <!--    search form 搜索表格 -->
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px" style="margin-top: 15px;">
 
-      <el-form-item :label="$t('lotteryCount.form.puserIdLabel')" prop="puserId">
+      <el-form-item :label="$t('lotteryCount.form.puserIdLabel')" prop="puserId" label-width="120">
         <el-input
           v-model="queryParams.pUserId"
           :placeholder="$t('lotteryCount.form.puserIdPlaceholder')"
@@ -11,7 +11,7 @@
           size="small"
           @keyup.enter.native="handleQuery"/>
       </el-form-item>
-      <el-form-item :label="$t('lotteryCount.form.betInfoLabel')" prop="betInfo">
+      <el-form-item :label="$t('lotteryCount.form.betInfoLabel')" prop="betInfo" label-width="120">
         <el-input
           v-model="queryParams.betInfo"
           :placeholder="$t('lotteryCount.form.betInfoPlaceholder')"
@@ -20,7 +20,7 @@
           @keyup.enter.native="handleQuery"/>
       </el-form-item>
 
-      <el-form-item :label="$t('lotteryCount.form.issueLabel')" prop="issue">
+      <el-form-item :label="$t('lotteryCount.form.issueLabel')" prop="issue" label-width="120">
         <el-input
           v-model="queryParams.issue"
           :placeholder="$t('lotteryCount.form.issuePlaceholder')"
@@ -52,7 +52,7 @@
 
     <!--member lottery count table-->
     <el-table stripe v-loading="loading"  :data="lotteryCountList" class="el-table--border">
-      <el-table-column :label="$t('lotteryCount.tableColumns.id')" prop="id"  align="center" min-width="120"/>
+      <el-table-column :label="$t('global.id')" prop="id"  align="center" min-width="120"/>
       <el-table-column :label="$t('lotteryCount.tableColumns.lotteryName')" prop="lotteryName" align="center"  min-width="120"/>
       <el-table-column :label="$t('lotteryCount.tableColumns.puserId')" prop="puserId" align="center" min-width="120"/>
       <el-table-column :label="$t('lotteryCount.tableColumns.issue')"  prop="issue" align="center"  min-width="120"/>

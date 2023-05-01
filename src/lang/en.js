@@ -1587,5 +1587,28 @@ export default {
         cancelButton: '@:common.cancelButton1'
       }
     }
-  }
+  },
+
+  lotteryCount: {
+    form: {
+      puserIdLabel: 'Member Id',
+      puserIdPlaceholder: 'Please enter the member ID',
+      betInfoLabel: 'Betting content',
+      betInfoPlaceholder: 'Enter Betting content',
+      issueLabel: 'Number of phases',
+      issuePlaceholder: 'Enter Number of phases',
+      lotteryNamePlaceholder: 'Please select a lottery name',
+      searchButton: '@:common.searchButton',
+      resetButton: '@:common.resetButton',
+    },
+    tableColumns: {
+      id: 'ID',
+      lotteryName: 'Lottery Name',
+      puserId: 'Member ID',
+      issue: 'Number of phases',
+      betInfo: 'Betting content',
+      chip: 'Amount bet',
+      ip: 'Bet IP',
+    }
+  },
 }

@@ -1,5 +1,32 @@
 export default {
 
+  global:{
+    cancelButton: '取 消',
+    submitButton: '确 定',
+    name: '名称',
+    addButton: '新增',
+    editButton: '修改',
+    deleteButton: '删除',
+    exportButton: '返现结果导出',
+    confirmButton: '确定',
+    cancelConfirmButton: '取 消',
+    operation: '操作',
+    statusEnable: '启用',
+    statusDisable: '停用',
+    status: '状态',
+    ctime: '发布时间',
+    edit: '修改',
+    delete: '删除',
+    sort: '排序',
+    icon: '图标',
+    nickname: '昵称',
+  },
+
+  globalPlaceholder:{
+    sortPlaceholder: '请输入排序',
+    nicknamePlaceholder: '请输入昵称',
+  },
+
   navbar: {
     dashboard: '首页',
     github: '项目地址',
@@ -763,7 +790,7 @@ export default {
           exp: '导出',
 
         },
-        pName: '平台名称',
+        // pName: '平台名称',
         sel: '全选/全不选',
         date: {
           datRange: '日期范围',
@@ -861,7 +888,7 @@ export default {
           trnsctNum: '交易订单号',
           gbNum: '游戏局号',
           bStat: '下注状态',
-          pname: '平台名称',
+          pName: '平台名称',
           vBets: '有效下注',
           tBets: '总下注',
           profit: '盈利',

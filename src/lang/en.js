@@ -824,7 +824,7 @@ export default {
       index: {
         div: {
           date: {
-            dRange: 'Date Range',
+            dRange: 'Select Date',
             sTime: 'Start Time',
             eTime: 'End Time',
             to: 'To'
@@ -845,7 +845,7 @@ export default {
           vBets: 'Valid Bets',
           tBets: 'Total Bets',
           profit: 'Profit',
-          pBets: 'Place your bets at',
+          pBets: 'Betting time',
           sportBet: 'Sports Betting Details'
         },
         data: {

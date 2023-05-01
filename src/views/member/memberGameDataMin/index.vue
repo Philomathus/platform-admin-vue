@@ -42,19 +42,19 @@
     </el-form>
 
     <el-table stripe v-loading="loading" :data="memberGameDataMinList">
-      <el-table-column :label=" $t('members.memberGameDataMin.index.div.memId') " align="center" prop="UserName"/>
+      <el-table-column :label=" $t('members.memberGameDataMin.index.div.memId') " align="center" prop="UserName" min-width="120"/>
       <el-table-column :label=" $t('members.memberGameDataMin.index.div.proxyId') " align="center" prop="agent"/>
-      <el-table-column :label=" $t('members.memberGameDataMin.index.div.trnsctNum') " align="center"  min-width="180px" prop="WagersID">
+      <el-table-column :label=" $t('members.memberGameDataMin.index.div.trnsctNum') " align="center"  min-width="190px" prop="WagersID">
       </el-table-column>
       <el-table-column :label=" $t('members.memberGameDataMin.index.div.gbNum') " align="center"  min-width="180px" :show-overflow-tooltip="true" prop="WagersID">
         <template v-slot="{row}">
           <a style="color: #00afff"  @click="handleDetail(row)">{{ row.WagersID }}</a>
         </template>
       </el-table-column>
-      <el-table-column :label=" $t('members.memberGameDataMin.index.div.bStat') " align="center" prop="Result"/>
-      <el-table-column :label=" $t('members.memberGameDataMin.index.div.pName') " align="center" prop="platformName"/>
-      <el-table-column :label=" $t('members.memberGameDataMin.index.div.vBets') " align="center" prop="Commissionable"/>
-      <el-table-column :label=" $t('members.memberGameDataMin.index.div.tBets') " align="center" prop="BetAmount"/>
+      <el-table-column :label=" $t('members.memberGameDataMin.index.div.bStat') " align="center" prop="Result"  min-width="100"/>
+      <el-table-column :label=" $t('members.memberGameDataMin.index.div.pName') " align="center" prop="platformName" min-width="120"/>
+      <el-table-column :label=" $t('members.memberGameDataMin.index.div.vBets') " align="center" prop="Commissionable"  min-width="120"/>
+      <el-table-column :label=" $t('members.memberGameDataMin.index.div.tBets') " align="center" prop="BetAmount"  min-width="120"/>
       <el-table-column :label=" $t('members.memberGameDataMin.index.div.profit') " align="center" prop="Payoff"/>
       <el-table-column :label=" $t('members.memberGameDataMin.index.div.pBets') "align="center" width="150px" prop="WagersDate"/>
     </el-table>

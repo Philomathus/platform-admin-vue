@@ -1,5 +1,40 @@
 export default {
 
+
+  global:{
+    export: 'Export',
+    cancelButton: 'Cancel',
+    confirmButton: 'Confirm',
+    refresh: 'refresh',
+    close: 'close',
+    searchButton: 'Search',
+    resetButton: 'Reset',
+    addButton: 'Add',
+    editButton: 'Edit',
+    deleteButton: 'Delete',
+    exportButton: 'Export',
+    submitButton: 'Submit',
+    operation: 'Operation',
+    statusEnable: 'Enable',
+    statusDisable: 'Disable',
+    sort: 'Sort',
+    qq: 'qq',
+    selectDateRangeSeparator: 'to',
+    icon: 'Icon',
+    userName: 'UserName',
+    realName: 'Real Name',
+    edit: 'Edit',
+    delete: 'Delete',
+    id: 'ID',
+  },
+
+  globalPlaceholder: {
+    statusPlaceholder: 'Please select status',
+    userNamePlaceholder: 'Please enter UserName',
+    selectDateStartPlaceholder: 'Start Time',
+    selectDateEndPlaceholder: 'End Time',
+  },
+
   navbar: {
     dashboard: 'Dashboard',
     github: 'Github',
@@ -24,7 +59,6 @@ export default {
   },
 
   excel: {
-    export: 'Export',
     selectedExport: 'Export Selected Items',
     placeholder: 'Please enter the file name (default excel-list)',
     selectDate: 'Select Date',
@@ -33,8 +67,6 @@ export default {
     startDatePlaceholder: 'Start Date',
     endDatePlaceholder: 'End Date',
     rangeSeparator: 'to',
-    cancelButton: 'Cancel',
-    submitButton: 'Confirm'
   },
 
   settings: {
@@ -49,8 +81,6 @@ export default {
   tagsView: {
     closeOthersTags: 'Close Other',
     closeAllTags: 'Close All',
-    refresh: '刷新',
-    close: '关闭',
     closeOthers: 'Close Other',
     closeAll: 'Close All'
   },
@@ -59,16 +89,6 @@ export default {
     startDatePlaceholder: 'Start Date',
     endDatePlaceholder: 'End Date',
     rangeSeparator: 'to',
-    searchButton: 'Search',
-    resetButton: 'Reset',
-    addButton: 'Add',
-    editButton: 'Edit',
-    deleteButton: 'Delete',
-    exportButton: 'Export',
-    submitButton: 'Submit',
-    confirmButton: 'Confirm',
-    cancelButton: 'Cancel',
-    operation: 'Operation',
     cancelConfirmButton: 'Cancel',
     editSuccessMsg: 'Edit Successful',
     editFailMsg: '',
@@ -78,8 +98,6 @@ export default {
     submitFail: '',
     deleteSuccessMsg: 'Delete Successful',
     submitSuccessful: '',
-    statusEnable: 'Enable',
-    statusDisable: 'Disable',
     statusConfirm: 'Confirm to "',
     statusConfirmTitle: 'Confirm',
     statusConfirmQuestion: '"?',
@@ -96,10 +114,6 @@ export default {
     mobilePhoneSerialNumberCheckButton: 'Mobile Phone Serial Number Check',
     displayMobilePhoneNumberButton: 'Display Mobile Phone Number',
     selectDate: 'Select Date',
-    selectDateStartPlaceholder: 'Start Time',
-    selectDateEndPlaceholder: 'End Time',
-    selectDateRangeSeparator: 'to',
-    qq: 'qq',
     wechat: 'WeChat',
     tableDialog: {
       name: 'Name',
@@ -125,7 +139,6 @@ export default {
           maxDeposit: 'Daily Maximum Deposit',
           minDepositPlaceholder: 'Please Enter Daily Minimum Deposit',
           maxDepositPlaceholder: 'Please Enter Daily Maximum Deposit',
-          status: 'Status',
         },
         validation: {
           depositTotalMin: 'Daily Minimum Deposit must not be empty',
@@ -143,9 +156,7 @@ export default {
           titlePlaceholder: 'Please enter Activity Title',
           typeId: 'Activity Type',
           typeIdPlaceholder: 'Please enter Activity Type',
-          sort: 'Sort',
           sortPlaceholder: 'Please enter sort.',
-          icon: 'Icon',
           jumpType: 'URL type',
           activityDetails: 'Activity Details',
           jumpLink: 'URL',
@@ -171,7 +182,6 @@ export default {
         tableDialog: {
           title: 'Title',
           titlePlaceholder: 'Please enter Title',
-          icon: 'Icon',
           index: 'Index',
           indexPlaceholder: 'Please enter Index',
           typeId: 'Task type',
@@ -193,9 +203,6 @@ export default {
           taskMode: 'Task Mode',
           taskModePlaceholder: 'Please enter Task Mode',
           ctime: 'Creation Time',
-          operation: 'Operation',
-          edit: 'Edit',
-          delete: 'Delete',
         },
         validation: {
           icon: 'Icon must not be empty',
@@ -241,7 +248,6 @@ export default {
         addTitle: "Add Lottery Allocation",
         editTitle: "Edit Lottery Allocation",
         tableDialog: {
-          id: 'Id',
           idPlaceholder: '',
           depositTotalMin: 'Daily Minimum Deposit',
           depositTotalMinPlaceholder: 'Please Enter Daily Minimum Deposit',
@@ -249,8 +255,6 @@ export default {
           depositTotalMaxPlaceholder: 'Please Enter Daily Maximum Deposit',
           lotteryTimes: 'Number of Lotteries',
           lotteryTimesPlaceholder: 'Please enter the Number of Lotteries',
-          status: 'Status',
-          statusPlaceholder: 'Please select status'
         },
         validation: {
           depositTotalMin: 'Daily Minimum Deposit must not be empty',
@@ -268,7 +272,6 @@ export default {
         inviterCodePlaceholder: 'Please enter Inviter Code',
         loginIp: 'Login IP',
         loginIpPlaceholder: 'Please enter Login IP',
-        id: 'ID',
         regTime: 'Registration Time',
         regTimePlaceholder: 'Please enter Registration Time',
         loginTime: 'Login Time',
@@ -282,9 +285,6 @@ export default {
         memberCodePlaceholder: 'Please enter Member Code',
         cxAgent: 'Agent Number',
         cxAgentPlaceholder: 'Please enter Agent Number',
-        userName: 'User Name',
-        userNamePlaceholder: 'Please enter User Name',
-        realName: 'Real Name',
         realNamePlaceholder: 'Please enter Real Name',
         status: 'Status (0 = Disabled 1 = Normal 2 = Test User 3 = Super User)',
         statusRadio: 'Please select Status',
@@ -307,7 +307,6 @@ export default {
         nickNamePlaceholder: 'Please enter Nickname',
         birthDay: 'Birth Date',
         birthDayPlaceholder: 'Please enter Birth Date',
-        qq: 'qq',
         qqPlaceholder: 'Please enter qq',
         wechat: 'WeChat',
         wechatPlaceholder: 'Please enter WeChat',
@@ -411,7 +410,6 @@ export default {
         typePlaceholder: 'Please enter Type',
         code: 'WeChat or QQ number',
         codePlaceholder: 'Please enter your WeChat or QQ number',
-        icon: 'Icon',
         iconPlaceholder: 'Please enter Icon',
         remark: 'Remarks',
         remarkPlaceholder: 'Please enter Remarks',
@@ -444,9 +442,6 @@ export default {
         creationTime: 'Creation Time',
         lastUpdateBy: 'Last Updated by',
         lastUpdateAt: 'Last Updated at',
-        operation: 'Operation',
-        edit: 'Edit',
-        delete: 'Delete',
         submit: 'Submit',
         cancel: 'Cancel',
       },
@@ -692,7 +687,6 @@ export default {
         table: {
           titles: 'Note Data Details',
           ordNum: 'Order Number',
-          userName: 'User Name',
           buNum: 'Bureau Number',
           payAmt: 'Payment Amount',
           plBets: 'Place your bets at',
@@ -965,7 +959,6 @@ export default {
         valBets: 'Cumulative valid bets',
         uType: 'User Type',
         loginMark: 'loginMark',
-        operation: 'operation',
 
       }
     }
@@ -974,12 +967,9 @@ export default {
   common: {
     titleDialog: 'Warning',
     titlePrompt: 'Tips',
-    addButton: 'Add',
-    editButton: 'Edit',
     removeButton: 'Remove',
     searchButton: 'Search',
     resetButton: 'Rename',
-    exportButton: 'Export',
     confirmButton: 'Confirm',
     cancelButton: 'Cancel',
     operationColumn: 'Operation'
@@ -1086,7 +1076,6 @@ export default {
         title: 'Remark ban reason',
         remarkPlaceholder: 'Please select the reason for the ban',
         remarkedPlaceholder: 'Please enter the reason for the ban',
-        submitButton: 'Submit',
         messageBox: {
           forbidSuccess: 'Banned successfully'
         }
@@ -1261,7 +1250,6 @@ export default {
         discountPrice: 'Discounted price',
         giveday: 'Number of complimentary days',
         operation: '@:common.operation',
-        editButton: 'Edit',
         removeButton: 'Remove'
       },
       addUpdateDialog: {
@@ -1315,15 +1303,12 @@ export default {
         remove: '@:common.removeButton'
       },
       table: {
-        id: 'ID',
         name: 'Plugin name',
-        status: 'Status',
         status0: 'Disabled',
         status1: 'Enabled',
         conUrl: 'Address',
         iconUrl: 'Icon',
         operation: '@:common.operation',
-        editButton: 'Edit',
         removeButton: 'Remove'
       },
       validations: {
@@ -1516,7 +1501,6 @@ export default {
         familyId: 'Family ID',
         hostId: 'Anchor ID',
         hostName: 'Anchor nickname',
-        status: 'Status',
         live: '{num} points',
         remark: 'Remarks',
         createTime: 'Creation time',

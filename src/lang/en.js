@@ -949,7 +949,7 @@ export default {
         nName: 'Nickname',
         mVip: 'Member VIP',
         points: 'Points',
-        sDeposit: 'Safe deposit box balance',
+        sDeposit: 'Deposit-Box-Amount',
         status: 'Status',
         selStat: 'Please select the status',
         memSearch: 'Member ID/account number/mobile phone number , comma-separated member search',
@@ -964,10 +964,8 @@ export default {
         codeAcc: 'Coding Account',
         valBets: 'Cumulative valid bets',
         uType: 'User Type',
-
-
-
-
+        loginMark: 'loginMark',
+        operation: 'operation',
 
       }
     }

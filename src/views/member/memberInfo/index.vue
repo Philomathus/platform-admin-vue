@@ -205,10 +205,10 @@
       </el-table-column>
       <el-table-column :label=" $t('members.memberInfo.index.uName') " align="center" prop="userName" min-width="120px"/>
       <el-table-column :label=" $t('members.memberInfo.index.nName') " :show-overflow-tooltip="true" align="center" prop="nickName" min-width="160"/>
-      <el-table-column :label=" $t('members.memberInfo.index.mVip') " align="center" prop="vip" min-width="70px"/>
+      <el-table-column :label=" $t('members.memberInfo.index.mVip') " align="center" prop="vip" min-width="100px"/>
       <el-table-column :label=" $t('members.memberInfo.index.points') " :show-overflow-tooltip="true" align="center" prop="totalAccount" min-width="120px"/>
       <el-table-column :label=" $t('members.memberInfo.index.sDeposit') " :show-overflow-tooltip="true" align="center" prop="boxAccount"
-                       min-width="120px"/>
+                       min-width="160px"/>
       <el-table-column :label=" $t('members.memberInfo.index.status') " align="center" min-width="110px">
         <template v-slot="{row}">
           <el-select v-model="row.status" :placeholder=" $t('members.memberInfo.index.status') " size="small"
@@ -226,12 +226,12 @@
       </el-table-column>
       <el-table-column :label=" $t('members.memberInfo.index.regTime') " align="center" prop="regTime" width="160"/>
       <el-table-column :label=" $t('members.memberInfo.index.logTime') " align="center" prop="loginTime" width="160"/>
-      <el-table-column :label=" $t('members.memberInfo.index.numLog') " align="center" prop="loginNum" min-width="100px"/>
+      <el-table-column :label=" $t('members.memberInfo.index.numLog') " align="center" prop="loginNum" min-width="130px"/>
       <el-table-column :label=" $t('members.memberInfo.index.logIp') " :show-overflow-tooltip="true" align="center" prop="loginIp" width="180"/>
       <el-table-column :label=" $t('members.memberInfo.index.regIp') " :show-overflow-tooltip="true" align="center" prop="registIp" width="180"/>
       <el-table-column :label=" $t('members.memberInfo.index.restArea') " :show-overflow-tooltip="true" align="center" prop="qq" width="180"/>
 
-      <el-table-column :label=" $t('members.memberInfo.index.wRest') " align="center" prop="speak">
+      <el-table-column :label=" $t('members.memberInfo.index.wRest') " align="center" prop="speak" width="165">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.speak"
@@ -242,7 +242,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column :label=" $t('members.memberInfo.index.ban') " align="center" prop="speak">
+      <el-table-column :label=" $t('members.memberInfo.index.ban') " align="center" prop="speak" width="160">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.speak"
@@ -252,10 +252,10 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column :label=" $t('members.memberInfo.index.codeAcc') " align="center" prop="codeAccount" min-width="100px"/>
+      <el-table-column :label=" $t('members.memberInfo.index.codeAcc') " align="center" prop="codeAccount" min-width="160px"/>
 
-      <el-table-column :label=" $t('members.memberInfo.index.valBets') " align="center" prop="codeTotal" min-width="100px"/>
-      <el-table-column :label=" $t('members.memberInfo.index.invCode') " align="center" prop="inviterCode" min-width="100px"/>
+      <el-table-column :label=" $t('members.memberInfo.index.valBets') " align="center" prop="codeTotal" min-width="160px"/>
+      <el-table-column :label=" $t('members.memberInfo.index.invCode') " align="center" prop="inviterCode" min-width="120px"/>
       <el-table-column :label=" $t('members.memberInfo.index.uType') " align="center" prop="channelcode" min-width="200px">
         <template slot-scope="scope">
           <span v-if="scope.row.channelcode == null"
@@ -265,8 +265,8 @@
             }}|{{ scope.row.version == null || scope.row.version == '' || scope.row.version == undefined ? '无' : scope.row.version }}|{{ scope.row.loginDev == 2 ? 'andriod' : scope.row.loginDev == 1 ? 'ios' : '其它' }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="登录备注" align="center" prop="email" :show-overflow-tooltip="true" min-width="130px"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right" min-width="220">
+      <el-table-column :label=" $t('members.memberInfo.index.loginMark')" align="center" prop="email" :show-overflow-tooltip="true" min-width="130px"/>
+      <el-table-column :label="$t('members.memberInfo.index.operation')" align="center" class-name="small-padding fixed-width" fixed="right" min-width="220">
         <template slot-scope="scope">
           <el-button
             type="primary"

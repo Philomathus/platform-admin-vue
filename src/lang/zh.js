@@ -984,6 +984,8 @@ export default {
         codeAcc: '打码账户',
         valBets: '累计有效投注',
         uType: '用户类型',
+        loginMark: '登录备注',
+        operation: '操作',
 
 
 

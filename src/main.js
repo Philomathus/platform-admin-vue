@@ -41,6 +41,9 @@ import RightToolbar from '@/components/RightToolbar'
 // 引入 vue-ele-form
 import EleForm from 'vue-ele-form'
 import * as numberUtil from '@/utils/number.js'
+import i18n from  './lang'
+import ElementUI from 'element-ui';
+import locale from "vue-ele-form/lib/locale";
 
 // 全局方法挂载
 Vue.prototype.getDicts = getDicts
@@ -100,11 +103,15 @@ Vue.use(Element, {
   size: Cookies.get('size') || 'medium' // set element-ui default size
 })
 Vue.use(loading);
+
+Vue.use(ElementUI, { locale });
+
 Vue.config.productionTip = false
 
 window.vue = new Vue({
   el: '#app',
   router,
   store,
+  i18n,
   render: h => h(App)
 })

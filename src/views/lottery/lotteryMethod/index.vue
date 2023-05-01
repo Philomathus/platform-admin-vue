@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="100px">
-      <el-form-item label="所属彩种类型" prop="lotteryType">
-        <el-select v-model="queryParams.lotteryType" placeholder="请选择所属彩种类型" clearable size="small">
+      <el-form-item :label="$t('lotteryMethod.form.lotteryTypeLabel')" prop="lotteryType">
+        <el-select v-model="queryParams.lotteryType" :placeholder="$t('lotteryMethod.form.lotteryTypePlaceholder')" clearable size="small">
           <el-option
             v-for="item in lotteryType"
             :key="item.value"
@@ -11,10 +11,10 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="投注名称" prop="name">
+      <el-form-item :label="$t('lotteryMethod.form.nameLabel')" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入投注名称"
+          :placeholder="$t('lotteryMethod.form.namePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -26,15 +26,15 @@
       </el-form-item>
     </el-form>
     <el-table stripe v-loading="loading" :data="lotteryMethodList">
-      <el-table-column label="所属彩种类型" align="center" prop="lotteryType"/>
-      <el-table-column label="投注名称" align="center" prop="name">
+      <el-table-column :label="$t('lotteryMethod.tableColumns.lotteryType')" align="center" prop="lotteryType"/>
+      <el-table-column :label="$t('lotteryMethod.tableColumns.name')" align="center" prop="name">
         <template v-slot="{row}">
           <a @click="$router.push({path: '/lottery/lotteryGame',query: { type: row.name}})" style="color: #00afff">
             {{ row.name }}</a>
         </template>
       </el-table-column>
       <el-table-column label="ind" align="center" prop="ind"/>
-      <el-table-column label="排序键order" align="center" prop="order"/>
+      <el-table-column :label="$t('lotteryMethod.tableColumns.order')" align="center" prop="order"/>
     </el-table>
 
     <pagination
@@ -58,26 +58,26 @@ export default {
     return {
       //所属彩种类型下拉框
       lotteryType: [{
-        value: '时时彩',
-        label: '时时彩'
+        value: this.$t('lotteryMethod.lotteryType.timeShareValue'),
+        label: this.$t('lotteryMethod.lotteryType.timeShareLabel')
       }, {
-        value: '11选5',
-        label: '11选5'
+        value: this.$t("lotteryMethod.lotteryType['11select5Value']"),
+        label: this.$t("lotteryMethod.lotteryType['11select5Label']")
       }, {
-        value: '快三',
-        label: '快三'
+        value: this.$t('lotteryMethod.lotteryType.fastThreeValue'),
+        label: this.$t('lotteryMethod.lotteryType.fastThreeLabel')
       }, {
-        value: '赛车',
-        label: '赛车'
+        value: this.$t('lotteryMethod.lotteryType.racingValue'),
+        label: this.$t('lotteryMethod.lotteryType.racingLabel')
       }, {
-        value: '六合彩',
-        label: '六合彩'
+        value: this.$t('lotteryMethod.lotteryType.markSixValue'),
+        label: this.$t('lotteryMethod.lotteryType.markSixLabel')
       }, {
-        value: 'baccarat',
-        label: '百家乐'
+        value: this.$t('lotteryMethod.lotteryType.baccaratValue'),
+        label: this.$t('lotteryMethod.lotteryType.baccaratLabel')
       }, {
-        value: '百人牛牛',
-        label: '百人牛牛'
+        value: this.$t('lotteryMethod.lotteryType.hundredBullsValue'),
+        label: this.$t('lotteryMethod.lotteryType.hundredBullsLabel')
       }],
       // 遮罩层
       loading: true,
@@ -113,7 +113,7 @@ export default {
       // 表单校验
       rules: {
         lotteryType: [
-          {required: true, message: "所属彩种类型不能为空", trigger: "change"}
+          {required: true, message: this.$t('lotteryMethod.lotteryTypeRuleMessage'), trigger: "change"}
         ]
       }
     };

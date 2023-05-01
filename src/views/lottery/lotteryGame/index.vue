@@ -1,17 +1,17 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="菜单id" prop="methodId">
+      <el-form-item :label="$t('lotteryGame.form.methodIdLabel')" prop="methodId">
         <el-input
           v-model="queryParams.methodId"
-          placeholder="请输入菜单id"
+          :placeholder="$t('lotteryGame.form.methodIdPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="类型" prop="type">
-        <el-select v-model="queryParams.type" placeholder="请选择所属彩种类型" clearable size="small">
+      <el-form-item :label="$t('lotteryGame.form.typeLabel')" prop="type">
+        <el-select v-model="queryParams.type" :placeholder="$t('lotteryGame.form.typePlaceholder')" clearable size="small">
           <el-option
             v-for="item in lotteryType"
             :key="item.value"
@@ -20,39 +20,39 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="简介" prop="info">
+      <el-form-item :label="$t('lotteryGame.form.infoLabel')" prop="info">
         <el-input
           v-model="queryParams.info"
-          placeholder="请输入简介"
+          :placeholder="$t('lotteryGame.form.infoPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="获奖规则" prop="victoryRule">
+      <el-form-item :label="$t('lotteryGame.form.victoryRuleLabel')" prop="victoryRule">
         <el-input
           v-model="queryParams.victoryRule"
-          placeholder="请输入获奖规则"
+          :placeholder="$t('lotteryGame.form.victoryRulePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('lotteryGame.form.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('lotteryGame.form.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
 
     <el-table stripe v-loading="loading" :data="lotteryGameList">
-      <el-table-column label="菜单id" align="center" prop="methodId"/>
-      <el-table-column label="类型" align="center" prop="type"/>
-      <el-table-column label="简介" align="center" prop="info"/>
-      <el-table-column label="赔率" align="center" prop="odds"/>
-      <el-table-column label="获奖规则" align="center" prop="victoryRule"/>
-      <el-table-column label="唯一编号" align="center" prop="ind"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('lotteryGame.tableColumns.methodId')" align="center" prop="methodId"/>
+      <el-table-column :label="$t('lotteryGame.tableColumns.type')" align="center" prop="type"/>
+      <el-table-column :label="$t('lotteryGame.tableColumns.info')" align="center" prop="info"/>
+      <el-table-column :label="$t('lotteryGame.tableColumns.odds')" align="center" prop="odds"/>
+      <el-table-column :label="$t('lotteryGame.tableColumns.victoryRule')" align="center" prop="victoryRule"/>
+      <el-table-column :label="$t('lotteryGame.tableColumns.ind')" align="center" prop="ind"/>
+      <el-table-column :label="$t('lotteryGame.tableColumns.operationLabel')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -60,7 +60,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:lotteryGame:edit']"
-          >修改赔率
+          >{{$t('lotteryGame.tableColumns.editButton')}}
           </el-button>
         </template>
       </el-table-column>
@@ -78,13 +78,13 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="300px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="40px">
-        <el-form-item label="赔率" prop="odds">
-          <el-input v-model="form.odds" placeholder="请输入赔率"/>
+        <el-form-item :label="$t('lotteryGame.dialogForm.oddsLabel')" prop="odds">
+          <el-input v-model="form.odds" :placeholder="$t('lotteryGame.dialogForm.oddsPlaceholder')"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{$t('lotteryGame.dialogForm.confirmButton')}}</el-button>
+        <el-button @click="cancel">{{$t('lotteryGame.dialogForm.cancelButton')}}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -134,26 +134,26 @@ export default {
       // 表单校验
       rules: {},
       lotteryType: [{
-        value: '时时彩',
-        label: '时时彩'
+        value: this.$t('lotteryGame.lotteryType.timeShareValue'),
+        label: this.$t('lotteryGame.lotteryType.timeShareLabel')
       }, {
-        value: '11选5',
-        label: '11选5'
+        value: this.$t("lotteryGame.lotteryType['11select5Value']"),
+        label: this.$t("lotteryGame.lotteryType['11select5Label']"),
       }, {
-        value: '快三',
-        label: '快三'
+        value: this.$t('lotteryGame.lotteryType.fastThreeValue'),
+        label: this.$t('lotteryGame.lotteryType.fastThreeLabel')
       }, {
-        value: '赛车',
-        label: '赛车'
+        value: this.$t('lotteryGame.lotteryType.racingValue'),
+        label: this.$t('lotteryGame.lotteryType.racingLabel')
       }, {
-        value: '六合彩',
-        label: '六合彩'
+        value: this.$t('lotteryGame.lotteryType.markSixValue'),
+        label: this.$t('lotteryGame.lotteryType.markSixLabel')
       }, {
-        value: 'baccarat',
-        label: '百家乐'
+        value: this.$t('lotteryGame.lotteryType.baccaratValue'),
+        label: this.$t('lotteryGame.lotteryType.baccaratLabel')
       }, {
-        value: '百人牛牛',
-        label: '百人牛牛'
+        value: this.$t('lotteryGame.lotteryType.hundredBullsValue'),
+        label: this.$t('lotteryGame.lotteryType.hundredBullsLabel')
       }],
     };
   },
@@ -213,7 +213,7 @@ export default {
       getLotteryGame(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改赔率";
+        this.title = this.$t('lotteryGame.updateOddsTitle');
       });
     },
     /** 提交按钮 */
@@ -222,7 +222,7 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateLotteryGame(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess(this.$t('lotteryGame.updateSuccessMessage'));
               this.open = false;
               this.getList();
             });

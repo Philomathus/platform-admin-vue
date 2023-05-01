@@ -19,15 +19,15 @@
     <el-table stripe v-loading="loading" :data="configVipList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
 
-      <el-table-column label="vip等级" align="center" prop="levelFlag" />
-      <el-table-column label="需求打码量" align="center" prop="levelMoney" />
-      <el-table-column label="晋级彩金" align="center" prop="jjcj" />
-      <el-table-column label="周俸禄" align="center" prop="zfl" />
-      <el-table-column label="月俸禄" align="center" prop="yfl" />
-      <el-table-column label="创建时间" align="center" prop="createTime" min-width="160"/>
-      <el-table-column label="最后更新人" align="center" prop="opName" />
-      <el-table-column label="最后更新时间" align="center" prop="updateTime" min-width="160"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right" min-width="120">
+      <el-table-column :label="$t('members.configVip.table.vipLvl')" align="center" prop="levelFlag" />
+      <el-table-column :label="$t('members.configVip.table.demandCodingValue')" align="center" prop="levelMoney" />
+      <el-table-column :label="$t('members.configVip.table.advancementJackpot')" align="center" prop="jjcj" />
+      <el-table-column :label="$t('members.configVip.table.weeklySalary')" align="center" prop="zfl" />
+      <el-table-column :label="$t('members.configVip.table.monthlySalary')" align="center" prop="yfl" />
+      <el-table-column :label="$t('members.configVip.table.creationTime')" align="center" prop="createTime" min-width="160"/>
+      <el-table-column :label="$t('members.configVip.table.lastUpdateBy')" align="center" prop="opName" />
+      <el-table-column :label="$t('members.configVip.table.lastUpdateAt')" align="center" prop="updateTime" min-width="160"/>
+      <el-table-column :label="$t('members.configVip.table.operation')" align="center" class-name="small-padding fixed-width" fixed="right" min-width="120">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -35,7 +35,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:configVip:edit']"
-          >修改</el-button>
+          >{{ $t('members.configVip.table.edit') }}</el-button>
           <el-button
             style="color: #FF5722"
             size="mini"
@@ -43,7 +43,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:configVip:remove']"
-          >删除</el-button>
+          >{{ $t('members.configVip.table.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -59,26 +59,26 @@
 
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="vip等级" prop="levelFlag">
-          <el-input v-model="form.levelFlag" placeholder="请输入vip等级" type="number"/>
+      <el-form ref="form" :model="form" :rules="rules" label-width="160px" append-to-body>
+        <el-form-item :label=" $t( 'members.configVip.table.vipLvl' ) " prop="levelFlag">
+          <el-input v-model="form.levelFlag" :placeholder="$t( 'members.configVip.dialog.vipLvlreq' )" type="number"/>
         </el-form-item>
-        <el-form-item label="需求打码" prop="levelMoney">
-          <el-input v-model="form.levelMoney" placeholder="请输入需求打码量" type="number"/>
+        <el-form-item :label="$t('members.configVip.table.demandCodingValue')" prop="levelMoney">
+          <el-input v-model="form.levelMoney" :placeholder="$t( 'members.configVip.dialog.demCodereq' )" type="number"/>
         </el-form-item>
-        <el-form-item label="晋级彩金" prop="jjcj">
-          <el-input v-model="form.jjcj" placeholder="请输入晋级彩金"type="number" />
+        <el-form-item :label="$t('members.configVip.table.advancementJackpot')" prop="jjcj">
+          <el-input v-model="form.jjcj" :placeholder="$t( 'members.configVip.dialog.advJackpotreq' )"type="number" />
         </el-form-item>
-        <el-form-item label="周俸禄" prop="zfl">
-          <el-input v-model="form.zfl" placeholder="请输入周俸禄"type="number" />
+        <el-form-item :label="$t('members.configVip.table.weeklySalary')" prop="zfl">
+          <el-input v-model="form.zfl" :placeholder="$t( 'members.configVip.dialog.weeklySalreq' )"type="number" />
         </el-form-item>
-        <el-form-item label="月俸禄" prop="yfl">
-          <el-input v-model="form.yfl" placeholder="请输入月俸禄" type="number"/>
+        <el-form-item :label="$t('members.configVip.table.monthlySalary')" prop="yfl">
+          <el-input v-model="form.yfl" :placeholder="$t( 'members.configVip.dialog.monthlySalreq' )" type="number"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('members.configVip.table.submit') }}</el-button>
+        <el-button @click="cancel">{{ $t('members.configVip.table.cancel') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -132,19 +132,19 @@ export default {
       // 表单校验
       rules: {
         levelFlag: [
-          {required: true, message: "vip等级不能为空只能是数字", trigger: "number"},
+          {required: true, message: this.$t('members.configVip.rules.vipRule'), trigger: "number"},
         ],
         levelMoney: [
-          {required: true, message: "需求打码不能为空只能是数字", trigger: "number"},
+          {required: true, message: this.$t('members.configVip.rules.demandRule'), trigger: "number"},
         ],
         jjcj: [
-          {required: true, message: "晋级彩金不能为空只能是数字", trigger: "number"},
+          {required: true, message: this.$t('members.configVip.rules.promoteRule'), trigger: "number"},
         ],
         zfl: [
-          {required: true, message: "周俸禄不能为空只能是数字", trigger: "number"},
+          {required: true, message: this.$t('members.configVip.rules.weekSalaryRule'), trigger: "number"},
         ],
         yfl: [
-          {required: true, message: "月俸禄不能为空只能是数字", trigger: "number"},
+          {required: true, message: this.$t('members.configVip.rules.monthSalaryRule'), trigger: "number"},
         ]
       }
     };
@@ -205,7 +205,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加vip配置";
+      this.title = this.$t('members.configVip.queries.addQuery');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -214,7 +214,7 @@ export default {
       getConfigVip(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改vip等级设置";
+        this.title = this.$t('members.configVip.queries.updateQuery');
       });
     },
     /** 提交按钮 */
@@ -241,32 +241,34 @@ export default {
     handleDelete(row) {
       const ids = row.id || this.ids;
       const vip=row.levelFlag;
-      this.$confirm('是否确认删除vip"' + vip + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('members.configVip.queries.delQuery') + vip
+        + this.$t('members.configVip.queries.delQuery2'), this.$t('members.configVip.queries.warning'), {
+        confirmButtonText: this.$t('members.configVip.queries.sure'),
+        cancelButtonText: this.$t('members.configVip.queries.cancel'),
         type: "warning"
       }).then(function() {
         return delConfigVip(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess( this.$t('members.configVip.queries.delSuccess') );
       }).catch(() => {
       })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
+      this.$confirm( this.$t('members.configVip.queries.confExcel'), this.$t('members.configVip.queries.warning'), {
+        confirmButtonText: this.$t('members.configVip.queries.confirm'),
+        cancelButtonText: this.$t('members.configVip.queries.cancel'),
         type: "warning"
       }).then(function() {
         return exportConfigVip(queryParams);
       }).then(response => {
-        this.downloadExcel(response, '【请填写功能名称】');
+        this.downloadExcel(response, this.$t('members.configVip.queries.function'));
       }).catch(() => {
       })
     }
   }
 };
 </script>
+

@@ -1,41 +1,33 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="100px">
-      <el-form-item label="发布时间" prop="ctime">
+      <el-form-item :label="$t('activity.releaseTime')" prop="ctime">
         <el-date-picker
           v-model="dateRange"
           size="small"
           style="width: 240px"
           value-format="yyyy-MM-dd"
           type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :start-placeholder="$t('activity.startDatePlaceholder')"
+          :end-placeholder="$t('activity.endDatePlaceholder')"
+          :range-separator="$t('activity.rangeSeparator')"
           :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item label="标题" prop="title">
-        <el-select
-          filterable
+      <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.title')" prop="title">
+        <el-input
           v-model="queryParams.title"
-          placeholder="请输入标题"
+          :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.titlePlaceholder')"
           clearable
           size="small"
-          style="width: 240px"
-        >
-          <el-option
-            v-for="dict in nameOptions"
-            :key="dict.id"
-            :label="dict.name"
-            :value="dict.name"
-            />
-        </el-select>
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
-      <el-form-item label="平台游戏类型" prop="kindId">
+      <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.kindId')" prop="kindId">
         <el-select
           filterable
           v-model="queryParams.kindId"
-          placeholder="请选择平台游戏类型"
+          :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.kindIdPlaceholder')"
           clearable
           size="small"
           style="width: 240px"
@@ -48,11 +40,11 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="平台类型" prop="platformId">
+      <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.platformId')" prop="platformId">
         <el-select
           filterable
           v-model="queryParams.platformId"
-          placeholder="请选择平台类型"
+          :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.platformIdPlaceholder')"
           clearable
           size="small"
           style="width: 240px"
@@ -66,8 +58,14 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{
+            $t('activity.searchButton')
+          }}
+        </el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{
+            $t('activity.resetButton')
+          }}
+        </el-button>
       </el-form-item>
     </el-form>
 
@@ -80,7 +78,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:activityQuestInfo:add']"
-        >新增
+        >{{ $t('activity.addButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -92,7 +90,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:activityQuestInfo:edit']"
-        >修改
+        >{{ $t('activity.editButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -104,7 +102,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:activityQuestInfo:remove']"
-        >删除
+        >{{ $t('activity.deleteButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -115,7 +113,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:activityQuestInfo:export']"
-        >导出
+        >{{ $t('activity.exportButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -123,8 +121,10 @@
 
     <el-table v-loading="loading" :data="activityQuestInfoList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="标题" align="center" prop="title" min-width="140"/>
-      <el-table-column label="图标" align="center" prop="icon">
+      <el-table-column :label="$t('activity.activityManage.activityQuestInfo.tableDialog.title')" align="center"
+                       prop="title" min-width="140"/>
+      <el-table-column :label="$t('activity.activityManage.activityQuestInfo.tableDialog.icon')" align="center"
+                       prop="icon">
         <template slot-scope="scope">
           <el-image
             style="height:50px"
@@ -134,20 +134,30 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="排序号" align="center" prop="indexs"/>
-      <el-table-column label="目标任务量" align="center" prop="target"/>
-      <el-table-column label="完成后增加的资金" align="center" prop="reward"/>
-      <el-table-column label="描述" align="center" prop="content"/>
-      <el-table-column label="任务有效时间" min-width="200" align="center" prop="detail"/>
-      <el-table-column label="平台游戏类型" align="center" prop="kindId"/>
-      <el-table-column label="平台类型" align="center" prop="platformName" min-width="140"/>
-      <el-table-column label="任务模式" align="center" prop="taskMode" :formatter="hasTaskModeFormat"/>
-      <el-table-column label="发布时间" align="center" prop="ctime" width="180">
+      <el-table-column :label="$t('activity.activityManage.activityQuestInfo.tableDialog.index')" align="center"
+                       prop="indexs"/>
+      <el-table-column :label="$t('activity.activityManage.activityQuestInfo.tableDialog.target')" align="center"
+                       prop="target"/>
+      <el-table-column :label="$t('activity.activityManage.activityQuestInfo.tableDialog.reward')" align="center"
+                       prop="reward"/>
+      <el-table-column :label="$t('activity.activityManage.activityQuestInfo.tableDialog.content')" align="center"
+                       prop="content"/>
+      <el-table-column :label="$t('activity.activityManage.activityQuestInfo.tableDialog.detail')" min-width="200"
+                       align="center" prop="detail"/>
+      <el-table-column :label="$t('activity.activityManage.activityQuestInfo.tableDialog.kindId')" align="center"
+                       prop="kindId"/>
+      <el-table-column :label="$t('activity.activityManage.activityQuestInfo.tableDialog.platformId')" align="center"
+                       prop="platformName" min-width="140"/>
+      <el-table-column :label="$t('activity.activityManage.activityQuestInfo.tableDialog.taskMode')" align="center"
+                       prop="taskMode" :formatter="hasTaskModeFormat"/>
+      <el-table-column :label="$t('activity.activityManage.activityQuestInfo.tableDialog.ctime')" align="center"
+                       prop="ctime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.ctime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" min-width="140" fixed="right">
+      <el-table-column :label="$t('activity.activityManage.activityQuestInfo.tableDialog.operation')" align="center"
+                       class-name="small-padding fixed-width" min-width="140" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -155,7 +165,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:activityQuestInfo:edit']"
-          >修改
+          >{{ $t('activity.activityManage.activityQuestInfo.tableDialog.edit') }}
           </el-button>
           <el-button
             style="color: #FF5722"
@@ -164,7 +174,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:activityQuestInfo:remove']"
-          >删除
+          >{{ $t('activity.activityManage.activityQuestInfo.tableDialog.delete') }}
           </el-button>
         </template>
       </el-table-column>
@@ -190,27 +200,28 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="850px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="130px">
-
         <el-row>
           <el-col class="col-width-w45h">
-            <el-form-item label="标题" prop="title">
-              <el-input v-model="form.title" placeholder="请输入标题"/>
+            <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.title')" prop="title">
+              <el-input v-model="form.title"
+                        :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.titlePlaceholder')"/>
             </el-form-item>
           </el-col>
           <el-col class="col-width-w45h">
-            <el-form-item label="排序号" prop="indexs">
-              <el-input v-model="form.indexs" type="number" class="no-number" placeholder="请输入排序号"/>
+            <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.index')" prop="indexs">
+              <el-input v-model="form.indexs" type="number" class="no-number"
+                        :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.indexPlaceholder')"/>
             </el-form-item>
           </el-col>
         </el-row>
 
         <el-row>
           <el-col class="col-width-w40">
-            <el-form-item label="任务类型" prop="typeId">
+            <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.typeId')" prop="typeId">
               <el-select
                 filterable
                 v-model="form.typeId"
-                placeholder="请选择任务类型"
+                :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.typeIdPlaceholder')"
                 clearable
                 size="small"
                 class="select-type">
@@ -223,11 +234,11 @@
             </el-form-item>
           </el-col>
           <el-col class="col-width-w40 ml5">
-            <el-form-item label="所属游戏" prop="gameId">
+            <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.gameId')" prop="gameId">
               <el-select
                 filterable
                 v-model="form.gameId"
-                placeholder="请选择所属游戏"
+                :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.gameIdPlaceholder')"
                 clearable
                 size="small"
                 class="select-type">
@@ -243,11 +254,11 @@
 
         <el-row>
           <el-col class="col-width-w40">
-            <el-form-item label="平台游戏类型" prop="kindId">
+            <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.kindId')" prop="kindId">
               <el-select
                 filterable
                 v-model="form.kindId"
-                placeholder="请选择平台游戏类型"
+                :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.kindIdPlaceholder')"
                 clearable
                 size="small"
                 class="select-type">
@@ -260,11 +271,12 @@
             </el-form-item>
           </el-col>
           <el-col class="col-width-w40 ml5">
-            <el-form-item label="平台类型" prop="platformId">
+            <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.platformId')"
+                          prop="platformId">
               <el-select
                 filterable
                 v-model="form.platformId"
-                placeholder="请选择平台类型"
+                :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.platformIdPlaceholder')"
                 clearable
                 size="small"
                 class="select-type">
@@ -280,11 +292,11 @@
 
         <el-row>
           <el-col class="col-width-w40">
-            <el-form-item label="任务模式" prop="taskMode">
+            <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.taskMode')" prop="taskMode">
               <el-select
                 filterable
                 v-model="form.taskMode"
-                placeholder="请选择任务模式"
+                :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.taskModePlaceholder')"
                 clearable
                 size="small"
                 style="width: 240px">
@@ -297,34 +309,39 @@
             </el-form-item>
           </el-col>
           <el-col class="col-width-w45h ml5">
-            <el-form-item label="目标任务量" prop="target">
-              <el-input v-model="form.target" type="number" class="no-number" placeholder="请输入目标任务量"/>
+            <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.target')" prop="target">
+              <el-input v-model="form.target" type="number" class="no-number"
+                        :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.targetPlaceholder')"/>
             </el-form-item>
           </el-col>
         </el-row>
 
         <el-row>
           <el-col class="col-width-w45h">
-            <el-form-item label="完成后增加资金" prop="reward">
-              <el-input v-model="form.reward" type="number" class="no-number" placeholder="请输入完成后增加的资金"/>
+            <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.reward')" prop="reward">
+              <el-input v-model="form.reward" type="number" class="no-number"
+                        :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.rewardPlaceholder')"/>
             </el-form-item>
           </el-col>
           <el-col class="col-width-w45h">
-            <el-form-item label="任务有效时间" prop="detail">
-              <el-input v-model="form.detail" type="textarea" placeholder="请输入内容"/>
+            <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.detail')" prop="detail">
+              <el-input v-model="form.detail" type="textarea"
+                        :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.detailPlaceholder')"/>
             </el-form-item>
           </el-col>
         </el-row>
 
         <el-row>
           <el-col class="col-width-w45h">
-            <el-form-item label="图标" prop="icon">
+            <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.icon')" prop="icon">
               <imageUpload v-model="form.icon" path="ActivityQuestInfo"/>
             </el-form-item>
           </el-col>
           <el-col class="col-width-w45h">
-            <el-form-item label="描述">
-              <el-input v-model="form.content" type="textarea" placeholder="请输入内容" rows="6"/>
+            <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.content')">
+              <el-input v-model="form.content" type="textarea"
+                        :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.contentPlaceholder')"
+                        rows="6"/>
             </el-form-item>
           </el-col>
         </el-row>
@@ -332,8 +349,8 @@
       </el-form>
 
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('activity.submitButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('activity.cancelButton') }}</el-button>
       </div>
     </el-dialog>
     <!-- 添加任务信息对话框 Add Task Info dialog end here-->
@@ -355,24 +372,24 @@
 
         <el-row>
           <el-col class="col-width-w45h">
-            <el-form-item label="标题" prop="title">
-              <el-input v-model="form.title" placeholder="请输入标题"/>
+            <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.title')" prop="title">
+              <el-input v-model="form.title" :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.titlePlaceholder')"/>
             </el-form-item>
           </el-col>
           <el-col class="col-width-w45h">
-            <el-form-item label="排序号" prop="indexs">
-              <el-input v-model="form.indexs" type="number" class="no-number" placeholder="请输入排序号"/>
+            <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.index')" prop="indexs">
+              <el-input v-model="form.indexs" type="number" class="no-number" :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.indexPlaceholder')"/>
             </el-form-item>
           </el-col>
         </el-row>
 
         <el-row>
           <el-col class="col-width-w40">
-            <el-form-item label="任务类型" prop="typeId">
+            <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.typeId')" prop="typeId">
               <el-select
                 filterable
                 v-model="form.typeId"
-                placeholder="请选择任务类型"
+                :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.typeIdPlaceholder')"
                 clearable
                 size="small"
                 class="select-type">
@@ -385,11 +402,11 @@
             </el-form-item>
           </el-col>
           <el-col class="col-width-w40 ml5">
-            <el-form-item label="所属游戏" prop="gameId">
+            <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.gameId')" prop="gameId">
               <el-select
                 filterable
                 v-model="form.gameId"
-                placeholder="请选择所属游戏"
+                :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.gameIdPlaceholder')"
                 clearable
                 size="small"
                 class="select-type">
@@ -405,11 +422,11 @@
 
         <el-row>
           <el-col class="col-width-w40">
-            <el-form-item label="平台游戏类型" prop="kindId">
+            <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.kindId')" prop="kindId">
               <el-select
                 filterable
                 v-model="form.kindId"
-                placeholder="请选择平台游戏类型"
+                :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.kindIdPlaceholder')"
                 clearable
                 size="small"
                 class="select-type">
@@ -423,11 +440,11 @@
             </el-form-item>
           </el-col>
           <el-col class="col-width-w40 ml5">
-            <el-form-item label="平台类型" prop="platformId">
+            <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.platformId')" prop="platformId">
               <el-select
                 filterable
                 v-model="form.platformId"
-                placeholder="请选择平台类型"
+                :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.platformIdPlaceholder')"
                 clearable
                 size="small"
                 class="select-type">
@@ -443,58 +460,41 @@
 
         <el-row>
           <el-col class="col-width-w45h">
-            <el-form-item label="目标任务量" prop="target">
-              <el-input v-model="form.target" type="number" class="no-number" placeholder="请输入目标任务量"/>
+            <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.target')" prop="target">
+              <el-input v-model="form.target" type="number" class="no-number" :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.targetPlaceholder')"/>
             </el-form-item>
           </el-col>
           <el-col class="col-width-w45h ">
-            <el-form-item label="完成后增加资金" prop="reward">
-              <el-input v-model="form.reward" type="number" class="no-number" placeholder="请输入完成后增加的资金"/>
+            <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.reward')" prop="reward">
+              <el-input v-model="form.reward" type="number" class="no-number" :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.rewardPlaceholder')"/>
             </el-form-item>
           </el-col>
         </el-row>
 
         <el-row>
           <el-col class="col-width-w45h">
-            <el-form-item label="任务有效时间" prop="detail">
-              <el-input v-model="form.detail" type="textarea" placeholder="请输入内容" rows="6"/>
+            <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.detail')" prop="detail">
+              <el-input v-model="form.detail" type="textarea" :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.detailPlaceholder')" rows="6"/>
             </el-form-item>
           </el-col>
           <el-col class="col-width-w40">
-            <el-form-item label="图标" prop="icon">
+            <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.icon')" prop="icon">
               <imageUpload v-model="form.icon" path="ActivityQuestInfo"/>
             </el-form-item>
           </el-col>
         </el-row>
+
         <el-row>
-          <el-col>
-            <el-form-item label="任务模式" prop="taskMode">
-              <el-select
-                filterable
-                v-model="form.taskMode"
-                placeholder="请选择任务模式"
-                size="small"
-                style="width: 240px">
-                <el-option
-                  v-for="dict in taskMode"
-                  :key="dict.value"
-                  :label="dict.label"
-                  :value="dict.value"/>
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-form-item label="描述">
-            <el-input v-model="form.content" type="textarea" placeholder="请输入内容" rows="7" style="width:90%"/>
+          <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.content')">
+            <el-input v-model="form.content" type="textarea" :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.contentPlaceholder')" rows="7" style="width:90%"/>
           </el-form-item>
         </el-row>
 
       </el-form>
 
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('activity.submitButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('activity.cancelButton') }}</el-button>
       </div>
 
     </el-dialog>
@@ -514,8 +514,7 @@ import {
   activityQuestTypes,
   gameInfoName,
   kindIdSelect,
-  platformIdSelect,
-  nameSelect,
+  platformIdSelect
 } from '@/api/activity/activityQuestInfo'
 import ImageUpload from '@/components/ImageUpload'
 import {pickerDateShortcuts} from "@/utils/dateUtils";
@@ -545,7 +544,6 @@ export default {
         value: 1,
         label: '每日任务'
       }],
-      nameOptions: [],
       //平台游戏类型
       kindIdOptions: [],
       //平台类型
@@ -589,69 +587,69 @@ export default {
       // 表单校验
       rules: {
         icon: [
-          {required: true, message: "图标不能不上传", trigger: "blur"}
+          {required: true, message: this.$t('activity.activityManage.activityQuestInfo.validation.icon'), trigger: "blur"}
         ],
         title: [
-          {required: true, message: "标题不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.activityManage.activityQuestInfo.validation.title'), trigger: "blur"}
         ],
         indexs: [
-          {required: true, message: "排序号不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.activityManage.activityQuestInfo.validation.index'), trigger: "blur"}
         ],
         typeId: [
-          {required: true, message: "任务类型不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.activityManage.activityQuestInfo.validation.typeId'), trigger: "blur"}
         ],
         target: [
-          {required: true, message: "目标任务量不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.activityManage.activityQuestInfo.validation.target'), trigger: "blur"}
         ],
         reward: [
-          {required: true, message: "完成后增加的资金不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.activityManage.activityQuestInfo.validation.reward'), trigger: "blur"}
         ],
         detail: [
-          {required: true, message: "任务有效时间不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.activityManage.activityQuestInfo.validation.detail'), trigger: "blur"}
         ],
         gameId: [
-          {required: true, message: "所属游戏不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.activityManage.activityQuestInfo.validation.gameId'), trigger: "blur"}
         ],
         kindId: [
-          {required: true, message: "平台游戏类型不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.activityManage.activityQuestInfo.validation.kindId'), trigger: "blur"}
         ],
         platformId: [
-          {required: true, message: "平台类型不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.activityManage.activityQuestInfo.validation.platformId'), trigger: "blur"}
         ],
         taskMode: [
-          {required: true, message: "任务模式不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.activityManage.activityQuestInfo.validation.taskMode'), trigger: "blur"}
         ]
       },
       rulese: {
         icon: [
-          {required: true, message: "图标不能不上传", trigger: "blur"}
+          {required: true, message: this.$t('activity.activityManage.activityQuestInfo.validation.icon'), trigger: "blur"}
         ],
         title: [
-          {required: true, message: "标题不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.activityManage.activityQuestInfo.validation.title'), trigger: "blur"}
         ],
         indexs: [
-          {required: true, message: "排序号不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.activityManage.activityQuestInfo.validation.index'), trigger: "blur"}
         ],
         typeId: [
-          {required: true, message: "任务类型不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.activityManage.activityQuestInfo.validation.typeId'), trigger: "blur"}
         ],
         target: [
-          {required: true, message: "目标任务量不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.activityManage.activityQuestInfo.validation.target'), trigger: "blur"}
         ],
         reward: [
-          {required: true, message: "完成后增加的资金不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.activityManage.activityQuestInfo.validation.reward'), trigger: "blur"}
         ],
         detail: [
-          {required: true, message: "任务有效时间不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.activityManage.activityQuestInfo.validation.detail'), trigger: "blur"}
         ],
         gameId: [
-          {required: true, message: "所属游戏不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.activityManage.activityQuestInfo.validation.gameId'), trigger: "blur"}
         ],
         kindId: [
-          {required: true, message: "平台游戏类型不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.activityManage.activityQuestInfo.validation.kindId'), trigger: "blur"}
         ],
         platformId: [
-          {required: true, message: "平台类型不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.activityManage.activityQuestInfo.validation.platformId'), trigger: "blur"}
         ]
       }
     }
@@ -670,11 +668,6 @@ export default {
     kindIdSelect().then(response => {
       console.info(response.data)
       this.kindIdOptions = response.data
-    })
-
-    nameSelect().then(response => {
-      console.info(response.data)
-      this.nameOptions = response.data
     })
     //平台类型
     platformIdSelect().then(response => {
@@ -723,7 +716,7 @@ export default {
       this.getList()
     },
     hasTaskModeFormat(row, column) {
-      return row.taskMode == 0 ? '永久任务' : '每日任务';
+      return row.taskMode == 0 ? this.$t('activity.activityManage.activityQuestInfo.permanentTask') : this.$t('activity.activityManage.activityQuestInfo.dailyTask');
     },
     /** 重置按钮操作 */
     resetQuery() {
@@ -745,7 +738,7 @@ export default {
       activityQuestTypes().then(response => {
         this.activityQuestTypeOptions = response.data
       })
-      this.title = '添加任务信息'
+      this.title = this.$t('activity.activityManage.activityQuestInfo.addTitle')
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -758,7 +751,7 @@ export default {
       getActivityQuestInfo(id).then(response => {
         this.form = response.data
         this.opene = true
-        this.title = '修改任务信息'
+        this.title = this.$t('activity.activityManage.activityQuestInfo.editTitle')
       })
     },
     /** 提交按钮 */
@@ -767,13 +760,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateActivityQuestInfo(this.form).then(response => {
-              this.msgSuccess('修改成功')
+              this.msgSuccess(this.$t('activity.editSuccessMsg'))
               this.opene = false
               this.getList()
             })
           } else {
             addActivityQuestInfo(this.form).then(response => {
-              this.msgSuccess('新增成功')
+              this.msgSuccess(this.$t('activity.addSuccessMsg'));
               this.open = false
               this.getList()
             })
@@ -784,28 +777,28 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids
-      this.$confirm('是否确认删除"' + row.title + '"?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('activity.deleteConfirm1') + row.title + '"?', this.$t('activity.deleteConfirmTitle'), {
+        confirmButtonText: this.$t('activity.confirmButton'),
+        cancelButtonText: this.$t('activity.cancelConfirmButton'),
         type: 'warning'
       }).then(function () {
         return delActivityQuestInfo(ids)
       }).then(() => {
         this.getList()
-        this.msgSuccess('删除成功')
+        this.msgSuccess(this.$t('activity.deleteSuccessMsg'));
       })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('activity.confirmExport'), this.$t('activity.confirmExportTitle'), {
+        confirmButtonText: this.$t('activity.confirmButton'),
+        cancelButtonText: this.$t('activity.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportActivityQuestInfo(queryParams)
       }).then(response => {
-        this.downloadExcel(response, '任务信息')
+        this.downloadExcel(response, this.$t('activity.activityManage.activityInfo.exportResponse'))
       }).catch(() => {
       })
     }

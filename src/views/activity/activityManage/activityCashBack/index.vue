@@ -1,23 +1,29 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="返现结果时间" prop="selectDate" label-width="100px">
+      <el-form-item :label="$t('activity.activityManage.activityCashBack.cashBackResultTime')" prop="selectDate"
+                    label-width="100px">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
-                        end-placeholder="结束时间" range-separator="至" :default-time="['00:00:00', '23:59:59']" clearable :picker-options="pickerOptions"
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}"
+                        :start-placeholder="$t('activity.startDatePlaceholder')"
+                        :end-placeholder="$t('activity.endDatePlaceholder')"
+                        :range-separator="$t('activity.rangeSeparator')"
+                        :default-time="['00:00:00', '23:59:59']" clearable
+                        :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item  prop="rebate">
+      <el-form-item prop="rebate">
         <el-input
           v-model="queryParams.rebate"
-          placeholder="返现金额"
+          :placeholder="$t('activity.activityManage.activityCashBack.rebateAmount')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item  prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small">
+      <el-form-item prop="status">
+        <el-select v-model="queryParams.status"
+                   :placeholder="$t('activity.selectStatus')" clearable size="small">
           <el-option
             v-for="dict in statusOptions"
             :key="dict.dictValue"
@@ -27,8 +33,8 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('activity.searchButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('activity.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -41,7 +47,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:activityCashBack:add']"
-        >新增</el-button>
+        >{{ $t('activity.addButton') }}
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -52,7 +59,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:activityCashBack:edit']"
-        >修改</el-button>
+        >{{ $t('activity.editButton') }}
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -63,7 +71,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:activityCashBack:remove']"
-        >删除</el-button>
+        >{{ $t('activity.deleteButton') }}
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -73,18 +82,19 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:activityCashBack:export']"
-        >返现结果导出</el-button>
+        >{{ $t('activity.exportButton') }}
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="activityCashBackList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键id" align="center" prop="id" />
-      <el-table-column label="当日存款总额最小值" align="center" prop="depositTotalMin" />
-      <el-table-column label="当日存款总额最大值" align="center" prop="depositTotalMax" />
-      <el-table-column label="返现金额" align="center" prop="rebate" />
-      <el-table-column label="状态" align="center" prop="status">
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column :label="$t('activity.activityManage.activityCashBack.tableDialog.tableId')" align="center" prop="id"/>
+      <el-table-column :label="$t('activity.activityManage.activityCashBack.tableDialog.minDeposit')" align="center" prop="depositTotalMin"/>
+      <el-table-column :label="$t('activity.activityManage.activityCashBack.tableDialog.maxDeposit')" align="center" prop="depositTotalMax"/>
+      <el-table-column :label="$t('activity.activityManage.activityCashBack.rebateAmount')" align="center" prop="rebate"/>
+      <el-table-column :label="$t('activity.activityManage.activityCashBack.tableDialog.status')" align="center" prop="status">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -102,14 +112,16 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:activityCashBack:edit']"
-          >修改</el-button>
+          >{{ $t('activity.editButton') }}
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:activityCashBack:remove']"
-          >删除</el-button>
+          >{{ $t('activity.deleteButton') }}
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -123,35 +135,43 @@
     />
 
     <!-- 添加或修改【充值返现】对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="150px">
-        <el-form-item label="当日存款总额最小值" prop="depositTotalMin">
-          <el-input v-model="form.depositTotalMin"  type="number" placeholder="请输入当日存款总额最小值" />
+        <el-form-item :label="$t('activity.activityManage.activityCashBack.tableDialog.minDeposit')" prop="depositTotalMin">
+          <el-input v-model="form.depositTotalMin" type="number" :placeholder="$t('activity.activityManage.activityCashBack.tableDialog.minDepositPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="当日存款总额最大值" prop="depositTotalMax">
-          <el-input v-model="form.depositTotalMax"  type="number" placeholder="请输入当日存款总额最大值" />
+        <el-form-item :label="$t('activity.activityManage.activityCashBack.tableDialog.maxDeposit')" prop="depositTotalMax">
+          <el-input v-model="form.depositTotalMax" type="number" :placeholder="$t('activity.activityManage.activityCashBack.tableDialog.maxDepositPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="返现金额" prop="rebate">
-          <el-input v-model="form.rebate" type="number" placeholder="返现金额" />
+        <el-form-item :label="$t('activity.activityManage.activityCashBack.rebateAmount')" prop="rebate">
+          <el-input v-model="form.rebate" type="number" :placeholder="$t('activity.activityManage.activityCashBack.rebateAmount')"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('activity.submitButton' )}}</el-button>
+        <el-button @click="cancel">{{ $t('activity.cancelButton' ) }}</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { listActivityCashBack,changeActivityInfoStatus, getActivityCashBack, delActivityCashBack, addActivityCashBack, updateActivityCashBack, exportActivityCashBack } from "@/api/activity/activityCashBack";
-import { pickerDateTimeShortcuts } from '@/utils/dateUtils'
+import {
+  listActivityCashBack,
+  changeActivityInfoStatus,
+  getActivityCashBack,
+  delActivityCashBack,
+  addActivityCashBack,
+  updateActivityCashBack,
+  exportActivityCashBack
+} from "@/api/activity/activityCashBack";
+import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
 
 
 export default {
   name: "ActivityCashBack",
-  components: {
-  },
+  components: {},
   data() {
     return {
       // 遮罩层
@@ -169,9 +189,9 @@ export default {
       total: 0,
       // 【充值返现】表格数据
       activityCashBackList: [],
-      pickerOptions: { shortcuts: pickerDateTimeShortcuts },
+      pickerOptions: {shortcuts: pickerDateTimeShortcuts},
       // 弹出层标题
-      title: "充值返现",
+      title: this.$t('activity.activityManage.activityCashBack.title'),
       // 是否显示弹出层
       open: false,
       // 查询参数
@@ -189,13 +209,13 @@ export default {
       // 表单校验
       rules: {
         depositTotalMin: [
-          {required: true, message: "当日存款总额最小值不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.activityManage.activityCashBack.validation.depositTotalMin'), trigger: "blur"}
         ],
         depositTotalMax: [
-          {required: true, message: "当日存款总额最大值不能不上传", trigger: "blur"}
+          {required: true, message: this.$t('activity.activityManage.activityCashBack.validation.depositTotalMax'), trigger: "blur"}
         ],
         rebate: [
-          {required: true, message: "返现金额不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.activityManage.activityCashBack.validation.rebate'), trigger: "blur"}
         ],
       }
     };
@@ -246,14 +266,14 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【充值返现】";
+      this.title = this.$t('activity.activityManage.activityCashBack.addCashbackTitle');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -262,7 +282,7 @@ export default {
       getActivityCashBack(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【充值返现】";
+        this.title = this.$t('activity.activityManage.activityCashBack.editCashbackTitle');
       });
     },
     /** 提交按钮 */
@@ -271,13 +291,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateActivityCashBack(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess(this.$t('activity.editSuccessMsg'));
               this.open = false;
               this.getList();
             });
           } else {
             addActivityCashBack(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess(this.$t('activity.addSuccessMsg'));
               this.open = false;
               this.getList();
             });
@@ -288,29 +308,36 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除【充值返现】编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('activity.deleteConfirm1') + ids + '"?', this.$t('activity.deleteConfirmTitle'), {
+        confirmButtonText: this.$t('activity.confirmButton'),
+        cancelButtonText: this.$t('activity.cancelConfirmButton'),
         type: "warning"
-      }).then(function() {
+      }).then(function () {
         return delActivityCashBack(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess(this.$t('activity.deleteSuccessMsg'));
       }).catch(() => {
-	  })
+      })
     },
     //修改状态
     handleStatusChange(row) {
-      let text = row.status === '1' ? '启用' : '停用'
-      this.$confirm('确认要"' + text + '""' + this.title + '"吗?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      let text = row.status === '1'
+        ? this.$t('activity.statusEnable')
+        : this.$t('activity.statusDisable')
+      this.$confirm(this.$t('activity.statusEditSuccess')
+        + text
+        + '""'
+        + this.title
+        + this.$t('activity.statusConfirmQuestion'),
+        this.$t('activity.statusConfirmTitle'), {
+        confirmButtonText: this.$t('activity.confirmButton'),
+        cancelButtonText: this.$t('activity.cancelButton'),
         type: 'warning'
       }).then(function () {
         return changeActivityInfoStatus(row.id, row.status)
       }).then(() => {
-        this.msgSuccess(text + '成功')
+        this.msgSuccess(text + this.$t('activity.statusEditSuccess'))
       }).catch(function () {
         row.status = row.status === '0' ? '1' : '0'
       })
@@ -318,14 +345,14 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('activity.confirmExport'), this.$t('activity.confirmExportTitle'), {
+        confirmButtonText: this.$t('activity.confirmButton'),
+        cancelButtonText: this.$t('activity.cancelButton'),
         type: "warning"
-      }).then(function() {
+      }).then(function () {
         return exportActivityCashBack(queryParams);
       }).then(response => {
-        this.downloadExcel(response, '【充值返现】');
+        this.downloadExcel(response, this.$t('activity.activityManage.activityCashBack.exportResponse'));
       }).catch(() => {
       })
     }

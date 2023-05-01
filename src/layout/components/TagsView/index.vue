@@ -20,8 +20,8 @@
     <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
       <li @click="refreshSelectedTag(selectedTag)">刷新页面</li>
       <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">关闭当前</li>
-      <li @click="closeOthersTags">关闭其他</li>
-      <li @click="closeAllTags(selectedTag)">关闭所有</li>
+      <li @click="closeOthersTags">{{ $t('tagsView.closeOthersTags') }}</li>
+      <li @click="closeAllTags(selectedTag)">{{ $t('tagsView.closeAllTags') }}</li>
     </ul>
   </div>
 </template>

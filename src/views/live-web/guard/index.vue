@@ -1,18 +1,18 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="规格" prop="specifications">
+      <el-form-item :label="$t('liveWeb.guard.queryForm.specificationsLabel')" prop="specifications">
         <el-input
           v-model="queryParams.specifications"
-          placeholder="请输入规格"
+          :placeholder="$t('liveWeb.guard.queryForm.specificationsPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('liveWeb.guard.queryForm.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('liveWeb.guard.queryForm.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -25,7 +25,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:liveGuardConfig:add']"
-        >新增
+        >{{$t('liveWeb.guard.actions.add')}}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -37,7 +37,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:liveGuardConfig:edit']"
-        >修改
+        >{{$t('liveWeb.guard.actions.edit')}}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -49,33 +49,23 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:liveGuardConfig:remove']"
-        >删除
+        >{{$t('liveWeb.guard.actions.remove')}}
         </el-button>
       </el-col>
-      <!--      <el-col :span="1.5">-->
-      <!--        <el-button-->
-      <!--          type="warning"-->
-      <!--          plain-->
-      <!--          icon="el-icon-download"-->
-      <!--          size="mini"-->
-      <!--          @click="handleExport"-->
-      <!--          v-hasPermi="['admin:liveGuardConfig:export']"-->
-      <!--        >导出</el-button>-->
-      <!--      </el-col>-->
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="liveGuardConfigList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="id" align="center" prop="id"/>
-      <el-table-column label="规格" align="center" prop="specifications"/>
-      <el-table-column label="守护月数" align="center" prop="month"/>
-      <el-table-column label="价格" align="center" prop="price"/>
-      <el-table-column label="守护类型" align="center" prop="type" :formatter="typeFormat"/>
-      <el-table-column label="礼物id" align="center" prop="propId"/>
-      <el-table-column label="优惠价格" align="center" prop="discountPrice"/>
-      <el-table-column label="赠送天数" align="center" prop="giveday"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('liveWeb.guard.table.specifications')" align="center" prop="specifications"/>
+      <el-table-column :label="$t('liveWeb.guard.table.month')" align="center" prop="month"/>
+      <el-table-column :label="$t('liveWeb.guard.table.price')" align="center" prop="price"/>
+      <el-table-column :label="$t('liveWeb.guard.table.type')" align="center" prop="type" :formatter="typeFormat"/>
+      <el-table-column :label="$t('liveWeb.guard.table.propId')" align="center" prop="propId"/>
+      <el-table-column :label="$t('liveWeb.guard.table.discountPrice')" align="center" prop="discountPrice"/>
+      <el-table-column :label="$t('liveWeb.guard.table.giveday')" align="center" prop="giveday"/>
+      <el-table-column :label="$t('liveWeb.guard.table.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -83,7 +73,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:liveGuardConfig:edit']"
-          >修改
+          >{{$t('liveWeb.guard.table.editButton')}}
           </el-button>
           <el-button
             style="color: #FF5722"
@@ -92,7 +82,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:liveGuardConfig:remove']"
-          >删除
+          >{{$t('liveWeb.guard.table.removeButton')}}
           </el-button>
         </template>
       </el-table-column>
@@ -110,23 +100,19 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="550px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="规格" prop="specifications">
-          <el-input v-model="form.specifications" placeholder="请选择规格"/>
+        <el-form-item :label="$t('liveWeb.guard.addUpdateDialog.specificationsLabel')" prop="specifications">
+          <el-input v-model="form.specifications" :placeholder="$t('liveWeb.guard.addUpdateDialog.specificationsPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="守护月数" prop="month">
-          <el-input v-model="form.month" placeholder="请输入守护月数"/>
+        <el-form-item :label="$t('liveWeb.guard.addUpdateDialog.monthLabel')" prop="month">
+          <el-input v-model="form.month" :placeholder="$t('liveWeb.guard.addUpdateDialog.monthPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="价格" prop="price">
-          <el-input v-model="form.price" placeholder="请输入价格"/>
+        <el-form-item :label="$t('liveWeb.guard.addUpdateDialog.priceLabel')" prop="price">
+          <el-input v-model="form.price" :placeholder="$t('liveWeb.guard.addUpdateDialog.pricePlaceholder')"/>
         </el-form-item>
-
-        <!--        <el-form-item label="礼物id" prop="propId">-->
-        <!--          <el-input v-model="form.propId" placeholder="请输入礼物id" />-->
-        <!--        </el-form-item>-->
         <div class="el-row">
           <div class="el-col-lg-12">
-            <el-form-item label="守护类型">
-              <el-select v-model="form.type" placeholder="请选择">
+            <el-form-item :label="$t('liveWeb.guard.addUpdateDialog.typeLabel')">
+              <el-select v-model="form.type" :placeholder="$t('liveWeb.guard.addUpdateDialog.typePlaceholder')">
                 <el-option
                   v-for="dict in guardOptions"
                   :key="dict.dictValue"
@@ -136,8 +122,8 @@
             </el-form-item>
           </div>
           <div class="el-col-lg-12">
-            <el-form-item label="关联礼物">
-              <el-select v-model="form.propId" placeholder="请选择">
+            <el-form-item :label="$t('liveWeb.guard.addUpdateDialog.propIdLabel')">
+              <el-select v-model="form.propId" :placeholder="$t('liveWeb.guard.addUpdateDialog.propIdPlaceholder')">
                 <el-option
                   v-for="dict in propIdOptions"
                   :key="dict.id"
@@ -148,16 +134,16 @@
           </div>
         </div>
 
-        <el-form-item label="优惠价格" prop="discountPrice">
-          <el-input v-model="form.discountPrice" placeholder="请输入优惠价格"/>
+        <el-form-item :label="$t('liveWeb.guard.addUpdateDialog.discountPriceLabel')" prop="discountPrice">
+          <el-input v-model="form.discountPrice" :placeholder="$t('liveWeb.guard.addUpdateDialog.discountPricePlaceholder')"/>
         </el-form-item>
-        <el-form-item label="赠送天数" prop="giveday">
-          <el-input v-model="form.giveday" placeholder="请输入赠送天数"/>
+        <el-form-item :label="$t('liveWeb.guard.addUpdateDialog.givedayLabel')" prop="giveday">
+          <el-input v-model="form.giveday" :placeholder="$t('liveWeb.guard.addUpdateDialog.givedayPlaceholder')"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{$t('liveWeb.guard.addUpdateDialog.confirmButton')}}</el-button>
+        <el-button @click="cancel">{{$t('liveWeb.guard.addUpdateDialog.cancelButton')}}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -276,7 +262,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加";
+      this.title = this.$t('liveWeb.guard.addUpdateDialog.titleAdd');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -286,7 +272,7 @@ export default {
         this.form = response.data;
         this.form.type = "" + this.form.type
         this.open = true;
-        this.title = "修改";
+        this.title = this.$t('liveWeb.guard.addUpdateDialog.titleUpdate');
       });
     },
     /** 提交按钮 */
@@ -295,13 +281,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateLiveGuardConfig(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess(this.$t('liveWeb.guard.messageBox.editLiveGuardConfigSuccess'));
               this.open = false;
               this.getList();
             });
           } else {
             addLiveGuardConfig(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess(this.$t('liveWeb.guard.messageBox.addLiveGuardConfigSuccess'));
               this.open = false;
               this.getList();
             });
@@ -312,30 +298,30 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('liveWeb.guard.confirmRemoveDialog.message', {ids: ids}), this.$t('liveWeb.guard.confirmRemoveDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.guard.confirmRemoveDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.guard.confirmRemoveDialog.cancelButton'),
         type: "warning"
       }).then(function () {
         return delLiveGuardConfig(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess(this.$t('liveWeb.guard.messageBox.removeLiveGuardConfigSuccess'));
       })
     },
     typeFormat(row, column) {
       if (row.type == "1") {
-        return "银之守护";
+        return this.$t('liveWeb.guard.table.type1');
       } else {
-        return "星之守护";
+        return this.$t('liveWeb.guard.table.typeOthers');
       }
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('liveWeb.guard.confirmExportDialog.message'), this.$t('liveWeb.guard.confirmExportDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.guard.confirmExportDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.guard.confirmExportDialog.cancelButton'),
         type: "warning"
       }).then(function () {
         return exportLiveGuardConfig(queryParams);

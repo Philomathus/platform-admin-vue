@@ -11,42 +11,42 @@
       append-to-body
     >
       <el-table stripe v-loading="loading" :data="memberGameDataRecordList">
-        <el-table-column label="订单号" align="center" prop="gameId"/>
-        <el-table-column label="用户名" align="center" prop="playName"/>
-        <el-table-column label="局号" align="center" prop="gameRound"/>
-        <el-table-column label="派彩额度" align="center" prop="netAmount"/>
-        <el-table-column label="下注时间" align="center" prop="betTime"/>
-        <el-table-column label="游戏类型" align="center" prop="gameType">
+        <el-table-column :label=" $t('members.memberGameData.agRecord.table.ordNum') " align="center" prop="gameId"/>
+        <el-table-column :label=" $t('members.memberGameData.agRecord.table.userName') " align="center" prop="playName"/>
+        <el-table-column :label=" $t('members.memberGameData.agRecord.table.buNum') " align="center" prop="gameRound"/>
+        <el-table-column :label=" $t('members.memberGameData.agRecord.table.payAmt') " align="center" prop="netAmount"/>
+        <el-table-column :label=" $t('members.memberGameData.agRecord.table.plBets') " align="center" prop="betTime"/>
+        <el-table-column :label=" $t('members.memberGameData.agRecord.table.gType') " align="center" prop="gameType">
           <template slot-scope="scope">
-            <span v-if="scope.row.gametype == 'BAC'">百家乐</span>
-            <span v-if="scope.row.gametype == 'DT'">龙虎</span>
+            <span v-if="scope.row.gametype == 'BAC'">{{ $t('members.memberGameData.agRecord.table.gTypes.bacc') }}</span>
+            <span v-if="scope.row.gametype == 'DT'">{{ $t('members.memberGameData.agRecord.table.gTypes.dt') }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="总投注" align="center" prop="betAmount"/>
-        <el-table-column label="有效投注" align="center" prop="validBetAmount"/>
-        <el-table-column label="订单状态" align="center" prop="flag">
+        <el-table-column :label=" $t('members.memberGameData.agRecord.table.tBet') " align="center" prop="betAmount"/>
+        <el-table-column :label=" $t('members.memberGameData.agRecord.table.vBet') " align="center" prop="validBetAmount"/>
+        <el-table-column :label=" $t('members.memberGameData.agRecord.table.oStat') " align="center" prop="flag">
           <template slot-scope="scope">
-            <span v-if="scope.row.flag == '0'">异常</span>
-            <span v-if="scope.row.flag == '1'">已派彩</span>
-            <span v-if="scope.row.flag == '8'">已取消</span>
-            <span v-if="scope.row.flag == '9'">已取消</span>
+            <span v-if="scope.row.flag == '0'">{{ $t('members.memberGameData.agRecord.table.anom') }}</span>
+            <span v-if="scope.row.flag == '1'">{{ $t('members.memberGameData.agRecord.table.pout') }}</span>
+            <span v-if="scope.row.flag == '8'">{{ $t('members.memberGameData.agRecord.table.canc') }}</span>
+            <span v-if="scope.row.flag == '9'">{{ $t('members.memberGameData.agRecord.table.canc') }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="玩法" align="center" prop="playType">
+        <el-table-column :label=" $t('members.memberGameData.agRecord.table.howTo') " align="center" prop="playType">
           <template slot-scope="scope">
-            <span v-if="scope.row.playType === '1'">庄</span>
-            <span v-if="scope.row.playType === '2'">闲</span>
-            <span v-if="scope.row.playType === '3'">和</span>
-            <span v-if="scope.row.playType === '21'">龙</span>
-            <span v-if="scope.row.playType === '22'">虎</span>
-            <span v-if="scope.row.playType === '23'">和</span>
+            <span v-if="scope.row.playType === '1'">{{ $t('members.memberGameData.agRecord.table.howtos.banker') }}</span>
+            <span v-if="scope.row.playType === '2'">{{ $t('members.memberGameData.agRecord.table.howtos.casual') }}</span>
+            <span v-if="scope.row.playType === '3'">{{ $t('members.memberGameData.agRecord.table.howtos.sum') }}</span>
+            <span v-if="scope.row.playType === '21'">{{ $t('members.memberGameData.agRecord.table.howtos.dragon') }}</span>
+            <span v-if="scope.row.playType === '22'">{{ $t('members.memberGameData.agRecord.table.howtos.tiger') }}</span>
+            <span v-if="scope.row.playType === '23'">{{ $t('members.memberGameData.agRecord.table.howtos.sum') }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="桌台号" align="center" prop="tableCode"/>
-        <el-table-column label="派彩时间" align="center" prop="recalcuTime"/>
-        <el-table-column label="余额" align="center" prop="beforeCredit"/>
-        <el-table-column label="投注IP" align="center" prop="betIP"/>
-        <el-table-column label="详情" align="center" class-name="small-padding fixed-width" fixed="right">
+        <el-table-column :label=" $t('members.memberGameData.agRecord.table.tNum') " align="center" prop="tableCode"/>
+        <el-table-column :label=" $t('members.memberGameData.agRecord.table.pTime') " align="center" prop="recalcuTime"/>
+        <el-table-column :label=" $t('members.memberGameData.agRecord.table.bal') " align="center" prop="beforeCredit"/>
+        <el-table-column :label=" $t('members.memberGameData.agRecord.table.betIp') " align="center" prop="betIP"/>
+        <el-table-column :label=" $t('members.memberGameData.agRecord.table.det') " align="center" class-name="small-padding fixed-width" fixed="right">
           <template slot-scope="scope">
             <el-button
               type="primary"
@@ -55,7 +55,7 @@
               size="small"
               @click="handleDetail(scope.row)"
               v-hasPermi="['member:memberGameData:detailList']"
-            >更多
+            >{{ $t('members.memberGameData.agRecord.buttons.more') }}
             </el-button>
           </template>
         </el-table-column>
@@ -65,7 +65,7 @@
 
     <!--会员Ag视讯注单数据详情-->
     <el-dialog
-      title="注单数据详情"
+      title=" $t('members.memberGameData.agRecord.table.titles') "
       v-dialogDrag
       :close-on-click-modal="false"
       :title="title"
@@ -105,7 +105,7 @@ export default {
       // 遮罩层
       loading: true,
       //弹出框标题
-      title: '游戏对局列表',
+      title: this.$t('members.memberGameData.agRecord.data.title') ,
       //页面编码
       index: 1,
       // 遮罩层
@@ -157,7 +157,7 @@ export default {
   watch: {
     vip: function(newVal, oldVal) {
       if (newVal < this.oldVip) {
-        this.$notify.error('vip等级只能大于之前的等级')
+        this.$notify.error( this.$t('members.memberGameData.agRecord.data.vipLvl') )
         this.showVipDisabled = true
       } else {
         this.showVipDisabled = false

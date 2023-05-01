@@ -3,7 +3,7 @@
     <div>
       <div class="setting-drawer-content">
         <div class="setting-drawer-title">
-          <h3 class="drawer-title">主题风格设置</h3>
+          <h3 class="drawer-title">{{ $t('settings.title') }}</h3>
         </div>
         <div class="setting-drawer-block-checbox">
           <div class="setting-drawer-block-checbox-item" @click="handleTheme('theme-dark')">
@@ -33,27 +33,27 @@
         </div>
 
         <div class="drawer-item">
-          <span>主题颜色</span>
+          <span>{{ $t('settings.themeColor') }}</span>
           <theme-picker style="float: right;height: 26px;margin: -3px 8px 0 0;" @change="themeChange" />
         </div>
       </div>
 
       <el-divider/>
 
-      <h3 class="drawer-title">系统布局配置</h3>
+      <h3 class="drawer-title">{{ $t('settings.systemLayoutConfig') }} </h3>
 
       <div class="drawer-item">
-        <span>开启 Tags-Views</span>
+        <span>{{ $t('settings.openTagsView') }}</span>
         <el-switch v-model="tagsView" class="drawer-switch" />
       </div>
 
       <div class="drawer-item">
-        <span>固定 Header</span>
+        <span>{{ $t('settings.fixedHeader') }}</span>
         <el-switch v-model="fixedHeader" class="drawer-switch" />
       </div>
 
       <div class="drawer-item">
-        <span>显示 Logo</span>
+        <span>{{ $t('settings.sidebarLogo') }}</span>
         <el-switch v-model="sidebarLogo" class="drawer-switch" />
       </div>
 

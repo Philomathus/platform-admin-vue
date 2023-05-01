@@ -1,18 +1,21 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="名称" prop="name">
+      <el-form-item :label="$t('activity.activityManage.activityType.tableDialog.name')" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入名称"
+          :placeholder="$t('activity.activityManage.activityType.tableDialog.namePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{
+            $t('activity.searchButton')
+          }}
+        </el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('activity.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -25,7 +28,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:activityType:add']"
-        >新增
+        >{{ $t('activity.addButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -37,7 +40,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:activityType:edit']"
-        >修改</el-button>
+        >{{ $t('activity.editButton') }}
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -48,7 +52,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:activityType:remove']"
-        >删除
+        >{{ $t('activity.deleteButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -59,7 +63,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:activityType:export']"
-        >导出
+        >{{ $t('activity.exportButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -67,9 +71,9 @@
 
     <el-table v-loading="loading" :data="activityTypeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="排序" align="center" prop="oder"/>
-      <el-table-column label="名称" align="center" prop="name"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('activity.activityManage.activityType.tableDialog.oder')" align="center" prop="oder"/>
+      <el-table-column :label="$t('activity.activityManage.activityType.tableDialog.name')" align="center" prop="name"/>
+      <el-table-column :label="$t('activity.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -77,7 +81,8 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:activityType:edit']"
-          >修改</el-button>
+          >{{ $t('activity.editButton') }}
+          </el-button>
           <el-button
             size="mini"
             type="text"
@@ -85,7 +90,9 @@
             style="color:#ec9090"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:activityType:remove']"
-          >删除
+          >{{
+              $t('activity.deleteButton')
+            }}
           </el-button>
         </template>
       </el-table-column>
@@ -103,16 +110,18 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="450px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入名称"/>
+        <el-form-item :label="$t('activity.activityManage.activityType.tableDialog.name')" prop="name">
+          <el-input v-model="form.name"
+                    :placeholder="$t('activity.activityManage.activityType.tableDialog.namePlaceholder')"/>
         </el-form-item>
-        <el-form-item label="排序" prop="oder">
-          <el-input v-model="form.oder" placeholder="请输入名称"/>
+        <el-form-item :label="$t('activity.activityManage.activityType.tableDialog.oder')" prop="oder">
+          <el-input v-model="form.oder"
+                    :placeholder="$t('activity.activityManage.activityType.tableDialog.oderPlaceholder')"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('activity.submitButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('activity.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -163,10 +172,10 @@ export default {
       // 表单校验
       rules: {
         name: [
-          {required: true, message: '名称不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('activity.activityManage.activityType.validation.name'), trigger: 'blur'}
         ],
         oder: [
-          {required: true, message: '不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('activity.activityManage.activityType.validation.oder'), trigger: 'blur'}
         ]
       }
     };
@@ -219,7 +228,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加活动类型";
+      this.title = this.$t('activity.activityManage.activityType.addTitle');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -228,7 +237,7 @@ export default {
       getActivityType(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改活动类型";
+        this.title = this.$t('activity.activityManage.activityType.editTitle');
       });
     },
     /** 提交按钮 */
@@ -237,13 +246,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateActivityType(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess(this.$t('activity.editSuccessMsg'));
               this.open = false;
               this.getList();
             });
           } else {
             addActivityType(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess(this.$t('activity.addSuccessMsg'));
               this.open = false;
               this.getList();
             });
@@ -253,10 +262,11 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
+
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除"' + row.name + '"?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('activity.deleteConfirm1') + row.name + '"?', this.$t('activity.deleteConfirmTitle'), {
+        confirmButtonText: this.$t('activity.confirmButton'),
+        cancelButtonText: this.$t('activity.cancelConfirmButton'),
         type: "warning"
       }).then(function () {
         return delActivityType(ids);
@@ -268,9 +278,9 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('activity.confirmExport'), this.$t('activity.confirmExportTitle'), {
+        confirmButtonText: this.$t('activity.confirmButton'),
+        cancelButtonText: this.$t('activity.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportActivityType(queryParams);

@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-          <el-form-item label="主播ID" prop="userIds">
+          <el-form-item :label="$t('liveWeb.liveUser.queryForm.userIdsLabel')" prop="userIds">
             <el-input
               v-model="queryParams.userIds"
-              placeholder="主播ID,批量搜索请用英文逗号隔开"
+              :placeholder="$t('liveWeb.liveUser.queryForm.userIdsPlaceholder')"
               clearable
               size="small"
               type="text"
@@ -14,17 +14,17 @@
               @keyup.enter.native="handleQuery" />
           </el-form-item>
 
-          <el-form-item label="注册日期" prop="selectDate">
+          <el-form-item :label="$t('liveWeb.liveUser.queryForm.userIdsPlaceholder')" prop="selectDate">
             <el-date-picker type="daterange" v-model="selectDate" format="yyyy-MM-dd"
-                            value-format="yyyy-MM-dd" :style="{width: '240px'}" start-placeholder="开始日期"
-                            end-placeholder="结束日期"
-                            range-separator="至" clearable :picker-options="pickerOptions">
+                            value-format="yyyy-MM-dd" :style="{width: '240px'}" :start-placeholder="$t('liveWeb.liveUser.queryForm.selectDateStartPlaceholder')"
+                            :end-placeholder="$t('liveWeb.liveUser.queryForm.selectDateEndPlaceholder')"
+                            :range-separator="$t('liveWeb.liveUser.queryForm.selectDateRangeSeparator')" clearable :picker-options="pickerOptions">
             </el-date-picker>
           </el-form-item>
           <el-form-item prop="nickName">
             <el-input
               v-model="queryParams.nickName"
-              placeholder="主播昵称"
+              :placeholder="$t('liveWeb.liveUser.queryForm.nickNamePlaceholder')"
               clearable
               size="small"
               @keyup.enter.native="handleQuery"/>
@@ -32,29 +32,29 @@
           <el-form-item prop="mobile" class="phone">
             <el-input
               v-model="queryParams.mobile"
-              placeholder="手机号"
+              :placeholder="$t('liveWeb.liveUser.queryForm.phonePlaceholder')"
               clearable
               size="small"
               @keyup.enter.native="handleQuery"/>
           </el-form-item>
           <el-form-item prop="isBan" class="is-ban">
-            <el-select v-model="queryParams.isBan" placeholder="是否禁播" class="col-w240" clearable>
-              <el-option label="正常" value="0"></el-option>
-              <el-option label="禁播" value="1"></el-option>
+            <el-select v-model="queryParams.isBan" :placeholder="$t('liveWeb.liveUser.queryForm.isBanPlaceholder')" class="col-w240" clearable>
+              <el-option :label="$t('liveWeb.liveUser.table.isBan0')" value="0"></el-option>
+              <el-option :label="$t('liveWeb.liveUser.table.isBan1')" value="1"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item prop="isAuthentication" class="is-authentication">
-            <el-select v-model="queryParams.isAuthentication" placeholder="全部状态" clearable>
-              <el-option label="未认证" value="0"></el-option>
-              <el-option label="待审核" value="1"></el-option>
-              <el-option label="已认证" value="2"></el-option>
-              <el-option label="审核不通过" value="3"></el-option>
+            <el-select v-model="queryParams.isAuthentication" :placeholder="$t('liveWeb.liveUser.queryForm.isAuthenticationPlaceholder')" clearable>
+              <el-option :label="$t('liveWeb.liveUser.table.isAuthentication0')" value="0"></el-option>
+              <el-option :label="$t('liveWeb.liveUser.table.isAuthentication1')" value="1"></el-option>
+              <el-option :label="$t('liveWeb.liveUser.table.isAuthentication2')" value="2"></el-option>
+              <el-option :label="$t('liveWeb.liveUser.table.isAuthentication3')" value="3"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item prop="mobile" class="family-id">
             <el-input
               v-model="queryParams.familyId"
-              placeholder="家族ID"
+              :placeholder="$t('liveWeb.liveUser.queryForm.mobilePlaceholder')"
               clearable
               size="small"
               type="number"
@@ -62,8 +62,8 @@
               @keyup.enter.native="handleQuery"/>
           </el-form-item>
           <el-form-item class="handle-btn">
-            <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+            <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('liveWeb.liveUser.queryForm.searchButton')}}</el-button>
+            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('liveWeb.liveUser.queryForm.resetButton')}}</el-button>
           </el-form-item>
     </el-form>
 
@@ -75,7 +75,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['admin:liveUser:add']">新增
+          v-hasPermi="['admin:liveUser:add']">{{$t('liveWeb.liveUser.actions.add')}}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -85,7 +85,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['admin:liveUser:export']">导出
+          v-hasPermi="['admin:liveUser:export']">{{$t('liveWeb.liveUser.actions.export')}}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -95,7 +95,7 @@
           icon="el-icon-download"
           size="mini"
           @click="sendRoomMsg"
-          v-hasPermi="['admin:liveUser:add']">直播间小助手
+          v-hasPermi="['admin:liveUser:add']">{{$t('liveWeb.liveUser.actions.liveRoomAssistant')}}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -106,7 +106,7 @@
           class="disabled-btn"
           :disabled="multiple"
           @click="joinFamilyBulk"
-        >批量加入家族
+        >{{$t('liveWeb.liveUser.actions.batchJoin')}}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -117,7 +117,7 @@
           class="disabled-btn"
           :disabled="multiple"
           @click="kickOutFamilyBulk"
-        >批量踢出家族
+        >{{$t('liveWeb.liveUser.actions.batchKickOut')}}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -126,13 +126,13 @@
     <!-- liveUser显示数据表部分从这里开始 liveUser display data table section start from here-->
     <el-table stripe v-loading="loading" :data="liveUserList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="50" align="center"/>
-      <el-table-column label="主播ID" min-width="120" align="center" prop="id"/>
-      <el-table-column label="主播昵称" min-width="140" :show-overflow-tooltip="true" align="center" prop="nickName"/>
-      <el-table-column label="主播名片" min-width="100" align="center" prop="weixinAccount"
+      <el-table-column :label="$t('liveWeb.liveUser.table.id')" min-width="120" align="center" prop="id"/>
+      <el-table-column :label="$t('liveWeb.liveUser.table.nickName')" min-width="140" :show-overflow-tooltip="true" align="center" prop="nickName"/>
+      <el-table-column :label="$t('liveWeb.liveUser.table.weixinAccount')" min-width="100" align="center" prop="weixinAccount"
                        :show-overflow-tooltip="true"/>
-      <el-table-column label="所属家族" min-width="100" align="center" prop="familyName" :show-overflow-tooltip="true">
+      <el-table-column :label="$t('liveWeb.liveUser.table.familyName')" min-width="100" align="center" prop="familyName" :show-overflow-tooltip="true">
         <template v-slot="{row}">
-          <span v-if="row.familyId === 0">未加入家族</span>
+          <span v-if="row.familyId === 0">{{$t('liveWeb.liveUser.table.familyId0')}}</span>
           <el-popover
             v-else
             placement="top"
@@ -141,15 +141,15 @@
             trigger="click">
             <table>
               <tr>
-                <td style="text-align: right">家 族 ID：</td>
+                <td style="text-align: right">{{$t('liveWeb.liveUser.table.familyIdPopover')}}</td>
                 <td style="text-align: left">{{ row.familyId }}</td>
               </tr>
               <tr>
-                <td style="text-align: right">家 族 长 ID：</td>
+                <td style="text-align: right">{{$t('liveWeb.liveUser.table.familyUserIdPopover')}}</td>
                 <td style="text-align: left">{{ row.familyUserId }}</td>
               </tr>
               <tr>
-                <td style="text-align: right">家族长昵称：</td>
+                <td style="text-align: right">{{$t('liveWeb.liveUser.table.familyNickNamePopover')}}</td>
                 <td style="text-align: left">{{ row.familyNickName }}</td>
               </tr>
             </table>
@@ -157,13 +157,13 @@
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column label="是否家族长" min-width="150" align="center" prop="familyChieftain"
+      <el-table-column :label="$t('liveWeb.liveUser.table.familyChieftain')" min-width="150" align="center" prop="familyChieftain"
                        :formatter="fmFamilyChieftain"/>
       <!--  isAuthentication 选择选项部分从这里开始 isAuthentication select options section start from here -->
-      <el-table-column label="状态" align="center" width="135px">
+      <el-table-column :label="$t('liveWeb.liveUser.table.isAuthentication')" align="center" width="135px">
         <template v-slot="{row}">
           <el-select v-model="row.isAuthentication"
-                     placeholder="请选择状态" size="small"
+                     :placeholder="$t('liveWeb.liveUser.table.isAuthenticationPlaceholder')" size="small"
                      @change="changeAuthType(row)">
             <el-option
               v-for="(dict,i) in typeAuthList"
@@ -175,15 +175,15 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="印票" min-width="120" align="center" prop="ticket"/>
-      <el-table-column label="时薪" min-width="120" align="center" prop="coin"/>
-      <el-table-column label="时薪任务" min-width="120" align="center" prop="weixinPrice"/>
-      <el-table-column label="礼物任务" min-width="120" align="center" prop="weiboMoney"/>
-      <el-table-column label="彩票抽成" min-width="120" align="center" prop="xpoint"/>
-      <el-table-column label="礼物抽成" min-width="120" align="center" prop="ypoint"/>
-      <el-table-column label="是否禁播" width="80" align="center" prop="isBan">
+      <el-table-column :label="$t('liveWeb.liveUser.table.ticket')" min-width="120" align="center" prop="ticket"/>
+      <el-table-column :label="$t('liveWeb.liveUser.table.coin')" min-width="120" align="center" prop="coin"/>
+      <el-table-column :label="$t('liveWeb.liveUser.table.weixinPrice')" min-width="120" align="center" prop="weixinPrice"/>
+      <el-table-column :label="$t('liveWeb.liveUser.table.weiboMoney')" min-width="120" align="center" prop="weiboMoney"/>
+      <el-table-column :label="$t('liveWeb.liveUser.table.xpoint')" min-width="120" align="center" prop="xpoint"/>
+      <el-table-column :label="$t('liveWeb.liveUser.table.ypoint')" min-width="120" align="center" prop="ypoint"/>
+      <el-table-column :label="$t('liveWeb.liveUser.table.isBan')" width="80" align="center" prop="isBan">
         <template v-slot="{row}">
-          <el-tooltip class="item" effect="dark" :content="row.isBan === 0 ? '正常' : '禁播'" placement="top">
+          <el-tooltip class="item" effect="dark" :content="row.isBan === 0 ? $t('liveWeb.liveUser.table.isBan0') : $t('liveWeb.liveUser.table.isBan1')" placement="top">
             <el-switch
               :active-value="0"
               :inactive-value="1"
@@ -195,10 +195,10 @@
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column label="手机号" min-width="100" align="center" prop="mobile"/>
-      <el-table-column label="登陆IP" min-width="150" :show-overflow-tooltip="true" align="left" prop="loginIp"/>
-      <el-table-column label="禁播原因" min-width="200" align="center" prop="banRemark" :show-overflow-tooltip="true"/>
-      <el-table-column label="操作" min-width="200" align="center" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column :label="$t('liveWeb.liveUser.table.mobile')" min-width="100" align="center" prop="mobile"/>
+      <el-table-column :label="$t('liveWeb.liveUser.table.loginIp')" min-width="150" :show-overflow-tooltip="true" align="left" prop="loginIp"/>
+      <el-table-column :label="$t('liveWeb.liveUser.table.banRemark')" min-width="200" align="center" prop="banRemark" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('liveWeb.liveUser.table.operation')" min-width="200" align="center" class-name="small-padding fixed-width" fixed="right">
         <template v-slot="{row}">
           <el-button
             size="small"
@@ -208,7 +208,7 @@
             @click="kickOutLive(row)"
             v-hasPermi="['admin:liveUser:edit']"
             v-show="row.familyId > 0 && row.familyChieftain !== 1">
-            踢出家族
+            {{$t('liveWeb.liveUser.table.kickOutButton')}}
           </el-button>
           <el-button
             size="small"
@@ -217,7 +217,7 @@
             icon="el-icon-s-check"
             @click="handleAuth(row)"
             v-hasPermi="['admin:liveUser:edit']"
-            v-show="row.isAuthentication === 1">审核
+            v-show="row.isAuthentication === 1">{{$t('liveWeb.liveUser.table.auditButton')}}
           </el-button>
 
           <!-- click on this button live Launch content dialog-->
@@ -231,7 +231,7 @@
                            //查询之前的开播信息
                             getLiveVideo(row.id);}"
             v-hasPermi="['admin:liveUser:edit']"
-            v-show="row.roboter == 1 && row.liveIn != 1">开播
+            v-show="row.roboter == 1 && row.liveIn != 1">{{$t('liveWeb.liveUser.table.starBroadcastButton')}}
           </el-button>
           <!-- end Launch content dialog button -->
 
@@ -242,23 +242,18 @@
             icon="el-icon-s-check"
             @click="closeLive(row)"
             v-hasPermi="['admin:liveUser:edit']"
-            v-show="row.roboter == 1 && row.liveIn == 1">关播
+            v-show="row.roboter == 1 && row.liveIn == 1">{{$t('liveWeb.liveUser.table.endBroadcastButton')}}
           </el-button>
           <el-button
             size="small"
             plain
             type="success"
             icon="el-icon-menu"
-            @click="handleMore(row)">更多
+            @click="handleMore(row)">{{$t('liveWeb.liveUser.table.moreButton')}}
           </el-button>
         </template>
 
       </el-table-column>
-
-      <!--      <el-table-column label="可用印票" min-width="120" align="center" prop="ticket"/>
-
-            <el-table-column label="粉丝" min-width="120" align="center" prop="fansCount"/>
-            <el-table-column label="注册时间" min-width="160" :show-overflow-tooltip="true" align="center" prop="createTime"/>-->
     </el-table>
     <!-- liveUser显示数据表部分到此结束 liveUser display data table section end here-->
 
@@ -276,21 +271,21 @@
 
         <section class="el-row">
           <div class="el-col-lg-14">
-            <el-form-item label="手机号" prop="mobile">
+            <el-form-item :label="$t('liveWeb.liveUser.addDialog.mobileLabel')" prop="mobile">
               <el-input v-model="form.mobile"/>
             </el-form-item>
-            <el-form-item label="昵称" prop="nickName">
+            <el-form-item :label="$t('liveWeb.liveUser.addDialog.nickNameLabel')" prop="nickName">
               <el-input v-model="form.nickName"/>
             </el-form-item>
           </div>
           <div class="el-col-lg-10">
-            <el-form-item label="用户头像" style="margin-left: -30px">
+            <el-form-item :label="$t('liveWeb.liveUser.addDialog.headImageLabel')" style="margin-left: -30px">
               <imageUpload v-model="form.headImage" path="liveVideo"/>
             </el-form-item>
           </div>
         </section>
 
-        <el-form-item label="类型" prop="isAuthentication">
+        <el-form-item :label="$t('liveWeb.liveUser.addDialog.isAuthenticationLabel')" prop="isAuthentication">
           <el-radio-group v-model="form.isAuthentication">
             <el-radio
               v-for="dict in attestList"
@@ -302,30 +297,30 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm(1)">确 定</el-button>
+        <el-button type="primary" @click="submitForm(1)">{{$t('liveWeb.liveUser.addDialog.confirmButton')}}</el-button>
         <!--add new model close button-->
-        <el-button @click="addopen = false">取 消</el-button>
+        <el-button @click="addopen = false">{{$t('liveWeb.liveUser.addDialog.cancelButton')}}</el-button>
       </div>
     </el-dialog>
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="sendMsg" width="500px" append-to-body>
       <el-form ref="form" :model="form" label-width="120px">
-        <el-form-item label="小助手消息">
-          <el-input v-model="form.info" prop="info" type="textarea" :rows="4" placeholder="请输入发送小助手消息"/>
+        <el-form-item :label="$t('liveWeb.liveUser.liveRoomAssistantDialog.infoLabel')">
+          <el-input v-model="form.info" prop="info" type="textarea" :rows="4" :placeholder="$t('liveWeb.liveUser.liveRoomAssistantDialog.infoPlaceholder')"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="sendLiveMsg()">确 定</el-button>
+        <el-button type="primary" @click="sendLiveMsg()">{{$t('liveWeb.liveUser.liveRoomAssistantDialog.confirmButton')}}</el-button>
       </div>
     </el-dialog>
 
     <!-- 开播内容对话框 Launch live content dialog-->
-    <el-dialog :close-on-click-modal="false" v-loading="openLoading" title="开播信息" :visible.sync="openLiveStatus"
+    <el-dialog :close-on-click-modal="false" v-loading="openLoading" :title="$t('liveWeb.liveUser.liveBroadcastDialog.title')" :visible.sync="openLiveStatus"
                width="500px" append-to-body>
       <el-form ref="form" :model="openLiveForm" label-width="120px">
-        <el-form-item label="标题" prop="title">
+        <el-form-item :label="$t('liveWeb.liveUser.liveBroadcastDialog.titleLabel')" prop="title">
           <el-input v-model.trim="openLiveForm.title"/>
         </el-form-item>
-        <el-form-item label="视频流地址" prop="flv">
+        <el-form-item :label="$t('liveWeb.liveUser.liveBroadcastDialog.flvLabel')" prop="flv">
           <el-input type="textarea" v-model.trim="openLiveForm.flv" @input="() =>{
             if(openLiveForm.flv.length>250){
               openLiveForm.flv = openLiveForm.flv.slice(0,250)
@@ -333,11 +328,11 @@
             }
           }"/>
         </el-form-item>
-        <el-form-item label="开播背景" prop="liveImage">
+        <el-form-item :label="$t('liveWeb.liveUser.liveBroadcastDialog.liveImageLabel')" prop="liveImage">
           <imageUpload v-model="openLiveForm.liveImage" path="liveVideo"/>
         </el-form-item>
 
-        <el-form-item style="width: 150px" :data="lotteryInfoList" label="彩票">
+        <el-form-item style="width: 150px" :data="lotteryInfoList" :label="$t('liveWeb.liveUser.liveBroadcastDialog.lotteryLabel')">
           <el-select v-model="openLiveForm.lottery" placeholder="" clearable style="width: 150px">
             <el-option
               v-for="lottery in lotteryInfoList"
@@ -348,47 +343,47 @@
 
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="openLive()">确 定</el-button>
+        <el-button type="primary" @click="openLive()">{{$t('liveWeb.liveUser.liveBroadcastDialog.confirmButton')}}</el-button>
       </div>
     </el-dialog>
 
     <!-- 添加或修改主播信息对话框 -->
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-        <el-form-item label="真实姓名" prop="authenticationName">
+        <el-form-item :label="$t('liveWeb.liveUser.editDialog.authenticationNameLabel')" prop="authenticationNameLabel">
           <el-input v-model="form.authenticationName" readonly/>
         </el-form-item>
-        <el-form-item label="手机号" prop="contact">
+        <el-form-item :label="$t('liveWeb.liveUser.editDialog.contactLabel')" prop="contact">
           <el-input v-model="form.mobile" readonly/>
         </el-form-item>
-        <el-form-item label="身份证号码" prop="identifyNumber">
+        <el-form-item :label="$t('liveWeb.liveUser.editDialog.identifyNumberLabel')" prop="identifyNumber">
           <el-input v-model="form.identifyNumber" readonly/>
         </el-form-item>
-        <el-form-item label="时薪" prop="coin">
+        <el-form-item :label="$t('liveWeb.liveUser.editDialog.coinLabel')" prop="coin">
           <el-input v-model="form.coin" type="number"/>
         </el-form-item>
-        <el-form-item label="开播时长任务" prop="weixinPrice">
+        <el-form-item :label="$t('liveWeb.liveUser.editDialog.weixinPriceLabel')" prop="weixinPrice">
           <el-input v-model="form.weixinPrice" type="number"/>
         </el-form-item>
-        <el-form-item label="收礼礼物" prop="weiboMoney">
+        <el-form-item :label="$t('liveWeb.liveUser.editDialog.weiboMoneyLabel')" prop="weiboMoney">
           <el-input v-model="form.weiboMoney" type="number"/>
         </el-form-item>
-        <el-form-item label="彩票抽成" prop="xpoint">
+        <el-form-item :label="$t('liveWeb.liveUser.editDialog.xpointLabel')" prop="xpoint">
           <el-input v-model="form.xpoint" type="number"/>
         </el-form-item>
-        <el-form-item label="礼物抽成" prop="ypoint">
+        <el-form-item :label="$t('liveWeb.liveUser.editDialog.ypointLabel')" prop="ypoint">
           <el-input v-model="form.ypoint" type="number"/>
         </el-form-item>
-        <el-form-item label="手持身份证照片">
+        <el-form-item :label="$t('liveWeb.liveUser.editDialog.identifyHoldImageLabel')">
           <img :src="form.identifyHoldImage" style="width: 300px;height: 300px"/>
         </el-form-item>
-        <el-form-item label="身份证正面">
+        <el-form-item :label="$t('liveWeb.liveUser.editDialog.identifyPositiveImageLabel')">
           <img :src="form.identifyPositiveImage" style="width: 300px;height: 300px"/>
         </el-form-item>
-        <el-form-item label="身份证反面">
+        <el-form-item :label="$t('liveWeb.liveUser.editDialog.identifyNagativeImageLabel')">
           <img :src="form.identifyNagativeImage" style="width: 300px;height: 300px"/>
         </el-form-item>
-        <el-form-item label="类型" prop="isAuthentication">
+        <el-form-item :label="$t('liveWeb.liveUser.editDialog.isAuthenticationLabel')" prop="isAuthentication">
           <el-radio-group v-model="form.isAuthentication">
             <el-radio
               v-for="dict in attestList"
@@ -398,16 +393,16 @@
             </el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="认证说明" prop="vExplain" v-if="form.isAuthentication === 2">
+        <el-form-item :label="$t('liveWeb.liveUser.editDialog.vExplainLabel')" prop="vExplain" v-if="form.isAuthentication === 2">
           <el-input v-model="form.vExplain"/>
         </el-form-item>
-        <el-form-item label="拒绝理由" prop="investorSendInfo" v-if="form.isAuthentication === 3">
+        <el-form-item :label="$t('liveWeb.liveUser.editDialog.investorSendInfoLabel')" prop="investorSendInfo" v-if="form.isAuthentication === 3">
           <el-input v-model="form.investorSendInfo"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer" v-if="form.isAuthentication > 1">
-        <el-button type="primary" @click="submitForm(0)">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm(0)">{{$t('liveWeb.liveUser.editDialog.confirmButton')}}</el-button>
+        <el-button @click="cancel">{{$t('liveWeb.liveUser.editDialog.cancelButton')}}</el-button>
       </div>
     </el-dialog>
     <more ref="more" @refMemeberData="getList()" :user-id="userId" @liveUserMore="handleQuery"></more>
@@ -455,7 +450,7 @@ export default {
       openLiveStatus: false,
       pickerOptions: {shortcuts: pickerDateShortcuts},
       // 0指未认证  1指待审核 2指认证 3指审核不通过
-      attestList: [{label: '待审核', value: 1}, {label: '认证', value: 2}, {label: '审核不通过', value: 3}],
+      attestList: [{label: this.$t('liveWeb.liveUser.table.isAuthentication1'), value: 1}, {label: this.$t('liveWeb.liveUser.table.isAuthentication2'), value: 2}, {label: this.$t('liveWeb.liveUser.table.isAuthentication3'), value: 3}],
       //所选的用户id
       userId: 0,
       // 遮罩层
@@ -503,10 +498,10 @@ export default {
       // 表单校验
       rules: {
         vExplain: [
-          {required: true, message: '认证说明不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('liveWeb.liveUser.editDialog.validation.vExplain'), trigger: 'blur'}
         ],
         investorSendInfo: [
-          {required: true, message: '拒绝理由不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('liveWeb.liveUser.editDialog.validation.investorSendInfo'), trigger: 'blur'}
         ]
       }
     }
@@ -650,7 +645,7 @@ export default {
     handleAdd() {
       this.reset()
       this.addopen = true
-      this.title = '添加虚拟主播'
+      this.title = this.$t('liveWeb.liveUser.addDialog.title')
     },
     sendRoomMsg() {
       this.reset()
@@ -664,7 +659,7 @@ export default {
       getLiveUser(id).then(response => {
         this.form = response.data
         this.open = true
-        this.title = '修改主播信息'
+        this.title = this.$t('liveWeb.liveUser.editDialog.title')
       })
     },
     /** 提交按钮 */

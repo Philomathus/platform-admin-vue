@@ -3,18 +3,18 @@
              append-to-body
   >
     <el-form ref="queryForm" :inline="true" label-width="68px">
-      <el-form-item label="选择日期" prop="selectDate">
+      <el-form-item :label="$t('excel.selectDate')" prop="selectDate">
         <el-date-picker type="datetimerange" v-model="selectDate" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '370px'}" start-placeholder="开始日期"
-                        end-placeholder="结束日期"
-                        range-separator="至" :default-time="['00:00:00', '23:59:59']"  clearable
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '370px'}" :start-placeholder="$t('excel.startDatePlaceholder')"
+                        :end-placeholder="$t('excel.endDatePlaceholder')"
+                        :range-separator="$t('excel.rangeSeparator')" :default-time="['00:00:00', '23:59:59']"  clearable
         ></el-date-picker>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="submitForm">确 定
+      <el-button type="primary" @click="submitForm">{{ $t('excel.submitButton') }}
       </el-button>
-      <el-button @click="open=!open">取 消</el-button>
+      <el-button @click="open=!open">{{ $t('excel.cancelButton') }}</el-button>
     </div>
   </el-dialog>
 </template>
@@ -32,7 +32,7 @@
     /*组件值*/
     data() {
       return {
-        title: '导出提示',
+        title:  this.$t('excel.cancelButton'),
         selectDate: [],
         open: false,
       }
@@ -59,7 +59,7 @@
             this.$emit("downLoadExcel", this.selectDate)
             this.open = false;
           } else {
-            this.$notify.warning("所选时间不能大于七天")
+            this.$notify.warning(this.$t('excel.noLongerThanSevenDaysWarning'))
           }
         }
       }

@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="日期选择" prop="selectDate">
+      <el-form-item :label="$t('liveWeb.liveHostWageNotedays.queryForm.selectDateLabel')" prop="selectDate">
         <el-date-picker
           v-model="queryParams.selectDate"
           size="small"
@@ -10,15 +10,15 @@
           type="daterange"
           clearable
           range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :start-placeholder="$t('liveWeb.liveHostWageNotedays.queryForm.selectDateStartPlaceholder')"
+          :end-placeholder="$t('liveWeb.liveHostWageNotedays.queryForm.selectDateEndPlaceholder')"
           :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="hostId" style="width: 150px">
         <el-input
           v-model="queryParams.hostId"
-          placeholder="主播ID"
+          :placeholder="$t('liveWeb.liveHostWageNotedays.queryForm.hostIdPlaceholder')"
           clearable
           size="small"
           type="number"
@@ -29,7 +29,7 @@
       <el-form-item prop="nickName" style="width: 150px">
         <el-input
           v-model="queryParams.nickName"
-          placeholder="主播昵称"
+          :placeholder="$t('liveWeb.liveHostWageNotedays.queryForm.nickNamePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -38,15 +38,15 @@
       <el-form-item prop="familyName" style="width: 150px">
         <el-input
           v-model="queryParams.familyName"
-          placeholder="家族名称"
+          :placeholder="$t('liveWeb.liveHostWageNotedays.queryForm.familyNamePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('liveWeb.liveHostWageNotedays.queryForm.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('liveWeb.liveHostWageNotedays.queryForm.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -59,7 +59,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:liveHostWageNote:exportHosts']"
-        >导出
+        >{{$t('liveWeb.liveHostWageNotedays.actions.export')}}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -67,15 +67,15 @@
 
     <el-table id="out-table" stripe v-loading="loading" :data="liveHostWageNoteList"
     >
-      <el-table-column label="主播ID" align="center" prop="hostId"/>
-      <el-table-column label="主播昵称" :show-overflow-tooltip="true" align="center" prop="nickName" min-width="100"/>
-      <el-table-column label="家族名称" align="center" prop="familyName"/>
-      <el-table-column label="开播时长" align="center" prop="livetime"/>
-      <el-table-column label="时长结算" align="center" prop="livetimejiesuan"/>
-      <el-table-column label="礼物结算" align="center" prop="ticket"/>
-      <el-table-column label="彩票结算" align="center" prop="costQianliu"/>
-      <el-table-column label="开播次数" align="center" prop="times"/>
-      <el-table-column label="总收入" align="center" prop="totalsettle"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNotedays.table.hostId')" align="center" prop="hostId"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNotedays.table.nickName')" :show-overflow-tooltip="true" align="center" prop="nickName" min-width="100"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNotedays.table.familyName')" align="center" prop="familyName"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNotedays.table.livetime')" align="center" prop="livetime"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNotedays.table.livetimejiesuan')" align="center" prop="livetimejiesuan"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNotedays.table.ticket')" align="center" prop="ticket"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNotedays.table.costQianliu')" align="center" prop="costQianliu"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNotedays.table.times')" align="center" prop="times"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNotedays.table.totalsettle')" align="center" prop="totalsettle"/>
     </el-table>
     <pagination
       v-show="total>0"
@@ -187,9 +187,9 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('是否确认导出所有主播时长数据项?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('liveWeb.confirmExportDialog.message'), this.$t('liveWeb.confirmExportDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.confirmExportDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.confirmExportDialog.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportHostWageNoteDays(queryParams)

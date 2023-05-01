@@ -2,17 +2,17 @@
   <div class="app-container">
 
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" style="margin-top: 20px">
-      <el-form-item label="日期范围" prop="selectDate">
+      <el-form-item :label=" $t('members.memberGameDataMin.index.div.date.dRange') " prop="selectDate">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}" start-placeholder="开始时间"
-                        end-placeholder="开始时间"
-                        range-separator="至" clearable :default-time="['12:00:00', '11:59:59']" :picker-options="pickerOptions"
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}" :start-placeholder=" $t('members.memberGameDataMin.index.div.date.sTime') "
+                        :end-placeholder=" $t('members.memberGameDataMin.index.div.date.eTime') "
+                        :range-separator=" $t('members.memberGameDataMin.index.div.date.to') " clearable :default-time="['12:00:00', '11:59:59']" :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="account">
         <el-input
           v-model="queryParams.account"
-          placeholder="请输入会员ID"
+          :placeholder=" $t('members.memberGameDataMin.index.div.entMemid') "
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -20,13 +20,13 @@
       <el-form-item prop="gameId">
         <el-input
           v-model="queryParams.gameId"
-          placeholder="请输入游戏局号"
+          :placeholder=" $t('members.memberGameDataMin.index.div.entbNum') "
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item prop="platformId">
-        <el-select v-model="queryParams.betState" placeholder="请选择投注状态">
+        <el-select v-model="queryParams.betState" :placeholder=" $t('members.memberGameDataMin.index.div.sBet') ">
           <el-option
             v-for="(item,index) in orderStateList"
             :key="index"
@@ -36,27 +36,27 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('members.memberGameDataMin.index.div.button.search') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('members.memberGameDataMin.index.div.button.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
     <el-table stripe v-loading="loading" :data="memberGameDataMinList">
-      <el-table-column label="会员ID" align="center" prop="UserName"/>
-      <el-table-column label="代理ID" align="center" prop="agent"/>
-      <el-table-column label="交易订单号" align="center"  min-width="180px" prop="WagersID">
+      <el-table-column :label=" $t('members.memberGameDataMin.index.div.memId') " align="center" prop="UserName"/>
+      <el-table-column :label=" $t('members.memberGameDataMin.index.div.proxyId') " align="center" prop="agent"/>
+      <el-table-column :label=" $t('members.memberGameDataMin.index.div.trnsctNum') " align="center"  min-width="180px" prop="WagersID">
       </el-table-column>
-      <el-table-column label="游戏局号" align="center"  min-width="180px" :show-overflow-tooltip="true" prop="WagersID">
+      <el-table-column :label=" $t('members.memberGameDataMin.index.div.gbNum') " align="center"  min-width="180px" :show-overflow-tooltip="true" prop="WagersID">
         <template v-slot="{row}">
           <a style="color: #00afff"  @click="handleDetail(row)">{{ row.WagersID }}</a>
         </template>
       </el-table-column>
-      <el-table-column label="下注状态" align="center" prop="Result"/>
-      <el-table-column label="平台名称" align="center" prop="platformName"/>
-      <el-table-column label="有效下注" align="center" prop="Commissionable"/>
-      <el-table-column label="总下注" align="center" prop="BetAmount"/>
-      <el-table-column label="盈利" align="center" prop="Payoff"/>
-      <el-table-column label="下注时间" align="center" width="150px" prop="WagersDate"/>
+      <el-table-column :label=" $t('members.memberGameDataMin.index.div.bStat') " align="center" prop="Result"/>
+      <el-table-column :label=" $t('members.memberGameDataMin.index.div.pName') " align="center" prop="platformName"/>
+      <el-table-column :label=" $t('members.memberGameDataMin.index.div.vBets') " align="center" prop="Commissionable"/>
+      <el-table-column :label=" $t('members.memberGameDataMin.index.div.tBets') " align="center" prop="BetAmount"/>
+      <el-table-column :label=" $t('members.memberGameDataMin.index.div.profit') " align="center" prop="Payoff"/>
+      <el-table-column :label=" $t('members.memberGameDataMin.index.div.pBets') "align="center" width="150px" prop="WagersDate"/>
     </el-table>
 
     <pagination
@@ -69,7 +69,7 @@
     />
 
     <!-- 游戏对局日志 -->
-    <el-dialog title="体育投注明细" :visible.sync="detailOpen" width="800px" style="max-height:100%;overflow-y: scroll;"
+    <el-dialog :title=" $t('members.memberGameDataMin.index.div.sportBet') " :visible.sync="detailOpen" width="800px" style="max-height:100%;overflow-y: scroll;"
                append-to-body>
 <!--      <div v-loading="loading" :style="'height:'+ height">-->
       <div v-loading="loading">
@@ -149,7 +149,7 @@ export default {
       // 表单校验
       rules: {
         gameId: [
-          { required: true, message: '游戏局号不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('members.memberGameDataMin.index.data.gbNum') , trigger: 'blur' }
         ]
       }
     }
@@ -216,7 +216,7 @@ export default {
         const reg = '^[0-9a-zA-Z_]{1,}$'
         let flag = this.queryParams.account.match(reg)
         if(!flag){
-          this.msgError("会员ID只能输入数字及下划线")
+          this.msgError( this.$t('members.memberGameDataMin.index.data.entMemid') )
           return
         }
       }

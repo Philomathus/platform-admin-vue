@@ -1,15 +1,15 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="日期范围" prop="updateTime">
+      <el-form-item :label="$t('liveWeb.anchorAward.queryForm.updateTimeLabel')" prop="updateTime">
         <el-date-picker v-model="queryParams.updateTime" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
-                        :style="{width: '100%'}" placeholder="请选择日期选择" clearable :picker-options="pickerOptions"
+                        :style="{width: '100%'}" :placeholder="$t('liveWeb.anchorAward.queryForm.updateTimePlaceholder')" clearable :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="id">
         <el-input
           v-model="queryParams.id"
-          placeholder="主播ID"
+          :placeholder="$t('liveWeb.anchorAward.queryForm.idPlaceholder')"
           clearable
           size="small"
           type="number"
@@ -20,7 +20,7 @@
       <el-form-item prop="nickName">
         <el-input
           v-model="queryParams.nickName"
-          placeholder="主播昵称"
+          :placeholder="$t('liveWeb.anchorAward.queryForm.nickNamePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -28,8 +28,8 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('liveWeb.anchorAward.queryForm.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('liveWeb.anchorAward.queryForm.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -42,19 +42,19 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['live:anchorAward:export']"
-        >导出
+        >{{$t('liveWeb.anchorAward.actions.exportButton')}}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="liveUserList" @selection-change="handleSelectionChange">
-      <el-table-column label="主播ID" align="center" prop="anchor"/>
-      <el-table-column label="主播昵称" align="center" prop="nickName"/>
-      <el-table-column label="投注" align="center" prop="cost"/>
-      <el-table-column label="派奖" align="center" prop="prize"/>
-      <el-table-column label="派奖千六" align="center" prop="prizeSixThousand"/>
-      <el-table-column label="修改时间" align="center" prop="updateTime"/>
+      <el-table-column :label="$t('liveWeb.anchorAward.table.anchor')" align="center" prop="anchor"/>
+      <el-table-column :label="$t('liveWeb.anchorAward.table.nickName')" align="center" prop="nickName"/>
+      <el-table-column :label="$t('liveWeb.anchorAward.table.cost')" align="center" prop="cost"/>
+      <el-table-column :label="$t('liveWeb.anchorAward.table.prize')" align="center" prop="prize"/>
+      <el-table-column :label="$t('liveWeb.anchorAward.table.prizeSixThousand')" align="center" prop="prizeSixThousand"/>
+      <el-table-column :label="$t('liveWeb.anchorAward.table.updateTime')" align="center" prop="updateTime"/>
     </el-table>
     <pagination
       v-show="total>0"
@@ -161,9 +161,9 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+      this.$confirm( this.$t('liveWeb.anchorAward.confirmExportDialog.message'), this.$t('liveWeb.anchorAward.confirmExportDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.anchorAward.confirmExportDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.anchorAward.confirmExportDialog.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportAnchorAward(queryParams)

@@ -1,17 +1,17 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="道具名" prop="name">
+      <el-form-item :label="$t('liveWeb.liveProp.queryForm.nameLabel')" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入道具名"
+          :placeholder="$t('liveWeb.liveProp.queryForm.namePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="类型" prop="type">
-        <el-select v-model="queryParams.type" placeholder="请选择类型" clearable size="small">
+      <el-form-item :label="$t('liveWeb.liveProp.queryForm.typeLabel')" prop="type">
+        <el-select v-model="queryParams.type" :placeholder="$t('liveWeb.liveProp.queryForm.typePlaceholder')" clearable size="small">
           <el-option
             v-for="item in typeOptions"
             :key="item.value"
@@ -22,8 +22,8 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('liveWeb.liveProp.queryForm.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('liveWeb.liveProp.queryForm.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -36,7 +36,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:liveProp:add']"
-        >新增
+        >{{$t('liveWeb.liveProp.actions.add')}}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -48,7 +48,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:liveProp:edit']"
-        >修改
+        >{{$t('liveWeb.liveProp.actions.edit')}}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -60,27 +60,17 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:liveProp:remove']"
-        >删除
+        >{{$t('liveWeb.liveProp.actions.remove')}}
         </el-button>
       </el-col>
-      <!--      <el-col :span="1.5">-->
-      <!--        <el-button-->
-      <!--          type="warning"-->
-      <!--          plain-->
-      <!--          icon="el-icon-download"-->
-      <!--          size="mini"-->
-      <!--          @click="handleExport"-->
-      <!--          v-hasPermi="['admin:liveProp:export']"-->
-      <!--        >导出</el-button>-->
-      <!--      </el-col>-->
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="livePropList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="id" align="center" prop="id"/>
-      <el-table-column label="名称" align="center" prop="name"/>
-      <el-table-column label="图标" align="center" prop="icon">
+      <el-table-column :label="$t('liveWeb.liveProp.table.name')" align="center" prop="name"/>
+      <el-table-column :label="$t('liveWeb.liveProp.table.icon')" align="center" prop="icon">
         <template slot-scope="scope">
           <el-image
             style="width: 50px;"
@@ -90,12 +80,12 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="消费钻石" align="center" prop="diamonds"/>
-      <el-table-column label="RMB/钻石" align="center" prop="ticket"/>
-      <el-table-column label="是否连送" align="center" prop="isMuch" :formatter="isMuchFormat"/>
-      <el-table-column label="类型" align="center" prop="type" :formatter="typeFormat"/>
-      <el-table-column label="展示动画" align="center" prop="isAnimated" :formatter="animatedFormat"/>
-      <el-table-column label="状态" align="center" key="isEffect" v-if="columns[0].visible">
+      <el-table-column :label="$t('liveWeb.liveProp.table.diamonds')" align="center" prop="diamonds"/>
+      <el-table-column :label="$t('liveWeb.liveProp.table.ticket')" align="center" prop="ticket"/>
+      <el-table-column :label="$t('liveWeb.liveProp.table.isMuch')" align="center" prop="isMuch" :formatter="isMuchFormat"/>
+      <el-table-column :label="$t('liveWeb.liveProp.table.type')" align="center" prop="type" :formatter="typeFormat"/>
+      <el-table-column :label="$t('liveWeb.liveProp.table.isAnimated')" align="center" prop="isAnimated" :formatter="animatedFormat"/>
+      <el-table-column :label="$t('liveWeb.liveProp.table.isEffect')" align="center" key="isEffect" v-if="columns[0].visible">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.isEffect"
@@ -173,9 +163,6 @@
             <el-radio label="2">大型动画礼物</el-radio>
           </el-radio-group>
         </el-form-item>
-        <!--        <el-form-item label="大型道具类型">-->
-        <!--          <el-input v-model="form.animType" placeholder="请输入大型道具类型" />-->
-        <!--        </el-form-item>-->
         <el-form-item label="svga动画" prop="animatedUrl" v-if="form.isAnimated === '2'">
           <fileUpload v-model="form.animatedUrl" path="give"/>
         </el-form-item>
@@ -372,11 +359,6 @@ export default {
     submitForm() {
       this.$refs['form'].validate(valid => {
         if (valid) {
-          // if(this.form.isAnimated==2){
-          //   this.form.animType="svga";
-          // }else{
-          //   this.form.animType="svga";
-          // }
           this.form.animType = 'svga'
           this.form.score = 0
           if (this.form.id != null) {
@@ -398,48 +380,49 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids
-      this.$confirm('是否确认删除礼物列编号为"' + ids + '"的数据项?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('liveWeb.liveProp.confirmRemoveDialog.message', {ids: ids}), this.$t('liveWeb.liveProp.confirmRemoveDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.liveProp.confirmRemoveDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.liveProp.confirmRemoveDialog.cancelButton'),
         type: 'warning'
       }).then(function () {
         return delLiveProp(ids)
       }).then(() => {
         this.getList()
-        this.msgSuccess('删除成功')
+        this.msgSuccess(this.$t('liveWeb.liveProp.messageBox.removeSuccess'))
       })
     },
     isMuchFormat(row, column) {
       if (row.isMuch == '1') {
-        return '是'
+        return this.$t('liveWeb.liveProp.table.isMuch1')
       } else {
-        return '否'
+        return this.$t('liveWeb.liveProp.table.isMuchOthers')
       }
     },
     typeFormat(row, column) {
       if (row.type == '0') {
-        return '礼物'
+        return this.$t('liveWeb.liveProp.table.type0')
       } else if (row.type == '1') {
-        return '打赏'
+        return this.$t('liveWeb.liveProp.table.type1')
       } else {
-        return '守护'
+        return this.$t('liveWeb.liveProp.table.type2')
       }
     },
     animatedFormat(row, column) {
       if (row.isAnimated == '0') {
-        return '普通礼物'
+        return this.$t('liveWeb.liveProp.table.isAnimated0')
       } else if (row.isAnimated == '1') {
-        return 'gif礼物'
+        return this.$t('liveWeb.liveProp.table.isAnimated1')
       } else {
-        return '大型动画礼物'
+        return this.$t('liveWeb.liveProp.table.isAnimatedOthers')
       }
     },
     // 状态修改
     handleStatusChange(row) {
-      let text = row.isEffect === '0' ? '停用' : '启用'
-      this.$confirm('确认要' + text + '"' + row.name + '"吗?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      let text = row.isEffect === '0' ? this.$t('liveWeb.liveProp.table.isEffect0') : this.$t('liveWeb.liveProp.table.isEffect1')
+
+      this.$confirm(this.$t('liveWeb.liveProp.confirmStatusChangeDialog.message', {text: text, name: row.name}), this.$t('liveWeb.liveProp.confirmStatusChangeDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.liveProp.confirmStatusChangeDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.liveProp.confirmStatusChangeDialog.cancelButton'),
         type: 'warning'
       }).then(function () {
         var data = {}
@@ -447,7 +430,7 @@ export default {
         data.isEffect = row.isEffect
         return updateLiveProp(data)
       }).then(() => {
-        this.msgSuccess(text + '成功')
+        this.msgSuccess(this.$t('liveWeb.liveProp.messageBox.statusChangeSuccess', {text: text}))
       }).catch(function () {
         row.isEffect = row.isEffect === '0' ? '1' : '0'
       })

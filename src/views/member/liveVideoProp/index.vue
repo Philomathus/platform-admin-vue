@@ -4,7 +4,7 @@
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" style="margin-top: 20px"
              label-width="68px"
     >
-      <el-form-item :label=" $t('members.liveVideoProp.form.date.label') " prop="selectDate">
+      <el-form-item :label=" $t('global.selectDate') " prop="selectDate" label-width="120">
         <el-date-picker
           type="daterange"
           v-model="queryParams.selectDate"
@@ -12,7 +12,7 @@
           value-format="yyyy-MM-dd"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
-          :range-separator=" $t('members.liveVideoProp.form.date.sep') "
+          :range-separator=" $t('global.selectDateRangeSeparator') "
           clearable
           :picker-options="pickerOptions"
           style="width: 280px"

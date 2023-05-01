@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item :label=" $t('members.logGameOrder.analyze.date.range') " prop="selectDate">
+      <el-form-item :label=" $t('global.selectDate') " prop="selectDate" label-width="120">
         <el-date-picker type="daterange" v-model="queryParams.selectDate" format="yyyy-MM-dd"
                         value-format="yyyy-MM-dd" :start-placeholder=" $t('members.logGameOrder.analyze.date.start') "
                         :end-placeholder=" $t('members.logGameOrder.analyze.date.end') "
@@ -93,7 +93,7 @@
           </el-select>
         </template>
       </el-table-column>
-      <el-table-column :label=" $t('members.logGameOrder.index.numRet') " align="center" prop="retryCount" min-width="80"/>
+      <el-table-column :label=" $t('members.logGameOrder.index.numRet') " align="center" prop="retryCount" min-width="180"/>
     </el-table>
 
     <pagination

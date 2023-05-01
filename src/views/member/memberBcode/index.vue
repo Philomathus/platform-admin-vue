@@ -4,7 +4,7 @@
     <el-button type="success" @click="copy2">{{ $t('members.memberBcode.index.totalCode') }} {{ this.totalData.countCur.toFixed(2) }}</el-button>
     <el-button type="warning" @click="copy3">{{ $t('members.memberBcode.index.codReq') }} {{ (this.totalData.total - this.totalData.countCur).toFixed(2) }}</el-button>
     <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" v-show="showSearch" label-width="100px">
-      <el-form-item :label="$t('members.memberBcode.index.datRang')" prop="selectDate">
+      <el-form-item :label="$t('global.selectDate')" prop="selectDate">
         <el-date-picker
           type="daterange"
           v-model="queryParams.selectDate"
@@ -51,8 +51,8 @@
       <el-table-column :label=" $t('members.memberBcode.index.memId') " align="center" prop="userId"/>
       <el-table-column :label=" $t('members.memberBcode.index.rev') " align="center" prop="income"/>
       <el-table-column :label=" $t('members.memberBcode.index.desc') " align="center" prop="des"/>
-      <el-table-column :label=" $t('members.memberBcode.index.wCode') " align="center" prop="status" :formatter="formatterStatus"/>
-      <el-table-column :label=" $t('members.memberBcode.index.ccVol') " align="center" prop="cur"/>
+      <el-table-column :label=" $t('members.memberBcode.index.wCode') " align="center" prop="status" :formatter="formatterStatus" min-width="160"/>
+      <el-table-column :label=" $t('members.memberBcode.index.ccVol') " align="center" prop="cur" min-width="160"/>
       <el-table-column :label=" $t('members.memberBcode.index.cTime') " align="center" prop="createTime" min-width="160"/>
       <el-table-column :label=" $t('members.memberBcode.index.opt') " width="220" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">

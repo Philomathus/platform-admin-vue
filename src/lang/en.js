@@ -26,6 +26,7 @@ export default {
     edit: 'Edit',
     delete: 'Delete',
     id: 'ID',
+    selectDate: 'Select Date',
   },
 
   globalPlaceholder: {
@@ -61,7 +62,6 @@ export default {
   excel: {
     selectedExport: 'Export Selected Items',
     placeholder: 'Please enter the file name (default excel-list)',
-    selectDate: 'Select Date',
     noLongerThanSevenDaysWarning: 'The selected time cannot be longer than seven days',
     exportPrompt: 'Export Confirm',
     startDatePlaceholder: 'Start Date',

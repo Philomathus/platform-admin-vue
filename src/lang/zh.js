@@ -20,6 +20,7 @@ export default {
     sort: '排序',
     icon: '图标',
     nickname: '昵称',
+    selectDate : '日期范围'
   },
 
   globalPlaceholder:{
@@ -53,7 +54,6 @@ export default {
     export: '导出',
     selectedExport: '导出已选择项',
     placeholder: '请输入文件名(默认excel-list)',
-    selectDate: '选择日期',
     noLongerThanSevenDaysWarning: '所选时间不能大于七天',
     exportPrompt: '导出提示',
     startDatePlaceholder: '开始日期',
@@ -122,7 +122,6 @@ export default {
     ipDuplicateCheckButton: 'ip重复检查',
     mobilePhoneSerialNumberCheckButton: '手机序列号检查',
     displayMobilePhoneNumberButton: '显示手机号',
-    selectDate: '日期范围',
     selectDateStartPlaceholder: '开始时间',
     selectDateEndPlaceholder: '开始时间',
     selectDateRangeSeparator: '至',
@@ -307,7 +306,6 @@ export default {
         inviterCodePlaceholder: '请输入邀请码',
         loginIp: '登录ip',
         loginIpPlaceholder: '请输入登录ip',
-        selectDate: '日期范围',
         selectDateStartPlaceholder: '开始时间',
         selectDateEndPlaceholder: '开始时间',
         selectDateRangeSeparator: '至',

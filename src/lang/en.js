@@ -605,7 +605,7 @@ export default {
         totalRech: 'Total Recharge',
         totalCode: 'Total Coding',
         codReq: 'Coding is also Required',
-        datRange: 'Date Range',
+        datRange: 'Select Date',
         sDate: 'Start Date',
         eDate: 'End Date',
         to: 'To',
@@ -745,7 +745,7 @@ export default {
         pName: 'Platform Name',
         sel: 'Select All/Select None',
         date: {
-          datRange: 'Date Range',
+          datRange: 'Select Date',
           sTime: 'Start Time',
           eTime: 'End Time',
           to: 'To'

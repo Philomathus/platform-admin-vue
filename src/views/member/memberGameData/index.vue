@@ -62,8 +62,8 @@
     </el-row>
 
     <el-table stripe v-loading="loading" :data="memberGameDataList">
-      <el-table-column :label=" $t('members.memberGameData.index.memId') " align="center" prop="account" min-width="120"/>
-      <el-table-column :label=" $t('members.memberGameData.index.subId') " align="center" prop="agent"/>
+      <el-table-column :label=" $t('members.memberGameData.index.memId') " align="center" prop="account" min-width="100"/>
+      <el-table-column :label=" $t('members.memberGameData.index.subId') " align="center" prop="agent" min-width="120"/>
       <el-table-column :label=" $t('members.memberGameData.index.gameId') " align="center" min-width="300px" prop="gameId"/>
       <el-table-column :label=" $t('members.memberGameData.index.gbNum') " align="center" min-width="160px" :show-overflow-tooltip="true" prop="gameRound">
         <template v-slot="{row}">
@@ -82,13 +82,13 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column :label=" $t('members.memberGameData.index.pName') " align="center" prop="platformName"/>
-      <el-table-column :label=" $t('members.memberGameData.index.gName') " align="center" prop="kindId"/>
-      <el-table-column :label=" $t('members.memberGameData.index.subName') " align="center" prop="sonPlatformName" min-width="120"/>
-      <el-table-column :label=" $t('members.memberGameData.index.vBets') " align="center" prop="cell_score"/>
-      <el-table-column :label=" $t('members.memberGameData.index.tBets') " align="center" prop="all_bet"/>
+      <el-table-column :label=" $t('members.memberGameData.index.pName') " align="center" prop="platformName" width="120"/>
+      <el-table-column :label=" $t('members.memberGameData.index.gName') " align="center" prop="kindId" width="120"/>
+      <el-table-column :label=" $t('members.memberGameData.index.subName') " align="center" prop="sonPlatformName" min-width="160"/>
+      <el-table-column :label=" $t('members.memberGameData.index.vBets') " align="center" prop="cell_score" width="120"/>
+      <el-table-column :label=" $t('members.memberGameData.index.tBets') " align="center" prop="all_bet" width="120"/>
       <el-table-column :label=" $t('members.memberGameData.index.profit') " align="center" prop="profit"/>
-      <el-table-column :label=" $t('members.memberGameData.index.setTime') " align="center" width="150px" prop="game_end_time"/>
+      <el-table-column :label=" $t('members.memberGameData.index.setTime') " align="center" width="160px" prop="game_end_time"/>
     </el-table>
 
     <pagination

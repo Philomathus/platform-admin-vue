@@ -36,10 +36,10 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{
-            $t('activity.searchButton')
+            $t('global.searchButton')
           }}
         </el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('activity.resetButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -51,7 +51,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['admin:activityInfo:add']">{{ $t('activity.addButton') }}
+          v-hasPermi="['admin:activityInfo:add']">{{ $t('global.addButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -62,7 +62,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['admin:activityInfo:edit']">{{ $t('activity.editButton') }}
+          v-hasPermi="['admin:activityInfo:edit']">{{ $t('global.editButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -73,7 +73,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['admin:activityInfo:remove']">{{ $t('activity.deleteButton') }}
+          v-hasPermi="['admin:activityInfo:remove']">{{ $t('global.deleteButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -83,7 +83,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['admin:activityInfo:export']">{{ $t('activity.exportButton') }}
+          v-hasPermi="['admin:activityInfo:export']">{{ $t('global.exportButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -93,7 +93,7 @@
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column :label="$t('activity.activityManage.activityInfo.tableDialog.title')" align="center" prop="title"
                        min-width="180"/>
-      <el-table-column :label="$t('activity.activityManage.activityInfo.tableDialog.icon')" align="center" prop="icon"
+      <el-table-column :label="$t('global.icon')" align="center" prop="icon"
                        min-width="160">
         <template slot-scope="scope">
           <el-image
@@ -130,9 +130,9 @@
           </el-switch>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('activity.activityManage.activityInfo.tableDialog.sort')" align="center" prop="order"
+      <el-table-column :label="$t('global.sort')" align="center" prop="order"
                        min-width="160"/>
-      <el-table-column :label="$t('activity.operation')" align="center"
+      <el-table-column :label="$t('global.operation')" align="center"
                        class-name="small-padding fixed-width" fixed="right" min-width="120">
         <template slot-scope="scope">
           <el-button
@@ -140,7 +140,7 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['admin:activityInfo:editButton']">{{ $t('activity.editButton') }}
+            v-hasPermi="['admin:activityInfo:editButton']">{{ $t('global.editButton') }}
           </el-button>
           <el-button
             style="color: #FF5722"
@@ -149,7 +149,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:activityInfo:remove']">{{
-              $t('activity.deleteButton')
+              $t('global.deleteButton')
             }}
           </el-button>
         </template>

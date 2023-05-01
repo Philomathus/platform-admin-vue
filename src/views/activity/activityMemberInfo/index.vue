@@ -19,7 +19,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item :label="$t('activity.selectDate')" prop="selectDate">
+      <el-form-item :label="$t('global.selectDate')" prop="selectDate">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}"
                         :start-placeholder="$t('activity.selectDateStartPlaceholder')"

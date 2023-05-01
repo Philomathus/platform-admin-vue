@@ -34,6 +34,7 @@ export default {
     userNamePlaceholder: 'Please enter UserName',
     selectDateStartPlaceholder: 'Start Time',
     selectDateEndPlaceholder: 'End Time',
+    namePlaceholder:'please enter name'
   },
 
   navbar: {

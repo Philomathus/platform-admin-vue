@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item :label="$t('activity.activityManage.activityCashBack.cashBackResultTime')" prop="selectDate"
+      <el-form-item :label="$t('global.selectDate')" prop="selectDate"
                     label-width="100px">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}"
@@ -33,8 +33,8 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('activity.searchButton') }}</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('activity.resetButton') }}</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -47,7 +47,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:activityCashBack:add']"
-        >{{ $t('activity.addButton') }}
+        >{{ $t('global.addButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -59,7 +59,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:activityCashBack:edit']"
-        >{{ $t('activity.editButton') }}
+        >{{ $t('global.editButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -71,7 +71,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:activityCashBack:remove']"
-        >{{ $t('activity.deleteButton') }}
+        >{{ $t('global.deleteButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -82,7 +82,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:activityCashBack:export']"
-        >{{ $t('activity.exportButton') }}
+        >{{ $t('global.exportButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -94,7 +94,7 @@
       <el-table-column :label="$t('activity.activityManage.activityCashBack.tableDialog.minDeposit')" align="center" prop="depositTotalMin"/>
       <el-table-column :label="$t('activity.activityManage.activityCashBack.tableDialog.maxDeposit')" align="center" prop="depositTotalMax"/>
       <el-table-column :label="$t('activity.activityManage.activityCashBack.rebateAmount')" align="center" prop="rebate"/>
-      <el-table-column :label="$t('activity.activityManage.activityCashBack.tableDialog.status')" align="center" prop="status">
+      <el-table-column :label="$t('global.status')" align="center" prop="status">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -104,7 +104,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('global.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -112,7 +112,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:activityCashBack:edit']"
-          >{{ $t('activity.editButton') }}
+          >{{ $t('global.editButton') }}
           </el-button>
           <el-button
             size="mini"
@@ -120,7 +120,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:activityCashBack:remove']"
-          >{{ $t('activity.deleteButton') }}
+          >{{ $t('global.deleteButton') }}
           </el-button>
         </template>
       </el-table-column>

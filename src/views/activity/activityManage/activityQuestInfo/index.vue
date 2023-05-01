@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="100px">
-      <el-form-item :label="$t('activity.releaseTime')" prop="ctime">
+      <el-form-item :label="$t('global.selectDate')" prop="ctime">
         <el-date-picker
           v-model="dateRange"
           size="small"
@@ -59,11 +59,11 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{
-            $t('activity.searchButton')
+            $t('global.searchButton')
           }}
         </el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{
-            $t('activity.resetButton')
+            $t('global.resetButton')
           }}
         </el-button>
       </el-form-item>
@@ -78,7 +78,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:activityQuestInfo:add']"
-        >{{ $t('activity.addButton') }}
+        >{{ $t('global.addButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -90,7 +90,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:activityQuestInfo:edit']"
-        >{{ $t('activity.editButton') }}
+        >{{ $t('global.editButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -102,7 +102,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:activityQuestInfo:remove']"
-        >{{ $t('activity.deleteButton') }}
+        >{{ $t('global.deleteButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -113,7 +113,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:activityQuestInfo:export']"
-        >{{ $t('activity.exportButton') }}
+        >{{ $t('global.exportButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -123,7 +123,7 @@
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column :label="$t('activity.activityManage.activityQuestInfo.tableDialog.title')" align="center"
                        prop="title" min-width="140"/>
-      <el-table-column :label="$t('activity.activityManage.activityQuestInfo.tableDialog.icon')" align="center"
+      <el-table-column :label="$t('global.icon')" align="center"
                        prop="icon">
         <template slot-scope="scope">
           <el-image
@@ -137,7 +137,7 @@
       <el-table-column :label="$t('activity.activityManage.activityQuestInfo.tableDialog.index')" align="center"
                        prop="indexs"/>
       <el-table-column :label="$t('activity.activityManage.activityQuestInfo.tableDialog.target')" align="center"
-                       prop="target"/>
+                       prop="target" min-width="150"/>
       <el-table-column :label="$t('activity.activityManage.activityQuestInfo.tableDialog.reward')" align="center"
                        prop="reward"/>
       <el-table-column :label="$t('activity.activityManage.activityQuestInfo.tableDialog.content')" align="center"
@@ -149,14 +149,14 @@
       <el-table-column :label="$t('activity.activityManage.activityQuestInfo.tableDialog.platformId')" align="center"
                        prop="platformName" min-width="140"/>
       <el-table-column :label="$t('activity.activityManage.activityQuestInfo.tableDialog.taskMode')" align="center"
-                       prop="taskMode" :formatter="hasTaskModeFormat"/>
+                       prop="taskMode" :formatter="hasTaskModeFormat" min-width="100"/>
       <el-table-column :label="$t('activity.activityManage.activityQuestInfo.tableDialog.ctime')" align="center"
                        prop="ctime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.ctime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('activity.activityManage.activityQuestInfo.tableDialog.operation')" align="center"
+      <el-table-column :label="$t('global.operation')" align="center"
                        class-name="small-padding fixed-width" min-width="140" fixed="right">
         <template slot-scope="scope">
           <el-button
@@ -165,7 +165,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:activityQuestInfo:edit']"
-          >{{ $t('activity.activityManage.activityQuestInfo.tableDialog.edit') }}
+          >{{ $t('global.edit') }}
           </el-button>
           <el-button
             style="color: #FF5722"
@@ -174,7 +174,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:activityQuestInfo:remove']"
-          >{{ $t('activity.activityManage.activityQuestInfo.tableDialog.delete') }}
+          >{{ $t('global.delete') }}
           </el-button>
         </template>
       </el-table-column>

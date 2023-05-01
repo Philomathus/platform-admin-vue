@@ -21,11 +21,11 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{
-            $t('activity.searchButton')
+            $t('global.searchButton')
           }}
         </el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{
-            $t('activity.resetButton')
+            $t('global.resetButton')
           }}
         </el-button>
       </el-form-item>
@@ -40,7 +40,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:activityQuestType:add']"
-        >{{ $t('activity.addButton') }}
+        >{{ $t('global.addButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -52,7 +52,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:activityQuestType:edit']"
-        >{{ $t('activity.editButton') }}
+        >{{ $t('global.editButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -64,7 +64,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:activityQuestType:remove']"
-        >{{ $t('activity.deleteButton') }}
+        >{{ $t('global.deleteButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -74,7 +74,7 @@
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column :label="$t('activity.activityManage.activityQuestType.game')" align="center" prop="name"/>
       <el-table-column :label="$t('activity.activityManage.activityQuestType.gameId')" align="center" prop="gameId"/>
-      <el-table-column :label="$t('activity.operation')" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('global.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -82,7 +82,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:activityQuestType:edit']"
-          >{{ $t('activity.editButton') }}
+          >{{ $t('global.editButton') }}
           </el-button>
           <el-button
             size="mini"
@@ -90,7 +90,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:activityQuestType:remove']"
-          >{{ $t('activity.deleteButton') }}
+          >{{ $t('global.deleteButton') }}
           </el-button>
         </template>
       </el-table-column>

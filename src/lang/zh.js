@@ -3,29 +3,39 @@ export default {
   global:{
     cancelButton: '取 消',
     submitButton: '确 定',
-    name: '名称',
-    addButton: '新增',
+    addButton: '新 增',
     editButton: '修改',
     deleteButton: '删除',
-    exportButton: '返现结果导出',
+    searchButton: '搜索',
+    resetButton: '重置',
+    exportButton: '导出',
+    exportMessage: '返现结果导出',
     confirmButton: '确定',
     cancelConfirmButton: '取 消',
     operation: '操作',
     statusEnable: '启用',
     statusDisable: '停用',
+    titleDialog: '警告',
+    titlePrompt: '提示',
+    name: '名称',
+    nickname: '昵称',
     status: '状态',
     ctime: '发布时间',
     edit: '修改',
     delete: '删除',
     sort: '排序',
     icon: '图标',
-    nickname: '昵称',
-    selectDate : '日期范围'
   },
 
   globalPlaceholder:{
     sortPlaceholder: '请输入排序',
     nicknamePlaceholder: '请输入昵称',
+    dateTimePickerStartTime: '开始时间',
+    dateTimePickerEndTime: '结束时间',
+    dateTimePickerRangeSeparator: '至',
+    selectDate : '日期范围',
+    datePickerStartDate: '开始日期',
+    datePickerEndDate: '结束日期'
   },
 
   navbar: {
@@ -2093,7 +2103,9 @@ export default {
         }
       }
     },
+  },
 
+  lottery: {
     //TODO: lotteryBet -> Luis
     lotteryBet: {
       totalCostButton: '投注金额',

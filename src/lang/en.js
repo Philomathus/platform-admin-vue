@@ -33,15 +33,21 @@ export default {
     name: 'Name',
     nickname: 'Nickname',
     status: 'Status',
-    ctTime: 'Release Time'
+    ctime: 'Release Time'
   },
 
   globalPlaceholder: {
+    sortPlaceholder: 'Please enter sort',
     statusPlaceholder: 'Please select status',
+    nickNamePlaceholder: 'Please enter a Nickname',
     userNamePlaceholder: 'Please enter UserName',
     selectDateStartPlaceholder: 'Start Time',
     selectDateEndPlaceholder: 'End Time',
-    namePlaceholder:'please enter name'
+    dateTimePickerRangeSeparator: 'to',
+    selectDate: 'Date Range',
+    namePlaceholder:'Please enter name',
+    datePickerStartDate: 'Start Date',
+    datePickerEndDate: 'End Date'
   },
 
   navbar: {
@@ -53,7 +59,6 @@ export default {
     size: 'Maximize',
     layOutSetting: 'Lay Out Setting',
     homepage: 'Home Page'
-
   },
 
   theme: {

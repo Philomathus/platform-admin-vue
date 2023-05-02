@@ -37,11 +37,14 @@ export default {
 
   globalPlaceholder:{
     sortPlaceholder: '请输入排序',
+    statusPlaceholder: '请选择状态',
     nicknamePlaceholder: '请输入昵称',
-    dateTimePickerStartTime: '开始时间',
-    dateTimePickerEndTime: '结束时间',
+    userNamePlaceholder: '请输入一个用户名',
+    selectDateStartPlaceholder: '开始时间',
+    selectDateEndPlaceholder: '结束时间',
     dateTimePickerRangeSeparator: '至',
-    selectDate : '日期范围',
+    selectDate: '日期范围',
+    namePlaceholder: '请输入姓名',
     datePickerStartDate: '开始日期',
     datePickerEndDate: '结束日期'
   },
@@ -77,8 +80,6 @@ export default {
     startDatePlaceholder: '开始日期',
     endDatePlaceholder: '结束日期',
     rangeSeparator: '至',
-    cancelButton: '取 消',
-    submitButton: '确 定'
   },
 
   settings: {

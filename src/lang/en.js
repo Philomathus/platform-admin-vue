@@ -21,12 +21,19 @@ export default {
     qq: 'qq',
     selectDateRangeSeparator: 'to',
     icon: 'Icon',
-    userName: 'UserName',
+    userName: 'Username',
     realName: 'Real Name',
     edit: 'Edit',
     delete: 'Delete',
     id: 'ID',
     selectDate: 'Select Date',
+    exportMessage: 'Cashback Results Export',
+    titleDialog: 'Warning',
+    titlePrompt: 'Tips',
+    name: 'Name',
+    nickname: 'Nickname',
+    status: 'Status',
+    ctTime: 'Release Time'
   },
 
   globalPlaceholder: {
@@ -926,7 +933,6 @@ export default {
           sDepo: 'Safe deposit box balance raised',
           det: 'Determine',
           cancel: 'Cancel',
-          close: 'Close',
           normal: 'Normal',
           fden: 'Forbidden',
 

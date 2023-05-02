@@ -457,7 +457,7 @@
       </div>
 
       <el-button type="primary" plain @click="blockedIpCloseBtn()" style="float: right;margin-top: -15px">
-        {{ $t('members.memberInfo.index.button.close') }}
+        {{ $t('global.close') }}
       </el-button>
 
     </el-dialog>

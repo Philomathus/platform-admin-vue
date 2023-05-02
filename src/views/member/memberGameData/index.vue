@@ -1,8 +1,16 @@
 <template>
   <div class="app-container">
+
+    <div v-loading="totalLoading">
     <el-button type="primary" @click="copy1">{{ $t('members.memberGameData.index.button.vBets') }} {{ this.totalData.totalSuccessBet || 0 }}</el-button>
     <el-button type="success" @click="copy2">{{ $t('members.memberGameData.index.button.tBets') }} {{ this.totalData.totalBet || 0 }}</el-button>
     <el-button type="warning" @click="copy3">{{ $t('members.memberGameData.index.button.profit') }} {{ this.totalData.totalIncome || 0 }}</el-button>
+
+      <el-button type="primary" icon="el-icon-search" size="mini" @click="listCount()" style="margin-left: 20px">
+        {{ $t('members.memberInfo.index.button.statQ') }}
+      </el-button>
+    </div>
+
 
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" style="margin-top: 20px">
 
@@ -142,6 +150,9 @@ export default {
   data() {
     return {
       pickerOptions: {shortcuts: pickerDateTimeShortcuts},
+
+      totalLoading: false,
+
       //统计数据
       totalData: {
         totalSuccessBet: 0,
@@ -247,6 +258,18 @@ export default {
     copy3() {
       this.copyCommand(this.totalData.totalIncome)
     },
+
+    listCount(){
+      this.totalLoading = true
+      // this.queryParams = this.addDateRange(this.queryParams, this.dateRange);
+      getCount(this.queryParams).then((res) => {
+        this.totalData = res.data
+      }).finally(() => {
+        this.totalLoading = false
+      })
+    },
+
+
     // 0:未洗码1已经洗码
     formatterStatus(row) {
       if (row.status == 0) {

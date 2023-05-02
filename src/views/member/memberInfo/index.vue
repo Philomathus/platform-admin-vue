@@ -271,14 +271,14 @@
       <el-table-column :label=" $t('members.memberInfo.index.uType') " align="center" prop="channelcode" min-width="200px">
         <template slot-scope="scope">
           <span v-if="scope.row.channelcode == null"
-                :style="{'color': '#5FB878'}">会员|{{ scope.row.version == null || scope.row.version == '' || scope.row.version == undefined ? '无' : scope.row.version }}|{{ scope.row.loginDev == 2 ? 'andriod' : scope.row.loginDev == 1 ? 'ios' : '其它' }}</span>
+                :style="{'color': '#5FB878'}">{{ $t('members.memberInfo.index.mem') }}{{ scope.row.version == null || scope.row.version == '' || scope.row.version == undefined ?  $t('members.memberInfo.index.none')  : scope.row.version }}|{{ scope.row.loginDev == 2 ? 'andriod' : scope.row.loginDev == 1 ? 'ios' :  $t('members.memberInfo.index.other')  }}</span>
           <span v-else :style="{color: (memberType = statusOptions[scope.row.channelcode > 0 ? 1 : 0]).color}">{{
               memberType.dictLabel
-            }}|{{ scope.row.version == null || scope.row.version == '' || scope.row.version == undefined ? '无' : scope.row.version }}|{{ scope.row.loginDev == 2 ? 'andriod' : scope.row.loginDev == 1 ? 'ios' : '其它' }}</span>
+            }}|{{ scope.row.version == null || scope.row.version == '' || scope.row.version == undefined ? $t('members.memberInfo.index.none')  : scope.row.version }}|{{ scope.row.loginDev == 2 ? 'andriod' : scope.row.loginDev == 1 ? 'ios' : $t('members.memberInfo.index.other')  }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="登录备注" align="center" prop="email" :show-overflow-tooltip="true" min-width="130px"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right" min-width="220">
+      <el-table-column :label=" $t('members.memberInfo.index.lRem') " align="center" prop="email" :show-overflow-tooltip="true" min-width="130px"/>
+      <el-table-column :label=" $t('members.memberInfo.index.opt') " align="center" class-name="small-padding fixed-width" fixed="right" min-width="220">
         <template slot-scope="scope">
           <el-button
             type="primary"
@@ -287,7 +287,7 @@
             size="small"
             @click="handleMore(scope.row)"
             v-hasPermi="['member:memberInfo:query']"
-          >更多
+          >{{ $t('members.memberInfo.index.button.more') }}
           </el-button>
           <el-button
             type="warning"
@@ -295,7 +295,7 @@
             size="small"
             @click="boxDish(scope.row)"
             v-hasPermi="['member:memberInfo:boxDish']"
-          >保险箱余额提出
+          >{{ $t('members.memberInfo.index.button.sDepo') }}
           </el-button>
         </template>
       </el-table-column>
@@ -315,7 +315,7 @@
     <el-dialog
       v-dialogDrag
       :close-on-click-modal="false"
-      title="备注禁用原因"
+      :title=" $t('members.memberInfo.index.nBan') "
       :visible.sync="muteRemark"
       width="400px"
       append-to-body
@@ -326,7 +326,7 @@
       <el-input v-model="status" v-show="false"/>
       <el-select
         v-model="remark"
-        placeholder="请选择禁用原因"
+        :placeholder=" $t('members.memberInfo.index.selDis') "
         clearable
         style="min-width: 360px"
       >
@@ -337,10 +337,10 @@
           :value="dict.dictValue"
         />
       </el-select>
-      <el-input v-model="remarked" placeholder="请输入禁用原因" v-if="this.remark == '其他'"/>
+      <el-input v-model="remarked" :placeholder=" $t('members.memberInfo.index.entDis') " v-if="this.remark == $t('members.memberInfo.index.other') "/>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="cancelUser()">取消</el-button>
-        <el-button type="primary" @click="submitMuteRemark">立即提交</el-button>
+        <el-button @click="cancelUser()"> {{ $t('members.memberInfo.index.cnc') }} </el-button>
+        <el-button type="primary" @click="submitMuteRemark">{{ $t('members.memberInfo.index.cnc') }}</el-button>
       </div>
     </el-dialog>
 
@@ -348,7 +348,7 @@
     <el-dialog
       v-dialogDrag
       :close-on-click-modal="false"
-      title="备注禁言原因"
+      :title=" $t('members.memberInfo.index.remBan') "
       :visible.sync="muteRemarkSpeak"
       width="400px"
       append-to-body
@@ -359,7 +359,7 @@
       <el-input v-model="speak" v-show="false"/>
       <el-select
         v-model="remark"
-        placeholder="请选择禁言原因"
+        :placeholder=" $t('members.memberInfo.index.selBan') "
         clearable
         style="min-width: 360px"
       >
@@ -370,10 +370,10 @@
           :value="dict.dictValue"
         />
       </el-select>
-      <el-input v-model="remarked" placeholder="请输入禁言原因" v-if="this.remark == '其他'"/>
+      <el-input v-model="remarked" :placeholder=" $t('members.memberInfo.index.resBan') " v-if="this.remark == $t('members.memberInfo.index.other')"/>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="cancelSpeak()">取消</el-button>
-        <el-button type="primary" @click="submitMuteRemarkSpeak">立即提交</el-button>
+        <el-button @click="cancelSpeak()">{{ $t('members.memberInfo.index.cnc') }}</el-button>
+        <el-button type="primary" @click="submitMuteRemarkSpeak">{{ $t('members.memberInfo.index.submit') }}</el-button>
       </div>
     </el-dialog>
 
@@ -382,49 +382,49 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="手机号" style="margin-bottom: 0px">
-          <el-input v-model="phone" placeholder="请输入手机号" maxlength="11" minlength="11"
+        <el-form-item :label=" $t('members.memberInfo.index.cellNum') " style="margin-bottom: 0px">
+          <el-input v-model="phone" :placeholder=" $t('members.memberInfo.index.entCell') " maxlength="11" minlength="11"
                     @blur="changetPhone(phone)"/>
         </el-form-item>
-        <el-form-item label="建议:">
+        <el-form-item :label=" $t('members.memberInfo.index.recom') ">
           <span style="color: #00afff">
-          请统一测试账号格式,默认格式已生成,请只输入后四位
+           {{ $t('members.memberInfo.index.lastDig') }}
             </span>
         </el-form-item>
-        <el-form-item label="密码" prop="password" style="margin-bottom: 0px">
-          <el-input v-model="password" placeholder="请输入密码"/>
+        <el-form-item :label=" $t('members.memberInfo.index.pass') " prop="password" style="margin-bottom: 0px">
+          <el-input v-model="password" :placeholder=" $t('members.memberInfo.index.entPass') "/>
         </el-form-item>
-        <el-form-item label="提示:">
+        <el-form-item :label=" $t('members.memberInfo.index.tips') ">
           <span style="color: #00afff">
-          密码自动分配,为电话号码后六位
+          {{ $t('members.memberInfo.index.passDig') }}
           </span>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('members.memberInfo.index.button.det') }}</el-button>
+        <el-button @click="cancel">{{ $t('members.memberInfo.index.button.cancel') }}</el-button>
       </div>
     </el-dialog>
     <more ref="more" @refMemeberData="getList()" :member-id="memberId" :member-code="memberCode"
           @memberMore="handleQuery"></more>
 
     <!--查看封停ip View blocked ip -->
-    <el-dialog :close-on-click-modal="false" title="查看封停ip" :visible.sync="speakIpBlackListList"
+    <el-dialog :close-on-click-modal="false" :title=" $t('members.memberInfo.index.button.ip') " :visible.sync="speakIpBlackListList"
                width="1200px" append-to-body>
       <el-form :model="queryParam" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-        <el-form-item label="会员id" prop="userId">
+        <el-form-item :label=" $t('members.memberInfo.index.memId') " prop="userId">
           <el-input
             v-model="queryParam.userId"
-            placeholder="会员id"
+            :placeholder=" $t('members.memberInfo.index.memId') "
             clearable
             size="small"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
-        <el-form-item label="会员ip" prop="userIp">
+        <el-form-item :label=" $t('members.memberInfo.index.memIp') " prop="userIp">
           <el-input
             v-model="queryParam.userIp"
-            placeholder="会员ip"
+            :placeholder=" $t('members.memberInfo.index.memIp') "
             clearable
             size="small"
             @keyup.enter.native="handleQuery"
@@ -432,18 +432,18 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQueryIpBlack"
-                     :disabled='!queryParam.userIp && !queryParam.userId'>搜索
+                     :disabled='!queryParam.userIp && !queryParam.userId'> {{ $t('members.memberInfo.index.search') }}
           </el-button>
         </el-form-item>
       </el-form>
 
       <el-table :stripe="true" v-loading="loading" :data="speakIpBlackData" style="margin-bottom:27px">
         <el-table-column type="selection" width="55" align="center"/>
-        <el-table-column label="会员ID" align="center" prop="userId"/>
-        <el-table-column label="会员ip" align="center" prop="userIp"/>
-        <el-table-column label="封停备注" align="center" prop="msg"/>
-        <el-table-column label="封停时间" align="center" prop="createTime"/>
-        <el-table-column label="操作" min-width="60" align="center" class-name="small-padding fixed-width"
+        <el-table-column :label=" $t('members.memberInfo.index.memId') " align="center" prop="userId"/>
+        <el-table-column :label=" $t('members.memberInfo.index.memIp') " align="center" prop="userIp"/>
+        <el-table-column :label=" $t('members.memberInfo.index.bRem') " align="center" prop="msg"/>
+        <el-table-column :label=" $t('members.memberInfo.index.cTime') " align="center" prop="createTime"/>
+        <el-table-column :label=" $t('members.memberInfo.index.opt') " min-width="60" align="center" class-name="small-padding fixed-width"
                          fixed="right">
           <template slot-scope="scope">
             <el-button
@@ -451,7 +451,7 @@
               type="text"
               icon="el-icon-edit"
               @click="handleUpdateIpBlack(scope.row)"
-            >解封
+            >{{ $t('members.memberInfo.index.opt') }}
             </el-button>
           </template>
         </el-table-column>
@@ -469,7 +469,7 @@
       </div>
 
       <el-button type="primary" plain @click="blockedIpCloseBtn()" style="float: right;margin-top: -15px">
-        关闭
+        {{ $t('members.memberInfo.index.button.close') }}
       </el-button>
 
     </el-dialog>
@@ -478,19 +478,19 @@
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="memberByIpAddressListList"
                width="1200px" append-to-body>
       <el-form :model="queryParamIp" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-        <el-form-item label="会员ip" prop="loginIp">
+        <el-form-item :label=" $t('members.memberInfo.index.memIp') " prop="loginIp">
           <el-input
             v-model="queryParamIp.loginIp"
-            placeholder="会员ip"
+            :placeholder=" $t('members.memberInfo.index.memIp') "
             clearable
             size="small"
             @keyup.enter.native="handleInputQuery"/>
         </el-form-item>
 
-        <el-form-item label="真实姓名" prop="realName">
+        <el-form-item :label=" $t('members.memberInfo.index.rName') " prop="realName">
           <el-input
             v-model="queryParamIp.realName"
-            placeholder="真实姓名"
+            :placeholder=" $t('members.memberInfo.index.rName') "
             clearable
             size="small"
             @keyup.enter.native="handleInputQuery"/>
@@ -499,19 +499,20 @@
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" size="mini"
                      @click="handleSearchQueryByIp"
-                     :disabled='!queryParamIp.loginIp && !queryParamIp.realName'>搜索
+                     :disabled='!queryParamIp.loginIp && !queryParamIp.realName'>
+            {{ $t('members.memberInfo.index.button.search') }}
           </el-button>
         </el-form-item>
       </el-form>
 
       <el-table :stripe="true" v-loading="loading" :data="memberByIpAddress" style="margin-bottom: 2px;">
-        <el-table-column label="会员ID" align="center" prop="id"/>
+        <el-table-column :label=" $t('members.memberInfo.index.memId') " align="center" prop="id"/>
 
-        <el-table-column label="昵称" align="center" prop="nickName"/>
-        <el-table-column label="状态" min-width="90" align="center" prop="status" :formatter="statusFormat"/>
+        <el-table-column :label=" $t('members.memberInfo.index.nName') " align="center" prop="nickName"/>
+        <el-table-column :label=" $t('members.memberInfo.index.status') " min-width="90" align="center" prop="status" :formatter="statusFormat"/>
 
-        <el-table-column label="登录IP" align="center" prop="loginIp"/>
-        <el-table-column label="登录备注" align="center" prop="email"/>
+        <el-table-column :label=" $t('members.memberInfo.index.logIp') " align="center" prop="loginIp"/>
+        <el-table-column :label=" $t('members.memberInfo.index.logRem') " align="center" prop="email"/>
       </el-table>
 
       <div v-if="paginationShow===true">
@@ -529,19 +530,19 @@
         <!--        handling onclick deactivate user status-->
         <el-col :span="1.5">
           <el-button type="primary" plain style="height: auto" @click="ipUnBlockHandler">
-            正常
+            {{ $t('members.memberInfo.index.button.normal') }}
           </el-button>
         </el-col>
         <!--        handling onclick deactivate user status-->
         <el-col :span="1.5">
           <el-button type="primary" plain style="height: auto" @click="ipBlockHandler" :disabled='!isActive'>
-            封禁
+            {{ $t('members.memberInfo.index.button.fden') }}
           </el-button>
         </el-col>
         <!--click on clock member searched panel  -->
         <el-col :span="1.5">
           <el-button type="primary" plain @click="closeTap()" style="height: auto">
-            关闭
+            {{ $t('members.memberInfo.index.button.close') }}
           </el-button>
         </el-col>
       </el-row>
@@ -797,12 +798,12 @@ export default {
           status: row.status
         }).then((res) => {
           if (res.code === 0) {
-            this.$notify.success('状态修改成功')
+            this.$notify.success( this.$t('members.memberInfo.index.sMod') )
           } else {
-            this.$notify.error('状态修改失败')
+            this.$notify.error( this.$t('members.memberInfo.index.sModfail') )
           }
         }).catch(() => {
-          this.$notify.error('网络异常')
+          this.$notify.error( this.$t('members.memberInfo.index.netAnom') )
         }).finally(() => {
           this.getList()
         })
@@ -815,13 +816,13 @@ export default {
       }
       changeStatusBan(this.id, this.status, this.remark).then((res) => {
         if (res.code === 0) {
-          this.$notify.success('状态修改成功')
+          this.$notify.success( this.$t('members.memberInfo.index.sMod') )
           this.muteRemark = false
         } else {
-          this.$notify.error('状态修改失败')
+          this.$notify.error( this.$t('members.memberInfo.index.sModfail') )
         }
       }).catch(() => {
-        this.$notify.error('网络异常')
+        this.$notify.error( this.$t('members.memberInfo.index.netAnom') )
       })
     },
     /** 查询用户信息列表 */
@@ -848,7 +849,7 @@ export default {
     },
     openIpBlackList() {
       this.speakIpBlackListList = true
-      this.title = '查看已封停的ip'
+      this.title = this.$t('members.memberInfo.index.vbIp')
       listSpeakIpBlackList(this.queryParam).then(response => {
         this.speakIpBlackData = response.rows
         this.total = response.total
@@ -865,9 +866,9 @@ export default {
     /** 修改按钮操作 */
     handleUpdateIpBlack(row) {
       var that = this
-      this.$confirm('确定要' + row.userId + '解封吗?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm( this.$t('members.memberInfo.index.confirmUp', {row: row.userId}) , this.$t('members.memberInfo.index.warn') , {
+        confirmButtonText: this.$t('members.memberInfo.index.det'),
+        cancelButtonText: this.$t('members.memberInfo.index.cnc'),
         type: 'warning'
       }).then(function () {
         var data = {}
@@ -875,7 +876,7 @@ export default {
         data.userId = row.userId
         return updateSpeakIpBlackList(data)
       }).then(() => {
-        that.msgSuccess('解封成功')
+        that.msgSuccess( this.$t('members.memberInfo.index.unbSucc') )
         this.openIpBlackList()
         that.getList()
       })
@@ -934,7 +935,7 @@ export default {
     /** 新增按钮操作 */
     handleAdd() {
       this.open = true
-      this.title = '添加测试用户信息'
+      this.title = this.$t('members.memberInfo.index.addUinf')
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -942,7 +943,7 @@ export default {
       getMemberInfo(id).then(response => {
         this.form = response.data
         this.open = true
-        this.title = '修改用户信息'
+        this.title = this.$t('members.memberInfo.index.modInf')
       })
     },
     /** 提交按钮 */
@@ -951,7 +952,7 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateMemberInfo(this.form).then(response => {
-              this.msgSuccess('修改成功')
+              this.msgSuccess( this.$t('members.memberInfo.index.modSucc') )
               this.open = false
               this.getList()
             })
@@ -959,7 +960,7 @@ export default {
             this.form.phone = this.phone;
             this.form.password = this.password;
             addMemberInfo(this.form).then(response => {
-              this.msgSuccess('新增成功')
+              this.msgSuccess( this.$t('members.memberInfo.index.addSucc') )
               this.open = false
               this.getList()
             })
@@ -981,26 +982,26 @@ export default {
       const queryParams = this.queryParams
       queryParams.params = []
       queryParams.downLoadDate = date
-      this.$confirm('是否确认导出所有会员列表数据项?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm( this.$t('members.memberInfo.index.confExp') ,  this.$t('members.memberInfo.index.warn') , {
+        confirmButtonText:  this.$t('members.memberInfo.index.det') ,
+        cancelButtonText: this.$t('members.memberInfo.index.cnc') ,
         type: 'warning'
       }).then(function () {
         const exportMemberInfoList = exportMemberInfo(queryParams);
         queryParams.downLoadDate = null
         if (exportMemberInfoList == null) {
-          this.msgError("没有数据")
+          this.msgError( this.$t('members.memberInfo.index.nData') )
         }
         return exportMemberInfoList
       }).then(response => {
-        this.downloadExcel(response, '会员列表')
+        this.downloadExcel(response, this.$t('members.memberInfo.index.memList') )
       })
     },
     //打开备注禁言弹框
     handleStatusChange(row) {
       if (row.speak === "0") {
         changeSpeak(row.id, row.speak, null).then(response => {
-          this.msgSuccess('解禁成功')
+          this.msgSuccess( this.$t('members.memberInfo.index.succUnb') )
         })
       } else {
         this.remark = null
@@ -1016,7 +1017,7 @@ export default {
         this.remark = this.remarked;
       }
       changeSpeak(this.id, this.speak, this.remark).then(response => {
-        this.msgSuccess('禁言成功')
+        this.msgSuccess( this.$t('members.memberInfo.index.banSucc') )
         this.muteRemarkSpeak = false
         this.getList()
       })
@@ -1026,7 +1027,7 @@ export default {
     /** Handle click on display tab event by ip address */
     memberListAccordingToIp() {
       this.memberByIpAddressListList = true
-      this.title = '查看会员'
+      this.title = this.$t('members.memberInfo.index.vMem')
     },
     /** formatting the 0-1-2 value */
     statusFormat(row, column) {
@@ -1036,7 +1037,7 @@ export default {
     /**creating pagination part */
     paginationByIpList() {
       this.memberByIpAddressListList = true
-      this.title = '查看已封停的ip'
+      this.title = this.$t('members.memberInfo.index.vbIp')
       listMemberInfo(this.queryParamIp).then(response => {
         this.memberByIpAddress = response.rows
         this.total = response.total
@@ -1051,7 +1052,7 @@ export default {
         let userIp = this.queryParamsByIp.userIp.match(reg)
         let realName = this.queryParams.realName.match(reg)
         if (!userIp || !realName) {
-          this.msgError("用户名或ip不正确！")
+          this.msgError( this.$t('members.memberInfo.index.uipInc') )
           return
         }
       }
@@ -1131,12 +1132,12 @@ export default {
         realName: this.queryParamIp.realName
       }).then((res) => {
         if (res.code === 0 || res.code > 200) {
-          this.$notify.error('状态修改失败')
+          this.$notify.error( this.$t('members.memberInfo.index.sModfail') )
         }
-        this.$notify.success('状态设置0成功')
+        this.$notify.success( this.$t('members.memberInfo.index.statSet') )
 
       }).catch(() => {
-        this.$notify.error('网络异常error')
+        this.$notify.error( this.$t('members.memberInfo.index.netEx') )
       }).finally(() => {
         this.searchMbyIpList()
       })
@@ -1150,12 +1151,12 @@ export default {
         realName: this.queryParamIp.realName
       }).then((res) => {
         if (res.code === 0 || res.code > 200) {
-          this.$notify.error('状态修改失败')
+          this.$notify.error( this.$t('members.memberInfo.index.sModfail') )
         }
-        this.$notify.success('状态设置正常成功')
+        this.$notify.success( this.$t('members.memberInfo.index.statNorm') )
 
       }).catch(() => {
-        this.$notify.error('网络异常error')
+        this.$notify.error( this.$t('members.memberInfo.index.netEx') )
       }).finally(() => {
         this.searchMbyIpList()
       })
@@ -1164,7 +1165,7 @@ export default {
     /** click  on ID TO Display show personalRecordTable - personalReport method*/
     personalReport(userId) {
       getMemberInfo(userId).then(res => {
-        this.title = res.data.nickName + " - 个人报表";
+        this.title = res.data.nickName + this.$t('members.memberInfo.index.pStat') ;
         this.$refs.tableShow.show(userId, this.title);
       });
     },
@@ -1181,7 +1182,7 @@ export default {
       value.select()   //select coming value;
       document.execCommand('Copy') // Execute the browser copy command
       this.$message({
-        message: data + ' 复制成功',
+        message: data + this.$t('members.memberInfo.index.repSucc') ,
         type: 'success'
       })
       value.remove()
@@ -1190,7 +1191,7 @@ export default {
 
     boxDish(row) {
       console.info(row.id)
-      this.$prompt('请输入您的谷歌验证码', '提示', {
+      this.$prompt( this.$t('members.memberInfo.index.pGverifcode') ,  this.$t('members.memberInfo.index.tips') , {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         inputPattern: /^[0-9]{1,10}$/,

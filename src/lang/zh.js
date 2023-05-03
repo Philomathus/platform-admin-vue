@@ -40,7 +40,8 @@ export default {
     dateTimePickerRangeSeparator: '至',
     selectDatePlaceholder: '日期范围',
     datePickerStartDate: '开始日期',
-    datePickerEndDate: '结束日期'
+    datePickerEndDate: '结束日期',
+    operationColumn: '操作',
   },
 
   navbar: {
@@ -1090,19 +1091,15 @@ export default {
   },
 
   common: {
-    titleDialog: '警告',
-    titlePrompt: '提示',
+    dialogTitle: '警告',
+    promptTitle: '提示',
     addButton: '新增',
     editButton: '修改',
     removeButton: '删除',
     searchButton: '搜索',
     resetButton: '重置',
     exportButton: '导出',
-    confirmButton1: '确认',
-    confirmButton2: '确 定',
     confirmButton3: '确定',
-    cancelButton1: '取消',
-    cancelButton2: '取 消',
     operationColumn: '操作',
     dateTimePickerStartTime: '开始时间',
     dateTimePickerEndTime: '结束时间',
@@ -1175,16 +1172,16 @@ export default {
         forbidFalse: '正常',
         userIp: '发言ip',
         createTimes: '发送时间',
-        operation: '@:common.operationColumn',
+        operation: '@:global.operationColumn',
         muteButton: '封停',
         unmuteButton: '解封',
         forbidButton: '禁言'
       },
       confirmUpdateDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '确定要{fromPlatform}解封吗?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       messageBox: {
         fromPlatformError: '会员ID只能输入数字及下划线',
@@ -1199,8 +1196,8 @@ export default {
         userNickNamePlaceholder: '请输入发送者昵称',
         msgLabel: '消息内容',
         userIpLabel: '封停ip',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton2',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
         validation: {
           postcatId: '主播ID不能为空'
         },
@@ -1225,21 +1222,21 @@ export default {
           userIdPlaceholder: '会员id',
           userIpLabel: '会员ip',
           userIpPlaceholder: '会员ip',
-          searchButton: '@:common.searchButton'
+          searchButton: '@:global.searchButton'
         },
         table: {
           userId: '会员ID',
           userIp: '封停ip',
           msg: '封停备注',
           createTime: '封停时间',
-          operation: '@:common.operationColumn',
+          operation: '@:global.operationColumn',
           unblockButton: '解封'
         },
         confirmUpdateDialog: {
-          title: '@:common.titleDialog',
+          title: '@:global.dialogTitle',
           message: '确定要{userId}解封吗?',
-          confirmButton: '@:common.confirmButton1',
-          cancelButton: '@:common.cancelButton1'
+          confirmButton: '@:global.confirmButton',
+          cancelButton: '@:global.cancelButton'
         },
         messageBox: {
           unblockSuccess: '解封成功'
@@ -1257,8 +1254,8 @@ export default {
         status2: '审核拒绝',
         status3: '封停中',
         status4: '解散',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
         add: '新增家族'
@@ -1280,7 +1277,7 @@ export default {
         contribution: '家族成员的贡献',
         videoTime: '直播时间',
         memo: '备注',
-        operation: '@:common.operationColumn',
+        operation: '@:global.operationColumn',
         updateFamilyButton: '修改',
         removeButton: '解散',
         updateFlag0Button: '不通过',
@@ -1304,8 +1301,8 @@ export default {
         noticePlaceholder: '请输入内容',
         memoLabel: '备注',
         memoPlaceholder: '请输入内容',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton2',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
         validation: {
           logo: '请上传家族LOGO',
           name: '请输入家族名称',
@@ -1317,42 +1314,42 @@ export default {
         }
       },
       confirmUpdateFlag0Dialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '是否确认拒绝家族名称"{name}"的数据项?',
-        confirmButton: '@:common:confirmButton1',
-        cancelButton: '@:common:cancelButton1'
+        confirmButton: '@:global:confirmButton',
+        cancelButton: '@:global:cancelButton'
       },
       confirmUpdateFlag1Dialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '是否确认通过审核家族名称"{name}"的数据项?',
-        confirmButton: '@:common:confirmButton1',
-        cancelButton: '@:common:cancelButton1'
+        confirmButton: '@:global:confirmButton',
+        cancelButton: '@:global:cancelButton'
       },
       confirmUpdateFlag2Prompt: {
-        title: '@:common.titlePrompt',
+        title: '@:global.promptTitle',
         message: '请输入封停原因',
-        confirmButton: '@:common:confirmButton1',
-        cancelButton: '@:common:cancelButton1',
+        confirmButton: '@:global:confirmButton',
+        cancelButton: '@:global:cancelButton',
         inputErrorMessage: '封停原因不能为空'
       },
       confirmUpdateFlag3Prompt: {
-        title: '@:common.titlePrompt',
+        title: '@:global.promptTitle',
         message: '请输入解封原因',
-        confirmButton: '@:common:confirmButton1',
-        cancelButton: '@:common:cancelButton1',
+        confirmButton: '@:global:confirmButton',
+        cancelButton: '@:global:cancelButton',
         inputErrorMessage: '解封原因不能为空'
       },
       confirmRemoveDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '是否确认解散"{name}"家族?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmExportDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '是否确认导出所有家族数据项?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       messageBox: {
         updateFlag0Success: '审核拒绝成功',
@@ -1368,13 +1365,13 @@ export default {
       queryForm: {
         specificationsLabel: '规格',
         specificationsPlaceholder: '请输入规格',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
-        add: '@:common.addButton',
-        edit: '@:common.editButton',
-        remove: '@:common.removeButton'
+        add: '@:global.addButton',
+        edit: '@:global.editButton',
+        remove: '@:global.deleteButton'
       },
       table: {
         specifications: '规格',
@@ -1386,7 +1383,7 @@ export default {
         propId: '礼物id',
         discountPrice: '优惠价格',
         giveday: '赠送天数',
-        operation: '@:common.operation',
+        operation: '@:global.operationColumn',
         editButton: '修改',
         removeButton: '删除'
       },
@@ -1407,20 +1404,20 @@ export default {
         discountPricePlaceholder: '请输入优惠价格',
         givedayLabel: '赠送天数',
         givedayPlaceholder: '请输入赠送天数',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton2'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmRemoveDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '是否确认删除编号为"{ids}"的数据项?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmExportDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '是否确认导出所有数据项?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       messageBox: {
         editLiveGuardConfigSuccess: '修改成功',
@@ -1432,13 +1429,13 @@ export default {
       queryForm: {
         nameLabel: '名称',
         namePlaceholder: '请输入名称',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
-        add: '@:common.addButton',
-        edit: '@:common.editButton',
-        remove: '@:common.removeButton'
+        add: '@:global.addButton',
+        edit: '@:global.editButton',
+        remove: '@:global.deleteButton'
       },
       table: {
         id: '编号',
@@ -1448,7 +1445,7 @@ export default {
         status1: '启用',
         conUrl: '地址',
         iconUrl: '图标',
-        operation: '@:common.operation',
+        operation: '@:global.operationColumn',
         editButton: '修改',
         removeButton: '删除'
       },
@@ -1465,8 +1462,8 @@ export default {
         conUrlLabel: '内容地址',
         conUrlPlaceholder: '请输入内容地址',
         iconUrlLabel: '图标地址',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton2'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       editDialog: {
         title: '修改h5插件',
@@ -1475,26 +1472,26 @@ export default {
         conUrlLabel: '内容地址',
         conUrlPlaceholder: '请输入内容地址',
         iconUrlLabel: '图标地址',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton2'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmRemoveDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '是否确认删除h5插件编号为"{ids}"的数据项?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmStatusChangeDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '确认要{text}"{name}"吗?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmExportDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       messageBox: {
         addSuccess: '新增成功',
@@ -1509,8 +1506,8 @@ export default {
         userIdPlaceholder: '请输入会员ID',
         nickNameLabel: '会员昵称',
         nickNamePlaceholder: '请输入会员昵称',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       table: {
         memberAccount: '用户Id',
@@ -1530,8 +1527,8 @@ export default {
         hostIdPlaceholder: '请输入主播ID',
         blackUserIdLabel: '会员ID',
         blackUserIdPlaceholder: '请输入被设置的用户ID',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       table: {
         blackUserId: '会员ID',
@@ -1540,7 +1537,7 @@ export default {
         hostName: '主播昵称',
         remark: '封停备注',
         createTime: '封停时间',
-        operation: '@:common.operationColumn',
+        operation: '@:global.operationColumn',
         removeButton: '移除黑名单禁言'
       },
       messageBox: {
@@ -1548,10 +1545,10 @@ export default {
         removeSuccess: '删除成功'
       },
       confirmRemoveDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '是否确认删除拉黑编号为"{ids}"的数据项?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       }
     },
     liveComplaint: {
@@ -1562,11 +1559,11 @@ export default {
         userIdPlaceholder: '请输入会员ID',
         anchorPlaceholder: '请输入主播ID',
         statusPlaceholder: '请选择处理状态',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
-        export: '@:common.exportButton'
+        export: '@:global.exportButton'
       },
       table: {
         content: '投诉内容',
@@ -1582,7 +1579,7 @@ export default {
         status0: '未处理',
         status1: '已处理',
         status2: '驳回',
-        operation: '@:common.operationColumn',
+        operation: '@:global.operationColumn',
         processButton: '处理',
         rejectButton: '驳回'
       },
@@ -1600,20 +1597,20 @@ export default {
         processingTimePlaceholder: '选择审批时间',
         statusLabel: '状态(0待处理 1审核通过 2驳回)',
         statusPlaceholder: '请选择字典生成',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton2'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmEditConfirmationPrompt: {
-        title: '@:common.titlePrompt',
+        title: '@:global.promptTitle',
         message: '请输入审核备注',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmExportDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       messageBox: {
         userIdFormatError: '会员ID只能输入数字及下划线',
@@ -1632,10 +1629,10 @@ export default {
         hostId: '请输入主播ID',
         hostName: '请输入直播昵称',
         statusPlaceholder: '全部状态',
-        searchButton: '@:common.searchButton'
+        searchButton: '@:global.searchButton'
       },
       actions: {
-        export: '@:common.exportButton'
+        export: '@:global.exportButton'
       },
       table: {
         id: '日期+主播ID',
@@ -1646,7 +1643,7 @@ export default {
         live: '{num}点',
         remark: '备注',
         createTime: '创建时间',
-        operation: '@:common.operationColumn',
+        operation: '@:global.operationColumn',
         passButton: '通过',
         rejectButton: '驳回'
       },
@@ -1662,27 +1659,27 @@ export default {
         statusPlaceholder: '请选择字典生成',
         liveLabel: '直播时间',
         livePlaceholder: '请输入直播时间',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton2'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmUpdateStatusFlag1Dialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '是否确认通过"{hostName}"的申请?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmUpdateStatusFlag2Prompt: {
-        title: '@:common.titlePrompt',
+        title: '@:global.promptTitle',
         message: '请输入驳回原因',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
         inputErrorMessage: '驳回原因不能为空'
       },
       confirmExportDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       messageBox: {
         updateStatusFlag1Success: '审核通过',
@@ -1700,11 +1697,11 @@ export default {
         familyIdPlaceholder: '家族ID',
         familyNamePlaceholder: '家族名称',
         familyNickNamePlaceholder: '族长昵称',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
-        export: '@:common.exportButton',
+        export: '@:global.exportButton',
         familyShow: '所有主播'
       },
       table: {
@@ -1723,10 +1720,10 @@ export default {
         totalsettle: '结算总计'
       },
       confirmExportDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       }
     },
     liveHostWageNotedays: {
@@ -1737,11 +1734,11 @@ export default {
         hostIdPlaceholder: '主播ID',
         nickNamePlaceholder: '主播昵称',
         familyNamePlaceholder: '家族名称',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
-        export: '@:common.exportButton'
+        export: '@:global.exportButton'
       },
       table: {
         hostId: '主播ID',
@@ -1755,10 +1752,10 @@ export default {
         totalsettle: '总收入'
       },
       confirmExportDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '是否确认导出所有主播时长数据项?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       }
     },
     liveHostWageNoteJump: {
@@ -1769,11 +1766,11 @@ export default {
         hostIdPlaceholder: '主播ID',
         nickNamePlaceholder: '主播昵称',
         familyIdPlaceholder: '家族ID',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
-        export: '@:common.exportButton'
+        export: '@:global.exportButton'
       },
       statistics: {
         totalsettleTotalPlaceholder: '结算总计统计'
@@ -1803,10 +1800,10 @@ export default {
         totalsettle: '结算总计'
       },
       confirmExportDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '是否确认导出所有主播时长数据项?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       }
     },
     liveMount: {
@@ -1815,13 +1812,13 @@ export default {
         gvipPlaceholder: 'VIP等级',
         nameLabel: '坐骑名',
         namePlaceholder: '请输入坐骑名',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
-        add: '@:common.addButton',
-        edit: '@:common.editButton',
-        remove: '@:common.removeButton'
+        add: '@:global.addButton',
+        edit: '@:global.editButton',
+        remove: '@:global.deleteButton'
       },
       table: {
         id: '坐骑id',
@@ -1835,9 +1832,9 @@ export default {
         disPrice: '折扣价格',
         vday: '有效天数',
         oder: '排序',
-        operation: '@:common.operationColumn',
-        editButton: '@:common.editButton',
-        removeButton: '@:common.removeButton'
+        operation: '@:global.operationColumn',
+        editButton: '@:global.editButton',
+        removeButton: '@:global.deleteButton'
       },
       addEditDialog: {
         titleAdd: '添加礼物',
@@ -1858,8 +1855,8 @@ export default {
         vdayLabel: '有效天数',
         vdayPlaceholder: '请输入有效天数',
         oderLabel: '排序',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton2',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
         validations: {
           id: 'ID不能为空',
           name: '坐骑名不能为空',
@@ -1874,16 +1871,16 @@ export default {
         }
       },
       confirmRemoveDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '是否确认删除礼物列编号为"{ids}"的数据项?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmStatusChangeDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '确认要{text}"{name}"吗?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       messageBox: {
         updateLiveMountSuccess: '修改成功',
@@ -1894,30 +1891,30 @@ export default {
     },
     liveMsgEngage: {
       actions: {
-        add: '@:common.addButton'
+        add: '@:global.addButton'
       },
       table: {
         msg: '互动信息',
-        operation: '@:common.operationColumn',
-        editButton: '@:common.editButton',
-        removeButton: '@:common.removeButton'
+        operation: '@:global.operationColumn',
+        editButton: '@:global.editButton',
+        removeButton: '@:global.deleteButton'
       },
       addEditDialog: {
         titleAdd: '添加主播互动消息',
         titleEdit: '修改主播互动消息',
         msgLabel: '互动消息',
         msgPlaceholder: '请输入互动信息',
-        confirmButton: '@:common.confirmButton2',
+        confirmButton: '@:global.confirmButton',
         validations: {
           id: 'id不能为空只能是数字',
           msg: '互动消息不能为空'
         }
       },
       confirmRemoveDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '是否确认删除消息为为"{msg}"的数据项?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       messageBox: {
         removeSuccess: '删除成功'
@@ -1929,13 +1926,13 @@ export default {
         namePlaceholder: '请输入道具名',
         typeLabel: '类型',
         typePlaceholder: '请选择类型',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
-        add: '@:common.addButton',
-        edit: '@:common.editButton',
-        remove: '@:common.removeButton'
+        add: '@:global.addButton',
+        edit: '@:global.editButton',
+        remove: '@:global.deleteButton'
       },
       table: {
         name: '名称',
@@ -1956,9 +1953,9 @@ export default {
         isEffect: '状态',
         isEffect1: '有效',
         isEffect0: '无效',
-        operation: '@:common.operationColumn',
-        editButton: '@:common.editButton',
-        removeButton: '@:common.removeButton'
+        operation: '@:global.operationColumn',
+        editButton: '@:global.editButton',
+        removeButton: '@:global.deleteButton'
       },
       addEditDialog: {
         titleAdd: '添加礼物列',
@@ -1980,20 +1977,20 @@ export default {
         isEffectLabel: '状态',
         sortLabel: '排序',
         sortPlaceholder: '请输入排序',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton2'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmRemoveDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '是否确认删除礼物列编号为"{ids}"的数据项?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmStatusChangeDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '确认要{text}"{name}"吗?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       messageBox: {
         updateLivePropSuccess: '修改成功',
@@ -2015,12 +2012,12 @@ export default {
         isBanPlaceholder: '是否禁播',
         isAuthenticationPlaceholder: '全部状态',
         mobilePlaceholder: '家族ID',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
-        add: '@:common.addButton',
-        export: '@:common.exportButton',
+        add: '@:global.addButton',
+        export: '@:global.exportButton',
         liveRoomAssistant: '直播间小助手',
         batchJoin: '批量加入家族',
         batchKickOut: '批量踢出家族'
@@ -2053,7 +2050,7 @@ export default {
         mobile: '手机号',
         loginIp: '登陆IP',
         banRemark: '禁播原因',
-        operation: '@:common.operationColumn',
+        operation: '@:global.operationColumn',
         kickOutButton: '踢出家族',
         auditButton: '审核',
         starBroadcastButton: '开播',
@@ -2066,14 +2063,14 @@ export default {
         nickNameLabel: '昵称',
         headImageLabel: '用户头像',
         isAuthenticationLabel: '类型',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton2'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       liveRoomAssistantDialog: {
         title: '直播间小助手',
         infoLabel: '小助手消息',
         infoPlaceholder: '请输入发送小助手消息',
-        confirmButton: '@:common.confirmButton2'
+        confirmButton: '@:global.confirmButton'
       },
       liveBroadcastDialog: {
         title: '开播信息',
@@ -2081,7 +2078,7 @@ export default {
         flvLabel: '视频流地址',
         liveImageLabel: '开播背景',
         lotteryLabel: '彩票',
-        confirmButton: '@:common.confirmButton2'
+        confirmButton: '@:global.confirmButton'
       },
       editDialog: {
         title: '修改主播信息',
@@ -2099,8 +2096,8 @@ export default {
         isAuthenticationLabel: '类型',
         vExplainLabel: '认证说明',
         investorSendInfoLabel: '拒绝理由',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton2',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
         validation: {
           vExplain: '认证说明不能为空',
           investorSendInfo: '拒绝理由不能为空'
@@ -2115,19 +2112,19 @@ export default {
       totalCostButton: '投注金额',
       totalPrizeButton: '中奖金额',
       totalCountButton: '统计查询',
-      exportButton: '@:common.exportButton',
+      exportButton: '@:global.exportButton',
       form: {
         lotteryFormLabel: '下注时间',
-        startTimePlaceholder: '@:common.dateTimePickerStartTime',
-        endTimePlaceholder: '@:common.dateTimePickerEndTime',
-        rangeSeparator: '@:common.dateTimePickerRangeSeparator',
+        startTimePlaceholder: '@:global.dateTimePickerStartTime',
+        endTimePlaceholder: '@:global.dateTimePickerEndTime',
+        rangeSeparator: '@:global.dateTimePickerRangeSeparator',
         puserIdPlaceholder: '会员ID',
         issuePlaceholder: '下注期数',
         lotteryNamePlaceholder: '请选择彩票名称',
         priceMinPlaceholder: '投注￥',
         priceMaxPlaceholder: '金额￥',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton',
       },
       tableColumns: {
         puserId: '用户ID',
@@ -2141,7 +2138,7 @@ export default {
         prize: '中奖金额',
         betTime: '下注时间',
         anchor: '主播Id',
-        operation: '@:common.operationColumn'
+        operation: '@:global.operationColumn'
       },
       responseMessages: {
         memberIdFormatError: '会员ID只能输入数字及下划线',
@@ -2152,9 +2149,9 @@ export default {
       },
       confirmExportDialog: {
         message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
-        title: '@:common.titleDialog',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        title: '@:global.dialogTitle',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
     },
 
@@ -2168,8 +2165,8 @@ export default {
         issueLabel: '期数',
         issuePlaceholder: '期数',
         lotteryNamePlaceholder: '请选择彩票名称',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton',
       },
       tableColumns: {
         id: '主键',
@@ -2187,14 +2184,14 @@ export default {
       form: {
         nameLabel: '名称',
         namePlaceholder: '请输入名称',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton',
       },
       rows: {
-        addButton: '@:common.addButton',
-        editButton: '@:common.editButton',
-        deleteButton: '@:common.removeButton',
-        exportButton: '@:common.exportButton',
+        addButton: '@:global.addButton',
+        editButton: '@:global.editButton',
+        deleteButton: '@:global.deleteButton',
+        exportButton: '@:global.exportButton',
       },
       tableColumns: {
         id: '编号',
@@ -2214,8 +2211,8 @@ export default {
         sort: '排序',
         operation: {
           label: '操作',
-          editButton: '@:common.editButton',
-          deleteButton: '@:common.removeButton',
+          editButton: '@:global.editButton',
+          deleteButton: '@:global.deleteButton',
         }
       },
       dialogForm: {
@@ -2235,8 +2232,8 @@ export default {
         sortPlaceholder: '请输入排序',
       },
       dialogFooter: {
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       validationMessages: {
         emptyName: '奖项名称不能为空',
@@ -2258,15 +2255,15 @@ export default {
       },
       confirmDeleteDialog: {
         message: '是否确认删除中秋博饼编号为{ids}的数据项?',
-        title: '@:common.titleDialog',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton1'
+        title: '@:global.dialogTitle',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmExportDialog: {
         message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
-        title: '@:common.titleDialog',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton1'
+        title: '@:global.dialogTitle',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       }
     },
 
@@ -2278,10 +2275,10 @@ export default {
         namePlaceholder: '请输入昵称',
         diceNamePlaceholder: '请输入奖项',
         diceIdPlaceholder: '请输入奖项id',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton',
       },
-      exportButton: '@:common.exportButton',
+      exportButton: '@:global.exportButton',
       tableColumns: {
         id: 'id',
         pUserId: '会员ID',
@@ -2304,8 +2301,8 @@ export default {
         diceValuePlaceholder: '请输入骰数值',
         diceIdLabel: '奖项id',
         diceIdPlaceholder: '请输入奖项id',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton1',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
       },
       responseMessages: {
         pUserIdFormatError: '会员ID只能输入数字及下划线',
@@ -2319,15 +2316,15 @@ export default {
       },
       confirmDeleteDialog:{
         message: '是否确认删除博饼中奖记录编号为"{ids}"的数据项?',
-        title: '@:common.titleDialog',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton1'
+        title: '@:global.dialogTitle',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmExportDialog: {
         message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
-        title: '@:common.titleDialog',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        title: '@:global.dialogTitle',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       }
     },
 
@@ -2342,8 +2339,8 @@ export default {
         infoPlaceholder: '请输入简介',
         victoryRuleLabel: '获奖规则',
         victoryRulePlaceholder: '请输入获奖规则',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton',
       },
       tableColumns: {
         methodId: '菜单id',
@@ -2358,8 +2355,8 @@ export default {
       dialogForm: {
         oddsLabel: '赔率',
         oddsPlaceholder: '请输入赔率',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       lotteryType: {
         timeShareLabel: '时时彩',
@@ -2387,10 +2384,10 @@ export default {
         namePlaceholder: '请选择彩种',
         statusPlaceholder: '全部状态',
         issuePlaceholder: '请输入期数',
-        datePickerStartDate: '@:common.datePickerStartDate',
-        datePickerEndDate: '@:common.datePickerEndDate',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton',
+        datePickerStartDate: '@:global.datePickerStartDate',
+        datePickerEndDate: '@:global.datePickerEndDate',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton',
         addIssueButton: '补期'
       },
       tableColumns:{
@@ -2402,7 +2399,7 @@ export default {
         killRate: '杀率',
         totalPrize: '派奖',
         status: '状态',
-        operationLabel: '@:common.operationColumn',
+        operationLabel: '@:global.operationColumn',
         repaymentButton: '重新派奖',
       },
       dialogForm:{
@@ -2414,8 +2411,8 @@ export default {
         namePlaceholder: '请选择彩种'
       },
       dialogFooter:{
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       rulesMessage:{
         ktime: '开奖时间不能为空',
@@ -2443,8 +2440,8 @@ export default {
         statusPlaceholder: '请选择状态',
         typeLabel: '所属彩种类型',
         typePlaceholder: '请选择所属彩种类型',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       tableColumns:{
         name: '彩票名称',
@@ -2456,7 +2453,7 @@ export default {
         minCost: '最小投注金额',
         order: '排序',
         operationLabel: '操作',
-        editButton: '@:common.editButton',
+        editButton: '@:global.editButton',
       },
       dialogForm:{
         title: '修改',
@@ -2465,8 +2462,8 @@ export default {
         orderPlaceholder: '请输入排序'
       } ,
       dialogFooter:{
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       statusLabel:{
         enable: '启用',
@@ -2493,9 +2490,9 @@ export default {
       updateSuccessMessage: '修改成功',
       updateBanErrorMessage: '修改禁播状态失败',
       promptOpensDialog: {
-        title: '@:common.titlePrompt',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton1'
+        title: '@:global.promptTitle',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       }
     },
 

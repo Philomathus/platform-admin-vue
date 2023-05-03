@@ -1646,7 +1646,385 @@ export default {
         confirmButton: '@:global.confirmButton',
         cancelButton: '@:global.cancelButton'
       }
-    }
+    },
+    liveHostWageNotedays: {
+      queryForm: {
+        selectDateLabel: '日期选择',
+        selectDateStartPlaceholder: '开始日期',
+        selectDateEndPlaceholder: '结束日期',
+        hostIdPlaceholder: '主播ID',
+        nickNamePlaceholder: '主播昵称',
+        familyNamePlaceholder: '家族名称',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      actions: {
+        export: '@:common.exportButton'
+      },
+      table: {
+        hostId: '主播ID',
+        nickName: '主播昵称',
+        familyName: '家族名称',
+        livetime: '开播时长',
+        livetimejiesuan: '时长结算',
+        ticket: '礼物结算',
+        costQianliu: '彩票结算',
+        times: '开播次数',
+        totalsettle: '总收入'
+      },
+      confirmExportDialog: {
+        title: '@:common.titleDialog',
+        message: '是否确认导出所有主播时长数据项?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      }
+    },
+    liveHostWageNoteJump: {
+      queryForm: {
+        dateDayPlaceholder: '选择日期',
+        settlementRateLabel: '散户结算率',
+        settlementRatePlaceholder: '请输入散户结算率',
+        hostIdPlaceholder: '主播ID',
+        nickNamePlaceholder: '主播昵称',
+        familyIdPlaceholder: '家族ID',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      actions: {
+        export: '@:common.exportButton'
+      },
+      statistics: {
+        totalsettleTotalPlaceholder: '结算总计统计'
+      },
+      table: {
+        hostId: '主播ID',
+        nickName: '主播昵称',
+        familyId: '家族ID',
+        familyIdPopover: '家 族 ID：',
+        familyUserIdPopover: '家 族 长 ID：',
+        familyNickName: '家族长昵称：',
+        familyName: '家族名称',
+        startTime: '直播开始时间',
+        endTime: '直播结束时间',
+        livetime: '直播时长',
+        lwrenwu: '礼物任务',
+        screnwu: '时长任务',
+        coin: '时薪',
+        livetimejiesuan: '时长结算',
+        liwu: '收礼金额',
+        liwujiesuanbili: '礼物提成',
+        ticket: '礼物结算',
+        lotteryCost: '彩票投注',
+        lotteryBili: '彩票提成',
+        costQianliu: '彩票结算',
+        times: '开播次数',
+        totalsettle: '结算总计'
+      },
+      confirmExportDialog: {
+        title: '@:common.titleDialog',
+        message: '是否确认导出所有主播时长数据项?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      }
+    },
+    liveMount: {
+      queryForm: {
+        gvipLabel: 'VIP等级',
+        gvipPlaceholder: 'VIP等级',
+        nameLabel: '坐骑名',
+        namePlaceholder: '请输入坐骑名',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      actions: {
+        add: '@:common.addButton',
+        edit: '@:common.editButton',
+        remove: '@:common.removeButton'
+      },
+      table: {
+        id: '坐骑id',
+        gvip: 'vip等级',
+        name: '坐骑名',
+        status: '状态',
+        status0: '停用',
+        status1: '启用',
+        iconUrl: '图标',
+        price: '价格',
+        disPrice: '折扣价格',
+        vday: '有效天数',
+        oder: '排序',
+        operation: '@:common.operationColumn',
+        editButton: '@:common.editButton',
+        removeButton: '@:common.removeButton'
+      },
+      addEditDialog: {
+        titleAdd: '添加礼物',
+        titleEdit: '修改礼物',
+        gvipLabel: 'vip等级',
+        gvipPlaceholder: '请输入免费领取VIP(-1只能买)',
+        nameLabel: '坐骑名',
+        namePlaceholder: '请输入坐骑名',
+        statusLabel: '状态',
+        status0: '未启用',
+        status1: '启用',
+        iconUrlLabel: '图标',
+        svgUrlLabel: 'svga动画',
+        priceLabel: '价格',
+        pricePlaceholder: '请输入价格',
+        disPriceLabel: '折扣价格',
+        disPricePlaceholder: '请输入折扣价格',
+        vdayLabel: '有效天数',
+        vdayPlaceholder: '请输入有效天数',
+        oderLabel: '排序',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton2',
+        validations: {
+          id: 'ID不能为空',
+          name: '坐骑名不能为空',
+          status: '状态不能为空',
+          iconUrl: 'PC端图标不能为空',
+          gvip: 'vip等级不能为空',
+          svgUrl: 'svgUrl动画不能为空',
+          price: '价格不能为空',
+          disPrice: '折扣价格不能为空',
+          vday: '赠送天数不能为空',
+          oder: '不能为空'
+        }
+      },
+      confirmRemoveDialog: {
+        title: '@:common.titleDialog',
+        message: '是否确认删除礼物列编号为"{ids}"的数据项?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      confirmStatusChangeDialog: {
+        title: '@:common.titleDialog',
+        message: '确认要{text}"{name}"吗?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      messageBox: {
+        updateLiveMountSuccess: '修改成功',
+        addLiveMountSuccess: '新增成功',
+        removeSuccess: '删除成功',
+        statusChangeSuccess: '{text}成功'
+      }
+    },
+    liveMsgEngage: {
+      actions: {
+        add: '@:common.addButton'
+      },
+      table: {
+        msg: '互动信息',
+        operation: '@:common.operationColumn',
+        editButton: '@:common.editButton',
+        removeButton: '@:common.removeButton'
+      },
+      addEditDialog: {
+        titleAdd: '添加主播互动消息',
+        titleEdit: '修改主播互动消息',
+        msgLabel: '互动消息',
+        msgPlaceholder: '请输入互动信息',
+        confirmButton: '@:common.confirmButton2',
+        validations: {
+          id: 'id不能为空只能是数字',
+          msg: '互动消息不能为空'
+        }
+      },
+      confirmRemoveDialog: {
+        title: '@:common.titleDialog',
+        message: '是否确认删除消息为为"{msg}"的数据项?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      messageBox: {
+        removeSuccess: '删除成功'
+      }
+    },
+    liveProp: {
+      queryForm: {
+        nameLabel: '道具名',
+        namePlaceholder: '请输入道具名',
+        typeLabel: '类型',
+        typePlaceholder: '请选择类型',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      actions: {
+        add: '@:common.addButton',
+        edit: '@:common.editButton',
+        remove: '@:common.removeButton'
+      },
+      table: {
+        name: '名称',
+        icon: '图标',
+        diamonds: '消费钻石',
+        ticket: 'RMB/钻石',
+        isMuch: '是否连送',
+        isMuch1: '是',
+        isMuchOthers: '否',
+        type: '类型',
+        type0: '礼物',
+        type1: '打赏',
+        type2: '守护',
+        isAnimated: '展示动画',
+        isAnimated0: '普通礼物',
+        isAnimated1: 'gif礼物',
+        isAnimatedOthers: '大型动画礼物',
+        isEffect: '状态',
+        isEffect1: '有效',
+        isEffect0: '无效',
+        operation: '@:common.operationColumn',
+        editButton: '@:common.editButton',
+        removeButton: '@:common.removeButton'
+      },
+      addEditDialog: {
+        titleAdd: '添加礼物列',
+        titleEdit: '修改礼物列',
+        nameLabel: '名称',
+        namePlaceholder: '请输入道具名',
+        diamondsLabel: '消费钻石',
+        diamondsPlaceholder: '请输入',
+        ticketLabel: '主播获得热度:',
+        ticketPlaceholder: '请输入',
+        iconLabel: '图标',
+        isMuchLabel: '连续',
+        isAnimatedLabel: '展示动画',
+        animatedUrlLabel: 'svga动画',
+        isSpecialLabel: '是否特殊礼物',
+        isSpecial0: '正常',
+        isSpecial1: '特殊',
+        typeLabel: '类型',
+        isEffectLabel: '状态',
+        sortLabel: '排序',
+        sortPlaceholder: '请输入排序',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton2'
+      },
+      confirmRemoveDialog: {
+        title: '@:common.titleDialog',
+        message: '是否确认删除礼物列编号为"{ids}"的数据项?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      confirmStatusChangeDialog: {
+        title: '@:common.titleDialog',
+        message: '确认要{text}"{name}"吗?',
+        confirmButton: '@:common.confirmButton1',
+        cancelButton: '@:common.cancelButton1'
+      },
+      messageBox: {
+        updateLivePropSuccess: '修改成功',
+        addLivePropSuccess: '新增成功',
+        removeSuccess: '删除成功',
+        statusChangeSuccess: '{text}成功'
+      }
+    },
+    liveUser: {
+      queryForm: {
+        userIdsLabel: '主播ID',
+        userIdsPlaceholder: '主播ID,批量搜索请用英文逗号隔开',
+        selectDateLabel: '注册日期',
+        selectDateStartPlaceholder: '开始日期',
+        selectDateEndPlaceholder: '结束日期',
+        selectDateRangeSeparator: '至',
+        nickNamePlaceholder: '主播昵称',
+        phonePlaceholder: '手机号',
+        isBanPlaceholder: '是否禁播',
+        isAuthenticationPlaceholder: '全部状态',
+        mobilePlaceholder: '家族ID',
+        searchButton: '@:common.searchButton',
+        resetButton: '@:common.resetButton'
+      },
+      actions: {
+        add: '@:common.addButton',
+        export: '@:common.exportButton',
+        liveRoomAssistant: '直播间小助手',
+        batchJoin: '批量加入家族',
+        batchKickOut: '批量踢出家族'
+      },
+      table: {
+        id: '主播ID',
+        nickName: '主播昵称',
+        weixinAccount: '主播名片',
+        familyName: '所属家族',
+        familyId0: '未加入家族',
+        familyIdPopover: '家 族 ID：',
+        familyUserIdPopover: '家 族 长 ID：',
+        familyNickNamePopover: '家族长昵称：',
+        familyChieftain: '是否家族长',
+        isAuthentication: '状态',
+        isAuthenticationPlaceholder: '请选择状态',
+        isAuthentication0: '未认证',
+        isAuthentication1: '待审核',
+        isAuthentication2: '已认证',
+        isAuthentication3: '审核不通过',
+        ticket: '印票',
+        coin: '时薪',
+        weixinPrice: '时薪任务',
+        weiboMoney: '礼物任务',
+        xpoint: '彩票抽成',
+        ypoint: '礼物抽成',
+        isBan: '是否禁播',
+        isBan0: '正常',
+        isBan1: '禁播',
+        mobile: '手机号',
+        loginIp: '登陆IP',
+        banRemark: '禁播原因',
+        operation: '@:common.operationColumn',
+        kickOutButton: '踢出家族',
+        auditButton: '审核',
+        starBroadcastButton: '开播',
+        endBroadcastButton: '关播',
+        moreButton: '更多'
+      },
+      addDialog: {
+        title: '添加虚拟主播',
+        mobileLabel: '手机号',
+        nickNameLabel: '昵称',
+        headImageLabel: '用户头像',
+        isAuthenticationLabel: '类型',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton2'
+      },
+      liveRoomAssistantDialog: {
+        title: '直播间小助手',
+        infoLabel: '小助手消息',
+        infoPlaceholder: '请输入发送小助手消息',
+        confirmButton: '@:common.confirmButton2'
+      },
+      liveBroadcastDialog: {
+        title: '开播信息',
+        titleLabel: '标题',
+        flvLabel: '视频流地址',
+        liveImageLabel: '开播背景',
+        lotteryLabel: '彩票',
+        confirmButton: '@:common.confirmButton2'
+      },
+      editDialog: {
+        title: '修改主播信息',
+        authenticationNameLabel: '真实姓名',
+        contactLabel: '手机号',
+        identifyNumberLabel: '身份证号码',
+        coinLabel: '身份证号码',
+        weixinPriceLabel: '开播时长任务',
+        weiboMoneyLabel: '收礼礼物',
+        xpointLabel: '彩票抽成',
+        ypointLabel: '礼物抽成',
+        identifyHoldImageLabel: '手持身份证照片',
+        identifyPositiveImageLabel: '身份证正面',
+        identifyNagativeImageLabel: '身份证反面',
+        isAuthenticationLabel: '类型',
+        vExplainLabel: '认证说明',
+        investorSendInfoLabel: '拒绝理由',
+        confirmButton: '@:common.confirmButton2',
+        cancelButton: '@:common.cancelButton2',
+        validation: {
+          vExplain: '认证说明不能为空',
+          investorSendInfo: '拒绝理由不能为空'
+        }
+      }
+    },
   },
 
   lotteryCount: {

@@ -2761,7 +2761,27 @@ export default {
 
     //TODO: lotteryTemp         -> Luis
     lotteryTemp:{
-
+      form: {
+        ktimeLabel: '开奖时间',
+        ktimePlaceholder: '选择开奖时间',
+        issueLabel: '当前期数',
+        issuePlaceholder: '请输入当前期数',
+        issueJustLabel: '上期期号',
+        issueJustPlaceholder: '请输入上期期号',
+        codeJustLabel: '上期开奖',
+        codeJustPlaceholder: '请输入上期开奖',
+      },
+      tableColumns:{
+        id: '彩种id',
+        issue: '当前期数',
+        issueJust: '上期期号',
+        codeJust: '上期开奖',
+        ktime: '开奖时间',
+      },
+      sealOptions: {
+        open: '开启中',
+        close: '封盘中'
+      }
     },
 
     //TODO: wheelHistory        -> Luis

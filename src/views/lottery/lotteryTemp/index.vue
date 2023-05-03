@@ -11,57 +11,57 @@
       <!--          </el-option>-->
       <!--        </el-select>-->
       <!--      </el-form-item>-->
-      <el-form-item label="开奖时间" prop="ktime">
+      <el-form-item :label="$t('lottery.lotteryTemp.form.ktimeLabel')" prop="ktime">
         <el-date-picker clearable size="small"
                         v-model="queryParams.ktime"
                         type="date"
                         value-format="yyyy-MM-dd"
-                        placeholder="选择开奖时间"
+                        :placeholder="$t('lottery.lotteryTemp.form.ktimePlaceholder')"
                         :picker-options="pickerOptions"
         >
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="当前期数" prop="issue">
+      <el-form-item :label="$t('lottery.lotteryTemp.form.issueLabel')" prop="issue">
         <el-input
           v-model="queryParams.issue"
-          placeholder="请输入当前期数"
+          :placeholder="$t('lottery.lotteryTemp.form.issuePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="上期期号" prop="issueJust">
+      <el-form-item :label="$t('lottery.lotteryTemp.form.issueJustLabel')" prop="issueJust">
         <el-input
           v-model="queryParams.issueJust"
-          placeholder="请输入上期期号"
+          :placeholder="$t('lottery.lotteryTemp.form.issueJustPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="上期开奖" prop="codeJust">
+      <el-form-item :label="$t('lottery.lotteryTemp.form.codeJustLabel')" prop="codeJust">
         <el-input
           v-model="queryParams.codeJust"
-          placeholder="请输入上期开奖"
+          :placeholder="$t('lottery.lotteryTemp.form.codeJustPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('global.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('global.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
 
     <el-table stripe v-loading="loading" :data="lotteryTempList">
-      <el-table-column label="彩种id" align="center" prop="id"/>
-      <el-table-column label="当前期数" align="center" prop="issue"/>
-      <el-table-column label="上期期号" align="center" prop="issueJust"/>
-      <el-table-column label="上期开奖" align="center" prop="codeJust"/>
+      <el-table-column :label="$t('lottery.lotteryTemp.tableColumns.id')" align="center" prop="id"/>
+      <el-table-column :label="$t('lottery.lotteryTemp.tableColumns.issue')" align="center" prop="issue"/>
+      <el-table-column :label="$t('lottery.lotteryTemp.tableColumns.issueJust')" align="center" prop="issueJust"/>
+      <el-table-column :label="$t('lottery.lotteryTemp.tableColumns.codeJust')" align="center" prop="codeJust"/>
       <!--      <el-table-column label="开启或封盘" align="center" prop="su" :formatter="formattersu"/>-->
-      <el-table-column label="开奖时间" align="center" prop="ktime" width="180">
+      <el-table-column :label="$t('lottery.lotteryTemp.tableColumns.ktime')" align="center" prop="ktime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.ktime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
@@ -94,10 +94,10 @@ export default {
       //开启封盘选择栏
       su: [{
         value: '0',
-        label: '开启中'
+        label: this.$t('lottery.lotteryTemp.sealOptions.open')
       }, {
         value: '1',
-        label: '封盘中'
+        label: this.$t('lottery.lotteryTemp.sealOptions.close')
       }],
       // 遮罩层
       loading: true,
@@ -151,9 +151,9 @@ export default {
     //开启封盘
     formattersu(row) {
       if (row.su == 0) {
-        return '开启中'
+        return this.$t('lottery.lotteryTemp.sealOptions.open')
       } else if (row.su == 1) {
-        return '封盘中'
+        return this.$t('lottery.lotteryTemp.sealOptions.close')
       } else {
         return ''
       }

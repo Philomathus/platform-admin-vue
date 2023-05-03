@@ -553,16 +553,16 @@ export default {
     //修改禁播状态
     displayCheck(row) {
       if (row.isBan) {
-        this.opens('主播禁播备注', row, row.isBan)
+        this.opens(this.$t('liveWeb.liveUser.confirmBanPrompt.message'), row, row.isBan)
       } else {
         this.banDetail(row, row.isBan)
       }
     },
     opens(hint, row, type) {
       var that = this
-      this.$prompt(hint, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
+      this.$prompt(hint, this.$t('liveWeb.liveUser.confirmBanPrompt.title'), {
+        confirmButtonText: this.$t('liveWeb.liveUser.confirmBanPrompt.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.liveUser.confirmBanPrompt.cancelButton')
         /*inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
         inputErrorMessage: '验证码格式不正确'*/
       }).then(({value}) => {
@@ -582,7 +582,7 @@ export default {
         row.isBan = type
         this.getList()
       }).catch(() => {
-        this.$notify.error('修改禁播状态失败')
+        this.$notify.error(this.$t('liveWeb.liveUser.messageBox.banErrorMessage'))
       })
     },
 
@@ -650,7 +650,7 @@ export default {
     sendRoomMsg() {
       this.reset()
       this.sendMsg = true
-      this.title = '直播间小助手'
+      this.title = this.$t('liveWeb.liveUser.liveRoomAssistantDialog.title')
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -678,17 +678,19 @@ export default {
       } else {
         that.$refs['form'].validate(valid => {
           if (valid) {
-            that.$confirm('是否确认' + (that.form.isAuthentication === 3 ? '不' : '') + '通过审核此主播?',
-              '警告',
+            //是否确认{not}通过审核此主播?
+
+            that.$confirm(this.$t('liveWeb.liveUser.confirmSubmitFormType0.message', {not: that.form.isAuthentication === 3 ? '不' : ''}),
+              this.$t('liveWeb.liveUser.confirmSubmitFormType0.title'),
               {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
+                confirmButtonText: this.$t('liveWeb.liveUser.confirmSubmitFormType0.confirmButton'),
+                cancelButtonText: this.$t('liveWeb.liveUser.confirmSubmitFormType0.cancelButton'),
                 type: 'warning'
               }).then(function () {
               return updateLiveUser(that.form)
             }).then(response => {
               if (response.code === 200) {
-                that.msgSuccess('审核成功')
+                that.msgSuccess(this.$t('liveWeb.liveUser.messageBox.submitSuccessful'))
               } else if (response.code === 500) {
                 that.msgError(response.msg)
               }
@@ -712,9 +714,10 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+
+      this.$confirm(this.$t('liveWeb.liveUser.confirmExportDialog.message'), this.$t('liveWeb.liveUser.confirmExportDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.liveUser.confirmExportDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.liveUser.confirmExportDialog.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportLiveUser(queryParams)
@@ -728,7 +731,7 @@ export default {
       getLiveUser(row.id).then(response => {
         this.form = response.data
         this.open = true
-        this.title = '修改主播信息'
+        this.title = this.$t('liveWeb.liveUser.editDialog.title')
       })
     },
     //开播
@@ -752,10 +755,10 @@ export default {
         lotteryName: lotteryName
       }).then(response => {
         that.openLiveStatus = false;
-        that.$notify.success("开播成功")
+        that.$notify.success(this.$t('liveWeb.liveUser.messageBox.openLiveSuccessful'))
         that.getList();
       }).catch((err) => {
-        that.$notify.error("开播失败")
+        that.$notify.error(this.$t('liveWeb.liveUser.messageBox.openLiveErrorMessage'))
       })
     },
     //关播
@@ -763,34 +766,34 @@ export default {
       var that = this;
       this.loading = true
       closeLive({id: row.id}).then(response => {
-        that.$notify.success("关播成功")
+        that.$notify.success(this.$t('liveWeb.liveUser.messageBox.closeLiveSuccessful'))
         that.getList();
       }).catch((err) => {
-        that.$notify.error("关播失败")
+        that.$notify.error(this.$t('liveWeb.liveUser.messageBox.closeLiveErrorMessage'))
       })
     },
     //踢出主播
     kickOutLive(row) {
       const id = row.id
       const t = this;
-      this.$confirm('确定踢出主播昵称:[' + row.nickName + ']?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('liveWeb.liveUser.confirmKickOutDialog.message'), this.$t('liveWeb.liveUser.confirmKickOutDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.liveUser.confirmKickOutDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.liveUser.confirmKickOutDialog.cancelButton'),
         type: 'warning'
       }).then(function () {
         kickOutLiveUser(id).then(response => {
-          t.$notify.success("踢出成功")
+          t.$notify.success(this.$t('liveWeb.liveUser.messageBox.kickOutSuccessful'))
           t.getList();
         }).catch((err) => {
-          t.$notify.error("踢出主播失败")
+          t.$notify.error(this.$t('liveWeb.liveUser.messageBox.kickOutErrorMessage'))
         })
       })
     },
 
     kickOutFamilyBulk() {
-      this.$confirm('确定批量踢出家族吗?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('liveWeb.liveUser.confirmKickOutFamilyBulkDialog.message'), this.$t('liveWeb.liveUser.confirmKickOutFamilyBulkDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.liveUser.confirmKickOutFamilyBulkDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.liveUser.confirmKickOutFamilyBulkDialog.cancelButton'),
         type: 'warning'
       }).then(() => {
         kickOutFamily({
@@ -803,7 +806,7 @@ export default {
             this.$message.error(res.msg)
           }
         }).catch((err) => {
-          this.$notify.error("踢出家族失败")
+          this.$notify.error(this.$t('liveWeb.liveUser.messageBox.kickOutFamilyBulkErrorMessage'))
         })
       }).catch(() => {
       });
@@ -831,12 +834,12 @@ export default {
         isAuthentication: row.isAuthentication
       }).then((res) => {
         if (res.code === 0) {
-          this.$notify.success('状态修改成功')
+          this.$notify.success(this.$t('liveWeb.liveUser.messageBox.changeAuthTypeSuccessful'))
         } else {
-          this.$notify.error('状态修改失败')
+          this.$notify.error(this.$t('liveWeb.liveUser.messageBox.changeAuthTypeError1'))
         }
       }).catch(() => {
-        this.$notify.error('网络异常')
+        this.$notify.error(this.$t('liveWeb.liveUser.messageBox.changeAuthTypeError2'))
       }).finally(() => {
         this.getList()
       })
@@ -845,11 +848,11 @@ export default {
 
 
     joinFamilyBulk() {
-      this.$prompt('批量加入家族', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$prompt(this.$t('liveWeb.liveUser.confirmJoinFamilyBulkPrompt.message'), {
+        confirmButtonText: this.$t('liveWeb.liveUser.confirmJoinFamilyBulkPrompt.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.liveUser.confirmJoinFamilyBulkPrompt.cancelButton'),
         inputPattern: /^(\-|\+)?\d+(\.\d+)?$/,
-        inputErrorMessage: '请输入数字类型'
+        inputErrorMessage: this.$t('liveWeb.liveUser.confirmJoinFamilyBulkPrompt.inputErrorMessage')
       }).then(({value}) => {
         goFamiily({
           familyId: value,
@@ -862,14 +865,14 @@ export default {
             this.$message.error(res.msg)
           }
         }).catch(() => {
-          this.$notify.error('加入家族失败')
+          this.$notify.error(this.$t('liveWeb.liveUser.messageBox.joinFamilyBulkError'))
         })
       }).catch(() => {
       });
     },
 
     fmFamilyChieftain(row) {
-      return row.familyChieftain === 1 ? '是' : '否'
+      return row.familyChieftain === 1 ? this.$t('liveWeb.liveUser.table.familyChieftain1') : this.$t('liveWeb.liveUser.table.familyChieftainOthers')
     }
 
   }

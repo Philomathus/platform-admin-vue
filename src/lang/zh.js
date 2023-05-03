@@ -42,7 +42,7 @@ export default {
     dateTimePickerEndTimePlaceholder: '结束时间',
     dateTimePickerRangeSeparator: '至',
     namePlaceholder: '请输入姓名',
-    selectDatePlaceholder: '日期范围',
+    selectDateLabel: '日期范围',
     datePickerStartDate: '开始日期',
     datePickerEndDate: '结束日期',
     operationColumn: '操作',
@@ -2030,6 +2030,8 @@ export default {
         familyUserIdPopover: '家 族 长 ID：',
         familyNickNamePopover: '家族长昵称：',
         familyChieftain: '是否家族长',
+        familyChieftain1: '是',
+        familyChieftainOthers: '否',
         isAuthentication: '状态',
         isAuthenticationPlaceholder: '请选择状态',
         isAuthentication0: '未认证',
@@ -2054,6 +2056,21 @@ export default {
         starBroadcastButton: '开播',
         endBroadcastButton: '关播',
         moreButton: '更多'
+      },
+      messageBox: {
+        banErrorMessage: '修改禁播状态失败',
+        submitSuccessful: '审核成功',
+        openLiveSuccessful: '开播成功',
+        openLiveErrorMessage: '开播失败',
+        closeLiveSuccessful: '关播成功',
+        closeLiveErrorMessage: '关播失败',
+        kickOutSuccessful: '踢出成功',
+        kickOutErrorMessage: '踢出主播失败',
+        kickOutFamilyBulkErrorMessage: '踢出家族失败',
+        changeAuthTypeSuccessful: '状态修改成功',
+        changeAuthTypeError1: '状态修改失败',
+        changeAuthTypeError2: '网络异常',
+        joinFamilyBulkError: '加入家族失败'
       },
       addDialog: {
         title: '添加虚拟主播',
@@ -2100,8 +2117,51 @@ export default {
           vExplain: '认证说明不能为空',
           investorSendInfo: '拒绝理由不能为空'
         }
+      },
+      confirmBanPrompt: {
+        title: '@:global.promptTitle',
+        message: '主播禁播备注',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmSubmitFormType0: {
+        title: '@:global.dialogTitle',
+        message: '是否确认{not}通过审核此主播?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmExportDialog: {
+        title: '@:global.dialogTitle',
+        message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmKickOutDialog: {
+        title: '@:global.dialogTitle',
+        message: '确定踢出主播昵称:[{nickName}]?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmKickOutFamilyBulkDialog: {
+        title: '@:global.dialogTitle',
+        message: '确定批量踢出家族吗?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmJoinFamilyBulkPrompt: {
+        message: '批量加入家族',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
+        inputErrorMessage: '请输入数字类型'
       }
     },
+    liveUserMore: {
+      tab1: {
+        queryParams: {
+          selectDateLabel: ''
+        }
+      }
+    }
   },
 
   lottery: {

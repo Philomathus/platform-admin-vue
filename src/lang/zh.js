@@ -2,7 +2,7 @@ export default {
 
   global:{
     export: '出口',
-    cancelButton: '取 消',
+    cancelButton: '取消',
     confirmButton: '确定',
     refresh: '刷新',
     close: '关闭',
@@ -27,24 +27,21 @@ export default {
     id: '身份证',
     selectDate: '选择日期',
     exportMessage: '返现结果导出',
-    titleDialog: '警告',
-    titlePrompt: '提示',
+    dialogTitle: '警告',
+    promptTitle: '提示',
     name: '名称',
     nickname: '昵称',
     status: '状态',
     ctime: '发布时间',
-  },
-
-  globalPlaceholder:{
     sortPlaceholder: '请输入排序',
     statusPlaceholder: '请选择状态',
     nicknamePlaceholder: '请输入昵称',
     userNamePlaceholder: '请输入一个用户名',
-    selectDateStartPlaceholder: '开始时间',
-    selectDateEndPlaceholder: '结束时间',
+    dateTimePickerStartTimePlaceholder: '开始时间',
+    dateTimePickerEndTimePlaceholder: '结束时间',
     dateTimePickerRangeSeparator: '至',
-    selectDate: '日期范围',
     namePlaceholder: '请输入姓名',
+    selectDatePlaceholder: '日期范围',
     datePickerStartDate: '开始日期',
     datePickerEndDate: '结束日期'
   },
@@ -80,6 +77,8 @@ export default {
     startDatePlaceholder: '开始日期',
     endDatePlaceholder: '结束日期',
     rangeSeparator: '至',
+    cancelButton: '取 消',
+    submitButton: '确 定'
   },
 
   settings: {

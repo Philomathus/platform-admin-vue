@@ -28,15 +28,12 @@ export default {
     id: 'ID',
     selectDate: 'Select Date',
     exportMessage: 'Cashback Results Export',
-    titleDialog: 'Warning',
-    titlePrompt: 'Tips',
+    dialogTitle: 'Warning',
+    promptTitle: 'Tips',
     name: 'Name',
     nickname: 'Nickname',
     status: 'Status',
-    ctime: 'Release Time'
-  },
-
-  globalPlaceholder: {
+    ctTime: 'Release Time',
     sortPlaceholder: 'Please enter sort',
     statusPlaceholder: 'Please select status',
     nickNamePlaceholder: 'Please enter a Nickname',

@@ -1,6 +1,5 @@
 export default {
 
-
   global:{
     export: 'Export',
     cancelButton: 'Cancel',
@@ -14,6 +13,8 @@ export default {
     deleteButton: 'Delete',
     exportButton: 'Export',
     submitButton: 'Submit',
+    newButton: 'New',
+    moreButton: 'More',
     operation: 'Operation',
     statusEnable: 'Enable',
     statusDisable: 'Disable',
@@ -43,8 +44,6 @@ export default {
     dateTimePickerRangeSeparator: 'to',
     selectDate: 'Date Range',
     namePlaceholder:'Please enter name',
-    datePickerStartDate: 'Start Date',
-    datePickerEndDate: 'End Date'
   },
 
   navbar: {
@@ -70,6 +69,7 @@ export default {
   },
 
   excel: {
+    export: 'Export',
     selectedExport: 'Export Selected Items',
     placeholder: 'Please enter the file name (default excel-list)',
     noLongerThanSevenDaysWarning: 'The selected time cannot be longer than seven days',
@@ -925,16 +925,10 @@ export default {
           totBal: 'Total Balance',
           totDep: 'Total Safe Deposit box balance',
           statQ: 'Statistical Queries',
-          search: 'Search',
-          reset: 'Reset',
-          new: 'New',
-          exp: 'Export',
           ip: 'View blocked IP',
           bBlock: 'Batch blocking',
-          more: 'More',
           sDepo: 'Safe deposit box balance raised',
           det: 'Determine',
-          cancel: 'Cancel',
           normal: 'Normal',
           fden: 'Forbidden',
 

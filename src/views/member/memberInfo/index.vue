@@ -23,11 +23,11 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item :label=" $t('members.memberInfo.index.date.range') " prop="regTime">
+      <el-form-item :label=" $t('globalPlaceholder.selectDate') " prop="regTime">
         <el-date-picker type="datetimerange" v-model="dateRange" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '95%'}" :start-placeholder=" $t('members.memberInfo.index.date.sTime') "
-                        :end-placeholder=" $t('members.memberInfo.index.date.eTime') "
-                        :range-separator=" $t('members.memberInfo.index.date.to') " clearable :default-time="['00:00:00', '23:59:59']"
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '95%'}" :start-placeholder=" $t('globalPlaceholder.selectDateStartPlaceholder') "
+                        :end-placeholder=" $t('globalPlaceholder.selectDateEndPlaceholder') "
+                        :range-separator=" $t('globalPlaceholder.dateTimePickerRangeSeparator') " clearable :default-time="['00:00:00', '23:59:59']"
                         :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
@@ -133,8 +133,8 @@
         />
       </el-form-item>
       <el-form-item class="submit-btn">
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('members.memberInfo.index.button.search') }}</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('members.memberInfo.index.button.reset') }}</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
 
     </el-form>
@@ -148,7 +148,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['member:memberInfo:add']"
-        >{{ $t('members.memberInfo.index.button.new') }}
+        >{{ $t('global.newButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -159,7 +159,7 @@
           size="mini"
           @click="openExport"
           v-hasPermi="['member:memberInfo:export']"
-        >{{ $t('members.memberInfo.index.button.exp') }}
+        >{{ $t('global.export') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -275,7 +275,7 @@
             size="small"
             @click="handleMore(scope.row)"
             v-hasPermi="['member:memberInfo:query']"
-          >{{ $t('members.memberInfo.index.button.more') }}
+          >{{ $t('global.moreButton') }}
           </el-button>
           <el-button
             type="warning"
@@ -390,7 +390,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">{{ $t('members.memberInfo.index.button.det') }}</el-button>
-        <el-button @click="cancel">{{ $t('members.memberInfo.index.button.cancel') }}</el-button>
+        <el-button @click="cancel">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
     <more ref="more" @refMemeberData="getList()" :member-id="memberId" :member-code="memberCode"
@@ -488,7 +488,7 @@
           <el-button type="primary" icon="el-icon-search" size="mini"
                      @click="handleSearchQueryByIp"
                      :disabled='!queryParamIp.loginIp && !queryParamIp.realName'>
-            {{ $t('members.memberInfo.index.button.search') }}
+            {{ $t('global.searchButton') }}
           </el-button>
         </el-form-item>
       </el-form>

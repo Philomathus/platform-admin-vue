@@ -27,8 +27,8 @@ export default {
     id: '身份证',
     selectDate: '选择日期',
     exportMessage: '返现结果导出',
-    titleDialog: '警告',
-    titlePrompt: '提示',
+    dialogTitle: '警告',
+    promptTitle: '提示',
     name: '名称',
     nickname: '昵称',
     status: '状态',
@@ -1118,11 +1118,11 @@ export default {
         updateTimePlaceholder: '请选择日期选择',
         idPlaceholder: '主播ID',
         nickNamePlaceholder: '主播昵称',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
-        exportButton: '@:common.exportButton'
+        exportButton: '@:global.exportButton'
       },
       table: {
         anchor: '主播ID',
@@ -1133,10 +1133,10 @@ export default {
         updateTime: '修改时间'
       },
       confirmExportDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       }
     },
     chat: {
@@ -1144,8 +1144,8 @@ export default {
         fromPlatformPlaceholder: '会员ID',
         userNicknamePlaceholder: '会员昵称',
         poscatIdPlaceholder: '主播ID',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
         viewBlackListButton: '查看封停ip'

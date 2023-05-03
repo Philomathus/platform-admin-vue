@@ -4,8 +4,8 @@ export default {
     export: 'Export',
     cancelButton: 'Cancel',
     confirmButton: 'Confirm',
-    refresh: 'refresh',
-    close: 'close',
+    refresh: 'Refresh',
+    close: 'Close',
     searchButton: 'Search',
     resetButton: 'Reset',
     addButton: 'Add',
@@ -41,9 +41,7 @@ export default {
     userNamePlaceholder: 'Please enter UserName',
     selectDateStartPlaceholder: 'Start Time',
     selectDateEndPlaceholder: 'End Time',
-    dateTimePickerRangeSeparator: 'to',
-    selectDate: 'Date Range',
-    namePlaceholder:'Please enter name',
+    namePlaceholder:'please enter name'
   },
 
   navbar: {
@@ -1044,11 +1042,11 @@ export default {
         updateTimePlaceholder: 'Please select a date range',
         idPlaceholder: 'Anchor ID',
         nickNamePlaceholder: 'Anchor nickname',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
-        exportButton: '@:common.exportButton'
+        exportButton: '@:global.exportButton'
       },
       table: {
         anchor: 'Anchor ID',
@@ -1061,8 +1059,8 @@ export default {
       exportDialog: {
         title: 'Warning',
         message: 'Confirm processing excel and download, there will be a delay when there is a large amount of data, please be patient...',
-        confirmButton: '@:common.confirmButton',
-        cancelButton: '@:common.cancelButton'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       }
     },
     chat: {
@@ -1070,8 +1068,8 @@ export default {
         fromPlatformPlaceholder: 'Member ID',
         userNicknamePlaceholder: 'Member nickname',
         poscatIdPlaceholder: 'Anchor ID',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
         viewBlackListButton: 'View blocked IPs'
@@ -1101,7 +1099,7 @@ export default {
         forbidFalse: 'Normal',
         userIp: 'User IP',
         createTimes: 'Send time',
-        operation: '@:common.operationColumn',
+        operation: '@:global.operationColumn',
         muteButton: 'Block',
         unmuteButton: 'Unblock',
         forbidButton: 'Ban'
@@ -1109,8 +1107,8 @@ export default {
       confirmUpdateDialog: {
         title: 'Warning',
         message: 'Sure you want {fromPlatform} unblocked?',
-        confirmButton: '@:common.confirmButton',
-        cancelButton: '@:common.cancelButton'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       messageBox: {
         fromPlatformError: 'Member IDs can only be entered as numbers and underscores',
@@ -1150,21 +1148,21 @@ export default {
           userIdPlaceholder: 'Member ID',
           userIpLabel: 'Member IP',
           userIpPlaceholder: 'Member IP',
-          searchButton: '@:common.searchButton'
+          searchButton: '@:global.searchButton'
         },
         table: {
           userId: 'Member ID',
           userIp: 'Member IP',
           msg: 'Blocking remarks',
           createTime: 'Closing time',
-          operation: '@:common.operationColumn',
+          operation: '@:global.operationColumn',
           unblockButton: 'Unblock'
         },
         confirmUpdateDialog: {
           title: 'Warning',
           message: 'Sure you want {userId} unblocked?',
-          confirmButton: '@:common.confirmButton',
-          cancelButton: '@:common.cancelButton'
+          confirmButton: '@:global.confirmButton',
+          cancelButton: '@:global.cancelButton'
         },
         messageBox: {
           unblockSuccess: 'Unblocked successfully'
@@ -1182,8 +1180,8 @@ export default {
         status2: 'Rejected',
         status3: 'Closed',
         status4: 'Dismissed',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
         add: 'Add family'
@@ -1205,7 +1203,7 @@ export default {
         contribution: 'Contribution of family members',
         videoTime: 'Live broadcast time',
         memo: 'Remarks',
-        operation: '@:common.operationColumn',
+        operation: '@:global.operationColumn',
         updateFamilyButton: 'Modify',
         removeButton: 'Remove',
         updateFlag0Button: 'No pass',
@@ -1229,8 +1227,8 @@ export default {
         noticePlaceholder: 'Please enter content',
         memoLabel: 'Remarks',
         memoPlaceholder: 'Please enter content',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton2',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
         validation: {
           logo: 'Please upload the family logo',
           name: 'Please enter the family name',
@@ -1242,42 +1240,42 @@ export default {
         }
       },
       confirmUpdateFlag0Dialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: 'Is it confirmed that the data item with the family name "{name}" is rejected?',
-        confirmButton: '@:common:confirmButton1',
-        cancelButton: '@:common:cancelButton1'
+        confirmButton: '@:global:confirmButton',
+        cancelButton: '@:global:cancelButton'
       },
       confirmUpdateFlag1Dialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: 'Is it confirmed that the data item with the family name "{name}" is approved?',
-        confirmButton: '@:common:confirmButton1',
-        cancelButton: '@:common:cancelButton1'
+        confirmButton: '@:global:confirmButton',
+        cancelButton: '@:global:cancelButton'
       },
       confirmUpdateFlag2Prompt: {
-        title: '@:common.titlePrompt',
+        title: '@:global.promptTitle',
         message: 'Please enter the reason for blocking',
-        confirmButton: '@:common:confirmButton1',
-        cancelButton: '@:common:cancelButton1',
+        confirmButton: '@:global:confirmButton',
+        cancelButton: '@:global:cancelButton',
         inputErrorMessage: 'The reason for blocking cannot be empty'
       },
       confirmUpdateFlag3Prompt: {
-        title: '@:common.titlePrompt',
+        title: '@:global.promptTitle',
         message: 'Please enter the reason for unblocking',
-        confirmButton: '@:common:confirmButton1',
-        cancelButton: '@:common:cancelButton1',
+        confirmButton: '@:global:confirmButton',
+        cancelButton: '@:global:cancelButton',
         inputErrorMessage: 'Reason for unblock cannot be empty'
       },
       confirmRemoveDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: 'Is it confirmed that the "{name}" family is disbanded?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmExportDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: 'Is it confirmed that all family data items are exported?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       messageBox: {
         updateFlag0Success: 'Audit rejection successful',
@@ -1293,13 +1291,13 @@ export default {
       queryForm: {
         specificationsLabel: 'Specification',
         specificationsPlaceholder: 'Please enter specifications',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
-        add: '@:common.addButton',
-        edit: '@:common.editButton',
-        remove: '@:common.removeButton'
+        add: '@:global.addButton',
+        edit: '@:global.editButton',
+        remove: '@:global.removeButton'
       },
       table: {
         specifications: 'Specification',
@@ -1311,7 +1309,7 @@ export default {
         propId: 'Gift id',
         discountPrice: 'Discounted price',
         giveday: 'Number of complimentary days',
-        operation: '@:common.operation',
+        operation: '@:global.operationColumn',
         removeButton: 'Remove'
       },
       addUpdateDialog: {
@@ -1331,20 +1329,20 @@ export default {
         discountPricePlaceholder: 'Please enter the discounted price',
         givedayLabel: '赠送天数',
         givedayPlaceholder: 'Please enter the number of days of gift',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton2'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmRemoveDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: 'Is it confirmed that the data item with the number "{ids}" is deleted?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmExportDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: 'Is it confirmed that all data items are exported?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       messageBox: {
         editLiveGuardConfigSuccess: 'Updated successfully',
@@ -1356,13 +1354,13 @@ export default {
       queryForm: {
         nameLabel: 'Name',
         namePlaceholder: 'Please enter a name',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
-        add: '@:common.addButton',
-        edit: '@:common.editButton',
-        remove: '@:common.removeButton'
+        add: '@:global.addButton',
+        edit: '@:global.editButton',
+        remove: '@:global.removeButton'
       },
       table: {
         name: 'Plugin name',
@@ -1370,7 +1368,7 @@ export default {
         status1: 'Enabled',
         conUrl: 'Address',
         iconUrl: 'Icon',
-        operation: '@:common.operation',
+        operation: '@:global.operationColumn',
         removeButton: 'Remove'
       },
       validations: {
@@ -1386,8 +1384,8 @@ export default {
         conUrlLabel: 'Content address',
         conUrlPlaceholder: 'Please enter the content address',
         iconUrlLabel: 'Icon address',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton2'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       editDialog: {
         title: 'Modify h5 plugin',
@@ -1396,26 +1394,26 @@ export default {
         conUrlLabel: 'Content address',
         conUrlPlaceholder: 'Please enter the content address',
         iconUrlLabel: 'Icon address',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton2'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmRemoveDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: 'Is it confirmed that the data item with the h5 plugin number "{ids}" is deleted?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmStatusChangeDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: 'Confirm you want {text} "{name}"?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmExportDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: 'Confirm processing excel and download, there will be a delay when there is a large amount of data, please be patient...',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       messageBox: {
         addSuccess: 'Added successfully',
@@ -1430,8 +1428,8 @@ export default {
         userIdPlaceholder: 'Please enter your member ID',
         nickNameLabel: 'Member nickname',
         nickNamePlaceholder: 'Please enter member nickname',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       table: {
         memberAccount: 'User Id',
@@ -1451,8 +1449,8 @@ export default {
         hostIdPlaceholder: 'Please enter the anchor ID',
         blackUserIdLabel: 'Member ID',
         blackUserIdPlaceholder: 'Please enter the user ID to be set',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       table: {
         blackUserId: 'Member ID',
@@ -1461,7 +1459,7 @@ export default {
         hostName: 'Anchor nickname',
         remark: 'Blocking remarks',
         createTime: 'Closing time',
-        operation: '@:common.operationColumn',
+        operation: '@:global.operationColumn',
         removeButton: 'Remove blacklist ban'
       },
       messageBox: {
@@ -1469,10 +1467,10 @@ export default {
         removeSuccess: 'Removed successfully'
       },
       confirmRemoveDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: 'Do you want to confirm the deletion of the data item with the number "{ids}"?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       }
     },
     liveComplaint: {
@@ -1483,11 +1481,11 @@ export default {
         userIdPlaceholder: 'Please enter your member ID',
         anchorPlaceholder: 'Please enter the anchor ID',
         statusPlaceholder: 'Please select the processing status',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
-        export: '@:common.exportButton'
+        export: '@:global.exportButton'
       },
       table: {
         content: 'Complaint content',
@@ -1503,7 +1501,7 @@ export default {
         status0: 'Pending',
         status1: 'Reviewed',
         status2: 'Rejected',
-        operation: '@:common.operationColumn',
+        operation: '@:global.operationColumn',
         processButton: 'Process',
         rejectButton: 'Reject'
       },
@@ -1521,20 +1519,20 @@ export default {
         processingTimePlaceholder: 'Select approval time',
         statusLabel: 'Status (0 Pending 1 Reviewed 2 Rejected)',
         statusPlaceholder: 'Please select dictionary generation',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton2'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmEditConfirmationPrompt: {
-        title: '@:common.titlePrompt',
+        title: '@:global.promptTitle',
         message: 'Please enter a note for review',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmExportDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: 'Confirm processing excel and download, there will be a delay when there is a large amount of data, please be patient...',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       messageBox: {
         userIdFormatError: 'Member IDs can only be entered as numbers and underscores',
@@ -1553,10 +1551,10 @@ export default {
         hostId: 'Please enter the anchor ID',
         hostName: 'Please enter a live nickname',
         statusPlaceholder: 'All states',
-        searchButton: '@:common.searchButton'
+        searchButton: '@:global.searchButton'
       },
       actions: {
-        export: '@:common.exportButton'
+        export: '@:global.exportButton'
       },
       table: {
         id: 'Date + Anchor ID',
@@ -1566,7 +1564,7 @@ export default {
         live: '{num} points',
         remark: 'Remarks',
         createTime: 'Creation time',
-        operation: '@:common.operationColumn',
+        operation: '@:global.operationColumn',
         passButton: 'Pass',
         rejectButton: 'Reject'
       },
@@ -1582,27 +1580,27 @@ export default {
         statusPlaceholder: 'Please select dictionary generation',
         liveLabel: 'Live broadcast time',
         livePlaceholder: 'Please enter the live time',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton2'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmUpdateStatusFlag1Dialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: 'Is the application for "{hostName}" confirmed?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmUpdateStatusFlag2Prompt: {
-        title: '@:common.titlePrompt',
+        title: '@:global.promptTitle',
         message: 'Please enter the reason for rejection',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
         inputErrorMessage: 'Reason for rejection cannot be empty'
       },
       confirmExportDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: 'Confirm processing excel and download, there will be a delay when there is a large amount of data, please be patient...',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       messageBox: {
         updateStatusFlag1Success: 'Audit approved',
@@ -1620,11 +1618,11 @@ export default {
         familyIdPlaceholder: 'Family ID',
         familyNamePlaceholder: 'Family name',
         familyNickNamePlaceholder: 'Leader nickname',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
-        export: '@:common.exportButton',
+        export: '@:global.exportButton',
         familyShow: 'All anchors'
       },
       table: {
@@ -1643,10 +1641,10 @@ export default {
         totalsettle: 'Total settlement'
       },
       confirmExportDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: 'Confirm processing excel and download, there will be a delay when there is a large amount of data, please be patient...',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       }
     }
   },
@@ -1660,8 +1658,8 @@ export default {
       issueLabel: 'Number of phases',
       issuePlaceholder: 'Enter Number of phases',
       lotteryNamePlaceholder: 'Please select a lottery name',
-      searchButton: '@:common.searchButton',
-      resetButton: '@:common.resetButton',
+      searchButton: '@:global.searchButton',
+      resetButton: '@:global.resetButton',
     },
     tableColumns: {
       id: 'ID',

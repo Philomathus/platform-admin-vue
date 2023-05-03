@@ -33,10 +33,7 @@ export default {
     name: 'Name',
     nickname: 'Nickname',
     status: 'Status',
-    ctTime: 'Release Time'
-  },
-
-  globalPlaceholder: {
+    ctTime: 'Release Time',
     statusPlaceholder: 'Please select status',
     userNamePlaceholder: 'Please enter UserName',
     selectDateStartPlaceholder: 'Start Time',

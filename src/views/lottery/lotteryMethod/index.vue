@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="100px">
-      <el-form-item :label="$t('lotteryMethod.form.lotteryTypeLabel')" prop="lotteryType">
-        <el-select v-model="queryParams.lotteryType" :placeholder="$t('lotteryMethod.form.lotteryTypePlaceholder')" clearable size="small">
+      <el-form-item :label="$t('lottery.lotteryMethod.form.lotteryTypeLabel')" prop="lotteryType">
+        <el-select v-model="queryParams.lotteryType" :placeholder="$t('lottery.lotteryMethod.form.lotteryTypePlaceholder')" clearable size="small">
           <el-option
             v-for="item in lotteryType"
             :key="item.value"
@@ -11,10 +11,10 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item :label="$t('lotteryMethod.form.nameLabel')" prop="name">
+      <el-form-item :label="$t('lottery.lotteryMethod.form.nameLabel')" prop="name">
         <el-input
           v-model="queryParams.name"
-          :placeholder="$t('lotteryMethod.form.namePlaceholder')"
+          :placeholder="$t('lottery.lotteryMethod.form.namePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -26,15 +26,15 @@
       </el-form-item>
     </el-form>
     <el-table stripe v-loading="loading" :data="lotteryMethodList">
-      <el-table-column :label="$t('lotteryMethod.tableColumns.lotteryType')" align="center" prop="lotteryType"/>
-      <el-table-column :label="$t('lotteryMethod.tableColumns.name')" align="center" prop="name">
+      <el-table-column :label="$t('lottery.lotteryMethod.tableColumns.lotteryType')" align="center" prop="lotteryType"/>
+      <el-table-column :label="$t('lottery.lotteryMethod.tableColumns.name')" align="center" prop="name">
         <template v-slot="{row}">
           <a @click="$router.push({path: '/lottery/lotteryGame',query: { type: row.name}})" style="color: #00afff">
             {{ row.name }}</a>
         </template>
       </el-table-column>
       <el-table-column label="ind" align="center" prop="ind"/>
-      <el-table-column :label="$t('lotteryMethod.tableColumns.order')" align="center" prop="order"/>
+      <el-table-column :label="$t('lottery.lotteryMethod.tableColumns.order')" align="center" prop="order"/>
     </el-table>
 
     <pagination
@@ -58,26 +58,26 @@ export default {
     return {
       //所属彩种类型下拉框
       lotteryType: [{
-        value: this.$t('lotteryMethod.lotteryType.timeShareValue'),
-        label: this.$t('lotteryMethod.lotteryType.timeShareLabel')
+        value: this.$t('lottery.lotteryMethod.lotteryType.timeShareValue'),
+        label: this.$t('lottery.lotteryMethod.lotteryType.timeShareLabel')
       }, {
         value: this.$t("lotteryMethod.lotteryType['11select5Value']"),
         label: this.$t("lotteryMethod.lotteryType['11select5Label']")
       }, {
-        value: this.$t('lotteryMethod.lotteryType.fastThreeValue'),
-        label: this.$t('lotteryMethod.lotteryType.fastThreeLabel')
+        value: this.$t('lottery.lotteryMethod.lotteryType.fastThreeValue'),
+        label: this.$t('lottery.lotteryMethod.lotteryType.fastThreeLabel')
       }, {
-        value: this.$t('lotteryMethod.lotteryType.racingValue'),
-        label: this.$t('lotteryMethod.lotteryType.racingLabel')
+        value: this.$t('lottery.lotteryMethod.lotteryType.racingValue'),
+        label: this.$t('lottery.lotteryMethod.lotteryType.racingLabel')
       }, {
-        value: this.$t('lotteryMethod.lotteryType.markSixValue'),
-        label: this.$t('lotteryMethod.lotteryType.markSixLabel')
+        value: this.$t('lottery.lotteryMethod.lotteryType.markSixValue'),
+        label: this.$t('lottery.lotteryMethod.lotteryType.markSixLabel')
       }, {
-        value: this.$t('lotteryMethod.lotteryType.baccaratValue'),
-        label: this.$t('lotteryMethod.lotteryType.baccaratLabel')
+        value: this.$t('lottery.lotteryMethod.lotteryType.baccaratValue'),
+        label: this.$t('lottery.lotteryMethod.lotteryType.baccaratLabel')
       }, {
-        value: this.$t('lotteryMethod.lotteryType.hundredBullsValue'),
-        label: this.$t('lotteryMethod.lotteryType.hundredBullsLabel')
+        value: this.$t('lottery.lotteryMethod.lotteryType.hundredBullsValue'),
+        label: this.$t('lottery.lotteryMethod.lotteryType.hundredBullsLabel')
       }],
       // 遮罩层
       loading: true,
@@ -113,7 +113,7 @@ export default {
       // 表单校验
       rules: {
         lotteryType: [
-          {required: true, message: this.$t('lotteryMethod.lotteryTypeRuleMessage'), trigger: "change"}
+          {required: true, message: this.$t('lottery.lotteryMethod.lotteryTypeRuleMessage'), trigger: "change"}
         ]
       }
     };

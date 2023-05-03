@@ -1,18 +1,18 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item :label="$t('lotteryDice.form.nameLabel')" prop="name">
+      <el-form-item :label="$t('global.name')" prop="name">
         <el-input
           v-model="queryParams.name"
-          :placeholder="$t('lotteryDice.form.namePlaceholder')"
+          :placeholder="$t('lottery.lotteryDice.form.namePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('lotteryDice.form.searchButton')}}</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('lotteryDice.form.resetButton')}}</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('global.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('global.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -25,7 +25,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:wheelDice:add']"
-        >{{$t('lotteryDice.rows.addButton')}}</el-button>
+        >{{$t('global.addButton')}}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -36,7 +36,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:wheelDice:edit']"
-        >{{$t('lotteryDice.rows.editButton')}}</el-button>
+        >{{$t('global.editButton')}}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -47,7 +47,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:wheelDice:remove']"
-        >{{$t('lotteryDice.rows.deleteButton')}}</el-button>
+        >{{$t('global.deleteButton')}}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -57,42 +57,42 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:wheelDice:export']"
-        >{{$t('lotteryDice.rows.exportButton')}}</el-button>
+        >{{$t('global.exportButton')}}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="wheelDiceList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column :label="$t('lotteryDice.tableColumns.id')" align="center" prop="id" />
-      <el-table-column :label="$t('lotteryDice.tableColumns.name')" align="center" prop="name" />
-      <el-table-column :label="$t('lotteryDice.tableColumns.prize.label')" align="center" prop="prize" >
+      <el-table-column :label="$t('lottery.lotteryDice.tableColumns.id')" align="center" prop="id" />
+      <el-table-column :label="$t('global.name')" align="center" prop="name" />
+      <el-table-column :label="$t('lottery.lotteryDice.tableColumns.prize.label')" align="center" prop="prize" >
         <template slot="header">
-          <span>{{$t('lotteryDice.tableColumns.prize.spanName')}}</span>
+          <span>{{$t('lottery.lotteryDice.tableColumns.prize.spanName')}}</span>
           <el-tooltip popper-class="tooltip" placement="top">
             <i class="el-icon-question"></i>
             <div slot="content" class="tooltip-content">
-              <div>{{$t('lotteryDice.tableColumns.prize.tooltipContent')}}</div>
+              <div>{{$t('lottery.lotteryDice.tableColumns.prize.tooltipContent')}}</div>
             </div>
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('lotteryDice.tableColumns.type')" align="center" prop="type" :formatter="typeFormat" >
+      <el-table-column :label="$t('lottery.lotteryDice.tableColumns.type')" align="center" prop="type" :formatter="typeFormat" >
       </el-table-column>
-      <el-table-column :label="$t('lotteryDice.tableColumns.description.label')" align="center" prop="des" >
+      <el-table-column :label="$t('lottery.lotteryDice.tableColumns.description.label')" align="center" prop="des" >
         <template slot="header">
-          <span>{{$t('lotteryDice.tableColumns.description.spanName')}}</span>
+          <span>{{$t('lottery.lotteryDice.tableColumns.description.spanName')}}</span>
           <el-tooltip popper-class="tooltip" placement="top">
             <i class="el-icon-question"></i>
             <div slot="content" class="tooltip-content">
-              <div>{{$t('lotteryDice.tableColumns.description.tooltipContent')}}</div>
+              <div>{{$t('lottery.lotteryDice.tableColumns.description.tooltipContent')}}</div>
             </div>
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('lotteryDice.tableColumns.weight')" align="center" prop="weight" />
-      <el-table-column :label="$t('lotteryDice.tableColumns.sort')" align="center" prop="odr" />
-      <el-table-column :label="$t('lotteryDice.tableColumns.operation.label')" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('lottery.lotteryDice.tableColumns.weight')" align="center" prop="weight" />
+      <el-table-column :label="$t('lottery.lotteryDice.tableColumns.sort')" align="center" prop="odr" />
+      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -100,7 +100,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:wheelDice:edit']"
-          >{{$t('lotteryDice.tableColumns.operation.editButton')}}</el-button>
+          >{{$t('global.editButton')}}</el-button>
           <el-button
             style="color: #FF5722"
             size="mini"
@@ -108,7 +108,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:wheelDice:remove']"
-          >{{$t('lotteryDice.tableColumns.operation.deleteButton')}}</el-button>
+          >{{$t('global.deleteButton')}}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -124,17 +124,17 @@
     <!-- 添加或修改中秋博饼对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="570px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="150px" style="padding-right: 20px">
-        <el-form-item :label="$t('lotteryDice.dialogForm.nameLabel')" prop="name">
-          <el-input v-model="form.name" :placeholder="$t('lotteryDice.dialogForm.namePlaceholder')" />
+        <el-form-item :label="$t('lottery.lotteryDice.dialogForm.nameLabel')" prop="name">
+          <el-input v-model="form.name" :placeholder="$t('lottery.lotteryDice.dialogForm.namePlaceholder')" />
         </el-form-item>
-        <el-form-item :label="$t('lotteryDice.dialogForm.prizeLabel')" prop="prize">
-          <el-input v-model="form.prize" type="number" :placeholder="$t('lotteryDice.dialogForm.prizePlaceholder')" />
+        <el-form-item :label="$t('lottery.lotteryDice.dialogForm.prizeLabel')" prop="prize">
+          <el-input v-model="form.prize" type="number" :placeholder="$t('lottery.lotteryDice.dialogForm.prizePlaceholder')" />
         </el-form-item>
-        <el-form-item :label="$t('lotteryDice.dialogForm.weightLabel')" prop="weight">
-          <el-input v-model="form.weight" type="number" :placeholder="$t('lotteryDice.dialogForm.weightPlaceholder')" />
+        <el-form-item :label="$t('lottery.lotteryDice.dialogForm.weightLabel')" prop="weight">
+          <el-input v-model="form.weight" type="number" :placeholder="$t('lottery.lotteryDice.dialogForm.weightPlaceholder')" />
         </el-form-item>
-        <el-form-item :label="$t('lotteryDice.dialogForm.typeLabel')" prop="type">
-          <el-select v-model="form.type" :placeholder="$t('lotteryDice.dialogForm.typePlaceholder')">
+        <el-form-item :label="$t('lottery.lotteryDice.dialogForm.typeLabel')" prop="type">
+          <el-select v-model="form.type" :placeholder="$t('lottery.lotteryDice.dialogForm.typePlaceholder')">
             <el-option
               v-for="dict in typeOptions"
               :key="dict.dictValue"
@@ -143,19 +143,19 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="$t('lotteryDice.dialogForm.descriptionLabel')" prop="des">
-          <el-input v-model="form.des"  type="number" :placeholder="$t('lotteryDice.dialogForm.descriptionPlaceholder')" />
+        <el-form-item :label="$t('lottery.lotteryDice.dialogForm.descriptionLabel')" prop="des">
+          <el-input v-model="form.des"  type="number" :placeholder="$t('lottery.lotteryDice.dialogForm.descriptionPlaceholder')" />
         </el-form-item>
-        <el-form-item :label="$t('lotteryDice.dialogForm.diceValueLabel')" prop="diceValue">
-          <el-input v-model="form.diceValue" :placeholder="$t('lotteryDice.dialogForm.diceValuePlaceholder')" />
+        <el-form-item :label="$t('lottery.lotteryDice.dialogForm.diceValueLabel')" prop="diceValue">
+          <el-input v-model="form.diceValue" :placeholder="$t('lottery.lotteryDice.dialogForm.diceValuePlaceholder')" />
         </el-form-item>
-        <el-form-item :label="$t('lotteryDice.dialogForm.sortLabel')" prop="odr">
-          <el-input v-model="form.odr" type="number" :placeholder="$t('lotteryDice.dialogForm.sortPlaceholder')" />
+        <el-form-item :label="$t('global.sort')" prop="odr">
+          <el-input v-model="form.odr" type="number" :placeholder="$t('global.sortPlaceholder')" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer" style="padding-right: 20px">
-        <el-button type="primary" @click="submitForm">{{$t('lotteryDice.dialogFooter.confirmButton')}}</el-button>
-        <el-button @click="cancel">{{$t('lotteryDice.dialogFooter.cancelButton')}}</el-button>
+        <el-button type="primary" @click="submitForm">{{$t('global.confirmButton')}}</el-button>
+        <el-button @click="cancel">{{$t('global.cancelButton')}}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -316,9 +316,9 @@ export default {
     handleDelete(row) {
       const ids = row.id || this.ids;
 
-      this.$confirm(this.$t('lotteryDice.confirmDeleteDialog.message', {ids: row.ids}), this.$t('lotteryBet.confirmDeleteDialog.title'), {
-        confirmButtonText: this.$t('lotteryBet.confirmDeleteDialog.confirmButton'),
-        cancelButtonText: this.$t('lotteryBet.confirmDeleteDialog.cancelButton'),
+      this.$confirm(this.$t('lottery.lotteryDice.confirmDeleteDialog.message', {ids: row.ids}), this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function() {
         return delWheelDice(ids);
@@ -331,9 +331,9 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm(this.$t('lotteryBet.confirmExportDialog.message'), this.$t('lotteryBet.confirmExportDialog.title'), {
-        confirmButtonText: this.$t('lotteryBet.confirmExportDialog.confirmButton'),
-        cancelButtonText: this.$t('lotteryBet.confirmExportDialog.cancelButton'),
+      this.$confirm(this.$t('lotteryBet.confirmExportDialog.message'), this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function() {
         return exportWheelDice(queryParams);

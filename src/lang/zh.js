@@ -2170,19 +2170,13 @@ export default {
       totalCostButton: '投注金额',
       totalPrizeButton: '中奖金额',
       totalCountButton: '统计查询',
-      exportButton: '@:global.exportButton',
       form: {
         lotteryFormLabel: '下注时间',
-        startTimePlaceholder: '@:global.dateTimePickerStartTime',
-        endTimePlaceholder: '@:global.dateTimePickerEndTime',
-        rangeSeparator: '@:global.dateTimePickerRangeSeparator',
         puserIdPlaceholder: '会员ID',
         issuePlaceholder: '下注期数',
         lotteryNamePlaceholder: '请选择彩票名称',
         priceMinPlaceholder: '投注￥',
         priceMaxPlaceholder: '金额￥',
-        searchButton: '@:global.searchButton',
-        resetButton: '@:global.resetButton',
       },
       tableColumns: {
         puserId: '用户ID',
@@ -2196,7 +2190,6 @@ export default {
         prize: '中奖金额',
         betTime: '下注时间',
         anchor: '主播Id',
-        operation: '@:global.operationColumn'
       },
       responseMessages: {
         memberIdFormatError: '会员ID只能输入数字及下划线',
@@ -2207,9 +2200,6 @@ export default {
       },
       confirmExportDialog: {
         message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
-        title: '@:global.dialogTitle',
-        confirmButton: '@:global.confirmButton',
-        cancelButton: '@:global.cancelButton'
       },
     },
 
@@ -2223,8 +2213,6 @@ export default {
         issueLabel: '期数',
         issuePlaceholder: '期数',
         lotteryNamePlaceholder: '请选择彩票名称',
-        searchButton: '@:global.searchButton',
-        resetButton: '@:global.resetButton',
       },
       tableColumns: {
         id: '主键',
@@ -2241,19 +2229,9 @@ export default {
     lotteryDice: {
       form: {
         nameLabel: '名称',
-        namePlaceholder: '请输入名称',
-        searchButton: '@:global.searchButton',
-        resetButton: '@:global.resetButton',
-      },
-      rows: {
-        addButton: '@:global.addButton',
-        editButton: '@:global.editButton',
-        deleteButton: '@:global.deleteButton',
-        exportButton: '@:global.exportButton',
       },
       tableColumns: {
         id: '编号',
-        name: '名称',
         prize: {
           label: '奖励',
           spanName: '奖励',
@@ -2267,11 +2245,6 @@ export default {
         },
         weight: '权重',
         sort: '排序',
-        operation: {
-          label: '操作',
-          editButton: '@:global.editButton',
-          deleteButton: '@:global.deleteButton',
-        }
       },
       dialogForm: {
         nameLabel: '奖项名称',
@@ -2286,12 +2259,6 @@ export default {
         descriptionPlaceholder: '请输入坐骑天数或是打码倍数',
         diceValueLabel: '奖励对应的图示',
         diceValuePlaceholder: '请输入奖励对应的图示',
-        sortLabel: '排序',
-        sortPlaceholder: '请输入排序',
-      },
-      dialogFooter: {
-        confirmButton: '@:global.confirmButton',
-        cancelButton: '@:global.cancelButton'
       },
       validationMessages: {
         emptyName: '奖项名称不能为空',
@@ -2313,15 +2280,9 @@ export default {
       },
       confirmDeleteDialog: {
         message: '是否确认删除中秋博饼编号为{ids}的数据项?',
-        title: '@:global.dialogTitle',
-        confirmButton: '@:global.confirmButton',
-        cancelButton: '@:global.cancelButton'
       },
       confirmExportDialog: {
         message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
-        title: '@:global.dialogTitle',
-        confirmButton: '@:global.confirmButton',
-        cancelButton: '@:global.cancelButton'
       }
     },
 
@@ -2332,11 +2293,8 @@ export default {
         pUserIdPlaceholder: '请输入会员ID',
         namePlaceholder: '请输入昵称',
         diceNamePlaceholder: '请输入奖项',
-        diceIdPlaceholder: '请输入奖项id',
-        searchButton: '@:global.searchButton',
-        resetButton: '@:global.resetButton',
+        diceIdPlaceholder: '请输入奖项id'
       },
-      exportButton: '@:global.exportButton',
       tableColumns: {
         id: 'id',
         pUserId: '会员ID',
@@ -2358,9 +2316,7 @@ export default {
         diceValueLabel: '骰数值',
         diceValuePlaceholder: '请输入骰数值',
         diceIdLabel: '奖项id',
-        diceIdPlaceholder: '请输入奖项id',
-        confirmButton: '@:global.confirmButton',
-        cancelButton: '@:global.cancelButton',
+        diceIdPlaceholder: '请输入奖项id'
       },
       responseMessages: {
         pUserIdFormatError: '会员ID只能输入数字及下划线',
@@ -2373,16 +2329,10 @@ export default {
         update: '修改博饼中奖记录'
       },
       confirmDeleteDialog:{
-        message: '是否确认删除博饼中奖记录编号为"{ids}"的数据项?',
-        title: '@:global.dialogTitle',
-        confirmButton: '@:global.confirmButton',
-        cancelButton: '@:global.cancelButton'
+        message: '是否确认删除博饼中奖记录编号为"{ids}"的数据项?'
       },
       confirmExportDialog: {
-        message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
-        title: '@:global.dialogTitle',
-        confirmButton: '@:global.confirmButton',
-        cancelButton: '@:global.cancelButton'
+        message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...'
       }
     },
 
@@ -2397,8 +2347,6 @@ export default {
         infoPlaceholder: '请输入简介',
         victoryRuleLabel: '获奖规则',
         victoryRulePlaceholder: '请输入获奖规则',
-        searchButton: '@:global.searchButton',
-        resetButton: '@:global.resetButton',
       },
       tableColumns: {
         methodId: '菜单id',
@@ -2413,8 +2361,6 @@ export default {
       dialogForm: {
         oddsLabel: '赔率',
         oddsPlaceholder: '请输入赔率',
-        confirmButton: '@:global.confirmButton',
-        cancelButton: '@:global.cancelButton'
       },
       lotteryType: {
         timeShareLabel: '时时彩',
@@ -2442,10 +2388,6 @@ export default {
         namePlaceholder: '请选择彩种',
         statusPlaceholder: '全部状态',
         issuePlaceholder: '请输入期数',
-        datePickerStartDate: '@:global.datePickerStartDate',
-        datePickerEndDate: '@:global.datePickerEndDate',
-        searchButton: '@:global.searchButton',
-        resetButton: '@:global.resetButton',
         addIssueButton: '补期'
       },
       tableColumns:{
@@ -2456,8 +2398,6 @@ export default {
         totalBet: '总投注',
         killRate: '杀率',
         totalPrize: '派奖',
-        status: '状态',
-        operationLabel: '@:global.operationColumn',
         repaymentButton: '重新派奖',
       },
       dialogForm:{
@@ -2468,10 +2408,7 @@ export default {
         nameLabel: '彩票名称',
         namePlaceholder: '请选择彩种'
       },
-      dialogFooter:{
-        confirmButton: '@:global.confirmButton',
-        cancelButton: '@:global.cancelButton'
-      },
+
       rulesMessage:{
         ktime: '开奖时间不能为空',
         name: '彩种不能为空',
@@ -2498,8 +2435,6 @@ export default {
         statusPlaceholder: '请选择状态',
         typeLabel: '所属彩种类型',
         typePlaceholder: '请选择所属彩种类型',
-        searchButton: '@:global.searchButton',
-        resetButton: '@:global.resetButton'
       },
       tableColumns:{
         name: '彩票名称',
@@ -2511,22 +2446,8 @@ export default {
         minCost: '最小投注金额',
         order: '排序',
         operationLabel: '操作',
-        editButton: '@:global.editButton',
       },
-      dialogForm:{
-        title: '修改',
-        iconLabel: '图标',
-        orderLabel: '排序',
-        orderPlaceholder: '请输入排序'
-      } ,
-      dialogFooter:{
-        confirmButton: '@:global.confirmButton',
-        cancelButton: '@:global.cancelButton'
-      },
-      statusLabel:{
-        enable: '启用',
-        disable: '禁用'
-      },
+
       officialLabel:{
         official: '官方',
         selfOpeningDatabase: '自开(数据库)',
@@ -2547,11 +2468,6 @@ export default {
       rulesNameMessage: '彩种名称不能为空',
       updateSuccessMessage: '修改成功',
       updateBanErrorMessage: '修改禁播状态失败',
-      promptOpensDialog: {
-        title: '@:global.promptTitle',
-        confirmButton: '@:global.confirmButton',
-        cancelButton: '@:global.cancelButton'
-      }
     },
 
     //TODO: lotteryMethod       -> Luis
@@ -2586,80 +2502,114 @@ export default {
       lotteryTypeRuleMessage: '所属彩种类型不能为空'
     },
 
-
     //TODO: lotteryPrizeConfig  -> Luis
     lotteryPrizeConfig:{
       form:{
-        lotteryNamePlaceholder: '',
-        searchButton: '',
-        resetButton: ''
+        lotteryNamePlaceholder: '请选择彩种',
+        newButton: '新增',
       },
-      addButton: '',
-      exportButton: '',
       tableColumns:{
-        lotteryId: '',
-        lotteryName: '',
-        lotteryKillrate: '',
-        lotteryNokillratehour: '',
-        lotteryRandom: '',
-        operationLabel: '',
-        updateButton: '',
+        lotteryId: '彩种ID',
+        lotteryName: '彩种名称',
+        lotteryKillrate: '杀率阀值',
+        lotteryNokillratehour: '杀率禁用时间点',
+        lotteryRandom: '随机开启不杀概率',
       },
       AddConfigDialogForm:{
-        lotteryId: '',
-        lotteryName: '',
-        lotteryKillrate: '',
-        lotteryRandom: '',
-        lotteryNokillratehourLabel: '',
-        lotteryNokillratehourPlaceholder: '',
+        lotteryIdLabel: '彩种编号',
+        lotteryIdPlaceholder: '请输入彩种编号',
+        lotteryNameLabel: '彩种名称',
+        lotteryNamePlaceholder: '请输入彩种名称',
+        lotteryKillrateLabel: '杀率阀值',
+        lotteryKillratePlaceholder: '请输入杀率阀值',
+        lotteryRandomLabel: '随机开启不杀概率',
+        lotteryRandomPlaceholder: '请输入随机开启不杀概率',
+        lotteryNokillratehourLabel: '杀率禁用时间点',
+        lotteryNokillratehourPlaceholder: '请选择杀率禁用时间点(可多选)',
       },
-      dialogConfirmButton: '',
-      dialogCancelButton: '',
       updateConfigDialogForm:{
-        lotteryIdLabel: '',
-        lotteryIdPlaceholder: '',
-        lotteryNameLabel: '',
-        lotteryNamePlaceholder: '',
-        lotteryKillrateLabel: '',
-        lotteryKillratePlaceholder: '',
-        lotteryRandomLabel: '',
-        lotteryRandomPlaceholder: '',
-        lotteryNokillratehourLabel: '',
-        lotteryNokillratehourPlaceholder: '',
+        lotteryIdLabel: '彩种编号',
+        lotteryIdPlaceholder: '请输入彩种编号',
+        lotteryNameLabel: '彩种名称',
+        lotteryNamePlaceholder: '请输入彩种名称',
+        lotteryKillrateLabel: '杀率阀值',
+        lotteryKillratePlaceholder: '请输入杀率阀值',
+        lotteryRandomLabel: '随机开启不杀概率',
+        lotteryRandomPlaceholder: '请输入随机开启不杀概率',
+        lotteryNokillratehourLabel: '杀率禁用时间点',
+        lotteryNokillratehourPlaceholder: '请选择杀率禁用时间点(可多选)',
       },
-      dialogFooter:{
-        confirmButton: '',
-        cancelButton: ''
-      },
-      optionUnit: '',
-      lotteryIdRuleMessage: '',
-      addTitle: '',
-      updateTitle: '',
-      updateSuccessMessage: '',
-      addedSuccessMessage: '',
-      deleteSuccessMessage: '',
+      optionUnit: '点',
+      lotteryIdRuleMessage: '彩种编号不能为空',
+      addTitle: '添加开奖配置',
+      updateTitle: '修改开奖配置',
+      updateSuccessMessage: '修改成功',
+      addedSuccessMessage: '新增成功',
+      deleteSuccessMessage: '删除成功',
       confirmDeleteDialog:{
-        message: '',
-        title: '',
-        confirmButton: '',
-        cancelButton: ''
+        message: '是否确认删除开奖配置编号为"{lotteryIds}"的数据项?',
       },
       confirmExportDialog:{
-        message: '',
-        title: '',
-        confirmButton: '',
-        cancelButton: ''
+        message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
       }
-
     },
 
     //TODO: lotteryPrizepool    -> Luis
     lotteryPrizepool:{
-
+      form:{
+        lotteryIdLabel: '彩种编号',
+        lotteryIdPlaceholder: '请输入彩种编号',
+      },
+      tableColumns:{
+        lotteryName: '彩种名称',
+        lotteryId: '彩种编号',
+        lotteryDate: '奖池日期',
+        lotteryHour: '奖池日期小时',
+        ptzTotal: '奖池投注日累积',
+        ppjTotal: '奖池派奖日累积',
+        psyTotal: '奖池剩余金额日累积',
+        pkillrate: '累积杀率',
+        poolUsemoney: '游戏奖池使用金额',
+      },
+      addTitle: '添加奖池配置',
+      updateTitle: '修改奖池配置',
+      updateSuccessMessage: '修改成功',
+      addSuccessMessage: '新增成功',
+      deleteSuccessMessage: '删除成功',
+      confirmDeleteMessage: '是否确认删除奖池配置编号为"{ids}"的数据项?',
+      confirmExportMessage: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
     },
 
     //TODO: lotteryRule         -> Luis
     lotteryRule:{
+      form:{
+        kindLabel: '所属彩种类型',
+        kindPlaceholder: '请选择所属彩种类型',
+        nameLabel: '彩票类型名称',
+        namePlaceholder: '请输入彩票类型名称',
+      },
+      tableColumns:{
+        kind: '所属彩种类型',
+        name: '彩票类型名称',
+        des: '开奖说明',
+        ind: '排序号',
+      },
+      dialogForm:{
+        kindLabel: '所属彩种类型',
+        kindPlaceholder: '请选择所属彩种类型',
+        nameLabel: '彩票类型名称',
+        namePlaceholder: '请输入彩票类型名称',
+        indLabel: '排序号',
+        indPlaceholder: '请输入排序号',
+        desLabel: '开奖说明',
+        desPlaceholder: '请输入开奖说明'
+      },
+      addTitle: '添加开奖规则说明',
+      updateTitle: '修改开奖规则说明',
+      updateSuccessMessage: '修改成功',
+      addSuccessMessage: '新增成功',
+      confirmDeleteMessage: '是否确认删除开奖规则说明编号为"{ids}"的数据项?',
+      confirmExportMessage: '是否确认导出所有开奖规则说明数据项?',
 
     },
 

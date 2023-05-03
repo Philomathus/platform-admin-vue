@@ -5,7 +5,7 @@
         <el-select
           filterable
           v-model="queryParams.lotteryName"
-          placeholder="请选择彩种"
+          :placeholder="$t('lottery.lotteryPrizeConfig.form.lotteryNamePlaceholder')"
           clearable
           size="small"
           style="width: 240px"
@@ -19,8 +19,8 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('global.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('global.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -33,7 +33,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:lotteryPrizeconfig:add']"
-        >新增
+        >{{$t('lottery.lotteryPrizeConfig.form.newButton')}}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -44,7 +44,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:lotteryPrizeconfig:export']"
-        >导出
+        >{{$t('global.exportButton')}}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -52,12 +52,12 @@
 
     <el-table stripe v-loading="loading" :data="lotteryPrizeconfigList" @selection-change="handleSelectionChange">
       <el-table-column width="55" align="center"/>
-      <el-table-column label="彩种ID" align="center" prop="lotteryId"/>
-      <el-table-column label="彩种名称" align="center" prop="lotteryName"/>
-      <el-table-column label="杀率阀值" align="center" prop="lotteryKillrate"/>
-      <el-table-column label="杀率禁用时间点" align="center" prop="lotteryNokillratehour"/>
-      <el-table-column label="随机开启不杀概率" align="center" prop="lotteryRandom"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('lottery.lotteryPrizeConfig.tableColumns.lotteryId')" align="center" prop="lotteryId"/>
+      <el-table-column :label="$t('lottery.lotteryPrizeConfig.tableColumns.lotteryName')" align="center" prop="lotteryName"/>
+      <el-table-column :label="$t('lottery.lotteryPrizeConfig.tableColumns.lotteryKillrate')" align="center" prop="lotteryKillrate"/>
+      <el-table-column :label="$t('lottery.lotteryPrizeConfig.tableColumns.lotteryNokillratehour')" align="center" prop="lotteryNokillratehour"/>
+      <el-table-column :label="$t('lottery.lotteryPrizeConfig.tableColumns.lotteryRandom')" align="center" prop="lotteryRandom"/>
+      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -65,7 +65,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:lotteryPrizeconfig:edit']"
-          >修改
+          >{{$t('global.editButton')}}
           </el-button>
         </template>
       </el-table-column>
@@ -83,21 +83,21 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="opene" width="800px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="130px">
-        <el-form-item label="彩种编号" prop="lotteryId">
-          <el-input v-model="form.lotteryId" placeholder="请输入彩种编号"/>
+        <el-form-item :label="$t('lottery.lotteryPrizeConfig.AddConfigDialogForm.lotteryIdLabel')" prop="lotteryId">
+          <el-input v-model="form.lotteryId" :placeholder="$t('lottery.lotteryPrizeConfig.AddConfigDialogForm.lotteryIdPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="彩种名称" prop="lotteryName">
-          <el-input v-model="form.lotteryName" placeholder="请输入彩种名称"/>
+        <el-form-item :label="$t('lottery.lotteryPrizeConfig.AddConfigDialogForm.lotteryNameLabel')" prop="lotteryName">
+          <el-input v-model="form.lotteryName" :placeholder="$t('lottery.lotteryPrizeConfig.AddConfigDialogForm.lotteryNamePlaceholder')"/>
         </el-form-item>
-        <el-form-item label="杀率阀值" prop="lotteryKillrate">
-          <el-input v-model="form.lotteryKillrate" placeholder="请输入杀率阀值"/>
+        <el-form-item :label="$t('lottery.lotteryPrizeConfig.AddConfigDialogForm.lotteryKillrateLabel')" prop="lotteryKillrate">
+          <el-input v-model="form.lotteryKillrate" :placeholder="$t('lottery.lotteryPrizeConfig.AddConfigDialogForm.lotteryKillratePlaceholder')"/>
         </el-form-item>
-        <el-form-item label="随机开启不杀概率" prop="lotteryRandom">
-          <el-input v-model="form.lotteryRandom" placeholder="请输入随机开启不杀概率"/>
+        <el-form-item :label="$t('lottery.lotteryPrizeConfig.AddConfigDialogForm.lotteryRandomLabel')" prop="lotteryRandom">
+          <el-input v-model="form.lotteryRandom" :placeholder="$t('lottery.lotteryPrizeConfig.AddConfigDialogForm.lotteryRandomPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="杀率禁用时间点" prop="lotteryNokillratehour">
+        <el-form-item :label="$t('lottery.lotteryPrizeConfig.AddConfigDialogForm.lotteryNokillratehourLabel')" prop="lotteryNokillratehour">
           <template>
-            <el-select v-model="form.lotteryNokillratehour" multiple placeholder="请选择杀率禁用时间点(可多选)" clearable>
+            <el-select v-model="form.lotteryNokillratehour" multiple :placeholder="$t('lottery.lotteryPrizeConfig.AddConfigDialogForm.lotteryNokillratehourPlaceholder')" clearable>
               <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -109,8 +109,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="addsubmitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="addsubmitForm">{{$t('global.submitButton')}}</el-button>
+        <el-button @click="cancel">{{$t('global.cancelButton')}}</el-button>
       </div>
     </el-dialog>
 
@@ -118,19 +118,19 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="800px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="130px">
-        <el-form-item label="彩种编号" prop="lotteryId">
-          <el-input v-model="form.lotteryId" placeholder="请输入彩种编号" readonly/>
+        <el-form-item :label="$t('lottery.lotteryPrizeConfig.AddConfigDialogForm.lotteryIdLabel')" prop="lotteryId">
+          <el-input v-model="form.lotteryId" :placeholder="$t('lottery.lotteryPrizeConfig.AddConfigDialogForm.lotteryIdPlaceholder')" readonly/>
         </el-form-item>
-        <el-form-item label="彩种名称" prop="lotteryName">
-          <el-input v-model="form.lotteryName" placeholder="请输入彩种名称" readonly/>
+        <el-form-item :label="$t('lottery.lotteryPrizeConfig.AddConfigDialogForm.lotteryNameLabel')" prop="lotteryName">
+          <el-input v-model="form.lotteryName" :placeholder="$t('lottery.lotteryPrizeConfig.AddConfigDialogForm.lotteryNamePlaceholder')" readonly/>
         </el-form-item>
-        <el-form-item label="杀率阀值" prop="lotteryKillrate">
-          <el-input v-model="form.lotteryKillrate" placeholder="请输入杀率阀值"/>
+        <el-form-item :label="$t('lottery.lotteryPrizeConfig.AddConfigDialogForm.lotteryKillrateLabel')" prop="lotteryKillrate">
+          <el-input v-model="form.lotteryKillrate" :placeholder="$t('lottery.lotteryPrizeConfig.AddConfigDialogForm.lotteryKillratePlaceholder')"/>
         </el-form-item>
-        <el-form-item label="随机开启不杀概率" prop="lotteryRandom">
-          <el-input v-model="form.lotteryRandom" placeholder="请输入随机开启不杀概率"/>
+        <el-form-item :label="$t('lottery.lotteryPrizeConfig.AddConfigDialogForm.lotteryRandomLabel')" prop="lotteryRandom">
+          <el-input v-model="form.lotteryRandom" :placeholder="$t('lottery.lotteryPrizeConfig.AddConfigDialogForm.lotteryRandomPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="杀率禁用时间点" prop="lotteryNokillratehour">
+        <el-form-item :label="$t('lottery.lotteryPrizeConfig.AddConfigDialogForm.lotteryNokillratehourLabel')" prop="lotteryNokillratehour">
           <template>
             <el-checkbox-group v-model="lotteryNokillratehours">
               <el-checkbox label="0"></el-checkbox>
@@ -162,8 +162,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{$t('global.submitButton')}}</el-button>
+        <el-button @click="cancel">{{$t('global.cancelButton')}}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -186,7 +186,7 @@ export default {
   data() {
     return {
       //下拉多选杀率禁用时间点
-      optionUnit: '点',
+      optionUnit: this.$t('lottery.lotteryPrizeConfig.optionUnit'),
       options: [
         {value: '0', label: '0' + this.optionUnit},
         {value: '1', label: '1' + this.optionUnit},
@@ -250,7 +250,7 @@ export default {
       // 表单校验
       rules: {
         lotteryId:
-          { required: true, message: '彩种编号不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('lottery.lotteryPrizeConfig.lotteryIdRuleMessage'), trigger: 'blur' }
       }
     };
   },
@@ -308,7 +308,7 @@ export default {
     handleAdd() {
       this.reset();
       this.opene = true;
-      this.title = "添加开奖配置";
+      this.title = this.$t('lottery.lotteryPrizeConfig.addTitle');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -320,7 +320,7 @@ export default {
       }
         this.form = response.data;
         this.open = true;
-        this.title = "修改开奖配置";
+        this.title = this.$t('lottery.lotteryPrizeConfig.updateTitle');
       });
     },
     /** 修改提交按钮 */
@@ -331,7 +331,7 @@ export default {
             this.form.lotteryNokillratehour = this.lotteryNokillratehours.join(',')
           }
           updateLotteryPrizeconfig(this.form).then(response => {
-            this.msgSuccess("修改成功");
+            this.msgSuccess(this.$t('lottery.lotteryPrizeConfig.updateSuccessMessage'));
             this.open = false;
             this.getList();
           });
@@ -345,7 +345,7 @@ export default {
           if (this.form.lotteryNokillratehour != null) {
             this.form.lotteryNokillratehour = this.form.lotteryNokillratehour.join(',')
             addLotteryPrizeconfig(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess(this.$t('lottery.lotteryPrizeConfig.addedSuccessMessage'));
               this.opene = false;
               this.getList();
             });
@@ -356,24 +356,25 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const lotteryIds = row.lotteryId || this.ids;
-      this.$confirm('是否确认删除开奖配置编号为"' + lotteryIds + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+
+      this.$confirm(this.$t('lottery.lotteryPrizeConfig.confirmDeleteDialog.message', row.lotteryId), this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function () {
         return delLotteryPrizeconfig(lotteryIds);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess(this.$t('lottery.lotteryPrizeConfig.deleteSuccessMessage'));
       }).catch(() => {
       })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('lottery.lotteryPrizeConfig.confirmExportDialog.message'), this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function () {
         return exportLotteryPrizeconfig(queryParams);

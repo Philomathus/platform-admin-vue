@@ -5,7 +5,7 @@
         <el-select
           filterable
           v-model="queryParams.name"
-          :placeholder="$t('lotteryHistory.form.namePlaceholder')"
+          :placeholder="$t('lottery.lotteryHistory.form.namePlaceholder')"
           clearable
           size="small"
           style="width: 240px">
@@ -17,7 +17,7 @@
         </el-select>
       </el-form-item>
       <el-form-item prop="status">
-        <el-select v-model="queryParams.status" :placeholder="$t('lotteryHistory.form.statusPlaceholder')" clearable size="small">
+        <el-select v-model="queryParams.status" :placeholder="$t('lottery.lotteryHistory.form.statusPlaceholder')" clearable size="small">
           <el-option
             v-for="dict in statusOptions"
             :key="dict.dictValue"
@@ -28,7 +28,7 @@
       <el-form-item prop="issue">
         <el-input
           v-model="queryParams.issue"
-          :placeholder="$t('lotteryHistory.form.issuePlaceholder')"
+          :placeholder="$t('lottery.lotteryHistory.form.issuePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"/>
@@ -41,46 +41,46 @@
           value-format="yyyy-MM-dd"
           type="daterange"
           range-separator="-"
-          :start-placeholder="$t('lotteryHistory.form.datePickerStartDate')"
-          :end-placeholder="$t('lotteryHistory.form.datePickerEndDate')"
+          :start-placeholder="$t('global.datePickerStartDate')"
+          :end-placeholder="$t('global.datePickerEndDate')"
           :picker-options="pickerOptions">
         </el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('lotteryHistory.form.searchButton')}}</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('lotteryHistory.form.resetButton')}}</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('global.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('global.resetButton')}}</el-button>
         <el-button
           type="primary"
           plain
           icon="el-icon-plus"
           size="mini"
           @click="addIssue"
-          v-hasPermi="['admin:lotteryHistory:add']">{{$t('lotteryHistory.form.addIssueButton')}}
+          v-hasPermi="['admin:lotteryHistory:add']">{{$t('lottery.lotteryHistory.form.addIssueButton')}}
         </el-button>
       </el-form-item>
     </el-form>
 
     <el-table stripe v-loading="loading" :data="lotteryHistoryList">
       <!--      <el-table-column label="ID" align="center" prop="id"/>-->
-      <el-table-column :label="$t('lotteryHistory.tableColumns.name')" align="center" prop="name"/>
-      <el-table-column :label="$t('lotteryHistory.tableColumns.issue')" align="center" prop="issue"/>
-      <el-table-column :label="$t('lotteryHistory.tableColumns.code')" align="center" min-width="150px" prop="code"/>
-      <el-table-column :label="$t('lotteryHistory.tableColumns.ktime')" min-width="90px" align="center" prop="ktime">
+      <el-table-column :label="$t('lottery.lotteryHistory.tableColumns.name')" align="center" prop="name"/>
+      <el-table-column :label="$t('lottery.lotteryHistory.tableColumns.issue')" align="center" prop="issue"/>
+      <el-table-column :label="$t('lottery.lotteryHistory.tableColumns.code')" align="center" min-width="150px" prop="code"/>
+      <el-table-column :label="$t('lottery.lotteryHistory.tableColumns.ktime')" min-width="90px" align="center" prop="ktime">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.ktime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('lotteryHistory.tableColumns.totalBet')" align="center" prop="totalBet"/>
-      <el-table-column :label="$t('lotteryHistory.tableColumns.killRate')" align="center" prop="killRate"/>
-      <el-table-column :label="$t('lotteryHistory.tableColumns.totalPrize')" align="center" prop="totalPrize"/>
-      <el-table-column :label="$t('lotteryHistory.tableColumns.status')" align="center" prop="status">
+      <el-table-column :label="$t('lottery.lotteryHistory.tableColumns.totalBet')" align="center" prop="totalBet"/>
+      <el-table-column :label="$t('lottery.lotteryHistory.tableColumns.killRate')" align="center" prop="killRate"/>
+      <el-table-column :label="$t('lottery.lotteryHistory.tableColumns.totalPrize')" align="center" prop="totalPrize"/>
+      <el-table-column :label="$t('global.status')" align="center" prop="status">
         <template slot-scope="scope">
           <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">
             {{ status.dictLabel }}
           </span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('lotteryHistory.tableColumns.operationLabel')" align="center" min-width="100px" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('global.operationColumn')" align="center" min-width="100px" class-name="small-padding fixed-width">
         <template slot-scope="scope" v-if="scope.row.status >= 2">
           <el-button
             size="small"
@@ -88,7 +88,7 @@
             icon="el-icon-refresh-right"
             plain
             @click="handleAward(scope.row)"
-          >{{$t('lotteryHistory.tableColumns.repaymentButton')}}</el-button>
+          >{{$t('lottery.lotteryHistory.tableColumns.repaymentButton')}}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -103,17 +103,17 @@
     <!-- 添加补奖配置对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="opene" width="450px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-        <el-form-item :label="$t('lotteryHistory.dialogForm.gameStartTimeLabel')" prop="gameStartTime" class="is-required" style="width: 350px">
-          <el-input v-model="form.startIssue" :placeholder="$t('lotteryHistory.dialogForm.startIssuePlaceholder')" prop="startIssue" />
+        <el-form-item :label="$t('lottery.lotteryHistory.dialogForm.gameStartTimeLabel')" prop="gameStartTime" class="is-required" style="width: 350px">
+          <el-input v-model="form.startIssue" :placeholder="$t('lottery.lotteryHistory.dialogForm.startIssuePlaceholder')" prop="startIssue" />
         </el-form-item>
-        <el-form-item :label="$t('lotteryHistory.dialogForm.gameEndTimeLabel')" prop="gameEndTime" class="is-required" style="width: 350px">
-          <el-input v-model="form.endIssue" :placeholder="$t('lotteryHistory.dialogForm.endIssuePlaceholder')" prop="endIssue"/>
+        <el-form-item :label="$t('lottery.lotteryHistory.dialogForm.gameEndTimeLabel')" prop="gameEndTime" class="is-required" style="width: 350px">
+          <el-input v-model="form.endIssue" :placeholder="$t('lottery.lotteryHistory.dialogForm.endIssuePlaceholder')" prop="endIssue"/>
         </el-form-item>
-        <el-form-item :label="$t('lotteryHistory.dialogForm.nameLabel')" prop="name" class="is-required">
+        <el-form-item :label="$t('lottery.lotteryHistory.dialogForm.nameLabel')" prop="name" class="is-required">
           <el-select
             filterable
             v-model="form.name"
-            :placeholder="$t('lotteryHistory.dialogForm.namePlaceholder')"
+            :placeholder="$t('lottery.lotteryHistory.dialogForm.namePlaceholder')"
             clearable
             size="small"
             style="width: 250px"
@@ -128,8 +128,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">{{$t('lotteryHistory.dialogFooter.confirmButton')}}</el-button>
-        <el-button @click="cancel">{{$t('lotteryHistory.dialogFooter.cancelButton')}}</el-button>
+        <el-button type="primary" @click="submitForm">{{$t('global.confirmButton')}}</el-button>
+        <el-button @click="cancel">{{$t('global.cancelButton')}}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -198,16 +198,16 @@ export default {
       // 表单校验
       rules: {
         ktime: [
-          {required: true, message: this.$t('lotteryHistory.rulesMessage.ktime'), trigger: "blur"}
+          {required: true, message: this.$t('lottery.lotteryHistory.rulesMessage.ktime'), trigger: "blur"}
         ],
         name: [
-          { required: true, message: this.$t('lotteryHistory.rulesMessage.name'),trigger: "blur" }
+          { required: true, message: this.$t('lottery.lotteryHistory.rulesMessage.name'),trigger: "blur" }
         ],
         startIssue: [
-          { required: true, message: this.$t('lotteryHistory.rulesMessage.startIssue'),trigger: "blur" }
+          { required: true, message: this.$t('lottery.lotteryHistory.rulesMessage.startIssue'),trigger: "blur" }
         ],
         endIssue: [
-          { required: true, message: this.$t('lotteryHistory.rulesMessage.endIssue'),trigger: "blur" }
+          { required: true, message: this.$t('lottery.lotteryHistory.rulesMessage.endIssue'),trigger: "blur" }
         ]
       }
     };
@@ -235,13 +235,13 @@ export default {
     // 0=投注中1=已开奖2=已派奖3=开奖失败
     formatterStatus(row) {
       if (row.status == 0) {
-        return this.$t('lotteryHistory.status.bettingIn')
+        return this.$t('lottery.lotteryHistory.status.bettingIn')
       } else if (row.status == 1) {
-        return this.$t('lotteryHistory.status.prizeDrawn')
+        return this.$t('lottery.lotteryHistory.status.prizeDrawn')
       } else if (row.status == 2) {
-        return this.$t('lotteryHistory.status.prizePaid')
+        return this.$t('lottery.lotteryHistory.status.prizePaid')
       } else if (row.status == 3) {
-        return this.$t('lotteryHistory.status.lotteryFailure')
+        return this.$t('lottery.lotteryHistory.status.lotteryFailure')
       } else {
         return ''
       }
@@ -259,7 +259,7 @@ export default {
         if (response.code == 0) {
           this.$message.error(response.msg)
         } else {
-          this.msgSuccess(this.$t('lotteryHistory.rePayoutSuccessMessage'))
+          this.msgSuccess(this.$t('lottery.lotteryHistory.rePayoutSuccessMessage'))
           this.getList()
         }
       });
@@ -296,14 +296,14 @@ export default {
     addIssue() {
       this.reset();
       this.opene = true;
-      this.title = this.$t('lotteryHistory.issueTitle');
+      this.title = this.$t('lottery.lotteryHistory.issueTitle');
     },
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
           addLotteryHistoryIssue(this.form).then(response => {
-            this.msgSuccess(this.$t('lotteryHistory.addIssueSuccessMessage'));
+            this.msgSuccess(this.$t('lottery.lotteryHistory.addIssueSuccessMessage'));
             this.opene = false;
             this.getList();
           });

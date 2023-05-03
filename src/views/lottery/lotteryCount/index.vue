@@ -3,27 +3,27 @@
     <!--    search form 搜索表格 -->
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px" style="margin-top: 15px;">
 
-      <el-form-item :label="$t('lotteryCount.form.puserIdLabel')" prop="puserId" label-width="120">
+      <el-form-item :label="$t('lottery.lotteryCount.form.puserIdLabel')" prop="puserId" label-width="120">
         <el-input
           v-model="queryParams.pUserId"
-          :placeholder="$t('lotteryCount.form.puserIdPlaceholder')"
+          :placeholder="$t('lottery.lotteryCount.form.puserIdPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"/>
       </el-form-item>
-      <el-form-item :label="$t('lotteryCount.form.betInfoLabel')" prop="betInfo" label-width="120">
+      <el-form-item :label="$t('lottery.lotteryCount.form.betInfoLabel')" prop="betInfo" label-width="120">
         <el-input
           v-model="queryParams.betInfo"
-          :placeholder="$t('lotteryCount.form.betInfoPlaceholder')"
+          :placeholder="$t('lottery.lotteryCount.form.betInfoPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"/>
       </el-form-item>
 
-      <el-form-item :label="$t('lotteryCount.form.issueLabel')" prop="issue" label-width="120">
+      <el-form-item :label="$t('lottery.lotteryCount.form.issueLabel')" prop="issue" label-width="120">
         <el-input
           v-model="queryParams.issue"
-          :placeholder="$t('lotteryCount.form.issuePlaceholder')"
+          :placeholder="$t('lottery.lotteryCount.form.issuePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"/>
@@ -32,7 +32,7 @@
       <el-form-item prop="lotteryName">
         <el-select
           v-model="queryParams.lotteryName"
-          :placeholder="$t('lotteryCount.form.lotteryNamePlaceholder')"
+          :placeholder="$t('lottery.lotteryCount.form.lotteryNamePlaceholder')"
           clearable
           size="small"
           style="width: 240px">
@@ -45,20 +45,20 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('lotteryCount.form.searchButton')}}</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('lotteryCount.form.resetButton')}}</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('global.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('global.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
     <!--member lottery count table-->
     <el-table stripe v-loading="loading"  :data="lotteryCountList" class="el-table--border">
       <el-table-column :label="$t('global.id')" prop="id"  align="center" min-width="120"/>
-      <el-table-column :label="$t('lotteryCount.tableColumns.lotteryName')" prop="lotteryName" align="center"  min-width="120"/>
-      <el-table-column :label="$t('lotteryCount.tableColumns.puserId')" prop="puserId" align="center" min-width="120"/>
-      <el-table-column :label="$t('lotteryCount.tableColumns.issue')"  prop="issue" align="center"  min-width="120"/>
-      <el-table-column :label="$t('lotteryCount.tableColumns.betInfo')" prop="betInfo" align="center"   min-width="120"/>
-      <el-table-column :label="$t('lotteryCount.tableColumns.chip')" prop="chip" align="center"   min-width="120"/>
-      <el-table-column :label="$t('lotteryCount.tableColumns.ip')" prop="ip" align="center"   min-width="120"/>
+      <el-table-column :label="$t('lottery.lotteryCount.tableColumns.lotteryName')" prop="lotteryName" align="center"  min-width="120"/>
+      <el-table-column :label="$t('lottery.lotteryCount.tableColumns.puserId')" prop="puserId" align="center" min-width="120"/>
+      <el-table-column :label="$t('lottery.lotteryCount.tableColumns.issue')"  prop="issue" align="center"  min-width="120"/>
+      <el-table-column :label="$t('lottery.lotteryCount.tableColumns.betInfo')" prop="betInfo" align="center"   min-width="120"/>
+      <el-table-column :label="$t('lottery.lotteryCount.tableColumns.chip')" prop="chip" align="center"   min-width="120"/>
+      <el-table-column :label="$t('lottery.lotteryCount.tableColumns.ip')" prop="ip" align="center"   min-width="120"/>
     </el-table>
 
     <pagination

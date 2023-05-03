@@ -9,23 +9,23 @@
           value-format="yyyy-MM-dd HH:mm:ss"
           type="datetimerange"
           range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :start-placeholder="$t('global.datePickerStartDate')"
+          :end-placeholder="$t('global.datePickerEndDate')"
           :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item label="彩种编号" prop="lotteryId">
+      <el-form-item ::label="$t('lottery.lotteryPrizepool.form.lotteryIdlabel')" prop="lotteryId">
         <el-input
           v-model="queryParams.lotteryId"
-          placeholder="请输入彩种编号"
+          placeholder="$t('lottery.lotteryPrizepool.form.lotteryIdPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('global.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('global.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -38,22 +38,22 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:lotteryPrizepool:export']"
-        >导出</el-button>
+        >{{$t('global.exportButton')}}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="lotteryPrizepoolList" @selection-change="handleSelectionChange">
       <el-table-column width="55" align="center" />
-      <el-table-column label="彩种名称" align="center" prop="lotteryName" />
-      <el-table-column label="彩种编号" align="center" prop="lotteryId" />
-      <el-table-column label="奖池日期" align="center" prop="lotteryDate" />
-      <el-table-column label="奖池日期小时" align="center" prop="lotteryHour" />
-      <el-table-column label="奖池投注日累积" align="center" prop="ptzTotal" />
-      <el-table-column label="奖池派奖日累积" align="center" prop="ppjTotal" />
-      <el-table-column label="奖池剩余金额日累积" align="center" prop="psyTotal" />
-      <el-table-column label="累积杀率" align="center" prop="pkillrate" />
-      <el-table-column label="游戏奖池使用金额" align="center" prop="poolUsemoney" />
+      <el-table-column :label="$t('lottery.lotteryPrizepool.tableColumns.lotteryName')" align="center" prop="lotteryName" />
+      <el-table-column :label="$t('lottery.lotteryPrizepool.tableColumns.lotteryId')" align="center" prop="lotteryId" />
+      <el-table-column :label="$t('lottery.lotteryPrizepool.tableColumns.lotteryDate')" align="center" prop="lotteryDate" />
+      <el-table-column :label="$t('lottery.lotteryPrizepool.tableColumns.lotteryHour')" align="center" prop="lotteryHour" />
+      <el-table-column :label="$t('lottery.lotteryPrizepool.tableColumns.ptzTotal')" align="center" prop="ptzTotal" />
+      <el-table-column :label="$t('lottery.lotteryPrizepool.tableColumns.ppjTotal')" align="center" prop="ppjTotal" />
+      <el-table-column :label="$t('lottery.lotteryPrizepool.tableColumns.psyTotal')" align="center" prop="psyTotal" />
+      <el-table-column :label="$t('lottery.lotteryPrizepool.tableColumns.pkillrate')" align="center" prop="pkillrate" />
+      <el-table-column :label="$t('lottery.lotteryPrizepool.tableColumns.poolUsemoney')" align="center" prop="poolUsemoney" />
     </el-table>
 
     <pagination
@@ -173,7 +173,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加奖池配置";
+      this.title = this.$t('lottery.lotteryPrizepool.addTitle');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -182,7 +182,7 @@ export default {
       getLotteryPrizepool(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改奖池配置";
+        this.title = this.$t('lottery.lotteryPrizepool.updateTitle');
       });
     },
     /** 提交按钮 */
@@ -191,13 +191,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateLotteryPrizepool(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess(this.$t('lottery.lotteryPrizepool.updateSuccessMessage'));
               this.open = false;
               this.getList();
             });
           } else {
             addLotteryPrizepool(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess(this.$t('lottery.lotteryPrizepool.addSuccessMessage'));
               this.open = false;
               this.getList();
             });
@@ -208,24 +208,24 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除奖池配置编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('lottery.lotteryPrizepool.confirmDeleteMessage', row.id), this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function() {
         return delLotteryPrizepool(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess(this.$t('lottery.lotteryPrizepool.deleteSuccessMessage'));
       }).catch(() => {
 	  })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('lottery.lotteryPrizepool.confirmExportMessage'), this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function() {
         return exportLotteryPrizepool(queryParams);

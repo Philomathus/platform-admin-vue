@@ -1,17 +1,17 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="100px">
-      <el-form-item :label="$t('lotteryInfo.form.nameLabel')" prop="name">
+      <el-form-item :label="$t('lottery.lotteryInfo.form.nameLabel')" prop="name">
         <el-input
           v-model="queryParams.name"
-          :placeholder="$t('lotteryInfo.form.namePlaceholder')"
+          :placeholder="$t('lottery.lotteryInfo.form.namePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item :label="$t('lotteryInfo.form.statusLabel')" prop="status">
-        <el-select v-model="queryParams.status" :placeholder="$t('lotteryInfo.form.statusPlaceholder')" clearable size="small">
+      <el-form-item :label="$t('lottery.lotteryInfo.form.statusLabel')" prop="status">
+        <el-select v-model="queryParams.status" :placeholder="$t('lottery.lotteryInfo.form.statusPlaceholder')" clearable size="small">
           <el-option
             v-for="item in status"
             :key="item.value"
@@ -30,8 +30,8 @@
       <!--          </el-option>-->
       <!--        </el-select>-->
       <!--      </el-form-item>-->
-      <el-form-item :label="$t('lotteryInfo.form.typeLabel')" prop="type">
-        <el-select v-model="queryParams.type" :placeholder="$t('lotteryInfo.form.typePlaceholder')" clearable size="small">
+      <el-form-item :label="$t('lottery.lotteryInfo.form.typeLabel')" prop="type">
+        <el-select v-model="queryParams.type" :placeholder="$t('lottery.lotteryInfo.form.typePlaceholder')" clearable size="small">
           <el-option
             v-for="item in type"
             :key="item.value"
@@ -68,20 +68,20 @@
       <!--        />-->
       <!--      </el-form-item>-->
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('lotteryInfo.form.searchButton')}}</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('lotteryInfo.form.resetButton')}}</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('global.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('global.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
     <el-table stripe v-loading="loading" :data="lotteryInfoList">
-      <el-table-column :label="$t('lotteryInfo.tableColumns.name')" align="center" prop="name"/>
-      <el-table-column :label="$t('lotteryInfo.tableColumns.type')" align="center" prop="type">
+      <el-table-column :label="$t('lottery.lotteryInfo.tableColumns.name')" align="center" prop="name"/>
+      <el-table-column :label="$t('lottery.lotteryInfo.tableColumns.type')" align="center" prop="type">
         <template v-slot="{row}">
           <a @click="$router.push({path: '/lottery/lotteryMethod',query: { lotteryType: row.type}})"
              style="color: #00afff"> {{ row.type }}</a>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('lotteryInfo.tableColumns.icon')" align="center" prop="icon">
+      <el-table-column :label="$t('lottery.lotteryInfo.tableColumns.icon')" align="center" prop="icon">
         <template slot-scope="scope">
           <el-image
             style="height:50px"
@@ -92,7 +92,7 @@
         </template>
       </el-table-column>
 <!--     Status Handler Switch Button  -->
-      <el-table-column :label="$t('lotteryInfo.tableColumns.status')" align="center" prop="status" :formatter="formatterStatus">
+      <el-table-column :label="$t('lottery.lotteryInfo.tableColumns.status')" align="center" prop="status" :formatter="formatterStatus">
           <template v-slot="{row}">
             <el-switch
               :inactive-value="0"
@@ -105,21 +105,21 @@
         </template>
       </el-table-column>
 
-      <el-table-column :label="$t('lotteryInfo.tableColumns.killRate')" align="center" prop="killRate"/>
-      <el-table-column :label="$t('lotteryInfo.tableColumns.cycle')" align="center" prop="cycle"/>
-      <el-table-column :label="$t('lotteryInfo.tableColumns.minCost')" align="center" prop="minCost"/>
+      <el-table-column :label="$t('lottery.lotteryInfo.tableColumns.killRate')" align="center" prop="killRate"/>
+      <el-table-column :label="$t('lottery.lotteryInfo.tableColumns.cycle')" align="center" prop="cycle"/>
+      <el-table-column :label="$t('lottery.lotteryInfo.tableColumns.minCost')" align="center" prop="minCost"/>
 
 <!--      ORDER -->
-      <el-table-column :label="$t('lotteryInfo.tableColumns.order')" align="center" prop="order"/>
+      <el-table-column :label="$t('lottery.lotteryInfo.tableColumns.order')" align="center" prop="order"/>
 
-      <el-table-column :label="$t('lotteryInfo.tableColumns.operationLabel')" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('lottery.lotteryInfo.tableColumns.operationLabel')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-          >{{$t('lotteryInfo.tableColumns.editButton')}}
+          >{{$t('global.editButton')}}
           </el-button>
         </template>
       </el-table-column>
@@ -134,20 +134,20 @@
     />
 
     <!-- 添加或修改活动信息对话框 -->
-    <el-dialog :title="$t('lotteryInfo.dialogForm.title')" :visible.sync="open" width="380px" v-loading="loading" append-to-body>
+    <el-dialog :title="$t('global.editButton')" :visible.sync="open" width="380px" v-loading="loading" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="90px">
-        <el-form-item :label="$t('lotteryInfo.dialogForm.iconLabel')" prop="icon">
+        <el-form-item :label="$t('global.icon')" prop="icon">
           <imageUpload v-model="form.icon" path="LotteryInfo"/>
         </el-form-item>
 
-        <el-form-item :label="$t('lotteryInfo.dialogForm.orderLabel')" prop="order">
-          <el-input v-model="form.order" :placeholder="$t('lotteryInfo.dialogForm.orderPlaceholder')" class="order-input"/>
+        <el-form-item :label="$t('global.sort')" prop="order">
+          <el-input v-model="form.order" :placeholder="$t('global.sortPlaceholder')" class="order-input"/>
         </el-form-item>
 
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">{{$t('lotteryInfo.dialogFooter.confirmButton')}}</el-button>
-        <el-button @click="cancel">{{$t('lotteryInfo.dialogFooter.cancelButton')}}</el-button>
+        <el-button type="primary" @click="submitForm">{{$t('global.confirmButton')}}</el-button>
+        <el-button @click="cancel">{{$t('global.cancelButton')}}</el-button>
       </div>
     </el-dialog>
 
@@ -168,38 +168,38 @@ export default {
       //状态选择栏
       status: [{
         value: '1',
-        label: this.$t('lotteryInfo.statusLabel.enable')
+        label: this.$t('global.statusEnable')
       }, {
         value: '0',
-        label: this.$t('lotteryInfo.statusLabel.disable')
+        label: this.$t('global.statusDisable')
       }],
       //开奖形式选择栏
       official: [{
         value: '0',
-        label: this.$t('lotteryInfo.officialLabel.official')
+        label: this.$t('lottery.lotteryInfo.officialLabel.official')
       }, {
         value: '1',
-        label: this.$t('lotteryInfo.officialLabel.selfOpeningDatabase')
+        label: this.$t('lottery.lotteryInfo.officialLabel.selfOpeningDatabase')
       }, {
         value: '2',
-        label: this.$t('lotteryInfo.officialLabel.selfOpeningProgram')
+        label: this.$t('lottery.lotteryInfo.officialLabel.selfOpeningProgram')
       }],
       //所属彩种类型下拉框
       type: [{
-        value: this.$t('lotteryInfo.type.timeShareValue'),
-        label: this.$t('lotteryInfo.type.timeShareLabel')
+        value: this.$t('lottery.lotteryInfo.type.timeShareValue'),
+        label: this.$t('lottery.lotteryInfo.type.timeShareLabel')
       }, {
         value: this.$t("lotteryInfo.type['11select5Value']"),
         label: this.$t("lotteryInfo.type['11select5Label']")
       }, {
-        value: this.$t('lotteryInfo.type.fastThreeValue'),
-        label: this.$t('lotteryInfo.type.fastThreeLabel')
+        value: this.$t('lottery.lotteryInfo.type.fastThreeValue'),
+        label: this.$t('lottery.lotteryInfo.type.fastThreeLabel')
       }, {
-        value: this.$t('lotteryInfo.type.racingValue'),
-        label: this.$t('lotteryInfo.type.racingLabel')
+        value: this.$t('lottery.lotteryInfo.type.racingValue'),
+        label: this.$t('lottery.lotteryInfo.type.racingLabel')
       }, {
-        value: this.$t('lotteryInfo.type.markSixValue'),
-        label: this.$t('lotteryInfo.type.markSixLabel')
+        value: this.$t('lottery.lotteryInfo.type.markSixValue'),
+        label: this.$t('lottery.lotteryInfo.type.markSixLabel')
       }],
       // 遮罩层
       loading: true,
@@ -238,7 +238,7 @@ export default {
       // 表单校验
       rules: {
         name: [
-          {required: true, message: this.$t('lotteryInfo.rulesNameMessage'), trigger: "blur"}
+          {required: true, message: this.$t('lottery.lotteryInfo.rulesNameMessage'), trigger: "blur"}
         ]
       }
     };
@@ -271,7 +271,7 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           updateLotteryInfo(this.form).then(response => {
-            this.msgSuccess(this.$t('lotteryInfo.updateSuccessMessage'));
+            this.msgSuccess(this.$t('lottery.lotteryInfo.updateSuccessMessage'));
             this.open = false;
             this.getList();
           });
@@ -281,11 +281,11 @@ export default {
     // 0=官方1=自开（数据库）2=自开（程序）
     formatterofficial(row) {
       if (row.official == 0) {
-        return this.$t('lotteryInfo.officialLabel.official')
+        return this.$t('lottery.lotteryInfo.officialLabel.official')
       } else if (row.official == 1) {
-        return this.$t('lotteryInfo.officialLabel.selfOpeningDatabase')
+        return this.$t('lottery.lotteryInfo.officialLabel.selfOpeningDatabase')
       } else if (row.official == 2) {
-        return this.$t('lotteryInfo.officialLabel.selfOpeningProgram')
+        return this.$t('lottery.lotteryInfo.officialLabel.selfOpeningProgram')
       } else {
         return ''
       }
@@ -309,9 +309,9 @@ export default {
     },
     opens(hint, row, type) {
       var that = this
-      this.$prompt(hint, this.$t('lotteryInfo.promptOpensDialog.title'), {
-        confirmButtonText: this.$t('lotteryInfo.promptOpensDialog.confirmButton'),
-        cancelButtonText: this.$t('lotteryInfo.promptOpensDialog.cancelButton')
+      this.$prompt(hint, this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton')
       }).then(({ value }) => {
         that.statusDetail(row, type, value)
       }).catch(() => {
@@ -328,7 +328,7 @@ export default {
         row.status = type
         this.getList()
       }).catch(() => {
-        this.$notify.error(this.$t('lotteryInfo.updateBanErrorMessage'))
+        this.$notify.error(this.$t('lottery.lotteryInfo.updateBanErrorMessage'))
       })
     },
 

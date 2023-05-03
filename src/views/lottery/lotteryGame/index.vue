@@ -1,17 +1,17 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item :label="$t('lotteryGame.form.methodIdLabel')" prop="methodId">
+      <el-form-item :label="$t('lottery.lotteryGame.form.methodIdLabel')" prop="methodId">
         <el-input
           v-model="queryParams.methodId"
-          :placeholder="$t('lotteryGame.form.methodIdPlaceholder')"
+          :placeholder="$t('lottery.lotteryGame.form.methodIdPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item :label="$t('lotteryGame.form.typeLabel')" prop="type">
-        <el-select v-model="queryParams.type" :placeholder="$t('lotteryGame.form.typePlaceholder')" clearable size="small">
+      <el-form-item :label="$t('lottery.lotteryGame.form.typeLabel')" prop="type">
+        <el-select v-model="queryParams.type" :placeholder="$t('lottery.lotteryGame.form.typePlaceholder')" clearable size="small">
           <el-option
             v-for="item in lotteryType"
             :key="item.value"
@@ -20,39 +20,38 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item :label="$t('lotteryGame.form.infoLabel')" prop="info">
+      <el-form-item :label="$t('lottery.lotteryGame.form.infoLabel')" prop="info">
         <el-input
           v-model="queryParams.info"
-          :placeholder="$t('lotteryGame.form.infoPlaceholder')"
+          :placeholder="$t('lottery.lotteryGame.form.infoPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item :label="$t('lotteryGame.form.victoryRuleLabel')" prop="victoryRule">
+      <el-form-item :label="$t('lottery.lotteryGame.form.victoryRuleLabel')" prop="victoryRule">
         <el-input
           v-model="queryParams.victoryRule"
-          :placeholder="$t('lotteryGame.form.victoryRulePlaceholder')"
+          :placeholder="$t('lottery.lotteryGame.form.victoryRulePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('lotteryGame.form.searchButton')}}</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('lotteryGame.form.resetButton')}}</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('global.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('global.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
-
     <el-table stripe v-loading="loading" :data="lotteryGameList">
-      <el-table-column :label="$t('lotteryGame.tableColumns.methodId')" align="center" prop="methodId"/>
-      <el-table-column :label="$t('lotteryGame.tableColumns.type')" align="center" prop="type"/>
-      <el-table-column :label="$t('lotteryGame.tableColumns.info')" align="center" prop="info"/>
-      <el-table-column :label="$t('lotteryGame.tableColumns.odds')" align="center" prop="odds"/>
-      <el-table-column :label="$t('lotteryGame.tableColumns.victoryRule')" align="center" prop="victoryRule"/>
-      <el-table-column :label="$t('lotteryGame.tableColumns.ind')" align="center" prop="ind"/>
-      <el-table-column :label="$t('lotteryGame.tableColumns.operationLabel')" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('lottery.lotteryGame.tableColumns.methodId')" align="center" prop="methodId"/>
+      <el-table-column :label="$t('lottery.lotteryGame.tableColumns.type')" align="center" prop="type"/>
+      <el-table-column :label="$t('lottery.lotteryGame.tableColumns.info')" align="center" prop="info"/>
+      <el-table-column :label="$t('lottery.lotteryGame.tableColumns.odds')" align="center" prop="odds"/>
+      <el-table-column :label="$t('lottery.lotteryGame.tableColumns.victoryRule')" align="center" prop="victoryRule"/>
+      <el-table-column :label="$t('lottery.lotteryGame.tableColumns.ind')" align="center" prop="ind"/>
+      <el-table-column :label="$t('lottery.lotteryGame.tableColumns.operationLabel')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -60,7 +59,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:lotteryGame:edit']"
-          >{{$t('lotteryGame.tableColumns.editButton')}}
+          >{{$t('lottery.lotteryGame.tableColumns.editButton')}}
           </el-button>
         </template>
       </el-table-column>
@@ -78,13 +77,13 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="300px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="40px">
-        <el-form-item :label="$t('lotteryGame.dialogForm.oddsLabel')" prop="odds">
-          <el-input v-model="form.odds" :placeholder="$t('lotteryGame.dialogForm.oddsPlaceholder')"/>
+        <el-form-item :label="$t('lottery.lotteryGame.dialogForm.oddsLabel')" prop="odds">
+          <el-input v-model="form.odds" :placeholder="$t('lottery.lotteryGame.dialogForm.oddsPlaceholder')"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">{{$t('lotteryGame.dialogForm.confirmButton')}}</el-button>
-        <el-button @click="cancel">{{$t('lotteryGame.dialogForm.cancelButton')}}</el-button>
+        <el-button type="primary" @click="submitForm">{{$t('global.confirmButton')}}</el-button>
+        <el-button @click="cancel">{{$t('global.cancelButton')}}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -134,26 +133,26 @@ export default {
       // 表单校验
       rules: {},
       lotteryType: [{
-        value: this.$t('lotteryGame.lotteryType.timeShareValue'),
-        label: this.$t('lotteryGame.lotteryType.timeShareLabel')
+        value: this.$t('lottery.lotteryGame.lotteryType.timeShareValue'),
+        label: this.$t('lottery.lotteryGame.lotteryType.timeShareLabel')
       }, {
         value: this.$t("lotteryGame.lotteryType['11select5Value']"),
         label: this.$t("lotteryGame.lotteryType['11select5Label']"),
       }, {
-        value: this.$t('lotteryGame.lotteryType.fastThreeValue'),
-        label: this.$t('lotteryGame.lotteryType.fastThreeLabel')
+        value: this.$t('lottery.lotteryGame.lotteryType.fastThreeValue'),
+        label: this.$t('lottery.lotteryGame.lotteryType.fastThreeLabel')
       }, {
-        value: this.$t('lotteryGame.lotteryType.racingValue'),
-        label: this.$t('lotteryGame.lotteryType.racingLabel')
+        value: this.$t('lottery.lotteryGame.lotteryType.racingValue'),
+        label: this.$t('lottery.lotteryGame.lotteryType.racingLabel')
       }, {
-        value: this.$t('lotteryGame.lotteryType.markSixValue'),
-        label: this.$t('lotteryGame.lotteryType.markSixLabel')
+        value: this.$t('lottery.lotteryGame.lotteryType.markSixValue'),
+        label: this.$t('lottery.lotteryGame.lotteryType.markSixLabel')
       }, {
-        value: this.$t('lotteryGame.lotteryType.baccaratValue'),
-        label: this.$t('lotteryGame.lotteryType.baccaratLabel')
+        value: this.$t('lottery.lotteryGame.lotteryType.baccaratValue'),
+        label: this.$t('lottery.lotteryGame.lotteryType.baccaratLabel')
       }, {
-        value: this.$t('lotteryGame.lotteryType.hundredBullsValue'),
-        label: this.$t('lotteryGame.lotteryType.hundredBullsLabel')
+        value: this.$t('lottery.lotteryGame.lotteryType.hundredBullsValue'),
+        label: this.$t('lottery.lotteryGame.lotteryType.hundredBullsLabel')
       }],
     };
   },
@@ -213,7 +212,7 @@ export default {
       getLotteryGame(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = this.$t('lotteryGame.updateOddsTitle');
+        this.title = this.$t('lottery.lotteryGame.updateOddsTitle');
       });
     },
     /** 提交按钮 */
@@ -222,7 +221,7 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateLotteryGame(this.form).then(response => {
-              this.msgSuccess(this.$t('lotteryGame.updateSuccessMessage'));
+              this.msgSuccess(this.$t('lottery.lotteryGame.updateSuccessMessage'));
               this.open = false;
               this.getList();
             });

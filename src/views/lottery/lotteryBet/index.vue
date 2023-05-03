@@ -82,8 +82,8 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('lottery.lotteryBet.form.searchButton')}}</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('lottery.lotteryBet.form.resetButton')}}</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('global.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('global.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -96,7 +96,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:lotteryBet:list']"
-        >{{$t('lottery.lotteryBet.exportButton')}}
+        >{{$t('global.exportButton')}}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -128,7 +128,7 @@
         </template>
       </el-table-column>
       <el-table-column :label="$t('lottery.lotteryBet.tableColumns.anchor')" align="center" prop="anchor"/>
-      <el-table-column :label="$t('lottery.lotteryBet.tableColumns.operation')" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -321,9 +321,9 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm(this.$t('lottery.lotteryBet.confirmExportDialog.message'), this.$t('lottery.lotteryBet.confirmExportDialog.title'), {
-        confirmButtonText: this.$t('lottery.lotteryBet.confirmExportDialog.confirmButton'),
-        cancelButtonText: this.$t('lottery.lotteryBet.confirmExportDialog.cancelButton'),
+      this.$confirm(this.$t('lottery.lotteryBet.confirmExportDialog.message'), this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportLotteryBet0(queryParams);

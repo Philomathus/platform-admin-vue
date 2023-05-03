@@ -2,7 +2,7 @@ export default {
 
   global:{
     export: '出口',
-    cancelButton: '取 消',
+    cancelButton: '取消',
     confirmButton: '确定',
     refresh: '刷新',
     close: '关闭',
@@ -33,15 +33,12 @@ export default {
     nickname: '昵称',
     status: '状态',
     ctime: '发布时间',
-  },
-
-  globalPlaceholder:{
     sortPlaceholder: '请输入排序',
     nicknamePlaceholder: '请输入昵称',
-    dateTimePickerStartTime: '开始时间',
-    dateTimePickerEndTime: '结束时间',
+    dateTimePickerStartTimePlaceholder: '开始时间',
+    dateTimePickerEndTimePlaceholder: '结束时间',
     dateTimePickerRangeSeparator: '至',
-    selectDate : '日期范围',
+    selectDatePlaceholder: '日期范围',
     datePickerStartDate: '开始日期',
     datePickerEndDate: '结束日期'
   },

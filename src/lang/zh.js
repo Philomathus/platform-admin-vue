@@ -43,8 +43,8 @@ export default {
     dateTimePickerRangeSeparator: '至',
     namePlaceholder: '请输入姓名',
     selectDateLabel: '日期范围',
-    datePickerStartDate: '开始日期',
-    datePickerEndDate: '结束日期',
+    datePickerStartDatePlaceholder: '开始日期',
+    datePickerEndDatePlaceholder: '结束日期',
     operationColumn: '操作',
   },
 
@@ -1088,24 +1088,6 @@ export default {
     }
   },
 
-  common: {
-    dialogTitle: '警告',
-    promptTitle: '提示',
-    addButton: '新增',
-    editButton: '修改',
-    removeButton: '删除',
-    searchButton: '搜索',
-    resetButton: '重置',
-    exportButton: '导出',
-    confirmButton3: '确定',
-    operationColumn: '操作',
-    dateTimePickerStartTime: '开始时间',
-    dateTimePickerEndTime: '结束时间',
-    dateTimePickerRangeSeparator: '至',
-    datePickerStartDate: '开始日期',
-    datePickerEndDate: '结束日期'
-  },
-
   liveWeb: {
     anchorAward: {
       queryForm: {
@@ -2058,16 +2040,16 @@ export default {
         moreButton: '更多'
       },
       messageBox: {
-        banErrorMessage: '修改禁播状态失败',
-        submitSuccessful: '审核成功',
-        openLiveSuccessful: '开播成功',
-        openLiveErrorMessage: '开播失败',
-        closeLiveSuccessful: '关播成功',
-        closeLiveErrorMessage: '关播失败',
-        kickOutSuccessful: '踢出成功',
-        kickOutErrorMessage: '踢出主播失败',
-        kickOutFamilyBulkErrorMessage: '踢出家族失败',
-        changeAuthTypeSuccessful: '状态修改成功',
+        banError: '修改禁播状态失败',
+        submitSuccess: '审核成功',
+        openLiveSuccess: '开播成功',
+        openLiveError: '开播失败',
+        closeLiveSuccess: '关播成功',
+        closeLiveError: '关播失败',
+        kickOutSuccess: '踢出成功',
+        kickOutError: '踢出主播失败',
+        kickOutFamilyBulkError: '踢出家族失败',
+        changeAuthTypeSuccess: '状态修改成功',
         changeAuthTypeError1: '状态修改失败',
         changeAuthTypeError2: '网络异常',
         joinFamilyBulkError: '加入家族失败'
@@ -2157,9 +2139,173 @@ export default {
     },
     liveUserMore: {
       tab1: {
-        queryParams: {
-          selectDateLabel: ''
+        title: '聊天室记录',
+        queryForm: {
+          selectDateLabel: '@:global.selectDateLabel',
+          selectDateStartPlaceholder: '@:global.dateTimePickerStartTimePlaceholder',
+          selectDateEndPlaceholder: '@:global.dateTimePickerEndTimePlaceholder',
+          selectDateRangeSeparator: '@:global.dateTimePickerRangeSeparator',
+          searchButton: '@:global.searchButton',
+          resetButton: '@:global.resetButton'
+        },
+        table: {
+          postcatId: '主播ID',
+          poscatNickname: '主播昵称',
+          fromPlatform: '发送者',
+          userNickName: '发送者昵称',
+          type: '消息类型',
+          type0: '普通消息',
+          type1: '未知',
+          msg: '消息内容',
+          createTime: '发送时间'
+        },
+        cancelButton: '@:global.cancelButton'
+      },
+      tab3: {
+        title: '收礼物日志',
+        queryForm: {
+          selectDateLabel: '@:global.selectDateLabel',
+          selectDateStartPlaceholder: '@:global.dateTimePickerStartTimePlaceholder',
+          selectDateEndPlaceholder: '@:global.dateTimePickerEndTimePlaceholder',
+          selectDateRangeSeparator: '@:global.dateTimePickerRangeSeparator',
+          giftNameLabel: '礼物名称',
+          giftNamePlaceholder: '请输入礼物名称',
+          searchButton: '@:global.searchButton',
+          resetButton: '@:global.resetButton'
+        },
+        table: {
+          propId: '礼物ID',
+          propName: '礼物名称',
+          perUserId: '会员平台ID',
+          totalDiamonds: '钻石',
+          createDate: '创建时间',
+          num: '发送数量'
+        },
+        cancelButton: '@:global.cancelButton'
+      },
+      tab5: {
+        title: '提现比例',
+        coinLabel: '时薪',
+        weixinPriceLabel: '开播时长任务',
+        weiboMoneyLabel: '收礼任务',
+        xpointLabel: '彩票抽成',
+        ypointLabel: '礼物抽成',
+        qqIdLabel: '每日开播任务时间（开始）',
+        qqIdPlaceholder: '任意时间点',
+        qqTokenLabel: '每日开播任务时间（结束）',
+        qqTokenPlaceholder: '任意时间点',
+        confirmButton: '确定修改',
+        cancelButton: '@:global.cancelButton',
+        validations: {
+          coin: '时薪不能为空',
+          weixinPrice: '开播时长任务不能为空',
+          weiboMoney: '收礼任务不能为空',
+          qqId: '每日开播任务时间（开始）',
+          qqToken: '每日开播任务时间（结束）',
+          xpoint: '彩票抽成不能为空',
+          ypoint: '礼物抽成不能为空'
         }
+      },
+      tab6: {
+        title: '重置手机号',
+        mobileLabel: '旧手机号',
+        mobilePlaceholder: '请输入旧手机号',
+        viewMobileButton: '查看完整手机号',
+        newMobileLabel: '新手机号',
+        newMobilePlaceholder: '请输入新手机号',
+        googleAuthCodeLabel: 'google验证码',
+        googleAuthCodePlaceholder: '请输入google验证码',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
+        validations: {
+          mobile: '旧手机号码不能为空',
+          newMobile: '新手机号码不能为空',
+          googleAuthCode: '谷歌验证码不能为空'
+        }
+      },
+      tab7: {
+        title: '银行卡',
+        realName: '真实姓名',
+        bankAccount: '银行卡号',
+        bankName: '银行名称',
+        operation: '@:global.operationColumn',
+        editButton: '@:global.editButton',
+        deleteButton: '@:global.deleteButton',
+        cancelButton: '@:global.cancelButton',
+        confirmUpdateDialog: {
+          title: '@:global.dialogTitle',
+          message: '是否修改银行卡信息?',
+          confirmButton: '@:global.confirmButton',
+          cancelButton: '@:global.cancelButton'
+        },
+        confirmDeleteDialog: {
+          title: '@:global.dialogTitle',
+          message: '是否确认删除银行卡号为"{bankAccount}"的数据项?',
+          confirmButton: '@:global.confirmButton',
+          cancelButton: '@:global.cancelButton'
+        }
+      },
+      tab8: {
+        title: '修改印票'
+      },
+      tab9: {
+        title: '重置提现密码',
+        passwordLabel: '重置提现密码',
+        passwordPlaceholder: '请输入新提现密码',
+        googleAuthCodeLabel: 'google验证码',
+        googleAuthCodePlaceholder: '请输入google验证码',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
+        validations: {
+          payPassword: '重置提现密码不能为空',
+          payPasswordMax: '重置提现密码长度不能超过30个字符'
+        }
+      },
+      inputPrompt: {
+        title: '@:global.promptTitle',
+        familyIdMessage: '请输入家族ID',
+        printedTicketMessage: '请输入印票',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
+        inputErrorMessage: '请输入数字类型'
+      },
+      messageBox: {
+        updateMobileSuccess: '手机号修改成功',
+        liveUserFullMobileSuccess: '完整手机号码已展示',
+        liveUserFullMobileError: '手机号码不可用',
+        updateTicketError: '修改印票失败',
+        cancelInput: '取消输入',
+        chatPageError: '获取聊天记录列表失败',
+        receiveProplistError: '获取聊天记录列表失败',
+        editRateError: '开始时间不能大于结束时间',
+        updateLiveUserSuccess: '修改成功',
+        updateLiveUserError: '修改失败',
+        updateLiveUserBankSuccess: '修改成功',
+        updateLiveUserBankError1: '网络异常',
+        updateLiveUserBankError2: '已取消',
+        deleteSuccess: '删除成功',
+        deleteError: '取消删除',
+        logPageError: '获取账户日志失败'
+      }
+    },
+    liveUserMount: {
+      queryForm: {
+        selectDateLabel: '过期时间',
+        selectDateStartPlaceholder: '开始日期',
+        selectDateEndPlaceholder: '结束日期',
+        userIdLabel: '会员ID',
+        userIdPlaceholder: '请输入会员ID',
+        mountIdPlaceholder: '请选择坐骑名称',
+        isUsePlaceholder: '请选择状态',
+        searchButton: '@:global.searchButton'
+      },
+      table: {
+        userId: '会员ID',
+        effectiveTime: '过期时间',
+        mountName: '坐骑名称',
+        isUse: '状态',
+        isUse0: '禁用',
+        isUse1: '启用'
       }
     }
   },

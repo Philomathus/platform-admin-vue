@@ -690,7 +690,7 @@ export default {
               return updateLiveUser(that.form)
             }).then(response => {
               if (response.code === 200) {
-                that.msgSuccess(this.$t('liveWeb.liveUser.messageBox.submitSuccessful'))
+                that.msgSuccess(this.$t('liveWeb.liveUser.messageBox.submitSuccess'))
               } else if (response.code === 500) {
                 that.msgError(response.msg)
               }
@@ -755,10 +755,10 @@ export default {
         lotteryName: lotteryName
       }).then(response => {
         that.openLiveStatus = false;
-        that.$notify.success(this.$t('liveWeb.liveUser.messageBox.openLiveSuccessful'))
+        that.$notify.success(this.$t('liveWeb.liveUser.messageBox.openLiveSuccess'))
         that.getList();
       }).catch((err) => {
-        that.$notify.error(this.$t('liveWeb.liveUser.messageBox.openLiveErrorMessage'))
+        that.$notify.error(this.$t('liveWeb.liveUser.messageBox.openLiveError'))
       })
     },
     //关播
@@ -766,10 +766,10 @@ export default {
       var that = this;
       this.loading = true
       closeLive({id: row.id}).then(response => {
-        that.$notify.success(this.$t('liveWeb.liveUser.messageBox.closeLiveSuccessful'))
+        that.$notify.success(this.$t('liveWeb.liveUser.messageBox.closeLiveSuccess'))
         that.getList();
       }).catch((err) => {
-        that.$notify.error(this.$t('liveWeb.liveUser.messageBox.closeLiveErrorMessage'))
+        that.$notify.error(this.$t('liveWeb.liveUser.messageBox.closeLiveError'))
       })
     },
     //踢出主播
@@ -782,10 +782,10 @@ export default {
         type: 'warning'
       }).then(function () {
         kickOutLiveUser(id).then(response => {
-          t.$notify.success(this.$t('liveWeb.liveUser.messageBox.kickOutSuccessful'))
+          t.$notify.success(this.$t('liveWeb.liveUser.messageBox.kickOutSuccess'))
           t.getList();
         }).catch((err) => {
-          t.$notify.error(this.$t('liveWeb.liveUser.messageBox.kickOutErrorMessage'))
+          t.$notify.error(this.$t('liveWeb.liveUser.messageBox.kickOutError'))
         })
       })
     },
@@ -806,7 +806,7 @@ export default {
             this.$message.error(res.msg)
           }
         }).catch((err) => {
-          this.$notify.error(this.$t('liveWeb.liveUser.messageBox.kickOutFamilyBulkErrorMessage'))
+          this.$notify.error(this.$t('liveWeb.liveUser.messageBox.kickOutFamilyBulkError'))
         })
       }).catch(() => {
       });
@@ -834,7 +834,7 @@ export default {
         isAuthentication: row.isAuthentication
       }).then((res) => {
         if (res.code === 0) {
-          this.$notify.success(this.$t('liveWeb.liveUser.messageBox.changeAuthTypeSuccessful'))
+          this.$notify.success(this.$t('liveWeb.liveUser.messageBox.changeAuthTypeSuccess'))
         } else {
           this.$notify.error(this.$t('liveWeb.liveUser.messageBox.changeAuthTypeError1'))
         }

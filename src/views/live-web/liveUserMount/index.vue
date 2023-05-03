@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="过期时间" prop="selectDate">
+      <el-form-item :label="$t('liveWeb.liveUserMount.queryForm.selectDateLabel')" prop="selectDate">
         <el-date-picker
           v-model="queryParams.selectDate"
           size="small"

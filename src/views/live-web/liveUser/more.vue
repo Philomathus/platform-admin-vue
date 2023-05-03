@@ -3,50 +3,50 @@
   <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="visible" width="800px" top="5vh" append-to-body>
     <!--顶部按钮-->
     <div class="page-tab" style="margin-bottom: 10px">
-      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(1,'聊天室记录')">
-        <span>聊天室记录</span></button>
+      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(1, $t('liveWeb.liveUserMore.tab1.title'))">
+        <span>{{$t('liveWeb.liveUserMore.tab1.title')}}</span></button>
 <!--      <button type="button" class="el-button el-button&#45;&#45;primary el-button&#45;&#45;mini is-plain" @click="change(2,'账户日志')">
         <span>账户日志</span>
       </button>-->
-      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(3,'收礼物日志')">
-        <span>收礼物日志</span></button>
-      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(5,'提现比例')">
-        <span>提现比例</span></button>
-      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(6,'重置手机号')">
-        <span>重置手机号</span></button>
+      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(3, $t('liveWeb.liveUserMore.tab3.title'))">
+        <span>{{$t('liveWeb.liveUserMore.tab3.title')}}</span></button>
+      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(5, $t('liveWeb.liveUserMore.tab5.title'))">
+        <span>{{$t('liveWeb.liveUserMore.tab5.title')}}</span></button>
+      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(6, $t('liveWeb.liveUserMore.tab6.title'))">
+        <span>{{$t('liveWeb.liveUserMore.tab6.title')}}</span></button>
 <!--      <button type="button" class="el-button el-button&#45;&#45;success el-button&#45;&#45;mini is-plain" @click="change(4,'加入家族')">
         <span>加入家族</span></button>-->
-      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(7,'银行卡')">
-        <span>银行卡</span></button>
-      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(8,'修改印票')">
-        <span>修改印票</span></button>
-      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(9,'重置提现密码')">
-        <span>重置提现密码</span></button>
+      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(7, $t('liveWeb.liveUserMore.tab7.title'))">
+        <span>{{$t('liveWeb.liveUserMore.tab7.title')}}</span></button>
+      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(8, $t('liveWeb.liveUserMore.tab8.title'))">
+        <span>{{$t('liveWeb.liveUserMore.tab8.title')}}</span></button>
+      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(9, $t('liveWeb.liveUserMore.tab9.title'))">
+        <span>{{$t('liveWeb.liveUserMore.tab9.title')}}</span></button>
     </div>
     <!--聊天室记录-->
     <el-row v-if="index===1">
       <el-form :model="queryParams" ref="queryForm" :inline="true" inline="inline">
-        <el-form-item label="日期范围" prop="selectDate">
+        <el-form-item :label="$t('liveWeb.liveUserMore.tab1.queryForm.selectDateLabel')" prop="selectDate">
           <el-date-picker type="daterange" v-model="queryParams.selectDate" format="yyyy-MM-dd"
-                          value-format="yyyy-MM-dd" :style="{width: '60%'}" start-placeholder="开始日期"
-                          end-placeholder="结束日期"
-                          range-separator="至" clearable></el-date-picker>
+                          value-format="yyyy-MM-dd" :style="{width: '60%'}" :start-placeholder="$t('liveWeb.liveUserMore.tab1.queryForm.selectDateStartPlaceholder')"
+                          :end-placeholder="$t('liveWeb.liveUserMore.tab1.queryForm.selectDateEndPlaceholder')"
+                          :range-separator="$t('liveWeb.liveUserMore.tab1.queryForm.selectDateRangeSeparator')" clearable></el-date-picker>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-          <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('liveWeb.liveUserMore.tab1.queryForm.searchButton')}}</el-button>
+          <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('liveWeb.liveUserMore.tab1.queryForm.resetButton')}}</el-button>
         </el-form-item>
       </el-form>
       <el-table @row-click="clickRow" ref="table" :data="dbTableList" @selection-change="handleSelectionChange"
                 height="260px">
-        <el-table-column prop="poscatId" label="主播ID" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="poscatNickName" label="主播昵称" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="fromPlatform" label="发送者" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="userNickName" label="发送者昵称" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="type" label="消息类型" :show-overflow-tooltip="true"
+        <el-table-column prop="poscatId" :label="$t('liveWeb.liveUserMore.tab1.table.postcatId')" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="poscatNickName" :label="$t('liveWeb.liveUserMore.tab1.table.poscatNickname')" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="fromPlatform" :label="$t('liveWeb.liveUserMore.tab1.table.fromPlatform')" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="userNickName" :label="$t('liveWeb.liveUserMore.tab1.table.userNickName')" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="type" :label="$t('liveWeb.liveUserMore.tab1.table.type')" :show-overflow-tooltip="true"
                          :formatter="formatterMsg"></el-table-column>
-        <el-table-column prop="msg" label="消息内容" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="createTime" label="发送时间" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="msg" :label="$t('liveWeb.liveUserMore.tab1.table.msg')" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="createTime" :label="$t('liveWeb.liveUserMore.tab1.table.createTime')" :show-overflow-tooltip="true"></el-table-column>
       </el-table>
       <pagination
         v-show="total>0"
@@ -56,7 +56,7 @@
         @pagination="getList"/>
 
       <!--adding close button here-->
-      <el-button @click="visible = false" class="close-button">取 消</el-button>
+      <el-button @click="visible = false" class="close-button">{{$t('liveWeb.liveUserMore.tab1.cancelButton')}}</el-button>
     </el-row>
     <!--账户日志-->
     <el-row v-if="index===2">
@@ -95,17 +95,17 @@
     <el-row v-if="index===7">
         <el-table @row-click="clickRow" ref="table" :data="liveBankList">
         <el-table-column prop="id" v-if="index===100"/>
-        <el-table-column prop="realName" label="真实姓名" :show-overflow-tooltip="true" min-width="80" align="center">
+        <el-table-column prop="realName" :label="$t('liveWeb.liveUserMore.tab7.realName')" :show-overflow-tooltip="true" min-width="80" align="center">
           <template v-slot="{row}" v-if="index===7">
             <el-input v-model.trim="row.realName"></el-input>
           </template>
           </el-table-column>
-        <el-table-column prop="bankAccount" label="银行卡号" :show-overflow-tooltip="true" min-width="150" align="center">
+        <el-table-column prop="bankAccount" :label="$t('liveWeb.liveUserMore.tab7.bankAccount')" :show-overflow-tooltip="true" min-width="150" align="center">
           <template v-slot="{row}" v-if="index===7">
             <el-input v-model.trim="row.bankAccount"></el-input>
           </template>
         </el-table-column>
-        <el-table-column prop="bankName" label="银行名称"  min-width="80" align="center">
+        <el-table-column prop="bankName" :label="$t('liveWeb.liveUserMore.tab7.bankName')"  min-width="80" align="center">
           <template v-slot="{row}" v-if="index===7">
             <el-select
             filterable
@@ -124,21 +124,21 @@
           </el-select>
           </template>
         </el-table-column>
-        <el-table-column label="操作" min-width="90" align="center">
+        <el-table-column :label="$t('liveWeb.liveUserMore.tab7.operation')" min-width="90" align="center">
           <template v-slot="{row}"  v-if="index===7">
             <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(row)"
-            >确认修改
+            >{{$t('liveWeb.liveUserMore.tab7.editButton')}}
             </el-button>
             <el-button
               size="mini"
               type="text"
               icon="el-icon-delete"
               @click="handleDelete(row)"
-            >删除
+            >{{$t('liveWeb.liveUserMore.tab7.deleteButton')}}
             </el-button>
           </template>
         </el-table-column>
@@ -151,41 +151,41 @@
         @pagination="getList"
       />
 <!--adding close button here-->
-      <el-button @click="visible = false" class="close-button">取 消</el-button>
+      <el-button @click="visible = false" class="close-button">{{$t('liveWeb.liveUserMore.tab7.cancelButton')}}</el-button>
     </el-row>
 
     <!--收礼物日志-->
     <el-row v-if="index===3">
       <el-form :model="queryParams" ref="queryForm" :inline="true">
-        <el-form-item label="日期范围" prop="selectDate">
+        <el-form-item :label="$t('liveWeb.liveUserMore.tab3.queryForm.selectDateLabel')" prop="selectDate">
           <el-date-picker type="daterange" v-model="queryParams.selectDate" format="yyyy-MM-dd"
-                          value-format="yyyy-MM-dd" :style="{width: '60%'}" start-placeholder="开始日期"
-                          end-placeholder="结束日期"
-                          range-separator="至" clearable></el-date-picker>
+                          value-format="yyyy-MM-dd" :style="{width: '60%'}" :start-placeholder="$t('liveWeb.liveUserMore.tab3.queryForm.selectDateStartPlaceholder')"
+                          :end-placeholder="$t('liveWeb.liveUserMore.tab3.queryForm.selectDateEndPlaceholder')"
+                          :range-separator="$t('liveWeb.liveUserMore.tab3.queryForm.selectDateRangeSeparator')" clearable></el-date-picker>
         </el-form-item>
-        <el-form-item label="礼物名称" prop="giftName">
+        <el-form-item :label="$t('liveWeb.liveUserMore.tab3.queryForm.giftNameLabel')" prop="giftName">
           <el-input
             v-model="queryParams.giftName"
-            placeholder="请输入礼物名称"
+            :placeholder="$t('liveWeb.liveUserMore.tab3.queryForm.giftNamePlaceholder')"
             clearable
             size="small"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-          <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('liveWeb.liveUserMore.tab3.queryForm.searchButton')}}</el-button>
+          <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('liveWeb.liveUserMore.tab3.queryForm.resetButton')}}</el-button>
         </el-form-item>
       </el-form>
       <el-table @row-click="clickRow" ref="table" :data="dbTableList" @selection-change="handleSelectionChange"
                 height="260px">
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column prop="propId" label="礼物ID" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="propName" label="礼物名称" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="perUserId" label="会员平台ID" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="totalDiamonds" label="钻石" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="createDate" label="创建时间" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="num" label="发送数量" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="propId" :label="$t('liveWeb.liveUserMore.tab3.table.propId')" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="propName" :label="$t('liveWeb.liveUserMore.tab3.table.propName')" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="perUserId" :label="$t('liveWeb.liveUserMore.tab3.table.perUserId')" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="totalDiamonds" :label="$t('liveWeb.liveUserMore.tab3.table.totalDiamonds')" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="createDate" :label="$t('liveWeb.liveUserMore.tab3.table.createDate')" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="num" :label="$t('liveWeb.liveUserMore.tab3.table.num')" :show-overflow-tooltip="true"></el-table-column>
       </el-table>
       <pagination
         v-show="total>0"
@@ -194,46 +194,46 @@
         :limit.sync="queryParams.pageSize"
         @pagination="getList"/>
 
-      <el-button @click="visible = false" style="float: right;margin-top: 35px">取 消</el-button>
+      <el-button @click="visible = false" style="float: right;margin-top: 35px">{{$t('liveWeb.liveUserMore.tab3.cancelButton')}}</el-button>
     </el-row>
 
     <!--提现比例-->
     <el-row v-if="index===5">
       <el-form :model="liveUserRate" ref="liveUserRate" :inline="false" :rules="RateRules">
-        <el-form-item label="时薪" prop="coin">
+        <el-form-item :label="$t('liveWeb.liveUserMore.tab5.coinLabel')" prop="coin">
           <el-input v-model="liveUserRate.coin" type="number" class="no-number"/>
         </el-form-item>
-        <el-form-item label="开播时长任务" prop="weixinPrice">
+        <el-form-item :label="$t('liveWeb.liveUserMore.tab5.weixinPriceLabel')" prop="weixinPrice">
           <el-input v-model="liveUserRate.weixinPrice" type="number" class="no-number"/>
         </el-form-item>
-        <el-form-item label="收礼任务" prop="weiboMoney">
+        <el-form-item :label="$t('liveWeb.liveUserMore.tab5.weiboMoneyLabel')" prop="weiboMoney">
           <el-input v-model="liveUserRate.weiboMoney" type="number" class="no-number"/>
         </el-form-item>
-        <el-form-item label="彩票抽成" prop="xpoint">
+        <el-form-item :label="$t('liveWeb.liveUserMore.tab5.xpointLabel')" prop="xpoint">
           <el-input v-model="liveUserRate.xpoint" type="number" class="no-number"/>
         </el-form-item>
-        <el-form-item label="礼物抽成" prop="ypoint">
+        <el-form-item :label="$t('liveWeb.liveUserMore.tab5.ypointLabel')" prop="ypoint">
           <el-input v-model="liveUserRate.ypoint" type="number" class="no-number"/>
         </el-form-item>
-        <el-form-item label="每日开播任务时间（开始）" prop="qqId" class="no-number">
+        <el-form-item :label="$t('liveWeb.liveUserMore.tab5.qqIdLabel')" prop="qqId" class="no-number">
           <el-time-picker
             arrow-control
             v-model="liveUserRate.qqId"
             value-format="HH:mm:ss"
-            placeholder="任意时间点">
+            :placeholder="$t('liveWeb.liveUserMore.tab5.qqIdPlaceholder')">
           </el-time-picker>
         </el-form-item>
-        <el-form-item label="每日开播任务时间（结束）" prop="qqToken" class="no-number">
+        <el-form-item :label="$t('liveWeb.liveUserMore.tab5.qqTokenLabel')" prop="qqToken" class="no-number">
           <el-time-picker
             arrow-control
             v-model="liveUserRate.qqToken"
             value-format="HH:mm:ss"
-            placeholder="任意时间点">
+            :placeholder="$t('liveWeb.liveUserMore.tab5.qqTokenPlaceholder')">
           </el-time-picker>
         </el-form-item>
         <el-form-item style="float: right">
-          <el-button type="primary" icon="el-icon-edit" size="mini" @click="editRate">确定修改</el-button>
-          <el-button @click="visible = false">取 消</el-button>
+          <el-button type="primary" icon="el-icon-edit" size="mini" @click="editRate">{{$t('liveWeb.liveUserMore.tab5.confirmButton')}}</el-button>
+          <el-button @click="visible = false">{{$t('liveWeb.liveUserMore.tab5.cancelButton')}}</el-button>
         </el-form-item>
       </el-form>
     </el-row>
@@ -243,23 +243,23 @@
       <el-form ref="mobileForm"  label-width="110px" :model="mobileForm" :rules="mobileRules">
 
 <!-- mobile hide and display full number -->
-        <el-form-item label="旧手机号"  prop="mobile">
-          <el-input v-model="mobileForm.mobile" placeholder="请输入旧手机号" style="width: 78%" readonly/>
-          <el-button type="primary" style="float: right" @click="liveUserFullMobile()">查看完整手机号</el-button>
+        <el-form-item :label="$t('liveWeb.liveUserMore.tab6.mobileLabel')" prop="mobile">
+          <el-input v-model="mobileForm.mobile" :placeholder="$t('liveWeb.liveUserMore.tab6.mobilePlaceholder')" style="width: 78%" readonly/>
+          <el-button type="primary" style="float: right" @click="liveUserFullMobile()">{{$t('liveWeb.liveUserMore.tab6.viewMobileButton')}}</el-button>
         </el-form-item>
 
 <!--   change mobile number add new mobile number -->
-        <el-form-item label="新手机号" prop="newMobile">
-          <el-input v-model="mobileForm.newMobile" placeholder="请输入新手机号"/>
+        <el-form-item :label="$t('liveWeb.liveUserMore.tab6.newMobileLabel')" prop="newMobile">
+          <el-input v-model="mobileForm.newMobile" :placeholder="$t('liveWeb.liveUserMore.tab6.newMobilePlaceholder')"/>
         </el-form-item>
 
 
-        <el-form-item label="google验证码" prop="googleAuthCode">
-          <el-input v-model="mobileForm.googleAuthCode" placeholder="请输入google验证码"/>
+        <el-form-item :label="$t('liveWeb.liveUserMore.tab6.googleAuthCodeLabel')" prop="googleAuthCode">
+          <el-input v-model="mobileForm.googleAuthCode" :placeholder="$t('liveWeb.liveUserMore.tab6.googleAuthCodePlaceholder')"/>
         </el-form-item>
         <el-form-item class="edit-close-btn">
-          <el-button type="primary" @click="updateMobile()" >确 定</el-button>
-          <el-button @click="visible = false">取 消</el-button>
+          <el-button type="primary" @click="updateMobile()" >{{$t('liveWeb.liveUserMore.tab6.confirmButton')}}</el-button>
+          <el-button @click="visible = false">{{$t('liveWeb.liveUserMore.tab6.cancelButton')}}</el-button>
         </el-form-item>
       </el-form>
 
@@ -268,18 +268,18 @@
     <!--重置提现密码-->
     <el-row v-if="index===9">
       <el-form ref="paypasswordForm" :model="paypasswordForm" :rules="paypasswordRules" label-width="110px">
-        <el-form-item label="重置提现密码" prop="password">
-          <el-input v-model="form.payPassword" placeholder="请输入新提现密码"/>
+        <el-form-item :label="$t('liveWeb.liveUserMore.tab9.passwordLabel')" prop="password">
+          <el-input v-model="form.payPassword" :placeholder="$t('liveWeb.liveUserMore.tab9.passwordPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="google验证码" prop="googleAuthCode">
-          <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>
+        <el-form-item :label="$t('liveWeb.liveUserMore.tab9.googleAuthCodeLabel')" prop="googleAuthCode">
+          <el-input v-model="form.googleAuthCode" :placeholder="$t('liveWeb.liveUserMore.tab9.googleAuthCodePlaceholder')"/>
         </el-form-item>
         <el-form-item class="edit-close-btn">
           <el-button type="primary"
                      @click="handlePaypassword()"
-                     v-has-permi="['admin:liveUser:reset']">确定
+                     v-has-permi="['admin:liveUser:reset']">{{$t('liveWeb.liveUserMore.tab9.confirmButton')}}
           </el-button>
-          <el-button @click="visible = false">取 消</el-button>
+          <el-button @click="visible = false">{{$t('liveWeb.liveUserMore.tab9.cancelButton')}}</el-button>
         </el-form-item>
       </el-form>
     </el-row>
@@ -340,44 +340,44 @@
               // 重置提现密码表单校验
               paypasswordRules: {
                 payPassword: [
-                  {required: true, message: '重置提现密码不能为空', trigger: 'blur'},
-                  {max: 30, message: "重置提现密码长度不能超过30个字符"}
+                  {required: true, message: this.$t('liveWeb.liveUserMore.tab9.validations.payPassword'), trigger: 'blur'},
+                  {max: 30, message: this.$t('liveWeb.liveUserMore.tab9.validations.payPasswordMax')}
                 ],
               },
               //手机号校验规则
               mobileRules: {
                 mobile: [
-                  {required: true, message: '旧手机号码不能为空', trigger: 'blur'}
+                  {required: true, message: this.$t('liveWeb.liveUserMore.tab6.validations.mobile'), trigger: 'blur'}
                 ],
                 newMobile: [
-                  {required: true, message: '新手机号码不能为空', trigger: 'blur'}
+                  {required: true, message: this.$t('liveWeb.liveUserMore.tab6.validations.newMobile'), trigger: 'blur'}
                 ],
                 googleAuthCode: [
-                  {required: true, message: '谷歌验证码不能为空', trigger: 'blur'}
+                  {required: true, message: this.$t('liveWeb.liveUserMore.tab6.validations.googleAuthCode'), trigger: 'blur'}
                 ],
               },
               //提现比例校验规则
               RateRules: {
                 coin: [
-                  {required: true, message: '时薪不能为空', trigger: 'blur'}
+                  {required: true, message: this.$t('liveWeb.liveUserMore.tab5.validations.coin'), trigger: 'blur'}
                 ],
                 weixinPrice: [
-                  {required: true, message: '开播时长任务不能为空', trigger: 'blur'}
+                  {required: true, message: this.$t('liveWeb.liveUserMore.tab5.validations.weixinPrice'), trigger: 'blur'}
                 ],
                 weiboMoney: [
-                  {required: true, message: '收礼任务不能为空', trigger: 'blur'}
+                  {required: true, message: this.$t('liveWeb.liveUserMore.tab5.validations.weiboMoney'), trigger: 'blur'}
                 ],
                 qqId: [
-                  {required: true, message: '每日开播任务时间（开始）', trigger: 'blur'}
+                  {required: true, message: this.$t('liveWeb.liveUserMore.tab5.validations.qqId'), trigger: 'blur'}
                 ],
                 qqToken: [
-                  {required: true, message: '每日开播任务时间（结束）', trigger: 'blur'}
+                  {required: true, message: this.$t('liveWeb.liveUserMore.tab5.validations.qqToken'), trigger: 'blur'}
                 ],
                 xpoint: [
-                  {required: true, message: '彩票抽成不能为空', trigger: 'blur'}
+                  {required: true, message: this.$t('liveWeb.liveUserMore.tab5.validations.xpoint'), trigger: 'blur'}
                 ],
                 ypoint: [
-                  {required: true, message: '礼物抽成不能为空', trigger: 'blur'}
+                  {required: true, message: this.$t('liveWeb.liveUserMore.tab5.validations.ypoint'), trigger: 'blur'}
                 ],
               },
               //银行卡校验规则
@@ -434,7 +434,7 @@
               if (valid) {
                 this.mobileForm.userId = this.userId + ''
                 updateMobile(this.mobileForm).then((res) => {
-                  that.$notify.success("手机号修改成功")
+                  that.$notify.success(this.$t('liveWeb.liveUserMore.messageBox.updateMobileSuccess'))
                   that.visible = false
                   that.$emit('liveUserMore');
                 })
@@ -448,9 +448,9 @@
                 liveFullMobile(this.userId+'').then((res) => {
                 this.mobileForm = res.data
                   if(!this.mobileForm.mobile){
-                    this.$message.error("手机号码不可用");
+                    this.$message.error(this.$t('liveWeb.liveUserMore.messageBox.liveUserFullMobileSuccess'));
                   }else{
-                    this.$message.success('完整手机号码已展示')
+                    this.$message.success(this.$t('liveWeb.liveUserMore.messageBox.liveUserFullMobileError'))
                   }
               })
             }
@@ -459,9 +459,9 @@
             formatterMsg(row, column) {
                 var type = row.type;
                 if (type === 0) {
-                    return '普通消息';
+                    return this.$t('liveWeb.liveUserMore.tab1.table.type0');
                 } else {
-                    return '未知';
+                    return this.$t('liveWeb.liveUserMore.tab1.table.type1');
                 }
             },
             //银行卡类型格式化
@@ -482,11 +482,11 @@
                 var hint = '';
                 switch (index) {
                     case 4 :
-                        hint = '请输入家族ID'
+                        hint = this.$t('liveWeb.liveUserMore.inputPrompt.familyIdMessage')
                         this.open(hint, 2);
                         break;
                     case 8 :
-                        hint = '请输入印票'
+                        hint = this.$t('liveWeb.liveUserMore.inputPrompt.printedTicketMessage')
                         this.open(hint, 2);
                         break;
                 }
@@ -537,11 +537,11 @@
                         });
                     });
                 } else if (type === 2){
-                    this.$prompt(hint, '提示', {
-                        confirmButtonText: '确定',
-                        cancelButtonText: '取消',
+                    this.$prompt(hint, this.$t('liveWeb.liveUserMore.inputPrompt.title'), {
+                        confirmButtonText: this.$t('liveWeb.liveUserMore.inputPrompt.confirmButton'),
+                        cancelButtonText: this.$t('liveWeb.liveUserMore.inputPrompt.cancelButton'),
                         inputPattern: /^(\-|\+)?\d+(\.\d+)?$/,
-                        inputErrorMessage: '请输入数字类型'
+                        inputErrorMessage: this.$t('liveWeb.liveUserMore.inputPrompt.inputErrorMessage')
                     }).then(({value}) => {
                         if (this.index === 4) {
                             goFamiily({
@@ -549,7 +549,7 @@
                                 id: this.userId
                             }).then((res) => {
                                 if (res.code === 200){
-                                    this.$message.success('加入家族成功')
+                                  this.$message.success('加入家族成功')
                                 } else {
                                   this.$message.error(res.msg)
                                 }
@@ -568,7 +568,7 @@
                               this.$message.error(res.msg)
                             }
                           }).catch(() => {
-                            this.$notify.error('修改印票失败')
+                            this.$notify.error(this.$t('liveWeb.liveUserMore.messageBox.updateTicketError'))
                           })
                         }
                     }).catch(() => {
@@ -660,7 +660,7 @@
                         this.total = res.total;
                     }
                 }).catch(() => {
-                    this.$notify.error('获取聊天记录列表失败')
+                    this.$notify.error(this.$t('liveWeb.liveUserMore.messageBox.chatPageError'))
                 });
             },
             //接受礼物日志
@@ -682,7 +682,7 @@
                         this.total = res.total;
                     }
                 }).catch(() => {
-                    this.$notify.error('获取聊天记录列表失败')
+                    this.$notify.error(this.$t('liveWeb.liveUserMore.messageBox.receiveProplistError'))
                 });
             },
           //修改主播提现比例
@@ -694,13 +694,13 @@
                 this.liveUserRate.qqToken='23:59:59';
             }
             if (this.liveUserRate.qqId>this.liveUserRate.qqToken){
-              this.$notify.warning('开始时间不能大于结束时间')
+              this.$notify.warning(this.$t('liveWeb.liveUserMore.messageBox.editRateError'))
               return;
             }
               return updateLiveUser(this.liveUserRate).then((res) => {
-                      this.$notify.success("修改成功")
+                      this.$notify.success(this.$t('liveWeb.liveUserMore.messageBox.updateLiveUserSuccess'))
                     }).catch(() => {
-                      this.$notify.success("修改失败")
+                      this.$notify.success(this.$t('liveWeb.liveUserMore.messageBox.updateLiveUserError'))
                     });
             },
           //查询主播提现比例
@@ -724,41 +724,41 @@
 
           //修改主播银行卡
           handleUpdate(row) {
-          this.$confirm('是否修改银行卡信息?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
+          this.$confirm(this.$t('liveWeb.liveUserMore.tab7.confirmUpdateDialog.message'), this.$t('liveWeb.liveUserMore.tab7.confirmUpdateDialog.title'), {
+            confirmButtonText: this.$t('liveWeb.liveUserMore.tab7.confirmUpdateDialog.confirmButton'),
+            cancelButtonText: this.$t('liveWeb.liveUserMore.tab7.confirmUpdateDialog.cancelButton'),
             type: 'warning'
           }).then(() => {
             this.loading = true
             updateLiveUserBank(row).then(res => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess(this.$t('liveWeb.liveUserMore.messageBox.updateLiveUserBankSuccess'));
               this.queryBank();
             }).catch(() => {
-              this.$notify.error('网络异常')
+              this.$notify.error(this.$t('liveWeb.liveUserMore.messageBox.updateLiveUserBankError1'))
             }).finally(() => {
               this.loading = false
             })
           }).catch(() => {
             this.$message({
               type: 'info',
-              message: '已取消'
+              message: this.$t('liveWeb.liveUserMore.messageBox.updateLiveUserBankError2')
             });
           });
         },
           /** 删除按钮操作 */
           handleDelete(row) {
             const bankAccount = row.bankAccount;
-            this.$confirm('是否确认删除银行卡号为"' + row.bankAccount + '"的数据项?', "警告", {
-              confirmButtonText: "确定",
-              cancelButtonText: "取消",
+            this.$confirm(this.$t('liveWeb.liveUserMore.tab7.confirmDeleteDialog.message', {bankAccount: row.bankAccount}), this.$t('liveWeb.liveUserMore.tab7.confirmDeleteDialog.title'), {
+              confirmButtonText: this.$t('liveWeb.liveUserMore.tab7.confirmDeleteDialog.confirmButton'),
+              cancelButtonText: this.$t('liveWeb.liveUserMore.tab7.confirmDeleteDialog.cancelButton'),
               type: "warning"
             }).then(function () {
               return delLiveUserBank(bankAccount);
             }).then(() => {
               this.queryBank();
-              this.msgSuccess("删除成功");
+              this.msgSuccess(this.$t('liveWeb.liveUserMore.messageBox.deleteSuccess'));
             }).catch(() => {
-              this.msgWarning('取消删除')
+              this.msgWarning(this.$t('liveWeb.liveUserMore.messageBox.deleteError'))
             });
           },
             //获取账户日志
@@ -773,7 +773,7 @@
                         this.total = res.total;
                     }
                 }).catch(() => {
-                    this.$notify.error('获取账户日志失败')
+                    this.$notify.error(this.$t('liveWeb.liveUserMore.messageBox.logPageError'))
                 });
             },
             /** 搜索按钮操作 */

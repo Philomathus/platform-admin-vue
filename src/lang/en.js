@@ -15,7 +15,6 @@ export default {
     submitButton: 'Submit',
     newButton: 'New',
     moreButton: 'More',
-    operation: 'Operation',
     statusEnable: 'Enable',
     statusDisable: 'Disable',
     sort: 'Sort',
@@ -39,9 +38,13 @@ export default {
     statusPlaceholder: 'Please select status',
     nickNamePlaceholder: 'Please enter a Nickname',
     userNamePlaceholder: 'Please enter UserName',
-    selectDateStartPlaceholder: 'Start Time',
-    selectDateEndPlaceholder: 'End Time',
-    namePlaceholder:'please enter name'
+    dateTimePickerStartTimePlaceholder: 'Start Time',
+    dateTimePickerEndTimePlaceholder: 'End Time',
+    namePlaceholder:'Please Enter Name',
+    selectDatePlaceholder: 'Date Range',
+    datePickerStartDate: 'Start Date',
+    datePickerEndDate: 'End Date',
+    operationColumn: 'Operation',
   },
 
   navbar: {

@@ -9,15 +9,15 @@
           value-format="yyyy-MM-dd"
           type="daterange"
           range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :start-placeholder="$t('liveWeb.liveUserMount.queryForm.selectDateStartPlaceholder')"
+          :end-placeholder="$t('liveWeb.liveUserMount.queryForm.selectDateEndPlaceholder')"
           :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item label="会员ID" prop="userId">
+      <el-form-item :label="$t('liveWeb.liveUserMount.queryForm.userIdLabel')" prop="userId">
         <el-input
           v-model.trim="queryParams.userId"
-          placeholder="请输入会员ID"
+          :placeholder="$t('liveWeb.liveUserMount.queryForm.userIdPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -27,7 +27,7 @@
         <el-select
           filterable
           v-model="queryParams.mountId"
-          placeholder="请选择坐骑名称"
+          :placeholder="$t('liveWeb.liveUserMount.queryForm.mountIdPlaceholder')"
           clearable
           size="small"
           style="width: 240px"
@@ -41,7 +41,7 @@
         </el-select>
       </el-form-item>
       <el-form-item prop="isUse">
-        <el-select v-model="queryParams.isUse" placeholder="请选择状态" size="small" clearable>
+        <el-select v-model="queryParams.isUse" :placeholder="$t('liveWeb.liveUserMount.queryForm.isUsePlaceholder')" size="small" clearable>
           <el-option
             v-for="item in isUseOptions"
             :key="item.value"
@@ -51,7 +51,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('liveWeb.liveUserMount.queryForm.searchButton')}}</el-button>
 <!--        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>-->
       </el-form-item>
     </el-form>
@@ -103,14 +103,14 @@
     </el-row>
 
     <el-table stripe v-loading="loading" :data="liveUserMountList">
-      <el-table-column label="会员ID" align="center" prop="userId" />
-      <el-table-column label="过期时间" align="center" prop="effectiveTime">
+      <el-table-column :label="$t('liveWeb.liveUserMount.table.userId')" align="center" prop="userId" />
+      <el-table-column :label="$t('liveWeb.liveUserMount.table.effectiveTime')" align="center" prop="effectiveTime">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.effectiveTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="坐骑名称" align="center" prop="mountName" />
-      <el-table-column label="状态" align="center" prop="isUse" :formatter="formatterIsUse"/>
+      <el-table-column :label="$t('liveWeb.liveUserMount.table.mountName')" align="center" prop="mountName" />
+      <el-table-column :label="$t('liveWeb.liveUserMount.table.isUse')" align="center" prop="isUse" :formatter="formatterIsUse"/>
 <!--      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">-->
 <!--        <template slot-scope="scope">-->
 <!--          <el-button-->
@@ -236,9 +236,9 @@ export default {
     // 状态
     formatterIsUse(row) {
       if (row.isUse == 0) {
-        return '禁用'
+        return this.$t('liveWeb.liveUserMount.table.isUse0')
       } else if (row.isUse == 1) {
-        return '启用'
+        return this.$t('liveWeb.liveUserMount.table.isUse1')
       }
     },
     /** 查询坐骑领取记录列表 */

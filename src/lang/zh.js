@@ -2291,8 +2291,8 @@ export default {
     liveUserMount: {
       queryForm: {
         selectDateLabel: '过期时间',
-        selectDateStartPlaceholder: '开始日期',
-        selectDateEndPlaceholder: '结束日期',
+        selectDateStartPlaceholder: '@:global.datePickerStartDatePlaceholder',
+        selectDateEndPlaceholder: '@:global.datePickerEndDatePlaceholder',
         userIdLabel: '会员ID',
         userIdPlaceholder: '请输入会员ID',
         mountIdPlaceholder: '请选择坐骑名称',

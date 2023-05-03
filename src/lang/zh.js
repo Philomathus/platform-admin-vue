@@ -15,7 +15,6 @@ export default {
     submitButton: '确 定',
     newButton: '新的',
     moreButton: '更多',
-    operation: '操作',
     statusEnable: '启用',
     statusDisable: '停用',
     sort: '排序',

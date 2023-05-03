@@ -1,20 +1,20 @@
 <template>
   <div class="app-container">
     <div v-loading="totalLoading">
-    <el-button type="primary" @click="copy1">{{$t('lotteryBet.totalCostButton')}} {{ this.totalData.totalCost||0 }}</el-button>
-    <el-button type="success" @click="copy2">{{$t('lotteryBet.totalPrizeButton')}} {{this.totalData.totalPrize||0 }}</el-button>
-    <el-button  type="primary" icon="el-icon-search" size="mini" @click="getCountTotal()" style="margin-left: 20px">{{$t('lotteryBet.totalCountButton')}}</el-button>
+    <el-button type="primary" @click="copy1">{{$t('lottery.lotteryBet.totalCostButton')}} {{ this.totalData.totalCost||0 }}</el-button>
+    <el-button type="success" @click="copy2">{{$t('lottery.lotteryBet.totalPrizeButton')}} {{this.totalData.totalPrize||0 }}</el-button>
+    <el-button  type="primary" icon="el-icon-search" size="mini" @click="getCountTotal()" style="margin-left: 20px">{{$t('lottery.lotteryBet.totalCountButton')}}</el-button>
     </div>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px" style="margin-top: 20px">
-      <el-form-item :label="$t('lotteryBet.form.lotteryFormLabel')" prop="betTime">
+      <el-form-item :label="$t('lottery.lotteryBet.form.lotteryFormLabel')" prop="betTime">
         <el-date-picker type="datetimerange"
                         v-model="queryParams.selectDate"
                         format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss"
                         style="width: 360px"
-                        :start-placeholder="$t('lotteryBet.form.startTimePlaceholder')"
-                        :end-placeholder="$t('lotteryBet.form.endTimePlaceholder')"
-                        :range-separator="$t('lotteryBet.form.rangeSeparator')"
+                        :start-placeholder="$t('global.dateTimePickerStartTimePlaceholder')"
+                        :end-placeholder="$t('global.dateTimePickerEndTimePlaceholder')"
+                        :range-separator="$t('global.dateTimePickerRangeSeparator')"
                         default-time="['00:00:00', '23:59:59']"
                         clearable
                         :picker-options="pickerOptions"
@@ -23,7 +23,7 @@
       <el-form-item prop="puserId">
         <el-input
           v-model="queryParams.puserId"
-          :placeholder="$t('lotteryBet.form.puserIdPlaceholder')"
+          :placeholder="$t('lottery.lotteryBet.form.puserIdPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -32,7 +32,7 @@
       <el-form-item prop="issue" style="width: 150px;">
         <el-input
           v-model="queryParams.issue"
-          :placeholder="$t('lotteryBet.form.issuePlaceholder')"
+          :placeholder="$t('lottery.lotteryBet.form.issuePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -41,7 +41,7 @@
       <el-form-item prop="lotteryName">
         <el-select
           v-model="queryParams.lotteryName"
-          :placeholder="$t('lotteryBet.form.lotteryNamePlaceholder')"
+          :placeholder="$t('lottery.lotteryBet.form.lotteryNamePlaceholder')"
           clearable
           size="small"
           style="width: 240px"
@@ -57,7 +57,7 @@
       <el-form-item prop="cost">
         <el-input
           v-model="queryParams.priceMin"
-          :placeholder="$t('lotteryBet.form.priceMinPlaceholder')"
+          :placeholder="$t('lottery.lotteryBet.form.priceMinPlaceholder')"
           clearable
           autocomplete="on"
           min="0"
@@ -70,7 +70,7 @@
         -
         <el-input
           v-model="queryParams.priceMax"
-          :placeholder="$t('lotteryBet.form.priceMaxPlaceholder')"
+          :placeholder="$t('lottery.lotteryBet.form.priceMaxPlaceholder')"
           clearable
           autocomplete="on"
           min="0"
@@ -82,8 +82,8 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('lotteryBet.form.searchButton')}}</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('lotteryBet.form.resetButton')}}</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('lottery.lotteryBet.form.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('lottery.lotteryBet.form.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -96,39 +96,39 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:lotteryBet:list']"
-        >{{$t('lotteryBet.exportButton')}}
+        >{{$t('lottery.lotteryBet.exportButton')}}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="lotteryBet0List">
-      <el-table-column :label="$t('lotteryBet.tableColumns.puserId')" align="center" prop="puserId"/>
-      <el-table-column :label="$t('lotteryBet.tableColumns.lotteryName')" align="center" prop="lotteryName"/>
-      <el-table-column :label="$t('lotteryBet.tableColumns.issue')" align="center" prop="issue"/>
-      <el-table-column :label="$t('lotteryBet.tableColumns.code')" align="center" prop="code"/>
-      <el-table-column :label="$t('lotteryBet.tableColumns.chip')" align="center" prop="chip"/>
-      <el-table-column :label="$t('lotteryBet.tableColumns.cost')" align="center" prop="cost"/>
-      <el-table-column :label="$t('lotteryBet.tableColumns.betSelect')" align="center" prop="betSelect"/>
-      <el-table-column :label="$t('lotteryBet.tableColumns.status')" align="center" prop="status">
+      <el-table-column :label="$t('lottery.lotteryBet.tableColumns.puserId')" align="center" prop="puserId"/>
+      <el-table-column :label="$t('lottery.lotteryBet.tableColumns.lotteryName')" align="center" prop="lotteryName"/>
+      <el-table-column :label="$t('lottery.lotteryBet.tableColumns.issue')" align="center" prop="issue"/>
+      <el-table-column :label="$t('lottery.lotteryBet.tableColumns.code')" align="center" prop="code"/>
+      <el-table-column :label="$t('lottery.lotteryBet.tableColumns.chip')" align="center" prop="chip"/>
+      <el-table-column :label="$t('lottery.lotteryBet.tableColumns.cost')" align="center" prop="cost"/>
+      <el-table-column :label="$t('lottery.lotteryBet.tableColumns.betSelect')" align="center" prop="betSelect"/>
+      <el-table-column :label="$t('lottery.lotteryBet.tableColumns.status')" align="center" prop="status">
         <template slot-scope="scope">
           <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">
             {{ status.dictLabel }}
           </span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('lotteryBet.tableColumns.prize')" align="center" prop="prize"/>
+      <el-table-column :label="$t('lottery.lotteryBet.tableColumns.prize')" align="center" prop="prize"/>
       <!--      <el-table-column label="下注选择菜单" align="center" prop="methodId" />-->
       <!--      <el-table-column label="下注索引" align="center" prop="betIds" />-->
       <!--      <el-table-column label="下注彩种id" align="center" prop="lotteryId" />-->
       <!--      <el-table-column label="主播ID" align="center" prop="anchor" />-->
-      <el-table-column :label="$t('lotteryBet.tableColumns.betTime')" align="center" min-width="120px" prop="betTime" width="180">
+      <el-table-column :label="$t('lottery.lotteryBet.tableColumns.betTime')" align="center" min-width="120px" prop="betTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.betTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('lotteryBet.tableColumns.anchor')" align="center" prop="anchor"/>
-      <el-table-column :label="$t('lotteryBet.tableColumns.operation')" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('lottery.lotteryBet.tableColumns.anchor')" align="center" prop="anchor"/>
+      <el-table-column :label="$t('lottery.lotteryBet.tableColumns.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -288,7 +288,7 @@ export default {
         const reg = '^[0-9a-zA-Z_]{1,}$'
         let flag = this.queryParams.puserId.match(reg)
         if(!flag){
-          this.msgError(this.$t('lotteryBet.responseMessages.memberIdFormatError'))
+          this.msgError(this.$t('lottery.lotteryBet.responseMessages.memberIdFormatError'))
           return
         }
       }
@@ -297,17 +297,17 @@ export default {
       var max=this.queryParams.priceMax
       if ((min!=="" || min!=null) && (max!=="" || max!=null)){
         if (parseInt(min)>parseInt(max)){
-          this.$message.warning(this.$t('lotteryBet.responseMessages.priceLimitWarning'))
+          this.$message.warning(this.$t('lottery.lotteryBet.responseMessages.priceLimitWarning'))
         }else {
           this.getList()
         }
       }else if ((min==="" || min==null) && (max==="" || max==null)){
         this.getList()
       }else {
-        this.$message.warning(this.$t('lotteryBet.responseMessages.priceLimitWarning'))
+        this.$message.warning(this.$t('lottery.lotteryBet.responseMessages.priceLimitWarning'))
       }
       if (this.queryParams.abnormal && !this.queryParams.puserId) {
-        this.$message.error(this.$t('lotteryBet.responseMessages.abnormalQueryError'))
+        this.$message.error(this.$t('lottery.lotteryBet.responseMessages.abnormalQueryError'))
         return
       }
       this.getList()
@@ -321,9 +321,9 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm(this.$t('lotteryBet.confirmExportDialog.message'), this.$t('lotteryBet.confirmExportDialog.title'), {
-        confirmButtonText: this.$t('lotteryBet.confirmExportDialog.confirmButton'),
-        cancelButtonText: this.$t('lotteryBet.confirmExportDialog.cancelButton'),
+      this.$confirm(this.$t('lottery.lotteryBet.confirmExportDialog.message'), this.$t('lottery.lotteryBet.confirmExportDialog.title'), {
+        confirmButtonText: this.$t('lottery.lotteryBet.confirmExportDialog.confirmButton'),
+        cancelButtonText: this.$t('lottery.lotteryBet.confirmExportDialog.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportLotteryBet0(queryParams);
@@ -335,7 +335,7 @@ export default {
     /** 补单 **/
     handleRepairLotteryBet0(row) {
       repaireLotteryBet0(row).then(response => {
-        this.msgSuccess(this.$t('lotteryBet.responseMessages.repairLotteryBetSuccess'));
+        this.msgSuccess(this.$t('lottery.lotteryBet.responseMessages.repairLotteryBetSuccess'));
         this.open = false;
         this.getList();
       });

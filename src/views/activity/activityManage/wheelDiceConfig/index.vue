@@ -15,10 +15,10 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{
-            $t('activity.searchButton')
+            $t('global.searchButton')
           }}
         </el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('activity.resetButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -31,7 +31,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:wheelDiceConfig:add']"
-        >{{ $t('activity.addButton') }}
+        >{{ $t('global.addButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -43,7 +43,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:wheelDiceConfig:edit']"
-        >{{ $t('activity.editButton') }}
+        >{{ $t('global.editButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -55,7 +55,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:wheelDiceConfig:remove']"
-        >{{ $t('activity.deleteutton') }}
+        >{{ $t('global.deleteButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -66,7 +66,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:wheelDiceConfig:export']"
-        >{{ $t('activity.exportButton') }}
+        >{{ $t('global.exportButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -92,7 +92,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('activity.operation')" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -100,7 +100,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:wheelDiceConfig:edit']"
-          >{{ $t('activity.editButton') }}
+          >{{ $t('global.editButton') }}
           </el-button>
           <el-button
             size="mini"
@@ -109,7 +109,7 @@
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:wheelDiceConfig:remove']"
           >{{
-              $t('activity.deleteButton')
+              $t('global.deleteButton')
             }}
           </el-button>
         </template>
@@ -139,8 +139,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">{{ $t('activity.submitButton') }}</el-button>
-        <el-button @click="cancel">{{ $t('activity.cancelButton') }}</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('global.submitButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -276,13 +276,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateWheelDiceConfig(this.form).then(response => {
-              this.msgSuccess(this.$t('activity.editSuccessMsg'));
+              this.msgSuccess(this.$t('global.editSuccessMsg'));
               this.open = false;
               this.getList();
             });
           } else {
             addWheelDiceConfig(this.form).then(response => {
-              this.msgSuccess(this.$t('activity.addSuccessMsg'));
+              this.msgSuccess(this.$t('global.addSuccessMsg'));
               this.open = false;
               this.getList();
             });
@@ -293,36 +293,36 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm(this.$t('activity.deleteConfirm1') + row.name + '"?', this.$t('activity.deleteConfirmTitle'), {
-        confirmButtonText: this.$t('activity.confirmButton'),
-        cancelButtonText: this.$t('activity.cancelConfirmButton'),
+      this.$confirm(this.$t('global.deleteConfirm') + row.name + '"?', this.$t('global.deleteConfirmTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function () {
         return delWheelDiceConfig(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess(this.$t('global.deleteSuccessMsg'));
       }).catch(() => {
       })
     },
     //修改状态
     handleStatusChange(row) {
       let text = row.status === '1'
-        ? this.$t('activity.statusEnable')
-        : this.$t('activity.statusDisable')
-      this.$confirm(this.$t('activity.statusEditSuccess')
+        ? this.$t('global.statusEnable')
+        : this.$t('global.statusDisable')
+      this.$confirm(this.$t('global.statusEditSuccess')
         + text
         + '""'
         + this.title
-        + this.$t('activity.statusConfirmQuestion'),
-        this.$t('activity.statusConfirmTitle'), {
-          confirmButtonText: this.$t('activity.confirmButton'),
-          cancelButtonText: this.$t('activity.cancelButton'),
+        + this.$t('global.statusConfirmQuestion'),
+        this.$t('global.statusConfirmTitle'), {
+          confirmButtonText: this.$t('global.confirmButton'),
+          cancelButtonText: this.$t('global.cancelButton'),
           type: 'warning'
       }).then(function () {
         return changeLotteryInfoStatus(row.id, row.status)
       }).then(() => {
-        this.msgSuccess(text + this.$t('activity.statusEditSuccess'))
+        this.msgSuccess(text + this.$t('global.statusEditSuccess'))
       }).catch(function () {
         row.status = row.status === '0' ? '1' : '0'
       })
@@ -330,14 +330,14 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm(this.$t('activity.confirmExport'), this.$t('activity.confirmExportTitle'), {
-        confirmButtonText: this.$t('activity.confirmButton'),
-        cancelButtonText: this.$t('activity.cancelButton'),
+      this.$confirm(this.$t('global.confirmExport'), this.$t('global.confirmExportTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportWheelDiceConfig(queryParams);
       }).then(response => {
-        this.downloadExcel(response, this.$t('activity.activityManage.activityCashBack.exportResponse'));
+        this.downloadExcel(response, this.$t('global.exportResponse'));
       }).catch(() => {
       })
     }

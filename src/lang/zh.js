@@ -25,7 +25,7 @@ export default {
     statusDisable: '停用',
     sort: '排序',
     qq: '问号',
-    selectDateRangeSeparator: '致',
+    selectDateRangeSeparator: '至',
     icon: '图标',
     userName: '用户名',
     realName: '真名',
@@ -52,6 +52,21 @@ export default {
     datePickerStartDatePlaceholder: '开始日期',
     datePickerEndDatePlaceholder: '结束日期',
     operationColumn: '操作',
+    editSuccessMsg: '修改成功',
+    addSuccessMsg: '新增成功',
+    deleteSuccessMsg: '删除成功',
+    deleteConfirm1: '是否确认删除【充值返现】编号为"',
+    deleteConfirm2: '"的数据项?',
+    deleteConfirmTitle: '警告',
+    statusConfirm: '确认要"',
+    statusConfirmTitle: '警告',
+    statusConfirmQuestion: '"吗?',
+    statusEditSuccess: '成功',
+    selectStatus: '请选择状态',
+    releaseTime: '释放时间',
+    confirmExport: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+    confirmExportTitle: '警告',
+    exportResponse: 'Activity Information',
   },
 
   navbar: {
@@ -3199,7 +3214,27 @@ export default {
 
     //TODO: lotteryTemp         -> Luis
     lotteryTemp:{
-
+      form: {
+        ktimeLabel: '开奖时间',
+        ktimePlaceholder: '选择开奖时间',
+        issueLabel: '当前期数',
+        issuePlaceholder: '请输入当前期数',
+        issueJustLabel: '上期期号',
+        issueJustPlaceholder: '请输入上期期号',
+        codeJustLabel: '上期开奖',
+        codeJustPlaceholder: '请输入上期开奖',
+      },
+      tableColumns:{
+        id: '彩种id',
+        issue: '当前期数',
+        issueJust: '上期期号',
+        codeJust: '上期开奖',
+        ktime: '开奖时间',
+      },
+      sealOptions: {
+        open: '开启中',
+        close: '封盘中'
+      }
     },
 
     //TODO: wheelHistory        -> Luis

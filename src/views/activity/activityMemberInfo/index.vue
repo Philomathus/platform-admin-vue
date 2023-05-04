@@ -22,19 +22,19 @@
       <el-form-item :label="$t('global.selectDate')" prop="selectDate">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}"
-                        :start-placeholder="$t('activity.selectDateStartPlaceholder')"
-                        :end-placeholder="$t('activity.selectDateEndPlaceholder')"
-                        :range-separator="$t('activity.selectDateRangeSeparator')"
+                        :start-placeholder="$t('global.selectDateStartPlaceholder')"
+                        :end-placeholder="$t('global.selectDateEndPlaceholder')"
+                        :range-separator="$t('global.selectDateRangeSeparator')"
                         clearable :default-time="['00:00:00', '23:59:59']" :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery"> {{
-            $t('activity.searchButton')
+            $t('global.searchButton')
           }}
         </el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{
-            $t('activity.resetButton')
+            $t('global.resetButton')
           }}
         </el-button>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQueryIp">{{
@@ -57,7 +57,7 @@
                 size="mini"
                 @click="handleAdd"
                 v-hasPermi="['activity:activityMemberInfo:add']"
-              >新增</el-button>
+              >{{ $t('global.addButton') }}</el-button>
             </el-col>
             <el-col :span="1.5">
               <el-button
@@ -68,7 +68,7 @@
                 :disabled="single"
                 @click="handleUpdate"
                 v-hasPermi="['activity:activityMemberInfo:edit']"
-              >修改</el-button>
+              >{{ $t('global.editButton') }}</el-button>
             </el-col>
             <el-col :span="1.5">
               <el-button
@@ -79,7 +79,7 @@
                 :disabled="multiple"
                 @click="handleDelete"
                 v-hasPermi="['activity:activityMemberInfo:remove']"
-              >删除</el-button>
+              >{{ $t('global.deleteButton') }}</el-button>
             </el-col>-->
       <el-col :span="1.5">
         <el-button
@@ -89,7 +89,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['activity:activityMemberInfo:export']"
-        >{{ $t('activity.exportButton') }}
+        >{{ $t('global.exportButton') }}
         </el-button>
         <el-button
           type="info"
@@ -173,14 +173,14 @@
       <!--            icon="el-icon-edit"-->
       <!--            @click="handleUpdate(scope.row)"-->
       <!--            v-hasPermi="['activity:activityMemberInfo:edit']"-->
-      <!--          >修改</el-button>-->
+      <!--          >{{ $t('global.editButton') }}</el-button>-->
       <!--          <el-button-->
       <!--            size="mini"-->
       <!--            type="text"-->
       <!--            icon="el-icon-delete"-->
       <!--            @click="handleDelete(scope.row)"-->
       <!--            v-hasPermi="['activity:activityMemberInfo:remove']"-->
-      <!--          >删除</el-button>-->
+      <!--          >{{ $t('global.deleteButton') }}</el-button>-->
       <!--        </template>-->
       <!--      </el-table-column>-->
     </el-table>
@@ -380,8 +380,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">{{ $t('activity.submitButton') }}</el-button>
-        <el-button @click="cancel">{{ $t('activity.cancelButton') }}</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('global.submitButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -620,13 +620,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateActivityMemberInfo(this.form).then(response => {
-              this.msgSuccess(this.$t('activity.editSuccessMsg'))
+              this.msgSuccess(this.$t('global.editSuccessMsg'))
               this.open = false;
               this.getList();
             });
           } else {
             addActivityMemberInfo(this.form).then(response => {
-              this.msgSuccess(this.$t('activity.addSuccessMsg'));
+              this.msgSuccess(this.$t('global.addSuccessMsg'));
               this.open = false;
               this.getList();
             });
@@ -637,15 +637,15 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm(this.$t('activity.deleteConfirm1') + row.title + '"?', this.$t('activity.deleteConfirmTitle'), {
-        confirmButtonText: this.$t('activity.confirmButton'),
-        cancelButtonText: this.$t('activity.cancelConfirmButton'),
+      this.$confirm(this.$t('global.deleteConfirm') + row.title + '"?', this.$t('global.deleteConfirmTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function () {
         return delActivityMemberInfo(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess(this.$t('activity.deleteSuccessMsg'));
+        this.msgSuccess(this.$t('global.deleteSuccessMsg'));
       }).catch(() => {
       })
     },
@@ -653,14 +653,14 @@ export default {
     handleExport() {
       if (checkTwoLogin()) {
         const queryParams = this.queryParams;
-        this.$confirm(this.$t('activity.confirmExport'), this.$t('activity.confirmExportTitle'), {
-          confirmButtonText: this.$t('activity.confirmButton'),
-          cancelButtonText: this.$t('activity.cancelButton'),
+        this.$confirm(this.$t('global.confirmExport'), this.$t('global.confirmExportTitle'), {
+          confirmButtonText: this.$t('global.confirmButton'),
+          cancelButtonText: this.$t('global.cancelButton'),
           type: "warning"
         }).then(function () {
           return exportActivityMemberInfo(queryParams);
         }).then(response => {
-          this.downloadExcel(response, this.$t('activity.activityManage.activityInfo.exportResponse'))
+          this.downloadExcel(response, this.$t('global.exportResponse'))
         }).catch(() => {
         })
       }

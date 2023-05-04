@@ -17,9 +17,9 @@
           style="width: 240px"
           value-format="yyyy-MM-dd"
           type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :range-separator="$t('global.datePickerStartDatePlaceholder')"
+          :start-placeholder="$t('global.datePickerEndDatePlaceholder')"
+          :end-placeholder="$t('global.selectDateRangeSeparator')"
           :picker-options="pickerOptions">
         </el-date-picker>
       </el-form-item>
@@ -46,7 +46,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['activity:userActivity:export']">导出
+          v-hasPermi="['activity:userActivity:export']">{{ $t('global.exportButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -54,17 +54,17 @@
 
     <el-table v-loading="loading" :data="userActivityList"  @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" min-width="60"/>
-      <el-table-column label="用户id" align="center" prop="id" min-width="60"/>
-      <el-table-column label="参加的活动" prop="msg" align="center" min-width="160"/>
-      <el-table-column label="状态" prop="status" align="center" min-width="100">
+      <el-table-column :label="用户id" align="center" prop="id" min-width="60"/>
+      <el-table-column :label="参加的活动" prop="msg" align="center" min-width="160"/>
+      <el-table-column :label="状态" prop="status" align="center" min-width="100">
         <template slot-scope="scope">
           <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">
             {{status.dictLabel }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="发布时间" prop="createTime" align="center" min-width="160"/>
-      <el-table-column label="修改时间" prop="updateTime" align="center" min-width="160"/>
-      <el-table-column label="操作人员" prop="updateBy" align="center" min-width="100"/>
+      <el-table-column :label="$t('global.ctTime')" prop="createTime" align="center" min-width="160"/>
+      <el-table-column :label="修改时间" prop="updateTime" align="center" min-width="160"/>
+      <el-table-column :label="操作人员" prop="updateBy" align="center" min-width="100"/>
     </el-table>
 
     <pagination
@@ -77,10 +77,10 @@
 <!--    add or update form -->
     <el-dialog :title="title" :visible.sync="open" width="600" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="90px">
-        <el-form-item label="标题" prop="msg">
+        <el-form-item :label="标题" prop="msg">
           <el-input v-model="form.msg" placeholder="请输入留言"/>
         </el-form-item>
-        <el-form-item label="活动类型" prop="status">
+        <el-form-item :label="活动类型" prop="status">
           <el-select
             filterable
             v-model="form.status"
@@ -97,7 +97,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('global.submitButton') }}</el-button>
         <el-button @click="open=false">取 消</el-button>
       </div>
     </el-dialog>
@@ -219,13 +219,13 @@ data(){
         if (valid) {
           if (this.form.id != null) {
             updateUserActivity(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess(this.$t('global.editSuccessMsg'));
               this.open = false;
               this.getList();
             });
           } else {
             addUserActivity(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess(this.$t('global.addSuccessMsg'));
               this.open = false;
               this.getList();
             });
@@ -248,23 +248,23 @@ data(){
     handleDelete(row){
       const id = row.id || this.ids;
       this.$confirm('是否确认删除"?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function () {
         return delUserActivity(id);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess(this.$t('global.deleteSuccessMsg'));
       })
     },
 
     /** 导出按钮操作 */
     handleExport(){
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('global.confirmExport'), this.$t('global.confirmExportTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportUserActivity(queryParams);

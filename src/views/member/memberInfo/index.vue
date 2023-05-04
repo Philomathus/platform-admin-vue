@@ -23,11 +23,11 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item :label=" $t('globalPlaceholder.selectDate') " prop="regTime">
+      <el-form-item :label=" $t('global.selectDate') " prop="regTime">
         <el-date-picker type="datetimerange" v-model="dateRange" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '95%'}" :start-placeholder=" $t('globalPlaceholder.selectDateStartPlaceholder') "
                         :end-placeholder=" $t('globalPlaceholder.selectDateEndPlaceholder') "
-                        :range-separator=" $t('globalPlaceholder.dateTimePickerRangeSeparator') " clearable :default-time="['00:00:00', '23:59:59']"
+                        :range-separator=" $t('global.selectDateRangeSeparator') " clearable :default-time="['00:00:00', '23:59:59']"
                         :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
@@ -266,7 +266,7 @@
         </template>
       </el-table-column>
       <el-table-column :label=" $t('members.memberInfo.index.loginMark')" align="center" prop="email" :show-overflow-tooltip="true" min-width="130px"/>
-      <el-table-column :label="$t('global.operation')" align="center" class-name="small-padding fixed-width" fixed="right" min-width="220">
+      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width" fixed="right" min-width="220">
         <template slot-scope="scope">
           <el-button
             type="primary"

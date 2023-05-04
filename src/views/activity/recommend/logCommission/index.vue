@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="会员ID" prop="memberId">
+      <el-form-item :label="会员ID" prop="memberId">
         <el-input
           v-model.trim="queryParams.memberId"
           placeholder="请输入会员ID"
@@ -19,9 +19,9 @@
 
     <el-table v-loading="loading" :data="logCommissionList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="会员ID" align="center" prop="memberId"/>
-      <el-table-column label="佣金" align="center" prop="commission"/>
-      <el-table-column label="创建时间" align="center" prop="createTime">
+      <el-table-column :label="会员ID" align="center" prop="memberId"/>
+      <el-table-column :label="佣金" align="center" prop="commission"/>
+      <el-table-column :label="创建时间" align="center" prop="createTime">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
@@ -40,16 +40,16 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="会员ID" prop="memberId">
+        <el-form-item :label="会员ID" prop="memberId">
           <el-input v-model="form.memberId" placeholder="请输入会员ID"/>
         </el-form-item>
-        <el-form-item label="佣金" prop="commission">
+        <el-form-item :label="佣金" prop="commission">
           <el-input v-model="form.commission" placeholder="请输入佣金"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('global.submitButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -177,13 +177,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateLogCommission(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess(this.$t('global.editSuccessMsg'));
               this.open = false;
               this.getList();
             });
           } else {
             addLogCommission(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess(this.$t('global.addSuccessMsg'));
               this.open = false;
               this.getList();
             });
@@ -195,22 +195,22 @@ export default {
     handleDelete(row) {
       const ids = row.id || this.ids;
       this.$confirm('是否确认删除佣金领取日志编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function () {
         return delLogCommission(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess(this.$t('global.deleteSuccessMsg'));
       })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('global.confirmExport'), this.$t('global.confirmExportTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportLogCommission(queryParams);

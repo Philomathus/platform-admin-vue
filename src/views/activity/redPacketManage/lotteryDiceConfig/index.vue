@@ -9,7 +9,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:lotteryDiceConfig:add']"
-        >新增</el-button>
+        >{{ $t('global.addButton') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -20,7 +20,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:lotteryDiceConfig:edit']"
-        >修改</el-button>
+        >{{ $t('global.editButton') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -31,7 +31,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:lotteryDiceConfig:remove']"
-        >删除</el-button>
+        >{{ $t('global.deleteButton') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -41,17 +41,17 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:lotteryDiceConfig:export']"
-        >导出</el-button>
+        >{{ $t('global.exportButton') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="lotteryDiceConfigList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="当日存款总额最小值" align="center" prop="depositTotalMin" />
-      <el-table-column label="当日存款总额最大值" align="center" prop="depositTotalMax" />
-      <el-table-column label="抽奖次数" align="center" prop="lotteryTimes" />
-      <el-table-column label="状态" align="center" prop="status">
+      <el-table-column :label="当日存款总额最小值" align="center" prop="depositTotalMin" />
+      <el-table-column :label="当日存款总额最大值" align="center" prop="depositTotalMax" />
+      <el-table-column :label="抽奖次数" align="center" prop="lotteryTimes" />
+      <el-table-column :label="状态" align="center" prop="status">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -61,7 +61,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -69,14 +69,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:lotteryDiceConfig:edit']"
-          >修改</el-button>
+          >{{ $t('global.editButton') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:lotteryDiceConfig:remove']"
-          >删除</el-button>
+          >{{ $t('global.deleteButton') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -92,22 +92,22 @@
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="150px">
-        <el-form-item label="活动类型" prop="type">
+        <el-form-item :label="活动类型" prop="type">
           <el-input v-model="form.type" placeholder="请输入活动类型" />
         </el-form-item>
-        <el-form-item label="当日存款总额最小值" prop="depositTotalMin">
+        <el-form-item :label="当日存款总额最小值" prop="depositTotalMin">
           <el-input v-model="form.depositTotalMin" placeholder="请输入当日存款总额最小值" />
         </el-form-item>
-        <el-form-item label="当日存款总额最大值" prop="depositTotalMax">
+        <el-form-item :label="当日存款总额最大值" prop="depositTotalMax">
           <el-input v-model="form.depositTotalMax" placeholder="请输入当日存款总额最大值" />
         </el-form-item>
-        <el-form-item label="抽奖次数" prop="lotteryTimes">
+        <el-form-item :label="抽奖次数" prop="lotteryTimes">
           <el-input v-model="form.lotteryTimes" placeholder="请输入抽奖次数" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('global.submitButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -238,13 +238,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateLotteryDiceConfig(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess(this.$t('global.editSuccessMsg'));
               this.open = false;
               this.getList();
             });
           } else {
             addLotteryDiceConfig(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess(this.$t('global.addSuccessMsg'));
               this.open = false;
               this.getList();
             });
@@ -256,14 +256,14 @@ export default {
     handleDelete(row) {
       const ids = row.id || this.ids;
       this.$confirm('是否确认删除抽奖次数设置编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function() {
         return delLotteryDiceConfig(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess(this.$t('global.deleteSuccessMsg'));
       }).catch(() => {
       })
     },
@@ -272,7 +272,7 @@ export default {
       let text = row.status === '1' ? '启用' : '停用'
       this.$confirm('确认要"' + text + '"吗?', '警告', {
         confirmButtonText: '确定',
-        cancelButtonText: '取消',
+cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function () {
         return changeStatus(row.id, row.status)
@@ -287,7 +287,7 @@ export default {
       const queryParams = this.queryParams;
       this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
         confirmButtonText: "确认",
-        cancelButtonText: "取消",
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function() {
         return exportLotteryDiceConfig(queryParams);

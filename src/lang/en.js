@@ -1803,11 +1803,11 @@ export default {
         hostIdPlaceholder: '主播ID',
         nickNamePlaceholder: '主播昵称',
         familyNamePlaceholder: '家族名称',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
-        export: '@:common.exportButton'
+        export: '@:global.exportButton'
       },
       table: {
         hostId: '主播ID',
@@ -1821,10 +1821,10 @@ export default {
         totalsettle: '总收入'
       },
       confirmExportDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '是否确认导出所有主播时长数据项?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       }
     },
     liveHostWageNoteJump: {
@@ -1835,11 +1835,11 @@ export default {
         hostIdPlaceholder: '主播ID',
         nickNamePlaceholder: '主播昵称',
         familyIdPlaceholder: '家族ID',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
-        export: '@:common.exportButton'
+        export: '@:global.exportButton'
       },
       statistics: {
         totalsettleTotalPlaceholder: '结算总计统计'
@@ -1869,10 +1869,10 @@ export default {
         totalsettle: '结算总计'
       },
       confirmExportDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '是否确认导出所有主播时长数据项?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       }
     },
     liveMount: {
@@ -1881,13 +1881,13 @@ export default {
         gvipPlaceholder: 'VIP等级',
         nameLabel: '坐骑名',
         namePlaceholder: '请输入坐骑名',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
-        add: '@:common.addButton',
-        edit: '@:common.editButton',
-        remove: '@:common.removeButton'
+        add: '@:global.addButton',
+        edit: '@:global.editButton',
+        remove: '@:global.deleteButton'
       },
       table: {
         id: '坐骑id',
@@ -1901,9 +1901,9 @@ export default {
         disPrice: '折扣价格',
         vday: '有效天数',
         oder: '排序',
-        operation: '@:common.operationColumn',
-        editButton: '@:common.editButton',
-        removeButton: '@:common.removeButton'
+        operation: '@:global.operationColumn',
+        editButton: '@:global.editButton',
+        removeButton: '@:global.deleteButton'
       },
       addEditDialog: {
         titleAdd: '添加礼物',
@@ -1924,8 +1924,8 @@ export default {
         vdayLabel: '有效天数',
         vdayPlaceholder: '请输入有效天数',
         oderLabel: '排序',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton2',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
         validations: {
           id: 'ID不能为空',
           name: '坐骑名不能为空',
@@ -1940,16 +1940,16 @@ export default {
         }
       },
       confirmRemoveDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '是否确认删除礼物列编号为"{ids}"的数据项?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmStatusChangeDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '确认要{text}"{name}"吗?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       messageBox: {
         updateLiveMountSuccess: '修改成功',
@@ -1960,30 +1960,30 @@ export default {
     },
     liveMsgEngage: {
       actions: {
-        add: '@:common.addButton'
+        add: '@:global.addButton'
       },
       table: {
         msg: '互动信息',
-        operation: '@:common.operationColumn',
-        editButton: '@:common.editButton',
-        removeButton: '@:common.removeButton'
+        operation: '@:global.operationColumn',
+        editButton: '@:global.editButton',
+        removeButton: '@:global.deleteButton'
       },
       addEditDialog: {
         titleAdd: '添加主播互动消息',
         titleEdit: '修改主播互动消息',
         msgLabel: '互动消息',
         msgPlaceholder: '请输入互动信息',
-        confirmButton: '@:common.confirmButton2',
+        confirmButton: '@:global.confirmButton',
         validations: {
           id: 'id不能为空只能是数字',
           msg: '互动消息不能为空'
         }
       },
       confirmRemoveDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '是否确认删除消息为为"{msg}"的数据项?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       messageBox: {
         removeSuccess: '删除成功'
@@ -1995,13 +1995,13 @@ export default {
         namePlaceholder: '请输入道具名',
         typeLabel: '类型',
         typePlaceholder: '请选择类型',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
-        add: '@:common.addButton',
-        edit: '@:common.editButton',
-        remove: '@:common.removeButton'
+        add: '@:global.addButton',
+        edit: '@:global.editButton',
+        remove: '@:global.deleteButton'
       },
       table: {
         name: '名称',
@@ -2022,9 +2022,9 @@ export default {
         isEffect: '状态',
         isEffect1: '有效',
         isEffect0: '无效',
-        operation: '@:common.operationColumn',
-        editButton: '@:common.editButton',
-        removeButton: '@:common.removeButton'
+        operation: '@:global.operationColumn',
+        editButton: '@:global.editButton',
+        removeButton: '@:global.deleteButton'
       },
       addEditDialog: {
         titleAdd: '添加礼物列',
@@ -2046,20 +2046,20 @@ export default {
         isEffectLabel: '状态',
         sortLabel: '排序',
         sortPlaceholder: '请输入排序',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton2'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmRemoveDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '是否确认删除礼物列编号为"{ids}"的数据项?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmStatusChangeDialog: {
-        title: '@:common.titleDialog',
+        title: '@:global.dialogTitle',
         message: '确认要{text}"{name}"吗?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       messageBox: {
         updateLivePropSuccess: '修改成功',
@@ -2081,12 +2081,12 @@ export default {
         isBanPlaceholder: '是否禁播',
         isAuthenticationPlaceholder: '全部状态',
         mobilePlaceholder: '家族ID',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
-        add: '@:common.addButton',
-        export: '@:common.exportButton',
+        add: '@:global.addButton',
+        export: '@:global.exportButton',
         liveRoomAssistant: '直播间小助手',
         batchJoin: '批量加入家族',
         batchKickOut: '批量踢出家族'
@@ -2101,6 +2101,8 @@ export default {
         familyUserIdPopover: '家 族 长 ID：',
         familyNickNamePopover: '家族长昵称：',
         familyChieftain: '是否家族长',
+        familyChieftain1: '是',
+        familyChieftainOthers: '否',
         isAuthentication: '状态',
         isAuthenticationPlaceholder: '请选择状态',
         isAuthentication0: '未认证',
@@ -2119,12 +2121,27 @@ export default {
         mobile: '手机号',
         loginIp: '登陆IP',
         banRemark: '禁播原因',
-        operation: '@:common.operationColumn',
+        operation: '@:global.operationColumn',
         kickOutButton: '踢出家族',
         auditButton: '审核',
         starBroadcastButton: '开播',
         endBroadcastButton: '关播',
         moreButton: '更多'
+      },
+      messageBox: {
+        banError: '修改禁播状态失败',
+        submitSuccess: '审核成功',
+        openLiveSuccess: '开播成功',
+        openLiveError: '开播失败',
+        closeLiveSuccess: '关播成功',
+        closeLiveError: '关播失败',
+        kickOutSuccess: '踢出成功',
+        kickOutError: '踢出主播失败',
+        kickOutFamilyBulkError: '踢出家族失败',
+        changeAuthTypeSuccess: '状态修改成功',
+        changeAuthTypeError1: '状态修改失败',
+        changeAuthTypeError2: '网络异常',
+        joinFamilyBulkError: '加入家族失败'
       },
       addDialog: {
         title: '添加虚拟主播',
@@ -2132,14 +2149,14 @@ export default {
         nickNameLabel: '昵称',
         headImageLabel: '用户头像',
         isAuthenticationLabel: '类型',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton2'
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       liveRoomAssistantDialog: {
         title: '直播间小助手',
         infoLabel: '小助手消息',
         infoPlaceholder: '请输入发送小助手消息',
-        confirmButton: '@:common.confirmButton2'
+        confirmButton: '@:global.confirmButton'
       },
       liveBroadcastDialog: {
         title: '开播信息',
@@ -2147,7 +2164,7 @@ export default {
         flvLabel: '视频流地址',
         liveImageLabel: '开播背景',
         lotteryLabel: '彩票',
-        confirmButton: '@:common.confirmButton2'
+        confirmButton: '@:global.confirmButton'
       },
       editDialog: {
         title: '修改主播信息',
@@ -2165,36 +2182,757 @@ export default {
         isAuthenticationLabel: '类型',
         vExplainLabel: '认证说明',
         investorSendInfoLabel: '拒绝理由',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton2',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
         validation: {
           vExplain: '认证说明不能为空',
           investorSendInfo: '拒绝理由不能为空'
         }
+      },
+      confirmBanPrompt: {
+        title: '@:global.promptTitle',
+        message: '主播禁播备注',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmSubmitFormType0: {
+        title: '@:global.dialogTitle',
+        message: '是否确认{not}通过审核此主播?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmExportDialog: {
+        title: '@:global.dialogTitle',
+        message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmKickOutDialog: {
+        title: '@:global.dialogTitle',
+        message: '确定踢出主播昵称:[{nickName}]?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmKickOutFamilyBulkDialog: {
+        title: '@:global.dialogTitle',
+        message: '确定批量踢出家族吗?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmJoinFamilyBulkPrompt: {
+        message: '批量加入家族',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
+        inputErrorMessage: '请输入数字类型'
       }
     },
-  },
-
-  lotteryCount: {
-    form: {
-      puserIdLabel: 'Member Id',
-      puserIdPlaceholder: 'Please enter the member ID',
-      betInfoLabel: 'Betting content',
-      betInfoPlaceholder: 'Enter Betting content',
-      issueLabel: 'Number of phases',
-      issuePlaceholder: 'Enter Number of phases',
-      lotteryNamePlaceholder: 'Please select a lottery name',
-      searchButton: '@:global.searchButton',
-      resetButton: '@:global.resetButton',
+    liveUserMore: {
+      tab1: {
+        title: '聊天室记录',
+        queryForm: {
+          selectDateLabel: '@:global.selectDateLabel',
+          selectDateStartPlaceholder: '@:global.dateTimePickerStartTimePlaceholder',
+          selectDateEndPlaceholder: '@:global.dateTimePickerEndTimePlaceholder',
+          selectDateRangeSeparator: '@:global.dateTimePickerRangeSeparator',
+          searchButton: '@:global.searchButton',
+          resetButton: '@:global.resetButton'
+        },
+        table: {
+          postcatId: '主播ID',
+          poscatNickname: '主播昵称',
+          fromPlatform: '发送者',
+          userNickName: '发送者昵称',
+          type: '消息类型',
+          type0: '普通消息',
+          type1: '未知',
+          msg: '消息内容',
+          createTime: '发送时间'
+        },
+        cancelButton: '@:global.cancelButton'
+      },
+      tab3: {
+        title: '收礼物日志',
+        queryForm: {
+          selectDateLabel: '@:global.selectDateLabel',
+          selectDateStartPlaceholder: '@:global.dateTimePickerStartTimePlaceholder',
+          selectDateEndPlaceholder: '@:global.dateTimePickerEndTimePlaceholder',
+          selectDateRangeSeparator: '@:global.dateTimePickerRangeSeparator',
+          giftNameLabel: '礼物名称',
+          giftNamePlaceholder: '请输入礼物名称',
+          searchButton: '@:global.searchButton',
+          resetButton: '@:global.resetButton'
+        },
+        table: {
+          propId: '礼物ID',
+          propName: '礼物名称',
+          perUserId: '会员平台ID',
+          totalDiamonds: '钻石',
+          createDate: '创建时间',
+          num: '发送数量'
+        },
+        cancelButton: '@:global.cancelButton'
+      },
+      tab5: {
+        title: '提现比例',
+        coinLabel: '时薪',
+        weixinPriceLabel: '开播时长任务',
+        weiboMoneyLabel: '收礼任务',
+        xpointLabel: '彩票抽成',
+        ypointLabel: '礼物抽成',
+        qqIdLabel: '每日开播任务时间（开始）',
+        qqIdPlaceholder: '任意时间点',
+        qqTokenLabel: '每日开播任务时间（结束）',
+        qqTokenPlaceholder: '任意时间点',
+        confirmButton: '确定修改',
+        cancelButton: '@:global.cancelButton',
+        validations: {
+          coin: '时薪不能为空',
+          weixinPrice: '开播时长任务不能为空',
+          weiboMoney: '收礼任务不能为空',
+          qqId: '每日开播任务时间（开始）',
+          qqToken: '每日开播任务时间（结束）',
+          xpoint: '彩票抽成不能为空',
+          ypoint: '礼物抽成不能为空'
+        }
+      },
+      tab6: {
+        title: '重置手机号',
+        mobileLabel: '旧手机号',
+        mobilePlaceholder: '请输入旧手机号',
+        viewMobileButton: '查看完整手机号',
+        newMobileLabel: '新手机号',
+        newMobilePlaceholder: '请输入新手机号',
+        googleAuthCodeLabel: 'google验证码',
+        googleAuthCodePlaceholder: '请输入google验证码',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
+        validations: {
+          mobile: '旧手机号码不能为空',
+          newMobile: '新手机号码不能为空',
+          googleAuthCode: '谷歌验证码不能为空'
+        }
+      },
+      tab7: {
+        title: '银行卡',
+        realName: '真实姓名',
+        bankAccount: '银行卡号',
+        bankName: '银行名称',
+        operation: '@:global.operationColumn',
+        editButton: '@:global.editButton',
+        deleteButton: '@:global.deleteButton',
+        cancelButton: '@:global.cancelButton',
+        confirmUpdateDialog: {
+          title: '@:global.dialogTitle',
+          message: '是否修改银行卡信息?',
+          confirmButton: '@:global.confirmButton',
+          cancelButton: '@:global.cancelButton'
+        },
+        confirmDeleteDialog: {
+          title: '@:global.dialogTitle',
+          message: '是否确认删除银行卡号为"{bankAccount}"的数据项?',
+          confirmButton: '@:global.confirmButton',
+          cancelButton: '@:global.cancelButton'
+        }
+      },
+      tab8: {
+        title: '修改印票'
+      },
+      tab9: {
+        title: '重置提现密码',
+        passwordLabel: '重置提现密码',
+        passwordPlaceholder: '请输入新提现密码',
+        googleAuthCodeLabel: 'google验证码',
+        googleAuthCodePlaceholder: '请输入google验证码',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
+        validations: {
+          payPassword: '重置提现密码不能为空',
+          payPasswordMax: '重置提现密码长度不能超过30个字符'
+        }
+      },
+      inputPrompt: {
+        title: '@:global.promptTitle',
+        familyIdMessage: '请输入家族ID',
+        printedTicketMessage: '请输入印票',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
+        inputErrorMessage: '请输入数字类型'
+      },
+      messageBox: {
+        updateMobileSuccess: '手机号修改成功',
+        liveUserFullMobileSuccess: '完整手机号码已展示',
+        liveUserFullMobileError: '手机号码不可用',
+        updateTicketError: '修改印票失败',
+        cancelInput: '取消输入',
+        chatPageError: '获取聊天记录列表失败',
+        receiveProplistError: '获取聊天记录列表失败',
+        editRateError: '开始时间不能大于结束时间',
+        updateLiveUserSuccess: '修改成功',
+        updateLiveUserError: '修改失败',
+        updateLiveUserBankSuccess: '修改成功',
+        updateLiveUserBankError1: '网络异常',
+        updateLiveUserBankError2: '已取消',
+        deleteSuccess: '删除成功',
+        deleteError: '取消删除',
+        logPageError: '获取账户日志失败'
+      }
     },
-    tableColumns: {
-      id: 'ID',
-      lotteryName: 'Lottery Name',
-      puserId: 'Member ID',
-      issue: 'Number of phases',
-      betInfo: 'Betting content',
-      chip: 'Amount bet',
-      ip: 'Bet IP',
+    liveUserMount: {
+      queryForm: {
+        selectDateLabel: '过期时间',
+        selectDateStartPlaceholder: '@:global.datePickerStartDatePlaceholder',
+        selectDateEndPlaceholder: '@:global.datePickerEndDatePlaceholder',
+        userIdLabel: '会员ID',
+        userIdPlaceholder: '请输入会员ID',
+        mountIdPlaceholder: '请选择坐骑名称',
+        isUsePlaceholder: '请选择状态',
+        searchButton: '@:global.searchButton'
+      },
+      table: {
+        userId: '会员ID',
+        effectiveTime: '过期时间',
+        mountName: '坐骑名称',
+        isUse: '状态',
+        isUse0: '禁用',
+        isUse1: '启用'
+      }
+    },
+    liveUserWithdrawNewlog: {
+      statistics: {
+        countNumberButton: '交易笔数',
+        countWithdrawMoneyButton: '总金额',
+      },
+      queryForm: {
+        searchTimeStartPlaceholder: '@:global.datePickerStartDatePlaceholder',
+        searchTimeEndPlaceholder: '@:global.datePickerEndDatePlaceholder',
+        userIdPlaceholder: '主播ID',
+        nickNamePlaceholder: '主播昵称',
+        orderNo: '订单号',
+        bankAccount: '提现银行账号',
+        wstatusPlaceholder: '全部状态',
+        wstatus0: '申请中',
+        wstatus1: '提交申请',
+        wstatus2: '审核不通过',
+        wstatus3: '终极审核通过',
+        wstatus4: '出款中',
+        wstatus5: '出款成功',
+        typePlaceholder: '提现类型',
+        type1: '家族',
+        type2: '个人',
+        SearchCardBlackPlaceholder: '银行归属地黑名单',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
+      },
+      actions: {
+        export: '@:global.exportButton',
+        fixIds: '合并订单'
+      },
+      table: {
+        clone: '复制',
+        cloneButton: '复制',
+        userId: '主播ID',
+        familyId: '家族ID',
+        nickName: '主播昵称',
+        withdrawMoney: '提现金额',
+        bankUserName: '提现真实姓名',
+        bankAccount: '提现银行账号',
+        bankName: '银行',
+        cardBlack: '银行归属地',
+        wstatus: '状态',
+        createTime: '创建时间',
+        updateTime: '最后修改时间',
+        opName: '审核员',
+        remark: '审核备注',
+        orderNo: '订单号',
+        type: '提现类型',
+        operation: '操作',
+        finalAuditButton: '审核通过',
+        recoverAuditButton: '恢复',
+        unlockButton: '解锁',
+        artificialWithdrawButton: '出款',
+        refusedButton: '拒绝',
+        withdrawSuccButton: '出款成功',
+        updateOrderButton: '重置订单',
+        withdrawRefusedButton: '出款拒绝',
+        withdrawMoneyButton: '修改提现金额'
+      },
+      addEditHostsWithdrawalManagementDialog: {
+        addTitle: '添加主播提现管理',
+        editTitle: '修改主播提现管理',
+        userIdLabel: '主播ID',
+        userIdPlaceholder: '请输入主播ID',
+        nickNameLabel: '主播昵称',
+        nickNamePlaceholder: '请输入主播昵称',
+        orderNoLabel: '订单号',
+        orderNoPlaceholder: '请输入订单号',
+        orderExpressionLabel: '订单表达式',
+        orderExpressionPlaceholder: '请输入订单表达式',
+        withdrawMoneyLabel: '提现金额',
+        withdrawMoneyPlaceholder: '请输入提现金额',
+        bankUserNameLabel: '提现收款人真实姓名',
+        bankUserNamePlaceholder: '请输入提现收款人真实姓名',
+        bankAccountLabel: '提现银行账号',
+        bankAccountPlaceholder: '请输入提现银行账号',
+        bankAddressLabel: '提现银行账号开户行',
+        bankAddressPlaceholder: '请输入提现银行账号开户行',
+        bankTypeIdLabel: '提现银行类型ID',
+        bankTypeIdPlaceholder: '请输入提现银行类型ID',
+        wstatusLabel: '状态(0申请中1初级审核通过2审核不通过3终极审核通过)',
+        wstatusValuePlaceholder: '请选择字典生成',
+        typeLabel: '提现类型(1提现到银行卡,2提现到支付宝)',
+        typePlaceholder: '请选择提现类型(1提现到银行卡,2提现到支付宝)',
+        typeValuePlaceholder: '请选择字典生成',
+        opNameLabel: '审核员',
+        opNamePlaceholder: '请输入审核员',
+        remarkLabel: '审核备注',
+        remarkPlaceholder: '请输入审核备注',
+        livetimeLabel: '主播时长',
+        livetimePlaceholder: '请输入主播时长',
+        liveticketLabel: '主播礼物',
+        liveticketPlaceholder: '请输入主播礼物',
+        livepaijiangLabel: '主播派奖',
+        livepaijiangPlaceholder: '请输入主播派奖',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
+        validations: {
+          userId: '主播ID不能为空',
+          orderNo: '订单号不能为空',
+          orderExpression: '订单表达式不能为空',
+          withdrawMoney: '提现金额不能为空',
+          googleAuthCode: 'google验证码不能为空',
+          bankUserName: '提现收款人真实姓名不能为空',
+          bankAccount: '提现银行账号不能为空',
+          bankTypeId: '提现银行类型ID不能为空',
+          wstatus: '状态不能为空',
+          type: '提现类型(1提现到银行卡,2提现到支付宝)不能为空'
+        }
+      },
+      editCashWithdrawalAmountDialog: {
+        title: '修改提现金额',
+        withdrawMoneyLabel: '提现金额',
+        withdrawMoneyPlaceholder: '请输入提现金额',
+        googleAuthCodeLabel: '谷歌验证码',
+        googleAuthCodePlaceholder: '请输入google验证码',
+        submitButton: '立即提交',
+        validations: {
+          withdrawMoney: '提现金额不能为空',
+          googleAuthCode: 'google验证码不能为空'
+        }
+      },
+      confirmFixIdsDialog: {
+        title: '@:global.dialogTitle',
+        message: '是否确认合并的订单?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmRefusedPrompt: {
+        title: '请输入拒绝出款原因',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmWithdrawRefusedPrompt: {
+        title: '请输入拒绝出款原因',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmDeleteDialog: {
+        title: '@:global.dialogTitle',
+        message: '是否确认删除主播提现管理编号为"{ids}"的数据项?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmExportDialog: {
+        title: '@:global.dialogTitle',
+        message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      messageBox: {
+        fixIdsError: '请选择要合并的订单',
+        fixIdsSuccess: '合并订单成功',
+        copySuccess: '复制成功',
+        submitDepositSuccess: '修改提现金额成功',
+        updateLiveUserWithdrawNewlogSuccees: '修改成功',
+        addLiveUserWithdrawNewlogSuccess: '新增成功',
+        deleteSuccess: '删除成功'
+      }
+    },
+    liveVideo: {
+      queryForm: {
+        typeLabel: '直播类型:',
+        idPlaceholder: '主播ID',
+        hostNamePlaceholder: '主播昵称/直播标题',
+        paiIdPlaceholder: '直播线路',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
+      },
+      actions: {
+        closeIds: '批量关播',
+        synchronizeOrder: '同步主台排序'
+      },
+      table: {
+        id: '主播ID',
+        hostName: '主播昵称',
+        title: '直播间标题',
+        cateId: '直播类型',
+        cateId2: '性感主播',
+        cateId3: '大秀直播',
+        cateId4: '收费直播',
+        cateIdOthers: '彩票直播',
+        voteNumber: '热度',
+        watchNumber: '在线人数',
+        lineName: '线路名称',
+        lineStatus: '直播性质',
+        liveStatus: '直播状态',
+        liveStatusEmpty: '检测中...',
+        openPay: '禁收费',
+        isLivePay: '收费',
+        isLivePayTrue: '是',
+        isLivePayFalse: '否',
+        beginTime: '开始时间',
+        lotteryName: '彩种',
+        operation: '@:global.operationColumn',
+        closeButton: '关播',
+        setSortButton: '固定定位',
+        closeSortButton: '取消固定定位',
+        recommendButton: '推荐',
+        closeRecommendButton: '取消推荐',
+        stickButton: '置底',
+        closeStickButton: '取消置底',
+        toLivePayButton: '收费'
+      },
+      addToLivePayDialog: {
+        addTitle: '添加直播',
+        toLivePayTitle: '付费设置',
+        idLabel: '主播ID',
+        idPlaceholder: '主播ID',
+        hostNameLabel: '主播昵称',
+        hostNamePlaceholder: '主播昵称',
+        titleLabel: '直播间标题',
+        titlePlaceholder: '直播间标题',
+        liveFeeLabel: '观看费用',
+        liveFeePlaceholder: '观看费用',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      effectDialog: {
+        title: '是否立即生效',
+        effect1: '是',
+        effect2: '否',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmCloseIdsDialog: {
+        title: '@:global.dialogTitle',
+        message: '是否确认批量关闭直播?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmCloseDialog: {
+        title: '@:global.dialogTitle',
+        message: '是否确认关闭直播编号为"{id}"的数据项?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmExportDialog: {
+        title: '@:global.dialogTitle',
+        message: '是否确认导出所有直播数据项?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmChangeOpenPayDialog: {
+        title: '@:global.dialogTitle',
+        message: '是否{openPay}用主播收费权限?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmSetSortPrompt: {
+        title: '固定定位',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
+        inputPlaceholder: '请输入大于0小于100的整数值',
+        inputErrorMessage: '固定位数据格式不正确，请输入大于0小于100的整数值'
+      },
+      synchronizeOrderDialog: {
+        message: '确认同步主台主播排序吗?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      messageBox: {
+        closeIdsError: '请选择关闭直播间',
+        closeIdsSuccess: '关播成功',
+        closeSuccess: '关播成功',
+        submitFormError: '付费金额必须大于0!',
+      }
+    },
+    liveVideoChat: {
+      queryForm: {
+        poscatIdLabel: '主播ID',
+        poscatIdPlaceholder: '请输入主播ID',
+        groupLabel: '消息所在聊天组',
+        groupPlaceholder: '请输入消息所在聊天组',
+        userIdLabel: '发送者id',
+        userIdPlaceholder: '请输入发送者id',
+        typeLabel: '消息类型 0 普通消息 1 弹幕消息',
+        typePlaceholder: '请选择消息类型 0 普通消息 1 弹幕消息',
+        typeValuePlaceholder: '请选择字典生成',
+        poscatNickNameLabel: '主播昵称',
+        poscatNickNamePlaceholder: '请输入主播昵称',
+        userNickNameLabel: '发送者昵称',
+        userNickNamePlaceholder: '请输入发送者昵称',
+        fromPlatformLabel: '平台会员ID',
+        fromPlatformPlaceholder: '请输入平台会员ID',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
+      },
+      actions: {
+        add: '@:global.addButton',
+        edit: '@:global.editButton',
+        delete: '@:global.deleteButton',
+        export: '@:global.exportButton'
+      },
+      table: {
+        id: '平台会员ID',
+        poscatId: '主播ID',
+        group: '消息所在聊天组',
+        userId: '发送者id',
+        msg: '消息内容',
+        type: '消息类型',
+        poscatNickName: '主播昵称',
+        userNickName: '发送者昵称',
+        fromPlatform: '平台会员ID',
+        operation: '@:global.operationColumn',
+        editButton: '@:global.editButton',
+        deleteButton: '@:global.deleteButton'
+      },
+      addEditDialog: {
+        addTitle: '添加会员发言',
+        editTitle: '封停会员',
+        poscatIdLabel: '主播ID',
+        poscatIdPlaceholder: '请输入主播ID',
+        groupLabel: '消息所在聊天组',
+        groupPlaceholder: '请输入消息所在聊天组',
+        userIdLabel: '发送者id',
+        userIdPlaceholder: '请输入发送者id',
+        msgLabel: '消息内容',
+        msgPlaceholder: '请输入内容',
+        typeLabel: '消息类型 0 普通消息 1 弹幕消息',
+        typePlaceholder: '请选择消息类型 0 普通消息 1 弹幕消息',
+        typeValuePlaceholder: '请选择字典生成',
+        poscatNickNameLabel: '主播昵称',
+        poscatNickNamePlaceholder: '请输入主播昵称',
+        userNickNameLabel: '发送者昵称',
+        userNickNamePlaceholder: '请输入发送者昵称',
+        fromPlatformLabel: '平台会员ID',
+        fromPlatformPlaceholder: '请输入平台会员ID',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
+        validations: {
+          poscatId: '主播ID不能为空'
+        }
+      },
+      confirmDeleteDialog: {
+        title: '@:global.dialogTitle',
+        message: '是否确认删除会员发言编号为"{ids}"的数据项?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmExportDialog: {
+        title: '@:global.dialogTitle',
+        message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      messageBox: {
+        updateLiveVideoChatSuccess: '修改成功',
+        addLiveVideoChatSuccess: '新增成功',
+        deleteSuccess: '删除成功'
+      }
+    },
+    liveVideoClassified: {
+      queryForm: {
+        titleLabel: '分类名称',
+        titlePlaceholder: '请输入分类名称',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
+      },
+      actions: {
+        add: '@:global.addButton',
+        edit: '@:global.editButton',
+        delete: '@:global.deleteButton',
+      },
+      table: {
+        title: '分类名称',
+        isEffect: '状态',
+        isEffect0: '停用',
+        isEffect1: '启用',
+        sort: '排序(客服端倒序)',
+        classfy: '分类代号',
+        isHostShow: '主播端显示',
+        isHostShow0: '停用',
+        isHostShow1: '启用',
+        operation: '@:global.operationColumn',
+        editButton: '@:global.editButton',
+        deleteButton: '@:global.deleteButton'
+      },
+      addEditDialog: {
+        addTitle: '添加分类',
+        editTitle: '修改分类',
+        titleLabel: '分类名称',
+        titlePlaceholder: '请输入分类名称',
+        isEffectLabel: '状态',
+        isHostShowLabel: '主播端显示',
+        sortLabel: '排序',
+        sortPlaceholder: '请输入排序',
+        classfyLabel: '分类代号',
+        classfyPlaceholder: '请输入分类id',
+        imgLabel: '分类图标',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
+        validations: {
+          title: '分类名称不能为空',
+          isEffect: '是否有效 1-有效 0-无效不能为空',
+          sort: '从大到小排不能为空',
+          img: '分类图标不能为空',
+          isHostShow: '是否主播端显示不能为空'
+        }
+      },
+      confirmDeleteDialog: {
+        title: '@:global.dialogTitle',
+        message: '是否确认删除分类编号为"{ids}"的数据项?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmStatusChangeDialog: {
+        title: '@:global.dialogTitle',
+        message: '确认要{text}"{title}"吗?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmShowStatusChangeDialog: {
+        title: '@:global.dialogTitle',
+        message: '确认要{text}"{title}"吗?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmExportDialog: {
+        title: '@:global.dialogTitle',
+        message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      messageBox: {
+        updateLiveVideoClassifiedSuccess: '修改成功',
+        addLiveVideoClassifiedSuccess: '新增成功',
+        deleteSuccess: '删除成功',
+        statusChangeSuccess: '{text}成功',
+        showStatusChangeSuccess: '{text}成功',
+      }
+    },
+    officerManage: {
+      queryForm: {
+        hostIdLabel: '主播ID',
+        hostIdPlaceholder: '请输入主播ID',
+        puserIdLabel: '用户ID',
+        puserIdPlaceholder: '请输入用户ID',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
+      },
+      actions: {
+        add: '@:global.addButton',
+        delete: '@:global.deleteButton',
+        export: '@:global.exportButton'
+      },
+      table: {
+        hostId: '主播ID',
+        hostName: '主播昵称',
+        puserId: '用户ID',
+        puserName: '用户昵称',
+        ctime: '创建时间',
+        operation: '@:global.operationColumn',
+        deleteButton: '@:global.deleteButton'
+      },
+      addDialog: {
+        title: '添加房管管理',
+        hostIdLabel: '主播ID',
+        hostIdPlaceholder: '请输入主播ID',
+        puserIdLabel: '用户ID',
+        puserIdPlaceholder: '请输入用户ID',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmDeleteDialog: {
+        title: '@:global.dialogTitle',
+        message: '是否确认删除房管管理编号为"{ids}"的数据项?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmExportDialog: {
+        title: '@:global.dialogTitle',
+        message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      messageBox: {
+        submitFormSuccess: '新增成功',
+        deleteSuccess: '删除成功',
+      }
+    },
+    pushChat: {
+      queryForm: {
+        fromPlatformPlaceholder: '会员ID',
+        userNickNamePlaceholder: '会员昵称',
+        poscatIdPlaceholder: '主播ID',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
+      },
+      refresh: {
+        title: '记录刷新',
+        placeholder: '时间间隔',
+        description: '{secs}秒后开始刷新',
+        interval: '{secs}秒',
+        startButton: '开始刷新',
+        stopButton: '停止刷新'
+      },
+      table: {
+        poscatId: '主播ID',
+        poscatNickName: '主播昵称',
+        fromPlatform: '平台会员ID',
+        userNickName: '用户昵称',
+        msg: '消息内容',
+        createTimes: '发送时间'
+      },
+      messageBox: {
+        queryError: '会员ID只能输入数字及下划线'
+      }
+    },
+    report: {
+      queryForm: {
+        typeLabel: '主播排行榜',
+        typePlaceholder: '请选择榜类型',
+        type0: '日榜',
+        type1: '周榜',
+        type2: '月榜',
+        reptimeLabel: '更新日期',
+        reptimePlaceholder: '选择更新日期',
+        nicknameLabel: '主播昵称',
+        nicknamePlaceholder: '请输入主播昵称',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
+      },
+      actions: {
+        export: '@:global.exportButton'
+      },
+      table: {
+        anchorid: '主播ID',
+        nickname: '主播昵称',
+        dayTicket: '每日热度',
+        sort: '热度排名',
+        dayTicketUpdiff: '距离上一次差值',
+        repdate: '日榜',
+        num: '榜单',
+        reptime: '更新日期'
+      }
     }
   },
 

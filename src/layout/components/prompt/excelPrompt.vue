@@ -3,7 +3,7 @@
              append-to-body
   >
     <el-form ref="queryForm" :inline="true" label-width="68px">
-      <el-form-item :label="$t('excel.selectDate')" prop="selectDate">
+      <el-form-item :label="$t('global.selectDate')" prop="selectDate">
         <el-date-picker type="datetimerange" v-model="selectDate" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '370px'}" :start-placeholder="$t('excel.startDatePlaceholder')"
                         :end-placeholder="$t('excel.endDatePlaceholder')"
@@ -12,9 +12,9 @@
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="submitForm">{{ $t('excel.submitButton') }}
+      <el-button type="primary" @click="submitForm">{{ $t('global.submitButton') }}
       </el-button>
-      <el-button @click="open=!open">{{ $t('excel.cancelButton') }}</el-button>
+      <el-button @click="open=!open">{{ $t('global.cancelButton') }}</el-button>
     </div>
   </el-dialog>
 </template>
@@ -32,7 +32,7 @@
     /*组件值*/
     data() {
       return {
-        title:  this.$t('excel.cancelButton'),
+        title:  this.$t('global.cancelButton'),
         selectDate: [],
         open: false,
       }

@@ -1,16 +1,16 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item :label="$t('activity.selectDate')" prop="selectDate">
+      <el-form-item :label="$t('global.selectDate')" prop="selectDate">
         <el-date-picker
           v-model="queryParams.selectDate"
           size="small"
           style="width: 240px"
           value-format="yyyy-MM-dd"
           type="daterange"
-          :range-separator="$t('activity.selectDateRangeSeparator')"
-          :start-:placeholder="$t('activity.selectDateStartPlaceholder')"
-          :end-:placeholder="$t('activity.selectDateEndPlaceholder')"
+          :range-separator="$t('global.selectDateRangeSeparator')"
+          :start-:placeholder="$t('global.selectDateStartPlaceholder')"
+          :end-:placeholder="$t('global.selectDateEndPlaceholder')"
           :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
@@ -70,7 +70,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('activity.searchButton') }}</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
         <!--        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>-->
       </el-form-item>
     </el-form>
@@ -116,7 +116,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:chatComplaint:export']"
-        >{{ $t('activity.exportButton') }}
+        >{{ $t('global.exportButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>

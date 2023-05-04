@@ -272,7 +272,7 @@ export default {
         return delActivityType(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess(this.$t('global.deleteSuccessMsg'));
       })
     },
     /** 导出按钮操作 */
@@ -285,7 +285,7 @@ export default {
       }).then(function () {
         return exportActivityType(queryParams);
       }).then(response => {
-        this.downloadExcel(response, '活动类型')
+        this.downloadExcel(response, this.$t('activity.activityManage.activityType.exportTile'))
       }).catch(() => {
       })
     }

@@ -22,19 +22,19 @@
       <el-form-item :label="$t('global.selectDate')" prop="selectDate">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}"
-                        :start-placeholder="$t('activity.selectDateStartPlaceholder')"
-                        :end-placeholder="$t('activity.selectDateEndPlaceholder')"
-                        :range-separator="$t('activity.selectDateRangeSeparator')"
+                        :start-placeholder="$t('global.selectDateStartPlaceholder')"
+                        :end-placeholder="$t('global.selectDateEndPlaceholder')"
+                        :range-separator="$t('global.selectDateRangeSeparator')"
                         clearable :default-time="['00:00:00', '23:59:59']" :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery"> {{
-            $t('activity.searchButton')
+            $t('global.searchButton')
           }}
         </el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{
-            $t('activity.resetButton')
+            $t('global.resetButton')
           }}
         </el-button>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQueryIp">{{
@@ -89,7 +89,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['activity:activityMemberInfo:export']"
-        >{{ $t('activity.exportButton') }}
+        >{{ $t('global.exportButton') }}
         </el-button>
         <el-button
           type="info"

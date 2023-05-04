@@ -259,6 +259,7 @@ export default {
       activityType: {
         addTitle: 'Add Activity Type',
         editTitle: 'Update Activity Type',
+        exportTile: 'Activity Type',
         tableDialog: {
           name: 'Name',
           namePlaceholder: 'Please Enter Name',

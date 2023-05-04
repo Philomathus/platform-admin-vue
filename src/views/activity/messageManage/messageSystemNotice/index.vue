@@ -301,7 +301,7 @@ export default {
         return delMessageSystemNotice(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess(this.$t('global.deleteSuccessMsg'));
       })
     },
     /** 导出按钮操作 */

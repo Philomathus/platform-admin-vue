@@ -19,7 +19,7 @@ export default {
     statusDisable: '停用',
     sort: '排序',
     qq: '问号',
-    selectDateRangeSeparator: '致',
+    selectDateRangeSeparator: '至',
     icon: '图标',
     userName: '用户名',
     realName: '真名',

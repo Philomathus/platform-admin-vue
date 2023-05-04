@@ -25,8 +25,8 @@
       </el-form-item>
       <el-form-item :label=" $t('global.selectDate') " prop="regTime">
         <el-date-picker type="datetimerange" v-model="dateRange" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '95%'}" :start-placeholder=" $t('globalPlaceholder.selectDateStartPlaceholder') "
-                        :end-placeholder=" $t('globalPlaceholder.selectDateEndPlaceholder') "
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '95%'}" :start-placeholder=" $t('global.datePickerStartDate') "
+                        :end-placeholder=" $t('global.datePickerEndDate') "
                         :range-separator=" $t('global.selectDateRangeSeparator') " clearable :default-time="['00:00:00', '23:59:59']"
                         :picker-options="pickerOptions"
         ></el-date-picker>
@@ -55,7 +55,7 @@
       <el-form-item prop="nickName" style="width: 110px;" class="nickName">
         <el-input
           v-model="queryParams.nickName"
-          :placeholder=" $t('members.memberInfo.index.nick') "
+          :placeholder=" $t('global.nickname') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -203,15 +203,15 @@
           <a @click="personalReport(row.id)" style="color: #1ab394;margin-left: 5px">{{ row.id }}</a>
         </template>
       </el-table-column>
-      <el-table-column :label=" $t('members.memberInfo.index.uName') " align="center" prop="userName" min-width="120px"/>
-      <el-table-column :label=" $t('members.memberInfo.index.nName') " :show-overflow-tooltip="true" align="center" prop="nickName" min-width="160"/>
+      <el-table-column :label=" $t('global.userName') " align="center" prop="userName" min-width="120px"/>
+      <el-table-column :label=" $t('global.nickname') " :show-overflow-tooltip="true" align="center" prop="nickName" min-width="160"/>
       <el-table-column :label=" $t('members.memberInfo.index.mVip') " align="center" prop="vip" min-width="100px"/>
       <el-table-column :label=" $t('members.memberInfo.index.points') " :show-overflow-tooltip="true" align="center" prop="totalAccount" min-width="120px"/>
       <el-table-column :label=" $t('members.memberInfo.index.sDeposit') " :show-overflow-tooltip="true" align="center" prop="boxAccount"
                        min-width="160px"/>
-      <el-table-column :label=" $t('members.memberInfo.index.status') " align="center" min-width="110px">
+      <el-table-column :label=" $t('global.status') " align="center" min-width="110px">
         <template v-slot="{row}">
-          <el-select v-model="row.status" :placeholder=" $t('members.memberInfo.index.status') " size="small"
+          <el-select v-model="row.status" :placeholder=" $t('global.status') " size="small"
                      @change="changeType(row)"
           >
             <!--<el-option v-for="(item,index) in typeList" :key="index" :label="item.label" :value="item.value"/>-->
@@ -382,7 +382,7 @@
         <el-form-item :label=" $t('members.memberInfo.index.pass') " prop="password" style="margin-bottom: 0px">
           <el-input v-model="password" :placeholder=" $t('members.memberInfo.index.entPass') "/>
         </el-form-item>
-        <el-form-item :label=" $t('members.memberInfo.index.tips') ">
+        <el-form-item :label=" $t('global.prompTitle') ">
           <span style="color: #00afff">
           {{ $t('members.memberInfo.index.passDig') }}
           </span>
@@ -420,7 +420,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQueryIpBlack"
-                     :disabled='!queryParam.userIp && !queryParam.userId'> {{ $t('members.memberInfo.index.search') }}
+                     :disabled='!queryParam.userIp && !queryParam.userId'> {{ $t('global.searchButton') }}
           </el-button>
         </el-form-item>
       </el-form>
@@ -431,7 +431,7 @@
         <el-table-column :label=" $t('members.memberInfo.index.memIp') " align="center" prop="userIp"/>
         <el-table-column :label=" $t('members.memberInfo.index.bRem') " align="center" prop="msg"/>
         <el-table-column :label=" $t('members.memberInfo.index.cTime') " align="center" prop="createTime"/>
-        <el-table-column :label=" $t('members.memberInfo.index.opt') " min-width="60" align="center" class-name="small-padding fixed-width"
+        <el-table-column :label=" $t('global.operationColumn') " min-width="60" align="center" class-name="small-padding fixed-width"
                          fixed="right">
           <template slot-scope="scope">
             <el-button
@@ -439,7 +439,7 @@
               type="text"
               icon="el-icon-edit"
               @click="handleUpdateIpBlack(scope.row)"
-            >{{ $t('members.memberInfo.index.opt') }}
+            >{{ $t('global.operationColumn') }}
             </el-button>
           </template>
         </el-table-column>
@@ -496,8 +496,8 @@
       <el-table :stripe="true" v-loading="loading" :data="memberByIpAddress" style="margin-bottom: 2px;">
         <el-table-column :label=" $t('members.memberInfo.index.memId') " align="center" prop="id"/>
 
-        <el-table-column :label=" $t('members.memberInfo.index.nName') " align="center" prop="nickName"/>
-        <el-table-column :label=" $t('members.memberInfo.index.status') " min-width="90" align="center" prop="status" :formatter="statusFormat"/>
+        <el-table-column :label=" $t('global.nickname') " align="center" prop="nickName"/>
+        <el-table-column :label=" $t('global.status') " min-width="90" align="center" prop="status" :formatter="statusFormat"/>
 
         <el-table-column :label=" $t('members.memberInfo.index.logIp') " align="center" prop="loginIp"/>
         <el-table-column :label=" $t('members.memberInfo.index.logRem') " align="center" prop="email"/>
@@ -530,7 +530,7 @@
         <!--click on clock member searched panel  -->
         <el-col :span="1.5">
           <el-button type="primary" plain @click="closeTap()" style="height: auto">
-            {{ $t('members.memberInfo.index.button.close') }}
+            {{ $t('global.close') }}
           </el-button>
         </el-col>
       </el-row>
@@ -1183,27 +1183,27 @@ export default {
 
     boxDish(row) {
       console.info(row.id)
-      this.$prompt( this.$t('members.memberInfo.index.pGverifcode') ,  this.$t('members.memberInfo.index.tips') , {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$prompt( this.$t('members.memberInfo.index.pGverifcode') ,  this.$t('global.prompTitle') , {
+        confirmButtonText: this.$t('members.memberInfo.index.det') ,
+        cancelButtonText: this.$t('members.memberInfo.index.cnc') ,
         inputPattern: /^[0-9]{1,10}$/,
-        inputErrorMessage: '验证码格式不正确,0-10数字,请重新输入',
+        inputErrorMessage: this.$t('members.memberInfo.index.verifInc') ,
       }).then(({value}) => {
         requestBoxDish({
           googleAuthCode: value,
           id: row.id
         }).then((res) => {
           if (res.code === 0) {
-            this.$notify.success('保险箱余额提出成功')
+            this.$notify.success( this.$t('members.memberInfo.index.sDepo') )
             this.getList()
           } else {
-            this.$notify.error('保险箱余额提出失败')
+            this.$notify.error( this.$t('members.memberInfo.index.fDepo') )
           }
         })
       }).catch(() => {
         this.$message({
           type: 'info',
-          message: '取消输入'
+          message: this.$t('members.memberInfo.index.cInp')
         })
       })
     }

@@ -12,81 +12,81 @@
     >
       <!--顶部按钮-->
       <div class="page-tab" style="margin-bottom: 20px">
-        <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(3,'加分')">
-          <span>加分</span></button>
+        <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(3, $t('members.memberInfo.more.exCred') )">
+          <span>{{ $t('members.memberInfo.more.exCred') }}</span></button>
         <button type="button" class="el-button el-button--primary el-button--mini is-plain"
-                @click="change(1,'三方游戏')">
-          <span>三方游戏</span></button>
-        <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(5,'银行卡')">
-          <span>银行卡</span></button>
+                @click="change(1, $t('members.memberInfo.more.threeWay') )">
+          <span>{{ $t('members.memberInfo.more.threeWay') }}</span></button>
+        <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(5, $t('members.memberInfo.more.bCard') )">
+          <span>{{ $t('members.memberInfo.more.bCard') }}</span></button>
         <button type="button" class="el-button el-button--primary el-button--mini is-plain"
-                @click="change(10,'发送短信')">
-          <span>发送短信</span></button>
+                @click="change(10, $t('members.memberInfo.more.sms') )">
+          <span>{{ $t('members.memberInfo.more.sms') }}</span></button>
         <button type="button" class="el-button el-button--primary el-button--mini is-plain"
-                @click="change(11,'重置手机号')">
-          <span>重置手机号</span></button>
+                @click="change(11, $t('members.memberInfo.more.rCp') )">
+          <span>{{ $t('members.memberInfo.more.rCp') }}</span></button>
         <button type="button" class="el-button el-button--primary el-button--mini is-plain"
-                @click="change(13,'重置邀请码')">
-          <span>重置邀请码</span></button>
+                @click="change(13, $t('members.memberInfo.more.rIc') )">
+          <span>{{ $t('members.memberInfo.more.rIc') }}</span></button>
 
         <!--Follow Members tab added by rajesh index:16 represent follow members-->
         <button type="button" class="el-button el-button--primary el-button--mini is-plain"
-                @click="change(16,'关注主播')">
-          <span>关注主播</span></button>
+                @click="change(16, $t('members.memberInfo.more.fAnc') )">
+          <span>{{ $t('members.memberInfo.more.fAnc') }}</span></button>
         <!--End follow members tab here  -->
 
         <button type="button" class="el-button el-button--primary el-button--mini is-plain"
-                @click="change(17,'守护主播')">
-          <span>守护主播</span>
+                @click="change(17, $t('members.memberInfo.more.gAnc') )">
+          <span>{{ $t('members.memberInfo.more.gAnc') }}</span>
         </button>
 
         <button type="button" class="el-button el-button--success el-button--mini is-plain"
-                @click="change(2,'资金明细')">
-          <span>资金明细</span>
+                @click="change(2, $t('members.memberInfo.more.fDet') )">
+          <span>{{ $t('members.memberInfo.more.fDet') }}</span>
         </button>
 
         <button
           type="button"
           class="el-button el-button--success el-button--mini is-plain"
-          @click="change(6,'重置保险箱密码')"
+          @click="change(6, $t('members.memberInfo.more.rPass') )"
           v-has-permi="['member:memberInfo:resetBox']">
-          <span>重置保险箱密码</span>
+          <span>{{ $t('members.memberInfo.more.rPass') }}</span>
         </button>
 
         <button
           type="button"
           class="el-button el-button--success el-button--mini is-plain"
-          @click="change(7,'重置提现密码')"
+          @click="change(7, $t('members.memberInfo.more.rwPass') )"
           v-has-permi="['member:memberInfo:resetTx']">
-          <span>重置提现密码</span>
+          <span>{{ $t('members.memberInfo.more.rwPass') }}</span>
         </button>
 
         <button type="button"
                 class="el-button el-button--primary el-button--mini is-plain"
-                @click="change(4,'重置登入密码')">
-          <span>重置登入密码</span></button>
+                @click="change(4, $t('members.memberInfo.more.rlPass') )">
+          <span>{{ $t('members.memberInfo.more.rlPass') }}</span></button>
 
         <button
           type="button"
           class="el-button el-button--success el-button--mini is-plain"
-          @click="change(8,'打码修复')"
+          @click="change(8, $t('members.memberInfo.more.cFix') )"
           v-has-permi="['member:memberInfo:bcodeRepair']">
-          <span>打码修复</span>
+          <span>{{ $t('members.memberInfo.more.cFix') }}</span>
         </button>
 
         <button type="button" class="el-button el-button--success el-button--mini is-plain"
-                @click="change(9,'修改Vip')">
-          <span>修改Vip</span>
+                @click="change(9, $t('members.memberInfo.more.mVip') )">
+          <span>{{ $t('members.memberInfo.more.mVip') }}</span>
         </button>
 
         <button type="button" class="el-button el-button--success el-button--mini is-plain"
-                @click="change(12,'IM禁言')">
-          <span>IM禁言</span>
+                @click="change(12, $t('members.memberInfo.more.imban') )">
+          <span>{{ $t('members.memberInfo.more.imban') }}</span>
         </button>
 
         <button type="button" class="el-button el-button--success el-button--mini is-plain"
-                @click="change(15,'域名展示')">
-          <span>域名展示</span>
+                @click="change(15, $t('members.memberInfo.more.dShow') )">
+          <span>{{ $t('members.memberInfo.more.dShow') }}</span>
         </button>
       </div>
 
@@ -94,11 +94,11 @@
       <!--积分明细-->
       <el-row v-if="index===1">
         <el-table @row-click="clickRow" ref="table" :data="dbTableList" height="460px" v-loading="loading">
-          <el-table-column prop="name" label="游戏名称" :show-overflow-tooltip="true"></el-table-column>
-          <el-table-column prop="value" label="金额" :show-overflow-tooltip="true"></el-table-column>
-          <el-table-column prop="createTime" label="操作">
+          <el-table-column prop="name" :label=" $t('members.memberInfo.more.gName') " :show-overflow-tooltip="true"></el-table-column>
+          <el-table-column prop="value" :label=" $t('members.memberInfo.more.amt') " :show-overflow-tooltip="true"></el-table-column>
+          <el-table-column prop="createTime" :label=" $t('global.operationColumn') ">
             <template v-slot="{row}" v-if="index===1">
-              <el-button @click="gameEsc(row)">下分</el-button>
+              <el-button @click="gameEsc(row)">{{ $t('members.memberInfo.more.lDiv') }}</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -124,11 +124,11 @@
 
       <el-row v-if="index===3">
         <el-form ref="form" :model="form" :rules="rules" label-width="110px">
-          <el-form-item label="加分金额" prop="score">
-            <el-input v-model="form.score" type="number" placeholder="请输入金额"/>
+          <el-form-item :label=" $t('members.memberInfo.more.amtEx') " prop="score">
+            <el-input v-model="form.score" type="number" :placeholder=" $t('members.memberInfo.more.pAmt') "/>
           </el-form-item>
-          <el-form-item label="入款类型" prop="moneydes">
-            <el-select v-model="form.moneydes" placeholder="入款类型" clearable size="small">
+          <el-form-item :label=" $t('members.memberInfo.more.dType') " prop="moneydes">
+            <el-select v-model="form.moneydes" :placeholder=" $t('members.memberInfo.more.dType') " clearable size="small">
               <el-option
                 v-for="item in moneydesOptions"
                 :key="item.value"
@@ -137,25 +137,25 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="支付备注" prop="remarkPay">
-            <el-input v-model="form.remarkPay" placeholder="请输入支付备注"/>
+          <el-form-item :label=" $t('members.memberInfo.more.pRem') " prop="remarkPay">
+            <el-input v-model="form.remarkPay" :placeholder=" $t('members.memberInfo.more.pNote') "/>
           </el-form-item>
-          <el-form-item label="加分备注" prop="mk">
-            <el-input v-model="form.mk" placeholder="请备注具体加分入金原因"/>
+          <el-form-item :label=" $t('members.memberInfo.more.exCredRem') " prop="mk">
+            <el-input v-model="form.mk" :placeholder=" $t('members.memberInfo.more.pNoteR') "/>
           </el-form-item>
-          <el-form-item label="订单备注" prop="ordermk">
-            <el-input v-model="form.ordermk" placeholder="补单请填写补单订单号，末开奖补回请填写开期号，无则填写为0"/>
+          <el-form-item :label=" $t('members.memberInfo.more.oRem') " prop="ordermk">
+            <el-input v-model="form.ordermk" :placeholder=" $t('members.memberInfo.more.pfOM') "/>
           </el-form-item>
-          <el-form-item label="待打码金额" prop="betMoney">
-            <el-input v-model="form.betMoney" type="number" placeholder="还需打码金额"
+          <el-form-item :label=" $t('members.memberInfo.more.amtCoded') " prop="betMoney">
+            <el-input v-model="form.betMoney" type="number" :placeholder=" $t('members.memberInfo.more.alsoCode') "
                       @blur="codeMoney(form.betMoney,form.score)"/>
           </el-form-item>
-          <el-form-item label="打码倍数" prop="beatNum">
+          <el-form-item :label=" $t('members.memberInfo.more.cMulti') " prop="beatNum">
             <el-input v-model="form.beatNum" type="number"
-                      placeholder="请按顺序先输入加分金额，再输入待打码金额，系统会自动计算打码倍数。默认请填写1,如未打算打码可填写为0"/>
+                      :placeholder=" $t('members.memberInfo.more.peAC') "/>
           </el-form-item>
-          <el-form-item label="谷歌验证码" prop="googleAuthCode">
-            <el-input v-model="form.googleAuthCode" placeholder="请输入谷歌验证码"/>
+          <el-form-item :label=" $t('members.memberInfo.more.gCaptcha') " prop="googleAuthCode">
+            <el-input v-model="form.googleAuthCode" :placeholder=" $t('members.memberInfo.more.pgAC') "/>
           </el-form-item>
         </el-form>
       </el-row>
@@ -164,11 +164,11 @@
       <!--重置密码-->
       <el-row v-if="index===4">
         <el-form ref="form" :model="form" :rules="rules" label-width="110px">
-          <el-form-item label="重置密码" prop="password">
-            <el-input v-model="form.password" placeholder="请输入新密码"/>
+          <el-form-item :label=" $t('members.memberInfo.more.resPass') " prop="password">
+            <el-input v-model="form.password" :placeholder=" $t('members.memberInfo.more.pNP') "/>
           </el-form-item>
-          <el-form-item label="google验证码" prop="googleAuthCode">
-            <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>
+          <el-form-item :label=" $t('members.memberInfo.more.gvc') " prop="googleAuthCode">
+            <el-input v-model="form.googleAuthCode" :placeholder=" $t('members.memberInfo.more.pgvc') "/>
           </el-form-item>
         </el-form>
       </el-row>
@@ -176,11 +176,11 @@
       <!--发送短信-->
       <el-row v-if="index===10">
         <el-form label-width="110px">
-          <el-form-item label="短信信息">
+          <el-form-item :label=" $t('members.memberInfo.more.sMess') ">
             <el-select
               filterable
               v-model="msg"
-              placeholder="请选择发送的信息"
+              :placeholder=" $t('members.memberInfo.more.psms') "
               clearable
               size="small"
               style="width: 240px"
@@ -200,16 +200,16 @@
       <!--重置手机号 update phone number-->
       <el-row v-if="index===11">
         <el-form ref="mobileForm" label-width="110px" :model="mobileForm" :rules="mobileRules">
-          <el-form-item label="旧手机号" prop="phone">
-            <el-input v-model="mobileForm.phone" placeholder="请输入旧手机号" readonly class="col-87pr mr10"/>
-            <el-button type="primary" @click="fullMobile()" v-has-permi="['member:memberInfo:fullMobile']">查看完整手机号
+          <el-form-item :label=" $t('members.memberInfo.more.ocpn') " prop="phone">
+            <el-input v-model="mobileForm.phone" :placeholder=" $t('members.memberInfo.more.pocpn') " readonly class="col-87pr mr10"/>
+            <el-button type="primary" @click="fullMobile()" v-has-permi="['member:memberInfo:fullMobile']">{{ $t('members.memberInfo.more.vCp') }}
             </el-button>
           </el-form-item>
-          <el-form-item label="新手机号" prop="newMobile">
-            <el-input v-model="mobileForm.newMobile" placeholder="请输入新手机号"/>
+          <el-form-item :label=" $t('members.memberInfo.more.ncp') " prop="newMobile">
+            <el-input v-model="mobileForm.newMobile" :placeholder=" $t('members.memberInfo.more.pncp') "/>
           </el-form-item>
-          <el-form-item label="google验证码" prop="googleAuthCode">
-            <el-input v-model="mobileForm.googleAuthCode" placeholder="请输入google验证码"/>
+          <el-form-item :label=" $t('members.memberInfo.more.gvc') " prop="googleAuthCode">
+            <el-input v-model="mobileForm.googleAuthCode" :placeholder=" $t('members.memberInfo.more.pgvc') "/>
           </el-form-item>
           <!--          <el-form-item>-->
           <!--            <el-button type="primary" @click="updateMobile()" v-has-permi="['member:memberInfo:updateMobile']">确 定-->
@@ -221,11 +221,11 @@
       <!--重置邀请码 reset invitation code-->
       <el-row v-if="index===13">
         <el-form ref="formInviterCode" :model="form" :rules="inviterCodeRules" label-width="110px">
-          <el-form-item label="重置邀请码" prop="inviterCode">
-            <el-input v-model="form.inviterCode" placeholder="请输入邀请码"/>
+          <el-form-item :label=" $t('members.memberInfo.more.ric') " prop="inviterCode">
+            <el-input v-model="form.inviterCode" :placeholder=" $t('members.memberInfo.more.peic') "/>
           </el-form-item>
-          <el-form-item label="google验证码" prop="googleAuthCode">
-            <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>
+          <el-form-item :label=" $t('members.memberInfo.more.gvc') " prop="googleAuthCode">
+            <el-input v-model="form.googleAuthCode" :placeholder=" $t('members.memberInfo.more.pgvc') "/>
           </el-form-item>
         </el-form>
       </el-row>
@@ -234,10 +234,10 @@
       <!--域名展示-->
       <el-row v-if="index===15">
         <el-form label-width="110px">
-          <el-form-item label="登录域名">
+          <el-form-item :label=" $t('members.memberInfo.more.lDom') ">
             {{ this.registerDomain }}
           </el-form-item>
-          <el-form-item label="注册域名">
+          <el-form-item :label=" $t('members.memberInfo.more.rDomn') ">
             {{ this.LoginDomain }}
           </el-form-item>
         </el-form>
@@ -253,14 +253,14 @@
           @selection-change="handleSelectionChange"
           height="460px"
           v-loading="loading">
-          <el-table-column align="center" prop="realName" label="真实姓名" :show-overflow-tooltip="true"
+          <el-table-column align="center" prop="realName" :label=" $t('global.realName') " :show-overflow-tooltip="true"
                            min-width="120">
             <template v-slot="{row}" v-if="index===5">
               <el-input v-model="row.realName"></el-input>
             </template>
           </el-table-column>
 
-          <el-table-column align="center" prop="bankName" label="银行名称" :show-overflow-tooltip="true"
+          <el-table-column align="center" prop="bankName" :label=" $t('members.memberInfo.more.bName') " :show-overflow-tooltip="true"
                            min-width="135">
             <template v-slot="{row}" v-if="index===5">
               <el-select filterable
@@ -272,21 +272,21 @@
               </el-select>
             </template>
           </el-table-column>
-          <el-table-column prop="bankAccount" label="银行卡号" :show-overflow-tooltip="true" min-width="150"
+          <el-table-column prop="bankAccount" :label=" $t('members.memberInfo.more.bcNum') " :show-overflow-tooltip="true" min-width="150"
                            align="center">
             <template v-slot="{row}" v-if="index===5">
               <el-input v-model="row.bankAccount"></el-input>
             </template>
           </el-table-column>
-          <el-table-column align="center" prop="bankAddress" label="银行地址" :show-overflow-tooltip="true"
+          <el-table-column align="center" prop="bankAddress" :label=" $t('members.memberInfo.more.bAdd') " :show-overflow-tooltip="true"
                            min-width="140">
             <template v-slot="{row}" v-if="index===5">
               <el-input v-model="row.bankAddress"></el-input>
             </template>
           </el-table-column>
-          <el-table-column prop="createTime" label=" 绑定时间" :show-overflow-tooltip="true" min-width="110"
+          <el-table-column prop="createTime" :label=" $t('members.memberInfo.more.bTime') " :show-overflow-tooltip="true" min-width="110"
                            align="center"></el-table-column>
-          <el-table-column label="操作" min-width="140" align="center">
+          <el-table-column :label=" $t('global.operationColumn') " min-width="140" align="center">
             <template v-slot="{row}" v-if="index===5">
               <el-button
                 @click="unbind(row)"
@@ -295,7 +295,7 @@
                 disabled
                 size="mini"
                 v-has-permi="['member:memberInfo:unbindCard']"
-              >主卡解绑
+              >{{ $t('members.memberInfo.more.mcUnb') }}
               </el-button>
               <el-button
                 @click="unbind(row)"
@@ -303,7 +303,7 @@
                 type="primary"
                 size="mini"
                 v-has-permi="['member:memberInfo:unbindCard']"
-              >副卡解绑
+              >{{ $t('members.memberInfo.more.subUnb') }}
               </el-button>
               <el-button
                 @click="changeBank(row)"
@@ -311,7 +311,7 @@
                 type="warning"
                 style="margin-left: 1px"
                 v-has-permi="['member:memberInfo:changeBank']"
-              >确认修改
+              >{{ $t('members.memberInfo.more.cMod') }}
               </el-button>
             </template>
           </el-table-column>
@@ -334,8 +334,8 @@
           @selection-change="handleSelectionChange"
           height="460px"
           v-loading="loading">
-          <el-table-column label="主播ID" align="center" prop="id" min-width="120px"/>
-          <el-table-column label="主播昵称" align="center" prop="nickName" min-width="120px"/>
+          <el-table-column :label=" $t('members.memberInfo.more.hid') " align="center" prop="id" min-width="120px"/>
+          <el-table-column :label=" $t('members.memberInfo.more.nAnc') " align="center" prop="nickName" min-width="120px"/>
         </el-table>
       </el-row>
       <!--  END 关注主播- Follow the anchor function created by Rajesh -->
@@ -346,9 +346,9 @@
           :data="guard"
           height="460px"
           v-loading="loading">
-          <el-table-column label="主播ID"  align="center" prop="anchorId"     min-width="120px"/>
-          <el-table-column label="守护类型" align="center" prop="type"         min-width="120px"/>
-          <el-table-column label="到期时间" align="center" prop="guardEndTime" min-width="120px"/>
+          <el-table-column :label=" $t('members.memberInfo.more.hid') "  align="center" prop="anchorId"     min-width="120px"/>
+          <el-table-column :label=" $t('members.memberInfo.more.gType') " align="center" prop="type"         min-width="120px"/>
+          <el-table-column :label=" $t('members.memberInfo.more.exTime') " align="center" prop="guardEndTime" min-width="120px"/>
         </el-table>
       </el-row>
 
@@ -359,21 +359,21 @@
           @click="handlePassword"
           v-show="index === 4"
           v-has-permi="['member:memberInfo:resetPwd']"
-        >确 定
+        >{{ $t('members.memberInfo.more.det') }}
         </el-button>
         <el-button
           type="primary"
           @click="handleImportTable"
           v-show="index === 3"
           v-has-permi="['member:memberInfo:addScore']"
-        >确 定
+        >{{ $t('members.memberInfo.more.det') }}
         </el-button>
 
         <el-button
           type="primary" @click="updateMobile()"
           v-show="index ===11"
           v-has-permi="['member:memberInfo:updateMobile']">
-          确 定
+          {{ $t('members.memberInfo.more.det') }}
         </el-button>
 
         <el-button
@@ -381,17 +381,17 @@
           @click="sendMsg()"
           v-show="index ===10"
           v-has-permi="['member:memberInfo:sendMsg']">
-          确 定
+          {{ $t('members.memberInfo.more.det') }}
         </el-button>
 
         <el-button
           type="primary"
           v-show="index===13"
           @click="updateInviterCode()">
-          确 定
+          {{ $t('members.memberInfo.more.det') }}
         </el-button>
 
-        <el-button @click="visible = false">取 消</el-button>
+        <el-button @click="visible = false">{{ $t('global.cancelButton') }}</el-button>
       </div>
       <!--  end footer slots for all dialog models-->
 
@@ -400,24 +400,24 @@
     <el-dialog
       v-dialogDrag
       :close-on-click-modal="false"
-      title="修改vip等级和昵称"
+      :title=" $t('members.memberInfo.more.mVIP') "
       :visible.sync="showVip"
       width="400px"
       append-to-body
       :show-close="false"
       :close-on-press-escape="false"
-    >Vip等级
+    >{{ $t('members.memberInfo.more.vl') }}
       <el-input v-model="vip"/>
-      昵称
+      {{ $t('global.nickname') }}
       <el-input v-model="nickName"/>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="showVip = !showVip">取消</el-button>
+        <el-button @click="showVip = !showVip">{{ $t('members.memberInfo.more.cancel') }}</el-button>
         <el-button
           type="primary"
           :disabled="showVipDisabled"
           @click="updateVip"
           v-has-permi="['member:memberInfo:updateVip']"
-        >立即提交
+        >{{ $t('members.memberInfo.more.sub') }}
         </el-button>
       </div>
     </el-dialog>
@@ -425,33 +425,33 @@
     <el-dialog
       v-dialogDrag
       :close-on-click-modal="false"
-      title="禁用启用IM发言"
+      :title=" $t('members.memberInfo.more.dEnab') "
       :visible.sync="im"
       width="600px"
       append-to-body
       :show-close="false"
       :close-on-press-escape="false">
-      剩余禁言时间: {{ this.ImList.ShuttedUntil }}
+      {{ $t('members.memberInfo.more.remban') }} {{ this.ImList.ShuttedUntil }}
       <br/>
-      会员账号: {{ this.ImList.Member_Account }}
+      {{ $t('members.memberInfo.more.mAcc') }} {{ this.ImList.Member_Account }}
       <br/>
-      昵称: {{ this.ImList.nickName }}
+      {{ $t('global.nickname') }} {{ this.ImList.nickName }}
       <br/>
-      IM禁言时间备注：0取消禁言,4294967295永久禁言,其它值具体禁言时间,以秒为单位
+      {{ $t('members.memberInfo.more.imbantime') }}
       <br/>
       <br/>
-      <div>禁言时间（单位秒）
+      <div>{{ $t('members.memberInfo.more.btime') }}
         <el-input width="200px" v-model="banSpeakTime" type="number"/>
       </div>
       <br/>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="im = !im">取消</el-button>
+        <el-button @click="im = !im">{{ $t('members.memberInfo.more.cancel') }}</el-button>
         <el-button
           type="primary"
           :disabled="showImDisabled"
           @click="updateIm"
           v-has-permi="['member:memberInfo:imBan']"
-        >立即提交
+        >{{ $t('members.memberInfo.more.snow') }}
         </el-button>
       </div>
     </el-dialog>
@@ -564,57 +564,57 @@ export default {
       //手机号校验规则
       mobileRules: {
         oldMobile: [
-          {required: true, message: '旧手机号码不能为空', trigger: 'blur'},
-          {max: 100, message: "旧手机号码长度不能超过11位"},
+          {required: true, message: this.$t('members.memberInfo.more.old') , trigger: 'blur'},
+          {max: 100, message: this.$t('members.memberInfo.more.lold') },
           {validator: validMobile, trigger: "blur"}
         ],
         newMobile: [
-          {required: true, message: '新手机号码不能为空', trigger: 'blur'},
-          {max: 11, message: "新手机号码长度不能超过11位"},
+          {required: true, message: this.$t('members.memberInfo.more.newcp') , trigger: 'blur'},
+          {max: 11, message: this.$t('members.memberInfo.more.lnewcp') },
           {validator: validMobile, trigger: "blur"}
         ],
         googleAuthCode: [
-          {required: true, message: '谷歌验证码不能为空', trigger: 'blur'},
+          {required: true, message: this.$t('members.memberInfo.more.gcapnot') , trigger: 'blur'},
           {validator: validNumber, trigger: "blur"}
         ]
       },
       // 加分表单校验
       inviterCodeRules: {
         inviterCode: [
-          {required: true, message: '重置邀请码不能为空', trigger: 'blur'},
-          {max: 500, message: "重置邀请码长度不能超过500个字符"}
+          {required: true, message: this.$t('members.memberInfo.more.ricbe') , trigger: 'blur'},
+          {max: 500, message: this.$t('members.memberInfo.more.lricbe') }
         ],
         googleAuthCode: [
-          {required: true, message: 'google验证码不能为空', trigger: 'blur'},
+          {required: true, message: this.$t('members.memberInfo.more.gCap') , trigger: 'blur'},
           {validator: validNumber, trigger: "blur"}
         ]
       },
       // 加分表单校验
       rules: {
         password: [
-          {required: true, message: '重置密码不能为空', trigger: 'blur'},
-          {max: 30, message: "重置密码长度不能超过30个字符"}
+          {required: true, message: this.$t('members.memberInfo.more.resPassEmp') , trigger: 'blur'},
+          {max: 30, message: this.$t('members.memberInfo.more.rpl') }
         ],
         score: [
-          {required: true, message: '加分金额不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('members.memberInfo.more.epcannot') , trigger: 'blur'}
         ],
         moneydes: [
-          {required: true, message: '入款备注不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('members.memberInfo.more.ennot') , trigger: 'blur'}
         ],
         mk: [
-          {required: true, message: '备注信息不能为空', trigger: 'blur'}, {
+          {required: true, message: this.$t('members.memberInfo.more.cinot') , trigger: 'blur'}, {
             max: 200,
-            message: "备注信息长度不能超过200位"
+            message: this.$t('members.memberInfo.more.lengthcomm')
           }
         ],
         ordermk: [
-          {required: true, message: '订单备注不能为空', trigger: 'blur'}, {
+          {required: true, message: this.$t('members.memberInfo.more.onemp') , trigger: 'blur'}, {
             max: 200,
-            message: "备注信息长度不能超过200位"
+            message: this.$t('members.memberInfo.more.lengthcomm')
           }
         ],
         googleAuthCode: [
-          {required: true, message: 'google验证码不能为空', trigger: 'blur'},
+          {required: true, message: this.$t('members.memberInfo.more.gCap') , trigger: 'blur'},
           {validator: validNumber, trigger: "blur"}
         ]
       }
@@ -648,7 +648,7 @@ export default {
         if (valid) {
           this.mobileForm.memberId = this.memberId
           updateMobile(this.mobileForm).then((res) => {
-            that.$notify.success('手机号修改成功')
+            that.$notify.success( this.$t('members.memberInfo.more.cellChange') )
             that.visible = false
             that.$emit('refMemeberData')
           })
@@ -660,9 +660,9 @@ export default {
         fullMobile(this.memberId).then((res) => {
           this.mobileForm = res.data
           if (!this.mobileForm.phone) {
-            this.$message.error('手机号码不可用')
+            this.$message.error( this.$t('members.memberInfo.more.cellnot') )
           } else {
-            this.$message.success('完整手机号码已展示')
+            this.$message.success( this.$t('members.memberInfo.more.cellComp') )
           }
         })
       }
@@ -672,7 +672,7 @@ export default {
       this.$refs['formInviterCode'].validate(valid => {
         if (valid) {
           updateInviterCode(this.form.inviterCode, this.form.googleAuthCode, this.memberId).then((res) => {
-            that.$notify.success('邀请码修改成功')
+            that.$notify.success( this.$t('members.memberInfo.more.icMod') )
             that.visible = false
             that.$emit('refMemeberData')
           })
@@ -685,7 +685,7 @@ export default {
         if (res.code === 0) {
           this.resetForm('form')
           this.visible = false
-          this.$notify.success('发送短信成功')
+          this.$notify.success( this.$t('members.memberInfo.more.sendSucc') )
           this.$emit('refMemeberData')
         }
       }).catch((err) => {
@@ -698,7 +698,7 @@ export default {
       this.loading = true
       gameEsc(row.type, this.memberId).then((res) => {
         if (res.code === 200) {
-          this.$notify.success('下分成功')
+          this.$notify.success( this.$t('members.memberInfo.more.dsSucc') )
           this.gameBalance()
         } else {
           this.$notify.error(res.msg)
@@ -711,9 +711,9 @@ export default {
     formatterBankType(row, column) {
       switch (column.type) {
         case 1:
-          return '银行卡转账'
+          return this.$t('members.memberInfo.more.bTran')
       }
-      return '未知'
+      return this.$t('members.memberInfo.more.unk')
     },
     unbind(row) {
       this.loading = true
@@ -727,9 +727,9 @@ export default {
       })
     },
     changeBank(row) {
-      this.$confirm('是否修改银行卡信息?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm( this.$t('members.memberInfo.more.bci') , this.$t('global.prompTitle') , {
+        confirmButtonText: this.$t('members.memberInfo.more.det') ,
+        cancelButtonText: this.$t('members.memberInfo.more.cancel') ,
         type: 'warning'
       }).then(() => {
         this.loading = true
@@ -742,7 +742,7 @@ export default {
       }).catch(() => {
         this.$message({
           type: 'info',
-          message: '已取消'
+          message: this.$t('members.memberInfo.more.cnced')
         })
       })
 
@@ -757,27 +757,27 @@ export default {
       //如果是重置密码,保险箱,体现
       switch (index) {
         case 6 :
-          hint = '确定重置保险箱?'
+          hint = this.$t('members.memberInfo.more.sres')
           this.open(hint, 1)
           break
         case 7 :
-          hint = '请输入您的谷歌验证码'
+          hint = this.$t('members.memberInfo.more.pgvc')
           this.open(hint, 2)
           break
         case 8 :
-          hint = '请输入您的谷歌验证码'
+          hint = this.$t('members.memberInfo.more.pgvc')
           this.open(hint, 3)
           break
         case 9 :
-          hint = '请输入Vip等级'
+          hint = this.$t('members.memberInfo.more.pvl')
           this.open(hint, 4)
           break
         case 12 :
-          hint = 'IM禁言'
+          hint = this.$t('members.memberInfo.more.imban')
           this.open(hint, 5)
           break
         case 2 :
-          hint = '资金明细'
+          hint = this.$t('members.memberInfo.more.fDet')
           this.funds(this.memberId);
           break
       }
@@ -793,72 +793,72 @@ export default {
     //打开提示框
     open(hint, type) {
       if (type === 1) {
-        this.$confirm(hint, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm(hint, this.$t('global.prompTitle') , {
+          confirmButtonText: this.$t('members.memberInfo.more.det') ,
+          cancelButtonText: this.$t('members.memberInfo.more.cancel') ,
           type: 'warning'
         }).then(() => {
           this.$message({
             type: 'success',
-            message: '操作成功!'
+            message: this.$t('members.memberInfo.more.succOp')
           })
           resetSafe({userId: this.memberId}).then((res) => {
             if (res.code === 0) {
-              this.$notify.success('重置保险箱成功')
+              this.$notify.success( this.$t('members.memberInfo.more.rsSucc') )
             } else {
-              this.$notify.error('重置保险箱失败')
+              this.$notify.error( this.$t('members.memberInfo.more.fSafe') )
             }
           })
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('members.memberInfo.more.cnced')
           })
         })
       } else if (type == 2) {
-        this.$prompt(hint, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$prompt(hint, this.$t('global.promptTitle') , {
+          confirmButtonText: this.$t('members.memberInfo.more.det') ,
+          cancelButtonText: this.$t('members.memberInfo.more.cancel') ,
           inputPattern: /^[0-9]{1,10}$/,
-          inputErrorMessage: '验证码格式不正确,0-10数字,请重新输入',
+          inputErrorMessage: this.$t('members.memberInfo.more.fvcnc') ,
         }).then(({value}) => {
           resetWithdrawal({
             googleAuthCode: value,
             id: this.memberId
           }).then((res) => {
             if (res.code === 0) {
-              this.$notify.success('重置提现成功')
+              this.$notify.success( this.$t('members.memberInfo.more.rws') )
             } else {
-              this.$notify.error('重置提现失败')
+              this.$notify.error( this.$t('members.memberInfo.more.rwf') )
             }
           })
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '取消输入'
+            message: this.$t('members.memberInfo.more.cinp')
           })
         })
       } else if (type == 3) {
-        this.$prompt(hint, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$prompt(hint,  this.$t('global.promptTitle') , {
+          confirmButtonText: this.$t('members.memberInfo.more.det') ,
+          cancelButtonText: this.$t('members.memberInfo.more.cancel') ,
           inputPattern: /^[0-9]{1,10}$/,
-          inputErrorMessage: '验证码格式不正确,0-10数字,请重新输入',
+          inputErrorMessage: this.$t('members.memberInfo.more.fvcnc') ,
         }).then(({value}) => {
           memberBcodeRepair({
             googleAuthCode: value,
             id: this.memberId
           }).then((res) => {
             if (res.code === 0) {
-              this.$notify.success('修复打码数据成功')
+              this.$notify.success( this.$t('members.memberInfo.more.rdSUcc') )
             } else {
-              this.$notify.error('修复打码数据失败')
+              this.$notify.error( this.$t('members.memberInfo.more.fixCode') )
             }
           })
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '取消输入'
+            message: this.$t('members.memberInfo.more.cinp')
           })
         })
       } else if (type == 4) {
@@ -871,9 +871,9 @@ export default {
     updateVip() {
       var that = this
       if (that.vip > 50) {
-        this.$message.error("vip等级最大为50级")
+        this.$message.error( this.$t('members.memberInfo.more.maxVip') )
       } else if (that.vip < this.oldVip) {
-        this.$message.error("vip等级修改不能小于之前的等级")
+        this.$message.error( this.$t('members.memberInfo.more.vipMod') )
       } else {
         updateVip({
           nickName: that.nickName,
@@ -889,7 +889,7 @@ export default {
           } else if (res.code === 1) {
             that.$message.error(res.data)
           } else {
-            that.$notify.error('vip等级修改失败')
+            that.$notify.error( this.$t('members.memberInfo.more.vipModF') )
           }
         })
       }
@@ -990,7 +990,7 @@ export default {
           }
         }
       ).catch(() => {
-        this.$notify.warning('获取三方游戏列表失败')
+        this.$notify.warning( this.$t('members.memberInfo.more.fThree') )
         this.loading = false
       })
     },
@@ -1008,7 +1008,7 @@ export default {
           this.loading = false
         }
       }).catch(() => {
-        this.$notify.warning('获取资金明细列表失败')
+        this.$notify.warning( this.$t('members.memberInfo.more.flfund') )
         this.loading = false
       })
     },
@@ -1095,7 +1095,7 @@ export default {
         this.dbTableList = res.data
         this.loading = false
       }).catch((error) => {
-        this.$notify.warning('获取关注列表失败')
+        this.$notify.warning( this.$t('members.memberInfo.more.ffollow') )
         this.loading = false
       })
     },

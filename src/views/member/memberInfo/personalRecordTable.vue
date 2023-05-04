@@ -3,48 +3,48 @@
   <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="open" width="1000px" append-to-body>
 
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" style="margin-top: 20px">
-      <el-form-item label="日期范围" prop="regTime">
+      <el-form-item :label=" $t('global.selectDatePlaceholder') " prop="regTime">
         <el-date-picker type="datetimerange" v-model="date.dateRange" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '95%'}" start-placeholder="开始时间"
-                        end-placeholder="开始时间" :clearable="false"
-                        range-separator="至" :default-time="['00:00:00', '23:59:59']" :picker-options="pickerOptions"
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '95%'}" :start-placeholder=" $t('global.dateTimePickerStartTimePlaceholder') "
+                        :end-placeholder=" $t('global.dateTimePickerEndTimePlaceholder') " :clearable="false"
+                        :range-separator=" $t('global.dateTimePickerRangeSeparator') " :default-time="['00:00:00', '23:59:59']" :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="initData()">搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="initData()">{{ $t('global.searchButton') }}</el-button>
       </el-form-item>
     </el-form>
 
     <table style="width:100%;margin-bottom: 40px">
 
       <tr>
-        <th class="bold">会员ID</th>
+        <th class="bold">{{ $t('members.memberInfo.personalRecordTable.memId') }}</th>
         <td>{{ data.memberId }}</td>
-        <th class="bold">提款</th>
+        <th class="bold">{{ $t('members.memberInfo.personalRecordTable.wFunds') }}</th>
         <td>{{ data.personalWithdrawRecharge }}</td>
       </tr>
       <tr>
-        <th class="bold">线上充值</th>
+        <th class="bold">{{ $t('members.memberInfo.personalRecordTable.oTop') }}</th>
         <td>{{ this.onlineRecharge }}</td>
-        <th class="bold">线下充值</th>
+        <th class="bold">{{ $t('members.memberInfo.personalRecordTable.ofTop') }}</th>
         <td>{{ data.personalRecharge }}</td>
       </tr>
       <tr>
-        <th class="bold">合计充值</th>
+        <th class="bold">{{ $t('members.memberInfo.personalRecordTable.tRech') }}</th>
         <td>{{ this.totalRechargeCount }}</td>
-        <th class="bold">打码量</th>
+        <th class="bold">{{ $t('members.memberInfo.personalRecordTable.cVol') }}</th>
         <td>{{ this.aBet.toFixed(2) }}</td>
       </tr>
       <tr>
-        <td class="bold">送礼</td>
+        <td class="bold">{{ $t('members.memberInfo.personalRecordTable.gGiv') }}</td>
         <td>{{ data.personalLiverVideoProp }}</td>
-        <td class="bold">盈亏</td>
+        <td class="bold">{{ $t('members.memberInfo.personalRecordTable.pnl') }}</td>
         <td>{{ this.income }}</td>
       </tr>
       <tr>
-        <th class="bold">余额</th>
+        <th class="bold">{{ $t('members.memberInfo.personalRecordTable.bal') }}</th>
         <td>{{ data.totalAccount.total_account }}</td>
-        <th class="bold">保险箱余额</th>
+        <th class="bold">{{ $t('members.memberInfo.personalRecordTable.sdepB') }}</th>
         <td>{{ data.totalAccount.box_account }}</td>
       </tr>
       <tr>
@@ -53,9 +53,9 @@
 
 
       <tr>
-        <th class="bold" colspan="2">投注游戏</th>
-        <th class="bold">有效投注</th>
-        <th class="bold">盈亏</th>
+        <th class="bold" colspan="2">{{ $t('members.memberInfo.personalRecordTable.bGames') }}</th>
+        <th class="bold">{{ $t('members.memberInfo.personalRecordTable.vBets') }}</th>
+        <th class="bold">{{ $t('members.memberInfo.personalRecordTable.pnl') }}</th>
       </tr>
       <tr v-for="bcList in bCodeList">
         <td colspan="2">{{ bcList.platformName }}</td>
@@ -66,7 +66,7 @@
     </table>
 
     <el-button type="primary" plain @click="open=false" style="float: right;margin-top: -20px">
-      关闭
+      {{ $t('globe.close') }}
     </el-button>
 
 
@@ -153,7 +153,7 @@ export default {
     initData() {
       const date = this.date
       if (!date.dateRange) {
-        this.msgError("搜索时间不允许为空");
+        this.msgError( this.$t('members.memberInfo.personalRecordTable.sTime') );
         return
       }
       getPersonalReport(this.memberId, date).then((res) => {

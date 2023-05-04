@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="75px">
-      <el-form-item label="直播类型:" prop="type" style="width: auto;margin-right: 30px">
+      <el-form-item :label="$t('liveWeb.liveVideo.queryForm.typeLabel')" prop="type" style="width: auto;margin-right: 30px">
         <el-checkbox-group v-model="queryParams.types" size="medium">
           <el-checkbox v-for="item in typeOptions" :key="item.dictValue" :label="item.dictValue">
             {{ item.dictLabel }}
@@ -11,7 +11,7 @@
       <el-form-item prop="id" style="width: 160px">
         <el-input
           v-model="queryParams.id"
-          placeholder="主播ID"
+          :placeholder="$t('liveWeb.liveVideo.queryForm.idPlaceholder')"
           clearable
           size="small"
           type="number"
@@ -22,14 +22,14 @@
       <el-form-item prop="hostName" style="width: 160px">
         <el-input
           v-model="queryParams.hostName"
-          placeholder="主播昵称/直播标题"
+          :placeholder="$t('liveWeb.liveVideo.queryForm.hostNamePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item prop="paiId" style="width: 150px">
-        <el-select v-model="queryParams.paiId" placeholder="直播线路" clearable>
+        <el-select v-model="queryParams.paiId" :placeholder="$t('liveWeb.liveVideo.queryForm.paiIdPlaceholder')" clearable>
           <el-option
             v-for="dict in serverOptions"
             :key="dict.id"
@@ -39,8 +39,8 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('liveWeb.liveVideo.queryForm.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('liveWeb.liveVideo.queryForm.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -53,7 +53,7 @@
           size="mini"
           @click="closeIds"
           v-hasPermi="['admin:liveVideo:remove']"
-        >批量关播
+        >{{$t('liveWeb.liveVideo.actions.closeIds')}}
         </el-button>
       </el-col>
 
@@ -64,7 +64,7 @@
           plain
           size="mini"
           @click="synchronizeOrder"
-          v-hasPermi="['admin:liveVideo:sync']">同步主台排序
+          v-hasPermi="['admin:liveVideo:sync']">{{$t('liveWeb.liveVideo.actions.synchronizeOrder')}}
         </el-button>
       </el-col>
 
@@ -73,31 +73,31 @@
 
     <el-table stripe v-loading="loading" :data="liveVideoList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="主播ID" min-width="120" align="center" prop="id"/>
-      <el-table-column label="主播昵称" min-width="120" align="center" prop="hostName" :show-overflow-tooltip="true"/>
-      <el-table-column label="直播间标题" min-width="120" align="center" prop="title" :show-overflow-tooltip="true"/>
-      <el-table-column label="直播类型" min-width="120" align="center" prop="cateId" :formatter="typeFormat"/>
-      <el-table-column label="热度" min-width="120" align="center" prop="voteNumber"/>
-      <el-table-column label="在线人数" min-width="120" align="center" prop="watchNumber"/>
+      <el-table-column :label="$t('liveWeb.liveVideo.table.id')" min-width="120" align="center" prop="id"/>
+      <el-table-column :label="$t('liveWeb.liveVideo.table.hostName')" min-width="120" align="center" prop="hostName" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('liveWeb.liveVideo.table.title')" min-width="120" align="center" prop="title" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('liveWeb.liveVideo.table.cateId')" min-width="120" align="center" prop="cateId" :formatter="typeFormat"/>
+      <el-table-column :label="$t('liveWeb.liveVideo.table.voteNumber')" min-width="120" align="center" prop="voteNumber"/>
+      <el-table-column :label="$t('liveWeb.liveVideo.table.watchNumber')" min-width="120" align="center" prop="watchNumber"/>
       <!--      <el-table-column label="推荐" min-width="120" align="center" prop="isRecommend" :formatter="isRecommendFormat"/>-->
       <!--      <el-table-column label="固定位置" min-width="120" align="center" prop="sort"/>-->
-      <el-table-column label="线路名称" min-width="120" align="center" prop="lineName"/>
-      <el-table-column label="直播性质" align="center" prop="lineStatus" width="100">
+      <el-table-column :label="$t('liveWeb.liveVideo.table.lineName')" min-width="120" align="center" prop="lineName"/>
+      <el-table-column :label="$t('liveWeb.liveVideo.table.lineStatus')" align="center" prop="lineStatus" width="100">
         <template slot-scope="scope">
           <span :style="{color: (status = lineStatusOption[parseInt(scope.row.lineStatus)+1]).color}">{{
               status.dictLabel
             }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="直播状态" min-width="100" align="center" prop="liveStatus">
+      <el-table-column :label="$t('liveWeb.liveVideo.table.liveStatus')" min-width="100" align="center" prop="liveStatus">
         <template slot-scope="scope">
-          <span v-if="scope.row.liveStatus === ''">检测中...</span>
+          <span v-if="scope.row.liveStatus === ''">{{$t('liveWeb.liveVideo.table.liveStatusEmpty')}}</span>
           <span v-else :style="{color: (status = liveStatusOption[parseInt(scope.row.liveStatus)]).color}">{{
               status.dictLabel
             }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="禁收费" min-width="65" align="center" prop="openPay">
+      <el-table-column :label="$t('liveWeb.liveVideo.table.openPay')" min-width="65" align="center" prop="openPay">
         <template slot-scope="scope">
           <el-switch
             active-value="0"
@@ -110,26 +110,26 @@
           </el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="收费" min-width="65" align="center" prop="isLivePay">
+      <el-table-column :label="$t('liveWeb.liveVideo.table.isLivePay')" min-width="65" align="center" prop="isLivePay">
         <template slot-scope="scope">
-          <span v-if="scope.row.isLivePay" style="color: #FFB800">是</span>
-          <span v-else>否</span>
+          <span v-if="scope.row.isLivePay" style="color: #FFB800">{{$t('liveWeb.liveVideo.table.isLivePayTrue')}}</span>
+          <span v-else>{{$t('liveWeb.liveVideo.table.isLivePayFalse')}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="开始时间" align="center" prop="beginTime" width="160">
+      <el-table-column :label="$t('liveWeb.liveVideo.table.beginTime')" align="center" prop="beginTime" width="160">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.beginTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="彩种" min-width="120" align="center" prop="lotteryName"/>
-      <el-table-column label="操作" min-width="355" align="left" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column :label="$t('liveWeb.liveVideo.table.lotteryName')" min-width="120" align="center" prop="lotteryName"/>
+      <el-table-column :label="$t('liveWeb.liveVideo.table.operation')" min-width="355" align="left" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="small"
             type="danger"
             @click="close(scope.row)"
             v-hasPermi="['admin:liveVideo:remove']"
-          >关播
+          >{{$t('liveWeb.liveVideo.table.closeButton')}}
           </el-button>
           <el-button
             size="small"
@@ -137,7 +137,7 @@
             v-show="scope.row.isRecommend === 0 && scope.row.sort >= 9999000 && scope.row.stick === false"
             @click="setSort(scope.row)"
             v-hasPermi="['admin:liveVideo:edit']"
-          >固定定位
+          >{{$t('liveWeb.liveVideo.table.setSortButton')}}
           </el-button>
           <el-input
             v-model="scope.row.sort"
@@ -153,7 +153,7 @@
             v-show="scope.row.isRecommend === 0 && scope.row.sort < 9999000 && scope.row.stick === false"
             @click="closeSort(scope.row)"
             v-hasPermi="['admin:liveVideo:edit']"
-          >取消固定定位
+          >{{$t('liveWeb.liveVideo.table.closeSortButton')}}
           </el-button>
           <el-button
             size="small"
@@ -161,7 +161,7 @@
             v-show="scope.row.isRecommend === 0 && scope.row.sort >= 9999000 && scope.row.stick === false"
             @click="recommend(scope.row)"
             v-hasPermi="['admin:liveVideo:edit']"
-          >推荐
+          >{{$t('liveWeb.liveVideo.table.recommendButton')}}
           </el-button>
           <el-button
             :plain="true"
@@ -170,7 +170,7 @@
             v-show="scope.row.isRecommend === 1 && scope.row.sort >= 9999000 && scope.row.stick === false"
             @click="closeRecommend(scope.row)"
             v-hasPermi="['admin:liveVideo:edit']"
-          >取消推荐
+          >{{$t('liveWeb.liveVideo.table.closeRecommendButton')}}
           </el-button>
           <el-button
             size="small"
@@ -178,7 +178,7 @@
             v-show="scope.row.isRecommend === 0 && scope.row.sort >= 9999000 && scope.row.stick === false"
             @click="stick(scope.row)"
             v-hasPermi="['admin:liveVideo:edit']"
-          >置底
+          >{{$t('liveWeb.liveVideo.table.stickButton')}}
           </el-button>
           <el-button
             :plain="true"
@@ -187,7 +187,7 @@
             v-show="scope.row.isRecommend === 0 && scope.row.sort >= 9999000 && scope.row.stick === true"
             @click="closeStick(scope.row)"
             v-hasPermi="['admin:liveVideo:edit']"
-          >取消置底
+          >{{$t('liveWeb.liveVideo.table.closeStickButton')}}
           </el-button>
           <el-button
             size="small"
@@ -195,7 +195,7 @@
             v-show="scope.row.openPay === '1' && !scope.row.isLivePay"
             @click="toLivePay(scope.row)"
             v-hasPermi="['admin:liveVideo:edit']"
-          >收费
+          >{{$t('liveWeb.liveVideo.table.toLivePayButton')}}
           </el-button>
         </template>
       </el-table-column>
@@ -204,22 +204,22 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="350px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="85px">
-        <el-form-item label="主播ID" prop="id">
-          <el-input v-model="form.id" placeholder="主播ID" readonly disabled/>
+        <el-form-item :label="$t('liveWeb.liveVideo.addToLivePayDialog.idLabel')" prop="id">
+          <el-input v-model="form.id" :placeholder="$t('liveWeb.liveVideo.addToLivePayDialog.idPlaceholder')" readonly disabled/>
         </el-form-item>
-        <el-form-item label="主播昵称" prop="hostName">
-          <el-input v-model="form.hostName" placeholder="主播昵称" readonly disabled/>
+        <el-form-item :label="$t('liveWeb.liveVideo.addToLivePayDialog.hostNameLabel')" prop="hostName">
+          <el-input v-model="form.hostName" :placeholder="$t('liveWeb.liveVideo.addToLivePayDialog.hostNamePlaceholder')" readonly disabled/>
         </el-form-item>
-        <el-form-item label="直播间标题" prop="title">
-          <el-input v-model="form.title" placeholder="直播间标题" readonly disabled/>
+        <el-form-item :label="$t('liveWeb.liveVideo.addToLivePayDialog.titleLabel')" prop="title">
+          <el-input v-model="form.title" :placeholder="$t('liveWeb.liveVideo.addToLivePayDialog.titlePlaceholder')" readonly disabled/>
         </el-form-item>
-        <el-form-item label="观看费用" prop="liveFee">
-          <el-input v-model="form.liveFee" placeholder="观看费用"/>
+        <el-form-item :label="$t('liveWeb.liveVideo.addToLivePayDialog.liveFeeLabel')" prop="liveFee">
+          <el-input v-model="form.liveFee" :placeholder="$t('liveWeb.liveVideo.addToLivePayDialog.liveFeePlaceholder')"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{$t('liveWeb.liveVideo.addToLivePayDialog.confirmButton')}}</el-button>
+        <el-button @click="cancel">{{$t('liveWeb.liveVideo.addToLivePayDialog.cancelButton')}}</el-button>
       </div>
     </el-dialog>
 
@@ -228,13 +228,13 @@
     >
       <el-form ref="form" :model="form" label-width="65px">
         <el-form-item prop="effect">
-          <el-radio v-model="form.effect" label="1">是</el-radio>
-          <el-radio v-model="form.effect" label="2">否</el-radio>
+          <el-radio v-model="form.effect" label="1">{{$t('liveWeb.liveVideo.effectDialog.effect1')}}</el-radio>
+          <el-radio v-model="form.effect" label="2">{{$t('liveWeb.liveVideo.effectDialog.effect2')}}</el-radio>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitFormEffect">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitFormEffect">{{$t('liveWeb.liveVideo.effectDialog.confirmButton')}}</el-button>
+        <el-button @click="cancel">{{$t('liveWeb.liveVideo.effectDialog.cancelButton')}}</el-button>
       </div>
     </el-dialog>
     <pagination
@@ -375,7 +375,7 @@ export default {
     handleAdd() {
       this.reset()
       this.open = true
-      this.title = '添加直播'
+      this.title = this.$t('liveWeb.liveVideo.addToLivePayDialog.addTitle')
     },
     /** 修改按钮操作 */
     toLivePay(row) {
@@ -384,42 +384,42 @@ export default {
       getLiveVideo(id).then(response => {
         this.form = response.data
         this.open = true
-        this.title = '付费设置'
+        this.title = this.$t('liveWeb.liveVideo.addToLivePayDialog.toLivePayTitle')
       })
     },
     closeIds() {
       const ids = this.ids
       if (ids == null || ids == '') {
-        this.msgError('请选择关闭直播间')
+        this.msgError(this.$t('liveWeb.liveVideo.messageBox.closeIdsError'))
         return
       }
-      this.$confirm('是否确认批量关闭直播?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('liveWeb.liveVideo.confirmCloseIdsDialog.message'), this.$t('liveWeb.liveVideo.confirmCloseIdsDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.liveVideo.confirmCloseIdsDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.liveVideo.confirmCloseIdsDialog.cancelButton'),
         type: 'warning'
       }).then(function () {
         return close(ids)
       }).then(() => {
         this.getList()
-        this.msgSuccess('关播成功')
+        this.msgSuccess(this.$t('liveWeb.liveVideo.messageBox.closeIdsSuccess'))
       })
     },
     close(row) {
-      this.$confirm('是否确认关闭直播编号为"' + row.id + '"的数据项?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('liveWeb.liveVideo.confirmCloseDialog.message', {id: row.id}), this.$t('liveWeb.liveVideo.title.message'), {
+        confirmButtonText: this.$t('liveWeb.liveVideo.confirmCloseDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.liveVideo.confirmCloseDialog.cancelButton'),
         type: 'warning'
       }).then(function () {
         return close(row.id)
       }).then(() => {
         this.getList()
-        this.msgSuccess('关播成功')
+        this.msgSuccess(this.$t('liveWeb.liveVideo.messageBox.closeSuccess'))
       })
     },
     /** 提交按钮 */
     submitForm() {
       if (this.form.liveFee <= 0) {
-        this.msgError('付费金额必须大于0!')
+        this.msgError(this.$t('liveWeb.liveVideo.messageBox.submitFormError'))
         return
       }
       updateLivePay(this.form.id, this.form.liveFee).then(response => {
@@ -434,13 +434,13 @@ export default {
     },
     typeFormat(row) {
       if (row.cateId == '2') {
-        return '性感主播'
+        return this.$t('liveWeb.liveVideo.table.cateId2')
       } else if (row.cateId == '3') {
-        return '大秀直播'
+        return this.$t('liveWeb.liveVideo.table.cateId3')
       } else if (row.cateId == '4') {
-        return '收费直播'
+        return this.$t('liveWeb.liveVideo.table.cateId4')
       } else {
-        return '彩票直播'
+        return this.$t('liveWeb.liveVideo.table.cateIdOthers')
       }
     },
     getServerLine() {
@@ -452,9 +452,9 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('是否确认导出所有直播数据项?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('liveWeb.liveVideo.confirmExportDialog.message'), this.$t('liveWeb.liveVideo.confirmExportDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.liveVideo.confirmExportDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.liveVideo.confirmExportDialog.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportLiveVideo(queryParams)
@@ -464,9 +464,10 @@ export default {
       })
     },
     changeOpenPay(row) {
-      this.$confirm('是否' + (row.openPay === '0' ? '禁' : '启') + '用主播收费权限?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+
+      this.$confirm(this.$t('liveWeb.liveVideo.confirmChangeOpenPayDialog.message', {openPay: row.openPay === '0' ? '禁' : '启'}), this.$t('liveWeb.liveVideo.confirmChangeOpenPayDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.liveVideo.confirmChangeOpenPayDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.liveVideo.confirmChangeOpenPayDialog.cancelButton'),
         type: 'warning'
       }).then(function () {
         return updateLiveUser({
@@ -542,13 +543,13 @@ export default {
     },
     // 固定定位
     setSort(row) {
-      this.$prompt('', '固定定位', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$prompt('', this.$t('liveWeb.liveVideo.confirmSetSortPrompt.title'), {
+        confirmButtonText: this.$t('liveWeb.liveVideo.confirmSetSortPrompt.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.liveVideo.confirmSetSortPrompt.cancelButton'),
         inputType: 'number',
-        inputPlaceholder: '请输入大于0小于100的整数值',
+        inputPlaceholder: this.$t('liveWeb.liveVideo.confirmSetSortPrompt.inputPlaceholder'),
         inputPattern: /^[1-9][0-9]?$/,
-        inputErrorMessage: '固定位数据格式不正确，请输入大于0小于100的整数值'
+        inputErrorMessage: this.$t('liveWeb.liveVideo.confirmSetSortPrompt.inputErrorMessage')
       }).then(({value}) => {
         updateVideoSort({
           id: row.id,
@@ -581,9 +582,9 @@ export default {
 
     /** 同步主台排序 Sync Master Sorting */
     synchronizeOrder(){
-        this.$confirm('确认同步主台主播排序吗?', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm(this.$t('liveWeb.liveVideo.synchronizeOrderDialog.message'), {
+          confirmButtonText: this.$t('liveWeb.liveVideo.synchronizeOrderDialog.confirmButton'),
+          cancelButtonText: this.$t('liveWeb.liveVideo.synchronizeOrderDialog.cancelButton'),
           type: 'warning'
         }).then(() => {
           resetSynchronizeOrder().then(res=>{

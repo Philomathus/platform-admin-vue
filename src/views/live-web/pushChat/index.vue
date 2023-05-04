@@ -4,7 +4,7 @@
       <el-form-item prop="fromPlatform">
         <el-input
           v-model="queryParams.fromPlatform"
-          placeholder="会员ID"
+          :placeholder="$t('liveWeb.pushChat.queryForm.fromPlatformPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -14,7 +14,7 @@
       <el-form-item prop="userNickName">
         <el-input
           v-model="queryParams.userNickName"
-          placeholder="会员昵称"
+          :placeholder="$t('liveWeb.pushChat.queryForm.userNickNamePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -24,7 +24,7 @@
       <el-form-item prop="poscatId">
         <el-input
           v-model="queryParams.poscatId"
-          placeholder="主播ID"
+          :placeholder="$t('liveWeb.pushChat.queryForm.poscatIdPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -32,8 +32,8 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('liveWeb.pushChat.queryForm.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('liveWeb.pushChat.queryForm.resetButton')}}</el-button>
       </el-form-item>
 
     </el-form>
@@ -50,13 +50,13 @@
 <!--        </el-button>-->
 <!--      </el-col>-->
       <el-col :span="10" style="margin-left: 10px">
-        <span style="font-size: 16px;margin-right: 10px">记录刷新</span>
-        <el-select v-model="refreshSec" placeholder="时间间隔" style="width: 110px">
-          <el-option value="5" label="5秒"></el-option>
-          <el-option value="10" label="10秒"></el-option>
-          <el-option value="15" label="15秒"></el-option>
-          <el-option value="20" label="20秒"></el-option>
-          <el-option value="30" label="30秒"></el-option>
+        <span style="font-size: 16px;margin-right: 10px">{{$t('liveWeb.pushChat.refresh.title')}}</span>
+        <el-select v-model="refreshSec" :placeholder="$t('liveWeb.pushChat.refresh.placeholder')" style="width: 110px">
+          <el-option value="5" :label="$t('liveWeb.pushChat.refresh.interval', {secs: 5})"></el-option>
+          <el-option value="10" :label="$t('liveWeb.pushChat.refresh.interval', {secs: 10})"></el-option>
+          <el-option value="15" :label="$t('liveWeb.pushChat.refresh.interval', {secs: 15})"></el-option>
+          <el-option value="20" :label="$t('liveWeb.pushChat.refresh.interval', {secs: 20})"></el-option>
+          <el-option value="30" :label="$t('liveWeb.pushChat.refresh.interval', {secs: 30})"></el-option>
         </el-select>
         <div style="width: 120px;display: inline-block;text-align: center">
           <span>{{ refreshDesc }}</span>
@@ -70,12 +70,12 @@
     </el-row>
 
     <el-table stripe v-loading="loading" :data="liveVideoChatList">
-      <el-table-column label="主播ID" min-width="120" align="center" prop="poscatId"/>
-      <el-table-column label="主播昵称" :show-overflow-tooltip="true" width="120" align="center" prop="poscatNickName"/>
-      <el-table-column label="平台会员ID" min-width="130" align="center" prop="fromPlatform"/>
-      <el-table-column label="用户昵称" :show-overflow-tooltip="true" width="120" align="center" prop="userNickName"/>
+      <el-table-column :label="$t('liveWeb.pushChat.table.poscatId')" min-width="120" align="center" prop="poscatId"/>
+      <el-table-column :label="$t('liveWeb.pushChat.table.poscatNickName')" :show-overflow-tooltip="true" width="120" align="center" prop="poscatNickName"/>
+      <el-table-column :label="$t('liveWeb.pushChat.table.fromPlatform')" min-width="130" align="center" prop="fromPlatform"/>
+      <el-table-column :label="$t('liveWeb.pushChat.table.userNickName')" :show-overflow-tooltip="true" width="120" align="center" prop="userNickName"/>
 <!--      <el-table-column label="消息类型" width="90" align="center" prop="type" :formatter="typeFormat"/>-->
-      <el-table-column label="消息内容" :show-overflow-tooltip="true" min-width="350" align="center" prop="msg"/>
+      <el-table-column :label="$t('liveWeb.pushChat.table.msg')" :show-overflow-tooltip="true" min-width="350" align="center" prop="msg"/>
       <!--      <el-table-column label="会员ID" align="center" prop="id" />-->
       <!--      <el-table-column label="消息所在聊天组" align="center" prop="group" />-->
       <!--      <el-table-column label="发送者id" align="center" prop="userId" />-->
@@ -100,7 +100,7 @@
 <!--        </template>-->
 <!--      </el-table-column>-->
 <!--      <el-table-column label="发言ip" width="160" align="center" prop="userIp"/>-->
-      <el-table-column label="发送时间" width="160" align="center" prop="createTimes"/>
+      <el-table-column :label="$t('liveWeb.pushChat.table.createTimes')" width="160" align="center" prop="createTimes"/>
 <!--      <el-table-column label="操作" width="145" align="center" class-name="small-padding fixed-width" fixed="right">-->
 <!--        <template slot-scope="scope">-->
 <!--          <el-button-->
@@ -411,7 +411,7 @@ export default {
         const reg = '^[0-9a-zA-Z_]{1,}$'
         let flag = this.queryParams.fromPlatform.match(reg)
         if(!flag){
-          this.msgError("会员ID只能输入数字及下划线")
+          this.msgError(this.$t('liveWeb.pushChat.messageBox.queryError'))
           return
         }
       }
@@ -613,7 +613,7 @@ export default {
       if (this.refreshType === 'primary') {
         this.refreshType = 'danger'
         this.refreshIcon = 'el-icon-circle-close'
-        this.refreshLabel = '停止刷新'
+        this.refreshLabel = this.$t('liveWeb.pushChat.refresh.stopButton')
         this.refreshDesc = ''
 
         this.stopRefresh()
@@ -622,7 +622,7 @@ export default {
       } else {
         this.refreshType = 'primary'
         this.refreshIcon = 'el-icon-refresh'
-        this.refreshLabel = '开始刷新'
+        this.refreshLabel = this.$t('liveWeb.pushChat.refresh.startButton')
         this.refreshDesc = ''
 
         this.stopRefresh()
@@ -636,7 +636,7 @@ export default {
           thet.getList()
           secs = thet.refreshSec
         }
-        thet.refreshDesc = secs + '秒后开始刷新'
+        thet.refreshDesc = this.$t('liveWeb.pushChat.refresh.description', {secs: secs})
         secs--
       }, 1000)
     },

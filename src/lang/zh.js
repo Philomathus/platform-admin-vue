@@ -2760,6 +2760,111 @@ export default {
         statusChangeSuccess: '{text}成功',
         showStatusChangeSuccess: '{text}成功',
       }
+    },
+    officerManage: {
+      queryForm: {
+        hostIdLabel: '主播ID',
+        hostIdPlaceholder: '请输入主播ID',
+        puserIdLabel: '用户ID',
+        puserIdPlaceholder: '请输入用户ID',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
+      },
+      actions: {
+        add: '@:global.addButton',
+        delete: '@:global.deleteButton',
+        export: '@:global.exportButton'
+      },
+      table: {
+        hostId: '主播ID',
+        hostName: '主播昵称',
+        puserId: '用户ID',
+        puserName: '用户昵称',
+        ctime: '创建时间',
+        operation: '@:global.operationColumn',
+        deleteButton: '@:global.deleteButton'
+      },
+      addDialog: {
+        title: '添加房管管理',
+        hostIdLabel: '主播ID',
+        hostIdPlaceholder: '请输入主播ID',
+        puserIdLabel: '用户ID',
+        puserIdPlaceholder: '请输入用户ID',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmDeleteDialog: {
+        title: '@:global.dialogTitle',
+        message: '是否确认删除房管管理编号为"{ids}"的数据项?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmExportDialog: {
+        title: '@:global.dialogTitle',
+        message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      messageBox: {
+        submitFormSuccess: '新增成功',
+        deleteSuccess: '删除成功',
+      }
+    },
+    pushChat: {
+      queryForm: {
+        fromPlatformPlaceholder: '会员ID',
+        userNickNamePlaceholder: '会员昵称',
+        poscatIdPlaceholder: '主播ID',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
+      },
+      refresh: {
+        title: '记录刷新',
+        placeholder: '时间间隔',
+        description: '{secs}秒后开始刷新',
+        interval: '{secs}秒',
+        startButton: '开始刷新',
+        stopButton: '停止刷新'
+      },
+      table: {
+        poscatId: '主播ID',
+        poscatNickName: '主播昵称',
+        fromPlatform: '平台会员ID',
+        userNickName: '用户昵称',
+        msg: '消息内容',
+        createTimes: '发送时间'
+      },
+      messageBox: {
+        queryError: '会员ID只能输入数字及下划线'
+      }
+    },
+    report: {
+      queryForm: {
+        typeLabel: '主播排行榜',
+        typePlaceholder: '请选择榜类型',
+        type0: '日榜',
+        type1: '周榜',
+        type2: '月榜',
+        reptimeLabel: '更新日期',
+        reptimePlaceholder: '选择更新日期',
+        nicknameLabel: '主播昵称',
+        nicknamePlaceholder: '请输入主播昵称',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
+      },
+      actions: {
+        export: '@:global.exportButton'
+      },
+      table: {
+        anchorid: '主播ID',
+        nickname: '主播昵称',
+        dayTicket: '每日热度',
+        sort: '热度排名',
+        dayTicketUpdiff: '距离上一次差值',
+        repdate: '日榜',
+        num: '榜单',
+        reptime: '更新日期'
+      }
     }
   },
 

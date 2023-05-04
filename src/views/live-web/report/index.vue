@@ -2,28 +2,28 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="88px">
 
-      <el-form-item label="主播排行榜">
-        <el-select v-model="queryParams.type" placeholder="请选择榜类型">
-          <el-option label="日榜" value="0"></el-option>
-          <el-option label="周榜" value="1"></el-option>
-          <el-option label="月榜" value="2"></el-option>
+      <el-form-item :label="$t('liveWeb.report.queryForm.typeLabel')">
+        <el-select v-model="queryParams.type" :placeholder="$t('liveWeb.report.queryForm.typePlaceholder')">
+          <el-option :label="$t('liveWeb.report.queryForm.type0')" value="0"></el-option>
+          <el-option :label="$t('liveWeb.report.queryForm.type1')" value="1"></el-option>
+          <el-option :label="$t('liveWeb.report.queryForm.type2')" value="2"></el-option>
         </el-select>
       </el-form-item>
 
-      <el-form-item label="更新日期">
+      <el-form-item :label="$t('liveWeb.report.queryForm.reptimeLabel')">
         <el-date-picker clearable size="small"
                         v-model="queryParams.reptime"
                         type="date"
                         value-format="yyyy-MM-dd"
-                        placeholder="选择更新日期"
+                        :placeholder="$t('liveWeb.report.queryForm.reptimePlaceholder')"
                         :picker-options="pickerOptions">
         </el-date-picker>
       </el-form-item>
 
-      <el-form-item label="主播昵称" prop="nickname">
+      <el-form-item :label="$t('liveWeb.report.queryForm.nicknameLabel')" prop="nickname">
         <el-input
           v-model="queryParams.nickname"
-          placeholder="请输入主播昵称"
+          :placeholder="$t('liveWeb.report.queryForm.nicknamePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -31,8 +31,8 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('liveWeb.report.queryForm.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('liveWeb.report.queryForm.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -45,7 +45,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:reportAnchorhotDay:export']"
-        >导出
+        >{{$t('liveWeb.report.actions.export')}}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -53,14 +53,14 @@
 
     <el-table stripe v-loading="loading" :data="reportAnchorhotDayList">
       <!--      <el-table-column label="id" align="center" prop="repId"/>-->
-      <el-table-column label="主播ID" align="center" prop="anchorid"/>
-      <el-table-column label="主播昵称" align="center" prop="nickname"/>
-      <el-table-column label="每日热度" align="center" prop="dayTicket"/>
-      <el-table-column label="热度排名" align="center" prop="sort"/>
-      <el-table-column label="距离上一次差值" align="center" prop="dayTicketUpdiff"/>
-      <el-table-column label="日榜" align="center" prop="repdate"/>
-      <el-table-column label="榜单" align="center" prop="num"/>
-      <el-table-column label="更新日期" align="center" prop="reptime" width="180">
+      <el-table-column :label="$t('liveWeb.report.table.anchorid')" align="center" prop="anchorid"/>
+      <el-table-column :label="$t('liveWeb.report.table.nickname')" align="center" prop="nickname"/>
+      <el-table-column :label="$t('liveWeb.report.table.dayTicket')" align="center" prop="dayTicket"/>
+      <el-table-column :label="$t('liveWeb.report.table.sort')" align="center" prop="sort"/>
+      <el-table-column :label="$t('liveWeb.report.table.dayTicketUpdiff')" align="center" prop="dayTicketUpdiff"/>
+      <el-table-column :label="$t('liveWeb.report.table.repdate')" align="center" prop="repdate"/>
+      <el-table-column :label="$t('liveWeb.report.table.num')" align="center" prop="num"/>
+      <el-table-column :label="$t('liveWeb.report.table.reptime')" align="center" prop="reptime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.reptime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>

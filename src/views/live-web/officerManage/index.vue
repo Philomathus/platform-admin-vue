@@ -1,27 +1,27 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="主播ID" prop="hostId">
+      <el-form-item :label="$t('liveWeb.officerManage.queryForm.hostIdLabel')" prop="hostId">
         <el-input
           v-model="queryParams.hostId"
-          placeholder="请输入主播ID"
+          :placeholder="$t('liveWeb.officerManage.queryForm.hostIdPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="用户ID" prop="puserId">
+      <el-form-item :label="$t('liveWeb.officerManage.queryForm.puserIdLabel')" prop="puserId">
         <el-input
           v-model="queryParams.puserId"
-          placeholder="请输入用户ID"
+          :placeholder="$t('liveWeb.officerManage.queryForm.puserIdPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('liveWeb.officerManage.queryForm.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('liveWeb.officerManage.queryForm.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -34,7 +34,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:liveOfficer:add']"
-        >新增</el-button>
+        >{{$t('liveWeb.officerManage.actions.add')}}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -45,7 +45,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:liveOfficer:remove']"
-        >删除</el-button>
+        >{{$t('liveWeb.officerManage.actions.delete')}}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -55,7 +55,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:liveOfficer:export']"
-        >导出</el-button>
+        >{{$t('liveWeb.officerManage.actions.export')}}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -63,12 +63,12 @@
     <el-table stripe v-loading="loading" :data="liveOfficerList" @selection-change="handleSelectionChange" class="el-table--border">
       <el-table-column type="selection" width="55" align="center"  min-width="120"/>
       <el-table-column label="ID" align="center" prop="id"  min-width="150"/>
-      <el-table-column label="主播ID" align="center" prop="hostId"  min-width="120"/>
-      <el-table-column label="主播昵称" align="center" prop="hostName"  min-width="120"/>
-      <el-table-column label="用户ID" align="center" prop="puserId"  min-width="150"/>
-      <el-table-column label="用户昵称" align="center" prop="puserName" min-width="120"/>
-      <el-table-column label="创建时间" align="center" prop="ctime" min-width="170"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right"  min-width="120">
+      <el-table-column :label="$t('liveWeb.officerManage.table.hostId')" align="center" prop="hostId"  min-width="120"/>
+      <el-table-column :label="$t('liveWeb.officerManage.table.hostName')" align="center" prop="hostName"  min-width="120"/>
+      <el-table-column :label="$t('liveWeb.officerManage.table.puserId')" align="center" prop="puserId"  min-width="150"/>
+      <el-table-column :label="$t('liveWeb.officerManage.table.puserName')" align="center" prop="puserName" min-width="120"/>
+      <el-table-column :label="$t('liveWeb.officerManage.table.ctime')" align="center" prop="ctime" min-width="170"/>
+      <el-table-column :label="$t('liveWeb.officerManage.table.operation')" align="center" class-name="small-padding fixed-width" fixed="right"  min-width="120">
         <template slot-scope="scope">
           <el-button
             style="color: #dc5252"
@@ -77,23 +77,23 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:liveOfficer:remove']"
-          >删除</el-button>
+          >{{$t('liveWeb.officerManage.table.deleteButton')}}</el-button>
         </template>
       </el-table-column>
     </el-table>
     <!-- 添加房屋管理对话框  Add live officer management dialog -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="主播ID" prop="hostId">
-          <el-input v-model="form.hostId" placeholder="请输入主播ID" />
+        <el-form-item :label="$t('liveWeb.officerManage.addDialog.hostIdLabel')" prop="hostId">
+          <el-input v-model="form.hostId" :placeholder="$t('liveWeb.officerManage.addDialog.hostIdPlaceholder')" />
         </el-form-item>
-        <el-form-item label="用户ID" prop="puserId">
-          <el-input v-model="form.puserId" placeholder="请输入用户ID" />
+        <el-form-item :label="$t('liveWeb.officerManage.addDialog.puserIdLabel')" prop="puserId">
+          <el-input v-model="form.puserId" :placeholder="$t('liveWeb.officerManage.addDialog.puserIdPlaceholder')" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{$t('liveWeb.officerManage.addDialog.confirmButton')}}</el-button>
+        <el-button @click="cancel">{{$t('liveWeb.officerManage.addDialog.cancelButton')}}</el-button>
       </div>
     </el-dialog>
     <pagination
@@ -200,7 +200,8 @@ export default {
     },
     /** 多选框选中数据 Multi-select box data */
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id)
+      this.ids = selection.map(item => item.id).
+
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
@@ -208,7 +209,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加房管管理";
+      this.title = this.$t('liveWeb.officerManage.addDialog.title');
     },
 
     /** 提交按钮  submit button*/
@@ -216,7 +217,7 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
             addLiveOfficer(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess(this.$t('liveWeb.officerManage.messageBox.submitFormSuccess'));
               this.open = false;
               this.getList();
             });
@@ -226,24 +227,24 @@ export default {
     /** 删除按钮操作 delete button action*/
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除房管管理编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('liveWeb.officerManage.confirmDeleteDialog.message', {ids: ids}), this.$t('liveWeb.officerManage.confirmDeleteDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.officerManage.confirmDeleteDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.officerManage.confirmDeleteDialog.cancelButton'),
         type: "warning"
       }).then(function() {
         return delLiveOfficer(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess(this.$t('liveWeb.officerManage.messageBox.deleteSuccess'));
       }).catch(() => {
       })
     },
     /** 导出按钮操作 Export button action */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('liveWeb.officerManage.confirmExportDialog.message'), this.$t('liveWeb.officerManage.confirmExportDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.officerManage.confirmExportDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.officerManage.confirmExportDialog.cancelButton'),
         type: "warning"
       }).then(function() {
         return exportLiveOfficer(queryParams);

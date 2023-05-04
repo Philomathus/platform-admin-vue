@@ -266,7 +266,7 @@
         </template>
       </el-table-column>
       <el-table-column :label=" $t('members.memberInfo.index.loginMark')" align="center" prop="email" :show-overflow-tooltip="true" min-width="130px"/>
-      <el-table-column :label="$t('global.operation')" align="center" class-name="small-padding fixed-width" fixed="right" min-width="220">
+      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width" fixed="right" min-width="220">
         <template slot-scope="scope">
           <el-button
             type="primary"

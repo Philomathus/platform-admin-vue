@@ -1,28 +1,28 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="会员ID" prop="pUserId">
+      <el-form-item :label="$t('lottery.wheelHistory.form.pUserIdLabel')" prop="pUserId">
         <el-input
           v-model="queryParams.pUserId"
-          placeholder="请输入会员ID"
+          :placeholder="$t('lottery.wheelHistory.form.pUserIdPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="昵称" prop="name">
+      <el-form-item :label="$t('global.nickname')" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入昵称"
+          :placeholder="$t('global.nicknamePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="奖励" prop="prize">
+      <el-form-item :label="$t('lottery.wheelHistory.form.prizeLabel')" prop="prize">
         <el-input
           v-model="queryParams.prize"
-          placeholder="请输入奖励"
+          :placeholder="$t('lottery.wheelHistory.form.prizePlaceholder')"
           clearable
           size="small"
           type="number"
@@ -38,15 +38,15 @@
           placeholder="选择时间">
         </el-date-picker>
       </el-form-item>-->
-      <el-form-item label="日期范围" prop="selectDate">
+      <el-form-item :label="$t('global.selectDatePlaceholder')" prop="selectDate">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}" start-placeholder="开始时间"
-                        end-placeholder="开始时间"
-                        range-separator="至" clearable :picker-options="pickerOptions"
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}" :start-placeholder="$t('global.dateTimePickerStartTimePlaceholder')"
+                        :end-placeholder="$t('global.dateTimePickerEndTimePlaceholder')"
+                        :range-separator="$t('global.dateTimePickerRangeSeparator')" clearable :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item label="转盘类型" prop="wheelType">
-        <el-select v-model="queryParams.wheelType" placeholder="请选择转盘类型" clearable size="small">
+      <el-form-item :label="$t('lottery.wheelHistory.form.wheelTypeLabel')" prop="wheelType">
+        <el-select v-model="queryParams.wheelType" :placeholder="$t('lottery.wheelHistory.form.wheelTypePlaceholder')" clearable size="small">
           <el-option
             v-for="dict in typeList "
             :key="dict.dictValue"
@@ -57,8 +57,8 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('global.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('global.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -103,7 +103,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['lottery:wheelHistory:export']"
-        >导出</el-button>
+        >{{$t('global.exportButton')}}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -111,15 +111,15 @@
     <el-table stripe v-loading="loading" :data="wheelHistoryList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="id" align="center" prop="id" />
-      <el-table-column label="会员ID" align="center" prop="puserId" />
-      <el-table-column label="昵称" align="center" prop="name" />
-      <el-table-column label="奖励" align="center" prop="prize" />
-      <el-table-column label="时间" align="center" prop="cTime" width="180">
+      <el-table-column :label="$t('lottery.wheelHistory.tableColumns.pUserId')" align="center" prop="puserId" />
+      <el-table-column :label="$t('global.nickname')" align="center" prop="name" />
+      <el-table-column :label="$t('lottery.wheelHistory.tableColumns.prize')" align="center" prop="prize" />
+      <el-table-column :label="$t('lottery.wheelHistory.tableColumns.cTime')" align="center" prop="cTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.cTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="转盘类型" align="center" prop="wheelType" :formatter="formatterType"/>
+      <el-table-column :label="$t('lottery.wheelHistory.tableColumns.wheelType')" align="center" prop="wheelType" :formatter="formatterType"/>
 <!--      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">-->
 <!--        <template slot-scope="scope">-->
 <!--          <el-button-->
@@ -151,32 +151,32 @@
     <!-- 添加或修改转盘中奖历史对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="会员ID" prop="pUserId">
-          <el-input v-model="form.pUserId" placeholder="请输入会员ID" />
+        <el-form-item :label="$t('lottery.wheelHistory.dialogForm.pUserIdLabel')" prop="pUserId">
+          <el-input v-model="form.pUserId" :placeholder="$t('lottery.wheelHistory.dialogForm.pUserIdPlaceholder')" />
         </el-form-item>
-        <el-form-item label="昵称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入昵称" />
+        <el-form-item :label="$t('global.nickname')" prop="name">
+          <el-input v-model="form.name" :placeholder="$t('global.nicknamePlaceholder')" />
         </el-form-item>
-        <el-form-item label="奖励" prop="prize">
-          <el-input v-model="form.prize" placeholder="请输入奖励" />
+        <el-form-item :label="$t('lottery.wheelHistory.dialogForm.prizeLabel')" prop="prize">
+          <el-input v-model="form.prize" :placeholder="$t('lottery.wheelHistory.dialogForm.prizePlaceholder')" />
         </el-form-item>
-        <el-form-item label="时间" prop="cTime">
+        <el-form-item :label="$t('lottery.wheelHistory.dialogForm.cTimeLabel')" prop="cTime">
           <el-date-picker clearable size="small"
             v-model="form.cTime"
             type="date"
             value-format="yyyy-MM-dd"
-            placeholder="选择时间">
+            :placeholder="$t('lottery.wheelHistory.dialogForm.cTimePlaceholder')">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="type为0是抽奖转盘,1是皮肤转盘" prop="wheelType">
-          <el-select v-model="form.wheelType" placeholder="请选择type为0是抽奖转盘,1是皮肤转盘">
-            <el-option label="请选择字典生成" value="" />
+        <el-form-item :label="$t('lottery.wheelHistory.dialogForm.wheelTypeLabel')" prop="wheelType">
+          <el-select v-model="form.wheelType" :placeholder="$t('lottery.wheelHistory.dialogForm.wheelTypePlaceholder')">
+            <el-option :label="$t('lottery.wheelHistory.dialogForm.optionLabel')" value="" />
           </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{$t('global.submitButton')}}</el-button>
+        <el-button @click="cancel">{{$t('global.cancelButton')}}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -278,7 +278,7 @@ export default {
         const reg = '^[0-9a-zA-Z_]{1,}$'
         let flag = this.queryParams.pUserId.match(reg)
         if(!flag){
-          this.msgError("会员ID只能输入数字及下划线")
+          this.msgError(this.$t('lottery.wheelHistory.queryErrorMessage'));
           return
         }
       }
@@ -300,7 +300,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加转盘中奖历史";
+      this.title = this.$t('lottery.wheelHistory.addTitle');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -309,7 +309,7 @@ export default {
       getWheelHistory(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改转盘中奖历史";
+        this.title = this.$t('lottery.wheelHistory.updateTitle');
       });
     },
     /** 提交按钮 */
@@ -318,13 +318,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateWheelHistory(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess(this.$t('lottery.wheelHistory.updateSuccessMessage'));
               this.open = false;
               this.getList();
             });
           } else {
             addWheelHistory(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess(this.$t('lottery.wheelHistory.addSuccessMessage'));
               this.open = false;
               this.getList();
             });
@@ -335,24 +335,24 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除转盘中奖历史编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('lottery.wheelHistory.confirmDeleteMessage', {ids: row.id}), this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function() {
         return delWheelHistory(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess(this.$t('lottery.wheelHistory.deleteSuccessMessage'));
       }).catch(() => {
 	  })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('lottery.wheelHistory.confirmExportMessage'), this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function() {
         return exportWheelHistory(queryParams);

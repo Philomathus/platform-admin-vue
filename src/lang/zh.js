@@ -3471,27 +3471,161 @@ export default {
 
     //TODO: wheelHistory        -> Luis
     wheelHistory:{
-
+      form:{
+        pUserIdLabel: '会员ID',
+        pUserIdPlaceholder: '请输入会员ID',
+        prizeLabel: '奖励',
+        prizePlaceholder: '请输入奖励',
+        wheelTypeLabel: '转盘类型',
+        wheelTypePlaceholder: '请选择转盘类型',
+      },
+      tableColumns:{
+        pUserId: '会员ID',
+        prize: '奖励',
+        cTime: '时间',
+        wheelType: '转盘类型',
+      },
+      dialogForm:{
+        pUserIdLabel: '会员ID',
+        pUserIdPlaceholder: '请输入会员ID',
+        prizeLabel: '奖励',
+        prizePlaceholder: '请输入奖励',
+        cTimeLabel: '时间',
+        cTimePlaceholder: '选择时间',
+        wheelTypeLabel: 'type为0是抽奖转盘,1是皮肤转盘',
+        wheelTypePlaceholder: '请选择type为0是抽奖转盘,1是皮肤转盘',
+        optionLabel: '请选择字典生成'
+      },
+      queryErrorMessage: '会员ID只能输入数字及下划线',
+      addTitle: '添加转盘中奖历史',
+      updateTitle: '添加转盘中奖历史',
+      updateSuccessMessage: '修改成功',
+      addSuccessMessage: '新增成功',
+      deleteSuccessMessage: '删除成功',
+      confirmDeleteMessage: '是否确认删除转盘中奖历史编号为"{ids}"的数据项?',
+      confirmExportMessage: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...'
     },
 
     //TODO: wheelLottery        -> Luis
     wheelLottery:{
-
+      form:{
+        namePlaceholder: '请输入名称',
+      },
+      tableColumns:{
+        lotteryId: '彩票ID',
+        minBet: '最小投注',
+        prePrize: '预备派奖金额',
+        actPrize: '实际派奖金额',
+      },
+      dialogForm:{
+        nameLabel: '彩票名称',
+        namePlaceholder: '请选择彩票名称',
+        minBetLabel: '最小投注',
+        minBetPlaceholder: '请输入最小投注',
+        prePrizeLabel: '预备派奖金额',
+        prePrizePlaceholder: '请输入预备派奖金额',
+        startPlaceholder: '选择开始时间',
+        endPlaceholder: '选择结束时间',
+      },
+      lotteryIdRuleMessage: '彩票ID不能为空',
+      addTitle: '添加转盘彩票',
+      updateTitle: '修改转盘彩票',
+      updateSuccessMessage: '修改成功',
+      addSuccessMessage: '新增成功',
+      deleteSuccessMessage: '删除成功',
+      confirmDeleteMessage: '是否确认删除转盘彩票编号为"{ids}"的数据项?',
+      confirmExportMessage: '是否确认导出所有转盘彩票数据项?',
     },
 
     //TODO: wheelPool           -> Luis
     wheelPool:{
-
+      tableColumns:{
+        id: '主键',
+        secMoney: '每秒增加奖池金额',
+        limitMoney: '上限金额',
+        weight: '中奖比例',
+      },
+      dialogForm:{
+        namePlaceholder: '请输入名称',
+        secMoneyLabel: '每秒金额',
+        secMoneyPlaceholder: '请输入每秒增加奖池金额',
+        limitMoneyLabel: '上限金额',
+        limitMoneyPlaceholder: '请输入上限金额',
+        weightLabel: '中奖比例',
+        weightPlaceholder: '请输入中奖比例',
+      },
+      updateTitle: '修改 wheelPool',
+      updateSuccessMessage: '修改成功'
     },
 
     //TODO: wheelPoolHistory    -> Luis
     wheelPoolHistory:{
-
+      totalPeopleCount: '总抽奖人数',
+      totalCountMoney: '总抽奖金额',
+      testTotalPeoples: '测试抽奖人数',
+      testTotalMoney: '测试抽奖金额',
+      listCount: '统计查询',
+      form:{
+        memberIdLabel: '会员ID',
+        memberIdPlaceholder: '请输入会员ID',
+      },
+      showTableButton: '抽奖资格记录',
+      tableColumns:{
+        id: '主键',
+        memberId: '会员ID',
+        winTimes: '中奖次数',
+        winId: '中奖ID',
+        memberStatus: '会员类型',
+        prize: '中奖金额',
+        first: '是否首次中奖',
+        status: '状态',
+        medalType: '中奖牌型',
+        drawType: '抽奖排序',
+        position: '已抽位置',
+        createTime: '创建时间',
+        updateTime: '更新时间',
+      },
+      dialogForm:{
+        userId: '会员ID',
+        nickName: '会员昵称',
+        status: '会员类型',
+        vip: '会员vip',
+        time: '开奖时间',
+      },
+      popUpTitle: '抽奖资格记录',
+      confirmExportMessage: '是否确认导出大奖池历史列表数据项?',
     },
 
     //TODO: wheelPrize          -> Luis
     wheelPrize:{
-
+      form:{
+        namePlaceholder: '请输入名称',
+        prizeLabel: '奖励',
+        prizePlaceholder: '请输入奖励',
+        weightLabel: '权重',
+        weightPlaceholder: '请输入权重',
+        wheelTypeLabel: '转盘类型',
+        wheelTypePlaceholder: '请选择转盘类型'
+      },
+      tableColumns:{
+        id: '编号',
+        prize: '奖励',
+        weight: '权重',
+        wheelType: '转盘类型',
+      },
+      dialogForm:{
+        namePlaceholder: '请输入名称',
+        prizeLabel: '奖励',
+        prizePlaceholder: '请输入奖励',
+        weightLabel: '权重',
+        weightPlaceholder: '请输入权重',
+        wheelTypeLabel: '转盘类型',
+        wheelTypePlaceholder: '请选择转盘类型'
+      },
+      addTitle: '添加转盘奖励',
+      updateTitle: '修改转盘奖励',
+      confirmDeleteMessage: '是否确认删除转盘奖励编号为"{ids}"的数据项?',
+      confirmExportMessage: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
     },
 
     //TODO: wheelSkin           -> Luis

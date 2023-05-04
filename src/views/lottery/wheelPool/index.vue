@@ -3,12 +3,12 @@
 
     <!--数据列表表 wheel pool data list table-->
     <el-table stripe v-loading="loading" :data="wheelPoolList" class="el-table--border">
-      <el-table-column label="主键" align="center" prop="id"  min-width="120"/>
-      <el-table-column label="名称" align="center" prop="name"  min-width="120"/>
-      <el-table-column label="每秒增加奖池金额" align="center" prop="secMoney"  min-width="120"/>
-      <el-table-column label="上限金额" align="center" prop="limitMoney"  min-width="120"/>
-      <el-table-column label="中奖比例" align="center" prop="weight"  min-width="120"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right" min-width="120">
+      <el-table-column :label="$t('lottery.wheelPool.tableColumns.id')" align="center" prop="id"  min-width="120"/>
+      <el-table-column :label="$t('global.name')" align="center" prop="name"  min-width="120"/>
+      <el-table-column :label="$t('lottery.wheelPool.tableColumns.secMoney')" align="center" prop="secMoney"  min-width="120"/>
+      <el-table-column :label="$t('lottery.wheelPool.tableColumns.limitMoney')" align="center" prop="limitMoney"  min-width="120"/>
+      <el-table-column :label="$t('lottery.wheelPool.tableColumns.weight')" align="center" prop="weight"  min-width="120"/>
+      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width" fixed="right" min-width="120">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -16,7 +16,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:wheelPool:edit']"
-          >修改</el-button>
+          >{{$t('global.editButton')}}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -24,22 +24,22 @@
     <!-- 修改轮池对话框 modify the wheel pool dialog box -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入名称" />
+        <el-form-item :label="$t('global.name')" prop="name">
+          <el-input v-model="form.name" :placeholder="$t('lottery.wheelPool.dialogForm.namePlaceholder')" />
         </el-form-item>
-        <el-form-item label="每秒金额" prop="secMoney">
-          <el-input v-model="form.secMoney" placeholder="请输入每秒增加奖池金额" />
+        <el-form-item :label="$t('lottery.wheelPool.dialogForm.secMoneyLabel')" prop="secMoney">
+          <el-input v-model="form.secMoney" :placeholder="$t('lottery.wheelPool.dialogForm.secMoneyPlaceholder')" />
         </el-form-item>
-        <el-form-item label="上限金额" prop="limitMoney">
-          <el-input v-model="form.limitMoney" placeholder="请输入上限金额" />
+        <el-form-item :label="$t('lottery.wheelPool.dialogForm.limitMoneyLabel')" prop="limitMoney">
+          <el-input v-model="form.limitMoney" :placeholder="$t('lottery.wheelPool.dialogForm.limitMoneyPlaceholder')" />
         </el-form-item>
-        <el-form-item label="中奖比例" prop="weight">
-          <el-input v-model="form.weight" placeholder="请输入中奖比例" />
+        <el-form-item :label="$t('lottery.wheelPool.dialogForm.weightLabel')" prop="weight">
+          <el-input v-model="form.weight" :placeholder="$t('lottery.wheelPool.dialogForm.weightPlaceholder')" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{$t('global.submitButton')}}</el-button>
+        <el-button @click="cancel">{{$t('global.cancelButton')}}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -116,7 +116,7 @@ export default {
       getWheelPool(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改 wheelPool";
+        this.title = this.$t('lottery.wheelPool.updateTitle');
       });
     },
     /** 提交按钮 */
@@ -125,7 +125,7 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateWheelPool(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess(this.$t('lottery.wheelPool.updateSuccessMessage'));
               this.open = false;
               this.getList();
             });

@@ -1893,7 +1893,7 @@ export default {
         id: '坐骑id',
         gvip: 'vip等级',
         name: '坐骑名',
-        status: '状态',
+        status: 'Status',
         status0: '停用',
         status1: '启用',
         iconUrl: '图标',
@@ -1912,7 +1912,7 @@ export default {
         gvipPlaceholder: '请输入免费领取VIP(-1只能买)',
         nameLabel: '坐骑名',
         namePlaceholder: '请输入坐骑名',
-        statusLabel: '状态',
+        statusLabel: 'Status',
         status0: '未启用',
         status1: '启用',
         iconUrlLabel: '图标',
@@ -1952,9 +1952,9 @@ export default {
         cancelButton: '@:common.cancelButton1'
       },
       messageBox: {
-        updateLiveMountSuccess: '修改成功',
-        addLiveMountSuccess: '新增成功',
-        removeSuccess: '删除成功',
+        updateLiveMountSuccess: 'Modified successfully',
+        addLiveMountSuccess: 'Add success',
+        removeSuccess: 'Delete successfully',
         statusChangeSuccess: '{text}成功'
       }
     },
@@ -1986,7 +1986,7 @@ export default {
         cancelButton: '@:common.cancelButton1'
       },
       messageBox: {
-        removeSuccess: '删除成功'
+        removeSuccess: 'Delete successfully'
       }
     },
     liveProp: {
@@ -2019,7 +2019,7 @@ export default {
         isAnimated0: '普通礼物',
         isAnimated1: 'gif礼物',
         isAnimatedOthers: '大型动画礼物',
-        isEffect: '状态',
+        isEffect: 'Status',
         isEffect1: '有效',
         isEffect0: '无效',
         operation: '@:common.operationColumn',
@@ -2043,7 +2043,7 @@ export default {
         isSpecial0: '正常',
         isSpecial1: '特殊',
         typeLabel: '类型',
-        isEffectLabel: '状态',
+        isEffectLabel: 'Status',
         sortLabel: '排序',
         sortPlaceholder: '请输入排序',
         confirmButton: '@:common.confirmButton2',
@@ -2062,9 +2062,9 @@ export default {
         cancelButton: '@:common.cancelButton1'
       },
       messageBox: {
-        updateLivePropSuccess: '修改成功',
-        addLivePropSuccess: '新增成功',
-        removeSuccess: '删除成功',
+        updateLivePropSuccess: 'Modified successfully',
+        addLivePropSuccess: 'Add success',
+        removeSuccess: 'Delete successfully',
         statusChangeSuccess: '{text}成功'
       }
     },
@@ -2101,7 +2101,7 @@ export default {
         familyUserIdPopover: '家 族 长 ID：',
         familyNickNamePopover: '家族长昵称：',
         familyChieftain: '是否家族长',
-        isAuthentication: '状态',
+        isAuthentication: 'Status',
         isAuthenticationPlaceholder: '请选择状态',
         isAuthentication0: '未认证',
         isAuthentication1: '待审核',
@@ -2674,27 +2674,161 @@ export default {
 
     //TODO: wheelHistory        -> Luis
     wheelHistory:{
-
+      form:{
+        pUserIdLabel: 'Member ID',
+        pUserIdPlaceholder: 'Please enter your member ID',
+        prizeLabel: 'Rewards',
+        prizePlaceholder: 'Please enter the award',
+        wheelTypeLabel: 'Turntable Type',
+        wheelTypePlaceholder: 'Please select the type of carouse',
+      },
+      tableColumns:{
+        pUserId: 'Member ID',
+        prize: 'Rewards',
+        cTime: 'Time',
+        wheelType: '转盘类型',
+      },
+      dialogForm:{
+        pUserIdLabel: 'Member ID',
+        pUserIdPlaceholder: 'Please enter your member ID',
+        prizeLabel: 'Rewards',
+        prizePlaceholder: 'Please enter the award',
+        cTimeLabel: 'Time',
+        cTimePlaceholder: 'Select time',
+        wheelTypeLabel: 'type 0 is the lottery wheel, 1 is the skin wheel',
+        wheelTypePlaceholder: 'Please select type 0 for the lottery wheel and 1 for the skin wheel.',
+        optionLabel: 'Please select dictionary generation'
+      },
+      queryErrorMessage: 'Member IDs can only be entered as numbers and underscores',
+      addTitle: 'Add spinning wheel winning history',
+      updateTitle: 'Update spinning wheel winning history',
+      updateSuccessMessage: 'Modified successfully',
+      addSuccessMessage: 'Add Success',
+      deleteSuccessMessage: 'Delete successfully',
+      confirmDeleteMessage: 'Do you want to confirm the deletion of the data item with the prize history number "{ids}"?',
+      confirmExportMessage: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...'
     },
 
     //TODO: wheelLottery        -> Luis
     wheelLottery:{
-
+      form:{
+        namePlaceholder: 'Please enter the name',
+      },
+      tableColumns:{
+        lotteryId: 'Lottery ID\\',
+        minBet: 'Minimum bet',
+        prePrize: 'Prepared payout amount',
+        actPrize: 'Actual prize payout amount',
+      },
+      dialogForm:{
+        nameLabel: 'Lottery name',
+        namePlaceholder: 'Please select the lottery name',
+        minBetLabel: 'Minimum bet',
+        minBetPlaceholder: 'Please enter a minimum bet',
+        prePrizeLabel: 'Prepared payout amount',
+        prePrizePlaceholder: 'Please enter the reserve payout amount',
+        startPlaceholder: 'Select start time',
+        endPlaceholder: 'Select end time',
+      },
+      lotteryIdRuleMessage: 'Lottery ID cannot be empty',
+      addTitle: 'Add spinning lottery tickets',
+      updateTitle: 'Modifying the Carousel Lottery',
+      updateSuccessMessage: 'Modified successfully',
+      addSuccessMessage: 'Add success',
+      deleteSuccessMessage: 'Delete successfully',
+      confirmDeleteMessage: 'Is it confirmed that the data item with the carousel ticket number "{ids}" is deleted?',
+      confirmExportMessage: 'Is it confirmed that all lottery ticket data items are exported?',
     },
 
     //TODO: wheelPool           -> Luis
     wheelPool:{
-
+      tableColumns:{
+        id: 'Primary key',
+        secMoney: 'Increase the jackpot amount every second',
+        limitMoney: 'Upper limit amount',
+        weight: 'Winning percentage',
+      },
+      dialogForm:{
+        namePlaceholder: 'Please enter the name',
+        secMoneyLabel: 'Amount per second',
+        secMoneyPlaceholder: 'Please enter the amount of the prize pool increase per second',
+        limitMoneyLabel: 'Upper limit amount',
+        limitMoneyPlaceholder: 'Please enter the maximum amount',
+        weightLabel: 'Winning percentage',
+        weightPlaceholder: 'Please enter the winning percentage',
+      },
+      updateTitle: 'Modify wheelPool',
+      updateSuccessMessage: 'Modified successfully'
     },
 
     //TODO: wheelPoolHistory    -> Luis
     wheelPoolHistory:{
-
+      totalPeopleCount: 'Total number of lucky draw winners',
+      totalCountMoney: 'Total Sweepstakes Amount',
+      testTotalPeoples: 'Testing the number of people in the lottery',
+      testTotalMoney: 'Test Sweepstakes Amount',
+      listCount: 'Statistical queries',
+      form:{
+        memberIdLabel: 'Member ID',
+        memberIdPlaceholder: 'Please enter your member ID',
+      },
+      showTableButton: 'Sweepstakes eligibility records',
+      tableColumns:{
+        id: 'Primary key',
+        memberId: 'Member ID',
+        winTimes: 'Number of wins',
+        winId: 'Winning ID',
+        memberStatus: 'Membership Type',
+        prize: 'Winning amount',
+        first: 'Whether it is the first time to win the prize',
+        status: 'Status',
+        medalType: 'Winning card type',
+        drawType: 'Lottery Sorting',
+        position: 'Position drawn',
+        createTime: 'Creation time',
+        updateTime: 'Update time',
+      },
+      dialogForm:{
+        userId: 'Member ID',
+        nickName: 'Member Nickname',
+        status: 'Membership Type',
+        vip: 'Member vip',
+        time: 'Prize time',
+      },
+      popUpTitle: 'Sweepstakes eligibility records',
+      confirmExportMessage: 'Whether to confirm the export of jackpot history list data items?',
     },
 
     //TODO: wheelPrize          -> Luis
     wheelPrize:{
-
+      form:{
+        namePlaceholder: 'Please enter the name',
+        prizeLabel: 'Rewards',
+        prizePlaceholder: 'Please enter the award',
+        weightLabel: 'Weights',
+        weightPlaceholder: 'Please enter weights',
+        wheelTypeLabel: 'Turntable Type',
+        wheelTypePlaceholder: 'Please select the type of carouse'
+      },
+      tableColumns:{
+        id: 'Number',
+        prize: 'Rewards',
+        weight: 'Weights',
+        wheelType: 'Turntable Type',
+      },
+      dialogForm:{
+        namePlaceholder: 'Please enter the name',
+        prizeLabel: 'Rewards',
+        prizePlaceholder: 'Please enter the award',
+        weightLabel: 'Weights',
+        weightPlaceholder: 'Please enter weights',
+        wheelTypeLabel: 'Turntable Type',
+        wheelTypePlaceholder: 'Please select the type of carouse'
+      },
+      addTitle: 'Add spinning rewards',
+      updateTitle: 'Modify the rewards of the reels',
+      confirmDeleteMessage: 'Is it confirmed that the data item with the carousel reward number "{ids}" is deleted?',
+      confirmExportMessage: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
     },
 
     //TODO: wheelSkin           -> Luis

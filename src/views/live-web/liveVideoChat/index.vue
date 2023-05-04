@@ -1,68 +1,68 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="主播ID" prop="poscatId">
+      <el-form-item :label="$t('liveWeb.liveVideoChat.queryForm.postcatIdLabel')" prop="poscatId">
         <el-input
           v-model="queryParams.poscatId"
-          placeholder="请输入主播ID"
+          :placeholder="$t('liveWeb.liveVideoChat.queryForm.poscatIdPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="消息所在聊天组" prop="group">
+      <el-form-item :label="$t('liveWeb.liveVideoChat.queryForm.groupLabel')" prop="group">
         <el-input
           v-model="queryParams.group"
-          placeholder="请输入消息所在聊天组"
+          :placeholder="$t('liveWeb.liveVideoChat.queryForm.groupPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="发送者id" prop="userId">
+      <el-form-item :label="$t('liveWeb.liveVideoChat.queryForm.userIdLabel')" prop="userId">
         <el-input
           v-model.trim="queryParams.userId"
-          placeholder="请输入发送者id"
+          :placeholder="$t('liveWeb.liveVideoChat.queryForm.userIdPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="消息类型 0 普通消息 1 弹幕消息" prop="type">
-        <el-select v-model="queryParams.type" placeholder="请选择消息类型 0 普通消息 1 弹幕消息" clearable size="small">
-          <el-option label="请选择字典生成" value=""/>
+      <el-form-item :label="$t('liveWeb.liveVideoChat.queryForm.typeLabel')" prop="type">
+        <el-select v-model="queryParams.type" :placeholder="$t('liveWeb.liveVideoChat.queryForm.typePlaceholder')" clearable size="small">
+          <el-option :label="$t('liveWeb.liveVideoChat.queryForm.typeValuePlaceholder')" value=""/>
         </el-select>
       </el-form-item>
-      <el-form-item label="主播昵称" prop="poscatNickName">
+      <el-form-item :label="$t('liveWeb.liveVideoChat.queryForm.poscatNickNameLabel')" prop="poscatNickName">
         <el-input
           v-model="queryParams.poscatNickName"
-          placeholder="请输入主播昵称"
+          :placeholder="$t('liveWeb.liveVideoChat.queryForm.poscatNickNamePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="发送者昵称" prop="userNickName">
+      <el-form-item :label="$t('liveWeb.liveVideoChat.queryForm.userNickNameLabel')" prop="userNickName">
         <el-input
           v-model="queryParams.userNickName"
-          placeholder="请输入发送者昵称"
+          :placeholder="$t('liveWeb.liveVideoChat.queryForm.userNickNamePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="平台会员ID" prop="fromPlatform">
+      <el-form-item :label="$t('liveWeb.liveVideoChat.queryForm.fromPlatformLabel')" prop="fromPlatform">
         <el-input
           v-model="queryParams.fromPlatform"
-          placeholder="请输入平台会员ID"
+          :placeholder="$t('liveWeb.liveVideoChat.queryForm.fromPlatformPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('liveWeb.liveVideoChat.queryForm.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('liveWeb.liveVideoChat.queryForm.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -75,7 +75,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:liveVideoChat:add']"
-        >新增
+        >{{$t('liveWeb.liveVideoChat.actions.add')}}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -87,7 +87,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:liveVideoChat:edit']"
-        >修改
+        >{{$t('liveWeb.liveVideoChat.actions.edit')}}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -99,7 +99,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:liveVideoChat:remove']"
-        >删除
+        >{{$t('liveWeb.liveVideoChat.actions.delete')}}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -110,7 +110,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:liveVideoChat:export']"
-        >导出
+        >{{$t('liveWeb.liveVideoChat.actions.export')}}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -118,16 +118,16 @@
 
     <el-table stripe v-loading="loading" :data="liveVideoChatList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="平台会员ID" align="center" prop="id"/>
-      <el-table-column label="主播ID" align="center" prop="poscatId"/>
-      <el-table-column label="消息所在聊天组" align="center" prop="group"/>
-      <el-table-column label="发送者id" align="center" prop="userId"/>
-      <el-table-column label="消息内容" align="center" prop="msg"/>
-      <el-table-column label="消息类型" align="center" prop="type"/>
-      <el-table-column label="主播昵称" align="center" prop="poscatNickName"/>
-      <el-table-column label="发送者昵称" align="center" prop="userNickName"/>
-      <el-table-column label="平台会员ID" align="center" prop="fromPlatform"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('liveWeb.liveVideoChat.table.id')" align="center" prop="id"/>
+      <el-table-column :label="$t('liveWeb.liveVideoChat.table.poscatId')" align="center" prop="poscatId"/>
+      <el-table-column :label="$t('liveWeb.liveVideoChat.table.group')" align="center" prop="group"/>
+      <el-table-column :label="$t('liveWeb.liveVideoChat.table.userId')" align="center" prop="userId"/>
+      <el-table-column :label="$t('liveWeb.liveVideoChat.table.msg')" align="center" prop="msg"/>
+      <el-table-column :label="$t('liveWeb.liveVideoChat.table.type')" align="center" prop="type"/>
+      <el-table-column :label="$t('liveWeb.liveVideoChat.table.poscatNickName')" align="center" prop="poscatNickName"/>
+      <el-table-column :label="$t('liveWeb.liveVideoChat.table.userNickName')" align="center" prop="userNickName"/>
+      <el-table-column :label="$t('liveWeb.liveVideoChat.table.fromPlatform')" align="center" prop="fromPlatform"/>
+      <el-table-column :label="$t('liveWeb.liveVideoChat.table.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -135,7 +135,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:liveVideoChat:edit']"
-          >修改
+          >{{$t('liveWeb.liveVideoChat.table.editButton')}}
           </el-button>
           <el-button
             size="mini"
@@ -143,7 +143,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:liveVideoChat:remove']"
-          >删除
+          >{{$t('liveWeb.liveVideoChat.table.deleteButton')}}
           </el-button>
         </template>
       </el-table-column>
@@ -161,36 +161,36 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="主播ID" prop="poscatId">
-          <el-input v-model="form.poscatId" placeholder="请输入主播ID"/>
+        <el-form-item :label="$t('liveWeb.liveVideoChat.addEditDialog.poscatIdLabel')" prop="poscatId">
+          <el-input v-model="form.poscatId" :placeholder="$t('liveWeb.liveVideoChat.addEditDialog.poscatIdPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="消息所在聊天组" prop="group">
-          <el-input v-model="form.group" placeholder="请输入消息所在聊天组"/>
+        <el-form-item :label="$t('liveWeb.liveVideoChat.addEditDialog.groupLabel')" prop="group">
+          <el-input v-model="form.group" :placeholder="$t('liveWeb.liveVideoChat.addEditDialog.groupPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="发送者id" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入发送者id"/>
+        <el-form-item :label="$t('liveWeb.liveVideoChat.addEditDialog.userIdLabel')" prop="userId">
+          <el-input v-model="form.userId" :placeholder="$t('liveWeb.liveVideoChat.addEditDialog.userIdPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="消息内容" prop="msg">
-          <el-input v-model="form.msg" type="textarea" placeholder="请输入内容"/>
+        <el-form-item :label="$t('liveWeb.liveVideoChat.addEditDialog.msgLabel')" prop="msg">
+          <el-input v-model="form.msg" type="textarea" :placeholder="$t('liveWeb.liveVideoChat.addEditDialog.msgPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="消息类型 0 普通消息 1 弹幕消息" prop="type">
-          <el-select v-model="form.type" placeholder="请选择消息类型 0 普通消息 1 弹幕消息">
-            <el-option label="请选择字典生成" value=""/>
+        <el-form-item :label="$t('liveWeb.liveVideoChat.addEditDialog.typeLabel')" prop="type">
+          <el-select v-model="form.type" :placeholder="$t('liveWeb.liveVideoChat.addEditDialog.typePlaceholder')">
+            <el-option :label="$t('liveWeb.liveVideoChat.addEditDialog.typeValuePlaceholder')" value=""/>
           </el-select>
         </el-form-item>
-        <el-form-item label="主播昵称" prop="poscatNickName">
-          <el-input v-model="form.poscatNickName" placeholder="请输入主播昵称"/>
+        <el-form-item :label="$t('liveWeb.liveVideoChat.addEditDialog.poscatNickNameLabel')" prop="poscatNickName">
+          <el-input v-model="form.poscatNickName" :placeholder="$t('liveWeb.liveVideoChat.addEditDialog.poscatNickNamePlaceholder')"/>
         </el-form-item>
-        <el-form-item label="发送者昵称" prop="userNickName">
-          <el-input v-model="form.userNickName" placeholder="请输入发送者昵称"/>
+        <el-form-item :label="$t('liveWeb.liveVideoChat.addEditDialog.userNickNameLabel')" prop="userNickName">
+          <el-input v-model="form.userNickName" :placeholder="$t('liveWeb.liveVideoChat.addEditDialog.userNickNamePlaceholder')"/>
         </el-form-item>
-        <el-form-item label="平台会员ID" prop="fromPlatform">
-          <el-input v-model="form.fromPlatform" placeholder="请输入平台会员ID"/>
+        <el-form-item :label="$t('liveWeb.liveVideoChat.addEditDialog.fromPlatformLabel')" prop="fromPlatform">
+          <el-input v-model="form.fromPlatform" :placeholder="$t('liveWeb.liveVideoChat.addEditDialog.fromPlatformPlaceholder')"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{$t('liveWeb.liveVideoChat.addEditDialog.confirmButton')}}</el-button>
+        <el-button @click="cancel">{{$t('liveWeb.liveVideoChat.addEditDialog.cancelButton')}}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -247,7 +247,7 @@ export default {
       // 表单校验
       rules: {
         poscatId: [
-          {required: true, message: "主播ID不能为空", trigger: "blur"}
+          {required: true, message: this.$t('liveWeb.liveVideoChat.addEditDialog.validations.poscatId'), trigger: "blur"}
         ],
       }
     };
@@ -306,7 +306,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加会员发言";
+      this.title = this.$t('liveWeb.liveVideoChat.addEditDialog.addTitle');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -315,7 +315,7 @@ export default {
       getLiveVideoChat(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "封停会员";
+        this.title = this.$t('liveWeb.liveVideoChat.addEditDialog.editTitle');
       });
     },
     /** 提交按钮 */
@@ -324,13 +324,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateLiveVideoChat(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess(this.$t('liveWeb.liveVideoChat.messageBox.updateLiveVideoChatSuccess'));
               this.open = false;
               this.getList();
             });
           } else {
             addLiveVideoChat(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess(this.$t('liveWeb.liveVideoChat.messageBox.addLiveVideoChatSuccess'));
               this.open = false;
               this.getList();
             });
@@ -341,23 +341,25 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除会员发言编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+
+      this.$confirm(this.$t('liveWeb.liveVideoChat.confirmDeleteDialog.message', {ids: ids}), this.$t('liveWeb.liveVideoChat.confirmDeleteDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.liveVideoChat.confirmDeleteDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.liveVideoChat.confirmDeleteDialog.cancelButton'),
         type: "warning"
       }).then(function () {
         return delLiveVideoChat(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess(this.$t('liveWeb.liveVideoChat.messageBox.deleteSuccess'));
       })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+
+      this.$confirm(this.$t('liveWeb.liveVideoChat.confirmExportDialog.message'), this.$t('liveWeb.liveVideoChat.confirmExportDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.liveVideoChat.confirmExportDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.liveVideoChat.confirmExportDialog.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportLiveVideoChat(queryParams);

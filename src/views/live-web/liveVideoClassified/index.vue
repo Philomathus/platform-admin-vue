@@ -1,18 +1,18 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="分类名称" prop="title">
+      <el-form-item :label="$t('liveWeb.liveVideoClassified.queryForm.titleLabel')" prop="title">
         <el-input
           v-model="queryParams.title"
-          placeholder="请输入分类名称"
+          :placeholder="$t('liveWeb.liveVideoClassified.queryForm.titlePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('liveWeb.liveVideoClassified.queryForm.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('liveWeb.liveVideoClassified.queryForm.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -25,7 +25,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:liveVideoClassified:add']"
-        >新增
+        >{{$t('liveWeb.liveVideoClassified.actions.add')}}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -37,7 +37,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:liveVideoClassified:edit']"
-        >修改
+        >{{$t('liveWeb.liveVideoClassified.actions.edit')}}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -49,7 +49,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:liveVideoClassified:remove']"
-        >删除
+        >{{$t('liveWeb.liveVideoClassified.actions.delete')}}
         </el-button>
       </el-col>
       <!--      <el-col :span="1.5">-->
@@ -69,8 +69,8 @@
     <el-table v-loading="loading" :data="liveVideoClassifiedList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="ID" align="center" prop="id"/>
-      <el-table-column label="分类名称" align="center" prop="title"/>
-      <el-table-column label="状态" align="center" key="isEffect" v-if="columns[0].visible">
+      <el-table-column :label="$t('liveWeb.liveVideoClassified.table.title')" align="center" prop="title"/>
+      <el-table-column :label="$t('liveWeb.liveVideoClassified.table.isEffect')" align="center" key="isEffect" v-if="columns[0].visible">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.isEffect"
@@ -80,10 +80,10 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="排序(客服端倒序)" align="center" prop="sort"/>
+      <el-table-column :label="$t('liveWeb.liveVideoClassified.table.sort')" align="center" prop="sort"/>
       <!--      <el-table-column label="分类图标" align="center" prop="img"/>-->
-      <el-table-column label="分类代号" align="center" prop="classfy"/>
-      <el-table-column label="主播端显示" align="center" key="isHostShow" v-if="columns[0].visible">
+      <el-table-column :label="$t('liveWeb.liveVideoClassified.table.classfy')" align="center" prop="classfy"/>
+      <el-table-column :label="$t('liveWeb.liveVideoClassified.table.isHostShow')" align="center" key="isHostShow" v-if="columns[0].visible">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.isHostShow"
@@ -94,7 +94,7 @@
         </template>
       </el-table-column>
       <!--      <el-table-column label="查询主播列表分页逻辑" align="center" prop="sortDesc"/>-->
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('liveWeb.liveVideoClassified.table.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -102,7 +102,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:liveVideoClassified:edit']"
-          >修改
+          >{{$t('liveWeb.liveVideoClassified.table.editButton')}}
           </el-button>
           <el-button
             style="color: #FF5722"
@@ -111,7 +111,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:liveVideoClassified:remove']"
-          >删除
+          >{{$t('liveWeb.liveVideoClassified.table.deleteButton')}}
           </el-button>
         </template>
       </el-table-column>
@@ -129,41 +129,41 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="610px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-        <el-form-item label="分类名称" prop="title">
-          <el-input v-model="form.title" placeholder="请输入分类名称"/>
+        <el-form-item :label="$t('liveWeb.liveVideoClassified.addEditDialog.titleLabel')" prop="title">
+          <el-input v-model="form.title" :placeholder="$t('liveWeb.liveVideoClassified.addEditDialog.titlePlaceholder')"/>
         </el-form-item>
 
         <section class="el-row">
           <div class="el-col-lg-14">
-            <el-form-item label="状态">
+            <el-form-item :label="$t('liveWeb.liveVideoClassified.addEditDialog.isEffectLabel')">
               <el-radio-group v-model="form.isEffect">
-                <el-radio label="0">未启用</el-radio>
-                <el-radio label="1">启用</el-radio>
+                <el-radio label="0">{{$t('liveWeb.liveVideoClassified.table.isEffect0')}}</el-radio>
+                <el-radio label="1">{{$t('liveWeb.liveVideoClassified.table.isEffect0')}}</el-radio>
               </el-radio-group>
             </el-form-item>
-            <el-form-item label="主播端显示">
+            <el-form-item :label="$t('liveWeb.liveVideoClassified.addEditDialog.isHostShowLabel')">
               <el-radio-group v-model="form.isHostShow">
-                <el-radio label="0">未启用</el-radio>
-                <el-radio label="1">启用</el-radio>
+                <el-radio label="0">{{$t('liveWeb.liveVideoClassified.table.isHostShow0')}}</el-radio>
+                <el-radio label="1">{{$t('liveWeb.liveVideoClassified.table.isHostShow1')}}</el-radio>
               </el-radio-group>
             </el-form-item>
-            <el-form-item label="排序" prop="sort">
-              <el-input v-model="form.sort" placeholder="请输入排序" type="number"/>
+            <el-form-item :label="$t('liveWeb.liveVideoClassified.addEditDialog.sortLabel')" prop="sort">
+              <el-input v-model="form.sort" :placeholder="$t('liveWeb.liveVideoClassified.addEditDialog.sortPlaceholder')" type="number"/>
             </el-form-item>
-            <el-form-item label="分类代号" prop="classfy">
-              <el-input v-model="form.classfy" placeholder="请输入分类id" type="number"/>
+            <el-form-item :label="$t('liveWeb.liveVideoClassified.addEditDialog.classfyLabel')" prop="classfy">
+              <el-input v-model="form.classfy" :placeholder="$t('liveWeb.liveVideoClassified.addEditDialog.classfyPlaceholder')" type="number"/>
             </el-form-item>
           </div>
           <div class="el-col-lg-10" style="margin-left: -35px">
-            <el-form-item label="分类图标" prop="img">
+            <el-form-item :label="$t('liveWeb.liveVideoClassified.addEditDialog.imgLabel')" prop="img">
               <imageUpload v-model="form.img" path="give"/>
             </el-form-item>
           </div>
         </section>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{$t('liveWeb.liveVideoClassified.addEditDialog.confirmButton')}}</el-button>
+        <el-button @click="cancel">{{$t('liveWeb.liveVideoClassified.addEditDialog.cancelButton')}}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -225,19 +225,19 @@ export default {
       // 表单校验
       rules: {
         title: [
-          {required: true, message: "分类名称不能为空", trigger: "blur"}
+          {required: true, message: this.$t('liveWeb.liveVideoClassified.addEditDialog.validations.title'), trigger: "blur"}
         ],
         isEffect: [
-          {required: true, message: "是否有效 1-有效 0-无效不能为空", trigger: "blur"}
+          {required: true, message: this.$t('liveWeb.liveVideoClassified.addEditDialog.validations.isEffect'), trigger: "blur"}
         ],
         sort: [
-          {required: true, message: "从大到小排不能为空", trigger: "blur"}
+          {required: true, message: this.$t('liveWeb.liveVideoClassified.addEditDialog.validations.sort'), trigger: "blur"}
         ],
         img: [
-          {required: true, message: "分类图标不能为空", trigger: "blur"}
+          {required: true, message: this.$t('liveWeb.liveVideoClassified.addEditDialog.validations.img'), trigger: "blur"}
         ],
         isHostShow: [
-          {required: true, message: "是否主播端显示不能为空", trigger: "blur"}
+          {required: true, message: this.$t('liveWeb.liveVideoClassified.addEditDialog.validations.isHostShow'), trigger: "blur"}
         ],
       }
     };
@@ -294,7 +294,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加分类";
+      this.title = this.$t('liveWeb.liveVideoClassified.addEditDialog.validations.addTitle');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -303,7 +303,7 @@ export default {
       getLiveVideoClassified(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改分类";
+        this.title = this.$t('liveWeb.liveVideoClassified.addEditDialog.validations.editTitle');
       });
     },
     /** 提交按钮 */
@@ -312,13 +312,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateLiveVideoClassified(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess(this.$t('liveWeb.liveVideoClassified.messageBox.updateLiveVideoClassifiedSuccess'));
               this.open = false;
               this.getList();
             });
           } else {
             addLiveVideoClassified(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess(this.$t('liveWeb.liveVideoClassified.messageBox.addLiveVideoClassifiedSuccess'));
               this.open = false;
               this.getList();
             });
@@ -329,23 +329,23 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除分类编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('liveWeb.liveVideoClassified.confirmDeleteDialog.message', {ids: ids}), this.$t('liveWeb.liveVideoClassified.confirmDeleteDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.liveVideoClassified.confirmDeleteDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.liveVideoClassified.confirmDeleteDialog.cancelButton'),
         type: "warning"
       }).then(function () {
         return delLiveVideoClassified(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess(this.$t('liveWeb.liveVideoClassified.messageBox.deleteSuccess'));
       })
     },
     // 状态修改
     handleStatusChange(row) {
-      let text = row.isEffect === '0' ? '停用' : '启用'
-      this.$confirm('确认要' + text + '"' + row.title + '"吗?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      let text = row.isEffect === '0' ? this.$t('liveWeb.liveVideoClassified.table.isEffect0') : this.$t('liveWeb.liveVideoClassified.table.isEffect1')
+      this.$confirm(this.$t('liveWeb.liveVideoClassified.confirmStatusChangeDialog.message', {text: text, title: row.title}), this.$t('liveWeb.liveVideoClassified.confirmStatusChangeDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.liveVideoClassified.confirmStatusChangeDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.liveVideoClassified.confirmStatusChangeDialog.cancelButton'),
         type: 'warning'
       }).then(function () {
         var data = {};
@@ -353,16 +353,16 @@ export default {
         data.isEffect = row.isEffect;
         return updateLiveVideoClassified(data)
       }).then(() => {
-        this.msgSuccess(text + '成功')
+        this.msgSuccess(this.$t('liveWeb.liveVideoClassified.messageBox.statusChangeSuccess', {text: text}))
       }).catch(function () {
         row.isEffect = row.isEffect === '0' ? '1' : '0'
       })
     },
     handleShowStatusChange(row) {
-      let text = row.isEffect === '0' ? '停用' : '启用'
-      this.$confirm('确认要' + text + '"' + row.title + '"吗?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      let text = row.isEffect === '0' ? this.$t('liveWeb.liveVideoClassified.table.isHostShow0') : this.$t('liveWeb.liveVideoClassified.table.isHostShow1')
+      this.$confirm(this.$t('liveWeb.liveVideoClassified.confirmShowStatusChangeDialog.message', {text: text, title: row.title}), this.$t('liveWeb.liveVideoClassified.confirmShowStatusChangeDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.liveVideoClassified.confirmShowStatusChangeDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.liveVideoClassified.confirmShowStatusChangeDialog.cancelButton'),
         type: 'warning'
       }).then(function () {
         var data = {};
@@ -370,7 +370,7 @@ export default {
         data.isHostShow = row.isHostShow;
         return updateLiveVideoClassified(data)
       }).then(() => {
-        this.msgSuccess(text + '成功')
+        this.msgSuccess(this.$t('liveWeb.liveVideoClassified.messageBox.showStatusChangeSuccess', {text: text}))
       }).catch(function () {
         row.isHostShow = row.isHostShow === '0' ? '1' : '0'
       })
@@ -378,9 +378,10 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+
+      this.$confirm(this.$t('liveWeb.liveVideoClassified.confirmExportDialog.message'), this.$t('liveWeb.liveVideoClassified.confirmExportDialog.title'), {
+        confirmButtonText: this.$t('liveWeb.liveVideoClassified.confirmExportDialog.confirmButton'),
+        cancelButtonText: this.$t('liveWeb.liveVideoClassified.confirmExportDialog.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportLiveVideoClassified(queryParams);

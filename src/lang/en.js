@@ -1166,7 +1166,35 @@ export default {
         sdepB: 'Safe deposit box balance',
         bGames: 'Betting Games',
         vBets: 'Valid Bets',
-        sTime: 'Search time is not allowed to be empty',
+        sTime: 'Search time is not allowed to be empty'
+      }
+    },
+    memberInfoHistory: {
+      index: {
+        aStates: 'All States',
+        mam: 'Member ID / Account Number / Mobile Phone Number',
+        iCode: 'Invitation Code',
+        aTypes: 'All Types',
+        lip: 'Login IP',
+        bcNum: 'Bank Card Number',
+        lRem: 'Login Remarks',
+        vip: 'View blocked IP',
+        mid: 'Member ID',
+        aNum: 'Account Number',
+        lTime: 'Login Time',
+        psStat: 'Please select the status',
+        rTime: 'Registration Time',
+        nLogs: 'Number of Logins',
+        wBan: 'Whether to ban',
+        cam: 'Coding Amount',
+        cvBets: 'Cumulative valid bets',
+        uType: 'User Type',
+        nrBan: 'Note the reason for the ban',
+        psrDis: 'Please select the reason for disabling',
+        perDis: 'Please enter the reason for disabling',
+        other: 'Other',
+        cnc: 'Cancellation',
+        snow: 'Submit Now',
 
       }
     }

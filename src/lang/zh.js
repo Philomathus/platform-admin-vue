@@ -1230,7 +1230,35 @@ export default {
         sdepB: '保险箱余额',
         bGames: '投注游戏',
         vBets: '有效投注',
-        sTime: '搜索时间不允许为空',
+        sTime: '搜索时间不允许为空'
+      }
+    },
+    memberInfoHistory: {
+      index: {
+        aStates: '全部状态',
+        mam: '会员ID/账号/手机号',
+        iCode: '邀请码',
+        aTypes: '全部类型',
+        lip: '登录IP',
+        bcNum: '银行卡号',
+        lRem: '登录备注',
+        vip: '查看封停IP',
+        mid: '会员ID',
+        aNum: '账号',
+        lTime: '登录时间',
+        psStat: '请选择状态',
+        rTime: '注册时间',
+        nLogs: '登陆次数',
+        wBan: '是否禁言',
+        cam: '打码账户',
+        cvBets: '累计有效投注',
+        uType: '用户类型',
+        nrBan: '备注禁用原因',
+        psrDis: '请选择禁用原因',
+        perDis: '请输入禁用原因',
+        other: '其他',
+        cnc: '取消',
+        snow: '立即提交',
 
       }
     }

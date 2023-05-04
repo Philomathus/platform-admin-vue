@@ -37,7 +37,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['activity:commonProblem:add']"
-        >{{ $t('activity.addButton') }}
+        >{{ $t('global.addButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -49,7 +49,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['activity:commonProblem:edit']"
-        >{{ $t('activity.editButton') }}
+        >{{ $t('global.editButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -61,7 +61,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['activity:commonProblem:remove']"
-        >{{ $t('activity.deleteButton') }}
+        >{{ $t('global.deleteButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -92,7 +92,7 @@
           <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">{{ status.dictLabel }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('activity.operation')" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -100,7 +100,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['activity:commonProblem:edit']"
-          >{{ $t('activity.editButton') }}
+          >{{ $t('global.editButton') }}
           </el-button>
           <el-button
             size="mini"
@@ -109,7 +109,7 @@
             @click="handleDelete(scope.row)"
             v-hasPermi="['activity:commonProblem:remove']"
           >{{
-              $t('activity.deleteButton')
+              $t('global.deleteButton')
             }}
           </el-button>
         </template>

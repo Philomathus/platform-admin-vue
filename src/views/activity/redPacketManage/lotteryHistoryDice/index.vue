@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="55px">
-      <el-form-item label="会员ID" prop="pUserId">
+      <el-form-item :label="会员ID" prop="pUserId">
         <el-input
           v-model="queryParams.pUserId"
           placeholder="请输入会员ID"
@@ -10,7 +10,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="昵称" prop="name">
+      <el-form-item :label="昵称" prop="name">
         <el-input
           v-model="queryParams.name"
           placeholder="请输入昵称"
@@ -34,7 +34,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:lotteryHistoryDice:add']"
-        >新增</el-button>
+        >{{ $t('global.addButton') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -45,7 +45,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:lotteryHistoryDice:edit']"
-        >修改</el-button>
+        >{{ $t('global.editButton') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -55,16 +55,16 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:lotteryHistoryDice:export']"
-        >导出</el-button>
+        >{{ $t('global.exportButton') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="lotteryHistoryDiceList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="会员ID" align="center" prop="pUserId" />
-      <el-table-column label="昵称" align="center" prop="name" />
-      <el-table-column label="头像" align="center" prop="headImg">
+      <el-table-column :label="会员ID" align="center" prop="pUserId" />
+      <el-table-column :label="昵称" align="center" prop="name" />
+      <el-table-column :label="头像" align="center" prop="headImg">
         <template slot-scope="scope">
           <el-image
             style="height: 50px;"
@@ -74,13 +74,13 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="抽奖时间" align="center" prop="cTime" width="180">
+      <el-table-column :label="抽奖时间" align="center" prop="cTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.cTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="奖励" align="center" prop="award" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="奖励" align="center" prop="award" />
+      <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -88,7 +88,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:lotteryHistoryDice:edit']"
-          >修改</el-button>
+          >{{ $t('global.editButton') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -104,22 +104,22 @@
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="会员ID" prop="pUserId">
+        <el-form-item :label="会员ID" prop="pUserId">
           <el-input v-model="form.pUserId" placeholder="请输入会员ID" />
         </el-form-item>
-        <el-form-item label="昵称" prop="name">
+        <el-form-item :label="昵称" prop="name">
           <el-input v-model="form.name" placeholder="请输入昵称" />
         </el-form-item>
-        <el-form-item label="头像">
+        <el-form-item :label="头像">
           <imageUpload v-model="form.headImg" path="lotteryHistoryDice"/>
         </el-form-item>
-        <el-form-item label="奖励" prop="award">
+        <el-form-item :label="奖励" prop="award">
           <el-input v-model="form.award" placeholder="请输入奖励" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('global.submitButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -244,13 +244,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateLotteryHistoryDice(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess(this.$t('global.editSuccessMsg'));
               this.open = false;
               this.getList();
             });
           } else {
             addLotteryHistoryDice(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess(this.$t('global.addSuccessMsg'));
               this.open = false;
               this.getList();
             });
@@ -262,8 +262,8 @@ export default {
     handleDelete(row) {
       const ids = row.id || this.ids;
       this.$confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function() {
         return delLotteryHistoryDice(ids);
@@ -278,7 +278,7 @@ export default {
       const queryParams = this.queryParams;
       this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
         confirmButtonText: "确认",
-        cancelButtonText: "取消",
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function() {
         return exportLotteryHistoryDice(queryParams);

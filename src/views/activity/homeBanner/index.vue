@@ -37,7 +37,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['activity:homeBanner:add']"
-        >{{ $t('activity.addButton') }}
+        >{{ $t('global.addButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -49,7 +49,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['activity:homeBanner:edit']"
-        >{{ $t('activity.editButton') }}
+        >{{ $t('global.editButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -61,7 +61,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['activity:homeBanner:remove']"
-        >{{ $t('activity.deleteButton') }}
+        >{{ $t('global.deleteButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -107,7 +107,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['activity:homeBanner:edit']"
-          >修改
+          >{{ $t('global.editButton') }}
           </el-button>
           <el-button
             size="mini"
@@ -115,7 +115,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['activity:homeBanner:remove']"
-          >删除
+          >{{ $t('global.deleteButton') }}
           </el-button>
         </template>
       </el-table-column>

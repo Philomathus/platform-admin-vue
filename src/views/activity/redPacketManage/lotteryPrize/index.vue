@@ -9,7 +9,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:lotteryPrize:add']"
-        >新增</el-button>
+        >{{ $t('global.addButton') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -20,7 +20,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:lotteryPrize:edit']"
-        >修改</el-button>
+        >{{ $t('global.editButton') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -31,7 +31,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:lotteryPrize:remove']"
-        >删除</el-button>
+        >{{ $t('global.deleteButton') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -41,19 +41,19 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:lotteryPrize:export']"
-        >导出</el-button>
+        >{{ $t('global.exportButton') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="lotteryPrizeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="编号" align="center" prop="id" />
-      <el-table-column label="名称" align="center" prop="prizeName" />
-      <el-table-column label="奖励" align="center" prop="prize" />
-      <el-table-column label="奖品权重" align="center" prop="prizeWeight" />
+      <el-table-column :label="编号" align="center" prop="id" />
+      <el-table-column :label="名称" align="center" prop="prizeName" />
+      <el-table-column :label="奖励" align="center" prop="prize" />
+      <el-table-column :label="奖品权重" align="center" prop="prizeWeight" />
       <el-table-column label="奖品（剩余）数量" align="center" prop="prizeAmount" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -61,14 +61,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:lotteryPrize:edit']"
-          >修改</el-button>
+          >{{ $t('global.editButton') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:lotteryPrize:remove']"
-          >删除</el-button>
+          >{{ $t('global.deleteButton') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -84,16 +84,16 @@
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="140px">
-        <el-form-item label="活动类型" prop="type">
+        <el-form-item :label="活动类型" prop="type">
           <el-input v-model="form.type" placeholder="请输入活动类型" />
         </el-form-item>
-        <el-form-item label="名称" prop="prizeName">
+        <el-form-item :label="名称" prop="prizeName">
           <el-input v-model="form.prizeName" placeholder="请输入名称" />
         </el-form-item>
-        <el-form-item label="奖励" prop="prize">
+        <el-form-item :label="奖励" prop="prize">
           <el-input v-model="form.prize" placeholder="请输入奖励" />
         </el-form-item>
-        <el-form-item label="奖品权重" prop="prizeWeight">
+        <el-form-item :label="奖品权重" prop="prizeWeight">
           <el-input v-model="form.prizeWeight" placeholder="请输入奖品权重" />
         </el-form-item>
         <el-form-item label="奖品（剩余）数量" prop="prizeAmount">
@@ -101,8 +101,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('global.submitButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -235,13 +235,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateLotteryPrize(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess(this.$t('global.editSuccessMsg'));
               this.open = false;
               this.getList();
             });
           } else {
             addLotteryPrize(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess(this.$t('global.addSuccessMsg'));
               this.open = false;
               this.getList();
             });
@@ -253,8 +253,8 @@ export default {
     handleDelete(row) {
       const ids = row.id || this.ids;
       this.$confirm('是否确认删除奖项设置编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function() {
         return delLotteryPrize(ids);
@@ -269,7 +269,7 @@ export default {
       const queryParams = this.queryParams;
       this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
         confirmButtonText: "确认",
-        cancelButtonText: "取消",
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function() {
         return exportLotteryPrize(queryParams);

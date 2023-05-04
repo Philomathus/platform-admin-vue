@@ -1,9 +1,9 @@
 <template>
   <div class="app-container">
     <el-table v-loading="loading" :data="recommonPicList">
-      <el-table-column label="参数名称" align="center" prop="envTitle"/>
-      <el-table-column label="参数编码" align="center" prop="envCode"/>
-      <el-table-column label="图片" align="center" prop="envValue">
+      <el-table-column :label="参数名称" align="center" prop="envTitle"/>
+      <el-table-column :label="参数编码" align="center" prop="envCode"/>
+      <el-table-column :label="图片" align="center" prop="envValue">
       <template slot-scope="scope">
         <el-image
           style="height:80px"
@@ -13,10 +13,10 @@
         </el-image>
       </template>
       </el-table-column>
-<!--      <el-table-column label="参数说明" align="center" prop="envDes"/>-->
-      <el-table-column label="参数组" align="center" prop="envGroup"/>
-      <el-table-column label="排序" align="center" prop="envSort"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+<!--      <el-table-column :label="参数说明" align="center" prop="envDes"/>-->
+      <el-table-column :label="参数组" align="center" prop="envGroup"/>
+      <el-table-column :label="排序" align="center" prop="envSort"/>
+      <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -24,7 +24,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:recommonPic:edit']"
-          >修改
+          >{{ $t('global.editButton') }}
           </el-button>
         </template>
       </el-table-column>
@@ -42,28 +42,28 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="参数名称" prop="envTitle">
+        <el-form-item :label="参数名称" prop="envTitle">
           <el-input v-model="form.envTitle"/>
         </el-form-item>
-        <el-form-item label="参数编码" prop="envCode">
+        <el-form-item :label="参数编码" prop="envCode">
           <el-input v-model="form.envCode" readonly/>
         </el-form-item>
-        <el-form-item label="图片" prop="envValue">
+        <el-form-item :label="图片" prop="envValue">
           <imageUpload v-model="form.envValue" path="bannerInfo"/>
         </el-form-item>
-<!--        <el-form-item label="参数说明" prop="envDes">-->
+<!--        <el-form-item :label="参数说明" prop="envDes">-->
 <!--          <el-input v-model="form.envDes"/>-->
 <!--        </el-form-item>-->
-        <el-form-item label="参数组" prop="envGroup">
+        <el-form-item :label="参数组" prop="envGroup">
           <el-input v-model="form.envGroup"/>
         </el-form-item>
-        <el-form-item label="排序" prop="envSort">
+        <el-form-item :label="排序" prop="envSort">
           <el-input v-model="form.envSort"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('global.submitButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>

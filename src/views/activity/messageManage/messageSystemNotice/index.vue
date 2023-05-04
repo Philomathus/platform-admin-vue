@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="公告标题" prop="title">
+      <el-form-item :label="公告标题" prop="title">
         <el-input
           v-model="queryParams.title"
           placeholder="请输入公告标题"
@@ -10,16 +10,16 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="发布时间" prop="pubdatetime">
+      <el-form-item :label="$t('global.ctTime')" prop="pubdatetime">
         <el-date-picker
           v-model="dateRange"
           size="small"
           style="width: 240px"
           value-format="yyyy-MM-dd"
           type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :range-separator="$t('global.datePickerStartDatePlaceholder')"
+          :start-placeholder="$t('global.datePickerEndDatePlaceholder')"
+          :end-placeholder="$t('global.selectDateRangeSeparator')"
           :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
@@ -38,7 +38,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:messageSystemNotice:add']"
-        >新增
+        >{{ $t('global.addButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -50,7 +50,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:messageSystemNotice:edit']"
-        >修改
+        >{{ $t('global.editButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -62,7 +62,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:messageSystemNotice:remove']"
-        >删除
+        >{{ $t('global.deleteButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -73,7 +73,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:messageSystemNotice:export']"
-        >导出
+        >{{ $t('global.exportButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -81,14 +81,14 @@
 
     <el-table v-loading="loading" :data="messageSystemNoticeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="公告标题" align="center" prop="title"/>
-      <el-table-column label="内容" show-overflow-tooltip align="center" prop="content"/>
-      <el-table-column label="发布时间" align="center" prop="pubdatetime" width="180">
+      <el-table-column :label="公告标题" align="center" prop="title"/>
+      <el-table-column :label="内容" show-overflow-tooltip align="center" prop="content"/>
+      <el-table-column :label="$t('global.ctTime')" align="center" prop="pubdatetime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.pubdatetime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -96,7 +96,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:messageSystemNotice:edit']"
-          >修改
+          >{{ $t('global.editButton') }}
           </el-button>
           <el-button
             style="color: #FF5722"
@@ -105,7 +105,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:messageSystemNotice:remove']"
-          >删除
+          >{{ $t('global.deleteButton') }}
           </el-button>
         </template>
       </el-table-column>
@@ -123,16 +123,16 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="公告标题" prop="title">
+        <el-form-item :label="公告标题" prop="title">
           <el-input v-model="form.title" placeholder="请输入公告标题"/>
         </el-form-item>
-        <el-form-item label="内容">
+        <el-form-item :label="内容">
           <el-input v-model="form.content" type="textarea" placeholder="请输入内容" rows="5"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('global.submitButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -276,13 +276,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateMessageSystemNotice(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess(this.$t('global.editSuccessMsg'));
               this.open = false;
               this.getList();
             });
           } else {
             addMessageSystemNotice(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess(this.$t('global.addSuccessMsg'));
               this.open = false;
               this.getList();
             });
@@ -293,9 +293,9 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除系统公告编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('global.deleteConfirm') + ids + '"?', this.$t('global.deleteConfirmTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function () {
         return delMessageSystemNotice(ids);
@@ -307,9 +307,9 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('global.confirmExport'), this.$t('global.confirmExportTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportMessageSystemNotice(queryParams);

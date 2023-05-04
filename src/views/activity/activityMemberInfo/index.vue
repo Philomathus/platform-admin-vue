@@ -57,7 +57,7 @@
                 size="mini"
                 @click="handleAdd"
                 v-hasPermi="['activity:activityMemberInfo:add']"
-              >新增</el-button>
+              >{{ $t('global.addButton') }}</el-button>
             </el-col>
             <el-col :span="1.5">
               <el-button
@@ -68,7 +68,7 @@
                 :disabled="single"
                 @click="handleUpdate"
                 v-hasPermi="['activity:activityMemberInfo:edit']"
-              >修改</el-button>
+              >{{ $t('global.editButton') }}</el-button>
             </el-col>
             <el-col :span="1.5">
               <el-button
@@ -79,7 +79,7 @@
                 :disabled="multiple"
                 @click="handleDelete"
                 v-hasPermi="['activity:activityMemberInfo:remove']"
-              >删除</el-button>
+              >{{ $t('global.deleteButton') }}</el-button>
             </el-col>-->
       <el-col :span="1.5">
         <el-button
@@ -173,14 +173,14 @@
       <!--            icon="el-icon-edit"-->
       <!--            @click="handleUpdate(scope.row)"-->
       <!--            v-hasPermi="['activity:activityMemberInfo:edit']"-->
-      <!--          >修改</el-button>-->
+      <!--          >{{ $t('global.editButton') }}</el-button>-->
       <!--          <el-button-->
       <!--            size="mini"-->
       <!--            type="text"-->
       <!--            icon="el-icon-delete"-->
       <!--            @click="handleDelete(scope.row)"-->
       <!--            v-hasPermi="['activity:activityMemberInfo:remove']"-->
-      <!--          >删除</el-button>-->
+      <!--          >{{ $t('global.deleteButton') }}</el-button>-->
       <!--        </template>-->
       <!--      </el-table-column>-->
     </el-table>

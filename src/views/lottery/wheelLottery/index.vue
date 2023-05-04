@@ -10,10 +10,10 @@
                 @keyup.enter.native="handleQuery"
               />
             </el-form-item>-->
-      <el-form-item label="名称" prop="name">
+      <el-form-item :label="$t('global.name')" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入名称"
+          :placeholder="$t('lottery.wheelLottery.form.namePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -86,8 +86,8 @@
              </el-select>
            </el-form-item>-->
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('global.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('global.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -100,7 +100,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['lottery:wheelLottery:add']"
-        >新增
+        >{{$t('global.addButton')}}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -112,7 +112,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['lottery:wheelLottery:edit']"
-        >修改
+        >{{$t('global.editButton')}}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -124,7 +124,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['lottery:wheelLottery:remove']"
-        >删除
+        >{{$t('global.deleteButton')}}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -135,7 +135,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['lottery:wheelLottery:export']"
-        >导出
+        >{{$t('global.exportButton')}}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -144,26 +144,26 @@
     <el-table stripe v-loading="loading" :data="wheelLotteryList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
 <!--      <el-table-column label="彩票ID-日期" align="center" prop="id"/>-->
-      <el-table-column label="彩票ID" align="center" prop="lotteryId"/>
-      <el-table-column label="名称" align="center" prop="name"/>
+      <el-table-column :label="$t('lottery.wheelLottery.tableColumns.lotteryId')" align="center" prop="lotteryId"/>
+      <el-table-column :label="$t('global.name')" align="center" prop="name"/>
 
       <!--      <el-table-column label="派奖比例" align="center" prop="pRate" />
             <el-table-column label="奖金池最小生效废弃）" align="center" prop="minPrize" />-->
-      <el-table-column label="最小投注" align="center" prop="minBet"/>
-      <el-table-column label="预备派奖金额" align="center" prop="prePrize"/>
-      <el-table-column label="实际派奖金额" align="center" prop="actPrize"/>
-      <el-table-column label="开始时间" align="center" prop="start" width="180">
+      <el-table-column :label="$t('lottery.wheelLottery.tableColumns.minBet')" align="center" prop="minBet"/>
+      <el-table-column :label="$t('lottery.wheelLottery.tableColumns.prePrize')" align="center" prop="prePrize"/>
+      <el-table-column :label="$t('lottery.wheelLottery.tableColumns.actPrize')" align="center" prop="actPrize"/>
+      <el-table-column :label="$t('global.dateTimePickerStartTimePlaceholder')" align="center" prop="start" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.start, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="结束时间" align="center" prop="end" width="180">
+      <el-table-column :label="$t('global.dateTimePickerEndTimePlaceholder')" align="center" prop="end" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.end, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
       <!--      <el-table-column label="转盘类型" align="center" prop="wheelType" :formatter="formatterType"/>-->
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -171,7 +171,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['lottery:wheelLottery:edit']"
-          >修改
+          >{{$t('global.editButton')}}
           </el-button>
           <el-button
             style="color: #FF5722"
@@ -180,7 +180,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['lottery:wheelLottery:remove']"
-          >删除
+          >{{$t('global.deleteButton')}}
           </el-button>
         </template>
       </el-table-column>
@@ -201,8 +201,8 @@
 <!--        <el-form-item label="彩票ID" prop="lotteryId">
           <el-input v-model="form.lotteryId" placeholder="请输入彩票ID"/>
         </el-form-item>-->
-        <el-form-item label="彩票名称" prop="name">
-            <el-select v-model="form.name" placeholder="请选择彩票名称" clearable size="small" :disabled="disAbleName" @change="changeId" class="col-w240">
+        <el-form-item :label="$t('lottery.wheelLottery.dialogForm.nameLabel')" prop="name">
+            <el-select v-model="form.name" :placeholder="$t('lottery.wheelLottery.dialogForm.namePlaceholder')" clearable size="small" :disabled="disAbleName" @change="changeId" class="col-w240">
               <el-option
                 v-for="dict in lotteryList "
                 :value="{form: form,dict: dict}"
@@ -217,11 +217,11 @@
                 <el-form-item label="奖金池最小生效废弃）" prop="minPrize">
                   <el-input v-model="form.minPrize" placeholder="请输入奖金池最小生效废弃）" />
                 </el-form-item>-->
-        <el-form-item label="最小投注" prop="minBet">
-          <el-input v-model="form.minBet" type="number" placeholder="请输入最小投注" class="col-w240"/>
+        <el-form-item :label="$t('lottery.wheelLottery.dialogForm.minBetLabel')" prop="minBet">
+          <el-input v-model="form.minBet" type="number" :placeholder="$t('lottery.wheelLottery.dialogForm.minBetPlaceholder')" class="col-w240"/>
         </el-form-item>
-        <el-form-item label="预备派奖金额" prop="prePrize">
-          <el-input v-model="form.prePrize" type="number" placeholder="请输入预备派奖金额" class="col-w240"/>
+        <el-form-item :label="$t('lottery.wheelLottery.dialogForm.prePrizeLabel')" prop="prePrize">
+          <el-input v-model="form.prePrize" type="number" :placeholder="$t('lottery.wheelLottery.dialogForm.prePrizePlaceholder')" class="col-w240"/>
         </el-form-item>
         <!--        <el-form-item label="实际派奖金额" prop="actPrize">
                   <el-input v-model="form.actPrize" placeholder="请输入实际派奖金额" />
@@ -236,28 +236,28 @@
                       />
                     </el-select>
                 </el-form-item>-->
-        <el-form-item label="开始时间" prop="start">
+        <el-form-item :label="$t('global.dateTimePickerStartTimePlaceholder')" prop="start">
           <el-date-picker clearable size="small"
                           v-model="form.start"
                           type="date"
                           value-format="yyyy-MM-dd"
-                          placeholder="选择开始时间"
+                          :placeholder="$t('lottery.wheelLottery.dialogForm.startPlaceholder')"
                           style="width: 240px">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="结束时间" prop="end">
+        <el-form-item :label="$t('global.dateTimePickerEndTimePlaceholder')" prop="end">
           <el-date-picker clearable size="small"
                           v-model="form.end"
                           type="date"
                           value-format="yyyy-MM-dd"
-                          placeholder="选择结束时间"
+                          :placeholder="$t('lottery.wheelLottery.dialogForm.endPlaceholder')"
                           style="width: 240px">
           </el-date-picker>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{$t('global.submitButton')}}</el-button>
+        <el-button @click="cancel">{{$t('global.cancelButton')}}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -323,7 +323,7 @@
         // 表单校验
         rules: {
           lotteryId: [
-            {required: true, message: "彩票ID不能为空", trigger: "blur"}
+            {required: true, message: this.$t('lottery.wheelLottery.lotteryIdRuleMessage'), trigger: "blur"}
           ],
         }
       };
@@ -417,7 +417,7 @@
         this.disAbleName = false
         this.reset();
         this.open = true;
-        this.title = "添加转盘彩票";
+        this.title = this.$t('lottery.wheelLottery.addTitle');
       },
       /** 修改按钮操作 */
       handleUpdate(row) {
@@ -427,7 +427,7 @@
         getWheelLottery(id).then(response => {
           this.form = response.data;
           this.open = true;
-          this.title = "修改转盘彩票";
+          this.title = this.$t('lottery.wheelLottery.updateTitle');
         });
       },
       /** 提交按钮 */
@@ -436,14 +436,14 @@
           if (valid) {
             if (this.form.id != null) {
               updateWheelLottery(this.form).then(response => {
-                this.msgSuccess("修改成功");
+                this.msgSuccess(this.$t('lottery.wheelLottery.updateSuccessMessage'));
                 this.open = false;
                 this.getList();
               });
             } else {
               this.form.id = this.form.lotteryId
               addWheelLottery(this.form).then(response => {
-                this.msgSuccess("新增成功");
+                this.msgSuccess(this.$t('lottery.wheelLottery.addSuccessMessage'));
                 this.open = false;
                 this.getList();
               });
@@ -454,24 +454,24 @@
       /** 删除按钮操作 */
       handleDelete(row) {
         const ids = row.id || this.ids;
-        this.$confirm('是否确认删除转盘彩票编号为"' + ids + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
+        this.$confirm(this.$t('lottery.wheelLottery.confirmDeleteMessage', {ids: row.id}), this.$t('global.dialogTitle'), {
+          confirmButtonText: this.$t('global.confirmButton'),
+          cancelButtonText: this.$t('global.cancelButton'),
           type: "warning"
         }).then(function () {
           return delWheelLottery(ids);
         }).then(() => {
           this.getList();
-          this.msgSuccess("删除成功");
+          this.msgSuccess(this.$t('lottery.wheelLottery.deleteSuccessMessage'));
         }).catch(() => {
         })
       },
       /** 导出按钮操作 */
       handleExport() {
         const queryParams = this.queryParams;
-        this.$confirm('是否确认导出所有转盘彩票数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
+        this.$confirm(this.$t('lottery.wheelLottery.confirmExportMessage'), this.$t('global.dialogTitle'), {
+          confirmButtonText: this.$t('global.confirmButton'),
+          cancelButtonText: this.$t('global.cancelButton'),
           type: "warning"
         }).then(function () {
           return exportWheelLottery(queryParams);

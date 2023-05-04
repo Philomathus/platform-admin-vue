@@ -382,7 +382,7 @@
         <el-form-item :label=" $t('members.memberInfo.index.pass') " prop="password" style="margin-bottom: 0px">
           <el-input v-model="password" :placeholder=" $t('members.memberInfo.index.entPass') "/>
         </el-form-item>
-        <el-form-item :label=" $t('global.prompTitle') ">
+        <el-form-item :label=" $t('global.promptTitle') ">
           <span style="color: #00afff">
           {{ $t('members.memberInfo.index.passDig') }}
           </span>
@@ -1183,7 +1183,7 @@ export default {
 
     boxDish(row) {
       console.info(row.id)
-      this.$prompt( this.$t('members.memberInfo.index.pGverifcode') ,  this.$t('global.prompTitle') , {
+      this.$prompt( this.$t('members.memberInfo.index.pGverifcode') ,  this.$t('global.promptTitle') , {
         confirmButtonText: this.$t('members.memberInfo.index.det') ,
         cancelButtonText: this.$t('members.memberInfo.index.cnc') ,
         inputPattern: /^[0-9]{1,10}$/,

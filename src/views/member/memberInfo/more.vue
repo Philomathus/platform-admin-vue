@@ -727,7 +727,7 @@ export default {
       })
     },
     changeBank(row) {
-      this.$confirm( this.$t('members.memberInfo.more.bci') , this.$t('global.prompTitle') , {
+      this.$confirm( this.$t('members.memberInfo.more.bci') , this.$t('global.promptTitle') , {
         confirmButtonText: this.$t('members.memberInfo.more.det') ,
         cancelButtonText: this.$t('members.memberInfo.more.cancel') ,
         type: 'warning'
@@ -793,7 +793,7 @@ export default {
     //打开提示框
     open(hint, type) {
       if (type === 1) {
-        this.$confirm(hint, this.$t('global.prompTitle') , {
+        this.$confirm(hint, this.$t('global.promptTitle') , {
           confirmButtonText: this.$t('members.memberInfo.more.det') ,
           cancelButtonText: this.$t('members.memberInfo.more.cancel') ,
           type: 'warning'

@@ -1,15 +1,16 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch">
-      <el-form-item label="日期范围" prop="regTime">
+      <el-form-item :label=" $t('global.selectDatePlaceholder') " prop="regTime">
         <el-date-picker type="datetimerange" v-model="dateRange" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '95%'}" start-placeholder="开始时间"
-                        end-placeholder="开始时间"
-                        range-separator="至" clearable :default-time="['00:00:00', '23:59:59']" :picker-options="pickerOptions"
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '95%'}"
+                        :start-placeholder=" $t('global.dateTimePickerStartTimePlaceholder') "
+                        :end-placeholder=" $t('global.dateTimePickerEndTimePlaceholder') "
+                        :range-separator=" $t('global.dateTimePickerRangeSeparator') " clearable :default-time="['00:00:00', '23:59:59']" :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="status" style="width: 110px;">
-        <el-select v-model="queryParams.status" placeholder="全部状态" clearable size="small">
+        <el-select v-model="queryParams.status" :placeholder=" $t('members.memberInfoHistory.index.aStates') " clearable size="small">
 <!--          <el-option v-for="(item,index) in typeList" :key="index" :label="item.label" :value="item.value"/>-->
           <el-option
             v-for="dict in typeList"
@@ -22,7 +23,7 @@
       <el-form-item prop="searchValue">
         <el-input
           v-model.trim="queryParams.searchValue"
-          placeholder="会员ID/账号/手机号"
+          :placeholder=" $t('members.memberInfoHistory.index.mam') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -31,14 +32,14 @@
       <el-form-item prop="inviterCode" style="width: 110px;">
         <el-input
           v-model="queryParams.inviterCode"
-          placeholder="邀请码"
+          :placeholder=" $t('members.memberInfoHistory.index.iCode') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item prop="channelcode" style="width: 110px;">
-        <el-select v-model="queryParams.channelcode" placeholder="全部类型" clearable size="small">
+        <el-select v-model="queryParams.channelcode" :placeholder=" $t('members.memberInfoHistory.index.aTypes') " clearable size="small">
           <el-option
             v-for="dict in statusOptions"
             :key="dict.dictValue"
@@ -50,7 +51,7 @@
       <el-form-item prop="nickName" style="width: 110px;">
         <el-input
           v-model="queryParams.nickName"
-          placeholder="昵称"
+          :placeholder=" $t('global.nickname') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -59,7 +60,7 @@
       <el-form-item prop="loginIp" style="width: 110px;">
         <el-input
           v-model="queryParams.loginIp"
-          placeholder="登录IP"
+          :placeholder=" $t('members.memberInfoHistory.index.lip') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -68,7 +69,7 @@
       <el-form-item prop="loginIp" style="width: 110px;">
         <el-input
           v-model="queryParams.bankAccount"
-          placeholder="银行卡号"
+          :placeholder=" $t('members.memberInfoHistory.index.bcNum') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -77,15 +78,15 @@
       <el-form-item prop="loginIp" style="width: 110px;">
         <el-input
           v-model="queryParams.email"
-          placeholder="登录备注"
+          :placeholder=" $t('members.memberInfoHistory.index.lRem') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -98,7 +99,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['member:memberInfo:add']"
-        >新增
+        >{{ $t('global.newButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -109,7 +110,7 @@
           size="mini"
           @click="openExport"
           v-hasPermi="['member:memberInfo:export']"
-        >导出
+        >{{ $t('global.export') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -119,23 +120,23 @@
           icon="el-icon-plus"
           size="mini"
           @click="openIpBlackList()"
-        >查看封停ip
+        >{{ $t('members.memberInfoHistory.index.vip') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table :stripe="true" v-loading="loading" :data="memberInfoList" @selection-change="handleSelectionChange">
-      <el-table-column label="会员ID" align="center" prop="id" min-width="120px"/>
-      <el-table-column label="账号" align="center" prop="userName" min-width="100px"/>
-      <el-table-column label="昵称" :show-overflow-tooltip="true" align="center" prop="nickName" min-width="160"/>
+      <el-table-column :label=" $t('members.memberInfoHistory.index.mid') " align="center" prop="id" min-width="120px"/>
+      <el-table-column :label=" $t('members.memberInfoHistory.index.aNum') " align="center" prop="userName" min-width="100px"/>
+      <el-table-column :label=" $t('global.nickname') " :show-overflow-tooltip="true" align="center" prop="nickName" min-width="160"/>
 <!--      <el-table-column label="会员vip" align="center" prop="vip" min-width="70px"/>-->
 <!--      <el-table-column label="积分" :show-overflow-tooltip="true" align="center" prop="totalAccount" min-width="120px"/>-->
 <!--      <el-table-column label="保险箱余额" :show-overflow-tooltip="true" align="center" prop="boxAccount" min-width="120px"/>-->
-      <el-table-column label="登录时间" align="center" prop="loginTime" min-width="110px"/>
-      <el-table-column label="状态" align="center" min-width="110px">
+      <el-table-column :label=" $t('members.memberInfoHistory.index.lTime') " align="center" prop="loginTime" min-width="110px"/>
+      <el-table-column :label=" $t('global.status') " align="center" min-width="110px">
         <template v-slot="{row}">
-          <el-select v-model="row.status" placeholder="请选择状态" size="small"
+          <el-select v-model="row.status" :placeholder=" $t('members.memberInfoHistory.index.psStat') " size="small"
                      @change="changeType(row)"
           >
             <!--<el-option v-for="(item,index) in typeList" :key="index" :label="item.label" :value="item.value"/>-->
@@ -148,10 +149,10 @@
           </el-select>
         </template>
       </el-table-column>
-      <el-table-column label="注册时间" align="center" prop="regTime" width="160"/>
-      <el-table-column label="登陆次数" align="center" prop="loginNum" min-width="100px"/>
-      <el-table-column label="登录ip" :show-overflow-tooltip="true" align="center" prop="loginIp" width="180"/>
-      <el-table-column label="是否禁言" align="center" prop="speak">
+      <el-table-column :label=" $t('members.memberInfoHistory.index.rTime') " align="center" prop="regTime" width="160"/>
+      <el-table-column :label=" $t('members.memberInfoHistory.index.nLogs') " align="center" prop="loginNum" min-width="100px"/>
+      <el-table-column :label=" $t('members.memberInfoHistory.index.lip') " :show-overflow-tooltip="true" align="center" prop="loginIp" width="180"/>
+      <el-table-column :label=" $t('members.memberInfoHistory.index.wBan') " align="center" prop="speak">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.speak"
@@ -161,18 +162,18 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="打码账户" align="center" prop="codeAccount" min-width="100px"/>
+      <el-table-column :label=" $t('members.memberInfoHistory.index.cam') " align="center" prop="codeAccount" min-width="100px"/>
 
-      <el-table-column label="累计有效投注" align="center" prop="codeTotal" min-width="100px"/>
-      <el-table-column label="邀请码" align="center" prop="inviterCode" min-width="100px"/>
-      <el-table-column label="用户类型" align="center" prop="channelcode" min-width="100px">
+      <el-table-column :label=" $t('members.memberInfoHistory.index.cvBets') " align="center" prop="codeTotal" min-width="100px"/>
+      <el-table-column :label=" $t('members.memberInfoHistory.index.iCode') " align="center" prop="inviterCode" min-width="100px"/>
+      <el-table-column :label=" $t('members.memberInfoHistory.index.uType') " align="center" prop="channelcode" min-width="100px">
         <template slot-scope="scope">
           <span v-if="scope.row.channelcode == null" :style="{'color': '#5FB878'}">会员</span>
           <span v-else :style="{color: (channelcode = statusOptions[parseInt(scope.row.channelcode)]).color}">{{ channelcode.dictLabel }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="登录备注" align="center" prop="email" :show-overflow-tooltip="true" min-width="130px"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column :label=" $t('members.memberInfoHistory.index.lRem') " align="center" prop="email" :show-overflow-tooltip="true" min-width="130px"/>
+      <el-table-column :label=" $t('global.operationColumn') " align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             type="primary"
@@ -181,7 +182,7 @@
             size="small"
             @click="handleMore(scope.row)"
             v-hasPermi="['member:memberInfo:query']"
-          >更多
+          >{{ $t('global.moreButton') }}
           </el-button>
         </template>
       </el-table-column>
@@ -200,7 +201,7 @@
     <el-dialog
       v-dialogDrag
       :close-on-click-modal="false"
-      title="备注禁用原因"
+      :title=" $t('members.memberInfoHistory.index.nrBan') "
       :visible.sync="muteRemark"
       width="400px"
       append-to-body
@@ -211,7 +212,7 @@
       <el-input v-model="status" v-show="false"/>
       <el-select
         v-model="remark"
-        placeholder="请选择禁用原因"
+        :placeholder=" $t('members.memberInfoHistory.index.psrDis') "
         clearable
         style="min-width: 360px"
       >
@@ -222,10 +223,10 @@
           :value="dict.dictValue"
         />
       </el-select>
-      <el-input v-model="remarked" placeholder="请输入禁用原因" v-if="this.remark == '其他'"/>
+      <el-input v-model="remarked" :placeholder=" $t('members.memberInfoHistory.index.perDis') " v-if="this.remark == $t('members.memberInfoHistory.index.other') "/>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="cancelUser()">取消</el-button>
-        <el-button type="primary" @click="submitMuteRemark">立即提交</el-button>
+        <el-button @click="cancelUser()">{{ $t('members.memberInfoHistory.index.cnc') }}</el-button>
+        <el-button type="primary" @click="submitMuteRemark">{{ $t('members.memberInfoHistory.index.snow') }}</el-button>
       </div>
     </el-dialog>
 

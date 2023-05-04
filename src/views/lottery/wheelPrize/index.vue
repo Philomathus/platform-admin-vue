@@ -1,19 +1,19 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="名称" prop="name">
+      <el-form-item :label="$t('global.name')" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入名称"
+          :placeholder="$t('lottery.wheelPrize.form.namePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="奖励" prop="prize">
+      <el-form-item :label="$t('lottery.wheelPrize.form.prizeLabel')" prop="prize">
         <el-input
           v-model="queryParams.prize"
-          placeholder="请输入奖励"
+          :placeholder="$t('lottery.wheelPrize.form.prizePlaceholder')"
           clearable
           size="small"
           type="number"
@@ -21,10 +21,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="权重" prop="weight">
+      <el-form-item :label="$t('lottery.wheelPrize.form.weightLabel')" prop="weight">
         <el-input
           v-model="queryParams.weight"
-          placeholder="请输入权重"
+          :placeholder="$t('lottery.wheelPrize.form.weightPlaceholder')"
           clearable
           size="small"
           type="number"
@@ -32,10 +32,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="排序" prop="odr">
+      <el-form-item :label="$t('global.sort')" prop="odr">
         <el-input
           v-model="queryParams.odr"
-          placeholder="请输入排序"
+          :placeholder="$t('global.sortPlaceholder')"
           clearable
           size="small"
           type="number"
@@ -43,8 +43,8 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="转盘类型" prop="wheelType">
-        <el-select v-model="queryParams.wheelType" placeholder="请选择转盘类型" clearable size="small">
+      <el-form-item :label="$t('lottery.wheelPrize.form.wheelTypeLabel')" prop="wheelType">
+        <el-select v-model="queryParams.wheelType" :placeholder="$t('lottery.wheelPrize.form.wheelTypePlaceholder')" clearable size="small">
           <el-option
             v-for="dict in typeList "
             :key="dict.dictValue"
@@ -55,8 +55,8 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('global.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('global.resetButton')}}</el-button>
       </el-form-item>
     </el-form>
 
@@ -69,7 +69,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['lottery:wheelPrize:add']"
-        >新增</el-button>
+        >{{$t('global.addButton')}}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -80,7 +80,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['lottery:wheelPrize:edit']"
-        >修改</el-button>
+        >{{$t('global.editButton')}}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -91,7 +91,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['lottery:wheelPrize:remove']"
-        >删除</el-button>
+        >{{$t('global.deleteButton')}}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -101,20 +101,20 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['lottery:wheelPrize:export']"
-        >导出</el-button>
+        >{{$t('global.exportButton')}}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="wheelPrizeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="编号" align="center" prop="id" />
-      <el-table-column label="名称" align="center" prop="name" />
-      <el-table-column label="奖励" align="center" prop="prize" />
-      <el-table-column label="权重" align="center" prop="weight" />
-      <el-table-column label="排序" align="center" prop="odr" />
-      <el-table-column label="转盘类型" align="center" prop="wheelType" :formatter="formatterType"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('lottery.wheelPrize.tableColumns.id')" align="center" prop="id" />
+      <el-table-column :label="$t('global.name')" align="center" prop="name" />
+      <el-table-column :label="$t('lottery.wheelPrize.tableColumns.prize')" align="center" prop="prize" />
+      <el-table-column :label="$t('lottery.wheelPrize.tableColumns.weight')" align="center" prop="weight" />
+      <el-table-column :label="$t('global.sort')" align="center" prop="odr" />
+      <el-table-column :label="$t('lottery.wheelPrize.tableColumns.wheelType')" align="center" prop="wheelType" :formatter="formatterType"/>
+      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -122,14 +122,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['lottery:wheelPrize:edit']"
-          >修改</el-button>
+          >{{$t('global.editButton')}}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['lottery:wheelPrize:remove']"
-          >删除</el-button>
+          >{{$t('global.deleteButton')}}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -145,20 +145,20 @@
     <!-- 添加或修改转盘奖励对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入名称" />
+        <el-form-item :label="$t('global.name')" prop="name">
+          <el-input v-model="form.name" :placeholder="$t('lottery.wheelPrize.dialogForm.namePlaceholder')" />
         </el-form-item>
-        <el-form-item label="奖励" prop="prize">
-          <el-input v-model="form.prize" placeholder="请输入奖励" />
+        <el-form-item :label="$t('lottery.wheelPrize.dialogForm.prizeLabel')" prop="prize">
+          <el-input v-model="form.prize" :placeholder="$t('lottery.wheelPrize.dialogForm.prizePlaceholder')" />
         </el-form-item>
-        <el-form-item label="权重" prop="weight">
-          <el-input v-model="form.weight" placeholder="请输入权重" />
+        <el-form-item :label="$t('lottery.wheelPrize.dialogForm.weightLabel')" prop="weight">
+          <el-input v-model="form.weight" :placeholder="$t('lottery.wheelPrize.dialogForm.weightPlaceholder')" />
         </el-form-item>
-        <el-form-item label="排序" prop="odr">
-          <el-input v-model="form.odr" placeholder="请输入排序" />
+        <el-form-item :label="$t('global.sort')" prop="odr">
+          <el-input v-model="form.odr" :placeholder="$t('global.sortPlaceholder')" />
         </el-form-item>
-        <el-form-item label="转盘类型" prop="wheelType">
-          <el-select v-model="form.wheelType" placeholder="请选择转盘类型" clearable size="small">
+        <el-form-item :label="$t('lottery.wheelPrize.dialogForm.wheelTypeLabel')" prop="wheelType">
+          <el-select v-model="form.wheelType" :placeholder="$t('lottery.wheelPrize.dialogForm.wheelTypePlaceholder')" clearable size="small">
             <el-option
               v-for="dict in typeList "
               :key="dict.dictValue"
@@ -169,8 +169,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{$t('global.submitButton')}}</el-button>
+        <el-button @click="cancel">{{$t('global.cancelButton')}}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -283,7 +283,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加转盘奖励";
+      this.title = this.$t('lottery.wheelPrize.addTitle');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -292,7 +292,7 @@ export default {
       getWheelPrize(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改转盘奖励";
+        this.title = this.$t('lottery.wheelPrize.updateTitle');
       });
     },
     /** 提交按钮 */
@@ -301,13 +301,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateWheelPrize(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess(this.$t('global.editSuccessMsg'));
               this.open = false;
               this.getList();
             });
           } else {
             addWheelPrize(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess(this.$t('global.addSuccessMsg'));
               this.open = false;
               this.getList();
             });
@@ -318,24 +318,24 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除转盘奖励编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('lottery.wheelPrize.confirmDeleteMessage', {ids: row.id}), this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function() {
         return delWheelPrize(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess(this.$t('global.deleteSuccessMsg'));
       }).catch(() => {
 	  })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('lottery.wheelPrize.confirmExportMessage'), this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function() {
         return exportWheelPrize(queryParams);

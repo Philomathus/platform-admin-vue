@@ -226,8 +226,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">{{ $t('activity.submitButton') }}</el-button>
-        <el-button @click="cancel">{{ $t('activity.cancelButton') }}</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('global.submitButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -369,9 +369,9 @@ export default {
     },
     /** 处理驳回按钮操作 */
     handleUpdate(row, status) {
-      this.$prompt(this.$t('activity.chatComplaint.updateChatComplaintPrompt', this.$t('activity.confirmExportTitle'), {
-        confirmButtonText: this.$t('activity.confirmButton'),
-        cancelButtonText: this.$t('activity.cancelButton'),
+      this.$prompt(this.$t('activity.chatComplaint.updateChatComplaintPrompt', this.$t('global.confirmExportTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
       }).then(({value}) => {
         const id = row.id
         updateChatComplaint(id, value, status).then(response => {
@@ -391,13 +391,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateChatComplaint(this.form).then(response => {
-              this.msgSuccess(this.$t('activity.editSuccessMsg'))
+              this.msgSuccess(this.$t('global.editSuccessMsg'))
               this.open = false;
               this.getList();
             });
           } else {
             addChatComplaint(this.form).then(response => {
-              this.msgSuccess(this.$t('activity.addSuccessMsg'));
+              this.msgSuccess(this.$t('global.addSuccessMsg'));
               this.open = false;
               this.getList();
             });
@@ -408,29 +408,29 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm(this.$t('activity.deleteConfirm1') + row.title + '"?', this.$t('activity.deleteConfirmTitle'), {
-        confirmButtonText: this.$t('activity.confirmButton'),
-        cancelButtonText: this.$t('activity.cancelConfirmButton'),
+      this.$confirm(this.$t('global.deleteConfirm') + row.title + '"?', this.$t('global.deleteConfirmTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function () {
         return delChatComplaint(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess(this.$t('activity.deleteSuccessMsg'));
+        this.msgSuccess(this.$t('global.deleteSuccessMsg'));
       }).catch(() => {
       })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm(this.$t('activity.confirmExport'), this.$t('activity.confirmExportTitle'), {
-        confirmButtonText: this.$t('activity.confirmButton'),
-        cancelButtonText: this.$t('activity.cancelButton'),
+      this.$confirm(this.$t('global.confirmExport'), this.$t('global.confirmExportTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function () {
         return exportChatComplaint(queryParams);
       }).then(response => {
-        this.downloadExcel(response, this.$t('activity.chatComplaint.exportResponse'))
+        this.downloadExcel(response, this.$t('global.exportResponse'))
       }).catch(() => {
       })
     }

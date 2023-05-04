@@ -10,7 +10,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:configRecommend:add']"
-        >新增
+        >{{ $t('global.addButton') }}
         </el-button>
       </el-col>
     </el-row>
@@ -18,9 +18,9 @@
     <el-table v-loading="loading" :data="configRecommendList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="级别(1 一级 2 二级)" align="center" prop="level"/>
-      <el-table-column label="名称" align="center" prop="name"/>
-      <el-table-column label="比例" align="center" prop="bill"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="名称" align="center" prop="name"/>
+      <el-table-column :label="比例" align="center" prop="bill"/>
+      <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -28,7 +28,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:configRecommend:edit']"
-          >修改
+          >{{ $t('global.editButton') }}
           </el-button>
         </template>
       </el-table-column>
@@ -46,19 +46,19 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="级别" prop="level">
+        <el-form-item :label="级别" prop="level">
           <el-input v-model="form.level" placeholder="请输入级别(1 一级 2 二级)"/>
         </el-form-item>
-        <el-form-item label="名称" prop="name">
+        <el-form-item :label="名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入名称"/>
         </el-form-item>
-        <el-form-item label="比例" prop="bill">
+        <el-form-item :label="比例" prop="bill">
           <el-input v-model="form.bill" placeholder="请输入比例"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('global.submitButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -177,13 +177,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateConfigRecommend(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess(this.$t('global.editSuccessMsg'));
               this.open = false;
               this.getList();
             });
           } else {
             addConfigRecommend(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess(this.$t('global.addSuccessMsg'));
               this.open = false;
               this.getList();
             });
@@ -195,22 +195,22 @@ export default {
     handleDelete(row) {
       const ids = row.id || this.ids;
       this.$confirm('是否确认删除推广设置编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function () {
         return delConfigRecommend(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess(this.$t('global.deleteSuccessMsg'));
       })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('global.confirmExport'), this.$t('global.confirmExportTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportConfigRecommend(queryParams);

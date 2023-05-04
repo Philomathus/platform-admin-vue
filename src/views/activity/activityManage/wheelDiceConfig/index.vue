@@ -15,10 +15,10 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{
-            $t('activity.searchButton')
+            $t('global.searchButton')
           }}
         </el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('activity.resetButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -31,7 +31,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:wheelDiceConfig:add']"
-        >{{ $t('activity.addButton') }}
+        >{{ $t('global.addButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -43,7 +43,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:wheelDiceConfig:edit']"
-        >{{ $t('activity.editButton') }}
+        >{{ $t('global.editButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -55,7 +55,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:wheelDiceConfig:remove']"
-        >{{ $t('activity.deleteutton') }}
+        >{{ $t('global.deleteButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -66,7 +66,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:wheelDiceConfig:export']"
-        >{{ $t('activity.exportButton') }}
+        >{{ $t('global.exportButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -92,7 +92,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('activity.operation')" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -100,7 +100,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:wheelDiceConfig:edit']"
-          >{{ $t('activity.editButton') }}
+          >{{ $t('global.editButton') }}
           </el-button>
           <el-button
             size="mini"
@@ -109,7 +109,7 @@
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:wheelDiceConfig:remove']"
           >{{
-              $t('activity.deleteButton')
+              $t('global.deleteButton')
             }}
           </el-button>
         </template>
@@ -301,7 +301,7 @@ export default {
         return delWheelDiceConfig(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess(this.$t('global.deleteSuccessMsg'));
       }).catch(() => {
       })
     },

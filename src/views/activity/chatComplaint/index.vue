@@ -1,16 +1,16 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item :label="$t('activity.selectDate')" prop="selectDate">
+      <el-form-item :label="$t('global.selectDate')" prop="selectDate">
         <el-date-picker
           v-model="queryParams.selectDate"
           size="small"
           style="width: 240px"
           value-format="yyyy-MM-dd"
           type="daterange"
-          :range-separator="$t('activity.selectDateRangeSeparator')"
-          :start-:placeholder="$t('activity.selectDateStartPlaceholder')"
-          :end-:placeholder="$t('activity.selectDateEndPlaceholder')"
+          :range-separator="$t('global.selectDateRangeSeparator')"
+          :start-:placeholder="$t('global.selectDateStartPlaceholder')"
+          :end-:placeholder="$t('global.selectDateEndPlaceholder')"
           :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
@@ -70,7 +70,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('activity.searchButton') }}</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
         <!--        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>-->
       </el-form-item>
     </el-form>
@@ -84,7 +84,7 @@
       <!--          size="mini"-->
       <!--          @click="handleAdd"-->
       <!--          v-hasPermi="['admin:chatComplaint:add']"-->
-      <!--        >新增</el-button>-->
+      <!--        >{{ $t('global.addButton') }}</el-button>-->
       <!--      </el-col>-->
       <!--      <el-col :span="1.5">-->
       <!--        <el-button-->
@@ -95,7 +95,7 @@
       <!--          :disabled="single"-->
       <!--          @click="handleUpdate"-->
       <!--          v-hasPermi="['admin:chatComplaint:edit']"-->
-      <!--        >修改</el-button>-->
+      <!--        >{{ $t('global.editButton') }}</el-button>-->
       <!--      </el-col>-->
       <!--      <el-col :span="1.5">-->
       <!--        <el-button-->
@@ -106,7 +106,7 @@
       <!--          :disabled="multiple"-->
       <!--          @click="handleDelete"-->
       <!--          v-hasPermi="['admin:chatComplaint:remove']"-->
-      <!--        >删除</el-button>-->
+      <!--        >{{ $t('global.deleteButton') }}</el-button>-->
       <!--      </el-col>-->
       <el-col :span="1.5">
         <el-button
@@ -116,7 +116,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:chatComplaint:export']"
-        >{{ $t('activity.exportButton') }}
+        >{{ $t('global.exportButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -141,7 +141,7 @@
       </el-table-column>
       <el-table-column :label="$t('activity.chatComplaint.tableDialog.status')" align="center" prop="status" :formatter="formatterStatus"/>
 
-      <el-table-column :label="$t('activity.operation')" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="small"
@@ -150,7 +150,7 @@
             v-show="scope.row.status == 0"
             @click="handleUpdate(scope.row,1)"
             v-hasPermi="['admin:chatComplaint:edit']"
-          >{{ $t('activity.editButton') }}
+          >{{ $t('global.editButton') }}
           </el-button>
           <el-button
             size="small"
@@ -160,7 +160,7 @@
             @click="handleUpdate(scope.row,2)"
             v-hasPermi="['admin:chatComplaint:edit']"
           >{{
-              $t('activity.deleteButton')
+              $t('global.deleteButton')
             }}
           </el-button>
         </template>
@@ -171,14 +171,14 @@
         <!--            icon="el-icon-edit"-->
         <!--            @click="handleUpdate(scope.row)"-->
         <!--            v-hasPermi="['admin:chatComplaint:edit']"-->
-        <!--          >修改</el-button>-->
+        <!--          >{{ $t('global.editButton') }}</el-button>-->
         <!--          <el-button-->
         <!--            size="mini"-->
         <!--            type="text"-->
         <!--            icon="el-icon-delete"-->
         <!--            @click="handleDelete(scope.row)"-->
         <!--            v-hasPermi="['admin:chatComplaint:remove']"-->
-        <!--          >删除</el-button>-->
+        <!--          >{{ $t('global.deleteButton') }}</el-button>-->
         <!--        </template>-->
       </el-table-column>
     </el-table>

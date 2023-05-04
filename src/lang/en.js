@@ -259,6 +259,7 @@ export default {
       activityType: {
         addTitle: 'Add Activity Type',
         editTitle: 'Update Activity Type',
+        exportTile: 'Activity Type',
         tableDialog: {
           name: 'Name',
           namePlaceholder: 'Please Enter Name',
@@ -436,12 +437,14 @@ export default {
         typePlaceholder: 'Please enter Type',
         code: 'WeChat or QQ number',
         codePlaceholder: 'Please enter your WeChat or QQ number',
+        icon: 'Icon',
         iconPlaceholder: 'Please enter Icon',
         remark: 'Remarks',
         remarkPlaceholder: 'Please enter Remarks',
         updateBy: 'Updated By',
         updateTime: 'Last Update Time',
         index: 'Index',
+        indexPlaceholder: 'Please enter index',
       }
     },
     homeBanner: {

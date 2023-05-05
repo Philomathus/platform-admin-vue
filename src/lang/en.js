@@ -1664,7 +1664,7 @@ export default {
       },
       table: {
         content: 'Complaint content',
-        mobile: 'Member cell phone number',
+        mobile: 'Member phone',
         roomName: 'Room name',
         userId: 'Member ID',
         anchor: 'Anchor',

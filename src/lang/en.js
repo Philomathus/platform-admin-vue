@@ -3008,7 +3008,7 @@ export default {
       form: {
         puserIdLabel: 'Member ID',
         puserIdPlaceholder: 'Please enter your member ID',
-        betInfoLabel: 'Content of the following note',
+        betInfoLabel: 'Betting content',
         betInfoPlaceholder: 'Content of the next note',
         issueLabel: 'Number of periods',
         issuePlaceholder: 'Number of periods',
@@ -3019,7 +3019,7 @@ export default {
         lotteryName: 'Lottery Name',
         puserId: 'Member ID',
         issue: 'Number of periods',
-        betInfo: 'Content of the following note',
+        betInfo: 'Betting content',
         chip: 'Bet amount',
         ip: 'Place an IP bet',
       }

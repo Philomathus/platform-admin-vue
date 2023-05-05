@@ -131,7 +131,7 @@ export default {
   },
   created() {
     this.getList()
-    this.count();
+    //this.count();
   },
   activated() {
   },
@@ -156,7 +156,7 @@ export default {
         this.total = response.total
         this.listLoading = false
         this.$rjLoading.hide()
-        //this.count()
+        this.count()
       }).catch((err) => {
         if (err == 'Error: 报表正在生成，请稍后...') {
           if (!this.listLoading) {
@@ -217,7 +217,7 @@ export default {
 
       this.queryParams.pageNum = 1
       this.getList()
-      this.count();
+      //this.count();
 
     },
     /** 重置按钮操作 */

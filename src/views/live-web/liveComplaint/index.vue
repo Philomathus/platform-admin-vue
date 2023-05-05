@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item :label="$t('liveWeb.liveComplaint.queryForm.selectDateLabel')" prop="selectDate">
+      <el-form-item :label="$t('liveWeb.liveComplaint.queryForm.selectDateLabel')" prop="selectDate" label-width="150">
         <el-date-picker
           v-model="queryParams.selectDate"
           size="small"
@@ -63,25 +63,25 @@
     </el-row>
 
     <el-table stripe v-loading="loading" :data="liveComplaintList">
-      <el-table-column :label="$t('liveWeb.liveComplaint.table.content')" align="center" prop="content" />
-      <el-table-column :label="$t('liveWeb.liveComplaint.table.mobile')" align="center" prop="mobile" />
-      <el-table-column :label="$t('liveWeb.liveComplaint.table.roomName')" align="center" prop="roomName" />
-      <el-table-column :label="$t('liveWeb.liveComplaint.table.userId')" align="center" prop="userId" />
-      <el-table-column :label="$t('liveWeb.liveComplaint.table.anchor')" align="center" prop="anchor" />
+      <el-table-column :label="$t('liveWeb.liveComplaint.table.content')" align="center" prop="content"  min-width="160"/>
+      <el-table-column :label="$t('liveWeb.liveComplaint.table.mobile')" align="center" prop="mobile"  min-width="160"/>
+      <el-table-column :label="$t('liveWeb.liveComplaint.table.roomName')" align="center" prop="roomName"  min-width="120"/>
+      <el-table-column :label="$t('liveWeb.liveComplaint.table.userId')" align="center" prop="userId"  min-width="120"/>
+      <el-table-column :label="$t('liveWeb.liveComplaint.table.anchor')" align="center" prop="anchor"  min-width="120"/>
       <el-table-column :label="$t('liveWeb.liveComplaint.table.createTime')" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="$t('liveWeb.liveComplaint.table.approver')" align="center" prop="approver" />
-      <el-table-column :label="$t('liveWeb.liveComplaint.table.remark')" align="center" prop="remark" />
+      <el-table-column :label="$t('liveWeb.liveComplaint.table.remark')" align="center" prop="remark"  min-width="140"/>
       <el-table-column :label="$t('liveWeb.liveComplaint.table.processingTime')" align="center" prop="processingTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.processingTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('liveWeb.liveComplaint.table.status')" align="center" prop="status" :formatter="formatterStatus"/>
-      <el-table-column :label="$t('liveWeb.liveComplaint.table.operation')" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('liveWeb.liveComplaint.table.status')" align="center" prop="status"  min-width="140" :formatter="formatterStatus"/>
+      <el-table-column :label="$t('liveWeb.liveComplaint.table.operation')" align="center" class-name="small-padding fixed-width" min-width="120">
         <template slot-scope="scope">
           <el-button
             size="small"

@@ -12,7 +12,7 @@
                         :picker-options="pickerOptions">
         </el-date-picker>
       </el-form-item>
-      <el-form-item :label="$t('liveWeb.liveHostWageNote.queryForm.settlementRateLabel')" prop="settlementRate" label-width="85px">
+      <el-form-item :label="$t('liveWeb.liveHostWageNote.queryForm.settlementRateLabel')" prop="settlementRate" label-width="185px">
         <el-input
           v-model="queryParams.settlementRate"
           :placeholder="$t('liveWeb.liveHostWageNote.queryForm.settlementRatePlaceholder')"
@@ -90,22 +90,22 @@
           <a style="color: #00afff" @click="familyShow(row.familyId)">{{ row.familyId }}</a>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.familyName')" align="center" prop="familyName">
+      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.familyName')" align="center" prop="familyName" min-width="120">
         <template v-slot="{row}">
           <span v-if="row.familyId === 0">{{$t('liveWeb.liveHostWageNote.table.familyId0Name')}}</span>
           <span v-else>{{ row.familyName }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.familyUserId')" align="center" prop="familyUserId"/>
-      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.familyNickName')" align="center" prop="familyNickName"/>
-      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.livetime')" align="center" prop="livetime"/>
-      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.livetimejiesuan')" align="center" prop="livetimejiesuan"/>
-      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.liwu')" align="center" prop="liwu"/>
-      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.liwujiesuan')" align="center" prop="liwujiesuan"/>
-      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.lotteryCost')" align="center" prop="lotteryCost"/>
-      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.costQianliu')" align="center" prop="costQianliu"/>
-      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.times')" align="center" prop="times"/>
-      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.totalsettle')" align="center" prop="totalsettle"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.familyUserId')" align="center" prop="familyUserId"  min-width="120"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.familyNickName')" align="center" prop="familyNickName"  min-width="130"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.livetime')" align="center" prop="livetime"  min-width="180"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.livetimejiesuan')" align="center" prop="livetimejiesuan"  min-width="120"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.liwu')" align="center" prop="liwu"  min-width="120"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.liwujiesuan')" align="center" prop="liwujiesuan"  min-width="120"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.lotteryCost')" align="center" prop="lotteryCost"  min-width="120"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.costQianliu')" align="center" prop="costQianliu"  min-width="150"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.times')" align="center" prop="times"  min-width="130"/>
+      <el-table-column :label="$t('liveWeb.liveHostWageNote.table.totalsettle')" align="center" prop="totalsettle"  min-width="120"/>
     </el-table>
 
     <pagination

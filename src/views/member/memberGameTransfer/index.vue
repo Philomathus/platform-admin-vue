@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item :label=" $t('members.memberGameTransfer.index.div.date.dRange') " prop="selectDate">
+      <el-form-item :label=" $t('global.selectDate') " prop="selectDate" label-width="40">
         <el-date-picker type="daterange" v-model="queryParams.selectDate" format="yyyy-MM-dd"
                         value-format="yyyy-MM-dd" :start-placeholder=" $t('members.memberGameTransfer.index.div.date.sDate') "
                         :end-placeholder=" $t('members.memberGameTransfer.index.div.date.eDate') "
@@ -57,7 +57,7 @@
       <el-table-column :label=" $t('members.memberGameTransfer.index.div.tId') " align="center" prop="id" width="180"/>
       <el-table-column :label=" $t('members.memberGameTransfer.index.div.pId') " align="center" prop="userId" />
       <el-table-column :label=" $t('members.memberGameTransfer.index.div.proxy') " align="center" prop="agent" />
-      <el-table-column :label=" $t('members.memberGameTransfer.index.div.plat') " align="center" prop="platformId">
+      <el-table-column :label=" $t('members.memberGameTransfer.index.div.plat') " align="center" prop="platformId" width="180">
         <template slot-scope="scope">
           <span v-if="scope.row.platformId == '1'">{{ $t('members.memberGameTransfer.index.div.template.kChess') }}</span>
           <span v-if="scope.row.platformId == '2'">{{ $t('members.memberGameTransfer.index.div.template.ppFish') }}</span>
@@ -84,8 +84,8 @@
         </template>
       </el-table-column>
       <el-table-column :label=" $t('members.memberGameTransfer.index.div.ordId') " align="center" prop="transferId" min-width="100"/>
-      <el-table-column :label=" $t('members.memberGameTransfer.index.div.pType') " align="center" prop="product" />
-      <el-table-column :label=" $t('members.memberGameTransfer.index.div.tStat') " align="center" prop="transferState">
+      <el-table-column :label=" $t('members.memberGameTransfer.index.div.pType') " align="center" prop="product" width="180"/>
+      <el-table-column :label=" $t('members.memberGameTransfer.index.div.tStat') " align="center" prop="transferState" width="180">
         <template slot-scope="scope">
           <span v-if="scope.row.transferState == 'Succeeded'" :style="{'color': '#5FB878'}">{{ $t('members.memberGameTransfer.index.div.succ') }}</span>
           <span v-else-if="scope.row.transferType == 'Inprogress'" :style="{'color': 'rgb(245 86 11)'}">{{ $t('members.memberGameTransfer.index.div.tobe') }}</span>
@@ -94,14 +94,14 @@
           <span v-else>{{ $t('members.memberGameTransfer.index.div.unk') }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label=" $t('members.memberGameTransfer.index.div.tType') " align="center" prop="transferType">
+      <el-table-column :label=" $t('members.memberGameTransfer.index.div.tType') " align="center" prop="transferType" width="180">
           <template slot-scope="scope">
             <span v-if="scope.row.transferType == 'Deposit'" :style="{'color': '#5FB878'}">{{ $t('members.memberGameTransfer.index.div.tQuota') }}</span>
             <span v-else-if="scope.row.transferType == 'Withdraw'" :style="{'color': 'rgb(245 86 11)'}">{{ $t('members.memberGameTransfer.index.div.cTrans') }}</span>
             <span v-else>{{ $t('members.memberGameTransfer.index.div.unk') }}</span>
           </template>
       </el-table-column>
-      <el-table-column :label=" $t('members.memberGameTransfer.index.div.tAmt') " align="center" prop="transferAmount" />
+      <el-table-column :label=" $t('members.memberGameTransfer.index.div.tAmt') " align="center" prop="transferAmount" width="180"/>
       <el-table-column :label=" $t('members.memberGameTransfer.index.div.tAmt') " align="center" prop="transferTime" width="180">
         <template slot-scope="scope">
           <span>{{ scope.row.transferTime  }}</span>

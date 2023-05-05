@@ -1214,7 +1214,6 @@ export default {
   liveWeb: {
     anchorAward: {
       queryForm: {
-        updateTimeLabel: 'Date range',
         updateTimePlaceholder: 'Please select a date range',
         idPlaceholder: 'Anchor ID',
         nickNamePlaceholder: 'Anchor nickname',

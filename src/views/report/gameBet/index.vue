@@ -156,7 +156,7 @@ export default {
         this.total = response.total
         this.listLoading = false
         this.$rjLoading.hide()
-        this.count()
+        //this.count()
       }).catch((err) => {
         if (err == 'Error: 报表正在生成，请稍后...') {
           if (!this.listLoading) {

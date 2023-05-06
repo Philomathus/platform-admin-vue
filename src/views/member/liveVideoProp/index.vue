@@ -72,10 +72,10 @@
     <el-table stripe v-loading="loading" :data="liveProplogList">
       <el-table-column :label=" $t('members.liveVideoProp.form.hostId') " align="center" prop="perUserId" width="120"/>
       <el-table-column :label=" $t('members.liveVideoProp.form.status') " align="center" min-width="110px" prop="isPrivate" :formatter="callbackStatusFormat"/>
-      <el-table-column :label=" $t('members.liveVideoProp.form.giftName') " align="center" prop="propName"/>
-      <el-table-column :label=" $t('members.liveVideoProp.form.giftAmt') " align="center" prop="totalDiamonds"/>
+      <el-table-column :label=" $t('members.liveVideoProp.form.giftName') " align="center" prop="propName" min-width="100"/>
+      <el-table-column :label=" $t('members.liveVideoProp.form.giftAmt') " align="center" prop="totalDiamonds" min-width="120"/>
       <el-table-column :label=" $t('members.liveVideoProp.form.hostId') " align="center" prop="toUserId"/>
-      <el-table-column :label=" $t('members.liveVideoProp.form.hostNn') " align="center" prop="nickName" min-width="100"/>
+      <el-table-column :label=" $t('members.liveVideoProp.form.hostNn') " align="center" prop="nickName" min-width="120"/>
       <el-table-column :label=" $t('members.liveVideoProp.form.giftDate') " align="center" prop="createTime" min-width="160"/>
     </el-table>
 

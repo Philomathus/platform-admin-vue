@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item :label="$t('liveWeb.anchorAward.queryForm.updateTimeLabel')" prop="updateTime">
+      <el-form-item :label="$t('global.selectDate')" prop="updateTime" label-width="40">
         <el-date-picker v-model="queryParams.updateTime" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
                         :style="{width: '100%'}" :placeholder="$t('liveWeb.anchorAward.queryForm.updateTimePlaceholder')" clearable :picker-options="pickerOptions"
         ></el-date-picker>

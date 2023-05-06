@@ -56,7 +56,7 @@
       <el-table-column :label="$t('lottery.lotteryCount.tableColumns.lotteryName')" prop="lotteryName" align="center"  min-width="120"/>
       <el-table-column :label="$t('lottery.lotteryCount.tableColumns.puserId')" prop="puserId" align="center" min-width="120"/>
       <el-table-column :label="$t('lottery.lotteryCount.tableColumns.issue')"  prop="issue" align="center"  min-width="120"/>
-      <el-table-column :label="$t('lottery.lotteryCount.tableColumns.betInfo')" prop="betInfo" align="center"   min-width="120"/>
+      <el-table-column :label="$t('lottery.lotteryCount.tableColumns.betInfo')" prop="betInfo" align="center"   min-width="140"/>
       <el-table-column :label="$t('lottery.lotteryCount.tableColumns.chip')" prop="chip" align="center"   min-width="120"/>
       <el-table-column :label="$t('lottery.lotteryCount.tableColumns.ip')" prop="ip" align="center"   min-width="120"/>
     </el-table>

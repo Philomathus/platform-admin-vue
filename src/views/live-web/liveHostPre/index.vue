@@ -109,9 +109,9 @@
     <el-table stripe v-loading="loading" :data="liveHostPreList" @selection-change="handleSelectionChange">
       <el-table-column :label="$t('liveWeb.liveHostPre.table.id')" align="center" prop="id" min-width="160"/>
       <el-table-column :label="$t('liveWeb.liveHostPre.table.familyId')" align="center" prop="familyId"/>
-      <el-table-column :label="$t('liveWeb.liveHostPre.table.hostId')" align="center" prop="hostId"/>
-      <el-table-column :label="$t('liveWeb.liveHostPre.table.hostName')" align="center" prop="hostName" min-width="100"/>
-      <el-table-column :label="$t('liveWeb.liveHostPre.table.status')" align="center" prop="status">
+      <el-table-column :label="$t('liveWeb.liveHostPre.table.hostId')" align="center" prop="hostId"  min-width="160"/>
+      <el-table-column :label="$t('liveWeb.liveHostPre.table.hostName')" align="center" prop="hostName" min-width="160"/>
+      <el-table-column :label="$t('global.status')" align="center" prop="status">
         <template slot-scope="scope">
         <span :style="{color: (status = statusOptions[scope.row.status]).color}">
             {{ status.dictLabel }}

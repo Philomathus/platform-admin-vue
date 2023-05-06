@@ -2698,7 +2698,7 @@ export default {
         remark: '审核备注',
         orderNo: '订单号',
         type: '提现类型',
-        operation: '操作',
+        operation: '@:global.operationColumn',
         finalAuditButton: '审核通过',
         recoverAuditButton: '恢复',
         unlockButton: '解锁',

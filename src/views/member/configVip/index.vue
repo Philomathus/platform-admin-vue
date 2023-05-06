@@ -20,13 +20,13 @@
       <el-table-column type="selection" width="55" align="center" />
 
       <el-table-column :label="$t('members.configVip.table.vipLvl')" align="center" prop="levelFlag" />
-      <el-table-column :label="$t('members.configVip.table.demandCodingValue')" align="center" prop="levelMoney" min-width="120"/>
-      <el-table-column :label="$t('members.configVip.table.advancementJackpot')" align="center" prop="jjcj" min-width="120" />
-      <el-table-column :label="$t('members.configVip.table.weeklySalary')" align="center" prop="zfl" />
-      <el-table-column :label="$t('members.configVip.table.monthlySalary')" align="center" prop="yfl" />
+      <el-table-column :label="$t('members.configVip.table.demandCodingValue')" align="center" prop="levelMoney" min-width="190"/>
+      <el-table-column :label="$t('members.configVip.table.advancementJackpot')" align="center" prop="jjcj" min-width="190" />
+      <el-table-column :label="$t('members.configVip.table.weeklySalary')" align="center" prop="zfl" width="120"/>
+      <el-table-column :label="$t('members.configVip.table.monthlySalary')" align="center" prop="yfl"  width="120"/>
       <el-table-column :label="$t('members.configVip.table.creationTime')" align="center" prop="createTime" min-width="160"/>
-      <el-table-column :label="$t('members.configVip.table.lastUpdateBy')" align="center" prop="opName" />
-      <el-table-column :label="$t('members.configVip.table.lastUpdateAt')" align="center" prop="updateTime" min-width="160"/>
+      <el-table-column :label="$t('members.configVip.table.lastUpdateBy')" align="center" prop="opName"  width="130"/>
+      <el-table-column :label="$t('members.configVip.table.lastUpdateAt')" align="center" prop="updateTime" min-width="170"/>
       <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width" fixed="right" min-width="120">
         <template slot-scope="scope">
           <el-button

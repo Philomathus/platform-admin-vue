@@ -1380,7 +1380,6 @@ export default {
   liveWeb: {
     anchorAward: {
       queryForm: {
-        updateTimeLabel: 'Date range',
         updateTimePlaceholder: 'Please select a date range',
         idPlaceholder: 'Anchor ID',
         nickNamePlaceholder: 'Anchor nickname',
@@ -1831,7 +1830,7 @@ export default {
       },
       table: {
         content: 'Complaint content',
-        mobile: 'Member cell phone number',
+        mobile: 'Member phone',
         roomName: 'Room name',
         userId: 'Member ID',
         anchor: 'Anchor',
@@ -1991,193 +1990,193 @@ export default {
     },
     liveHostWageNotedays: {
       queryForm: {
-        selectDateLabel: '日期选择',
-        selectDateStartPlaceholder: '开始日期',
-        selectDateEndPlaceholder: '结束日期',
-        hostIdPlaceholder: '主播ID',
-        nickNamePlaceholder: '主播昵称',
-        familyNamePlaceholder: '家族名称',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        selectDateLabel: 'Date selection',
+        selectDateStartPlaceholder: 'Start date',
+        selectDateEndPlaceholder: 'End date',
+        hostIdPlaceholder: 'Anchor ID',
+        nickNamePlaceholder: 'Anchor nickname',
+        familyNamePlaceholder: 'Family name',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
-        export: '@:common.exportButton'
+        export: '@:global.exportButton'
       },
       table: {
-        hostId: '主播ID',
-        nickName: '主播昵称',
-        familyName: '家族名称',
-        livetime: '开播时长',
-        livetimejiesuan: '时长结算',
-        ticket: '礼物结算',
-        costQianliu: '彩票结算',
-        times: '开播次数',
-        totalsettle: '总收入'
+        hostId: 'Anchor ID',
+        nickName: 'Anchor nickname',
+        familyName: 'Family name',
+        livetime: 'On-air duration',
+        livetimejiesuan: 'Hourly billing',
+        ticket: 'Gift settlement',
+        costQianliu: 'Lottery settlement',
+        times: 'Number of starts',
+        totalsettle: 'Total revenue'
       },
       confirmExportDialog: {
-        title: '@:common.titleDialog',
-        message: '是否确认导出所有主播时长数据项?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        title: '@:global.dialogTitle',
+        message: 'Do you confirm to export all the anchor hours data items?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       }
     },
     liveHostWageNoteJump: {
       queryForm: {
-        dateDayPlaceholder: '选择日期',
-        settlementRateLabel: '散户结算率',
-        settlementRatePlaceholder: '请输入散户结算率',
-        hostIdPlaceholder: '主播ID',
-        nickNamePlaceholder: '主播昵称',
-        familyIdPlaceholder: '家族ID',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        dateDayPlaceholder: 'Select date',
+        settlementRateLabel: 'Retail settlement rate',
+        settlementRatePlaceholder: 'Please enter the retail settlement rate',
+        hostIdPlaceholder: 'Anchor ID',
+        nickNamePlaceholder: 'Nickname of anchor',
+        familyIdPlaceholder: 'Family ID',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
-        export: '@:common.exportButton'
+        export: '@:global.exportButton'
       },
       statistics: {
-        totalsettleTotalPlaceholder: '结算总计统计'
+        totalsettleTotalPlaceholder: 'Total settlement statistics'
       },
       table: {
-        hostId: '主播ID',
-        nickName: '主播昵称',
-        familyId: '家族ID',
-        familyIdPopover: '家 族 ID：',
-        familyUserIdPopover: '家 族 长 ID：',
-        familyNickName: '家族长昵称：',
-        familyName: '家族名称',
-        startTime: '直播开始时间',
-        endTime: '直播结束时间',
-        livetime: '直播时长',
-        lwrenwu: '礼物任务',
-        screnwu: '时长任务',
-        coin: '时薪',
-        livetimejiesuan: '时长结算',
-        liwu: '收礼金额',
-        liwujiesuanbili: '礼物提成',
-        ticket: '礼物结算',
-        lotteryCost: '彩票投注',
-        lotteryBili: '彩票提成',
-        costQianliu: '彩票结算',
-        times: '开播次数',
-        totalsettle: '结算总计'
+        hostId: 'Anchor ID',
+        nickName: 'Nickname of anchor',
+        familyId: 'Family ID',
+        familyIdPopover: 'Family ID: ',
+        familyUserIdPopover: 'Family leader ID：',
+        familyNickName: 'Family leader nickname：',
+        familyName: 'Family name',
+        startTime: 'Start of live broadcast',
+        endTime: 'End of live broadcast',
+        livetime: 'Duration of live broadcast',
+        lwrenwu: 'Gift mission',
+        screnwu: 'Hourly tasks',
+        coin: 'Hourly rate',
+        livetimejiesuan: 'Hourly billing',
+        liwu: 'Amount of gifts received',
+        liwujiesuanbili: 'Gift commission',
+        ticket: 'Gift settlement',
+        lotteryCost: 'Lottery Bet',
+        lotteryBili: 'Lottery commission',
+        costQianliu: 'Lottery settlement',
+        times: 'Number of starts',
+        totalsettle: 'Total settlement'
       },
       confirmExportDialog: {
-        title: '@:common.titleDialog',
-        message: '是否确认导出所有主播时长数据项?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        title: '@:global.dialogTitle',
+        message: 'Do you confirm to export all the anchor hours data items?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       }
     },
     liveMount: {
       queryForm: {
-        gvipLabel: 'VIP等级',
-        gvipPlaceholder: 'VIP等级',
-        nameLabel: '坐骑名',
-        namePlaceholder: '请输入坐骑名',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        gvipLabel: 'VIP level',
+        gvipPlaceholder: 'VIP level',
+        nameLabel: 'Mount name',
+        namePlaceholder: 'Please enter the mount name',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
-        add: '@:common.addButton',
-        edit: '@:common.editButton',
-        remove: '@:common.removeButton'
+        add: '@:global.addButton',
+        edit: '@:global.editButton',
+        remove: '@:global.deleteButton'
       },
       table: {
-        id: '坐骑id',
-        gvip: 'vip等级',
-        name: '坐骑名',
+        id: 'Mount ID',
+        gvip: 'VIP level',
+        name: 'Mount name',
         status: 'Status',
-        status0: '停用',
-        status1: '启用',
-        iconUrl: '图标',
-        price: '价格',
-        disPrice: '折扣价格',
-        vday: '有效天数',
-        oder: '排序',
-        operation: '@:common.operationColumn',
-        editButton: '@:common.editButton',
-        removeButton: '@:common.removeButton'
+        status0: 'Disabled',
+        status1: 'Enabled',
+        iconUrl: 'Icons',
+        price: 'Price',
+        disPrice: 'Discount price',
+        vday: 'Valid days',
+        oder: 'Sort by',
+        operation: '@:global.operationColumn',
+        editButton: '@:global.editButton',
+        removeButton: '@:global.deleteButton'
       },
       addEditDialog: {
-        titleAdd: '添加礼物',
-        titleEdit: '修改礼物',
-        gvipLabel: 'vip等级',
-        gvipPlaceholder: '请输入免费领取VIP(-1只能买)',
-        nameLabel: '坐骑名',
-        namePlaceholder: '请输入坐骑名',
+        titleAdd: 'Add a gift',
+        titleEdit: 'Modify gift',
+        gvipLabel: 'VIP level',
+        gvipPlaceholder: 'Please enter to receive free VIP (-1 can only buy)',
+        nameLabel: 'Mount name',
+        namePlaceholder: 'Please enter the mount name',
         statusLabel: 'Status',
-        status0: '未启用',
-        status1: '启用',
-        iconUrlLabel: '图标',
-        svgUrlLabel: 'svga动画',
-        priceLabel: '价格',
-        pricePlaceholder: '请输入价格',
-        disPriceLabel: '折扣价格',
-        disPricePlaceholder: '请输入折扣价格',
-        vdayLabel: '有效天数',
-        vdayPlaceholder: '请输入有效天数',
-        oderLabel: '排序',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton2',
+        status0: 'Disabled',
+        status1: 'Enabled',
+        iconUrlLabel: 'Icons',
+        svgUrlLabel: 'SVGA animation',
+        priceLabel: 'Price',
+        pricePlaceholder: 'Please enter the price',
+        disPriceLabel: 'Discount price',
+        disPricePlaceholder: 'Please enter discounted price',
+        vdayLabel: 'Valid days',
+        vdayPlaceholder: 'Please enter the number of valid days',
+        oderLabel: 'Sort by',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
         validations: {
-          id: 'ID不能为空',
-          name: '坐骑名不能为空',
-          status: '状态不能为空',
-          iconUrl: 'PC端图标不能为空',
-          gvip: 'vip等级不能为空',
-          svgUrl: 'svgUrl动画不能为空',
-          price: '价格不能为空',
-          disPrice: '折扣价格不能为空',
-          vday: '赠送天数不能为空',
-          oder: '不能为空'
+          id: 'ID cannot be empty',
+          name: 'Mount name cannot be empty',
+          status: 'Status cannot be empty',
+          iconUrl: 'PC icon cannot be empty',
+          gvip: 'The VIP level cannot be empty',
+          svgUrl: 'SVG URL animation cannot be empty',
+          price: 'Price cannot be empty',
+          disPrice: 'The discounted price cannot be empty',
+          vday: 'The number of days of gift cannot be empty',
+          oder: 'Cannot be empty'
         }
       },
       confirmRemoveDialog: {
-        title: '@:common.titleDialog',
-        message: '是否确认删除礼物列编号为"{ids}"的数据项?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        title: '@:global.dialogTitle',
+        message: 'Is it confirmed that the data item with the gift column number "{ids}" is deleted?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmStatusChangeDialog: {
-        title: '@:common.titleDialog',
-        message: '确认要{text}"{name}"吗?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        title: '@:global.dialogTitle',
+        message: 'Confirm you want {text} "{name}"?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       messageBox: {
         updateLiveMountSuccess: 'Modified successfully',
         addLiveMountSuccess: 'Add success',
         removeSuccess: 'Delete successfully',
-        statusChangeSuccess: '{text}成功'
+        statusChangeSuccess: '{text} successful'
       }
     },
     liveMsgEngage: {
       actions: {
-        add: '@:common.addButton'
+        add: '@:global.addButton'
       },
       table: {
-        msg: '互动信息',
-        operation: '@:common.operationColumn',
-        editButton: '@:common.editButton',
-        removeButton: '@:common.removeButton'
+        msg: 'Interactive message',
+        operation: '@:global.operationColumn',
+        editButton: '@:global.editButton',
+        removeButton: '@:global.deleteButton'
       },
       addEditDialog: {
-        titleAdd: '添加主播互动消息',
-        titleEdit: '修改主播互动消息',
-        msgLabel: '互动消息',
-        msgPlaceholder: '请输入互动信息',
-        confirmButton: '@:common.confirmButton2',
+        titleAdd: 'Add anchor interactive messages',
+        titleEdit: 'Modify anchor interaction messages',
+        msgLabel: 'Interactive news',
+        msgPlaceholder: 'Please enter interactive message',
+        confirmButton: '@:global.confirmButton',
         validations: {
-          id: 'id不能为空只能是数字',
-          msg: '互动消息不能为空'
+          id: 'ID can not be empty can only be a number',
+          msg: 'Interactive messages cannot be empty'
         }
       },
       confirmRemoveDialog: {
-        title: '@:common.titleDialog',
-        message: '是否确认删除消息为为"{msg}"的数据项?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        title: '@:global.dialogTitle',
+        message: 'Is it confirmed to delete the data item with the message "{msg}"?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       messageBox: {
         removeSuccess: 'Delete successfully'
@@ -2185,210 +2184,948 @@ export default {
     },
     liveProp: {
       queryForm: {
-        nameLabel: '道具名',
-        namePlaceholder: '请输入道具名',
-        typeLabel: '类型',
-        typePlaceholder: '请选择类型',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        nameLabel: 'Props name',
+        namePlaceholder: 'Please enter the name of the prop',
+        typeLabel: 'Type',
+        typePlaceholder: 'Please select type',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
-        add: '@:common.addButton',
-        edit: '@:common.editButton',
-        remove: '@:common.removeButton'
+        add: '@:global.addButton',
+        edit: '@:global.editButton',
+        remove: '@:global.deleteButton'
       },
       table: {
-        name: '名称',
-        icon: '图标',
-        diamonds: '消费钻石',
-        ticket: 'RMB/钻石',
-        isMuch: '是否连送',
-        isMuch1: '是',
-        isMuchOthers: '否',
-        type: '类型',
-        type0: '礼物',
-        type1: '打赏',
-        type2: '守护',
-        isAnimated: '展示动画',
-        isAnimated0: '普通礼物',
-        isAnimated1: 'gif礼物',
-        isAnimatedOthers: '大型动画礼物',
+        name: 'Name',
+        icon: 'Icons',
+        diamonds: 'Consumption of diamonds',
+        ticket: 'RMB/Diamond',
+        isMuch: 'Whether to send',
+        isMuch1: 'Yes',
+        isMuchOthers: 'No',
+        type: 'Type',
+        type0: 'Gift',
+        type1: 'Reward',
+        type2: 'Guard',
+        isAnimated: 'Show animation',
+        isAnimated0: 'General gifts',
+        isAnimated1: 'GIF gift',
+        isAnimatedOthers: 'Large-scale animation gifts',
         isEffect: 'Status',
-        isEffect1: '有效',
-        isEffect0: '无效',
-        operation: '@:common.operationColumn',
-        editButton: '@:common.editButton',
-        removeButton: '@:common.removeButton'
+        isEffect1: 'Effective',
+        isEffect0: 'Invalid',
+        operation: '@:global.operationColumn',
+        editButton: '@:global.editButton',
+        removeButton: '@:global.deleteButton'
       },
       addEditDialog: {
-        titleAdd: '添加礼物列',
-        titleEdit: '修改礼物列',
-        nameLabel: '名称',
-        namePlaceholder: '请输入道具名',
-        diamondsLabel: '消费钻石',
-        diamondsPlaceholder: '请输入',
-        ticketLabel: '主播获得热度:',
-        ticketPlaceholder: '请输入',
-        iconLabel: '图标',
-        isMuchLabel: '连续',
-        isAnimatedLabel: '展示动画',
-        animatedUrlLabel: 'svga动画',
-        isSpecialLabel: '是否特殊礼物',
-        isSpecial0: '正常',
-        isSpecial1: '特殊',
-        typeLabel: '类型',
+        titleAdd: 'Add a gift column',
+        titleEdit: 'Modify Gift Column',
+        nameLabel: 'Name',
+        namePlaceholder: 'Please enter the name of the prop',
+        diamondsLabel: 'Consumption of diamonds',
+        diamondsPlaceholder: 'Please enter',
+        ticketLabel: 'Anchors get hot:',
+        ticketPlaceholder: 'Please enter',
+        iconLabel: 'Icons',
+        isMuchLabel: 'Continuous',
+        isAnimatedLabel: 'Show animation',
+        animatedUrlLabel: 'SVGA animation',
+        isSpecialLabel: 'Is a special gift',
+        isSpecial0: 'Normal',
+        isSpecial1: 'Special',
+        typeLabel: 'Type',
         isEffectLabel: 'Status',
-        sortLabel: '排序',
-        sortPlaceholder: '请输入排序',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton2'
+        sortLabel: 'Sort by',
+        sortPlaceholder: 'Please enter sort',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmRemoveDialog: {
-        title: '@:common.titleDialog',
-        message: '是否确认删除礼物列编号为"{ids}"的数据项?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        title: '@:global.dialogTitle',
+        message: 'Is it confirmed that the data item with the gift column number "{ids}" is deleted?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       confirmStatusChangeDialog: {
-        title: '@:common.titleDialog',
-        message: '确认要{text}"{name}"吗?',
-        confirmButton: '@:common.confirmButton1',
-        cancelButton: '@:common.cancelButton1'
+        title: '@:global.dialogTitle',
+        message: 'Confirm you want {text} "{name}"?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       messageBox: {
         updateLivePropSuccess: 'Modified successfully',
         addLivePropSuccess: 'Add success',
         removeSuccess: 'Delete successfully',
-        statusChangeSuccess: '{text}成功'
+        statusChangeSuccess: '{text} successful'
       }
     },
     liveUser: {
       queryForm: {
-        userIdsLabel: '主播ID',
-        userIdsPlaceholder: '主播ID,批量搜索请用英文逗号隔开',
-        selectDateLabel: '注册日期',
-        selectDateStartPlaceholder: '开始日期',
-        selectDateEndPlaceholder: '结束日期',
-        selectDateRangeSeparator: '至',
-        nickNamePlaceholder: '主播昵称',
-        phonePlaceholder: '手机号',
-        isBanPlaceholder: '是否禁播',
-        isAuthenticationPlaceholder: '全部状态',
-        mobilePlaceholder: '家族ID',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        userIdsLabel: 'Anchor ID',
+        userIdsPlaceholder: 'Anchor ID, bulk search please use English comma separated',
+        selectDateLabel: 'Registration date',
+        selectDateStartPlaceholder: 'Start date',
+        selectDateEndPlaceholder: 'End date',
+        selectDateRangeSeparator: 'To',
+        nickNamePlaceholder: 'Anchor nickname',
+        phonePlaceholder: 'Cell phone number',
+        isBanPlaceholder: 'Whether to ban the broadcast',
+        isAuthenticationPlaceholder: 'All Status',
+        mobilePlaceholder: 'Family ID',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
-        add: '@:common.addButton',
-        export: '@:common.exportButton',
+        add: '@:global.addButton',
+        export: '@:global.exportButton',
         liveRoomAssistant: '直播间小助手',
-        batchJoin: '批量加入家族',
-        batchKickOut: '批量踢出家族'
+        batchJoin: 'Batch join family',
+        batchKickOut: 'Batch kick out of family'
       },
       table: {
-        id: '主播ID',
-        nickName: '主播昵称',
-        weixinAccount: '主播名片',
-        familyName: '所属家族',
-        familyId0: '未加入家族',
-        familyIdPopover: '家 族 ID：',
-        familyUserIdPopover: '家 族 长 ID：',
-        familyNickNamePopover: '家族长昵称：',
-        familyChieftain: '是否家族长',
+        id: 'Anchor ID',
+        nickName: 'Nickname of anchor',
+        weixinAccount: 'Anchor business card',
+        familyName: 'Family',
+        familyId0: 'Not in the family',
+        familyIdPopover: 'Family ID: ',
+        familyUserIdPopover: 'Family ID：',
+        familyNickNamePopover: 'Family leader nickname：',
+        familyChieftain: 'Is the family long',
+        familyChieftain1: 'Yes',
+        familyChieftainOthers: 'No',
         isAuthentication: 'Status',
-        isAuthenticationPlaceholder: '请选择状态',
-        isAuthentication0: '未认证',
-        isAuthentication1: '待审核',
-        isAuthentication2: '已认证',
-        isAuthentication3: '审核不通过',
-        ticket: '印票',
-        coin: '时薪',
-        weixinPrice: '时薪任务',
-        weiboMoney: '礼物任务',
-        xpoint: '彩票抽成',
-        ypoint: '礼物抽成',
-        isBan: '是否禁播',
-        isBan0: '正常',
-        isBan1: '禁播',
-        mobile: '手机号',
-        loginIp: '登陆IP',
-        banRemark: '禁播原因',
-        operation: '@:common.operationColumn',
+        isAuthenticationPlaceholder: 'Please select the status',
+        isAuthentication0: 'Not certified',
+        isAuthentication1: 'Pending review',
+        isAuthentication2: 'Certified',
+        isAuthentication3: 'Audit failed',
+        ticket: 'Stamp',
+        coin: 'Hourly rate',
+        weixinPrice: 'Hourly rate assignment',
+        weiboMoney: 'Gift mission',
+        xpoint: 'Lottery draw',
+        ypoint: 'Gift draw',
+        isBan: 'Whether to ban the broadcast',
+        isBan0: 'Normal',
+        isBan1: 'ban on broadcasting',
+        mobile: 'Cell phone number',
+        loginIp: 'Login IP',
+        banRemark: 'Reason for ban',
+        operation: '@:global.operationColumn',
         kickOutButton: '踢出家族',
-        auditButton: '审核',
-        starBroadcastButton: '开播',
-        endBroadcastButton: '关播',
-        moreButton: '更多'
+        auditButton: 'Audit',
+        starBroadcastButton: 'Start broadcasting',
+        endBroadcastButton: 'Offcasting',
+        moreButton: 'More'
+      },
+      messageBox: {
+        banError: 'Failure to modify ban status',
+        submitSuccess: 'Successful audit',
+        openLiveSuccess: 'Successful start of the broadcast',
+        openLiveError: 'Failed to start the broadcast',
+        closeLiveSuccess: 'Off-air success',
+        closeLiveError: 'Off-air failure',
+        kickOutSuccess: 'Kick-out Success',
+        kickOutError: 'Failed to kick-out the anchor',
+        kickOutFamilyBulkError: 'Failed to kick-out of the family',
+        changeAuthTypeSuccess: 'Status modified successfully',
+        changeAuthTypeError1: 'Status modification failure',
+        changeAuthTypeError2: 'Network Anomaly',
+        joinFamilyBulkError: 'Failed to join the family'
       },
       addDialog: {
-        title: '添加虚拟主播',
-        mobileLabel: '手机号',
-        nickNameLabel: '昵称',
-        headImageLabel: '用户头像',
-        isAuthenticationLabel: '类型',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton2'
+        title: 'Add virtual hosts',
+        mobileLabel: 'Cell phone number',
+        nickNameLabel: 'Nickname',
+        headImageLabel: 'User avatar',
+        isAuthenticationLabel: 'Type',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
       },
       liveRoomAssistantDialog: {
-        title: '直播间小助手',
-        infoLabel: '小助手消息',
-        infoPlaceholder: '请输入发送小助手消息',
-        confirmButton: '@:common.confirmButton2'
+        title: 'Live Room Assistant',
+        infoLabel: 'Little helper news',
+        infoPlaceholder: 'Please enter to send a small assistant message',
+        confirmButton: '@:global.confirmButton'
       },
       liveBroadcastDialog: {
-        title: '开播信息',
-        titleLabel: '标题',
-        flvLabel: '视频流地址',
-        liveImageLabel: '开播背景',
-        lotteryLabel: '彩票',
-        confirmButton: '@:common.confirmButton2'
+        title: 'Opening information',
+        titleLabel: 'Title',
+        flvLabel: 'Video streaming address',
+        liveImageLabel: 'Background',
+        lotteryLabel: 'Lottery',
+        confirmButton: '@:global.confirmButton'
       },
       editDialog: {
-        title: '修改主播信息',
-        authenticationNameLabel: '真实姓名',
-        contactLabel: '手机号',
-        identifyNumberLabel: '身份证号码',
-        coinLabel: '身份证号码',
-        weixinPriceLabel: '开播时长任务',
-        weiboMoneyLabel: '收礼礼物',
-        xpointLabel: '彩票抽成',
-        ypointLabel: '礼物抽成',
-        identifyHoldImageLabel: '手持身份证照片',
-        identifyPositiveImageLabel: '身份证正面',
-        identifyNagativeImageLabel: '身份证反面',
-        isAuthenticationLabel: '类型',
-        vExplainLabel: '认证说明',
-        investorSendInfoLabel: '拒绝理由',
-        confirmButton: '@:common.confirmButton2',
-        cancelButton: '@:common.cancelButton2',
+        title: 'Modify anchor information',
+        authenticationNameLabel: 'Real name',
+        contactLabel: 'Cell phone number',
+        identifyNumberLabel: 'ID number',
+        coinLabel: 'Hourly rate',
+        weixinPriceLabel: 'On-air hours task',
+        weiboMoneyLabel: 'Receiving gifts',
+        xpointLabel: 'Lottery draw',
+        ypointLabel: 'Gift draw',
+        identifyHoldImageLabel: 'Photo ID in hand',
+        identifyPositiveImageLabel: 'Front side of ID card',
+        identifyNagativeImageLabel: 'Back side of ID card',
+        isAuthenticationLabel: 'Type',
+        vExplainLabel: 'Certification description',
+        investorSendInfoLabel: 'Reasons for rejection',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
         validation: {
-          vExplain: '认证说明不能为空',
-          investorSendInfo: '拒绝理由不能为空'
+          vExplain: 'Authentication description cannot be empty',
+          investorSendInfo: 'Reason for rejection cannot be empty'
         }
+      },
+      confirmBanPrompt: {
+        title: '@:global.promptTitle',
+        message: 'Anchor ban remarks',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmSubmitFormType0: {
+        title: '@:global.dialogTitle',
+        message: 'Is it confirmed that this host has {not} been reviewed?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmExportDialog: {
+        title: '@:global.dialogTitle',
+        message: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmKickOutDialog: {
+        title: '@:global.dialogTitle',
+        message: 'OK to kick out the anchor nickname: [{nickName}]?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmKickOutFamilyBulkDialog: {
+        title: '@:global.dialogTitle',
+        message: 'Sure to bulk kick out of the family?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmJoinFamilyBulkPrompt: {
+        message: 'Batch join family',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
+        inputErrorMessage: 'Please enter the number type'
       }
     },
-  },
-
-  lotteryCount: {
-    form: {
-      puserIdLabel: 'Member Id',
-      puserIdPlaceholder: 'Please enter the member ID',
-      betInfoLabel: 'Betting content',
-      betInfoPlaceholder: 'Enter Betting content',
-      issueLabel: 'Number of phases',
-      issuePlaceholder: 'Enter Number of phases',
-      lotteryNamePlaceholder: 'Please select a lottery name',
-      searchButton: '@:global.searchButton',
-      resetButton: '@:global.resetButton',
+    liveUserMore: {
+      tab1: {
+        title: 'Chat room transcript',
+        queryForm: {
+          selectDateLabel: '@:global.selectDateLabel',
+          selectDateStartPlaceholder: '@:global.dateTimePickerStartTimePlaceholder',
+          selectDateEndPlaceholder: '@:global.dateTimePickerEndTimePlaceholder',
+          selectDateRangeSeparator: '@:global.dateTimePickerRangeSeparator',
+          searchButton: '@:global.searchButton',
+          resetButton: '@:global.resetButton'
+        },
+        table: {
+          postcatId: 'Anchor ID',
+          poscatNickname: 'Anchor nickname',
+          fromPlatform: 'Sender',
+          userNickName: 'Sender\'s nickname',
+          type: 'Message type',
+          type0: 'General message',
+          type1: 'Unknown',
+          msg: 'Message content',
+          createTime: 'Sending time'
+        },
+        cancelButton: '@:global.cancelButton'
+      },
+      tab3: {
+        title: 'Gift receiving journal',
+        queryForm: {
+          selectDateLabel: '@:global.selectDateLabel',
+          selectDateStartPlaceholder: '@:global.dateTimePickerStartTimePlaceholder',
+          selectDateEndPlaceholder: '@:global.dateTimePickerEndTimePlaceholder',
+          selectDateRangeSeparator: '@:global.dateTimePickerRangeSeparator',
+          giftNameLabel: 'Gift name',
+          giftNamePlaceholder: 'Please enter the name of the gift',
+          searchButton: '@:global.searchButton',
+          resetButton: '@:global.resetButton'
+        },
+        table: {
+          propId: 'Gift ID',
+          propName: 'Gift name',
+          perUserId: 'Member platform ID',
+          totalDiamonds: 'Diamond',
+          createDate: 'Create time',
+          num: 'Quantity sent'
+        },
+        cancelButton: '@:global.cancelButton'
+      },
+      tab5: {
+        title: 'Withdrawal ratio',
+        coinLabel: 'Hourly rate',
+        weixinPriceLabel: 'On-air hours task',
+        weiboMoneyLabel: 'Gift receiving mission',
+        xpointLabel: 'Lottery draw',
+        ypointLabel: 'Gift draw',
+        qqIdLabel: 'Daily opening task time (start)',
+        qqIdPlaceholder: 'Any point in time',
+        qqTokenLabel: 'Daily opening task time (end)',
+        qqTokenPlaceholder: 'Any point in time',
+        confirmButton: 'Determine the modification',
+        cancelButton: '@:global.cancelButton',
+        validations: {
+          coin: 'The hourly rate cannot be empty',
+          weixinPrice: 'On-air hours task cannot be empty',
+          weiboMoney: 'The gift receiving task cannot be empty',
+          qqId: 'Daily opening task time (start)',
+          qqToken: 'Daily opening task time (end)',
+          xpoint: 'Lottery draw cannot be empty',
+          ypoint: 'Gift draw cannot be empty'
+        }
+      },
+      tab6: {
+        title: 'Reset cell phone number',
+        mobileLabel: 'Old cell phone number',
+        mobilePlaceholder: 'Please enter your old cell phone number',
+        viewMobileButton: 'View full cell phone number',
+        newMobileLabel: 'New cell phone number',
+        newMobilePlaceholder: 'Please enter your new cell phone number',
+        googleAuthCodeLabel: 'google verification code',
+        googleAuthCodePlaceholder: 'Please enter google verification code',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
+        validations: {
+          mobile: 'Old cell phone number cannot be empty',
+          newMobile: 'The new cell phone number cannot be empty',
+          googleAuthCode: 'Google captcha cannot be empty'
+        }
+      },
+      tab7: {
+        title: 'Bank card',
+        realName: 'Real name',
+        bankAccount: 'Bank card number',
+        bankName: 'Bank name',
+        operation: '@:global.operationColumn',
+        editButton: '@:global.editButton',
+        deleteButton: '@:global.deleteButton',
+        cancelButton: '@:global.cancelButton',
+        confirmUpdateDialog: {
+          title: '@:global.dialogTitle',
+          message: 'Do I change my bank card information?',
+          confirmButton: '@:global.confirmButton',
+          cancelButton: '@:global.cancelButton'
+        },
+        confirmDeleteDialog: {
+          title: '@:global.dialogTitle',
+          message: 'Is it confirmed to delete the data item with the bank card number "{bankAccount}"?',
+          confirmButton: '@:global.confirmButton',
+          cancelButton: '@:global.cancelButton'
+        }
+      },
+      tab8: {
+        title: 'Modification of printed tickets'
+      },
+      tab9: {
+        title: 'Reset withdrawal password',
+        passwordLabel: 'New withdrawal password',
+        passwordPlaceholder: 'Please enter your new withdrawal password',
+        googleAuthCodeLabel: 'google verification code',
+        googleAuthCodePlaceholder: 'Please enter google verification code',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
+        validations: {
+          payPassword: 'Reset withdrawal password cannot be empty',
+          payPasswordMax: 'The length of the reset withdrawal password cannot exceed 30 characters'
+        }
+      },
+      inputPrompt: {
+        title: '@:global.promptTitle',
+        familyIdMessage: 'Please enter the family ID',
+        printedTicketMessage: 'Please enter a printed ticket',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
+        inputErrorMessage: 'Please enter the number type'
+      },
+      messageBox: {
+        updateMobileSuccess: 'Cell phone number change successfully',
+        liveUserFullMobileSuccess: 'The complete cell phone number is displayed',
+        liveUserFullMobileError: 'Cell phone number is not available',
+        updateTicketError: 'Failure to modify printed tickets',
+        cancelInput: 'Cancel input',
+        chatPageError: 'Failed to get the list of chat logs',
+        receiveProplistError: 'Failed to get the prop list',
+        editRateError: 'The start time cannot be greater than the end time',
+        updateLiveUserSuccess: 'Modified successfully',
+        updateLiveUserError: 'Modification failure',
+        updateLiveUserBankSuccess: 'Modified successfully',
+        updateLiveUserBankError1: 'Network anomaly',
+        updateLiveUserBankError2: 'Canceled',
+        deleteSuccess: 'Deleted successfully',
+        deleteError: 'Cancel delete',
+        logPageError: 'Failed to get account log'
+      }
     },
-    tableColumns: {
-      id: 'ID',
-      lotteryName: 'Lottery Name',
-      puserId: 'Member ID',
-      issue: 'Number of phases',
-      betInfo: 'Betting content',
-      chip: 'Amount bet',
-      ip: 'Bet IP',
+    liveUserMount: {
+      queryForm: {
+        selectDateLabel: 'Expiration time',
+        selectDateStartPlaceholder: '@:global.datePickerStartDatePlaceholder',
+        selectDateEndPlaceholder: '@:global.datePickerEndDatePlaceholder',
+        userIdLabel: 'Member ID',
+        userIdPlaceholder: 'Please enter your member ID',
+        mountIdPlaceholder: 'Please select the mount name',
+        isUsePlaceholder: 'Please select the status',
+        searchButton: '@:global.searchButton'
+      },
+      table: {
+        userId: 'Member ID',
+        effectiveTime: 'Expiration time',
+        mountName: 'Mount name',
+        isUse: 'Status',
+        isUse0: 'Disabled',
+        isUse1: 'Enabled'
+      }
+    },
+    liveUserWithdrawNewlog: {
+      statistics: {
+        countNumberButton: 'Number of transactions',
+        countWithdrawMoneyButton: 'Total amount',
+      },
+      queryForm: {
+        searchTimeStartPlaceholder: '@:global.datePickerStartDatePlaceholder',
+        searchTimeEndPlaceholder: '@:global.datePickerEndDatePlaceholder',
+        userIdPlaceholder: 'Anchor ID',
+        nickNamePlaceholder: 'Anchor nickname',
+        orderNo: 'Order number',
+        bankAccount: 'Withdrawal bank account number',
+        wstatusPlaceholder: 'All states',
+        wstatus0: 'Application in progress',
+        wstatus1: 'Submit an application',
+        wstatus2: 'Audit does not pass',
+        wstatus3: 'Ultimate audit approved',
+        wstatus4: 'Payment in progress',
+        wstatus5: 'Successful payment',
+        typePlaceholder: 'Withdrawal type',
+        type1: 'Family',
+        type2: 'Personal',
+        SearchCardBlackPlaceholder: 'Bank attribution blacklist',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
+      },
+      actions: {
+        export: '@:global.exportButton',
+        fixIds: 'Consolidation of orders'
+      },
+      table: {
+        clone: 'Reproduction',
+        cloneButton: 'Reproduction',
+        userId: 'Anchor ID',
+        familyId: 'Family ID',
+        nickName: 'Anchor nickname',
+        withdrawMoney: 'Cash withdrawal amount',
+        bankUserName: 'Withdraw real name',
+        bankAccount: 'Withdrawal bank account',
+        bankName: 'Bank',
+        cardBlack: 'Bank attribution',
+        wstatus: 'Status',
+        createTime: 'Create time',
+        updateTime: 'Last modified time',
+        opName: 'Auditors',
+        remark: 'Audit remarks',
+        orderNo: 'Order number',
+        type: 'Withdrawal type',
+        operation: '@:global.operationColumn',
+        finalAuditButton: 'Audit approved',
+        recoverAuditButton: 'Recover',
+        unlockButton: 'Unlock',
+        artificialWithdrawButton: 'Payout',
+        refusedButton: 'Reject',
+        withdrawSuccButton: 'Successful disbursement',
+        updateOrderButton: 'Reset order',
+        withdrawRefusedButton: 'Outgoing payment refusal',
+        withdrawMoneyButton: 'Modify withdrawal amount'
+      },
+      addEditHostsWithdrawalManagementDialog: {
+        addTitle: 'Add anchor withdrawal management',
+        editTitle: 'Modify anchor cash withdrawal management',
+        userIdLabel: 'Anchor ID',
+        userIdPlaceholder: 'Please enter the anchor ID',
+        nickNameLabel: 'Anchor nickname',
+        nickNamePlaceholder: 'Please enter the anchor nickname',
+        orderNoLabel: 'Order number',
+        orderNoPlaceholder: 'Please enter the order number',
+        orderExpressionLabel: 'Order expressions',
+        orderExpressionPlaceholder: 'Please enter the order expression',
+        withdrawMoneyLabel: 'Cash withdrawal amount',
+        withdrawMoneyPlaceholder: 'Please enter the withdrawal amount',
+        bankUserNameLabel: 'The real name of the withdrawal recipient',
+        bankUserNamePlaceholder: 'Please enter the real name of the withdrawal recipient',
+        bankAccountLabel: 'Withdrawal bank account',
+        bankAccountPlaceholder: 'Please enter the withdrawal bank account number',
+        bankAddressLabel: 'Withdrawal bank account',
+        bankAddressPlaceholder: 'Please enter the withdrawal bank account',
+        bankTypeIdLabel: 'Withdrawal bank type ID',
+        bankTypeIdPlaceholder: 'Please enter the withdrawal bank type ID',
+        wstatusLabel: 'Status(0 application in progress 1 primary audit passed 2 audit not passed 3 ultimate audit passed)',
+        wstatusValuePlaceholder: 'Please select dictionary generation',
+        typeLabel: 'Withdrawal type (1 withdraw from bank card, 2 withdraw from Alipay)',
+        typePlaceholder: 'Please choose the withdrawal type (1 withdraw from bank card, 2 withdraw from Alipay)',
+        typeValuePlaceholder: 'Please select dictionary generation',
+        opNameLabel: 'Auditors',
+        opNamePlaceholder: 'Please enter auditor',
+        remarkLabel: 'Audit remarks',
+        remarkPlaceholder: 'Please enter a note for review',
+        livetimeLabel: 'Broadcast hours',
+        livetimePlaceholder: 'Please enter the length of the anchor',
+        liveticketLabel: 'Anchor gifts',
+        liveticketPlaceholder: 'Please enter anchor gift',
+        livepaijiangLabel: 'Anchor prize distribution',
+        livepaijiangPlaceholder: 'Please enter the anchor payout',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
+        validations: {
+          userId: 'Anchor ID cannot be empty',
+          orderNo: 'Order number cannot be empty',
+          orderExpression: 'The order expression cannot be empty',
+          withdrawMoney: 'Cash withdrawal amount cannot be empty',
+          googleAuthCode: 'google captcha cannot be empty',
+          bankUserName: 'The real name of the recipient of the withdrawal cannot be empty',
+          bankAccount: 'Withdrawal bank account cannot be empty',
+          bankTypeId: 'Withdrawal bank type ID cannot be empty',
+          wstatus: 'Status cannot be empty',
+          type: 'Withdrawal type (1 withdraw from bank card, 2 withdraw from Alipay) cannot be empty'
+        }
+      },
+      editCashWithdrawalAmountDialog: {
+        title: 'Modify cash withdrawal amount',
+        withdrawMoneyLabel: 'Cash withdrawal amount',
+        withdrawMoneyPlaceholder: 'Please enter the withdrawal amount',
+        googleAuthCodeLabel: 'Google captcha',
+        googleAuthCodePlaceholder: 'Please enter google verification code',
+        submitButton: 'Submit now',
+        validations: {
+          withdrawMoney: 'Cash withdrawal amount cannot be empty',
+          googleAuthCode: 'google captcha cannot be empty'
+        }
+      },
+      confirmFixIdsDialog: {
+        title: '@:global.dialogTitle',
+        message: 'Is the combined order confirmed?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmRefusedPrompt: {
+        title: 'Please enter the reason for rejecting the payment',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmWithdrawRefusedPrompt: {
+        title: 'Please enter the reason for rejecting the payment',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmDeleteDialog: {
+        title: '@:global.dialogTitle',
+        message: 'Do you want to confirm the deletion of the data item with the anchor withdrawal management number "{ids}"?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmExportDialog: {
+        title: '@:global.dialogTitle',
+        message: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      messageBox: {
+        fixIdsError: 'Please select the orders to be merged',
+        fixIdsSuccess: 'Merged orders successfully',
+        copySuccess: 'Copied successfully',
+        submitDepositSuccess: 'Modified cash withdrawal amount successfully',
+        updateLiveUserWithdrawNewlogSuccees: 'Modified successfully',
+        addLiveUserWithdrawNewlogSuccess: 'Added successfully',
+        deleteSuccess: 'Deleted successfully'
+      }
+    },
+    liveVideo: {
+      queryForm: {
+        typeLabel: 'Live streaming type:',
+        idPlaceholder: 'Anchor ID',
+        hostNamePlaceholder: 'Host nickname / live title',
+        paiIdPlaceholder: 'Live streaming line',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
+      },
+      actions: {
+        closeIds: 'Batch off broadcast',
+        synchronizeOrder: 'Synchronized master station sorting'
+      },
+      table: {
+        id: 'Anchor ID',
+        hostName: 'Anchor nickname',
+        title: 'Live room title',
+        cateId: 'Live streaming type',
+        cateId2: 'Sexy anchor',
+        cateId3: 'The big show live',
+        cateId4: 'Paid Live Streaming',
+        cateIdOthers: 'Live lottery',
+        voteNumber: 'Votes',
+        watchNumber: 'Number of people online',
+        lineName: 'Line name',
+        lineStatus: 'Live broadcast nature',
+        liveStatus: 'Live status',
+        liveStatusEmpty: 'Testing in progress...',
+        openPay: 'No charge',
+        isLivePay: 'Charges',
+        isLivePayTrue: 'Yes',
+        isLivePayFalse: 'No',
+        beginTime: 'Start time',
+        lotteryName: 'Color type',
+        operation: '@:global.operationColumn',
+        closeButton: 'Turn-off broadcasting',
+        setSortButton: 'Fixed positioning',
+        closeSortButton: 'Eliminate fixed positioning',
+        recommendButton: 'Recommend',
+        closeRecommendButton: 'Cancel recommendation',
+        stickButton: 'Set bottom',
+        closeStickButton: 'Cancel bottom',
+        toLivePayButton: 'Charges'
+      },
+      addToLivePayDialog: {
+        addTitle: 'Add live stream',
+        toLivePayTitle: 'Paid setup',
+        idLabel: 'Anchor ID',
+        idPlaceholder: 'Anchor ID',
+        hostNameLabel: 'Anchor nickname',
+        hostNamePlaceholder: 'Anchor nickname',
+        titleLabel: 'Live room title',
+        titlePlaceholder: 'Live room title',
+        liveFeeLabel: 'Viewing fee',
+        liveFeePlaceholder: 'Viewing fee',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      effectDialog: {
+        title: 'Effective immediately or not',
+        effect1: 'Yes',
+        effect2: 'No',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmCloseIdsDialog: {
+        title: '@:global.dialogTitle',
+        message: 'Is it confirmed that the live broadcast is closed in bulk?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmCloseDialog: {
+        title: '@:global.dialogTitle',
+        message: 'Is it confirmed that the data item with the live number "{id}" is closed?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmExportDialog: {
+        title: '@:global.dialogTitle',
+        message: 'Is it confirmed that all live data items are exported?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmChangeOpenPayDialog: {
+        title: '@:global.dialogTitle',
+        message: 'Does {openPay} use anchor fee access?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmSetSortPrompt: {
+        title: 'Fixed positioning',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
+        inputPlaceholder: 'Please enter an integer value greater than 0 and less than 100',
+        inputErrorMessage: 'Fixed bit data format is incorrect, please enter an integer value greater than 0 and less than 100'
+      },
+      synchronizeOrderDialog: {
+        message: 'Do you confirm the synchronization of the main station anchor sort?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      messageBox: {
+        closeIdsError: 'Please choose to close the live room',
+        closeIdsSuccess: 'Off-air success',
+        closeSuccess: 'Off-air success',
+        submitFormError: 'Paid amount must be greater than 0!',
+      }
+    },
+    liveVideoChat: {
+      queryForm: {
+        poscatIdLabel: 'Anchor ID',
+        poscatIdPlaceholder: 'Please enter the anchor ID',
+        groupLabel: 'The chat group the message is in',
+        groupPlaceholder: 'Please enter the chat group the message is in',
+        userIdLabel: 'Sender ID',
+        userIdPlaceholder: 'Please enter the sender ID',
+        typeLabel: 'Message type (0 Normal message, 1 Pop-up message)',
+        typePlaceholder: 'Please select the message type (0 Normal message, 1 Pop-up message)',
+        typeValuePlaceholder: 'Please select dictionary generation',
+        poscatNickNameLabel: 'Anchor nickname',
+        poscatNickNamePlaceholder: 'Please enter the anchor nickname',
+        userNickNameLabel: 'Sender\'s nickname',
+        userNickNamePlaceholder: 'Please enter the sender\'s nickname',
+        fromPlatformLabel: 'Platform member ID',
+        fromPlatformPlaceholder: 'Please enter the platform member ID',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
+      },
+      actions: {
+        add: '@:global.addButton',
+        edit: '@:global.editButton',
+        delete: '@:global.deleteButton',
+        export: '@:global.exportButton'
+      },
+      table: {
+        id: 'Platform member ID',
+        poscatId: 'Anchor ID',
+        group: 'The chat group the message is in',
+        userId: 'Sender ID',
+        msg: 'Message content',
+        type: 'Message Type',
+        poscatNickName: 'Anchor nickname',
+        userNickName: 'Sender\'s nickname',
+        fromPlatform: 'Platform member ID',
+        operation: '@:global.operationColumn',
+        editButton: '@:global.editButton',
+        deleteButton: '@:global.deleteButton'
+      },
+      addEditDialog: {
+        addTitle: 'Add member statement',
+        editTitle: 'Suspension of members',
+        poscatIdLabel: 'Anchor ID',
+        poscatIdPlaceholder: 'Please enter the anchor ID',
+        groupLabel: 'The chat group the message is in',
+        groupPlaceholder: 'Please enter the chat group the message is in',
+        userIdLabel: 'Sender ID',
+        userIdPlaceholder: 'Please enter the sender ID',
+        msgLabel: 'Message content',
+        msgPlaceholder: 'Please enter content',
+        typeLabel: 'Message type (0 Normal message, 1 Pop-up message)',
+        typePlaceholder: 'Please select the message type (0 Normal message, 1 Pop-up message)',
+        typeValuePlaceholder: 'Please select dictionary generation',
+        poscatNickNameLabel: 'Nickname of anchor',
+        poscatNickNamePlaceholder: 'Please enter the nickname of the anchor',
+        userNickNameLabel: 'Sender\'s nickname',
+        userNickNamePlaceholder: 'Please enter the sender\'s nickname',
+        fromPlatformLabel: 'Platform member ID',
+        fromPlatformPlaceholder: 'Please enter the platform member ID',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
+        validations: {
+          poscatId: 'Anchor ID cannot be empty'
+        }
+      },
+      confirmDeleteDialog: {
+        title: '@:global.dialogTitle',
+        message: 'Do you want to confirm the deletion of the data item with the member speech number "{ids}"?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmExportDialog: {
+        title: '@:global.dialogTitle',
+        message: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      messageBox: {
+        updateLiveVideoChatSuccess: 'Modified successfully',
+        addLiveVideoChatSuccess: 'Added successfully',
+        deleteSuccess: 'Deleted successfully'
+      }
+    },
+    liveVideoClassified: {
+      queryForm: {
+        titleLabel: 'Category name',
+        titlePlaceholder: 'Please enter the category name',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
+      },
+      actions: {
+        add: '@:global.addButton',
+        edit: '@:global.editButton',
+        delete: '@:global.deleteButton',
+      },
+      table: {
+        title: 'Category name',
+        isEffect: 'Status',
+        isEffect0: 'Disabled',
+        isEffect1: 'Enabled',
+        sort: 'Sorting (reverse order on customer service side)',
+        classfy: 'Classification code',
+        isHostShow: 'Host side display',
+        isHostShow0: 'Disabled',
+        isHostShow1: 'Enabled',
+        operation: '@:global.operationColumn',
+        editButton: '@:global.editButton',
+        deleteButton: '@:global.deleteButton'
+      },
+      addEditDialog: {
+        addTitle: 'Add category',
+        editTitle: 'Modify category',
+        titleLabel: 'Category name',
+        titlePlaceholder: 'Please enter the category name',
+        isEffectLabel: 'Status',
+        isHostShowLabel: 'Host side display',
+        sortLabel: 'Sort by',
+        sortPlaceholder: 'Please enter sort',
+        classfyLabel: 'Classification code',
+        classfyPlaceholder: 'Please enter the category ID',
+        imgLabel: 'Category icon',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton',
+        validations: {
+          title: 'Category name cannot be empty',
+          isEffect: 'Is Valid (1 - valid, 0 - invalid) cannot be empty)',
+          sort: 'The row from largest to smallest cannot be empty',
+          img: 'Category icon cannot be empty',
+          isHostShow: 'Whether the anchor side of the display can not be empty'
+        }
+      },
+      confirmDeleteDialog: {
+        title: '@:global.dialogTitle',
+        message: 'Is it confirmed that the data item with the category number "{ids}" is deleted?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmStatusChangeDialog: {
+        title: '@:global.dialogTitle',
+        message: 'Confirm you want {text} "{title}"?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmShowStatusChangeDialog: {
+        title: '@:global.dialogTitle',
+        message: 'Confirm you want {text} "{title}"?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmExportDialog: {
+        title: '@:global.dialogTitle',
+        message: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      messageBox: {
+        updateLiveVideoClassifiedSuccess: 'Modified successfully',
+        addLiveVideoClassifiedSuccess: 'Added successfully',
+        deleteSuccess: 'Deleted successfully',
+        statusChangeSuccess: '{text} successfully',
+        showStatusChangeSuccess: '{text} successfully',
+      }
+    },
+    officerManage: {
+      queryForm: {
+        hostIdLabel: 'Anchor ID',
+        hostIdPlaceholder: 'Please enter the anchor ID',
+        puserIdLabel: 'User ID',
+        puserIdPlaceholder: 'Please enter your user ID',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
+      },
+      actions: {
+        add: '@:global.addButton',
+        delete: '@:global.deleteButton',
+        export: '@:global.exportButton'
+      },
+      table: {
+        hostId: 'Anchor ID',
+        hostName: 'Anchor nickname',
+        puserId: 'User ID',
+        puserName: 'User nickname',
+        ctime: 'Create time',
+        operation: '@:global.operationColumn',
+        deleteButton: '@:global.deleteButton'
+      },
+      addDialog: {
+        title: 'Add house management',
+        hostIdLabel: 'Anchor ID',
+        hostIdPlaceholder: 'Please enter the anchor ID',
+        puserIdLabel: 'User ID',
+        puserIdPlaceholder: 'Please enter your user ID',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmDeleteDialog: {
+        title: '@:global.dialogTitle',
+        message: 'Is it confirmed that the data item with the house management number "{ids}" is deleted?',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      confirmExportDialog: {
+        title: '@:global.dialogTitle',
+        message: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+        confirmButton: '@:global.confirmButton',
+        cancelButton: '@:global.cancelButton'
+      },
+      messageBox: {
+        submitFormSuccess: 'Added successfully',
+        deleteSuccess: 'Deleted successfully',
+      }
+    },
+    pushChat: {
+      queryForm: {
+        fromPlatformPlaceholder: 'Member ID',
+        userNickNamePlaceholder: 'Member nickname',
+        poscatIdPlaceholder: 'Anchor ID',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
+      },
+      refresh: {
+        title: 'Record refresh',
+        placeholder: 'Time interval',
+        description: 'Refresh starts after {secs} seconds',
+        interval: '{secs} seconds',
+        startButton: 'Start refreshing',
+        stopButton: 'Stop refreshing'
+      },
+      table: {
+        poscatId: 'Anchor ID',
+        poscatNickName: 'Anchor nickname',
+        fromPlatform: 'Platform member ID',
+        userNickName: 'User nickname',
+        msg: 'Message content',
+        createTimes: 'Sending time'
+      },
+      messageBox: {
+        queryError: 'Member IDs can only be entered as numbers and underscores'
+      }
+    },
+    report: {
+      queryForm: {
+        typeLabel: 'Anchor ranking',
+        typePlaceholder: 'Please select the list type',
+        type0: 'Day list',
+        type1: 'Weekly list',
+        type2: 'Monthly list',
+        reptimeLabel: 'Update date',
+        reptimePlaceholder: 'Select update date',
+        nicknameLabel: 'Nickname of anchor',
+        nicknamePlaceholder: 'Please enter the anchor nickname',
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
+      },
+      actions: {
+        export: '@:global.exportButton'
+      },
+      table: {
+        anchorid: 'Anchor ID',
+        nickname: 'Anchor nickname',
+        dayTicket: 'Daily hotness',
+        sort: 'Hotness ranking',
+        dayTicketUpdiff: 'Difference from last time',
+        repdate: 'Day list',
+        num: 'List',
+        reptime: 'Update date'
+      }
     }
   },
 
@@ -2436,7 +3173,7 @@ export default {
       form: {
         puserIdLabel: 'Member ID',
         puserIdPlaceholder: 'Please enter your member ID',
-        betInfoLabel: 'Content of the following note',
+        betInfoLabel: 'Betting content',
         betInfoPlaceholder: 'Content of the next note',
         issueLabel: 'Number of periods',
         issuePlaceholder: 'Number of periods',
@@ -2447,7 +3184,7 @@ export default {
         lotteryName: 'Lottery Name',
         puserId: 'Member ID',
         issue: 'Number of periods',
-        betInfo: 'Content of the following note',
+        betInfo: 'Betting content',
         chip: 'Bet amount',
         ip: 'Place an IP bet',
       }

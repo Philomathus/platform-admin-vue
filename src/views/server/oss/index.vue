@@ -141,7 +141,7 @@
 </template>
 
 <script>
-import {listOss, getOss, delOss, addOss, updateOss, effectOss} from '@/api/platform-web/server/oss'
+import {listOss, getOss, delOss, addOss, effectOss} from '@/api/platform-web/server/oss'
 import ImageUpload from '@/components/ImageUpload'
 
 export default {

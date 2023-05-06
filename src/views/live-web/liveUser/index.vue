@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-          <el-form-item :label="$t('liveWeb.liveUser.queryForm.userIdsLabel')" prop="userIds">
+          <el-form-item :label="$t('liveWeb.liveUser.queryForm.userIdsLabel')" prop="userIds" label-width="70">
             <el-input
               v-model="queryParams.userIds"
               :placeholder="$t('liveWeb.liveUser.queryForm.userIdsPlaceholder')"
@@ -14,7 +14,7 @@
               @keyup.enter.native="handleQuery" />
           </el-form-item>
 
-          <el-form-item :label="$t('liveWeb.liveUser.queryForm.userIdsPlaceholder')" prop="selectDate">
+          <el-form-item :label="$t('global.selectDate')" prop="selectDate" label-width="200">
             <el-date-picker type="daterange" v-model="selectDate" format="yyyy-MM-dd"
                             value-format="yyyy-MM-dd" :style="{width: '240px'}" :start-placeholder="$t('liveWeb.liveUser.queryForm.selectDateStartPlaceholder')"
                             :end-placeholder="$t('liveWeb.liveUser.queryForm.selectDateEndPlaceholder')"
@@ -127,7 +127,7 @@
     <el-table stripe v-loading="loading" :data="liveUserList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="50" align="center"/>
       <el-table-column :label="$t('liveWeb.liveUser.table.id')" min-width="120" align="center" prop="id"/>
-      <el-table-column :label="$t('liveWeb.liveUser.table.nickName')" min-width="140" :show-overflow-tooltip="true" align="center" prop="nickName"/>
+      <el-table-column :label="$t('liveWeb.liveUser.table.nickName')" min-width="160" :show-overflow-tooltip="true" align="center" prop="nickName"/>
       <el-table-column :label="$t('liveWeb.liveUser.table.weixinAccount')" min-width="100" align="center" prop="weixinAccount"
                        :show-overflow-tooltip="true"/>
       <el-table-column :label="$t('liveWeb.liveUser.table.familyName')" min-width="100" align="center" prop="familyName" :show-overflow-tooltip="true">
@@ -177,11 +177,11 @@
 
       <el-table-column :label="$t('liveWeb.liveUser.table.ticket')" min-width="120" align="center" prop="ticket"/>
       <el-table-column :label="$t('liveWeb.liveUser.table.coin')" min-width="120" align="center" prop="coin"/>
-      <el-table-column :label="$t('liveWeb.liveUser.table.weixinPrice')" min-width="120" align="center" prop="weixinPrice"/>
+      <el-table-column :label="$t('liveWeb.liveUser.table.weixinPrice')" min-width="170" align="center" prop="weixinPrice"/>
       <el-table-column :label="$t('liveWeb.liveUser.table.weiboMoney')" min-width="120" align="center" prop="weiboMoney"/>
       <el-table-column :label="$t('liveWeb.liveUser.table.xpoint')" min-width="120" align="center" prop="xpoint"/>
       <el-table-column :label="$t('liveWeb.liveUser.table.ypoint')" min-width="120" align="center" prop="ypoint"/>
-      <el-table-column :label="$t('liveWeb.liveUser.table.isBan')" width="80" align="center" prop="isBan">
+      <el-table-column :label="$t('liveWeb.liveUser.table.isBan')" width="160" align="center" prop="isBan">
         <template v-slot="{row}">
           <el-tooltip class="item" effect="dark" :content="row.isBan === 0 ? $t('liveWeb.liveUser.table.isBan0') : $t('liveWeb.liveUser.table.isBan1')" placement="top">
             <el-switch
@@ -195,7 +195,7 @@
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('liveWeb.liveUser.table.mobile')" min-width="100" align="center" prop="mobile"/>
+      <el-table-column :label="$t('liveWeb.liveUser.table.mobile')" min-width="130" align="center" prop="mobile"/>
       <el-table-column :label="$t('liveWeb.liveUser.table.loginIp')" min-width="150" :show-overflow-tooltip="true" align="left" prop="loginIp"/>
       <el-table-column :label="$t('liveWeb.liveUser.table.banRemark')" min-width="200" align="center" prop="banRemark" :show-overflow-tooltip="true"/>
       <el-table-column :label="$t('liveWeb.liveUser.table.operation')" min-width="200" align="center" class-name="small-padding fixed-width" fixed="right">

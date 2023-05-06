@@ -2264,7 +2264,7 @@ export default {
     liveUser: {
       queryForm: {
         userIdsLabel: 'Anchor ID',
-        userIdsPlaceholder: 'Anchor ID, bulk search please use English comma separated',
+        userIdsPlaceholder: 'Anchor ID, bulk separated by comma',
         selectDateLabel: 'Registration date',
         selectDateStartPlaceholder: 'Start date',
         selectDateEndPlaceholder: 'End date',
@@ -2287,7 +2287,7 @@ export default {
       table: {
         id: 'Anchor ID',
         nickName: 'Nickname of anchor',
-        weixinAccount: 'Anchor business card',
+        weixinAccount: 'Anchor card',
         familyName: 'Family',
         familyId0: 'Not in the family',
         familyIdPopover: 'Family ID: ',
@@ -2308,10 +2308,10 @@ export default {
         weiboMoney: 'Gift mission',
         xpoint: 'Lottery draw',
         ypoint: 'Gift draw',
-        isBan: 'Whether to ban the broadcast',
+        isBan: 'broadcast Status',
         isBan0: 'Normal',
         isBan1: 'ban on broadcasting',
-        mobile: 'Cell phone number',
+        mobile: 'Phone Number',
         loginIp: 'Login IP',
         banRemark: 'Reason for ban',
         operation: '@:global.operationColumn',

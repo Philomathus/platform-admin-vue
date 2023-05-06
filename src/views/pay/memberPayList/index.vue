@@ -1,10 +1,16 @@
 <template>
   <div class="app-container">
+    <div v-loading="totalLoading">
     <el-button type="primary" @click="copy1">通道总数 {{ this.total || 0 }}</el-button>
     <el-button type="success" @click="copy2">总成功金额 {{ this.totalData.subMoney || 0 }}</el-button>
     <el-button type="success" @click="copy2">手续费总额 {{ this.totalData.handlingfeeTotal || 0 }}</el-button>
     <el-button type="success" @click="copy2">结算总金额 {{ (this.totalData.subMoney - this.totalData.handlingfeeTotal || 0 ).toFixed(2)}}</el-button>
     <!--    <el-button type="info" id="copy4" @click="copy4">成功率 {{ numberUtil.toPercent(this.totalData.failRate) }}</el-button>-->
+    <el-button type="primary" icon="el-icon-search" size="mini" @click="listCounts()" style="margin-left: 20px">
+      {{ $t('members.memberInfo.index.button.statQ') }}
+    </el-button>
+    </div>
+
     <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 10px" v-show="showSearch" label-width="100px">
       <el-form-item label="更新时间" prop="updateTime" label-width="70px">
         <el-date-picker clearable size="small"
@@ -47,7 +53,6 @@
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
-
     </el-form>
 
     <el-row :gutter="10" class="mb8">
@@ -80,7 +85,7 @@
     <pagination
       v-show="total>0"
       :total="total"
-      :page-sizes="[50,100,200,500]"
+      :page-sizes="[20,50,100,200,500]"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
@@ -102,6 +107,7 @@ export default {
   components: {},
   data() {
     return {
+      totalLoading: false,
       refreshSec: '5',
       refreshType: 'primary',
       refreshIcon: 'el-icon-refresh',
@@ -135,7 +141,7 @@ export default {
       queryParams: {
         updateTime: this.parseTime(new Date(), '{y}-{m}-{d}'),
         pageNum: 1,
-        pageSize: 100,
+        pageSize: 20,
         platformId: null,
         channelName: null,
       },
@@ -158,7 +164,6 @@ export default {
       this.statusOptions = response.data
     })
     this.getList()
-    this.listCounts()
   },
   activated() {
     this.refreshType = 'primary'
@@ -169,12 +174,6 @@ export default {
     this.stopRefresh()
   },
   methods: {
-    //
-    listCounts() {
-      listCounts(this.queryParams).then((res) => {
-        this.totalData = res
-      })
-    },
     //复制
     copy1() {
       this.copyCommand(this.totalData.total)
@@ -229,6 +228,11 @@ export default {
       this.queryParams.pageNum = 1
       this.getList()
       this.listCounts()
+    },
+    listCounts() {
+      listCounts(this.queryParams).then((res) => {
+        this.totalData = res
+      })
     },
     /** 重置按钮操作 */
     resetQuery() {

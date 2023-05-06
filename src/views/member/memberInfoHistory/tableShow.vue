@@ -1,17 +1,17 @@
 <template>
 
-  <el-dialog v-dialogDrag :close-on-click-modal="false" title="资金明细" :visible.sync="open" width="800px"
+  <el-dialog v-dialogDrag :close-on-click-modal="false" :title=" $t('members.memberInfoHistory.tableShow.fdet') " :visible.sync="open" width="800px"
              append-to-body
   >
     <div class="memberInfo">
-      <div class="title">会员基本信息</div>
+      <div class="title">{{ $t('members.memberInfoHistory.tableShow.bmi') }}</div>
       <div class="mount col-w12pr">
-        <div class="font">会员Id</div>
-        <div class="font">注册时间</div>
+        <div class="font">{{ $t('members.memberInfoHistory.tableShow.mid') }}</div>
+        <div class="font">{{ $t('members.memberInfoHistory.tableShow.rtime') }}</div>
 <!--        <div class="font">电话号码</div>-->
-        <div class="font">用户类型</div>
-        <div class="font">会员打码</div>
-        <div class="font">会员IP</div>
+        <div class="font">{{ $t('members.memberInfoHistory.tableShow.utype') }}</div>
+        <div class="font">{{ $t('members.memberInfoHistory.tableShow.mcod') }}</div>
+        <div class="font">{{ $t('members.memberInfoHistory.tableShow.mip') }}</div>
       </div>
       <div class="mount col-w28pr" >
         <div class="font">{{ data.会员编号 }}</div>
@@ -22,11 +22,11 @@
         <div class="font">{{ data.登陆IP }}</div>
       </div>
       <div class="mount col-w12pr" >
-        <div class="font">当前余额</div>
-        <div class="font">登录时间</div>
-        <div class="font">VIP等级</div>
-        <div class="font">会员注单</div>
-        <div class="font">登录地址</div>
+        <div class="font">{{ $t('members.memberInfoHistory.tableShow.cbal') }}</div>
+        <div class="font">{{ $t('members.memberInfoHistory.tableShow.ltime') }}</div>
+        <div class="font">{{ $t('members.memberInfoHistory.tableShow.vlvl') }}</div>
+        <div class="font">{{ $t('members.memberInfoHistory.tableShow.mnf') }}</div>
+        <div class="font">{{ $t('members.memberInfoHistory.tableShow.ladd') }}</div>
       </div>
       <div class="mount col-w28pr" >
         <div class="font">{{ data.会员积分 }}</div>
@@ -37,45 +37,45 @@
       </div>
     </div>
     <div class="fundsInfo">
-      <div class="title">会员资金信息</div>
+      <div class="title">{{ $t('members.memberInfoHistory.tableShow.mmi') }}</div>
       <div class="mount col-w80pr">
 
         <div style="display: flex;justify-content: flex-start;">
           <div class="mount" style="width: 43%">
-            <div class="font">线上充值金额(一月内): {{ data.线上金额 }}</div>
+            <div class="font">{{ $t('members.memberInfoHistory.tableShow.ora') }} {{ data.线上金额 }}</div>
           </div>
           <div class="mount" style="width: 45%">
-            <div class="font">线上历史充值金额:{{ historyRecharge || 0.00 }}</div>
+            <div class="font">{{ $t('members.memberInfoHistory.tableShow.ohra') }} {{ historyRecharge || 0.00 }}</div>
           </div>
           <div class="mount" style="width: 12%">
-            <el-button type="success" @click="getHistoryRecharge()" class="col-h40">查询</el-button>
+            <el-button type="success" @click="getHistoryRecharge()" class="col-h40">{{ $t('members.memberInfoHistory.tableShow.inq') }}</el-button>
           </div>
         </div>
-        <div class="font">线下充值金额: {{ data.线下充值金额 }}</div>
-        <div class="font">代充金额: {{ data.人工代充金额 }}</div>
-        <div class="font">手工上分金额: {{ data.平台赠送金额 }}</div>
-        <div class="font">充值总金额: {{ totalRecharge || 0.00 }}</div>
-        <div class="font">提现次数: {{ data.会员提现次数 }}</div>
-        <div class="font">提现金额: {{ data.会员提现金额 }}</div>
+        <div class="font">{{ $t('members.memberInfoHistory.tableShow.ota') }} {{ data.线下充值金额 }}</div>
+        <div class="font">{{ $t('members.memberInfoHistory.tableShow.ca') }} {{ data.人工代充金额 }}</div>
+        <div class="font">{{ $t('members.memberInfoHistory.tableShow.mca') }} {{ data.平台赠送金额 }}</div>
+        <div class="font">{{ $t('members.memberInfoHistory.tableShow.taor') }} {{ totalRecharge || 0.00 }}</div>
+        <div class="font">{{ $t('members.memberInfoHistory.tableShow.now') }} {{ data.会员提现次数 }}</div>
+        <div class="font">{{ $t('members.memberInfoHistory.tableShow.cwa') }} {{ data.会员提现金额 }}</div>
       </div>
     </div>
     <div class="lotteryInfo">
-      <div class="title">会员备注</div>
+      <div class="title">{{ $t('members.memberInfoHistory.tableShow.mr') }} </div>
       <div class="mount col-w80pr">
         <div class="member-his-note-field">
           <el-input type="textarea" class="font" id="text-area" style="height: auto" v-model.trim="email" maxlength="50" show-word-limit></el-input>
-          <el-button type="success" class="renew_btn" @click="updateEmail(email,data.会员编号)">更新</el-button>
+          <el-button type="success" class="renew_btn" @click="updateEmail(email,data.会员编号)">{{ $t('members.memberInfoHistory.tableShow.upd') }}</el-button>
         </div>
       </div>
     </div>
     <div class="lotteryInfo">
-      <div class="title">彩票检测</div>
+      <div class="title">{{ $t('members.memberInfoHistory.tableShow.ltest') }}</div>
       <div class="mount col-w80pr">
-        <div class="font">异常投注次数: {{ data.彩票异常投注次数 }}</div>
+        <div class="font">{{ $t('members.memberInfoHistory.tableShow.noab') }} {{ data.彩票异常投注次数 }}</div>
       </div>
     </div>
     <div class="playInfo">
-      <div class="title" style="border-right:  1px solid rgba(0, 0, 0, 0.10);">游戏盈利(一月内)</div>
+      <div class="title" style="border-right:  1px solid rgba(0, 0, 0, 0.10);">{{ $t('members.memberInfoHistory.tableShow.gp') }}</div>
       <div class="mount col-w80pr">
         <div class="font" v-for="item in playData">{{ item }}</div>
       </div>
@@ -127,16 +127,16 @@ export default {
 
     updateEmail(email, id) {
       if (this.validateTextLength(this.email) > 50) {
-        this.$message.error("最多输入50个汉字")
+        this.$message.error( this.$t('members.memberInfoHistory.tableShow.icc') )
       } else {
         updateEmail({id: id, email: email}).then((res) => {
-          this.$notify.success("修改成功")
+          this.$notify.success( this.$t('members.memberInfoHistory.tableShow.ms') )
         })
       }
     },
     showPhone() {
       if (this.data['会员名称'] === null) {
-        this.$message.error("此会员无手机号");
+        this.$message.error( this.$t('members.memberInfoHistory.tableShow.ncn') );
       } else {
         if (checkTwoLogin()) {
           //获取会员的手机号

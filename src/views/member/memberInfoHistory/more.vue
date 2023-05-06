@@ -12,73 +12,73 @@
       <!--顶部按钮-->
       <div class="page-tab mb20">
         <button type="button"
-                class="el-button el-button--primary el-button--mini is-plain" @click="change(3,'加分')">
-          <span>加分</span>
+                class="el-button el-button--primary el-button--mini is-plain" @click="change(3, $t('members.memberInfoHistory.more.eCred') )">
+          <span>{{ $t('members.memberInfoHistory.more.eCred') }}</span>
         </button>
         <button type="button"
-                class="el-button el-button--primary el-button--mini is-plain" @click="change(1,'三方游戏')">
-          <span>三方游戏</span>
+                class="el-button el-button--primary el-button--mini is-plain" @click="change(1, $t('members.memberInfoHistory.more.twGame') )">
+          <span>{{ $t('members.memberInfoHistory.more.twGame') }}</span>
         </button>
         <button type="button"
-                class="el-button el-button--primary el-button--mini is-plain" @click="change(5,'银行卡')">
-          <span>银行卡</span>
+                class="el-button el-button--primary el-button--mini is-plain" @click="change(5, $t('members.memberInfoHistory.more.bCard') )">
+          <span>{{ $t('members.memberInfoHistory.more.bCard') }}</span>
         </button>
         <button type="button"
-                class="el-button el-button--primary el-button--mini is-plain" @click="change(10,'发送短信')">
-          <span>发送短信</span>
+                class="el-button el-button--primary el-button--mini is-plain" @click="change(10, $t('members.memberInfoHistory.more.sms') )">
+          <span>{{ $t('members.memberInfoHistory.more.sms') }}</span>
         </button>
         <button type="button"
-                class="el-button el-button--primary el-button--mini is-plain" @click="change(4,'重置密码')">
-          <span>重置密码</span>
+                class="el-button el-button--primary el-button--mini is-plain" @click="change(4, $t('members.memberInfoHistory.more.rPass') )">
+          <span>{{ $t('members.memberInfoHistory.more.rPass') }}</span>
         </button>
 <!--        <button type="button" class="el-button el-button&#45;&#45;primary el-button&#45;&#45;mini is-plain" @click="change(11,'重置手机号')">-->
 <!--          <span>重置手机号</span>-->
 <!--        </button>-->
 
         <button type="button"
-                class="el-button el-button--primary el-button--mini is-plain" @click="change(11,'重置手机号')">
-          <span>重置手机号</span>
+                class="el-button el-button--primary el-button--mini is-plain" @click="change(11, $t('members.memberInfoHistory.more.rcp') )">
+          <span>{{ $t('members.memberInfoHistory.more.rcp') }}</span>
         </button>
 
         <button type="button"
-                class="el-button el-button--primary el-button--mini is-plain" @click="change(13,'重置邀请码')">
-          <span>重置邀请码</span>
+                class="el-button el-button--primary el-button--mini is-plain" @click="change(13, $t('members.memberInfoHistory.more.ric') )">
+          <span>{{ $t('members.memberInfoHistory.more.ric') }}</span>
         </button>
 
           <button type="button"
-                  class="el-button el-button--success el-button--mini is-plain" @click="change(2,'资金明细')">
-            <span>资金明细</span>
+                  class="el-button el-button--success el-button--mini is-plain" @click="change(2, $t('members.memberInfoHistory.more.fdet') )">
+            <span>{{ $t('members.memberInfoHistory.more.fdet') }}</span>
           </button>
           <button type="button"
-                  class="el-button el-button--success el-button--mini is-plain" @click="change(6,'重置保险箱')" v-has-permi="['member:memberInfo:resetBox']">
-            <span>重置保险箱</span>
+                  class="el-button el-button--success el-button--mini is-plain" @click="change(6, $t('members.memberInfoHistory.more.rsafe') )" v-has-permi="['member:memberInfo:resetBox']">
+            <span>{{ $t('members.memberInfoHistory.more.rsafe') }}</span>
           </button>
           <button type="button"
-                  class="el-button el-button--success el-button--mini is-plain" @click="change(7,'重置提现')" v-has-permi="['member:memberInfo:resetTx']">
-            <span>重置提现</span>
+                  class="el-button el-button--success el-button--mini is-plain" @click="change(7, $t('members.memberInfoHistory.more.rwith') )" v-has-permi="['member:memberInfo:resetTx']">
+            <span>{{ $t('members.memberInfoHistory.more.rwith') }}</span>
           </button>
           <button type="button"
-                  class="el-button el-button--success el-button--mini is-plain" @click="change(8,'打码修复')" v-has-permi="['member:memberInfo:bcodeRepair']">
-            <span>打码修复</span>
+                  class="el-button el-button--success el-button--mini is-plain" @click="change(8, $t('members.memberInfoHistory.more.cfix') )" v-has-permi="['member:memberInfo:bcodeRepair']">
+            <span>{{ $t('members.memberInfoHistory.more.cfix') }}</span>
           </button>
           <button type="button"
-                  class="el-button el-button--success el-button--mini is-plain" @click="change(9,'修改Vip')">
-            <span>修改Vip</span>
+                  class="el-button el-button--success el-button--mini is-plain" @click="change(9, $t('members.memberInfoHistory.more.mvip') )">
+            <span>{{ $t('members.memberInfoHistory.more.mvip') }}</span>
           </button>
           <button type="button"
-                  class="el-button el-button--success el-button--mini is-plain" @click="change(12,'IM禁言')">
-            <span>IM禁言</span>
+                  class="el-button el-button--success el-button--mini is-plain" @click="change(12, $t('members.memberInfoHistory.more.imban') )">
+            <span>{{ $t('members.memberInfoHistory.more.imban') }}</span>
           </button>
         </div>
 
       <!--积分明细-->
       <el-row v-if="index===1">
         <el-table @row-click="clickRow" ref="table" :data="dbTableList" height="460px" v-loading="loading">
-          <el-table-column prop="name" label="游戏名称" :show-overflow-tooltip="true"></el-table-column>
-          <el-table-column prop="value" label="金额" :show-overflow-tooltip="true"></el-table-column>
-          <el-table-column prop="createTime" label="操作">
+          <el-table-column prop="name" :label=" $t('members.memberInfoHistory.more.gname') " :show-overflow-tooltip="true"></el-table-column>
+          <el-table-column prop="value" :label=" $t('members.memberInfoHistory.more.amt') " :show-overflow-tooltip="true"></el-table-column>
+          <el-table-column prop="createTime" :label=" $t('global.operationColumn') ">
             <template v-slot="{row}" v-if="index===1">
-              <el-button @click="gameEsc(row)">下分</el-button>
+              <el-button @click="gameEsc(row)">{{ $t('members.memberInfoHistory.more.ldiv') }}</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -102,13 +102,13 @@
         <el-form ref="form" :model="form" :rules="rules" label-width="110px">
            <div class="el-row">
               <div class="el-col el-col-9">
-                <el-form-item label="加分金额" prop="score">
-                  <el-input v-model="form.score" type="number" placeholder="请输入金额"/>
+                <el-form-item :label=" $t('members.memberInfoHistory.more.aep') " prop="score">
+                  <el-input v-model="form.score" type="number" :placeholder=" $t('members.memberInfoHistory.more.pea') "/>
                 </el-form-item>
               </div>
               <div class="el-col el-col-9">
-                <el-form-item label="入款类型" prop="moneydes">
-                  <el-select v-model="form.moneydes" placeholder="入款类型" clearable size="small">
+                <el-form-item :label=" $t('members.memberInfoHistory.more.dtype') " prop="moneydes">
+                  <el-select v-model="form.moneydes" :placeholder=" $t('members.memberInfoHistory.more.dtype') " clearable size="small">
                     <el-option
                       v-for="item in moneydesOptions"
                       :key="item.value"
@@ -119,55 +119,55 @@
                 </el-form-item>
               </div>
             </div>
-            <el-form-item label="支付备注" prop="remarkPay">
-              <el-input v-model="form.remarkPay" placeholder="请输入支付备注"/>
+            <el-form-item :label=" $t('members.memberInfoHistory.more.pRem') " prop="remarkPay">
+              <el-input v-model="form.remarkPay" :placeholder=" $t('members.memberInfoHistory.more.pnote') "/>
             </el-form-item>
-            <el-form-item label="加分备注" prop="mk">
-              <el-input v-model="form.mk" placeholder="请备注具体加分入金原因"/>
+            <el-form-item :label=" $t('members.memberInfoHistory.more.eRem') " prop="mk">
+              <el-input v-model="form.mk" placeholder=" $t('members.memberInfoHistory.more.prap') "/>
             </el-form-item>
-            <el-form-item label="订单备注" prop="ordermk">
-              <el-input v-model="form.ordermk" placeholder="补单请填写补单订单号，末开奖补回请填写开期号，无则填写为0"/>
+            <el-form-item :label=" $t('members.memberInfoHistory.more.orem') " prop="ordermk">
+              <el-input v-model="form.ordermk" :placeholder=" $t('members.memberInfoHistory.more.pfro') "/>
             </el-form-item>
-            <el-form-item label="待打码金额" prop="betMoney">
-              <el-input v-model="form.betMoney" type="number" placeholder="还需打码金额" @blur="codeMoney(form.betMoney,form.score)"/>
+            <el-form-item :label=" $t('members.memberInfoHistory.more.acoded') " prop="betMoney">
+              <el-input v-model="form.betMoney" type="number" :placeholder=" $t('members.memberInfoHistory.more.aca') " @blur="codeMoney(form.betMoney,form.score)"/>
             </el-form-item>
-            <el-form-item label="打码倍数" prop="beatNum">
-              <el-input v-model="form.beatNum" type="number" placeholder="请按顺序先输入加分金额，再输入待打码金额，系统会自动计算打码倍数。默认请填写1,如未打算打码可填写为0"/>
+            <el-form-item :label=" $t('members.memberInfoHistory.more.cmult') " prop="beatNum">
+              <el-input v-model="form.beatNum" type="number" :placeholder=" $t('members.memberInfoHistory.more.peax') "/>
             </el-form-item>
-            <el-form-item label="谷歌验证码" prop="googleAuthCode">
-              <el-input v-model="form.googleAuthCode" placeholder="请输入谷歌验证码"  />
+            <el-form-item :label=" $t('members.memberInfoHistory.more.gcap') " prop="googleAuthCode">
+              <el-input v-model="form.googleAuthCode" :placeholder=" $t('members.memberInfoHistory.more.pgac') "  />
             </el-form-item>
         </el-form>
       </el-row>
       <!--重置密码-->
       <el-row v-if="index===4">
           <el-form ref="form" :model="form" :rules="rules" label-width="110px">
-            <el-form-item label="重置密码" prop="password">
-              <el-input v-model="form.password" placeholder="请输入新密码"/>
+            <el-form-item :label=" $t('members.memberInfoHistory.more.rpass') " prop="password">
+              <el-input v-model="form.password" :placeholder=" $t('members.memberInfoHistory.more.penp') "/>
             </el-form-item>
-            <el-form-item label="google验证码" prop="googleAuthCode">
-              <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>
+            <el-form-item :label=" $t('members.memberInfoHistory.more.gvc') " prop="googleAuthCode">
+              <el-input v-model="form.googleAuthCode" :placeholder=" $t('members.memberInfoHistory.more.pegvc') "/>
             </el-form-item>
           </el-form>
       </el-row>
       <!--重置邀请码-->
       <el-row v-if="index===13">
           <el-form ref="formInviterCode" :model="form" :rules="inviterCodeRules" label-width="110px">
-            <el-form-item label="重置邀请码" prop="inviterCode">
-              <el-input v-model="form.inviterCode" placeholder="请输入邀请码"/>
+            <el-form-item :label=" $t('members.memberInfoHistory.more.ric') " prop="inviterCode">
+              <el-input v-model="form.inviterCode" :placeholder=" $t('members.memberInfoHistory.more.peic') "/>
             </el-form-item>
-            <el-form-item label="google验证码" prop="googleAuthCode">
-              <el-input v-model="form.googleAuthCode" placeholder="请输入google验证码"/>
+            <el-form-item :label=" $t('members.memberInfoHistory.more.gvc') " prop="googleAuthCode">
+              <el-input v-model="form.googleAuthCode" :placeholder=" $t('members.memberInfoHistory.more.pegvc') "/>
             </el-form-item>
           </el-form>
       </el-row>
       <!--发送短信-->
       <el-row v-if="index===10">
         <el-form label-width="110px">
-          <el-form-item label="短信信息">
+          <el-form-item :label=" $t('members.memberInfoHistory.more.smsm') ">
             <el-select  filterable
                         v-model="msg"
-                        placeholder="请选择发送的信息"
+                        :placeholder=" $t('members.memberInfoHistory.more.psms') "
                         clearable
                         size="small"
                         class="col-w240">
@@ -183,15 +183,15 @@
       <!--重置手机号 display full number-->
       <el-row v-if="index===11">
           <el-form ref="mobileForm" label-width="110px" :model="mobileForm" :rules="mobileRules">
-            <el-form-item label="旧手机号" prop="phone">
-              <el-input v-model="mobileForm.phone" placeholder="请输入旧手机号" class="col-85pr mr10" readonly/>
-              <el-button type="primary" @click="fullMobile()" v-has-permi="['member:memberInfo:fullMobile']">查看完整手机号</el-button>
+            <el-form-item :label=" $t('members.memberInfoHistory.more.ocpn') " prop="phone">
+              <el-input v-model="mobileForm.phone" :placeholder=" $t('members.memberInfoHistory.more.peocpn') " class="col-85pr mr10" readonly/>
+              <el-button type="primary" @click="fullMobile()" v-has-permi="['member:memberInfo:fullMobile']">{{ $t('members.memberInfoHistory.more.vfcpn') }}</el-button>
             </el-form-item>
-            <el-form-item label="新手机号" prop="newMobile">
-              <el-input v-model="mobileForm.newMobile" placeholder="请输入新手机号"/>
+            <el-form-item :label=" $t('members.memberInfoHistory.more.ncpn') " prop="newMobile">
+              <el-input v-model="mobileForm.newMobile" :placeholder=" $t('members.memberInfoHistory.more.pencn') "/>
             </el-form-item>
-            <el-form-item label="google验证码" prop="googleAuthCode">
-              <el-input v-model="mobileForm.googleAuthCode" placeholder="请输入google验证码"/>
+            <el-form-item :label=" $t('members.memberInfoHistory.more.gvc') " prop="googleAuthCode">
+              <el-input v-model="mobileForm.googleAuthCode" :placeholder=" $t('members.memberInfoHistory.more.pegvc') "/>
             </el-form-item>
           </el-form>
       </el-row>
@@ -205,31 +205,31 @@
           @selection-change="handleSelectionChange"
           height="460px"
           v-loading="loading">
-          <el-table-column prop="realName" label="真实姓名" :show-overflow-tooltip="true" min-width="120">
+          <el-table-column prop="realName" :label=" $t('global.realName') " :show-overflow-tooltip="true" min-width="120">
             <template v-slot="{row}" v-if="index===5">
               <el-input v-model="row.realName"></el-input>
             </template>
           </el-table-column>
-          <el-table-column prop="bankName" label="银行名称" :show-overflow-tooltip="true" min-width="120">
+          <el-table-column prop="bankName" :label=" $t('members.memberInfoHistory.more.bname') " :show-overflow-tooltip="true" min-width="120">
             <template v-slot="{row}" v-if="index===5">
               <el-input v-model="row.bankName"></el-input>
             </template>
           </el-table-column>
-          <el-table-column prop="bankAccount" label="银行卡号" :show-overflow-tooltip="true" min-width="180"
+          <el-table-column prop="bankAccount" :label=" $t('members.memberInfoHistory.more.bcnum') " :show-overflow-tooltip="true" min-width="180"
                            align="center">
             <template v-slot="{row}" v-if="index===5">
               <el-input v-model="row.bankAccount"></el-input>
             </template>
           </el-table-column>
-          <el-table-column prop="bankAddress" label="银行地址" :show-overflow-tooltip="true" min-width="150">
+          <el-table-column prop="bankAddress" :label=" $t('members.memberInfoHistory.more.badd') " :show-overflow-tooltip="true" min-width="150">
             <template v-slot="{row}" v-if="index===5">
               <el-input v-model="row.bankAddress"></el-input>
             </template>
           </el-table-column>
-          <el-table-column prop="createTime" label=" 绑定时间" :show-overflow-tooltip="true" min-width="160"
+          <el-table-column prop="createTime" :label=" $t('members.memberInfoHistory.more.btime') " :show-overflow-tooltip="true" min-width="160"
                            align="center"
           ></el-table-column>
-          <el-table-column label="操作" min-width="200">
+          <el-table-column :label=" $t('global.operationColumn') " min-width="200">
             <template v-slot="{row}" v-if="index===5">
               <el-button
                 @click="unbind(row)"
@@ -237,21 +237,21 @@
                 type="primary"
                 disabled
                 size="mini"
-                v-has-permi="['member:memberInfo:unbindCard']">主卡解绑
+                v-has-permi="['member:memberInfo:unbindCard']">{{ $t('members.memberInfoHistory.more.mcunb') }}
               </el-button>
               <el-button
                 @click="unbind(row)"
                 v-show="row.dv==0"
                 type="primary"
                 size="mini"
-                v-has-permi="['member:memberInfo:unbindCard']">副卡解绑
+                v-has-permi="['member:memberInfo:unbindCard']">{{ $t('members.memberInfoHistory.more.scunb') }}
               </el-button>
               <el-button
                 @click="changeBank(row)"
                 size="mini"
                 type="warning"
                 style="margin-left: 0"
-                v-has-permi="['member:memberInfo:changeBank']">确认修改
+                v-has-permi="['member:memberInfo:changeBank']">{{ $t('members.memberInfoHistory.more.cmod') }}
               </el-button>
             </template>
           </el-table-column>
@@ -269,56 +269,56 @@
         <el-button type="primary"
                    @click="handlePassword"
                    v-show="index === 4"
-                   v-has-permi="['member:memberInfo:resetPwd']">确 定
+                   v-has-permi="['member:memberInfo:resetPwd']">{{ $t('members.memberInfoHistory.more.det') }}
         </el-button>
 
         <el-button type="primary"
                    @click="handleImportTable"
                    v-show="index === 3"
-                   v-has-permi="['member:memberInfo:addScore']">确 定
+                   v-has-permi="['member:memberInfo:addScore']">{{ $t('members.memberInfoHistory.more.det') }}
         </el-button>
 
         <el-button type="primary"
                    @click="sendMsg()"
                    v-show="index === 10"
-                   v-has-permi="['member:memberInfo:sendMsg']">确 定
+                   v-has-permi="['member:memberInfo:sendMsg']">{{ $t('members.memberInfoHistory.more.det') }}
         </el-button>
 
         <el-button type="primary"
                    @click="updateMobile()"
                    v-show="index===11"
-                   v-has-permi="['member:memberInfo:updateMobile']">确 定
+                   v-has-permi="['member:memberInfo:updateMobile']">{{ $t('members.memberInfoHistory.more.det') }}
         </el-button>
 
         <el-button type="primary"
                    @click="updateInviterCode()"
-                   v-show="index===13">确 定
+                   v-show="index===13">{{ $t('members.memberInfoHistory.more.det') }}
         </el-button>
 
-        <el-button @click="visible = false">取 消</el-button>
+        <el-button @click="visible = false">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
     <!-- 禁用备注弹框 -->
     <el-dialog
       v-dialogDrag
       :close-on-click-modal="false"
-      title="修改vip等级和昵称"
+      :title=" $t('members.memberInfoHistory.more.mvipln') "
       :visible.sync="showVip"
       width="400px"
       append-to-body
       :show-close="false"
       :close-on-press-escape="false">
-      Vip等级
+      {{ $t('members.memberInfoHistory.more.vlvl') }}
       <el-input v-model="vip"/>
-      昵称
+      {{ $t('global.nickname') }}
       <el-input v-model="nickName"/>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="showVip = !showVip">取消</el-button>
+        <el-button @click="showVip = !showVip">{{ $t('members.memberInfoHistory.more.cnc') }}</el-button>
         <el-button
           type="primary"
           :disabled="showVipDisabled"
           @click="updateVip"
-          v-has-permi="['member:memberInfo:updateVip']">立即提交
+          v-has-permi="['member:memberInfo:updateVip']">{{ $t('members.memberInfoHistory.more.snow') }}
         </el-button>
       </div>
     </el-dialog>
@@ -326,32 +326,32 @@
     <el-dialog
       v-dialogDrag
       :close-on-click-modal="false"
-      title="禁用启用IM发言"
+      :title=" $t('members.memberInfoHistory.more.dims') "
       :visible.sync="im"
       width="600px"
       append-to-body
       :show-close="false"
       :close-on-press-escape="false">
-      剩余禁言时间: {{ this.ImList.ShuttedUntil }}
+      {{ $t('members.memberInfoHistory.more.remban') }} {{ this.ImList.ShuttedUntil }}
       <br/>
-      会员账号: {{ this.ImList.Member_Account }}
+      {{ $t('members.memberInfoHistory.more.macc') }} {{ this.ImList.Member_Account }}
       <br/>
-      昵称: {{ this.ImList.nickName }}
+      {{ $t('global.nickname') }} {{ this.ImList.nickName }}
       <br/>
-      IM禁言时间备注：0取消禁言,4294967295永久禁言,其它值具体禁言时间,以秒为单位
+      {{ $t('members.memberInfoHistory.more.imbtime') }}
       <br/>
       <br/>
-      <div>禁言时间（单位秒）
+      <div>{{ $t('members.memberInfoHistory.more.bant') }}
         <el-input width="200px" v-model="banSpeakTime" type="number"/>
       </div>
       <br/>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="im = !im">取消</el-button>
+        <el-button @click="im = !im">{{ $t('members.memberInfoHistory.more.cnc') }}</el-button>
         <el-button
           type="primary"
           :disabled="showImDisabled"
           @click="updateIm"
-          v-has-permi="['member:memberInfo:imBan']">立即提交
+          v-has-permi="['member:memberInfo:imBan']">{{ $t('members.memberInfoHistory.more.snow') }}
         </el-button>
       </div>
     </el-dialog>
@@ -416,7 +416,7 @@ export default {
       msgList: [],
       mobileForm: {},
       //弹出框标题
-      title: '加分',
+      title: this.$t('members.memberInfoHistory.more.ecred'),
       //页面编码
       index: 3,
       // 遮罩层
@@ -431,7 +431,7 @@ export default {
       //入款类型
       moneydesOptions: [{
         value: '1',
-        label: '人工入款'
+        label: this.$t('members.memberInfoHistory.more.snow')
       }],
       //加分提交的数据
       form: {
@@ -459,51 +459,51 @@ export default {
       //手机号校验规则
       mobileRules: {
         oldMobile: [
-          { required: true, message: '旧手机号码不能为空', trigger: 'blur' },
-          {max: 100,message: "旧手机号码长度不能超过11位" },
+          { required: true, message: this.$t('members.memberInfoHistory.more.ocne'), trigger: 'blur' },
+          {max: 100,message: this.$t('members.memberInfoHistory.more.lopn') },
           { validator: validMobile , trigger: "blur"  }
         ],
         newMobile: [
-          { required: true, message: '新手机号码不能为空', trigger: 'blur' },
-          {max: 11,message: "新手机号码长度不能超过11位" },
+          { required: true, message: this.$t('members.memberInfoHistory.more.ncne'), trigger: 'blur' },
+          {max: 11,message: this.$t('members.memberInfoHistory.more.lcne') },
           { validator: validMobile , trigger: "blur"  }
         ],
         googleAuthCode: [
-          { required: true, message: '谷歌验证码不能为空', trigger: 'blur' },
+          { required: true, message: this.$t('members.memberInfoHistory.more.gcce'), trigger: 'blur' },
           { validator: validNumber , trigger: "blur"  }
         ]
       },
       // 加分表单校验
       inviterCodeRules: {
         inviterCode: [
-          { required: true, message: '重置邀请码不能为空', trigger: 'blur' },
-          { max: 500,message: "重置邀请码长度不能超过500个字符" }
+          { required: true, message: this.$t('members.memberInfoHistory.more.ricce'), trigger: 'blur' },
+          { max: 500,message: this.$t('members.memberInfoHistory.more.lricce') }
         ],
         googleAuthCode: [
-          { required: true, message: 'google验证码不能为空', trigger: 'blur' },
+          { required: true, message: this.$t('members.memberInfoHistory.more.gcce'), trigger: 'blur' },
           { validator: validNumber , trigger: "blur"  }
         ]
       },
       // 加分表单校验
       rules: {
         password: [
-          { required: true, message: '重置密码不能为空', trigger: 'blur' },
-          { max: 30,message: "重置密码长度不能超过30个字符" }
+          { required: true, message: this.$t('members.memberInfoHistory.more.rpassemp'), trigger: 'blur' },
+          { max: 30,message: this.$t('members.memberInfoHistory.more.rpl') }
         ],
         score: [
-          { required: true, message: '加分金额不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('members.memberInfoHistory.more.taep'), trigger: 'blur' }
         ],
         moneydes: [
-          { required: true, message: '入款类型不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('members.memberInfoHistory.more.tetemp'), trigger: 'blur' }
         ],
         mk: [
-          { required: true, message: '备注信息不能为空', trigger: 'blur' },{max: 200,message: "备注信息长度不能超过200位" }
+          { required: true, message: this.$t('members.memberInfoHistory.more.tetemp'), trigger: 'blur' },{max: 200,message: this.$t('members.memberInfoHistory.more.tlci') }
         ],
         ordermk: [
-          { required: true, message: '订单备注不能为空', trigger: 'blur' },{max: 200,message: "备注信息长度不能超过200位" }
+          { required: true, message: this.$t('members.memberInfoHistory.more.once'), trigger: 'blur' },{max: 200,message: this.$t('members.memberInfoHistory.more.tlci') }
         ],
         googleAuthCode: [
-          { required: true, message: 'google验证码不能为空', trigger: 'blur' },
+          { required: true, message: this.$t('members.memberInfoHistory.more.gcce'), trigger: 'blur' },
           { validator: validNumber , trigger: "blur"  }
         ]
       }
@@ -513,7 +513,7 @@ export default {
   watch: {
     vip: function(newVal, oldVal) {
       if (newVal < this.oldVip) {
-        this.$notify.error('vip等级只能大于之前的等级')
+        this.$notify.error( this.$t('members.memberInfoHistory.more.vpl') )
         this.showVipDisabled = true
       } else {
         this.showVipDisabled = false
@@ -537,7 +537,7 @@ export default {
         if (valid) {
           this.mobileForm.memberId = this.memberId
           updateMobile(this.mobileForm).then((res) => {
-            that.$notify.success('手机号修改成功')
+            that.$notify.success( this.$t('members.memberInfoHistory.more.cpn') )
             that.visible = false
             that.$emit('refMemeberData')
           })
@@ -547,7 +547,7 @@ export default {
     fullMobile() {
       if (checkTwoLogin()) {
         fullMobile(this.memberId).then((res) => {
-          this.$message.success('完整手机号码已展示')
+          this.$message.success( this.$t('members.memberInfoHistory.more.cnd') )
           this.mobileForm = res.data
         })
       }
@@ -557,7 +557,7 @@ export default {
       this.$refs['formInviterCode'].validate(valid => {
         if (valid) {
           updateInviterCode(this.form.inviterCode, this.form.googleAuthCode, this.memberId).then((res) => {
-            that.$notify.success('邀请码修改成功')
+            that.$notify.success( this.$t('members.memberInfoHistory.more.icms') )
             that.visible = false
             that.$emit('refMemeberData')
           })
@@ -578,7 +578,7 @@ export default {
       this.loading = true
       gameEsc(row.type, this.memberId).then((res) => {
         if (res.code === 200) {
-          this.$notify.success('下分成功')
+          this.$notify.success( this.$t('members.memberInfoHistory.more.dss') )
           this.gameBalance()
         } else {
           this.$notify.error(res.msg)
@@ -591,9 +591,9 @@ export default {
     formatterBankType(row, column) {
       switch (column.type) {
         case 1:
-          return '银行卡转账'
+          return this.$t('members.memberInfoHistory.more.bct')
       }
-      return '未知'
+      return this.$t('members.memberInfoHistory.more.unk')
     },
     unbind(row) {
       this.loading = true
@@ -607,9 +607,9 @@ export default {
       })
     },
     changeBank(row) {
-      this.$confirm('是否修改银行卡信息?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm( this.$t('members.memberInfoHistory.more.wcbc') , this.$t('global.promptTitle'), {
+        confirmButtonText: this.$t('members.memberInfoHistory.more.det') ,
+        cancelButtonText: this.$t('members.memberInfoHistory.more.cnc') ,
         type: 'warning'
       }).then(() => {
         this.loading = true
@@ -622,7 +622,7 @@ export default {
       }).catch(() => {
         this.$message({
           type: 'info',
-          message: '已取消'
+          message: this.$t('members.memberInfoHistory.more.cancel')
         })
       })
 
@@ -637,27 +637,27 @@ export default {
       //如果是重置密码,保险箱,体现
       switch (index) {
         case 6 :
-          hint = '确定重置保险箱?'
+          hint = this.$t('members.memberInfoHistory.more.srs')
           this.open(hint, 1)
           break
         case 7 :
-          hint = '请输入您的谷歌验证码'
+          hint = this.$t('members.memberInfoHistory.more.pegvc')
           this.open(hint, 2)
           break
         case 8 :
-          hint = '请输入您的谷歌验证码'
+          hint = this.$t('members.memberInfoHistory.more.pegvc')
           this.open(hint, 3)
           break
         case 9 :
-          hint = '请输入Vip等级'
+          hint = this.$t('members.memberInfoHistory.more.pevip')
           this.open(hint, 4)
           break
         case 12 :
-          hint = 'IM禁言'
+          hint = this.$t('members.memberInfoHistory.more.imban')
           this.open(hint, 5)
           break
         case 2 :
-          hint = 'IM禁言'
+          hint = this.$t('members.memberInfoHistory.more.imban')
           this.funds(this.memberId);
           break
       }
@@ -673,72 +673,72 @@ export default {
     //打开提示框
     open(hint, type) {
       if (type === 1) {
-        this.$confirm(hint, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm(hint, this.$t('global.promptTitle') , {
+          confirmButtonText: this.$t('members.memberInfoHistory.more.det'),
+          cancelButtonText: this.$t('members.memberInfoHistory.more.cnc'),
           type: 'warning'
         }).then(() => {
           this.$message({
             type: 'success',
-            message: '操作成功!'
+            message: this.$t('members.memberInfoHistory.more.sop')
           })
           resetSafe({ userId: this.memberId }).then((res) => {
             if (res.code === 0) {
-              this.$notify.success('重置保险箱成功')
+              this.$notify.success( this.$t('members.memberInfoHistory.more.rss') )
             } else {
-              this.$notify.error('重置保险箱失败')
+              this.$notify.error( this.$t('members.memberInfoHistory.more.frs') )
             }
           })
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: this.$t('members.memberInfoHistory.more.cancel')
           })
         })
       } else if (type == 2) {
-        this.$prompt(hint, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$prompt(hint, this.$t('global.promptTitle') , {
+          confirmButtonText: this.$t('members.memberInfoHistory.more.det'),
+          cancelButtonText: this.$t('members.memberInfoHistory.more.cnc'),
           inputPattern: /^[0-9]{1,10}$/,
-          inputErrorMessage: '验证码格式不正确,0-10数字,请重新输入',
+          inputErrorMessage: this.$t('members.memberInfoHistory.more.fvc'),
         }).then(({ value }) => {
           resetWithdrawal({
             googleAuthCode: value,
             id: this.memberId
           }).then((res) => {
             if (res.code === 0) {
-              this.$notify.success('重置提现成功')
+              this.$notify.success( this.$t('members.memberInfoHistory.more.rws') )
             } else {
-              this.$notify.error('重置提现失败')
+              this.$notify.error( this.$t('members.memberInfoHistory.more.rwf') )
             }
           })
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '取消输入'
+            message: this.$t('members.memberInfoHistory.more.cip')
           })
         })
       } else if (type == 3) {
-        this.$prompt(hint, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$prompt(hint, this.$t('global.promptTitle') , {
+          confirmButtonText: this.$t('members.memberInfoHistory.more.det'),
+          cancelButtonText: this.$t('members.memberInfoHistory.more.cnc'),
           inputPattern: /^[0-9]{1,10}$/,
-          inputErrorMessage: '验证码格式不正确,0-10数字,请重新输入',
+          inputErrorMessage: this.$t('members.memberInfoHistory.more.fvc'),
         }).then(({ value }) => {
           memberBcodeRepair({
             googleAuthCode: value,
             id: this.memberId
           }).then((res) => {
             if (res.code === 0) {
-              this.$notify.success('修复打码数据成功')
+              this.$notify.success( this.$t('members.memberInfoHistory.more.rcds') )
             } else {
-              this.$notify.error('修复打码数据失败')
+              this.$notify.error( this.$t('members.memberInfoHistory.more.fcdf') )
             }
           })
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '取消输入'
+            message: this.$t('members.memberInfoHistory.more.cip')
           })
         })
       } else if (type == 4) {
@@ -757,11 +757,11 @@ export default {
       }).then((res) => {
         if (res.code === 0) {
           that.oldVip = that.vip
-          that.$notify.success('vip等级修改成功')
+          that.$notify.success( this.$t('members.memberInfoHistory.more.vlms') )
           that.showVip = false
           that.$emit('refMemeberData')
         } else {
-          that.$notify.error('vip等级修改失败')
+          that.$notify.error( this.$t('members.memberInfoHistory.more.vlmf') )
         }
       })
     },
@@ -834,7 +834,7 @@ export default {
           }
         }
       ).catch(() => {
-        this.$notify.warning('获取三方游戏列表失败')
+        this.$notify.warning( this.$t('members.memberInfoHistory.more.fthree') )
         this.loading = false
       })
     },
@@ -852,7 +852,7 @@ export default {
           this.loading = false
         }
       }).catch(() => {
-        this.$notify.warning('获取资金明细列表失败')
+        this.$notify.warning( this.$t('members.memberInfoHistory.more.ffund') )
         this.loading = false
       })
     },
@@ -917,7 +917,7 @@ export default {
           this.loading = false
         }
       }).catch((error) => {
-        this.$notify.warning('获取银行卡列表失败')
+        this.$notify.warning( this.$t('members.memberInfoHistory.more.fbcard') )
         this.loading = false
       })
     },

@@ -131,7 +131,7 @@ export default {
   },
   created() {
     this.getList()
-    this.count();
+    //this.count();
   },
   activated() {
   },
@@ -217,7 +217,7 @@ export default {
 
       this.queryParams.pageNum = 1
       this.getList()
-      this.count();
+      //this.count();
 
     },
     /** 重置按钮操作 */

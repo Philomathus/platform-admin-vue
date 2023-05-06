@@ -128,7 +128,7 @@
 
     <el-table :stripe="true" v-loading="loading" :data="memberInfoList" @selection-change="handleSelectionChange">
       <el-table-column :label=" $t('members.memberInfoHistory.index.mid') " align="center" prop="id" min-width="120px"/>
-      <el-table-column :label=" $t('members.memberInfoHistory.index.aNum') " align="center" prop="userName" min-width="100px"/>
+      <el-table-column :label=" $t('members.memberInfoHistory.index.aNum') " align="center" prop="userName" min-width="140px"/>
       <el-table-column :label=" $t('global.nickname') " :show-overflow-tooltip="true" align="center" prop="nickName" min-width="160"/>
 <!--      <el-table-column label="会员vip" align="center" prop="vip" min-width="70px"/>-->
 <!--      <el-table-column label="积分" :show-overflow-tooltip="true" align="center" prop="totalAccount" min-width="120px"/>-->
@@ -150,9 +150,9 @@
         </template>
       </el-table-column>
       <el-table-column :label=" $t('members.memberInfoHistory.index.rTime') " align="center" prop="regTime" width="160"/>
-      <el-table-column :label=" $t('members.memberInfoHistory.index.nLogs') " align="center" prop="loginNum" min-width="100px"/>
+      <el-table-column :label=" $t('members.memberInfoHistory.index.nLogs') " align="center" prop="loginNum" min-width="140px"/>
       <el-table-column :label=" $t('members.memberInfoHistory.index.lip') " :show-overflow-tooltip="true" align="center" prop="loginIp" width="180"/>
-      <el-table-column :label=" $t('members.memberInfoHistory.index.wBan') " align="center" prop="speak">
+      <el-table-column :label=" $t('members.memberInfoHistory.index.wBan') " align="center" prop="speak" min-width="140">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.speak"
@@ -162,10 +162,10 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column :label=" $t('members.memberInfoHistory.index.cam') " align="center" prop="codeAccount" min-width="100px"/>
+      <el-table-column :label=" $t('members.memberInfoHistory.index.cam') " align="center" prop="codeAccount" min-width="130px"/>
 
-      <el-table-column :label=" $t('members.memberInfoHistory.index.cvBets') " align="center" prop="codeTotal" min-width="100px"/>
-      <el-table-column :label=" $t('members.memberInfoHistory.index.iCode') " align="center" prop="inviterCode" min-width="100px"/>
+      <el-table-column :label=" $t('members.memberInfoHistory.index.cvBets') " align="center" prop="codeTotal" min-width="160px"/>
+      <el-table-column :label=" $t('members.memberInfoHistory.index.iCode') " align="center" prop="inviterCode" min-width="140px"/>
       <el-table-column :label=" $t('members.memberInfoHistory.index.uType') " align="center" prop="channelcode" min-width="100px">
         <template slot-scope="scope">
           <span v-if="scope.row.channelcode == null" :style="{'color': '#5FB878'}">会员</span>
@@ -173,7 +173,7 @@
         </template>
       </el-table-column>
       <el-table-column :label=" $t('members.memberInfoHistory.index.lRem') " align="center" prop="email" :show-overflow-tooltip="true" min-width="130px"/>
-      <el-table-column :label=" $t('global.operationColumn') " align="center" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column :label=" $t('global.operationColumn') " align="center" class-name="small-padding fixed-width" fixed="right" min-width="100">
         <template slot-scope="scope">
           <el-button
             type="primary"

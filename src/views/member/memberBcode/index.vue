@@ -48,11 +48,11 @@
     </el-row>
 
     <el-table stripe v-loading="loading" :data="memberBcodeList">
-      <el-table-column :label=" $t('members.memberBcode.index.memId') " align="center" prop="userId"/>
+      <el-table-column :label=" $t('members.memberBcode.index.memId') " align="center" prop="userId" min-width="100"/>
       <el-table-column :label=" $t('members.memberBcode.index.rev') " align="center" prop="income"/>
-      <el-table-column :label=" $t('members.memberBcode.index.desc') " align="center" prop="des"/>
+      <el-table-column :label=" $t('members.memberBcode.index.desc') " align="center" prop="des" min-width="120"/>
       <el-table-column :label=" $t('members.memberBcode.index.wCode') " align="center" prop="status" :formatter="formatterStatus" min-width="160"/>
-      <el-table-column :label=" $t('members.memberBcode.index.ccVol') " align="center" prop="cur" min-width="160"/>
+      <el-table-column :label=" $t('members.memberBcode.index.ccVol') " align="center" prop="cur" min-width="170"/>
       <el-table-column :label=" $t('members.memberBcode.index.cTime') " align="center" prop="createTime" min-width="160"/>
       <el-table-column :label=" $t('members.memberBcode.index.opt') " width="220" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">

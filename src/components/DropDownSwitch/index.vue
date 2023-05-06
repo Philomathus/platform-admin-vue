@@ -96,7 +96,7 @@ export default {
         path_onlineRecharge,
         key_onlineRecharge,
         true,
-        true,
+        false,
         null,
         0
       ),
@@ -106,7 +106,7 @@ export default {
         path_memberWithdrawal,
         key_memberWithdrawal,
         true,
-        true,
+        false,
         null,
         0
       ),
@@ -116,7 +116,7 @@ export default {
         path_companyDeposit,
         key_companyDeposit,
         true,
-        true,
+        false,
         null,
         0
       ),
@@ -126,7 +126,7 @@ export default {
         path_usdtDeposit,
         key_usdtDeposit,
         true,
-        true,
+        false,
         null,
         0
       ),

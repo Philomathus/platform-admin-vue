@@ -945,7 +945,7 @@ export default {
           totBal: 'Total Balance',
           totDep: 'Total Safe Deposit box balance',
           statQ: 'Statistical Queries',
-          ip: 'View blocked IP',
+          ip: 'blocked IP',
           bBlock: 'Batch blocking',
           sDepo: 'Safe deposit box balance raised',
           det: 'Determine',
@@ -1012,7 +1012,7 @@ export default {
         sMod: 'Status modified successfully',
         sModfail: 'Status modification failed',
         netAnom: 'Network Anomaly',
-        vbIp: 'View blocked IP',
+        vbIp: 'blocked IP',
         confirmUp: 'Determine to {row} unblock?',
         warn: 'Warning',
         det: 'Determine',
@@ -1179,7 +1179,7 @@ export default {
         lip: 'Login IP',
         bcNum: 'Bank Card Number',
         lRem: 'Login Remarks',
-        vip: 'View blocked IP',
+        vip: 'blocked IP',
         mid: 'Member ID',
         aNum: 'Account Number',
         lTime: 'Login Time',
@@ -1414,7 +1414,7 @@ export default {
         resetButton: '@:global.resetButton'
       },
       actions: {
-        viewBlackListButton: 'View blocked IPs'
+        viewBlackListButton: 'blocked IPs'
       },
       refresh: {
         title: 'Record refresh',
@@ -1483,8 +1483,8 @@ export default {
         }
       },
       viewBlackListDialog: {
-        title1: 'View blocked ip',
-        title2: 'View blocked ip',
+        title1: 'blocked ip',
+        title2: 'blocked ip',
         queryForm: {
           userIdLabel: 'Member ID',
           userIdPlaceholder: 'Member ID',

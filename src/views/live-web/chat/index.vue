@@ -32,8 +32,8 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('liveWeb.chat.queryForm.searchButton')}}</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('liveWeb.chat.queryForm.resetButton')}}</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('global.searchButton')}}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('global.resetButton')}}</el-button>
       </el-form-item>
 
     </el-form>
@@ -59,7 +59,7 @@
           <el-option value="30" :label="$t('liveWeb.chat.refresh.interval', {secs: 30})"></el-option>
         </el-select>
         <div style="width: 120px;display: inline-block;text-align: center">
-          <span>{{ refreshDesc }}</span>
+          <span style="font-size: 12px">{{ refreshDesc }}</span>
         </div>
         <el-button :type="refreshType" :icon="refreshIcon" size="mini" @click="refreshData">{{
             refreshLabel
@@ -636,7 +636,7 @@ export default {
           thet.getList()
           secs = thet.refreshSec
         }
-        thet.refreshDesc = this.$t('liveWeb.chat.refresh.description', { secs: secs })
+        thet.refreshDesc =  secs + ' Sec/秒后开始刷新'
         secs--
       }, 1000)
     },

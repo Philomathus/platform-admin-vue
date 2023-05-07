@@ -299,6 +299,7 @@
         @pagination="getList"
       />
     </div>
+
     <!-- 禁用备注弹框 -->
     <el-dialog
       v-dialogDrag
@@ -325,7 +326,7 @@
           :value="dict.dictValue"
         />
       </el-select>
-      <el-input v-model="remarked" :placeholder=" $t('members.memberInfo.index.entDis') " v-if="this.remark == $t('members.memberInfo.index.other') "/>
+      <el-input v-model="remarked" :placeholder=" $t('members.memberInfo.index.entDis') " v-if="this.remark == '其他' "/>
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancelUser()"> {{ $t('members.memberInfo.index.cnc') }} </el-button>
         <el-button type="primary" @click="submitMuteRemark">{{ $t('members.memberInfo.index.cnc') }}</el-button>

@@ -5,7 +5,7 @@
       <span class="el-dropdown-link">通知<i class="el-icon-arrow-down el-icon--right"></i></span>
       <el-dropdown-menu>
 
-        <el-dropdown-item v-if="this.onlineRecharge.hasPermission">
+        <el-dropdown-item>
           <div class = "switch-container">
             <span class="switch-label">线上充值信息</span>
             <el-switch @click.native.stop v-model="onlineRecharge.switchValue"
@@ -13,7 +13,7 @@
           </div>
         </el-dropdown-item>
 
-        <el-dropdown-item v-if="this.memberWithdrawal.hasPermission">
+        <el-dropdown-item>
           <div class = "switch-container">
             <span class="switch-label">会员提现信息</span>
            <el-switch @click.native.stop v-model="memberWithdrawal.switchValue"
@@ -21,7 +21,7 @@
           </div>
         </el-dropdown-item>
 
-        <el-dropdown-item v-if="this.companyDeposit.hasPermission">
+        <el-dropdown-item>
           <div class = "switch-container">
             <span class="switch-label">公司入款信息</span>
            <el-switch @click.native.stop v-model="companyDeposit.switchValue"
@@ -29,7 +29,7 @@
           </div>
         </el-dropdown-item>
 
-        <el-dropdown-item v-if="this.usdtTopUp.hasPermission">
+        <el-dropdown-item>
           <div class = "switch-container">
            <span class="switch-label" style="margin-right: 5px">USDT充值信息</span>
            <el-switch @click.native.stop v-model="usdtTopUp.switchValue"
@@ -44,6 +44,12 @@
 </template>
 
 <script>
+//AUDIOS
+import onlineRecharge   from '@i/audio/online_deposit_zh.mp3';
+import memberWithdrawal from '@i/audio/withdraw_zh.mp3';
+import companyDeposit   from '@i/audio/company_deposit_zh.mp3';
+import usdtDeposit      from '@i/audio/usdt_deposit_zh.mp3';
+
 //COUNTER
 import { listCount   as memberPayJourListCount     } from '@/api/platform-web/pay/memberPayJour';
 import { getCountAll as memberWithdrawLogListCount } from '@/api/platform-web/pay/memberWithdrawLog';
@@ -51,84 +57,63 @@ import { listCount   as memberRechargeLogListCount } from '@/api/platform-web/pa
 import { listCount   as payUsdtRechargeListCount   } from '@/api/platform-web/pay/payUsdtRecharge';
 
 //CACHING & LOOP
-import { startInterval, killInterval } from "@/utils/scheduledTask";
-import { checkPath                   } from "@/api/platform-web/system/login";
 import { getToken                    } from '@/utils/auth';
-
-//AUDIOS
-import onlineRecharge   from '@i/audio/online_deposit_zh.mp3';
-import memberWithdrawal from '@i/audio/withdraw_zh.mp3';
-import companyDeposit   from '@i/audio/company_deposit_zh.mp3';
-import usdtDeposit      from '@i/audio/usdt_deposit_zh.mp3';
-
-//PATH
-const path_onlineRecharge   = 'memberPayJour';
-const path_memberWithdrawal = 'memberWithdrawLog';
-const path_companyDeposit   = 'memberRechargeLog';
-const path_usdtDeposit      = 'payUsdtRecharge';
-
-//STORAGE KEY
-const key_onlineRecharge    = 'onlineRecharge';
-const key_memberWithdrawal  = 'memberWithdrawal';
-const key_companyDeposit    = 'companyDeposit';
-const key_usdtDeposit       = 'usdtTopUp';
-
+import { checkPermissions            } from "@/api/platform-web/system/login";
+import { startInterval, killInterval } from "@/utils/scheduledTask";
 
 class NotificationType {
-  constructor(ringtone, countMethod, path, storageKey, hasPermission,  switchValue,interval, totalCount ) {
-    this.ringtone      = ringtone;
-    this.countMethod   = countMethod;
-    this.path          = path;
-    this.storageKey    = storageKey;
-    this.switchValue   = switchValue;
-    this.hasPermission = hasPermission;
-    this.totalCount    = totalCount;
-    this.interval      = interval;
+  constructor(countMethod, ringtone, permission, storageKey, switchValue, totalCount, interval) {
+    this.countMethod = countMethod;
+    this.ringtone    = ringtone;
+    this.permission  = permission;
+    this.storageKey  = storageKey;
+    this.switchValue = switchValue;
+    this.totalCount  = totalCount;
+    this.interval    = interval;
   }
 }
+
 const IntervalMillis = 5000;
+
 export default {
   data() {
     return {
       onlineRecharge: new NotificationType(
-        new Audio (onlineRecharge),
         memberPayJourListCount,
-        path_onlineRecharge,
-        key_onlineRecharge,
+        new Audio (onlineRecharge),
+        'pay:memberPayJour:list',
+        'key_onlineRecharge',
         true,
-        false,
-        null,
-        0
+        0,
+        null
       ),
       memberWithdrawal: new NotificationType(
-        new Audio (memberWithdrawal),
         memberWithdrawLogListCount,
-        path_memberWithdrawal,
-        key_memberWithdrawal,
+        new Audio (memberWithdrawal),
+        'pay:memberWithdrawLog:list',
+        'key_memberWithdrawal',
         true,
-        false,
-        null,
-        0
+        0,
+        null
       ),
       companyDeposit: new NotificationType(
-        new Audio (companyDeposit),
         memberRechargeLogListCount,
-        path_companyDeposit,
-        key_companyDeposit,
+        new Audio (companyDeposit),
+        'pay:memberRechargeLog:list',
+        'key_companyDeposit',
         true,
-        false,
-        null,
-        0
+        0,
+        null
+
       ),
       usdtTopUp: new NotificationType(
-        new Audio (usdtDeposit),
         payUsdtRechargeListCount,
-        path_usdtDeposit,
-        key_usdtDeposit,
+        new Audio (usdtDeposit),
+        'admin:payUsdtRecharge:list',
+        'key_usdtTopUp',
         true,
-        false,
-        null,
-        0
+        0,
+        null
       ),
       query: {
         selectDate: [ this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime()) ]
@@ -136,40 +121,39 @@ export default {
     };
   },
   mounted() {
-    this.getCurrentCount( this.onlineRecharge, this.memberWithdrawal, this.companyDeposit, this.usdtTopUp);
+    this.getCurrentCount( this.onlineRecharge   );
+    this.getCurrentCount( this.memberWithdrawal );
+    this.getCurrentCount( this.companyDeposit   );
+    this.getCurrentCount( this.usdtTopUp        );
   },
   methods: {
-    getCurrentCount(...types) {
-      for ( let type of types){
-        checkPath(type.path).then(hasPermission => {
-          if (!hasPermission) {
-            type.hasPermission = false;
-            return;
-          }
-          if (!type.switchValue) {
-            return;
-          }
-          let storedSwitchValue = localStorage.getItem(type.storageKey)
-          if (storedSwitchValue !== null){
-            type.switchValue = storedSwitchValue === "true";
-          }
-          type.countMethod(this.query).then(res => {
-            type.totalCount = type !== this.memberWithdrawal ? res.total : res.data;
-          });
-          this.scheduleReminder(type);
+    getCurrentCount(type) {
+      checkPermissions(type.permission).then(hasPermission => {
+        if (!hasPermission) {
+          return;
+        }
+        let storedSwitchValue = localStorage.getItem(type.storageKey)
+        if (storedSwitchValue !== null){
+          type.switchValue = storedSwitchValue === "true";
+        }
+        type.countMethod(this.query).then(res => {
+          type.totalCount = type !== this.memberWithdrawal ? res.total : res.data;
+
         });
-      }
+        this.scheduleReminder(type);
+      });
     },
 
     scheduleReminder(type) {
-      localStorage.setItem(type.storageKey, type.switchValue);
+      localStorage.setItem(type.storageKey, type.switchValue)
       if (type.switchValue) {
         type.interval = startInterval(() => {
           if(!getToken()) {
             return;
           }
           type.countMethod(this.query).then(res => {
-            let total = type !== this.memberWithdrawal ? res.total : res.data;
+              let total = type !== this.memberWithdrawal ? res.total : res.data;
+              total += type.totalCount + 1;
               if(total > type.totalCount) {
                 type.totalCount = total;
                 type.ringtone.play();
@@ -191,7 +175,6 @@ export default {
   display: inline-block;
   vertical-align: middle;
   flex-grow: 1;
-  margin-right: 5px;
 
 }
 .switch-container {

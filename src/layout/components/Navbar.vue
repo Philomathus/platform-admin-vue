@@ -5,6 +5,15 @@
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
 
     <div class="right-menu">
+<!--      <span v-if="notifyOnDepositOrWithdraw">-->
+<!--        <label           class="right-menu-item" style="font-size: 10px">入款提醒</label>-->
+<!--        <SwitchDeposit   id = "notification-switch-deposit" class="right-menu-item" />-->
+<!--        <label           class="right-menu-item" style="font-size: 10px">提现提醒</label>-->
+<!--        <SwitchWithdraw  id = "notification-switch-withdraw" class="right-menu-item"/>-->
+<!--      </span>-->
+
+      <DropDownSwitch v-if="showDropDownNotification" id = dropDownSwitch class="right-menu-item" />
+
       <template v-if="device!=='mobile'">
         <search id="header-search" class="right-menu-item" />
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
@@ -45,16 +54,24 @@ import Hamburger from '@/components/Hamburger'
 import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
-import LangSelect from '@/components/LangSelect'
+import { checkPermissions } from "@/api/platform-web/system/login";
+import DropDownSwitch from "@/components/DropDownSwitch/index.vue";
 
 export default {
+  data() {
+    return {
+      showDropDownNotification: false
+    }
+  },
   components: {
     Breadcrumb,
     Hamburger,
     Screenfull,
     SizeSelect,
     Search,
-    LangSelect,
+    DropDownSwitch,
+    // SwitchDeposit,
+    // SwitchWithdraw
   },
   computed: {
     ...mapGetters([
@@ -74,14 +91,18 @@ export default {
       }
     }
   },
+  mounted() {
+    checkPermissions( 'pay:memberPayJour:list','pay:memberWithdrawLog:list','pay:memberRechargeLog:list','admin:payUsdtRecharge:list' )
+      .then( hasPermissions => this.showDropDownNotification = hasPermissions );
+  },
   methods: {
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
-      this.$confirm( this.$t('logout.confirm'), this.$t('logout.prompt'), {
-        confirmButtonText: this.$t('permission.confirm'),
-        cancelButtonText: this.$t('permission.cancel'),
+      this.$confirm('确定注销并退出系统吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
         this.$store.dispatch('LogOut').then(() => {

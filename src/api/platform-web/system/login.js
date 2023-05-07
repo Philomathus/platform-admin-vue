@@ -1,7 +1,6 @@
 import request from '@/utils/request'
 import {url} from '@/utils/url'
 import { encrypt } from '@/utils/jsencrypt'
-import {getRouters} from "@/api/platform-web/system/router";
 
 // 登录方法
 export function login(username, password, googleAuthCode, uuid) {
@@ -27,36 +26,8 @@ export function getInfo() {
   })
 }
 
-export function checkPaths(...paths) {
-  return getRouters().then((res) => {
-    for (const route of res.data) {
-      if (route.path === "/moneyManage") {
-        for (const child of route.children) {
-          for (const p of paths) {
-            if (child.path === p) {
-              return true;
-            }
-          }
-        }
-      }
-    }
-    return false;
-  });
-}
-
-export function checkPath(path) {
-  return getRouters().then((res) => {
-    for (const route of res.data) {
-      if (route.path === "/moneyManage") {
-        for (const child of route.children) {
-          if (child.path === path) {
-            return true;
-          }
-        }
-      }
-    }
-    return false;
-  });
+export function checkPermissions(...perms) {
+  return getInfo().then( res => perms.every( value => res.permissions.includes( value ) ) );
 }
 
 // 退出方法

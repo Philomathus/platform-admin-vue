@@ -83,7 +83,7 @@ export default {
         new Audio (onlineRecharge),
         'pay:memberPayJour:list',
         'key_onlineRecharge',
-        true,
+        false,
         0,
         null
       ),
@@ -92,7 +92,7 @@ export default {
         new Audio (memberWithdrawal),
         'pay:memberWithdrawLog:list',
         'key_memberWithdrawal',
-        true,
+        false,
         0,
         null
       ),
@@ -101,7 +101,7 @@ export default {
         new Audio (companyDeposit),
         'pay:memberRechargeLog:list',
         'key_companyDeposit',
-        true,
+        false,
         0,
         null
 
@@ -111,7 +111,7 @@ export default {
         new Audio (usdtDeposit),
         'admin:payUsdtRecharge:list',
         'key_usdtTopUp',
-        true,
+        false,
         0,
         null
       ),

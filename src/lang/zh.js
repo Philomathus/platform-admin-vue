@@ -7,7 +7,7 @@ import {
 export default {
 
   global:{
-    export: '出口',
+    export: '导出',
     cancelButton: '取消',
     confirmButton: '确定',
     refresh: '刷新',

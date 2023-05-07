@@ -23,7 +23,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item :label=" $t('global.selectDate') " prop="regTime">
+      <el-form-item :label="$t('global.selectDate') " prop="regTime">
         <el-date-picker type="datetimerange" v-model="dateRange" format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '95%'}" :start-placeholder=" $t('global.datePickerStartDate') "
                         :end-placeholder=" $t('global.datePickerEndDate') "

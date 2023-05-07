@@ -6,19 +6,20 @@
     <el-button  type="primary" icon="el-icon-search" size="mini" @click="getCountTotal()" style="margin-left: 20px">{{$t('lottery.lotteryBet.totalCountButton')}}</el-button>
     </div>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px" style="margin-top: 20px">
-      <el-form-item :label="$t('lottery.lotteryBet.form.lotteryFormLabel')" prop="betTime">
+
+      <el-form-item :label="$t('global.selectDate') " prop="betTime">
         <el-date-picker type="datetimerange"
                         v-model="queryParams.selectDate"
                         format="yyyy-MM-dd HH:mm:ss"
                         value-format="yyyy-MM-dd HH:mm:ss"
-                        style="width: 360px"
-                        :start-placeholder="$t('global.dateTimePickerStartTimePlaceholder')"
-                        :end-placeholder="$t('global.dateTimePickerEndTimePlaceholder')"
-                        :range-separator="$t('global.dateTimePickerRangeSeparator')"
-                        default-time="['00:00:00', '23:59:59']"
+                        :style="{width: '95%'}"
+                        :start-placeholder=" $t('global.datePickerStartDate') "
+                        :end-placeholder=" $t('global.datePickerEndDate') "
+                        :range-separator=" $t('global.selectDateRangeSeparator') "
                         clearable
+                        :default-time="['00:00:00', '23:59:59']"
                         :picker-options="pickerOptions"
-        />
+        ></el-date-picker>
       </el-form-item>
       <el-form-item prop="puserId">
         <el-input

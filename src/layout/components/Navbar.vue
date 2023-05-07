@@ -56,6 +56,7 @@ import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
 import { checkPermissions } from "@/api/platform-web/system/login";
 import DropDownSwitch from "@/components/DropDownSwitch/index.vue";
+import LangSelect from '@/components/LangSelect'
 
 export default {
   data() {
@@ -72,6 +73,7 @@ export default {
     DropDownSwitch,
     // SwitchDeposit,
     // SwitchWithdraw
+    LangSelect,
   },
   computed: {
     ...mapGetters([

@@ -153,7 +153,6 @@ export default {
           }
           type.countMethod(this.query).then(res => {
               let total = type !== this.memberWithdrawal ? res.total : res.data;
-              total += type.totalCount + 1;
               if(total > type.totalCount) {
                 type.totalCount = total;
                 type.ringtone.play();

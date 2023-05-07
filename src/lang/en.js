@@ -60,6 +60,7 @@ export default {
     confirmExport: 'Are you sure you want to export into excel file?, there might be a short delay depending on the volume of data, please wait patiently...',
     confirmExportTitle: 'Confirm',
     exportResponse: 'Activity Information',
+    memberId :'MemberId'
   },
 
   navbar: {

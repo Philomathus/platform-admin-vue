@@ -70,11 +70,11 @@
     </el-row>
 
     <el-table stripe v-loading="loading" :data="liveVideoChatList">
-      <el-table-column :label="$t('liveWeb.chat.table.fromPlatform')" min-width="130" align="center" prop="fromPlatform"/>
+      <el-table-column :label="$t('global.memberId')" min-width="130" align="center" prop="fromPlatform"/>
       <el-table-column :label="$t('liveWeb.chat.table.userNickName')" :show-overflow-tooltip="true" width="120" align="center" prop="userNickName"/>
       <el-table-column :label="$t('liveWeb.chat.table.type')" width="90" align="center" prop="type" :formatter="typeFormat"/>
       <el-table-column :label="$t('liveWeb.chat.table.msg')" :show-overflow-tooltip="true" min-width="350" align="center" prop="msg"/>
-      <el-table-column :label="$t('liveWeb.chat.table.postcatId')" min-width="120" align="center" prop="poscatId"/>
+      <el-table-column :label="$t('liveWeb.chat.table.poscatId')" min-width="120" align="center" prop="poscatId"/>
       <el-table-column :label="$t('liveWeb.chat.table.poscatNickName')" :show-overflow-tooltip="true" width="120" align="center" prop="poscatNickName"/>
       <el-table-column :label="$t('liveWeb.chat.table.noSpeaking')" width="80" align="center" prop="noSpeaking">
         <template slot-scope="scope">

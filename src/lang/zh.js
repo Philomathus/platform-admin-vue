@@ -29,6 +29,7 @@ export default {
     icon: '图标',
     userName: '用户名',
     realName: '真名',
+    memberId: '会员ID',
     edit: '修改',
     delete: '删除',
     id: '身份证',

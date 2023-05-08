@@ -231,16 +231,16 @@
       <el-table-column :label=" $t('members.memberInfo.index.regIp') " :show-overflow-tooltip="true" align="center" prop="registIp" width="180"/>
       <el-table-column :label=" $t('members.memberInfo.index.restArea') " :show-overflow-tooltip="true" align="center" prop="qq" width="180"/>
 
-      <el-table-column :label=" $t('members.memberInfo.index.wRest') " align="center" prop="speak" width="165">
-        <template slot-scope="scope">
-          <el-switch
-            v-model="scope.row.speak"
-            active-value="1"
-            inactive-value="0"
-            @change="handleStatusChange(scope.row)"
-          ></el-switch>
-        </template>
-      </el-table-column>
+<!--      <el-table-column :label=" $t('members.memberInfo.index.wRest') " align="center" prop="speak" width="165">-->
+<!--        <template slot-scope="scope">-->
+<!--          <el-switch-->
+<!--            v-model="scope.row.speak"-->
+<!--            active-value="1"-->
+<!--            inactive-value="0"-->
+<!--            @change="handleStatusChange(scope.row)"-->
+<!--          ></el-switch>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
 
       <el-table-column :label=" $t('members.memberInfo.index.ban') " align="center" prop="speak" width="160">
         <template slot-scope="scope">

@@ -278,6 +278,14 @@ export function ipBan(query) {
   })
 }
 
+export function withdrawMoneyStatus(id, birthDay){
+  return request({
+    url : url.platformWeb + '/member/memberInfo/withdrawStatus',
+    method : 'put',
+    params : {id, birthDay}
+  })
+}
+
 // personal Report data
 export function getPersonalReport(id, date) {
   return request({

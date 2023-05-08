@@ -61,7 +61,7 @@ export default {
     deleteConfirmTitle: '警告',
     statusConfirm: '确认要"',
     statusConfirmTitle: '警告',
-    statusConfirmQuestion: '"吗?',
+    statusConfirmQuestion: '吗?',
     statusEditSuccess: '成功',
     selectStatus: '请选择状态',
     releaseTime: '释放时间',

@@ -231,16 +231,18 @@
       <el-table-column :label=" $t('members.memberInfo.index.regIp') " :show-overflow-tooltip="true" align="center" prop="registIp" width="180"/>
       <el-table-column :label=" $t('members.memberInfo.index.restArea') " :show-overflow-tooltip="true" align="center" prop="qq" width="180"/>
 
-<!--      <el-table-column :label=" $t('members.memberInfo.index.wRest') " align="center" prop="speak" width="165">-->
-<!--        <template slot-scope="scope">-->
-<!--          <el-switch-->
-<!--            v-model="scope.row.speak"-->
-<!--            active-value="1"-->
-<!--            inactive-value="0"-->
-<!--            @change="handleStatusChange(scope.row)"-->
-<!--          ></el-switch>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
+      <el-table-column :label=" $t('members.memberInfo.index.wRest') " align="center" prop="birthDay" width="165">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.birthDay"
+            active-value="1"
+            inactive-value="0"
+            @change="handleWithdrawStatus(scope.row)"
+          ></el-switch>
+        </template>
+      </el-table-column>
+
+
 
       <el-table-column :label=" $t('members.memberInfo.index.ban') " align="center" prop="speak" width="160">
         <template slot-scope="scope">
@@ -359,7 +361,7 @@
           :value="dict.dictValue"
         />
       </el-select>
-      <el-input v-model="remarked" :placeholder=" $t('members.memberInfo.index.resBan') " v-if="this.remark == $t('members.memberInfo.index.other')"/>
+      <el-input v-model="remarked" :placeholder=" $t('members.memberInfo.index.resBan') " v-if="this.remark == '其他'"/>
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancelSpeak()">{{ $t('members.memberInfo.index.cnc') }}</el-button>
         <el-button type="primary" @click="submitMuteRemarkSpeak">{{ $t('members.memberInfo.index.submit') }}</el-button>
@@ -573,7 +575,7 @@ import {
   ipBan, ipUnBlock,
   listCount,
   listMemberInfo, requestBoxDish, resetWithdrawal,
-  updateMemberInfo
+  updateMemberInfo, withdrawMoneyStatus
 } from '@/api/platform-web/member/memberInfo'
 import more from './more'
 import {listSpeakIpBlackList, updateSpeakIpBlackList} from '@/api/live-web/chat/speakIpBlackList'
@@ -581,6 +583,7 @@ import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
 import {getConfigEnvironment} from "@/api/platform-web/config/configEnvironment";
 import ExcelPrompt from '@/layout/components/prompt/excelPrompt.vue';
 import PersonalRecordTable from "@/views/member/memberInfo/personalRecordTable";
+import {changeActivityInfoStatus} from "@/api/activity/activityInfo";
 
 
 export default {
@@ -1207,7 +1210,23 @@ export default {
           message: this.$t('members.memberInfo.index.cInp')
         })
       })
+    },
+
+    handleWithdrawStatus(row){
+      let text = row.birthDay === '1' ? this.$t('global.statusEnable') : this.$t('global.statusDisable')
+      this.$confirm(this.$t('global.statusEditSuccess') + " "+ text +" " + this.$t('global.statusConfirmQuestion'), this.$t('global.statusConfirmTitle'), {
+          confirmButtonText: this.$t('global.confirmButton'),
+          cancelButtonText: this.$t('global.cancelButton'),
+          type: 'warning'
+        }).then(function () {
+        return withdrawMoneyStatus(row.id, row.birthDay)
+      }).then(() => {
+        this.msgSuccess(text + this.$t('global.statusEditSuccess'))
+      }).catch(function () {
+        row.birthDay = row.birthDay === '0' ? '1' : '0'
+      })
     }
+
   },
 }
 

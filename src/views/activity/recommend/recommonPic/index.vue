@@ -16,7 +16,7 @@
 <!--      <el-table-column :label="参数说明" align="center" prop="envDes"/>-->
       <el-table-column :label="参数组" align="center" prop="envGroup"/>
       <el-table-column :label="排序" align="center" prop="envSort"/>
-      <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"

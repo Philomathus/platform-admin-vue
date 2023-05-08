@@ -51,7 +51,7 @@
       <el-table-column :label="当日存款总额最小值" align="center" prop="depositTotalMin" />
       <el-table-column :label="当日存款总额最大值" align="center" prop="depositTotalMax" />
       <el-table-column :label="抽奖次数" align="center" prop="lotteryTimes" />
-      <el-table-column :label="状态" align="center" prop="status">
+      <el-table-column :label=$t('global.status') align="center" prop="status">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -61,7 +61,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -93,16 +93,16 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="150px">
         <el-form-item :label="活动类型" prop="type">
-          <el-input v-model="form.type" placeholder="请输入活动类型" />
+          <el-input v-model="form.type" :placeholder="请输入活动类型" />
         </el-form-item>
         <el-form-item :label="当日存款总额最小值" prop="depositTotalMin">
-          <el-input v-model="form.depositTotalMin" placeholder="请输入当日存款总额最小值" />
+          <el-input v-model="form.depositTotalMin" :placeholder="请输入当日存款总额最小值" />
         </el-form-item>
         <el-form-item :label="当日存款总额最大值" prop="depositTotalMax">
-          <el-input v-model="form.depositTotalMax" placeholder="请输入当日存款总额最大值" />
+          <el-input v-model="form.depositTotalMax" :placeholder="请输入当日存款总额最大值" />
         </el-form-item>
         <el-form-item :label="抽奖次数" prop="lotteryTimes">
-          <el-input v-model="form.lotteryTimes" placeholder="请输入抽奖次数" />
+          <el-input v-model="form.lotteryTimes" :placeholder="请输入抽奖次数" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

@@ -20,7 +20,7 @@
       <el-table-column label="级别(1 一级 2 二级)" align="center" prop="level"/>
       <el-table-column :label="名称" align="center" prop="name"/>
       <el-table-column :label="比例" align="center" prop="bill"/>
-      <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -50,10 +50,10 @@
           <el-input v-model="form.level" placeholder="请输入级别(1 一级 2 二级)"/>
         </el-form-item>
         <el-form-item :label="名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入名称"/>
+          <el-input v-model="form.name" :placeholder="请输入名称"/>
         </el-form-item>
         <el-form-item :label="比例" prop="bill">
-          <el-input v-model="form.bill" placeholder="请输入比例"/>
+          <el-input v-model="form.bill" :placeholder="请输入比例"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

@@ -165,7 +165,7 @@
             <el-table-column :label="客户端版本号" align="center" prop="version" />
             <el-table-column :label="提现密码(md5加密)" align="center" prop="withdrawalPass" />
             <el-table-column :label="设备ID" align="center" prop="deviceId" />-->
-      <!--      <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">-->
+      <!--      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">-->
       <!--        <template slot-scope="scope">-->
       <!--          <el-button-->
       <!--            size="mini"-->

@@ -48,12 +48,12 @@
 
     <el-table stripe v-loading="loading" :data="lotteryPrizeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column :label="编号" align="center" prop="id" />
-      <el-table-column :label="名称" align="center" prop="prizeName" />
-      <el-table-column :label="奖励" align="center" prop="prize" />
-      <el-table-column :label="奖品权重" align="center" prop="prizeWeight" />
-      <el-table-column label="奖品（剩余）数量" align="center" prop="prizeAmount" />
-      <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('activity.redPacketManage.lotteryPrize.tableDialog.id')" align="center" prop="id" />
+      <el-table-column :label="$t('activity.redPacketManage.lotteryPrize.tableDialog.prizeName')" align="center" prop="prizeName" />
+      <el-table-column :label="$t('activity.redPacketManage.lotteryPrize.tableDialog.prize')" align="center" prop="prize" />
+      <el-table-column :label="$t('activity.redPacketManage.lotteryPrize.tableDialog.prizeWeight')" align="center" prop="prizeWeight" />
+      <el-table-column :label="$t('activity.redPacketManage.lotteryPrize.tableDialog.prizeAmount')" align="center" prop="prizeAmount" />
+      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -84,20 +84,20 @@
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="140px">
-        <el-form-item :label="活动类型" prop="type">
-          <el-input v-model="form.type" placeholder="请输入活动类型" />
+        <el-form-item :label="$t('activity.redPacketManage.lotteryPrize.tableDialog.type')" prop="type">
+          <el-input v-model="form.type" :placeholder="$t('activity.redPacketManage.lotteryPrize.tableDialog.typePlaceholder')" />
         </el-form-item>
-        <el-form-item :label="名称" prop="prizeName">
-          <el-input v-model="form.prizeName" placeholder="请输入名称" />
+        <el-form-item :label="$t('activity.redPacketManage.lotteryPrize.tableDialog.prizeName')" prop="prizeName">
+          <el-input v-model="form.prizeName" :placeholder="$t('activity.redPacketManage.lotteryPrize.tableDialog.prizeNamePlaceholder')" />
         </el-form-item>
-        <el-form-item :label="奖励" prop="prize">
-          <el-input v-model="form.prize" placeholder="请输入奖励" />
+        <el-form-item :label="$t('activity.redPacketManage.lotteryPrize.tableDialog.prize')" prop="prize">
+          <el-input v-model="form.prize" :placeholder="$t('activity.redPacketManage.lotteryPrize.tableDialog.prizePlaceholder')" />
         </el-form-item>
-        <el-form-item :label="奖品权重" prop="prizeWeight">
-          <el-input v-model="form.prizeWeight" placeholder="请输入奖品权重" />
+        <el-form-item :label="$t('activity.redPacketManage.lotteryPrize.tableDialog.prizeWeight')" prop="prizeWeight">
+          <el-input v-model="form.prizeWeight" :placeholder="$t('activity.redPacketManage.lotteryPrize.tableDialog.prizeWeightPlaceholder')" />
         </el-form-item>
-        <el-form-item label="奖品（剩余）数量" prop="prizeAmount">
-          <el-input v-model="form.prizeAmount" placeholder="请输入奖品（剩余）数量" />
+        <el-form-item :label="$t('activity.redPacketManage.lotteryPrize.tableDialog.prizeAmount')" prop="prizeAmount">
+          <el-input v-model="form.prizeAmount" :placeholder="$t('activity.redPacketManage.lotteryPrize.tableDialog.prizeAmountPlaceholder')" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -150,19 +150,19 @@ export default {
       // 表单校验
       rules: {
         type: [
-          { required: true, message: '活动类型不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('activity.redPacketManage.activityCashBack.lotteryPrize.validation.type'), trigger: 'blur' }
         ],
         prizeName: [
-          { required: true, message: '名称不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('activity.redPacketManage.activityCashBack.lotteryPrize.validation.prizeName'), trigger: 'blur' }
         ],
         prize: [
-          { required: true, message: '奖励不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('activity.redPacketManage.activityCashBack.lotteryPrize.validation.prize'), trigger: 'blur' }
         ],
         prizeWeight: [
-          { required: true, message: '奖品权重不能为空，且为1-9的一个数字', trigger: 'blur', pattern:'^[1-9]$' }
+          { required: true, message: this.$t('activity.redPacketManage.activityCashBack.lotteryPrize.validation.prizeWeight'), trigger: 'blur', pattern:'^[1-9]$' }
         ],
         prizeAmount: [
-          { required: true, message: '奖品不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('activity.redPacketManage.activityCashBack.lotteryPrize.validation.prizeAmount'), trigger: 'blur' }
         ]
       }
     };
@@ -217,7 +217,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加奖项设置";
+      this.title = this.$t('activity.redPacketManage.activityCashBack.lotteryPrize.addTitle');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -226,7 +226,7 @@ export default {
       getLotteryPrize(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改奖项设置";
+        this.title = this.$t('activity.redPacketManage.activityCashBack.lotteryPrize.editTitle');
       });
     },
     /** 提交按钮 */
@@ -252,7 +252,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除奖项设置编号为"' + ids + '"的数据项?', "警告", {
+      this.$confirm(this.$t('global.deleteConfirm') + ids + '"?', this.$t('global.deleteConfirmTitle'), {
         confirmButtonText: this.$t('global.confirmButton'),
         cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
@@ -267,8 +267,8 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
-        confirmButtonText: "确认",
+      this.$confirm(this.$t('global.confirmExport'), this.$t('global.confirmExportTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
         cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function() {

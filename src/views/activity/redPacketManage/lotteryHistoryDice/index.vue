@@ -4,7 +4,7 @@
       <el-form-item :label="会员ID" prop="pUserId">
         <el-input
           v-model="queryParams.pUserId"
-          placeholder="请输入会员ID"
+          :placeholder="请输入会员ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -13,15 +13,15 @@
       <el-form-item :label="昵称" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入昵称"
+          :placeholder="请输入昵称"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -80,7 +80,7 @@
         </template>
       </el-table-column>
       <el-table-column :label="奖励" align="center" prop="award" />
-      <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -105,16 +105,16 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item :label="会员ID" prop="pUserId">
-          <el-input v-model="form.pUserId" placeholder="请输入会员ID" />
+          <el-input v-model="form.pUserId" :placeholder="请输入会员ID" />
         </el-form-item>
         <el-form-item :label="昵称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入昵称" />
+          <el-input v-model="form.name" :placeholder="请输入昵称" />
         </el-form-item>
         <el-form-item :label="头像">
           <imageUpload v-model="form.headImg" path="lotteryHistoryDice"/>
         </el-form-item>
         <el-form-item :label="奖励" prop="award">
-          <el-input v-model="form.award" placeholder="请输入奖励" />
+          <el-input v-model="form.award" :placeholder="请输入奖励" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

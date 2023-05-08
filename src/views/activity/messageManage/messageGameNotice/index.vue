@@ -4,7 +4,7 @@
       <el-form-item :label="公告标题" prop="title">
         <el-input
           v-model="queryParams.title"
-          placeholder="请输入公告标题"
+          :placeholder="请输入公告标题"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -13,7 +13,7 @@
       <el-form-item :label="设备端" prop="device">
         <el-input
           v-model="queryParams.device"
-          placeholder="请输入设备端"
+          :placeholder="请输入设备端"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -24,13 +24,13 @@
                         v-model="queryParams.pubdatetime"
                         type="date"
                         value-format="yyyy-MM-dd"
-                        placeholder="选择发布时间"
+                        :placeholder="选择发布时间"
         >
         </el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -95,7 +95,7 @@
         </template>
       </el-table-column>
       <el-table-column :label="内容" align="center" prop="content"/>
-      <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -129,17 +129,17 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item :label="公告标题" prop="title">
-          <el-input v-model="form.title" placeholder="请输入公告标题"/>
+          <el-input v-model="form.title" :placeholder="请输入公告标题"/>
         </el-form-item>
         <!--        <el-form-item :label="设备端" prop="device">-->
-        <!--          <el-input v-model="form.device" placeholder="请输入设备端" />-->
+        <!--          <el-input v-model="form.device" :placeholder="请输入设备端" />-->
         <!--        </el-form-item>-->
         <el-form-item :label="$t('global.ctTime')" prop="pubdatetime">
           <el-date-picker clearable size="small"
                           v-model="form.pubdatetime"
                           type="date"
                           value-format="yyyy-MM-dd"
-                          placeholder="选择发布时间"
+                          :placeholder="选择发布时间"
           >
           </el-date-picker>
         </el-form-item>
@@ -291,13 +291,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateMessageGameNotice(this.form).then(response => {
-              this.msgSuccess('修改成功')
+              this.msgSuccess(this.$t('global.editSuccessMsg'));
               this.open = false
               this.getList()
             })
           } else {
             addMessageGameNotice(this.form).then(response => {
-              this.msgSuccess('新增成功')
+              this.msgSuccess(this.$t('global.addSuccessMsg'));
               this.open = false
               this.getList()
             })
@@ -316,7 +316,7 @@ cancelButtonText: this.$t('global.cancelButton'),
         return delMessageGameNotice(ids)
       }).then(() => {
         this.getList()
-        this.msgSuccess('删除成功')
+        this.msgSuccess(this.$t('global.deleteSuccessMsg'));
       })
     },
     /** 导出按钮操作 */

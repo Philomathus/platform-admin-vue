@@ -4,7 +4,7 @@
       <el-form-item :label="公告标题" prop="title">
         <el-input
           v-model="queryParams.title"
-          placeholder="请输入公告标题"
+          :placeholder="请输入公告标题"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -24,8 +24,8 @@
         ></el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -88,7 +88,7 @@
           <span>{{ parseTime(scope.row.pubdatetime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -124,10 +124,10 @@
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item :label="公告标题" prop="title">
-          <el-input v-model="form.title" placeholder="请输入公告标题"/>
+          <el-input v-model="form.title" :placeholder="请输入公告标题"/>
         </el-form-item>
         <el-form-item :label="内容">
-          <el-input v-model="form.content" type="textarea" placeholder="请输入内容" rows="5"/>
+          <el-input v-model="form.content" type="textarea" :placeholder="请输入内容" rows="5"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

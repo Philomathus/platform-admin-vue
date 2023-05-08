@@ -5,7 +5,7 @@
       <el-form-item prop="id">
         <el-input
           v-model="queryParams.id"
-          placeholder="请输入用户ID"
+          :placeholder="请输入用户ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"/>
@@ -24,7 +24,7 @@
         </el-date-picker>
       </el-form-item>
       <el-form-item prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small">
+        <el-select v-model="queryParams.status" :placeholder=this.$t('global.statusPlaceholder') clearable size="small">
           <el-option
             v-for="dict in statusOptions"
             :key="dict.dictValue"
@@ -33,8 +33,8 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -56,7 +56,7 @@
       <el-table-column type="selection" width="55" align="center" min-width="60"/>
       <el-table-column :label="用户id" align="center" prop="id" min-width="60"/>
       <el-table-column :label="参加的活动" prop="msg" align="center" min-width="160"/>
-      <el-table-column :label="状态" prop="status" align="center" min-width="100">
+      <el-table-column :label=$t('global.status') prop="status" align="center" min-width="100">
         <template slot-scope="scope">
           <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">
             {{status.dictLabel }}</span>
@@ -78,13 +78,13 @@
     <el-dialog :title="title" :visible.sync="open" width="600" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="90px">
         <el-form-item :label="标题" prop="msg">
-          <el-input v-model="form.msg" placeholder="请输入留言"/>
+          <el-input v-model="form.msg" :placeholder="请输入留言"/>
         </el-form-item>
         <el-form-item :label="活动类型" prop="status">
           <el-select
             filterable
             v-model="form.status"
-            placeholder="请选择活动类型"
+            :placeholder="请选择活动类型"
             clearable
             size="small"
             style="width: 240px">

@@ -450,14 +450,55 @@ export default {
     },
     homeBanner: {
       addTitle: 'Add Home Page Image',
-      editTitle: 'Update Home Page Image',
+      editTitle: 'Modify Home Page Image',
+      exportTitle: 'Home Page Image',
       tableDialog: {
         sort: 'Index',
         sortPlaceholder: 'Please enter Index',
         coverImg: 'Display Photo',
-        coverImgPlaceholder: '',
       },
-    }
+    },
+    homeNotice: {
+      addTitle: 'Add System Bulletin',
+      editTitle: 'Modify System Bulletin',
+      tableDialog: {
+        title: 'Title',
+        titlePlaceholder: 'Please enter Title',
+        type: 'Type',
+        typePlaceholder: 'Please enter Type',
+        content: 'Content',
+        contentPlaceholder: 'Please enter Content',
+        index: 'Index',
+        indexPlaceholder: 'Please enter Index',
+      },
+    },
+    redPacketManage: {
+      lotteryPrize: {
+        addTitle: 'Add Lottery Settings',
+        editTitle: 'Modify Lottery Settings',
+        exportTitle: 'Lottery Settings',
+        tableDialog: {
+          id: 'Id',
+          prizeName: 'Prize Name',
+          prizeNamePlaceholder: 'Please enter Prize Name',
+          prize: 'Prize',
+          prizePlaceholder: 'Please enter Prize',
+          prizeAmount: 'Number of Prizes(Remaining)',
+          prizeAmountPlaceholder: 'Please enter Number of Prizes(Remaining)',
+          type: 'Activity Type',
+          typePlaceholder: 'Please enter Activity Type',
+          prizeWeight: 'Prize Weight',
+          prizeWeightPlaceholder: 'Please enter Prize Weight',
+        },
+        validation: {
+          type: 'Activity Type must not be empty',
+          prizeName: 'Prize Name  must not be empty',
+          prize: 'Prize  must not be empty',
+          prizeWeight: 'prize Weight cannot be empty and is a number from 1 to 9',
+          prizeAmount: 'Prize must not be empty',
+        },
+      },
+    },
   },
 
   members: {

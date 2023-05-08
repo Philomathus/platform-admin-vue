@@ -80,8 +80,8 @@
 
     <el-table stripe v-loading="loading" :data="homeBannerList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column :label="名称" align="center" prop="name"/>
-      <el-table-column :label="图片" align="center" prop="coverImg">
+      <el-table-column :label="$t('global.exportButton')" align="center" prop="name"/>
+      <el-table-column :label="$t('activity.tableDialog.coverImg')" align="center" prop="coverImg">
         <template slot-scope="scope">
           <el-image
             style="height: 80px"
@@ -92,14 +92,14 @@
         </template>
       </el-table-column>
       <el-table-column :label="排序号" align="center" prop="indexs"/>
-      <el-table-column :label="状态" align="center" prop="status">
+      <el-table-column :label="$t('global.status')" align="center" prop="status">
         <template slot-scope="scope">
           <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">{{
               status.dictLabel
             }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -324,7 +324,7 @@ export default {
         return delHomeBanner(ids)
       }).then(() => {
         this.getList()
-        this.msgSuccess('删除成功')
+        this.msgSuccess(this.$t('global.deleteSuccessMsg'))
       }).catch(() => {
       })
     },

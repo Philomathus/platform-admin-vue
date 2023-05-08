@@ -4,15 +4,15 @@
       <el-form-item :label="会员ID" prop="memberId">
         <el-input
           v-model.trim="queryParams.memberId"
-          placeholder="请输入会员ID"
+          :placeholder="请输入会员ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -41,10 +41,10 @@
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item :label="会员ID" prop="memberId">
-          <el-input v-model="form.memberId" placeholder="请输入会员ID"/>
+          <el-input v-model="form.memberId" :placeholder="请输入会员ID"/>
         </el-form-item>
         <el-form-item :label="佣金" prop="commission">
-          <el-input v-model="form.commission" placeholder="请输入佣金"/>
+          <el-input v-model="form.commission" :placeholder="请输入佣金"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

@@ -1,17 +1,17 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item :label="标题" prop="title">
+      <el-form-item :label="$t('activity.activityManage.homeNotice.tableDialog.title')" prop="title">
         <el-input
           v-model="queryParams.title"
-          placeholder="请输入标题"
+          :placeholder="$t('activity.activityManage.homeNotice.tableDialog.titlePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item :label="状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small">
+      <el-form-item :label=$t('global.status') prop="status">
+        <el-select v-model="queryParams.status" :placeholder=this.$t('global.statusPlaceholder') clearable size="small">
           <el-option
             v-for="dict in statusOptions"
             :key="dict.dictValue"
@@ -20,8 +20,8 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item :label="类型" prop="type">
-        <el-select v-model="queryParams.type" placeholder="请选择类型" clearable size="small">
+      <el-form-item :label="$t('activity.activityManage.homeNotice.tableDialog.type')" prop="type">
+        <el-select v-model="queryParams.type" :placeholder="$t('activity.activityManage.homeNotice.tableDialog.typePlaceholder')" clearable size="small">
           <el-option
             v-for="dict in typeOptions"
             :key="dict.dictValue"
@@ -31,8 +31,8 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -88,20 +88,20 @@
 
     <el-table stripe v-loading="loading" :data="homeNoticeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column :label="标题" align="center" prop="title"/>
-      <el-table-column :label="内容" align="center" prop="content">
+      <el-table-column :label="$t('activity.activityManage.homeNotice.tableDialog.title')" align="center" prop="title"/>
+      <el-table-column :label="$t('activity.activityManage.homeNotice.tableDialog.content')" align="center" prop="content">
         <template v-slot="{row}">
           <div v-html="row.content" style="max-height: 120px"></div>
         </template>
       </el-table-column>
-      <el-table-column :label="排序" align="center" prop="indexs"/>
-      <el-table-column :label="状态" align="center" prop="status">
+      <el-table-column :label="$t('activity.activityManage.homeNotice.tableDialog.index')" align="center" prop="indexs"/>
+      <el-table-column :label=$t('global.status') align="center" prop="status">
         <template slot-scope="scope">
           <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">{{ status.dictLabel }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="类型" align="center" prop="type" :formatter="typeFormat"/>
-      <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('activity.activityManage.homeNotice.tableDialog.type')" align="center" prop="type" :formatter="typeFormat"/>
+      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -135,16 +135,16 @@
     <!-- 添加或修改系统公告对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item :label="标题" prop="title">
-          <el-input v-model="form.title" placeholder="请输入标题"/>
+        <el-form-item :label="$t('activity.activityManage.homeNotice.tableDialog.title')" prop="title">
+          <el-input v-model="form.title" :placeholder="$t('activity.activityManage.homeNotice.tableDialog.titlePlaceholder')"/>
         </el-form-item>
-        <el-form-item :label="内容">
-          <el-input v-model="form.content" type="textarea" placeholder="请输入内容" rows="5"/>
+        <el-form-item :label="$t('activity.activityManage.homeNotice.tableDialog.content')">
+          <el-input v-model="form.content" type="textarea" :placeholder="$t('activity.activityManage.homeNotice.tableDialog.contentPlaceholder')" rows="5"/>
         </el-form-item>
-        <el-form-item :label="排序" prop="indexs">
-          <el-input v-model="form.indexs" placeholder="请输入排序"/>
+        <el-form-item :label="$t('activity.activityManage.homeNotice.tableDialog.index')" prop="indexs">
+          <el-input v-model="form.indexs" :placeholder="$t('activity.activityManage.homeNotice.tableDialog.indexPlaceholder')"/>
         </el-form-item>
-        <el-form-item :label="状态">
+        <el-form-item :label=$t('global.status')>
           <el-radio-group v-model="form.status">
             <el-radio
               v-for="dict in statusOptions"
@@ -154,8 +154,8 @@
             </el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item :label="类型" prop="type">
-          <el-select v-model="form.type" placeholder="请选择类型">
+        <el-form-item :label="$t('activity.activityManage.homeNotice.tableDialog.type')" prop="type">
+          <el-select v-model="form.type" :placeholder="$t('activity.activityManage.homeNotice.tableDialog.typePlaceholder')">
             <el-option
               v-for="dict in typeOptions"
               :key="dict.dictValue"
@@ -291,7 +291,7 @@ export default {
     handleAdd() {
       this.reset()
       this.open = true
-      this.title = '添加系统公告'
+      this.title = this.t('activity.activityManage.homeNotice.addTitle')
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -300,7 +300,7 @@ export default {
       getHomeNotice(id).then(response => {
         this.form = response.data
         this.open = true
-        this.title = '修改系统公告'
+        this.title = this.t('activity.activityManage.homeNotice.EditTitle')
       })
     },
     /** 提交按钮 */
@@ -309,13 +309,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateHomeNotice(this.form).then(response => {
-              this.msgSuccess('修改成功')
+              this.msgSuccess(this.$t('global.editSuccessMsg'));
               this.open = false
               this.getList()
             })
           } else {
             addHomeNotice(this.form).then(response => {
-              this.msgSuccess('新增成功')
+              this.msgSuccess(this.$t('global.addSuccessMsg'));
               this.open = false
               this.getList()
             })
@@ -326,25 +326,25 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids
-      this.$confirm('是否确认删除系统公告编号为"' + ids + '"的数据项?', '警告', {
-        confirmButtonText: '确定',
-cancelButtonText: this.$t('global.cancelButton'),
+      this.$confirm(this.$t('global.deleteConfirm') + ids + '"?', this.$t('global.deleteConfirmTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function() {
         return delHomeNotice(ids)
       }).then(() => {
         this.getList()
-        this.msgSuccess('删除成功')
+        this.msgSuccess(this.$t('global.deleteSuccessMsg'));
       }).catch(() => {
       })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('是否确认导出所有系统公告数据项?', '警告', {
-        confirmButtonText: '确定',
-cancelButtonText: this.$t('global.cancelButton'),
-        type: 'warning'
+      this.$confirm(this.$t('global.confirmExport'), this.$t('global.confirmExportTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
+        type: "warning"
       }).then(function() {
         return exportHomeNotice(queryParams)
       }).then(response => {

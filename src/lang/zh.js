@@ -6,7 +6,7 @@ import {
 
 export default {
 
-  global:{
+  global: {
     export: '导出',
     cancelButton: '取消',
     confirmButton: '确定',
@@ -510,15 +510,55 @@ export default {
     homeBanner: {
       addTitle: '添加首页轮播图',
       editTitle: '修改首页轮播图',
+      exportTitle: '首页轮播图',
       tableDialog: {
         sort: '排序号',
         sortPlaceholder: '请输入排序号',
         coverImg: '图片',
-        coverImgPlaceholder: '',
       },
-    }
+    },
+    homeNotice: {
+      addTitle: '添加系统公告',
+      editTitle: '修改系统公告',
+      tableDialog: {
+        title: '标题',
+        titlePlaceholder: '请输入标题',
+        type: '类型',
+        typePlaceholder: '请选择类型',
+        content: '内容',
+        contentPlaceholder: '请输入内容',
+        index: '排序',
+        indexPlaceholder: '请输入排序',
+      },
+    },
+    redPacketManage: {
+      lotteryPrize: {
+        addTitle: '添加奖项设置',
+        editTitle: '修改奖项设置',
+        exportTitle: '【请填写功能名称】',
+        tableDialog: {
+          id: '编号',
+          prizeName: '名称',
+          prizeNamePlaceholder: '请输入名称',
+          prize: '奖励',
+          prizePlaceholder: '请输入奖励',
+          prizeAmount: '奖品（剩余）数量',
+          prizeAmountPlaceholder: '请输入奖品（剩余）数量',
+          type: '活动类型',
+          typePlaceholder: '请输入活动类型',
+          prizeWeight: '奖品权重',
+          prizeWeightPlaceholder: '请输入奖品权重',
+        },
+        validation: {
+          type: '活动类型不能为空',
+          prizeName: '名称不能为空',
+          prize: '奖励不能为空',
+          prizeWeight: '奖品权重不能为空，且为1-9的一个数字',
+          prizeAmount: '奖品不能为空',
+        },
+      },
+    },
   },
-
   members: {
     configVip: {
       home: '',
@@ -3354,7 +3394,7 @@ export default {
         add: '添加博饼中奖记录',
         update: '修改博饼中奖记录'
       },
-      confirmDeleteDialog:{
+      confirmDeleteDialog: {
         message: '是否确认删除博饼中奖记录编号为"{ids}"的数据项?'
       },
       confirmExportDialog: {
@@ -3409,14 +3449,14 @@ export default {
     },
 
     //TODO: lotteryHistory      -> Luis
-    lotteryHistory:{
+    lotteryHistory: {
       form: {
         namePlaceholder: '请选择彩种',
         statusPlaceholder: '全部状态',
         issuePlaceholder: '请输入期数',
         addIssueButton: '补期'
       },
-      tableColumns:{
+      tableColumns: {
         name: '彩票名称',
         issue: '期数',
         code: '开奖号码',
@@ -3426,7 +3466,7 @@ export default {
         totalPrize: '派奖',
         repaymentButton: '重新派奖',
       },
-      dialogForm:{
+      dialogForm: {
         gameStartTimeLabel: '开始期数',
         startIssuePlaceholder: '请输入开始期数',
         gameEndTimeLabel: '结束期数',
@@ -3435,13 +3475,13 @@ export default {
         namePlaceholder: '请选择彩种'
       },
 
-      rulesMessage:{
+      rulesMessage: {
         ktime: '开奖时间不能为空',
         name: '彩种不能为空',
         startIssue: '开始期数不能为空',
         endIssue: '结束期数不能为空',
       },
-      status:{
+      status: {
         bettingIn: '投注中',
         prizeDrawn: '已开奖',
         prizePaid: '已派奖',
@@ -3453,7 +3493,7 @@ export default {
     },
 
     //TODO: lotteryInfo         -> Luis
-    lotteryInfo:{
+    lotteryInfo: {
       form: {
         nameLabel: '彩种名称',
         namePlaceholder: '请输入彩种名称',
@@ -3462,7 +3502,7 @@ export default {
         typeLabel: '所属彩种类型',
         typePlaceholder: '请选择所属彩种类型',
       },
-      tableColumns:{
+      tableColumns: {
         name: '彩票名称',
         type: '所属彩种类型',
         icon: '图标',
@@ -3474,12 +3514,12 @@ export default {
         operationLabel: '操作',
       },
 
-      officialLabel:{
+      officialLabel: {
         official: '官方',
         selfOpeningDatabase: '自开(数据库)',
         selfOpeningProgram: '自开(程序)'
       },
-      type:{
+      type: {
         timeShareValue: '时时彩',
         timeShareLabel: '时时彩',
         '11select5Value': '11选5',
@@ -3497,8 +3537,8 @@ export default {
     },
 
     //TODO: lotteryMethod       -> Luis
-    lotteryMethod:{
-      form:{
+    lotteryMethod: {
+      form: {
         lotteryTypeLabel: '所属彩种类型',
         lotteryTypePlaceholder: '请选择所属彩种类型',
         nameLabel: '投注名称',
@@ -3509,7 +3549,7 @@ export default {
         name: '投注名称',
         order: '排序键order',
       },
-      lotteryType:{
+      lotteryType: {
         timeShareValue: '时时彩',
         timeShareLabel: '时时彩',
         '11select5Value': '11选5',
@@ -3529,19 +3569,19 @@ export default {
     },
 
     //TODO: lotteryPrizeConfig  -> Luis
-    lotteryPrizeConfig:{
-      form:{
+    lotteryPrizeConfig: {
+      form: {
         lotteryNamePlaceholder: '请选择彩种',
         newButton: '新增',
       },
-      tableColumns:{
+      tableColumns: {
         lotteryId: '彩种ID',
         lotteryName: '彩种名称',
         lotteryKillrate: '杀率阀值',
         lotteryNokillratehour: '杀率禁用时间点',
         lotteryRandom: '随机开启不杀概率',
       },
-      AddConfigDialogForm:{
+      AddConfigDialogForm: {
         lotteryIdLabel: '彩种编号',
         lotteryIdPlaceholder: '请输入彩种编号',
         lotteryNameLabel: '彩种名称',
@@ -3553,7 +3593,7 @@ export default {
         lotteryNokillratehourLabel: '杀率禁用时间点',
         lotteryNokillratehourPlaceholder: '请选择杀率禁用时间点(可多选)',
       },
-      updateConfigDialogForm:{
+      updateConfigDialogForm: {
         lotteryIdLabel: '彩种编号',
         lotteryIdPlaceholder: '请输入彩种编号',
         lotteryNameLabel: '彩种名称',
@@ -3572,21 +3612,21 @@ export default {
       updateSuccessMessage: '修改成功',
       addedSuccessMessage: '新增成功',
       deleteSuccessMessage: '删除成功',
-      confirmDeleteDialog:{
+      confirmDeleteDialog: {
         message: '是否确认删除开奖配置编号为"{lotteryIds}"的数据项?',
       },
-      confirmExportDialog:{
+      confirmExportDialog: {
         message: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
       }
     },
 
     //TODO: lotteryPrizepool    -> Luis
-    lotteryPrizepool:{
-      form:{
+    lotteryPrizepool: {
+      form: {
         lotteryIdLabel: '彩种编号',
         lotteryIdPlaceholder: '请输入彩种编号',
       },
-      tableColumns:{
+      tableColumns: {
         lotteryName: '彩种名称',
         lotteryId: '彩种编号',
         lotteryDate: '奖池日期',
@@ -3607,20 +3647,20 @@ export default {
     },
 
     //TODO: lotteryRule         -> Luis
-    lotteryRule:{
-      form:{
+    lotteryRule: {
+      form: {
         kindLabel: '所属彩种类型',
         kindPlaceholder: '请选择所属彩种类型',
         nameLabel: '彩票类型名称',
         namePlaceholder: '请输入彩票类型名称',
       },
-      tableColumns:{
+      tableColumns: {
         kind: '所属彩种类型',
         name: '彩票类型名称',
         des: '开奖说明',
         ind: '排序号',
       },
-      dialogForm:{
+      dialogForm: {
         kindLabel: '所属彩种类型',
         kindPlaceholder: '请选择所属彩种类型',
         nameLabel: '彩票类型名称',
@@ -3640,7 +3680,7 @@ export default {
     },
 
     //TODO: lotteryTemp         -> Luis
-    lotteryTemp:{
+    lotteryTemp: {
       form: {
         ktimeLabel: '开奖时间',
         ktimePlaceholder: '选择开奖时间',
@@ -3651,7 +3691,7 @@ export default {
         codeJustLabel: '上期开奖',
         codeJustPlaceholder: '请输入上期开奖',
       },
-      tableColumns:{
+      tableColumns: {
         id: '彩种id',
         issue: '当前期数',
         issueJust: '上期期号',
@@ -3665,8 +3705,8 @@ export default {
     },
 
     //TODO: wheelHistory        -> Luis
-    wheelHistory:{
-      form:{
+    wheelHistory: {
+      form: {
         pUserIdLabel: '会员ID',
         pUserIdPlaceholder: '请输入会员ID',
         prizeLabel: '奖励',
@@ -3674,13 +3714,13 @@ export default {
         wheelTypeLabel: '转盘类型',
         wheelTypePlaceholder: '请选择转盘类型',
       },
-      tableColumns:{
+      tableColumns: {
         pUserId: '会员ID',
         prize: '奖励',
         cTime: '时间',
         wheelType: '转盘类型',
       },
-      dialogForm:{
+      dialogForm: {
         pUserIdLabel: '会员ID',
         pUserIdPlaceholder: '请输入会员ID',
         prizeLabel: '奖励',
@@ -3702,17 +3742,17 @@ export default {
     },
 
     //TODO: wheelLottery        -> Luis
-    wheelLottery:{
-      form:{
+    wheelLottery: {
+      form: {
         namePlaceholder: '请输入名称',
       },
-      tableColumns:{
+      tableColumns: {
         lotteryId: '彩票ID',
         minBet: '最小投注',
         prePrize: '预备派奖金额',
         actPrize: '实际派奖金额',
       },
-      dialogForm:{
+      dialogForm: {
         nameLabel: '彩票名称',
         namePlaceholder: '请选择彩票名称',
         minBetLabel: '最小投注',
@@ -3733,14 +3773,14 @@ export default {
     },
 
     //TODO: wheelPool           -> Luis
-    wheelPool:{
-      tableColumns:{
+    wheelPool: {
+      tableColumns: {
         id: '主键',
         secMoney: '每秒增加奖池金额',
         limitMoney: '上限金额',
         weight: '中奖比例',
       },
-      dialogForm:{
+      dialogForm: {
         namePlaceholder: '请输入名称',
         secMoneyLabel: '每秒金额',
         secMoneyPlaceholder: '请输入每秒增加奖池金额',
@@ -3754,18 +3794,18 @@ export default {
     },
 
     //TODO: wheelPoolHistory    -> Luis
-    wheelPoolHistory:{
+    wheelPoolHistory: {
       totalPeopleCount: '总抽奖人数',
       totalCountMoney: '总抽奖金额',
       testTotalPeoples: '测试抽奖人数',
       testTotalMoney: '测试抽奖金额',
       listCount: '统计查询',
-      form:{
+      form: {
         memberIdLabel: '会员ID',
         memberIdPlaceholder: '请输入会员ID',
       },
       showTableButton: '抽奖资格记录',
-      tableColumns:{
+      tableColumns: {
         id: '主键',
         memberId: '会员ID',
         winTimes: '中奖次数',
@@ -3780,7 +3820,7 @@ export default {
         createTime: '创建时间',
         updateTime: '更新时间',
       },
-      dialogForm:{
+      dialogForm: {
         userId: '会员ID',
         nickName: '会员昵称',
         status: '会员类型',
@@ -3792,8 +3832,8 @@ export default {
     },
 
     //TODO: wheelPrize          -> Luis
-    wheelPrize:{
-      form:{
+    wheelPrize: {
+      form: {
         namePlaceholder: '请输入名称',
         prizeLabel: '奖励',
         prizePlaceholder: '请输入奖励',
@@ -3802,13 +3842,13 @@ export default {
         wheelTypeLabel: '转盘类型',
         wheelTypePlaceholder: '请选择转盘类型'
       },
-      tableColumns:{
+      tableColumns: {
         id: '编号',
         prize: '奖励',
         weight: '权重',
         wheelType: '转盘类型',
       },
-      dialogForm:{
+      dialogForm: {
         namePlaceholder: '请输入名称',
         prizeLabel: '奖励',
         prizePlaceholder: '请输入奖励',
@@ -3824,19 +3864,13 @@ export default {
     },
 
     //TODO: wheelSkin           -> Luis
-    wheelSkin:{
-
-    },
+    wheelSkin: {},
 
     //TODO: wheelSkinReceived   -> Luis
-    wheelSkinReceived:{
-
-    },
+    wheelSkinReceived: {},
 
 
   }
-
-
 
 
 }

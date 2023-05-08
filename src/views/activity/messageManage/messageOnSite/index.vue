@@ -4,7 +4,7 @@
       <el-form-item :label="信息标题" prop="title">
         <el-input
           v-model="queryParams.title"
-          placeholder="请输入信息标题"
+          :placeholder="请输入信息标题"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -24,8 +24,8 @@
         ></el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -100,7 +100,7 @@
         </template>
       </el-table-column>
       <el-table-column :label="会员id" align="center" prop="toUserId"/>
-      <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -136,18 +136,18 @@
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item :label="信息标题" prop="title">
-          <el-input v-model="form.title" placeholder="请输入信息标题"/>
+          <el-input v-model="form.title" :placeholder="请输入信息标题"/>
         </el-form-item>
         <el-form-item :label="内容">
-          <el-input v-model="form.content" type="textarea" placeholder="请输入内容" rows="5"/>
+          <el-input v-model="form.content" type="textarea" :placeholder="请输入内容" rows="5"/>
         </el-form-item>
         <!--        <el-form-item :label="接收者类型" prop="receiverType">-->
-        <!--          <el-select v-model="form.receiverType" placeholder="请选择接收者类型">-->
+        <!--          <el-select v-model="form.receiverType" :placeholder="请选择接收者类型">-->
         <!--            <el-option :label="请选择字典生成" value="" />-->
         <!--          </el-select>-->
         <!--        </el-form-item>-->
         <!--        <el-form-item :label="接收者" prop="receiver">-->
-        <!--          <el-input v-model="form.receiver" placeholder="请输入接收者" />-->
+        <!--          <el-input v-model="form.receiver" :placeholder="请输入接收者" />-->
         <!--        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -160,13 +160,13 @@
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item :label="会员id" prop="toUserId">
-          <el-input v-model="form.toUserId" placeholder="会员id"/>
+          <el-input v-model="form.toUserId" :placeholder="会员id"/>
         </el-form-item>
         <el-form-item :label="信息标题" prop="title">
-          <el-input v-model="form.title" placeholder="请输入信息标题"/>
+          <el-input v-model="form.title" :placeholder="请输入信息标题"/>
         </el-form-item>
         <el-form-item :label="内容">
-          <el-input v-model="form.content" type="textarea" placeholder="请输入内容" rows="5"/>
+          <el-input v-model="form.content" type="textarea" :placeholder="请输入内容" rows="5"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -333,13 +333,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateMessageOnSite(this.form).then(response => {
-              this.msgSuccess('修改成功')
+              this.msgSuccess(this.$t('global.editSuccessMsg'));
               this.open = false
               this.getList()
             })
           } else {
             addMessageOnSite(this.form).then(response => {
-              this.msgSuccess('新增成功')
+              this.msgSuccess(this.$t('global.addSuccessMsg'));
               this.open = false
               this.getList()
             })
@@ -369,7 +369,7 @@ cancelButtonText: this.$t('global.cancelButton'),
         return delMessageOnSite(ids)
       }).then(() => {
         this.getList()
-        this.msgSuccess('删除成功')
+        this.msgSuccess(this.$t('global.deleteSuccessMsg'));
       })
     },
     /** 导出按钮操作 */

@@ -850,7 +850,7 @@ export default {
             id: this.memberId
           }).then((res) => {
             if (res.code === 0) {
-              this.$notify.success( this.$t('members.memberInfo.more.rdSUcc') )
+              this.$notify.success( this.$t('members.memberInfo.more.rdSucc') )
             } else {
               this.$notify.error( this.$t('members.memberInfo.more.fixCode') )
             }

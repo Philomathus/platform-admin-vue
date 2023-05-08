@@ -1040,6 +1040,7 @@ export default {
         cInp: 'Cancel Input',
       },
       more: {
+        rdSucc: 'data is restored successfully。',
         exCred: 'Extra Credit',
         threeWay: 'Three-way Game',
         bCard: 'Bank Card',

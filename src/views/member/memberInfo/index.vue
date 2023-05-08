@@ -234,6 +234,7 @@
       <el-table-column :label=" $t('members.memberInfo.index.wRest') " align="center" prop="birthDay" width="165">
         <template slot-scope="scope">
           <el-switch
+            v-hasPermi="['member:withdrawStatus:edit']"
             v-model="scope.row.birthDay"
             active-value="1"
             inactive-value="0"
@@ -241,9 +242,6 @@
           ></el-switch>
         </template>
       </el-table-column>
-
-
-
       <el-table-column :label=" $t('members.memberInfo.index.ban') " align="center" prop="speak" width="160">
         <template slot-scope="scope">
           <el-switch

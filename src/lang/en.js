@@ -45,6 +45,8 @@ export default {
     selectDatePlaceholder: 'Date Range',
     datePickerStartDate: 'Start Date',
     datePickerEndDate: 'End Date',
+    datePickerStartDatePlaceholder: 'Start Date',
+    datePickerEndDatePlaceholder: 'End Date',
     operationColumn: 'Operation',
     editSuccessMsg: 'Edit Successful',
     addSuccessMsg: 'Add Successful',

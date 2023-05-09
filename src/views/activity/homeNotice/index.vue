@@ -1,17 +1,17 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item :label="$t('activity.activityManage.homeNotice.tableDialog.title')" prop="title">
+      <el-form-item :label="$t('activity.homeNotice.tableDialog.title')" prop="title">
         <el-input
           v-model="queryParams.title"
-          :placeholder="$t('activity.activityManage.homeNotice.tableDialog.titlePlaceholder')"
+          :placeholder="$t('activity.homeNotice.tableDialog.titlePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item :label=$t('global.status') prop="status">
-        <el-select v-model="queryParams.status" :placeholder=this.$t('global.statusPlaceholder') clearable size="small">
+      <el-form-item :label="$t('global.status')" prop="status">
+        <el-select v-model="queryParams.status" :placeholder="$t('global.statusPlaceholder')" clearable size="small">
           <el-option
             v-for="dict in statusOptions"
             :key="dict.dictValue"
@@ -20,8 +20,8 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item :label="$t('activity.activityManage.homeNotice.tableDialog.type')" prop="type">
-        <el-select v-model="queryParams.type" :placeholder="$t('activity.activityManage.homeNotice.tableDialog.typePlaceholder')" clearable size="small">
+      <el-form-item :label="$t('activity.homeNotice.tableDialog.type')" prop="type">
+        <el-select v-model="queryParams.type" :placeholder="$t('activity.homeNotice.tableDialog.typePlaceholder')" clearable size="small">
           <el-option
             v-for="dict in typeOptions"
             :key="dict.dictValue"
@@ -88,19 +88,19 @@
 
     <el-table stripe v-loading="loading" :data="homeNoticeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column :label="$t('activity.activityManage.homeNotice.tableDialog.title')" align="center" prop="title"/>
-      <el-table-column :label="$t('activity.activityManage.homeNotice.tableDialog.content')" align="center" prop="content">
+      <el-table-column :label="$t('activity.homeNotice.tableDialog.title')" align="center" prop="title"/>
+      <el-table-column :label="$t('activity.homeNotice.tableDialog.content')" align="center" prop="content">
         <template v-slot="{row}">
           <div v-html="row.content" style="max-height: 120px"></div>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('activity.activityManage.homeNotice.tableDialog.index')" align="center" prop="indexs"/>
+      <el-table-column :label="$t('activity.homeNotice.tableDialog.index')" align="center" prop="indexs"/>
       <el-table-column :label=$t('global.status') align="center" prop="status">
         <template slot-scope="scope">
           <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">{{ status.dictLabel }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('activity.activityManage.homeNotice.tableDialog.type')" align="center" prop="type" :formatter="typeFormat"/>
+      <el-table-column :label="$t('activity.homeNotice.tableDialog.type')" align="center" prop="type" :formatter="typeFormat"/>
       <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -135,14 +135,14 @@
     <!-- 添加或修改系统公告对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item :label="$t('activity.activityManage.homeNotice.tableDialog.title')" prop="title">
-          <el-input v-model="form.title" :placeholder="$t('activity.activityManage.homeNotice.tableDialog.titlePlaceholder')"/>
+        <el-form-item :label="$t('activity.homeNotice.tableDialog.title')" prop="title">
+          <el-input v-model="form.title" :placeholder="$t('activity.homeNotice.tableDialog.titlePlaceholder')"/>
         </el-form-item>
-        <el-form-item :label="$t('activity.activityManage.homeNotice.tableDialog.content')">
-          <el-input v-model="form.content" type="textarea" :placeholder="$t('activity.activityManage.homeNotice.tableDialog.contentPlaceholder')" rows="5"/>
+        <el-form-item :label="$t('activity.homeNotice.tableDialog.content')">
+          <el-input v-model="form.content" type="textarea" :placeholder="$t('activity.homeNotice.tableDialog.contentPlaceholder')" rows="5"/>
         </el-form-item>
-        <el-form-item :label="$t('activity.activityManage.homeNotice.tableDialog.index')" prop="indexs">
-          <el-input v-model="form.indexs" :placeholder="$t('activity.activityManage.homeNotice.tableDialog.indexPlaceholder')"/>
+        <el-form-item :label="$t('activity.homeNotice.tableDialog.index')" prop="indexs">
+          <el-input v-model="form.indexs" :placeholder="$t('activity.homeNotice.tableDialog.indexPlaceholder')"/>
         </el-form-item>
         <el-form-item :label=$t('global.status')>
           <el-radio-group v-model="form.status">
@@ -154,8 +154,8 @@
             </el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item :label="$t('activity.activityManage.homeNotice.tableDialog.type')" prop="type">
-          <el-select v-model="form.type" :placeholder="$t('activity.activityManage.homeNotice.tableDialog.typePlaceholder')">
+        <el-form-item :label="$t('activity.homeNotice.tableDialog.type')" prop="type">
+          <el-select v-model="form.type" :placeholder="$t('activity.homeNotice.tableDialog.typePlaceholder')">
             <el-option
               v-for="dict in typeOptions"
               :key="dict.dictValue"
@@ -291,7 +291,7 @@ export default {
     handleAdd() {
       this.reset()
       this.open = true
-      this.title = this.t('activity.activityManage.homeNotice.addTitle')
+      this.title = this.t('activity.homeNotice.addTitle')
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -300,7 +300,7 @@ export default {
       getHomeNotice(id).then(response => {
         this.form = response.data
         this.open = true
-        this.title = this.t('activity.activityManage.homeNotice.EditTitle')
+        this.title = this.t('activity.homeNotice.EditTitle')
       })
     },
     /** 提交按钮 */

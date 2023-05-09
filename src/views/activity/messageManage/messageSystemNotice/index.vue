@@ -1,25 +1,25 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item :label="公告标题" prop="title">
+      <el-form-item label="公告标题" prop="title">
         <el-input
           v-model="queryParams.title"
-          :placeholder="请输入公告标题"
+          placeholder="请输入公告标题"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item :label="$t('global.ctTime')" prop="pubdatetime">
+      <el-form-item :label="$t('global.selectDate')" prop="pubdatetime" label-width="100">
         <el-date-picker
           v-model="dateRange"
           size="small"
           style="width: 240px"
           value-format="yyyy-MM-dd"
           type="daterange"
-          :range-separator="$t('global.datePickerStartDatePlaceholder')"
-          :start-placeholder="$t('global.datePickerEndDatePlaceholder')"
-          :end-placeholder="$t('global.selectDateRangeSeparator')"
+          :range-separator="$t('global.dateTimePickerRangeSeparator')"
+          :start-placeholder="$t('global.datePickerStartDatePlaceholder')"
+          :end-placeholder="$t('global.datePickerEndDatePlaceholder')"
           :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
@@ -81,8 +81,8 @@
 
     <el-table v-loading="loading" :data="messageSystemNoticeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column :label="公告标题" align="center" prop="title"/>
-      <el-table-column :label="内容" show-overflow-tooltip align="center" prop="content"/>
+      <el-table-column label="公告标题" align="center" prop="title"/>
+      <el-table-column label="内容" show-overflow-tooltip align="center" prop="content"/>
       <el-table-column :label="$t('global.ctTime')" align="center" prop="pubdatetime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.pubdatetime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>

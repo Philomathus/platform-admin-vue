@@ -1,11 +1,11 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="copy">在线会员数量 {{ this.totalData.total || 0 }}</el-button>
+    <el-button type="primary" @click="copy">{{ $t('members.memberOnline.nom') }} {{ this.totalData.total || 0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px" class="mt20">
       <el-form-item prop="searchValue">
         <el-input
           v-model.trim="queryParams.searchValue"
-          placeholder="会员ID/账号"
+          :placeholder=" $t('members.memberOnline.man') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -14,15 +14,15 @@
       <el-form-item prop="nickName">
         <el-input
           v-model="queryParams.nickName"
-          placeholder="请输入会员昵称"
+          :placeholder=" $t('members.memberOnline.pemn') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -35,23 +35,23 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:memberOnline:export']"
-        >导出</el-button>
+        >{{ $t('global.exportButton') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="memberOnlineList" >
       <el-table-column width="55" align="center" />
-      <el-table-column label="会员ID" align="center" prop="id" />
-      <el-table-column label="会员账号" align="center" prop="userName" />
-      <el-table-column label="会员vip" align="center" prop="vip" />
-      <el-table-column label="最后活跃时间" align="center" prop="online" >
+      <el-table-column :label=" $t('members.memberOnline.mid') " align="center" prop="id" />
+      <el-table-column :label=" $t('members.memberOnline.ma') " align="center" prop="userName" />
+      <el-table-column :label=" $t('members.memberOnline.mv') " align="center" prop="vip" />
+      <el-table-column :label=" $t('members.memberOnline.mv') " align="center" prop="online" >
       <template slot-scope="scope">
         <span>{{ parseTime(scope.row.online, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
       </template>
       </el-table-column>
-      <el-table-column label="昵称" align="center" prop="nickName" />
-      <el-table-column label="登入IP" align="center" prop="loginIp" />
+      <el-table-column :label=" $t('global.nickname') " align="center" prop="nickName" />
+      <el-table-column :label=" $t('members.memberOnline.lip') " align="center" prop="loginIp" />
     </el-table>
 
     <pagination
@@ -151,7 +151,7 @@ export default {
         const reg = '^[0-9a-zA-Z_]{1,}$'
         let flag = this.queryParams.searchValue.match(reg)
         if(!flag){
-          this.msgError("会员ID/账号只能输入数字及下划线")
+          this.msgError( this.$t('members.memberOnline.lip') )
           return
         }
       }
@@ -167,14 +167,14 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
+      this.$confirm( this.$t('members.memberOnline.cpe') , this.$t('global.dialogTitle') , {
+        confirmButtonText: this.$t('global.confirmButton') ,
+        cancelButtonText: this.$t('global.cancelButton') ,
         type: "warning"
       }).then(function() {
         return exportMemberOnline(queryParams);
       }).then(response => {
-        this.downloadExcel(response, '在线会员列表');
+        this.downloadExcel(response, this.$t('members.memberOnline.oml') );
       }).catch(() => {
       })
     }

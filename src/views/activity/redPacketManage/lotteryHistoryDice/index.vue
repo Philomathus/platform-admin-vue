@@ -1,19 +1,19 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="55px">
-      <el-form-item :label="会员ID" prop="pUserId">
+      <el-form-item label="会员ID" prop="pUserId">
         <el-input
           v-model="queryParams.pUserId"
-          :placeholder="请输入会员ID"
+          placeholder="请输入会员ID"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item :label="昵称" prop="name">
+      <el-form-item label="昵称" prop="name">
         <el-input
           v-model="queryParams.name"
-          :placeholder="请输入昵称"
+          placeholder="请输入昵称"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -62,9 +62,9 @@
 
     <el-table stripe v-loading="loading" :data="lotteryHistoryDiceList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column :label="会员ID" align="center" prop="pUserId" />
-      <el-table-column :label="昵称" align="center" prop="name" />
-      <el-table-column :label="头像" align="center" prop="headImg">
+      <el-table-column label="会员ID" align="center" prop="pUserId" />
+      <el-table-column label="昵称" align="center" prop="name" />
+      <el-table-column label="头像" align="center" prop="headImg">
         <template slot-scope="scope">
           <el-image
             style="height: 50px;"
@@ -74,12 +74,12 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column :label="抽奖时间" align="center" prop="cTime" width="180">
+      <el-table-column label="抽奖时间" align="center" prop="cTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.cTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="奖励" align="center" prop="award" />
+      <el-table-column label="奖励" align="center" prop="award" />
       <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -104,17 +104,17 @@
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item :label="会员ID" prop="pUserId">
-          <el-input v-model="form.pUserId" :placeholder="请输入会员ID" />
+        <el-form-item label="会员ID" prop="pUserId">
+          <el-input v-model="form.pUserId" placeholder="请输入会员ID" />
         </el-form-item>
-        <el-form-item :label="昵称" prop="name">
-          <el-input v-model="form.name" :placeholder="请输入昵称" />
+        <el-form-item label="昵称" prop="name">
+          <el-input v-model="form.name" placeholder="请输入昵称" />
         </el-form-item>
-        <el-form-item :label="头像">
+        <el-form-item label="头像">
           <imageUpload v-model="form.headImg" path="lotteryHistoryDice"/>
         </el-form-item>
-        <el-form-item :label="奖励" prop="award">
-          <el-input v-model="form.award" :placeholder="请输入奖励" />
+        <el-form-item label="奖励" prop="award">
+          <el-input v-model="form.award" placeholder="请输入奖励" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

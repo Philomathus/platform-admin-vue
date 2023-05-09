@@ -1,8 +1,12 @@
 <template>
   <div class="app-container">
     <div v-loading="totalLoading">
-      <el-button type="primary" @click="copy1">{{ $t('members.memberInfo.index.button.numMem') }} {{ this.totalData.peopledTotal || 0 }}</el-button>
-      <el-button type="success" @click="copy2">{{ $t('members.memberInfo.index.button.totBal') }} {{ this.totalData.totalMoney || 0 }}</el-button>
+      <el-button type="primary" @click="copy1">{{ $t('members.memberInfo.index.button.numMem') }}
+        {{ this.totalData.peopledTotal || 0 }}
+      </el-button>
+      <el-button type="success" @click="copy2">{{ $t('members.memberInfo.index.button.totBal') }}
+        {{ this.totalData.totalMoney || 0 }}
+      </el-button>
       <el-button type="warning" @click="copy3">{{ $t('members.memberInfo.index.button.totDep') }} {{
           this.totalData.safeBalanceTotalMoney || 0
         }}
@@ -25,14 +29,17 @@
       </el-form-item>
       <el-form-item :label="$t('global.selectDate') " prop="regTime">
         <el-date-picker type="datetimerange" v-model="dateRange" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '95%'}" :start-placeholder=" $t('global.datePickerStartDatePlaceholder') "
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '95%'}"
+                        :start-placeholder=" $t('global.datePickerStartDatePlaceholder') "
                         :end-placeholder=" $t('global.datePickerEndDatePlaceholder') "
-                        :range-separator=" $t('global.selectDateRangeSeparatorPlaceholder') " clearable :default-time="['00:00:00', '23:59:59']"
+                        :range-separator=" $t('global.selectDateRangeSeparator') " clearable
+                        :default-time="['00:00:00', '23:59:59']"
                         :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="status" style="width: 110px;margin-left: -20px">
-        <el-select v-model="queryParams.status" :placeholder=" $t('members.memberInfo.index.aState') " clearable size="small">
+        <el-select v-model="queryParams.status" :placeholder=" $t('members.memberInfo.index.aState') " clearable
+                   size="small">
           <!--          <el-option v-for="(item,index) in typeList" :key="index" :label="item.label" :value="item.value"/>-->
           <el-option
             v-for="(dict,i) in typeList"
@@ -89,7 +96,8 @@
         />
       </el-form-item>
       <el-form-item prop="channelcode" style="width: 110px;" id="channelCode">
-        <el-select v-model="queryParams.channelcode" :placeholder=" $t('members.memberInfo.index.aType') " clearable size="small">
+        <el-select v-model="queryParams.channelcode" :placeholder=" $t('members.memberInfo.index.aType') " clearable
+                   size="small">
           <el-option
             v-for="(dict,i) in statusOptions"
             :key="'A'+ i"
@@ -108,7 +116,8 @@
         />
       </el-form-item>
       <el-form-item prop="loginDev" style="width: 110px;" id="channelCode">
-        <el-select v-model="queryParams.loginDev" :placeholder=" $t('members.memberInfo.index.lDev') " clearable style="width: 110px">
+        <el-select v-model="queryParams.loginDev" :placeholder=" $t('members.memberInfo.index.lDev') " clearable
+                   style="width: 110px">
           <el-option value="1" label="ios"></el-option>
           <el-option value="2" label="android"></el-option>
         </el-select>
@@ -133,7 +142,10 @@
         />
       </el-form-item>
       <el-form-item class="submit-btn">
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{
+            $t('global.searchButton')
+          }}
+        </el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
 
@@ -204,10 +216,13 @@
         </template>
       </el-table-column>
       <el-table-column :label=" $t('global.userName') " align="center" prop="userName" min-width="120px"/>
-      <el-table-column :label=" $t('global.nickname') " :show-overflow-tooltip="true" align="center" prop="nickName" min-width="160"/>
+      <el-table-column :label=" $t('global.nickname') " :show-overflow-tooltip="true" align="center" prop="nickName"
+                       min-width="160"/>
       <el-table-column :label=" $t('members.memberInfo.index.mVip') " align="center" prop="vip" min-width="100px"/>
-      <el-table-column :label=" $t('members.memberInfo.index.points') " :show-overflow-tooltip="true" align="center" prop="totalAccount" min-width="120px"/>
-      <el-table-column :label=" $t('members.memberInfo.index.sDeposit') " :show-overflow-tooltip="true" align="center" prop="boxAccount"
+      <el-table-column :label=" $t('members.memberInfo.index.points') " :show-overflow-tooltip="true" align="center"
+                       prop="totalAccount" min-width="120px"/>
+      <el-table-column :label=" $t('members.memberInfo.index.sDeposit') " :show-overflow-tooltip="true" align="center"
+                       prop="boxAccount"
                        min-width="160px"/>
       <el-table-column :label=" $t('global.status') " align="center" min-width="110px">
         <template v-slot="{row}">
@@ -226,10 +241,14 @@
       </el-table-column>
       <el-table-column :label=" $t('members.memberInfo.index.regTime') " align="center" prop="regTime" width="160"/>
       <el-table-column :label=" $t('members.memberInfo.index.logTime') " align="center" prop="loginTime" width="160"/>
-      <el-table-column :label=" $t('members.memberInfo.index.numLog') " align="center" prop="loginNum" min-width="130px"/>
-      <el-table-column :label=" $t('members.memberInfo.index.logIp') " :show-overflow-tooltip="true" align="center" prop="loginIp" width="180"/>
-      <el-table-column :label=" $t('members.memberInfo.index.regIp') " :show-overflow-tooltip="true" align="center" prop="registIp" width="180"/>
-      <el-table-column :label=" $t('members.memberInfo.index.restArea') " :show-overflow-tooltip="true" align="center" prop="qq" width="180"/>
+      <el-table-column :label=" $t('members.memberInfo.index.numLog') " align="center" prop="loginNum"
+                       min-width="130px"/>
+      <el-table-column :label=" $t('members.memberInfo.index.logIp') " :show-overflow-tooltip="true" align="center"
+                       prop="loginIp" width="180"/>
+      <el-table-column :label=" $t('members.memberInfo.index.regIp') " :show-overflow-tooltip="true" align="center"
+                       prop="registIp" width="180"/>
+      <el-table-column :label=" $t('members.memberInfo.index.restArea') " :show-overflow-tooltip="true" align="center"
+                       prop="qq" width="180"/>
 
       <el-table-column :label=" $t('members.memberInfo.index.wRest') " align="center" prop="birthDay" width="165">
         <template slot-scope="scope">
@@ -252,21 +271,37 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column :label=" $t('members.memberInfo.index.codeAcc') " align="center" prop="codeAccount" min-width="160px"/>
+      <el-table-column :label=" $t('members.memberInfo.index.codeAcc') " align="center" prop="codeAccount"
+                       min-width="160px"/>
 
-      <el-table-column :label=" $t('members.memberInfo.index.valBets') " align="center" prop="codeTotal" min-width="160px"/>
-      <el-table-column :label=" $t('members.memberInfo.index.invCode') " align="center" prop="inviterCode" min-width="120px"/>
-      <el-table-column :label=" $t('members.memberInfo.index.uType') " align="center" prop="channelcode" min-width="200px">
+      <el-table-column :label=" $t('members.memberInfo.index.valBets') " align="center" prop="codeTotal"
+                       min-width="160px"/>
+      <el-table-column :label=" $t('members.memberInfo.index.invCode') " align="center" prop="inviterCode"
+                       min-width="120px"/>
+      <el-table-column :label=" $t('members.memberInfo.index.uType') " align="center" prop="channelcode"
+                       min-width="200px">
         <template slot-scope="scope">
           <span v-if="scope.row.channelcode == null"
-                :style="{'color': '#5FB878'}">{{ $t('members.memberInfo.index.mem') }}{{ scope.row.version == null || scope.row.version == '' || scope.row.version == undefined ?  $t('members.memberInfo.index.none')  : scope.row.version }}|{{ scope.row.loginDev == 2 ? 'andriod' : scope.row.loginDev == 1 ? 'ios' :  $t('members.memberInfo.index.other')  }}</span>
+                :style="{'color': '#5FB878'}">{{
+              $t('members.memberInfo.index.mem')
+            }}{{
+              scope.row.version == null || scope.row.version == '' || scope.row.version == undefined ? $t('members.memberInfo.index.none') : scope.row.version
+            }}|{{
+              scope.row.loginDev == 2 ? 'andriod' : scope.row.loginDev == 1 ? 'ios' : $t('members.memberInfo.index.other')
+            }}</span>
           <span v-else :style="{color: (memberType = statusOptions[scope.row.channelcode > 0 ? 1 : 0]).color}">{{
               memberType.dictLabel
-            }}|{{ scope.row.version == null || scope.row.version == '' || scope.row.version == undefined ? $t('members.memberInfo.index.none')  : scope.row.version }}|{{ scope.row.loginDev == 2 ? 'andriod' : scope.row.loginDev == 1 ? 'ios' : $t('members.memberInfo.index.other')  }}</span>
+            }}|{{
+              scope.row.version == null || scope.row.version == '' || scope.row.version == undefined ? $t('members.memberInfo.index.none') : scope.row.version
+            }}|{{
+              scope.row.loginDev == 2 ? 'andriod' : scope.row.loginDev == 1 ? 'ios' : $t('members.memberInfo.index.other')
+            }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label=" $t('members.memberInfo.index.loginMark')" align="center" prop="email" :show-overflow-tooltip="true" min-width="130px"/>
-      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width" fixed="right" min-width="220">
+      <el-table-column :label=" $t('members.memberInfo.index.loginMark')" align="center" prop="email"
+                       :show-overflow-tooltip="true" min-width="130px"/>
+      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width"
+                       fixed="right" min-width="220">
         <template slot-scope="scope">
           <el-button
             type="primary"
@@ -326,9 +361,10 @@
           :value="dict.dictValue"
         />
       </el-select>
-      <el-input v-model="remarked" :placeholder=" $t('members.memberInfo.index.entDis') " v-if="this.remark == '其他' "/>
+      <el-input v-model="remarked" :placeholder=" $t('members.memberInfo.index.entDis') "
+                v-if="this.remark == '其他' "/>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="cancelUser()"> {{ $t('members.memberInfo.index.cnc') }} </el-button>
+        <el-button @click="cancelUser()"> {{ $t('members.memberInfo.index.cnc') }}</el-button>
         <el-button type="primary" @click="submitMuteRemark">{{ $t('members.memberInfo.index.cnc') }}</el-button>
       </div>
     </el-dialog>
@@ -372,7 +408,8 @@
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item :label=" $t('members.memberInfo.index.cellNum') " style="margin-bottom: 0px">
-          <el-input v-model="phone" :placeholder=" $t('members.memberInfo.index.entCell') " maxlength="11" minlength="11"
+          <el-input v-model="phone" :placeholder=" $t('members.memberInfo.index.entCell') " maxlength="11"
+                    minlength="11"
                     @blur="changetPhone(phone)"/>
         </el-form-item>
         <el-form-item :label=" $t('members.memberInfo.index.recom') ">
@@ -398,7 +435,8 @@
           @memberMore="handleQuery"></more>
 
     <!--查看封停ip View blocked ip -->
-    <el-dialog :close-on-click-modal="false" :title=" $t('members.memberInfo.index.button.ip') " :visible.sync="speakIpBlackListList"
+    <el-dialog :close-on-click-modal="false" :title=" $t('members.memberInfo.index.button.ip') "
+               :visible.sync="speakIpBlackListList"
                width="1200px" append-to-body>
       <el-form :model="queryParam" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
         <el-form-item :label=" $t('members.memberInfo.index.memId') " prop="userId">
@@ -432,7 +470,8 @@
         <el-table-column :label=" $t('members.memberInfo.index.memIp') " align="center" prop="userIp"/>
         <el-table-column :label=" $t('members.memberInfo.index.bRem') " align="center" prop="msg"/>
         <el-table-column :label=" $t('members.memberInfo.index.cTime') " align="center" prop="createTime"/>
-        <el-table-column :label=" $t('global.operationColumn') " min-width="60" align="center" class-name="small-padding fixed-width"
+        <el-table-column :label=" $t('global.operationColumn') " min-width="60" align="center"
+                         class-name="small-padding fixed-width"
                          fixed="right">
           <template slot-scope="scope">
             <el-button
@@ -498,7 +537,8 @@
         <el-table-column :label=" $t('members.memberInfo.index.memId') " align="center" prop="id"/>
 
         <el-table-column :label=" $t('global.nickname') " align="center" prop="nickName"/>
-        <el-table-column :label=" $t('global.status') " min-width="90" align="center" prop="status" :formatter="statusFormat"/>
+        <el-table-column :label=" $t('global.status') " min-width="90" align="center" prop="status"
+                         :formatter="statusFormat"/>
 
         <el-table-column :label=" $t('members.memberInfo.index.logIp') " align="center" prop="loginIp"/>
         <el-table-column :label=" $t('members.memberInfo.index.logRem') " align="center" prop="email"/>
@@ -617,8 +657,8 @@ export default {
       memberId: null,
       // 日期范围
       dateRange: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
-      minVip : '',
-      maxVip : '',
+      minVip: '',
+      maxVip: '',
       //禁言禁用
       id: '',
       userName: '',
@@ -792,12 +832,12 @@ export default {
           status: row.status
         }).then((res) => {
           if (res.code === 0) {
-            this.$notify.success( this.$t('members.memberInfo.index.sMod') )
+            this.$notify.success(this.$t('members.memberInfo.index.sMod'))
           } else {
-            this.$notify.error( this.$t('members.memberInfo.index.sModfail') )
+            this.$notify.error(this.$t('members.memberInfo.index.sModfail'))
           }
         }).catch(() => {
-          this.$notify.error( this.$t('members.memberInfo.index.netAnom') )
+          this.$notify.error(this.$t('members.memberInfo.index.netAnom'))
         }).finally(() => {
           this.getList()
         })
@@ -810,13 +850,13 @@ export default {
       }
       changeStatusBan(this.id, this.status, this.remark).then((res) => {
         if (res.code === 0) {
-          this.$notify.success( this.$t('members.memberInfo.index.sMod') )
+          this.$notify.success(this.$t('members.memberInfo.index.sMod'))
           this.muteRemark = false
         } else {
-          this.$notify.error( this.$t('members.memberInfo.index.sModfail') )
+          this.$notify.error(this.$t('members.memberInfo.index.sModfail'))
         }
       }).catch(() => {
-        this.$notify.error( this.$t('members.memberInfo.index.netAnom') )
+        this.$notify.error(this.$t('members.memberInfo.index.netAnom'))
       })
     },
     /** 查询用户信息列表 */
@@ -860,7 +900,7 @@ export default {
     /** 修改按钮操作 */
     handleUpdateIpBlack(row) {
       var that = this
-      this.$confirm( this.$t('members.memberInfo.index.confirmUp', {row: row.userId}) , this.$t('members.memberInfo.index.warn') , {
+      this.$confirm(this.$t('members.memberInfo.index.confirmUp', {row: row.userId}), this.$t('members.memberInfo.index.warn'), {
         confirmButtonText: this.$t('members.memberInfo.index.det'),
         cancelButtonText: this.$t('members.memberInfo.index.cnc'),
         type: 'warning'
@@ -870,7 +910,7 @@ export default {
         data.userId = row.userId
         return updateSpeakIpBlackList(data)
       }).then(() => {
-        that.msgSuccess( this.$t('members.memberInfo.index.unbSucc') )
+        that.msgSuccess(this.$t('members.memberInfo.index.unbSucc'))
         this.openIpBlackList()
         that.getList()
       })
@@ -946,7 +986,7 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateMemberInfo(this.form).then(response => {
-              this.msgSuccess( this.$t('members.memberInfo.index.modSucc') )
+              this.msgSuccess(this.$t('members.memberInfo.index.modSucc'))
               this.open = false
               this.getList()
             })
@@ -954,7 +994,7 @@ export default {
             this.form.phone = this.phone;
             this.form.password = this.password;
             addMemberInfo(this.form).then(response => {
-              this.msgSuccess( this.$t('members.memberInfo.index.addSucc') )
+              this.msgSuccess(this.$t('members.memberInfo.index.addSucc'))
               this.open = false
               this.getList()
             })
@@ -976,26 +1016,26 @@ export default {
       const queryParams = this.queryParams
       queryParams.params = []
       queryParams.downLoadDate = date
-      this.$confirm( this.$t('members.memberInfo.index.confExp') ,  this.$t('members.memberInfo.index.warn') , {
-        confirmButtonText:  this.$t('members.memberInfo.index.det') ,
-        cancelButtonText: this.$t('members.memberInfo.index.cnc') ,
+      this.$confirm(this.$t('members.memberInfo.index.confExp'), this.$t('members.memberInfo.index.warn'), {
+        confirmButtonText: this.$t('members.memberInfo.index.det'),
+        cancelButtonText: this.$t('members.memberInfo.index.cnc'),
         type: 'warning'
       }).then(function () {
         const exportMemberInfoList = exportMemberInfo(queryParams);
         queryParams.downLoadDate = null
         if (exportMemberInfoList == null) {
-          this.msgError( this.$t('members.memberInfo.index.nData') )
+          this.msgError(this.$t('members.memberInfo.index.nData'))
         }
         return exportMemberInfoList
       }).then(response => {
-        this.downloadExcel(response, this.$t('members.memberInfo.index.memList') )
+        this.downloadExcel(response, this.$t('members.memberInfo.index.memList'))
       })
     },
     //打开备注禁言弹框
     handleStatusChange(row) {
       if (row.speak === "0") {
         changeSpeak(row.id, row.speak, null).then(response => {
-          this.msgSuccess( this.$t('members.memberInfo.index.succUnb') )
+          this.msgSuccess(this.$t('members.memberInfo.index.succUnb'))
         })
       } else {
         this.remark = null
@@ -1011,7 +1051,7 @@ export default {
         this.remark = this.remarked;
       }
       changeSpeak(this.id, this.speak, this.remark).then(response => {
-        this.msgSuccess( this.$t('members.memberInfo.index.banSucc') )
+        this.msgSuccess(this.$t('members.memberInfo.index.banSucc'))
         this.muteRemarkSpeak = false
         this.getList()
       })
@@ -1046,7 +1086,7 @@ export default {
         let userIp = this.queryParamsByIp.userIp.match(reg)
         let realName = this.queryParams.realName.match(reg)
         if (!userIp || !realName) {
-          this.msgError( this.$t('members.memberInfo.index.uipInc') )
+          this.msgError(this.$t('members.memberInfo.index.uipInc'))
           return
         }
       }
@@ -1126,31 +1166,31 @@ export default {
         realName: this.queryParamIp.realName
       }).then((res) => {
         if (res.code === 0 || res.code > 200) {
-          this.$notify.error( this.$t('members.memberInfo.index.sModfail') )
+          this.$notify.error(this.$t('members.memberInfo.index.sModfail'))
         }
-        this.$notify.success( this.$t('members.memberInfo.index.statSet') )
+        this.$notify.success(this.$t('members.memberInfo.index.statSet'))
 
       }).catch(() => {
-        this.$notify.error( this.$t('members.memberInfo.index.netEx') )
+        this.$notify.error(this.$t('members.memberInfo.index.netEx'))
       }).finally(() => {
         this.searchMbyIpList()
       })
     },
 
     /** start on click ip status to set 0 panel from here */
-    ipUnBlockHandler(){
+    ipUnBlockHandler() {
       /** set Member Status 0, By Ip Address Query Handler*/
       ipUnBlock({
         loginIp: this.queryParamIp.loginIp,
         realName: this.queryParamIp.realName
       }).then((res) => {
         if (res.code === 0 || res.code > 200) {
-          this.$notify.error( this.$t('members.memberInfo.index.sModfail') )
+          this.$notify.error(this.$t('members.memberInfo.index.sModfail'))
         }
-        this.$notify.success( this.$t('members.memberInfo.index.statNorm') )
+        this.$notify.success(this.$t('members.memberInfo.index.statNorm'))
 
       }).catch(() => {
-        this.$notify.error( this.$t('members.memberInfo.index.netEx') )
+        this.$notify.error(this.$t('members.memberInfo.index.netEx'))
       }).finally(() => {
         this.searchMbyIpList()
       })
@@ -1159,7 +1199,7 @@ export default {
     /** click  on ID TO Display show personalRecordTable - personalReport method*/
     personalReport(userId) {
       getMemberInfo(userId).then(res => {
-        this.title = res.data.nickName + this.$t('members.memberInfo.index.pStat') ;
+        this.title = res.data.nickName + this.$t('members.memberInfo.index.pStat');
         this.$refs.tableShow.show(userId, this.title);
       });
     },
@@ -1176,7 +1216,7 @@ export default {
       value.select()   //select coming value;
       document.execCommand('Copy') // Execute the browser copy command
       this.$message({
-        message: data + this.$t('members.memberInfo.index.repSucc') ,
+        message: data + this.$t('members.memberInfo.index.repSucc'),
         type: 'success'
       })
       value.remove()
@@ -1185,21 +1225,21 @@ export default {
 
     boxDish(row) {
       console.info(row.id)
-      this.$prompt( this.$t('members.memberInfo.index.pGverifcode') ,  this.$t('global.promptTitle') , {
-        confirmButtonText: this.$t('members.memberInfo.index.det') ,
-        cancelButtonText: this.$t('members.memberInfo.index.cnc') ,
+      this.$prompt(this.$t('members.memberInfo.index.pGverifcode'), this.$t('global.promptTitle'), {
+        confirmButtonText: this.$t('members.memberInfo.index.det'),
+        cancelButtonText: this.$t('members.memberInfo.index.cnc'),
         inputPattern: /^[0-9]{1,10}$/,
-        inputErrorMessage: this.$t('members.memberInfo.index.verifInc') ,
+        inputErrorMessage: this.$t('members.memberInfo.index.verifInc'),
       }).then(({value}) => {
         requestBoxDish({
           googleAuthCode: value,
           id: row.id
         }).then((res) => {
           if (res.code === 0) {
-            this.$notify.success( this.$t('members.memberInfo.index.sDepo') )
+            this.$notify.success(this.$t('members.memberInfo.index.sDepo'))
             this.getList()
           } else {
-            this.$notify.error( this.$t('members.memberInfo.index.fDepo') )
+            this.$notify.error(this.$t('members.memberInfo.index.fDepo'))
           }
         })
       }).catch(() => {
@@ -1210,13 +1250,13 @@ export default {
       })
     },
 
-    handleWithdrawStatus(row){
+    handleWithdrawStatus(row) {
       let text = row.birthDay === '1' ? this.$t('global.statusEnable') : this.$t('global.statusDisable')
-      this.$confirm(this.$t('global.statusEditSuccess') + " "+ text +" " + this.$t('global.statusConfirmQuestion'), this.$t('global.statusConfirmTitle'), {
-          confirmButtonText: this.$t('global.confirmButton'),
-          cancelButtonText: this.$t('global.cancelButton'),
-          type: 'warning'
-        }).then(function () {
+      this.$confirm(this.$t('global.statusEditSuccess') + " " + text + " " + this.$t('global.statusConfirmQuestion'), this.$t('global.statusConfirmTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
+        type: 'warning'
+      }).then(function () {
         return withdrawMoneyStatus(row.id, row.birthDay)
       }).then(() => {
         this.msgSuccess(text + this.$t('global.statusEditSuccess'))

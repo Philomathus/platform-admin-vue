@@ -553,7 +553,26 @@ export default {
           prizeAmount: '奖品不能为空',
         },
       },
-
+      lotteryDiceConfig: {
+        addTitle: '添加抽奖次数设置',
+        editTitle: '修改抽奖次数设置',
+        tableDialog:{
+          depositTotalMin: '当日存款总额最小值',
+          depositTotalMinPlaceholder: '请输入当日存款总额最小值',
+          depositTotalMax: '当日存款总额最大值',
+          depositTotalMaxPlaceholder: '请输入当日存款总额最大值',
+          lotteryTimes: '抽奖次数',
+          lotteryTimesPlaceholder: '请输入抽奖次数',
+          type: '活动类型',
+          typePlaceholder: '请输入活动类型',
+        },
+        validation: {
+          type: '活动类型不能为空',
+          depositTotalMin: '当日存款总额最小值不能为空',
+          depositTotalMax: '当日存款总额最大值不能为空',
+          lotteryTimes: '抽奖次数不能为空',
+        }
+      }
     },
     messageGameNotice: {
       addTitle: '添加游戏公告',

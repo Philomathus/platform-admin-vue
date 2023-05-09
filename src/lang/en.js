@@ -500,6 +500,27 @@ export default {
           prizeAmount: 'Prize must not be empty',
         },
       },
+      lotteryDiceConfig: {
+        addTitle: 'Add Lottery Dice Config',
+        editTitle: 'Modify Lottery Dice Config',
+        exportTitle: 'Lottery Dice Config',
+        tableDialog:{
+          depositTotalMin: 'Daily Minimum Deposit',
+          depositTotalMinPlaceholder: 'Please enter Daily Minimum Deposit',
+          depositTotalMax: 'Daily Maximum Deposit',
+          depositTotalMaxPlaceholder: 'Please enter Daily Maximum Deposit',
+          lotteryTimes: 'Number of Lotteries',
+          lotteryTimesPlaceholder: ' Please enter Number of Lotteries',
+          type: 'Activity Type',
+          typePlaceholder: 'Please enter Activity Type',
+        },
+        validation: {
+          type: 'Activity Type must not be empty',
+          depositTotalMin: 'Daily Minimum Deposit must not be empty',
+          depositTotalMax: 'Daily Maximum Deposit must not be empty',
+          lotteryTimes: 'Number of Lotteries must not be empty',
+        },
+      },
     },
     messageGameNotice: {
       addTitle: 'Add Game Announcement',

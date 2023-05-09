@@ -1,9 +1,9 @@
 <template>
   <div class="app-container">
     <el-table v-loading="loading" :data="recommonPicList">
-      <el-table-column :label="参数名称" align="center" prop="envTitle"/>
-      <el-table-column :label="参数编码" align="center" prop="envCode"/>
-      <el-table-column :label="图片" align="center" prop="envValue">
+      <el-table-column :label="$t('activity.recommend.recommonPic.tableDialog.envTitle')" align="center" prop="envTitle"/>
+      <el-table-column :label="$t('activity.recommend.recommonPic.tableDialog.envCode')" align="center" prop="envCode"/>
+      <el-table-column :label="$t('activity.recommend.recommonPic.tableDialog.envValue')" align="center" prop="envValue">
       <template slot-scope="scope">
         <el-image
           style="height:80px"
@@ -14,8 +14,8 @@
       </template>
       </el-table-column>
 <!--      <el-table-column :label="参数说明" align="center" prop="envDes"/>-->
-      <el-table-column :label="参数组" align="center" prop="envGroup"/>
-      <el-table-column :label="排序" align="center" prop="envSort"/>
+      <el-table-column :label="$t('activity.recommend.recommonPic.tableDialog.envGroup')" align="center" prop="envGroup"/>
+      <el-table-column :label="$t('activity.recommend.recommonPic.tableDialog.envSort')" align="center" prop="envSort"/>
       <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -42,22 +42,22 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item :label="参数名称" prop="envTitle">
+        <el-form-item :label="$t('activity.recommend.recommonPic.tableDialog.envTitle')" prop="envTitle">
           <el-input v-model="form.envTitle"/>
         </el-form-item>
-        <el-form-item :label="参数编码" prop="envCode">
+        <el-form-item :label="$t('activity.recommend.recommonPic.tableDialog.envCode')" prop="envCode">
           <el-input v-model="form.envCode" readonly/>
         </el-form-item>
-        <el-form-item :label="图片" prop="envValue">
+        <el-form-item :label="$t('activity.recommend.recommonPic.tableDialog.envValue')" prop="envValue">
           <imageUpload v-model="form.envValue" path="bannerInfo"/>
         </el-form-item>
 <!--        <el-form-item :label="参数说明" prop="envDes">-->
 <!--          <el-input v-model="form.envDes"/>-->
 <!--        </el-form-item>-->
-        <el-form-item :label="参数组" prop="envGroup">
+        <el-form-item :label="$t('activity.recommend.recommonPic.tableDialog.envGroup')" prop="envGroup">
           <el-input v-model="form.envGroup"/>
         </el-form-item>
-        <el-form-item :label="排序" prop="envSort">
+        <el-form-item :label="$t('activity.recommend.recommonPic.tableDialog.envSort')" prop="envSort">
           <el-input v-model="form.envSort"/>
         </el-form-item>
       </el-form>
@@ -156,7 +156,7 @@ export default {
       getRecommonPic(envCode).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改推广图";
+        this.title = this.$t('activity.recommend.recommonPic.editTitle');
       });
     },
     /** 提交按钮 */
@@ -164,7 +164,7 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           updateRecommonPic(this.form).then(response => {
-            this.msgSuccess("修改成功");
+            this.msgSuccess(this.$t('global.editSuccessMsg'));
             this.open = false;
             this.getList();
           });

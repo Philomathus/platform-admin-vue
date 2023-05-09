@@ -17,9 +17,9 @@
 
     <el-table v-loading="loading" :data="configRecommendList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="级别(1 一级 2 二级)" align="center" prop="level"/>
-      <el-table-column :label="名称" align="center" prop="name"/>
-      <el-table-column :label="比例" align="center" prop="bill"/>
+      <el-table-column :label="$t('activity.recommend.configRecommon.tableDialog.level')" align="center" prop="level"/>
+      <el-table-column :label="$t('global.name')" align="center" prop="name"/>
+      <el-table-column :label="$t('activity.recommend.configRecommon.tableDialog.bill')" align="center" prop="bill"/>
       <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -46,14 +46,14 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item :label="级别" prop="level">
-          <el-input v-model="form.level" placeholder="请输入级别(1 一级 2 二级)"/>
+        <el-form-item :label="$t('activity.recommend.configRecommon.tableDialog.level')" prop="level">
+          <el-input v-model="form.level" :placeholder="$t('activity.recommend.configRecommon.tableDialog.levelPlaceholder')"/>
         </el-form-item>
-        <el-form-item :label="名称" prop="name">
-          <el-input v-model="form.name" :placeholder="请输入名称"/>
+        <el-form-item :label="$t('global.name')" prop="name">
+          <el-input v-model="form.name" :placeholder="$t('global.namePlaceholder')"/>
         </el-form-item>
-        <el-form-item :label="比例" prop="bill">
-          <el-input v-model="form.bill" :placeholder="请输入比例"/>
+        <el-form-item :label="$t('activity.recommend.configRecommon.tableDialog.bill')" prop="bill">
+          <el-input v-model="form.bill" :placeholder="$t('activity.recommend.configRecommon.tableDialog.billPlaceholder')"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -159,7 +159,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加推广设置";
+      this.title = this.$t('activity.recommend.configRecommon.addTitle');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -168,7 +168,7 @@ export default {
       getConfigRecommend(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改推广设置";
+        this.title = this.$t('activity.recommend.configRecommon.UpdateTitle');
       });
     },
     /** 提交按钮 */
@@ -194,7 +194,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除推广设置编号为"' + ids + '"的数据项?', "警告", {
+      this.$confirm(this.$t('global.deleteConfirm') + ids + '"?', this.$t('global.deleteConfirmTitle'), {
         confirmButtonText: this.$t('global.confirmButton'),
         cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
@@ -210,12 +210,12 @@ export default {
       const queryParams = this.queryParams;
       this.$confirm(this.$t('global.confirmExport'), this.$t('global.confirmExportTitle'), {
         confirmButtonText: this.$t('global.confirmButton'),
-cancelButtonText: this.$t('global.cancelButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportConfigRecommend(queryParams);
       }).then(response => {
-        this.downloadExcel(response, '推广设置')
+        this.downloadExcel(response, this.$t('activity.recommend.configRecommon.exportTitle'))
       }).catch(() => {
       })
     }

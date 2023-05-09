@@ -30,6 +30,7 @@ export default {
     userName: '用户名',
     realName: '真名',
     memberId: '会员ID',
+    memberIdPlaceholder: '请输入会员ID',
     edit: '修改',
     delete: '删除',
     id: '身份证',
@@ -617,7 +618,45 @@ export default {
         device: '设备不能为空',
         action: '动作不能为空',
         pubdatatime: '发布时间不能为空',
-      }
+      },
+    },
+    recommend: {
+      logCommission: {
+        addTitle: '添加佣金领取日志',
+        editTitle: '修改佣金领取日志',
+        exportTitle: '佣金领取日志',
+        queryValidation: '会员ID只能输入数字及下划线',
+        tableDialog: {
+          commission: '佣金',
+          commissionPlaceholder: '请输入佣金',
+        },
+      },
+      configRecommon: {
+        addTitle: '添加推广设置',
+        editTitle: '修改推广设置',
+        exportTitle: '推广设置',
+        tableDialog: {
+          level: '级别(1 一级 2 二级)',
+          levelPlaceholder: '请输入级别(1 一级 2 二级)',
+          bill: '比例',
+          billPlaceholder: '请输入比例',
+        },
+      },
+      recommonPic: {
+        editTitle: '修改推广图',
+        tableDialog:{
+          envTitle: '参数名称',
+          envTitlePlaceholder: '',
+          envCode: '参数编码',
+          envCodePlaceholder: '',
+          envValue: '图片',
+          envValuePlaceholder: '',
+          envGroup: '参数组',
+          envGroupPlaceholder: '',
+          envSort: '排序',
+          envSortPlaceholder: '',
+        },
+      },
     },
   },
   members: {

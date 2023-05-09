@@ -1,17 +1,20 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item :label="会员ID" prop="memberId">
+      <el-form-item :label=" $t('global.memberId')" prop="memberId">
         <el-input
           v-model.trim="queryParams.memberId"
-          :placeholder="请输入会员ID"
+          :placeholder=" $t('global.memberIdPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{
+            $t('global.searchButton')
+          }}
+        </el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
@@ -19,9 +22,9 @@
 
     <el-table v-loading="loading" :data="logCommissionList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column :label="会员ID" align="center" prop="memberId"/>
-      <el-table-column :label="佣金" align="center" prop="commission"/>
-      <el-table-column :label="创建时间" align="center" prop="createTime">
+      <el-table-column :label="$t('global.memberId')" align="center" prop="memberId"/>
+      <el-table-column :label="$t('activity.recommend.logCommission.tableDialog.commission')" align="center" prop="commission"/>
+      <el-table-column :label="$t('global.cTime')" align="center" prop="createTime">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
@@ -40,11 +43,11 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item :label="会员ID" prop="memberId">
-          <el-input v-model="form.memberId" :placeholder="请输入会员ID"/>
+        <el-form-item :label="$t('global.memberId')" prop="memberId">
+          <el-input v-model="form.memberId" :placeholder="$t('global.memberIdPlaceholder')"/>
         </el-form-item>
-        <el-form-item :label="佣金" prop="commission">
-          <el-input v-model="form.commission" :placeholder="请输入佣金"/>
+        <el-form-item :label="$t('activity.recommend.logCommission.tableDialog.commission')" prop="commission">
+          <el-input v-model="form.commission" :placeholder="$t('activity.recommend.logCommission.tableDialog.commissionPlaceholder')"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -133,11 +136,11 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      if(this.queryParams.memberId){
+      if (this.queryParams.memberId) {
         const reg = '^[0-9a-zA-Z_]{1,}$'
         let flag = this.queryParams.memberId.match(reg)
-        if(!flag){
-          this.msgError("会员ID只能输入数字及下划线")
+        if (!flag) {
+          this.msgError(this.$t('activity.recommend.logCommission.queryValidation'))
           return
         }
       }
@@ -159,7 +162,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加佣金领取日志";
+      this.title = this.$t('activity.recommend.logCommission.addTitle');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -168,7 +171,7 @@ export default {
       getLogCommission(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改佣金领取日志";
+        this.title = this.$t('activity.recommend.logCommission.editTitle');
       });
     },
     /** 提交按钮 */
@@ -194,7 +197,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除佣金领取日志编号为"' + ids + '"的数据项?', "警告", {
+      this.$confirm(this.$t('global.deleteConfirm') + ids + '"?', this.$t('global.deleteConfirmTitle'), {
         confirmButtonText: this.$t('global.confirmButton'),
         cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
@@ -210,12 +213,12 @@ export default {
       const queryParams = this.queryParams;
       this.$confirm(this.$t('global.confirmExport'), this.$t('global.confirmExportTitle'), {
         confirmButtonText: this.$t('global.confirmButton'),
-cancelButtonText: this.$t('global.cancelButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportLogCommission(queryParams);
       }).then(response => {
-        this.downloadExcel(response, '佣金领取日志')
+        this.downloadExcel(response, this.$t('activity.recommend.logCommission.exportTitle'))
       }).catch(() => {
       })
     }

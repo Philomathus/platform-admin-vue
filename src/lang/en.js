@@ -61,7 +61,8 @@ export default {
     confirmExport: 'Are you sure you want to export into excel file?, there might be a short delay depending on the volume of data, please wait patiently...',
     confirmExportTitle: 'Confirm',
     exportResponse: 'Activity Information',
-    memberId :'MemberId'
+    memberId :'Member ID',
+    memberIdPlaceholder: 'Please enter Member ID',
   },
 
   navbar: {
@@ -564,7 +565,40 @@ export default {
         device: 'Device must not be empty',
         action: 'Action must not be empty',
         pubdatatime: 'Publication Time must not be empty',
-      }
+      },
+    },
+    recommend: {
+      logCommission: {
+        addTitle: 'Add Commission Collection Log',
+        editTitle: 'Modify Commission Collection Log',
+        exportTitle: 'Commission Collection Log',
+        queryValidation: 'The member ID can only contain numbers and underscores',
+        tableDialog: {
+          commission: 'Commission',
+          commissionPlaceholder: 'Please enter Commission',
+        },
+      },
+      configRecommon: {
+        addTitle: 'Add Promotion Settings',
+        editTitle: 'Edit Promotion Settings',
+        exportTitle: 'Promotion Settings',
+        tableDialog: {
+          level: 'Level (1 - Level 1, 2 - Level 2)',
+          levelPlaceholder: 'Please enter Level (1 - Level 1, 2 - Level 2)',
+          bill: 'Bill',
+          billPlaceholder: 'Please enter Bill',
+        },
+      },
+      recommonPic: {
+        editTitle: 'Modify Extension Chart',
+        tableDialog:{
+          envTitle: 'Parameter Name',
+          envCode: 'Parameter Code',
+          envValue: 'Parameter Code',
+          envGroup: 'Parameter Set ',
+          envSort: 'Parameter Index',
+        },
+      },
     },
   },
 

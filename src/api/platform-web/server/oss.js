@@ -18,14 +18,6 @@ export function getOss(id) {
   })
 }
 
-// 查询oss文件存储服务配置详细
-export function getOss(id) {
-  return request({
-    url: url.platformWeb + '/server/oss/' + id,
-    method: 'get'
-  })
-}
-
 // 新增oss文件存储服务配置
 export function addOss(data) {
   return request({

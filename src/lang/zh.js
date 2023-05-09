@@ -553,6 +553,7 @@ export default {
           prizeAmount: '奖品不能为空',
         },
       },
+
     },
     messageGameNotice: {
       addTitle: '添加游戏公告',
@@ -646,15 +647,10 @@ export default {
         editTitle: '修改推广图',
         tableDialog:{
           envTitle: '参数名称',
-          envTitlePlaceholder: '',
           envCode: '参数编码',
-          envCodePlaceholder: '',
           envValue: '图片',
-          envValuePlaceholder: '',
           envGroup: '参数组',
-          envGroupPlaceholder: '',
           envSort: '排序',
-          envSortPlaceholder: '',
         },
       },
     },

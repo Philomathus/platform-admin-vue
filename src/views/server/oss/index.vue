@@ -29,16 +29,6 @@
         </el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['server:oss:edit']"
-        >修改
-        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -107,12 +97,6 @@
         <el-form-item label="名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入名称"/>
         </el-form-item>
-        <el-form-item label="accessKey" prop="accessKey" form>
-          <el-input v-model="form.accessKey" placeholder="请输入accessKey" show-password/>
-        </el-form-item>
-        <el-form-item label="accessSecret" prop="accessSecret">
-          <el-input v-model="form.accessSecret" placeholder="请输入accessSecret" show-password/>
-        </el-form-item>
         <el-form-item label="访问域名" prop="endpoint">
           <el-input v-model="form.endpoint" placeholder="请输入访问域名"/>
         </el-form-item>
@@ -153,7 +137,7 @@
 </template>
 
 <script>
-import {listOss, getOss, delOss, addOss, effectOss} from '@/api/platform-web/server/oss'
+import {listOss, getOss, delOss, addOss, updateOss, effectOss} from '@/api/platform-web/server/oss'
 import ImageUpload from '@/components/ImageUpload'
 
 export default {
@@ -199,12 +183,6 @@ export default {
       rules: {
         name: [
           {required: true, message: '名称不能为空', trigger: 'blur'}
-        ],
-        accessKey: [
-          {required: true, message: 'accessKey不能为空', trigger: 'blur'}
-        ],
-        accessSecret: [
-          {required: true, message: 'accessSecret不能为空', trigger: 'blur'}
         ],
         endpoint: [
           {required: true, message: '访问域名不能为空', trigger: 'blur'}
@@ -254,8 +232,6 @@ export default {
       this.form = {
         id: null,
         name: null,
-        accessKey: null,
-        accessSecret: null,
         endpoint: null,
         bucket: null,
         //vhost: null,

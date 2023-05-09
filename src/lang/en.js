@@ -1582,6 +1582,19 @@ export default {
       dels: 'Deleted Successfully',
       cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
       pbtd: 'Payout Bonus Tentative Deposit Form'
+    },
+    memberOnline: {
+      nom: 'Number of online members',
+      man: 'Member ID/ Account number',
+      pemn: 'Please enter member nickname',
+      mid: 'Member ID',
+      ma: 'Member Account',
+      mv: 'Member VIP',
+      lat: 'Last active time',
+      lip: 'Login IP',
+      menu: 'Member ID/Account number can only be entered as a number and underscore',
+      cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+      oml: 'Online Member List'
     }
   },
 

@@ -48,10 +48,10 @@
 
     <el-table stripe v-loading="loading" :data="lotteryDiceConfigList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column :label="当日存款总额最小值" align="center" prop="depositTotalMin" />
-      <el-table-column :label="当日存款总额最大值" align="center" prop="depositTotalMax" />
-      <el-table-column :label="抽奖次数" align="center" prop="lotteryTimes" />
-      <el-table-column :label=$t('global.status') align="center" prop="status">
+      <el-table-column :label="$t('activity.redPacketManage.lotteryDiceConfig.tableDialog.depositTotalMin')" align="center" prop="depositTotalMin" />
+      <el-table-column :label="$t('activity.redPacketManage.lotteryDiceConfig.tableDialog.depositTotalMax')" align="center" prop="depositTotalMax" />
+      <el-table-column :label="$t('activity.redPacketManage.lotteryDiceConfig.tableDialog.lotteryTimes')" align="center" prop="lotteryTimes" />
+      <el-table-column :label="$t('global.status')" align="center" prop="status">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -92,17 +92,17 @@
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="150px">
-        <el-form-item :label="活动类型" prop="type">
-          <el-input v-model="form.type" :placeholder="请输入活动类型" />
+        <el-form-item :label="$t('activity.redPacketManage.lotteryDiceConfig.tableDialog.type')" prop="type">
+          <el-input v-model="form.type" :placeholder="$t('activity.redPacketManage.lotteryDiceConfig.tableDialog.typePlaceholder')" />
         </el-form-item>
-        <el-form-item :label="当日存款总额最小值" prop="depositTotalMin">
-          <el-input v-model="form.depositTotalMin" :placeholder="请输入当日存款总额最小值" />
+        <el-form-item :label="$t('activity.redPacketManage.lotteryDiceConfig.tableDialog.depositTotalMin')" prop="depositTotalMin">
+          <el-input v-model="form.depositTotalMin" :placeholder="$t('activity.redPacketManage.lotteryDiceConfig.tableDialog.depositTotalMinPlaceholder')" />
         </el-form-item>
-        <el-form-item :label="当日存款总额最大值" prop="depositTotalMax">
-          <el-input v-model="form.depositTotalMax" :placeholder="请输入当日存款总额最大值" />
+        <el-form-item :label="$t('activity.redPacketManage.lotteryDiceConfig.tableDialog.depositTotalMaxPlaceholder')" prop="depositTotalMax">
+          <el-input v-model="form.depositTotalMax" :placeholder="$t('activity.redPacketManage.lotteryDiceConfig.tableDialog.depositTotalMaxPlaceholder')" />
         </el-form-item>
-        <el-form-item :label="抽奖次数" prop="lotteryTimes">
-          <el-input v-model="form.lotteryTimes" :placeholder="请输入抽奖次数" />
+        <el-form-item :label="$t('activity.redPacketManage.lotteryDiceConfig.tableDialog.lotteryTimes')" prop="lotteryTimes">
+          <el-input v-model="form.lotteryTimes" :placeholder="$t('activity.redPacketManage.lotteryDiceConfig.tableDialog.lotteryTimesPlaceholder')" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -155,16 +155,16 @@ export default {
       // 表单校验
       rules: {
         type: [
-          { required: true, message: '活动类型不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('activity.redPacketManage.lotteryDiceConfig.validation.type'), trigger: 'blur' }
         ],
         depositTotalMin: [
-          { required: true, message: '当日存款总额最小值不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('activity.redPacketManage.lotteryDiceConfig.validation.depositTotalMin'), trigger: 'blur' }
         ],
         depositTotalMax: [
-          { required: true, message: '当日存款总额最大值不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('activity.redPacketManage.lotteryDiceConfig.validation.depositTotalMax'), trigger: 'blur' }
         ],
         lotteryTimes: [
-          { required: true, message: '抽奖次数不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('activity.redPacketManage.lotteryDiceConfig.validation.lotteryTimes'), trigger: 'blur' }
         ]
       }
     };
@@ -220,7 +220,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加抽奖次数设置";
+      this.title = this.$t('activity.redPacketManage.lotteryDiceConfig.addTitle');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -229,7 +229,7 @@ export default {
       getLotteryDiceConfig(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改抽奖次数设置";
+        this.title = this.$t('activity.redPacketManage.lotteryDiceConfig.editTitle');
       });
     },
     /** 提交按钮 */
@@ -255,7 +255,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除抽奖次数设置编号为"' + ids + '"的数据项?', "警告", {
+      this.$confirm(this.$t('global.deleteConfirm') + row.name + '"?', this.$t('global.deleteConfirmTitle'), {
         confirmButtonText: this.$t('global.confirmButton'),
         cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
@@ -269,11 +269,18 @@ export default {
     },
     //修改状态
     handleStatusChange(row) {
-      let text = row.status === '1' ? '启用' : '停用'
-      this.$confirm('确认要"' + text + '"吗?', '警告', {
-        confirmButtonText: '确定',
-cancelButtonText: this.$t('global.cancelButton'),
-        type: 'warning'
+      let text = row.status === '1'
+        ? this.$t('global.statusEnable')
+        : this.$t('global.statusDisable')
+      this.$confirm(this.$t('global.statusEditSuccess')
+        + text
+        + '""'
+        + this.title
+        + this.$t('global.statusConfirmQuestion'),
+        this.$t('global.statusConfirmTitle'), {
+          confirmButtonText: this.$t('global.confirmButton'),
+          cancelButtonText: this.$t('global.cancelButton'),
+          type: 'warning'
       }).then(function () {
         return changeStatus(row.id, row.status)
       }).then(() => {
@@ -285,10 +292,10 @@ cancelButtonText: this.$t('global.cancelButton'),
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
-        confirmButtonText: "确认",
+      this.$confirm(this.$t('global.confirmExport'), this.$t('global.confirmExportTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
         cancelButtonText: this.$t('global.cancelButton'),
-        type: "warning"
+        type: 'warning'
       }).then(function() {
         return exportLotteryDiceConfig(queryParams);
       }).then(response => {

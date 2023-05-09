@@ -41,7 +41,7 @@ export default {
     name: '名称',
     nickname: '昵称',
     status: '状态',
-    ctime: '发布时间',
+    ctTime: '发布时间',
     ctTimePlaceholder: '选择发布时间',
     sortPlaceholder: '请输入排序',
     statusPlaceholder: '请选择状态',
@@ -556,7 +556,7 @@ export default {
       lotteryDiceConfig: {
         addTitle: '添加抽奖次数设置',
         editTitle: '修改抽奖次数设置',
-        tableDialog:{
+        tableDialog: {
           depositTotalMin: '当日存款总额最小值',
           depositTotalMinPlaceholder: '请输入当日存款总额最小值',
           depositTotalMax: '当日存款总额最大值',
@@ -571,8 +571,21 @@ export default {
           depositTotalMin: '当日存款总额最小值不能为空',
           depositTotalMax: '当日存款总额最大值不能为空',
           lotteryTimes: '抽奖次数不能为空',
-        }
-      }
+        },
+      },
+      lotteryHistoryDice: {
+        addTitle: '添加抽奖结果',
+        editTitle: '修改抽奖结果',
+        exportTitle: '抽奖结果',
+        tableDialog: {
+          coverImg: '图片',
+          award: '奖励',
+          awardPlaceholder: '奖励'
+        },
+        validation: {
+          pUserId: '会员ID不能为空'
+        },
+      },
     },
     messageGameNotice: {
       addTitle: '添加游戏公告',
@@ -664,7 +677,7 @@ export default {
       },
       recommonPic: {
         editTitle: '修改推广图',
-        tableDialog:{
+        tableDialog: {
           envTitle: '参数名称',
           envCode: '参数编码',
           envValue: '图片',
@@ -1634,8 +1647,8 @@ export default {
         updateTimePlaceholder: '请选择日期选择',
         idPlaceholder: '主播ID',
         nickNamePlaceholder: '主播昵称',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
         exportButton: '@:common.exportButton'

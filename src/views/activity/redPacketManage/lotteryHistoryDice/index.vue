@@ -1,19 +1,19 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="55px">
-      <el-form-item label="会员ID" prop="pUserId">
+      <el-form-item :label="$t('global.memberId') " prop="pUserId">
         <el-input
           v-model="queryParams.pUserId"
-          placeholder="请输入会员ID"
+          :placeholder="$t('global.memberIdPlaceholder') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="昵称" prop="name">
+      <el-form-item :label="$t('global.name') " prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入昵称"
+          :placeholder="$t('global.namePlaceholder') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -62,9 +62,9 @@
 
     <el-table stripe v-loading="loading" :data="lotteryHistoryDiceList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="会员ID" align="center" prop="pUserId" />
-      <el-table-column label="昵称" align="center" prop="name" />
-      <el-table-column label="头像" align="center" prop="headImg">
+      <el-table-column :label="$t('global.memberId') " align="center" prop="pUserId" />
+      <el-table-column :label="$t('global.name') " align="center" prop="name" />
+      <el-table-column :label="$t('activity.redPacketManage.lotteryHistoryDice.tableDialog.coverImg') " align="center" prop="headImg">
         <template slot-scope="scope">
           <el-image
             style="height: 50px;"
@@ -74,12 +74,12 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="抽奖时间" align="center" prop="cTime" width="180">
+      <el-table-column :label="$t('global.ctTime')" align="center" prop="cTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.cTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="奖励" align="center" prop="award" />
+      <el-table-column :label="$t('activity.redPacketManage.lotteryHistoryDice.tableDialog.award')" align="center" prop="award" />
       <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -104,17 +104,17 @@
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="会员ID" prop="pUserId">
-          <el-input v-model="form.pUserId" placeholder="请输入会员ID" />
+        <el-form-item :label="$t('global.memberId')" prop="pUserId">
+          <el-input v-model="form.pUserId" :placeholder="$t('global.memberIdPlaceholder')" />
         </el-form-item>
-        <el-form-item label="昵称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入昵称" />
+        <el-form-item :label="$t('global.name')" prop="name">
+          <el-input v-model="form.name" :placeholder="$t('global.namePlaceholder')" />
         </el-form-item>
-        <el-form-item label="头像">
+        <el-form-item :label="$t('activity.redPacketManage.lotteryHistoryDice.tableDialog.coverImg')">
           <imageUpload v-model="form.headImg" path="lotteryHistoryDice"/>
         </el-form-item>
-        <el-form-item label="奖励" prop="award">
-          <el-input v-model="form.award" placeholder="请输入奖励" />
+        <el-form-item :label="$t('activity.redPacketManage.lotteryHistoryDice.tableDialog.award')" prop="award">
+          <el-input v-model="form.award" :placeholder="$t('activity.redPacketManage.lotteryHistoryDice.tableDialog.awardPlaceholder')" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -170,7 +170,7 @@ export default {
       // 表单校验
       rules: {
         pUserId: [
-          { required: true, message: '会员ID不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('activity.redPacketManage.lotteryHistoryDice.validation.pUserId'), trigger: 'blur' }
         ],
       }
     };
@@ -226,7 +226,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加抽奖结果";
+      this.title = this.$t('activity.redPacketManage.lotteryHistoryDice.addTitle');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -235,7 +235,7 @@ export default {
       getLotteryHistoryDice(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改抽奖结果";
+        this.title = this.$t('activity.redPacketManage.lotteryHistoryDice.editTitle');
       });
     },
     /** 提交按钮 */
@@ -261,7 +261,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项?', "警告", {
+      this.$confirm(this.$t('global.deleteConfirm') + ids + '"?', this.$t('global.deleteConfirmTitle'), {
         confirmButtonText: this.$t('global.confirmButton'),
         cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
@@ -276,14 +276,14 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
-        confirmButtonText: "确认",
+      this.$confirm(this.$t('global.confirmExport'), this.$t('global.confirmExportTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
         cancelButtonText: this.$t('global.cancelButton'),
-        type: "warning"
+        type: 'warning'
       }).then(function() {
         return exportLotteryHistoryDice(queryParams);
       }).then(response => {
-        this.downloadExcel(response, '【请填写功能名称】');
+        this.downloadExcel(response, this.$t('activity.redPacketManage.lotteryHistoryDice.exportTitle'));
       }).catch(() => {
       })
     }

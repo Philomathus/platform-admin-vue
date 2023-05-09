@@ -521,6 +521,19 @@ export default {
           lotteryTimes: 'Number of Lotteries must not be empty',
         },
       },
+      lotteryHistoryDice: {
+        addTitle: 'Add Lottery Result',
+        editTitle: 'Edit Lottery Result',
+        exportTitle: 'Lottery Result',
+        tableDialog: {
+          coverImg: 'Display Photo',
+          award: 'Reward',
+          awardPlaceholder: 'Please enter Reward'
+        },
+        validation: {
+          pUserId: 'Member Id must not be empty'
+        },
+      },
     },
     messageGameNotice: {
       addTitle: 'Add Game Announcement',

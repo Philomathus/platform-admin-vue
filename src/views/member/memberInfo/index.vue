@@ -365,7 +365,7 @@
                 v-if="this.remark == '其他' "/>
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancelUser()"> {{ $t('members.memberInfo.index.cnc') }}</el-button>
-        <el-button type="primary" @click="submitMuteRemark">{{ $t('members.memberInfo.index.cnc') }}</el-button>
+        <el-button type="primary" @click="submitMuteRemark">{{ $t('members.memberInfo.index.sbmt') }}</el-button>
       </div>
     </el-dialog>
 

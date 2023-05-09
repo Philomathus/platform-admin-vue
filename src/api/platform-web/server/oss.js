@@ -6,10 +6,7 @@ export function listOss(query) {
   return request({
     url: url.platformWeb + '/server/oss/list',
     method: 'get',
-    params: query,
-    headers: {
-      hideAccess: true
-    }
+    params: query
   })
 }
 
@@ -26,6 +23,15 @@ export function addOss(data) {
   return request({
     url: url.platformWeb + '/server/oss',
     method: 'post',
+    data: data
+  })
+}
+
+// 修改oss文件存储服务配置
+export function updateOss(data) {
+  return request({
+    url: url.platformWeb + '/server/oss',
+    method: 'put',
     data: data
   })
 }

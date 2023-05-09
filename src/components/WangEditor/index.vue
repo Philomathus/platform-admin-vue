@@ -66,7 +66,7 @@ export default {
       }
       this.editor.config.uploadImgTimeout = 3 * 60 * 1000
       this.editor.config.onchange = (html) => {
-        this.$emit('change', html.replaceAll(localStorage.getItem('vHostUrl'), "\$\{domain\.oss\}"))
+        this.$emit('change', html)
       }
       this.editor.create()
       this.fullLoading = false
@@ -74,7 +74,7 @@ export default {
   },
   mounted() {
     this.setEditor()
-    this.editor.txt.html(this.value.replaceAll("\$\{domain\.oss\}", localStorage.getItem('vHostUrl')))
+    this.editor.txt.html(this.value)
   }
 }
 </script>

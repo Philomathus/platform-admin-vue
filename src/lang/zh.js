@@ -655,6 +655,7 @@ export default {
       },
     },
   },
+
   members: {
     configVip: {
       home: '',
@@ -1564,6 +1565,46 @@ export default {
         ncn: '此会员无手机号',
 
       }
+    },
+    memberMoney: {
+      mid: '会员ID',
+      pemid: '请输入会员ID',
+      uex: '上传Excel',
+      sdel: '开始派送',
+      cd: '清除数据',
+      tda: '总派送金额:',
+      sda: '统计派送金额',
+      da: '派送金额',
+      cm: '打码倍数',
+      peda: '请输入派送金额',
+      pecm: '请输入打码倍数',
+      rod: '入款备注',
+      peen: '请输入入款备注',
+      pegac: '请输入谷歌验证码',
+      sd: '开始派送',
+      dace: '派送金额不能为空',
+      cmce: '打码倍数不能为空',
+      tenc: '入款备注不能为空',
+      gcce: '谷歌验证码不能为空',
+      eus: 'Excel上传成功',
+      euf: 'Excel上传失败!',
+      ooe: '只能选取一个excel,如需更换请x掉再选取',
+      ute: '上传模板只能是xlsx or xls 格式的Excel文件!',
+      sut: '上传模板大小不能超过10MB!',
+      rs: '移除成功',
+      tfis: '此文件导入成功',
+      tfif: '此文件导入失败',
+      sfc: '数据清理成功',
+      dip: '正在派送中',
+      ds: '派送成功',
+      apsf: '添加派送彩金暂存表',
+      mpbs: '修改派送彩金暂存表',
+      ms: '修改成功',
+      as: '新增成功',
+      wcd: '是否确认删除派送彩金暂存表编号为 {mid} 的数据项?',
+      dels: '删除成功',
+      cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+      pbtd: '派送彩金暂存表'
     }
   },
 

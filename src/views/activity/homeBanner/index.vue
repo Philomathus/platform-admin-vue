@@ -81,7 +81,7 @@
     <el-table stripe v-loading="loading" :data="homeBannerList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column :label="$t('global.exportButton')" align="center" prop="name"/>
-      <el-table-column :label="$t('activity.tableDialog.coverImg')" align="center" prop="coverImg">
+      <el-table-column :label="$t('activity.homeBanner.tableDialog.coverImg')" align="center" prop="coverImg">
         <template slot-scope="scope">
           <el-image
             style="height: 80px"
@@ -91,7 +91,7 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column :label="排序号" align="center" prop="indexs"/>
+      <el-table-column :label="$t('global.sort')" align="center" prop="indexs"/>
       <el-table-column :label="$t('global.status')" align="center" prop="status">
         <template slot-scope="scope">
           <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">{{

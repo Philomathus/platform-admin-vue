@@ -95,11 +95,13 @@
         </template>
       </el-table-column>
       <el-table-column :label="$t('activity.homeNotice.tableDialog.index')" align="center" prop="indexs"/>
-      <el-table-column :label=$t('global.status') align="center" prop="status">
+
+      <el-table-column :label="$t('global.status')" align="center" prop="status">
         <template slot-scope="scope">
           <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">{{ status.dictLabel }}</span>
         </template>
       </el-table-column>
+
       <el-table-column :label="$t('activity.homeNotice.tableDialog.type')" align="center" prop="type" :formatter="typeFormat"/>
       <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">

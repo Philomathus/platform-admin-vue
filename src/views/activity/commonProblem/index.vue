@@ -15,7 +15,7 @@
           <el-option
             v-for="dict in statusOptions"
             :key="dict.dictValue"
-            ::label="dict.dictLabel"
+            :label="dict.dictLabel"
             :value="dict.dictValue"
           />
         </el-select>

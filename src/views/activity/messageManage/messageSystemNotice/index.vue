@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="公告标题" prop="title">
+      <el-form-item :label="$t('activity.messageSystemNotice.tableDialog.title')" prop="title">
         <el-input
           v-model="queryParams.title"
-          placeholder="请输入公告标题"
+          :placeholder="$t('activity.messageSystemNotice.tableDialog.titlePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -81,8 +81,8 @@
 
     <el-table v-loading="loading" :data="messageSystemNoticeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="公告标题" align="center" prop="title"/>
-      <el-table-column label="内容" show-overflow-tooltip align="center" prop="content"/>
+      <el-table-column :label="$t('activity.messageSystemNotice.tableDialog.title')" align="center" prop="title"/>
+      <el-table-column :label="$t('activity.messageSystemNotice.tableDialog.content')" show-overflow-tooltip align="center" prop="content"/>
       <el-table-column :label="$t('global.ctTime')" align="center" prop="pubdatetime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.pubdatetime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
@@ -123,11 +123,11 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item :label="公告标题" prop="title">
-          <el-input v-model="form.title" :placeholder="请输入公告标题"/>
+        <el-form-item :label="$t('activity.messageSystemNotice.tableDialog.title')" prop="title">
+          <el-input v-model="form.title" :placeholder="$t('activity.messageSystemNotice.tableDialog.titlePlaceholder')"/>
         </el-form-item>
-        <el-form-item :label="内容">
-          <el-input v-model="form.content" type="textarea" :placeholder="请输入内容" rows="5"/>
+        <el-form-item :label="$t('activity.messageSystemNotice.tableDialog.content')">
+          <el-input v-model="form.content" type="textarea" :placeholder="$t('activity.messageSystemNotice.tableDialog.contentPlaceholder')" rows="5"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -190,19 +190,19 @@ export default {
       // 表单校验
       rules: {
         title: [
-          {required: true, message: "公告标题不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.messageSystemNotice.validation.title'), trigger: "blur"}
         ],
         content: [
-          {required: true, message: "内容不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.messageSystemNotice.validation.content'), trigger: "blur"}
         ],
         device: [
-          {required: true, message: "设备不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.messageSystemNotice.validation.device'), trigger: "blur"}
         ],
         action: [
-          {required: true, message: "动作不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.messageSystemNotice.validation.action'), trigger: "blur"}
         ],
         pubdatetime: [
-          {required: true, message: "发布时间不能为空", trigger: "blur"}
+          {required: true, message: this.$t('activity.messageSystemNotice.validation.pubdatatime'), trigger: "blur"}
         ]
       }
     };
@@ -258,7 +258,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加系统公告";
+      this.title = this.$t('activity.messageSystemNotice.addTitle');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -267,7 +267,7 @@ export default {
       getMessageSystemNotice(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改系统公告";
+        this.title = this.$t('activity.messageSystemNotice.editTitle');
       });
     },
     /** 提交按钮 */
@@ -314,7 +314,7 @@ export default {
       }).then(function () {
         return exportMessageSystemNotice(queryParams);
       }).then(response => {
-        this.downloadExcel(response, '系统公告')
+        this.downloadExcel(response, this.$t('activity.messageSystemNotice.exportTitle'))
       }).catch(() => {
       })
     }

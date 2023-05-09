@@ -25,9 +25,9 @@
       </el-form-item>
       <el-form-item :label="$t('global.selectDate') " prop="regTime">
         <el-date-picker type="datetimerange" v-model="dateRange" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '95%'}" :start-placeholder=" $t('global.datePickerStartDate') "
-                        :end-placeholder=" $t('global.datePickerEndDate') "
-                        :range-separator=" $t('global.selectDateRangeSeparator') " clearable :default-time="['00:00:00', '23:59:59']"
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '95%'}" :start-placeholder=" $t('global.datePickerStartDatePlaceholder') "
+                        :end-placeholder=" $t('global.datePickerEndDatePlaceholder') "
+                        :range-separator=" $t('global.selectDateRangeSeparatorPlaceholder') " clearable :default-time="['00:00:00', '23:59:59']"
                         :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>

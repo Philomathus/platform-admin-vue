@@ -4,7 +4,7 @@
       <el-form-item :label="$t('activity.activityManage.activityType.tableDialog.name')" prop="name">
         <el-input
           v-model="queryParams.name"
-          :placeholder="$t('globalPlaceholder.namePlaceholder')"
+          :placeholder="$t('global.namePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"

@@ -17,9 +17,9 @@
           style="width: 240px"
           value-format="yyyy-MM-dd"
           type="daterange"
-          :range-separator="$t('global.datePickerStartDatePlaceholder')"
-          :start-placeholder="$t('global.datePickerEndDatePlaceholder')"
-          :end-placeholder="$t('global.selectDateRangeSeparator')"
+          :range-separator="$t('global.dateTimePickerRangeSeparator')"
+          :start-placeholder="$t('global.datePickerStartDatePlaceholder')"
+          :end-placeholder="$t('global.datePickerEndDatePlaceholder')"
           :picker-options="pickerOptions">
         </el-date-picker>
       </el-form-item>

@@ -146,7 +146,7 @@
         <el-form-item :label="$t('activity.homeNotice.tableDialog.index')" prop="indexs">
           <el-input v-model="form.indexs" :placeholder="$t('activity.homeNotice.tableDialog.indexPlaceholder')"/>
         </el-form-item>
-        <el-form-item :label=$t('global.status')>
+        <el-form-item :label="$t('global.status')">
           <el-radio-group v-model="form.status">
             <el-radio
               v-for="dict in statusOptions"

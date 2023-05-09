@@ -9,8 +9,8 @@
           value-format="yyyy-MM-dd HH:mm:ss"
           type="datetimerange"
           range-separator="-"
-          :start-placeholder="$t('global.datePickerStartDate')"
-          :end-placeholder="$t('global.datePickerEndDate')"
+          :start-placeholder="$t('global.datePickerStartDatePlaceholder')"
+          :end-placeholder="$t('global.datePickerEndDatePlaceholder')"
           :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>

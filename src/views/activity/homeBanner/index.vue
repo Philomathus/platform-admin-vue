@@ -4,7 +4,7 @@
       <el-form-item :label="$t('activity.tableDialog.name')" prop="name">
         <el-input
           v-model="queryParams.name"
-          :placeholder="$t('activity.tableDialog.namePlaceholder')"
+          :placeholder="$t('global.namePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -15,7 +15,7 @@
           <el-option
             v-for="dict in statusOptions"
             :key="dict.dictValue"
-            ::label="dict.dictLabel"
+            :label="dict.dictLabel"
             :value="dict.dictValue"
           />
         </el-select>
@@ -80,7 +80,7 @@
 
     <el-table stripe v-loading="loading" :data="homeBannerList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column :label="$t('global.exportButton')" align="center" prop="name"/>
+      <el-table-column :label="$t('global.name')" align="center" prop="name"/>
       <el-table-column :label="$t('activity.homeBanner.tableDialog.coverImg')" align="center" prop="coverImg">
         <template slot-scope="scope">
           <el-image
@@ -133,21 +133,21 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item :label="$t('activity.tableDialog.name')" prop="name">
-          <el-input v-model="form.name" :placeholder="$t('activity.tableDialog.namePlaceholder')"/>
+        <el-form-item :label="$t('global.name')" prop="name">
+          <el-input v-model="form.name" :placeholder="$t('global.namePlaceholder')"/>
         </el-form-item>
-        <el-form-item :label="$t('activity.tableDialog.sort')" prop="indexs">
-          <el-input v-model="form.indexs" :placeholder="$t('activity.tableDialog.sortPlaceholder')"/>
+        <el-form-item :label="$t('global.sort')" prop="indexs">
+          <el-input v-model="form.indexs" :placeholder="$t('global.sortPlaceholder')"/>
         </el-form-item>
         <el-form-item :label="$t('activity.homeBanner.tableDialog.coverImg')">
           <imageUpload v-model="form.coverImg"/>
         </el-form-item>
-        <el-form-item :label="$t('activity.tableDialog.status')">
+        <el-form-item :label="$t('global.status')">
           <el-radio-group v-model="form.status">
             <el-radio
               v-for="dict in statusOptions"
               :key="dict.dictValue"
-              ::label="parseInt(dict.dictValue)"
+              :label="parseInt(dict.dictValue)"
             >{{ dict.dictLabel }}
             </el-radio>
           </el-radio-group>
@@ -281,7 +281,7 @@ export default {
     handleAdd() {
       this.reset()
       this.open = true
-      this.title = this.$t('activity.activityManage.homeBanner.addTitle');
+      this.title = this.$t('activity.homeBanner.addTitle');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -290,7 +290,7 @@ export default {
       getHomeBanner(id).then(response => {
         this.form = response.data
         this.open = true
-        this.title = this.$t('activity.activityManage.homeBanner.editTitle');
+        this.title = this.$t('activity.homeBanner.editTitle');
       })
     },
     /** 提交按钮 */

@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item :label="信息标题" prop="title">
+      <el-form-item :label="$t('activity.messageOnSite.tableDialog.title')" prop="title">
         <el-input
           v-model="queryParams.title"
-          :placeholder="请输入信息标题"
+          :placeholder="$t('activity.messageOnSite.tableDialog.titlePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -17,9 +17,9 @@
           style="width: 240px"
           value-format="yyyy-MM-dd"
           type="daterange"
-          :range-separator="$t('global.datePickerStartDatePlaceholder')"
-          :start-placeholder="$t('global.datePickerEndDatePlaceholder')"
-          :end-placeholder="$t('global.selectDateRangeSeparator')"
+          :range-separator="$t('global.dateTimePickerRangeSeparator')"
+          :start-placeholder="$t('global.datePickerStartDatePlaceholder')"
+          :end-placeholder="$t('global.datePickerEndDatePlaceholder')"
           :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
@@ -84,7 +84,7 @@
           size="mini"
           @click="handleAddUserMessage"
           v-hasPermi="['admin:messageOnSite:add']"
-        >发送会员消息
+        >{{ $t('activity.messageOnSite.sendMemberMsgButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -92,8 +92,8 @@
 
     <el-table v-loading="loading" :data="messageOnSiteList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column :label="信息标题" align="center" prop="title"/>
-      <el-table-column :label="内容" show-overflow-tooltip align="center" prop="content"/>
+      <el-table-column :label="$t('activity.messageOnSite.tableDialog.title')" align="center" prop="title"/>
+      <el-table-column :label="$t('activity.messageOnSite.tableDialog.content')" show-overflow-tooltip align="center" prop="content"/>
       <el-table-column :label="$t('global.ctTime')" align="center" prop="pubdatetime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.pubdatetime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
@@ -135,20 +135,12 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item :label="信息标题" prop="title">
-          <el-input v-model="form.title" :placeholder="请输入信息标题"/>
+        <el-form-item :label="$t('activity.messageOnSite.tableDialog.title')" prop="title">
+          <el-input v-model="form.title" :placeholder="$t('activity.messageOnSite.tableDialog.titlePlaceholder')"/>
         </el-form-item>
-        <el-form-item :label="内容">
-          <el-input v-model="form.content" type="textarea" :placeholder="请输入内容" rows="5"/>
+        <el-form-item :label="$t('activity.messageOnSite.tableDialog.content')">
+          <el-input v-model="form.content" type="textarea" :placeholder="$t('activity.messageOnSite.tableDialog.contentPlaceholder')" rows="5"/>
         </el-form-item>
-        <!--        <el-form-item :label="接收者类型" prop="receiverType">-->
-        <!--          <el-select v-model="form.receiverType" :placeholder="请选择接收者类型">-->
-        <!--            <el-option :label="请选择字典生成" value="" />-->
-        <!--          </el-select>-->
-        <!--        </el-form-item>-->
-        <!--        <el-form-item :label="接收者" prop="receiver">-->
-        <!--          <el-input v-model="form.receiver" :placeholder="请输入接收者" />-->
-        <!--        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">{{ $t('global.submitButton') }}</el-button>
@@ -159,19 +151,19 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="openUserMessage" width="500px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item :label="会员id" prop="toUserId">
-          <el-input v-model="form.toUserId" :placeholder="会员id"/>
+        <el-form-item :label="$t('activity.messageOnSite.tableDialog.userId')" prop="toUserId">
+          <el-input v-model="form.toUserId" :placeholder="$t('activity.messageOnSite.tableDialog.userIdPlaceholder')"/>
         </el-form-item>
-        <el-form-item :label="信息标题" prop="title">
-          <el-input v-model="form.title" :placeholder="请输入信息标题"/>
+        <el-form-item :label="$t('activity.messageOnSite.tableDialog.title')" prop="title">
+          <el-input v-model="form.title" :placeholder="$t('activity.messageOnSite.tableDialog.titlePlaceholder')"/>
         </el-form-item>
-        <el-form-item :label="内容">
-          <el-input v-model="form.content" type="textarea" :placeholder="请输入内容" rows="5"/>
+        <el-form-item :label="$t('activity.messageOnSite.tableDialog.content')">
+          <el-input v-model="form.content" type="textarea" :placeholder="$t('activity.messageOnSite.tableDialog.contentPlaceholder')" rows="5"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitFormUserMessage">确 定</el-button>
-        <el-button @click="closeUserMessage">取 消</el-button>
+        <el-button type="primary" @click="submitFormUserMessage">{{ $t('global.confirmButton') }}</el-button>
+        <el-button @click="closeUserMessage">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -234,22 +226,22 @@ export default {
       // 表单校验
       rules: {
         title: [
-          {required: true, message: '信息标题不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('activity.messageOnSite.validation.title'), trigger: 'blur'}
         ],
         toUserId: [
-          {required: true, message: '会员id不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('activity.messageOnSite.validation.toUserId'), trigger: 'blur'}
         ],
         content: [
-          {required: true, message: '内容不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('activity.messageOnSite.validation.content'), trigger: 'blur'}
         ],
         receiverType: [
-          {required: true, message: '接收者类型不能为空', trigger: 'change'}
+          {required: true, message: this.$t('activity.messageOnSite.validation.receiverType'), trigger: 'change'}
         ],
         action: [
-          {required: true, message: '动作不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('activity.messageOnSite.validation.action'), trigger: 'blur'}
         ],
         pubdatetime: [
-          {required: true, message: '发布时间不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('activity.messageOnSite.validation.pubdatatime'), trigger: 'blur'}
         ]
       }
     }
@@ -306,12 +298,12 @@ export default {
     handleAdd() {
       this.reset()
       this.open = true
-      this.title = '添加站内信息'
+      this.title = this.$t('activity.messageOnSite.addTitle')
     },
     handleAddUserMessage() {
       this.reset()
       this.openUserMessage = true
-      this.title = '单个会员发送消息'
+      this.title = this.$t('activity.messageOnSite.addUserTitle')
     },
     closeUserMessage(){
       this.openUserMessage = false
@@ -324,7 +316,7 @@ export default {
       getMessageOnSite(id).then(response => {
         this.form = response.data
         this.open = true
-        this.title = '修改站内信息'
+        this.title = this.$t('activity.messageOnSite.editTitle')
       })
     },
     /** 提交按钮 */
@@ -351,7 +343,7 @@ export default {
       this.$refs['form'].validate(valid => {
         if (valid) {
           addUserMessage(this.form).then(response => {
-              this.msgSuccess('发送成功')
+              this.msgSuccess(this.$t('activity.messageOnSite.submitFormSuccess'))
               this.openUserMessage = false
               this.getList()
             })
@@ -361,10 +353,10 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids
-      this.$confirm('是否确认删除站内信息编号为"' + ids + '"的数据项?', '警告', {
-        confirmButtonText: '确定',
-cancelButtonText: this.$t('global.cancelButton'),
-        type: 'warning'
+      this.$confirm(this.$t('global.deleteConfirm') + ids + '"?', this.$t('global.deleteConfirmTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
+        type: "warning"
       }).then(function () {
         return delMessageOnSite(ids)
       }).then(() => {
@@ -375,10 +367,10 @@ cancelButtonText: this.$t('global.cancelButton'),
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('是否确认导出所有站内信息数据项?', '警告', {
-        confirmButtonText: '确定',
-cancelButtonText: this.$t('global.cancelButton'),
-        type: 'warning'
+      this.$confirm(this.$t('global.confirmExport'), this.$t('global.confirmExportTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
+        type: "warning"
       }).then(function () {
         return exportMessageOnSite(queryParams)
       }).then(response => {

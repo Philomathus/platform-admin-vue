@@ -141,7 +141,7 @@
             <el-option
               v-for="dict in qqwechatType"
               :key="dict.dictValue"
-              ::label="dict.dictLabel"
+              :label="dict.dictLabel"
               :value="dict.dictValue"
             ></el-option>
           </el-select>

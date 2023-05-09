@@ -41,6 +41,7 @@ export default {
     nickname: '昵称',
     status: '状态',
     ctime: '发布时间',
+    ctTimePlaceholder: '选择发布时间',
     sortPlaceholder: '请输入排序',
     statusPlaceholder: '请选择状态',
     nicknamePlaceholder: '请输入昵称',
@@ -348,9 +349,6 @@ export default {
         inviterCodePlaceholder: '请输入邀请码',
         loginIp: '登录ip',
         loginIpPlaceholder: '请输入登录ip',
-        selectDateStartPlaceholder: '开始时间',
-        selectDateEndPlaceholder: '开始时间',
-        selectDateRangeSeparator: '至',
         id: '系统编号',
         idPlaceholder: '',
         regTime: '注册时间',
@@ -437,7 +435,6 @@ export default {
         loginNum: '登陆次数不能为空',
       },
     },
-
     chatComplaint: {
       addTitle: '添加客服投诉',
       editTitle: '',
@@ -512,8 +509,6 @@ export default {
       editTitle: '修改首页轮播图',
       exportTitle: '首页轮播图',
       tableDialog: {
-        sort: '排序号',
-        sortPlaceholder: '请输入排序号',
         coverImg: '图片',
       },
     },
@@ -557,6 +552,72 @@ export default {
           prizeAmount: '奖品不能为空',
         },
       },
+    },
+    messageGameNotice: {
+      addTitle: '添加游戏公告',
+      editTitle: '修改游戏公告',
+      tableDialog: {
+        title: '公告标题',
+        titlePlaceholder: '请输入公告标题',
+        device: '设备端',
+        devicePlaceholder: '请输入设备端',
+        action: '动作',
+        content: '内容',
+      },
+      validation: {
+        title: '公告标题不能为空',
+        device: '设备端不能为空',
+        action: '动作不能为空',
+        pubdatetime: '发布时间不能为空',
+        content: '内容不能为空',
+      }
+    },
+    messageOnSite: {
+      addTitle: '添加站内信息',
+      addUserTitle: '单个会员发送消息',
+      editTitle: '修改站内信息',
+      submitFormSuccess: '发送成功',
+      sendMemberMsgButton: '发送会员消息',
+      tableDialog: {
+        title: '信息标题',
+        titlePlaceholder: '请输入信息标题',
+        device: '设备端',
+        devicePlaceholder: '请输入设备端',
+        action: '动作',
+        content: '内容',
+        contentPlaceholder: '请输入内容',
+        userId: '会员id',
+        userIdPlaceholder: '会员id',
+      },
+      validation: {
+        title: '信息标题不能为空',
+        toUserId: '会员id不能为空',
+        content: '内容不能为空',
+        receiverType: '接收者类型不能为空',
+        action: '动作不能为空',
+        pubdatatime: '发布时间不能为空',
+      }
+    },
+    messageSystemNotice: {
+      addTitle: '添加系统公告',
+      editTitle: '修改系统公告',
+      exportTitle: '系统公告',
+      tableDialog: {
+        title: '信息标题',
+        titlePlaceholder: '请输入信息标题',
+        device: '设备端',
+        devicePlaceholder: '请输入设备端',
+        action: '动作',
+        content: '内容',
+        contentPlaceholder: '请输入内容',
+      },
+      validation: {
+        title: '公告标题不能为空',
+        content: '内容不能为空',
+        device: '设备不能为空',
+        action: '动作不能为空',
+        pubdatatime: '发布时间不能为空',
+      }
     },
   },
   members: {

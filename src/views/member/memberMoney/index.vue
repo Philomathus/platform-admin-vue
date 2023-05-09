@@ -3,17 +3,17 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="会员ID" prop="memberId">
+      <el-form-item :label=" $t('members.memberMoney.mid') " prop="memberId">
         <el-input
           v-model="queryParams.memberId"
-          placeholder="请输入会员ID"
+          :placeholder=" $t('members.memberMoney.pemid') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
       </el-form-item>
       <el-form-item>
         <el-upload
@@ -31,25 +31,25 @@
           :on-success="uploadSuccess"
           :auto-upload="true"
           :before-upload="beforeAvatarUpload">
-          <el-button slot="trigger" size="small" type="primary" @click="submitUpload">上传excel</el-button>
+          <el-button slot="trigger" size="small" type="primary" @click="submitUpload">{{ $t('members.memberMoney.uex') }}</el-button>
         </el-upload>
       </el-form-item>
       <el-form-item>
-        <el-button type="success" size="mini" @click="starSend">开始派送</el-button>
+        <el-button type="success" size="mini" @click="starSend">{{ $t('members.memberMoney.sdel') }}</el-button>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" size="mini" @click="handleClean">清除数据</el-button>
+        <el-button type="primary" size="mini" @click="handleClean">{{ $t('members.memberMoney.cd') }}</el-button>
       </el-form-item>
     </el-form>
       </el-col>
 
     <el-col :span="1.5" style="padding-top: 5px">
-      <el-button type="success" size="mini">总派送金额 : {{totalMoney || 0}}</el-button>
+      <el-button type="success" size="mini">{{ $t('members.memberMoney.tda') }} {{totalMoney || 0}}</el-button>
       <el-button  type="primary"
                   icon="el-icon-search"
                   size="mini"
                   @click="getTotalMoney"
-                  style="margin-left: 20px">统计派送金额
+                  style="margin-left: 20px">{{ $t('members.memberMoney.sda') }}
       </el-button>
     </el-col>
     </el-row>
@@ -64,7 +64,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:memberMoney:edit']"
-        >修改
+        >{{ $t('global.editButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -76,7 +76,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:memberMoney:remove']"
-        >删除
+        >{{ $t('global.deleteButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -87,7 +87,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:memberMoney:export']"
-        >导出
+        >{{ $t('global.exportButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -95,10 +95,10 @@
 
     <el-table stripe v-loading="loading" :data="memberMoneyList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" min-width="150"/>
-      <el-table-column label="会员id" align="center" prop="memberId" min-width="150"/>
-      <el-table-column label="派送金额" align="center" prop="money" min-width="150"/>
-      <el-table-column label="打码倍数" align="center" prop="beat" min-width="150"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right" min-width="150">
+      <el-table-column :label=" $t('members.memberMoney.mid') " align="center" prop="memberId" min-width="150"/>
+      <el-table-column :label=" $t('members.memberMoney.da') " align="center" prop="money" min-width="150"/>
+      <el-table-column :label=" $t('members.memberMoney.cm') " align="center" prop="beat" min-width="150"/>
+      <el-table-column :label=" $t('global.operationColumn') " align="center" class-name="small-padding fixed-width" fixed="right" min-width="150">
 
         <template slot-scope="scope">
           <el-button
@@ -107,7 +107,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:memberMoney:edit']"
-          >修改
+          >{{ $t('global.editButton') }}
           </el-button>
           <el-button
             size="mini"
@@ -115,7 +115,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:memberMoney:remove']"
-          >删除
+          >{{ $t('global.deleteButton') }}
           </el-button>
         </template>
       </el-table-column>
@@ -133,32 +133,32 @@
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="派送金额" prop="money">
-          <el-input v-model="form.money" placeholder="请输入派送金额"/>
+        <el-form-item :label=" $t('members.memberMoney.da') " prop="money">
+          <el-input v-model="form.money" :placeholder=" $t('members.memberMoney.peda') "/>
         </el-form-item>
-        <el-form-item label="打码倍数" prop="beat">
-          <el-input v-model="form.beat" placeholder="请输入打码倍数"/>
+        <el-form-item :label=" $t('members.memberMoney.cm') " prop="beat">
+          <el-input v-model="form.beat" :placeholder=" $t('members.memberMoney.pecm') "/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('global.confirmButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
 
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="opene" width="400px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="startPaiRules" label-width="100px">
-        <el-form-item label="入款备注" prop="moneydes">
-          <el-input v-model="form.moneydes" placeholder="请输入入款备注"/>
+        <el-form-item :label=" $t('members.memberMoney.rod') " prop="moneydes">
+          <el-input v-model="form.moneydes" :placeholder=" $t('members.memberMoney.peen') "/>
         </el-form-item>
-        <el-form-item label="谷歌验证码" prop="googleAuthCode">
-          <el-input v-model="form.googleAuthCode" placeholder="请输入谷歌验证码"/>
+        <el-form-item :label=" $t('members.memberMoney.gc') " prop="googleAuthCode">
+          <el-input v-model="form.googleAuthCode" :placeholder=" $t('members.memberMoney.pegac') "/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitFormStartSend">开始派送</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitFormStartSend">{{ $t('members.memberMoney.sd') }}</el-button>
+        <el-button @click="cancel">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -220,18 +220,18 @@ export default {
       // 表单校验
       rules: {
         money: [
-          { required: true, message: '派送金额不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('members.memberMoney.dace'), trigger: 'blur' }
         ],
         beat: [
-          { required: true, message: '打码倍数不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('members.memberMoney.cmce'), trigger: 'blur' }
         ]
       },
       startPaiRules: {
         moneydes: [
-          { required: true, message: '入款备注不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('members.memberMoney.tenc'), trigger: 'blur' }
         ],
         googleAuthCode: [
-          { required: true, message: '谷歌验证码不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('members.memberMoney.gcce'), trigger: 'blur' }
         ]
       }
     }
@@ -241,16 +241,16 @@ export default {
   },
   methods: {
     uploadSuccess() {
-      this.$message.success('excel上传成功')
+      this.$message.success( this.$t('members.memberMoney.eus') )
       this.queryParams.memberId = null
       this.queryParams.pageNum = 1
       this.getList()
     },
     uploadFalse() {
-      this.$message.error('excel上传失败！')
+      this.$message.error( this.$t('members.memberMoney.euf') )
     },
     handleExceed() {
-      this.$message.error('只能选取一个excel,如需更换请x掉再选取')
+      this.$message.error( this.$t('members.memberMoney.ooe') )
     },
     // 上传前对文件的大小的判断
     beforeAvatarUpload(file) {
@@ -258,11 +258,11 @@ export default {
       const extensionXls = file.name.split('.')[1] === 'xls' //added this new extensionsXsl
       const isLt2M = file.size / 1024 / 1024 < 10
       if (!extension && !extensionXls) {
-        this.$message.error('上传模板只能是xlsx or xls 格式的excel文件!')
+        this.$message.error( this.$t('members.memberMoney.ute') )
         return
       }
       if (!isLt2M) {
-        this.$message.error('上传模板大小不能超过10MB!')
+        this.$message.error( this.$t('members.memberMoney.sut') )
         return
       }
     },
@@ -272,15 +272,15 @@ export default {
     },
 
     handleRemove() {
-      this.$message.success('移除成功')
+      this.$message.success( this.$t('members.memberMoney.rs') )
     },
     handlePreview(file) {
       console.info(file.response.status)
       if (file.response.status) {
 
-        this.$message.success('此文件导入成功')
+        this.$message.success( this.$t('members.memberMoney.tfis') )
       } else {
-        this.$message.error('此文件导入失败')
+        this.$message.error( this.$t('members.memberMoney.tfif') )
       }
     },
     /** 查询派送彩金暂存表列表 */
@@ -294,7 +294,7 @@ export default {
     },
     handleClean() {
       handleClean().then(response => {
-        this.$message.success('数据清理成功')
+        this.$message.success( this.$t('members.memberMoney.sdc') )
         this.queryParams.memberId = null
         this.queryParams.pageNum = 1
         this.getList()
@@ -303,13 +303,13 @@ export default {
     starSend() {
       this.reset()
       this.opene = true
-      this.title = '开始派送'
+      this.title = this.$t('members.memberMoney.sd')
     },
     submitFormStartSend() {
       this.opene = false
       const loading = this.$loading({
         lock: true,
-        text: '正在派送中',
+        text: this.$t('members.memberMoney.dip'),
         spinner: 'el-icon-loading',
         background: 'rgba(0, 0, 0, 0.7)'
       })
@@ -317,7 +317,7 @@ export default {
         loading.close()
         if (response.code === 0) {
           this.getList()
-          this.$message.success('派送成功')
+          this.$message.success( this.$t('members.memberMoney.ds') )
         } else {
           this.$message.error(response.msg)
         }
@@ -362,7 +362,7 @@ export default {
     handleAdd() {
       this.reset()
       this.open = true
-      this.title = '添加派送彩金暂存表'
+      this.title = this.$t('members.memberMoney.apsf')
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -371,7 +371,7 @@ export default {
       getMemberMoney(memberId).then(response => {
         this.form = response.data
         this.open = true
-        this.title = '修改派送彩金暂存表'
+        this.title = this.$t('members.memberMoney.mpbs')
       })
     },
     /** 提交按钮 */
@@ -380,13 +380,13 @@ export default {
         if (valid) {
           if (this.form.memberId != null) {
             updateMemberMoney(this.form).then(response => {
-              this.msgSuccess('修改成功')
+              this.msgSuccess( this.$t('members.memberMoney.ms') )
               this.open = false
               this.getList()
             })
           } else {
             addMemberMoney(this.form).then(response => {
-              this.msgSuccess('新增成功')
+              this.msgSuccess( this.$t('members.memberMoney.as') )
               this.open = false
               this.getList()
             })
@@ -397,29 +397,29 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const memberIds = row.memberId || this.ids
-      this.$confirm('是否确认删除派送彩金暂存表编号为"' + memberIds + '"的数据项?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm( this.$t('members.memberMoney.wcd', {mid: memberIds}) , this.$t('global.dialogTitle') , {
+        confirmButtonText: this.$t('global.confirmButton') ,
+        cancelButtonText: this.$t('global.cancelButton') ,
         type: 'warning'
       }).then(function() {
         return delMemberMoney(memberIds)
       }).then(() => {
         this.getList()
-        this.msgSuccess('删除成功')
+        this.msgSuccess( this.$t('members.memberMoney.dels') )
       }).catch(() => {
       })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+      this.$confirm( this.$t('members.memberMoney.cpe') , this.$t('global.dialogTitle') , {
+        confirmButtonText: this.$t('global.confirmButton') ,
+        cancelButtonText: this.$t('global.cancelButton') ,
         type: 'warning'
       }).then(function() {
         return exportMemberMoney(queryParams)
       }).then(response => {
-        this.downloadExcel(response, '派送彩金暂存表')
+        this.downloadExcel(response, this.$t('members.memberMoney.pbtd') )
       }).catch(() => {
       })
     },

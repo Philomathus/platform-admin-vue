@@ -634,6 +634,22 @@ export default {
         },
       },
     },
+    userActivity: {
+      exportTitle: 'Activity Information',
+      tableDialog: {
+        id: 'User Id',
+        idPlaceholder: 'Please enter UserId',
+        msg: 'Message',
+        msgPlaceholder: 'Please enter a message.',
+        updateBy: 'Updated By',
+        updateTime: 'Update Time',
+        activityType: 'Activity Type',
+        activityTypePlaceholder: 'Please enter Activity Type',
+      },
+      validation: {
+        msg: 'Participating activities must be empty'
+      },
+    },
   },
 
   members: {

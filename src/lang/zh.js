@@ -686,6 +686,22 @@ export default {
         },
       },
     },
+    userActivity: {
+      exportTitle: '活动信息',
+      tableDialog: {
+        id: '用户id',
+        idPlaceholder: '请输入用户ID',
+        msg: '标题',
+        msgPlaceholder: '请输入留言',
+        updateBy: '操作人员',
+        updateTime: '修改时间',
+        activityType: '活动类型',
+        activityTypePlaceholder: '活动类型',
+      },
+      validation: {
+        msg: '参加的活动不能为空'
+      }
+    }
   },
 
   members: {

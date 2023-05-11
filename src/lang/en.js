@@ -289,6 +289,7 @@ export default {
           depositTotalMaxPlaceholder: 'Please Enter Daily Maximum Deposit',
           lotteryTimes: 'Number of Lotteries',
           lotteryTimesPlaceholder: 'Please enter the Number of Lotteries',
+          status: 'status',
         },
         validation: {
           depositTotalMin: 'Daily Minimum Deposit must not be empty',

@@ -117,7 +117,6 @@ export default {
     closeAllTags: '',
     closeOthersTags: ''
   },
-
   tagsView: {
     closeOthersTags: '关闭其他',
     closeAllTags: '关闭所有',
@@ -126,7 +125,6 @@ export default {
     closeOthers: '关闭所有',
     closeAll: '关闭其他'
   },
-
   activity: {
     startDatePlaceholder: '开始时间',
     endDatePlaceholder: '结束时间',
@@ -322,6 +320,7 @@ export default {
       wheelDiceConfig: {
         addTitle: "添加【抽奖配置】",
         editTitle: "修改【抽奖配置】",
+        exportResponse: "请填写功能名称",
         tableDialog: {
           id: '主键id',
           idPlaceholder: '',
@@ -703,7 +702,36 @@ export default {
       }
     }
   },
-
+  config: {
+    configUsdtRecharge: {
+      addTitle: '添加USDT充值',
+      editTitle: '编辑USDT充值',
+      exportTitle: 'USDT充电',
+      tableDialog: {
+        channelName: '渠道名称',
+        channelNamePlaceholder: '请输入渠道名称',
+        chainName: '链名称',
+        chainNamePlaceholder: '请输入链名称',
+        rechargeAddress: '充值地址',
+        rechargeAddressPlaceholder: '请输入充值地址',
+        discountBill: '优惠比例',
+        discountBillPlaceholder: '请输入优惠比例',
+        exchangeRate: 'usdt汇率',
+        exchangeRatePlaceholder: '请输入usdt汇率',
+        remark: '备注信息',
+        remarkPlaceholder: '请输入备注信息',
+      },
+      validation: {
+        channelName: '渠道名称不能为空',
+        chainName: '链名称不能为空',
+        rechargeAddress: '充值地址不能为空',
+        discountBill: '优惠比例不能为空',
+        exchangeRate: 'usdt汇率不能为空',
+        icon: '钱包二维码不能为空',
+      }
+    },
+    configEnvironment: {}
+  },
   members: {
     configVip: {
       home: '',

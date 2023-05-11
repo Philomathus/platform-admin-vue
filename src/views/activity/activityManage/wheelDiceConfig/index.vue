@@ -337,7 +337,7 @@ export default {
       }).then(function () {
         return exportWheelDiceConfig(queryParams);
       }).then(response => {
-        this.downloadExcel(response, this.$t('global.exportResponse'));
+        this.downloadExcel(response, this.$t('activity.activityManage.wheelDiceConfig.statusPlaceholder'));
       }).catch(() => {
       })
     }

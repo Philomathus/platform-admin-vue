@@ -150,19 +150,19 @@ export default {
       // 表单校验
       rules: {
         type: [
-          { required: true, message: this.$t('activity.redPacketManage.activityCashBack.lotteryPrize.validation.type'), trigger: 'blur' }
+          { required: true, message: this.$t('activity.redPacketManage.lotteryPrize.validation.type'), trigger: 'blur' }
         ],
         prizeName: [
-          { required: true, message: this.$t('activity.redPacketManage.activityCashBack.lotteryPrize.validation.prizeName'), trigger: 'blur' }
+          { required: true, message: this.$t('activity.redPacketManage.lotteryPrize.validation.prizeName'), trigger: 'blur' }
         ],
         prize: [
-          { required: true, message: this.$t('activity.redPacketManage.activityCashBack.lotteryPrize.validation.prize'), trigger: 'blur' }
+          { required: true, message: this.$t('activity.redPacketManage.lotteryPrize.validation.prize'), trigger: 'blur' }
         ],
         prizeWeight: [
-          { required: true, message: this.$t('activity.redPacketManage.activityCashBack.lotteryPrize.validation.prizeWeight'), trigger: 'blur', pattern:'^[1-9]$' }
+          { required: true, message: this.$t('activity.redPacketManage.lotteryPrize.validation.prizeWeight'), trigger: 'blur', pattern:'^[1-9]$' }
         ],
         prizeAmount: [
-          { required: true, message: this.$t('activity.redPacketManage.activityCashBack.lotteryPrize.validation.prizeAmount'), trigger: 'blur' }
+          { required: true, message: this.$t('activity.redPacketManage.lotteryPrize.validation.prizeAmount'), trigger: 'blur' }
         ]
       }
     };
@@ -217,7 +217,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = this.$t('activity.redPacketManage.activityCashBack.lotteryPrize.addTitle');
+      this.title = this.$t('activity.redPacketManage.lotteryPrize.addTitle');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -226,7 +226,7 @@ export default {
       getLotteryPrize(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = this.$t('activity.redPacketManage.activityCashBack.lotteryPrize.editTitle');
+        this.title = this.$t('activity.redPacketManage.lotteryPrize.editTitle');
       });
     },
     /** 提交按钮 */
@@ -274,7 +274,7 @@ export default {
       }).then(function() {
         return exportLotteryPrize(queryParams);
       }).then(response => {
-        this.downloadExcel(response, '【请填写功能名称】');
+        this.downloadExcel(response, this.$t('activity.redPacketManage.lotteryPrize.exportTitle'))
       }).catch(() => {
       })
     }

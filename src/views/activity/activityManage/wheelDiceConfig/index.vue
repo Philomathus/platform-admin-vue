@@ -74,8 +74,6 @@
 
     <el-table stripe v-loading="loading" :data="wheelDiceConfigList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column :label="$t('activity.activityManage.wheelDiceConfig.statusPlaceholder')" align="center"
-                       prop="id"/>
       <el-table-column :label="$t('activity.activityManage.wheelDiceConfig.depositTotalMin')" align="center"
                        prop="depositTotalMin"/>
       <el-table-column :label="$t('activity.activityManage.wheelDiceConfig.depositTotalMax')" align="center"

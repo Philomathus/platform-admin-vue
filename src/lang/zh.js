@@ -331,7 +331,6 @@ export default {
           lotteryTimes: '抽奖次数',
           lotteryTimesPlaceholder: '请输入抽奖次数',
           status: '状态',
-          statusPlaceholder: '请选择状态'
         },
         validation: {
           depositTotalMin: '名称不能为空',

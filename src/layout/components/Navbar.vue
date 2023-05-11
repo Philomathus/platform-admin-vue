@@ -54,8 +54,8 @@ import Hamburger from '@/components/Hamburger'
 import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
-import { checkPermissions } from "@/api/platform-web/system/login";
-import DropDownSwitch from "@/components/DropDownSwitch/index.vue";
+// import { checkPermissions } from "@/api/platform-web/system/login";
+// import DropDownSwitch from "@/components/DropDownSwitch/index.vue";
 import LangSelect from '@/components/LangSelect'
 
 export default {
@@ -70,7 +70,7 @@ export default {
     Screenfull,
     SizeSelect,
     Search,
-    DropDownSwitch,
+    //DropDownSwitch,
     // SwitchDeposit,
     // SwitchWithdraw
     LangSelect,
@@ -94,8 +94,8 @@ export default {
     }
   },
   mounted() {
-    checkPermissions( 'pay:memberPayJour:list','pay:memberWithdrawLog:list','pay:memberRechargeLog:list','admin:payUsdtRecharge:list' )
-      .then( hasPermissions => this.showDropDownNotification = hasPermissions );
+    /*checkPermissions( 'pay:memberPayJour:list','pay:memberWithdrawLog:list','pay:memberRechargeLog:list','admin:payUsdtRecharge:list' )
+      .then( hasPermissions => this.showDropDownNotification = hasPermissions );*/
   },
   methods: {
     toggleSideBar() {

@@ -15,7 +15,7 @@
                         :style="{width: '95%'}"
                         :start-placeholder=" $t('global.datePickerStartDatePlaceholder') "
                         :end-placeholder=" $t('global.datePickerEndDatePlaceholder') "
-                        :range-separator=" $t('global.selectDateRangeSeparatorPlaceholder') "
+                        :range-separator=" $t('global.selectDateRangeSeparator') "
                         clearable
                         :default-time="['00:00:00', '23:59:59']"
                         :picker-options="pickerOptions"

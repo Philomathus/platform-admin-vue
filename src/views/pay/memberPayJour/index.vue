@@ -68,6 +68,35 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+
+      <el-form-item prop="money" label-width="70px">
+        <el-input
+          v-model="queryParams.priceMin"
+          placeholder="￥"
+          clearable
+          autocomplete="on"
+          min="0"
+          size="small"
+          style="width: 86px"
+          type="number"
+          class="no-number"
+          @keyup.enter.native="handleQuery"
+        />
+        -
+        <el-input
+          v-model="queryParams.priceMax"
+          placeholder="￥"
+          clearable
+          autocomplete="on"
+          min="0"
+          size="small"
+          style="width: 86px"
+          type="number"
+          class="no-number"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -256,6 +285,8 @@ export default {
         channelName: null,
         status: null,
         downLoadDate: [],
+        priceMin: null,
+        priceMax: null,
       },
       // 表单参数
       form: {},

@@ -1,7 +1,6 @@
 export default {
 
   global:{
-    export: 'Export',
     cancelButton: 'Cancel',
     confirmButton: 'Confirm',
     refresh: 'Refresh',
@@ -1582,6 +1581,38 @@ export default {
       menu: 'Member ID/Account number can only be entered as a number and underscore',
       cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
       oml: 'Online Member List'
+    },
+    memberQuest: {
+      mid: 'Member ID',
+      pemid: 'Please enter your Member ID',
+      task: 'Task Title',
+      pet: 'Please enter the task title',
+      cts: 'Current task status',
+      nct: 'Number of current tasks',
+      ntt: 'Number of target tasks',
+      ap: 'Additional points',
+      ti: 'Task ID',
+      pcc: '0=In progress 1=Completed 2 Prize collection completed',
+      peti: 'Please enter the task ID',
+      psdg: 'Please select dictionary generation',
+      petct: 'Please enter the current number of tasks',
+      ip: 'In progress',
+      abc: 'Awards to be claimed',
+      award: 'Awarded',
+      penpa: 'Please enter the number of points to be added',
+      tip: 'The increase in points is a positive integer',
+      pepi: 'Please enter a positive integer',
+      uap: 'Up to 10w of additional points',
+      ci: 'Cancel Input',
+      menu: 'Member IDs can only be entered as numbers and underscores',
+      afn: 'Add [Please fill in the function name]',
+      mfn: 'Modify [Please fill in the function name]',
+      ms: 'Modified Successfully',
+      as: 'Add Success',
+      wcd: 'Whether to confirm the deletion of [Please fill in the function name] number "{id}" the data item?',
+      ds: 'Deleted Successfully',
+      cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+      pffe: '[Please fill in the function name',
     }
   },
 

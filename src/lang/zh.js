@@ -7,7 +7,6 @@ import {
 export default {
 
   global: {
-    export: '导出',
     cancelButton: '取消',
     confirmButton: '确定',
     refresh: '刷新',
@@ -1637,6 +1636,39 @@ export default {
       menu: '会员ID/账号只能输入数字及下划线',
       cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
       oml: '在线会员列表'
+    },
+    memberQuest: {
+      mid: '会员ID',
+      pemid: '请输入会员ID',
+      task: '任务标题',
+      pet: '请输入任务标题',
+      cts: '当前任务状态',
+      nct: '当前任务数量',
+      ntt: '目标任务数量',
+      ap: '补分',
+      ti: '任务ID',
+      pcc: '0=进行中1=已经完成2 领奖完成',
+      peti: '请输入任务iD',
+      psdg: '请选择字典生成',
+      petct: '请输入当前任务数量',
+      ip: '进行中',
+      abc: '待领奖',
+      award: '已领奖',
+      penpa: '请输入需要增加的积分',
+      tip: '增加的积分为正整数',
+      pepi: '请输入正整数',
+      uap: '最多补分10w',
+      ci: '取消输入',
+      menu: '会员ID只能输入数字及下划线',
+      afn: '添加【请填写功能名称】',
+      mfn: '修改【请填写功能名称】',
+      ms: '修改成功',
+      as: '新增成功',
+      wcd: '是否确认删除【请填写功能名称】编号为 "{id}" 的数据项',
+      ds: '删除成功',
+      cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+      pffe: '【请填写功能名称】',
+
     }
   },
 

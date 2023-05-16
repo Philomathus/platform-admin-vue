@@ -655,6 +655,7 @@ export default {
       },
     },
   },
+
   config: {
     configUsdtRecharge: {
       addTitle: 'Add USDT Recharge',
@@ -1677,6 +1678,37 @@ export default {
       ds: 'Deleted Successfully',
       cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
       pffe: '[Please fill in the function name',
+    },
+    memberSmallFeatures: {
+      bcp: 'Bulk cellphone number update password',
+      tcpn: 'The cellphone number is unified in a vertical line, no characters are allowed',
+      peup: 'Please enter the updated password',
+      pega: 'Please enter Google Authentication Code 21',
+      upd: 'Update',
+      bmqc: 'Bulk member ID query cellphone number',
+      muv: 'Member ID is unified in a vertical line, no characters are allowed',
+      pegac: 'Please enter Google Authentication Code',
+      clear: 'Clear',
+      bmib: 'Batch member ID payout bonus',
+      sf: 'Select File',
+      bi: 'Batch Import',
+      oef: 'Only excel files can be uploaded',
+      peda: 'Please enter the delivery amount',
+      bmcb: 'Batch member ID cannot be empty',
+      gccb: 'Google captcha cannot be empty',
+      bpnc: 'Batch phone number cannot be empty',
+      pcbe: 'Password cannot be empty',
+      dacb: 'Delivery amount cannot be empty',
+      fis: 'File imported successfully',
+      fif: 'File import failed',
+      fuf: 'File upload failed!',
+      ut: 'Upload templates can only be in xls, xlsx, doc, docx format!',
+      tsut: 'The size of the uploaded template cannot exceed 10MB',
+      bce: 'Business Type cannot be empty',
+      tfis: 'This file was imported successfully',
+      tfif: 'This file import failed',
+      na: 'Network Anomaly',
+
     }
   },
 

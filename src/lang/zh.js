@@ -1,9 +1,3 @@
-import {addLiveUserWithdrawNewlog} from "@/api/platform-web/live-web/liveUserWithdrawNewlog";
-import {
-  addLiveVideoClassified,
-  updateLiveVideoClassified
-} from "@/api/live-web/liveVideoClassified/liveVideoClassified";
-
 export default {
 
   global: {
@@ -116,6 +110,7 @@ export default {
     closeAllTags: '',
     closeOthersTags: ''
   },
+
   tagsView: {
     closeOthersTags: '关闭其他',
     closeAllTags: '关闭所有',
@@ -124,6 +119,7 @@ export default {
     closeOthers: '关闭所有',
     closeAll: '关闭其他'
   },
+
   activity: {
     startDatePlaceholder: '开始时间',
     endDatePlaceholder: '结束时间',
@@ -700,6 +696,7 @@ export default {
       }
     }
   },
+
   config: {
     configUsdtRecharge: {
       addTitle: '添加USDT充值',
@@ -730,6 +727,7 @@ export default {
     },
     configEnvironment: {}
   },
+
   members: {
     configVip: {
       home: '',
@@ -1724,6 +1722,37 @@ export default {
       ds: '删除成功',
       cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
       pffe: '【请填写功能名称】',
+
+    },
+    memberSmallFeatures: {
+      bcp: '批量手机号更新密码',
+      tcpn: '手机号统一以竖行排列,不允许有任何字符',
+      peup: '请输入更新的密码',
+      pega: '请输入谷歌验证码21',
+      upd: '更新',
+      bmqc: '批量会员ID查询手机号',
+      muv: '会员ID统一以竖行排列,不允许有任何字符',
+      pegac: '请输入谷歌验证码',
+      clear: '清除',
+      bmib: '批量会员ID派送彩金',
+      sf: '选取文件',
+      bi: '批量导入',
+      oef: '只能上传excel文件',
+      peda: '请输入派送金额',
+      bmcb: '批量会员ID不能为空',
+      gccb: '谷歌验证码不能为空',
+      bpnc: '批量手机号不能为空',
+      pcbe: '密码不能为空',
+      dacb: '派送金额不能为空',
+      fis: '文件导入成功',
+      fif: '文件导入失败',
+      fuf: '文件上传失败！',
+      ut: '上传模板只能是 xls、xlsx、doc、docx 格式!',
+      tsut: '上传模板大小不能超过 10MB!',
+      bce: 'businessType不能为空',
+      tfis: '此文件导入成功',
+      tfif: '此文件导入失败',
+      na: '网络异常',
 
     }
   },

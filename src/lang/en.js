@@ -1720,6 +1720,25 @@ export default {
       puc: 'Please upload the correct video format',
       suv: 'The size of the uploaded video cannot exceed 300MB',
 
+    },
+    shaBaSportDataMin: {
+      pem: 'Please enter your member ID',
+      pegb: 'Please enter the game bureau number',
+      psbs: 'Please select a betting status',
+      mid: 'Member ID',
+      pid: 'Proxy ID',
+      ton: 'Transaction Order Number',
+      bs: 'Bet Status',
+      pn: 'Platform Name',
+      sub: 'Subplatform',
+      vb: 'Valid Bets',
+      tb: 'Total Bets',
+      prof: 'Profit',
+      pyb: 'Place your bets at',
+      pbt: 'Place bet type',
+      non: 'Note order number',
+      menu: 'Member IDs can only be entered as numbers and underscores',
+
     }
   },
 

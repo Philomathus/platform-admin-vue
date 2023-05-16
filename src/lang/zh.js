@@ -1765,6 +1765,25 @@ export default {
       puc: '请上传正确的视频格式',
       suv: '上传视频大小不能超过300MB',
 
+    },
+    shaBaSportDataMin: {
+      pem: '请输入会员ID',
+      pegb: '请输入游戏局号',
+      psbs: '请选择投注状态',
+      mid: '会员ID',
+      pid: '代理ID',
+      ton: '交易订单号',
+      bs: '下注状态',
+      pn: '平台名称',
+      sub: '子平台',
+      vb: '有效下注',
+      tb: '总下注',
+      prof: '盈利',
+      pyb: '下注时间',
+      pbt: '下注类型',
+      non: '注单号',
+      menu: '会员ID只能输入数字及下划线',
+
     }
   },
 

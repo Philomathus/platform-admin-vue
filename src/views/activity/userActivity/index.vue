@@ -5,7 +5,7 @@
       <el-form-item prop="id">
         <el-input
           v-model="queryParams.id"
-          placeholder="请输入用户ID"
+          :placeholder="$t('activity.userActivity.tableDialog.idPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"/>
@@ -24,7 +24,8 @@
         </el-date-picker>
       </el-form-item>
       <el-form-item prop="status">
-        <el-select v-model="queryParams.status" :placeholder="this.$t('global.statusPlaceholder')" clearable size="small">
+        <el-select v-model="queryParams.status" :placeholder="this.$t('global.statusPlaceholder')" clearable
+                   size="small">
           <el-option
             v-for="dict in statusOptions"
             :key="dict.dictValue"
@@ -33,7 +34,10 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{
+            $t('global.searchButton')
+          }}
+        </el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
@@ -52,19 +56,19 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="userActivityList"  @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="userActivityList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" min-width="60"/>
-      <el-table-column label="用户id" align="center" prop="id" min-width="60"/>
-      <el-table-column label="参加的活动" prop="msg" align="center" min-width="160"/>
+      <el-table-column :label="$t('activity.userActivity.tableDialog.id')" align="center" prop="id" min-width="60"/>
+      <el-table-column :label="$t('activity.userActivity.tableDialog.msg')" prop="msg" align="center" min-width="160"/>
       <el-table-column :label="$t('global.status')" prop="status" align="center" min-width="100">
         <template slot-scope="scope">
           <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">
-            {{status.dictLabel }}</span>
+            {{ status.dictLabel }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="$t('global.ctTime')" prop="createTime" align="center" min-width="160"/>
-      <el-table-column label="修改时间" prop="updateTime" align="center" min-width="160"/>
-      <el-table-column label="操作人员" prop="updateBy" align="center" min-width="100"/>
+      <el-table-column :label="$t('activity.userActivity.tableDialog.updateTime')" prop="updateTime" align="center" min-width="160"/>
+      <el-table-column :label="$t('activity.userActivity.tableDialog.updateBy')" prop="updateBy" align="center" min-width="100"/>
     </el-table>
 
     <pagination
@@ -74,17 +78,17 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"/>
 
-<!--    add or update form -->
+    <!--    add or update form -->
     <el-dialog :title="title" :visible.sync="open" width="600" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="90px">
-        <el-form-item label="标题" prop="msg">
-          <el-input v-model="form.msg" placeholder="请输入留言"/>
+        <el-form-item :label="$t('activity.userActivity.tableDialog.msg')" prop="msg">
+          <el-input v-model="form.msg" :placeholder="$t('activity.userActivity.tableDialog.msgPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="活动类型" prop="status">
+        <el-form-item :label="$t('activity.userActivity.tableDialog.activityType')" prop="status">
           <el-select
             filterable
             v-model="form.status"
-            placeholder="请选择活动类型"
+            :placeholder="$t('activity.userActivity.tableDialog.activityTypePlaceholder')"
             clearable
             size="small"
             style="width: 240px">
@@ -98,7 +102,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">{{ $t('global.submitButton') }}</el-button>
-        <el-button @click="open=false">取 消</el-button>
+        <el-button @click="open=false">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
 
@@ -119,39 +123,39 @@ import {pickerDateShortcuts} from "@/utils/dateUtils";
 export default {
   name: "index",
 
-data(){
-  return{
+  data() {
+    return {
       /** 遮罩层  */
       loading: true,
 
-      ids: [],               /** 选中数组 */
-      single: true,          /** 非单个禁用 */
-      multiple: true,        /** 非多个禁用 */
-      showSearch: true,      /** 显示搜索条件 */
-      total: 0,              /** 总条数 */
-      activityInfoList: [],  /** 活动信息表格数据  */
-      title: "",             /** 弹出层标题  */
-      open: false,          /** 是否显示弹出层  */
+      ids: [], /** 选中数组 */
+      single: true, /** 非单个禁用 */
+      multiple: true, /** 非多个禁用 */
+      showSearch: true, /** 显示搜索条件 */
+      total: 0, /** 总条数 */
+      activityInfoList: [], /** 活动信息表格数据  */
+      title: "", /** 弹出层标题  */
+      open: false, /** 是否显示弹出层  */
 
 
-     dateRange: [],          /** 日期范围 */
-     pickerOptions: {shortcuts: pickerDateShortcuts},
+      dateRange: [], /** 日期范围 */
+      pickerOptions: {shortcuts: pickerDateShortcuts},
 
-     userActivityList : [],
-     statusOptions: [],
+      userActivityList: [],
+      statusOptions: [],
 
-     queryParams:{
-      pageNum:1,
-      pageSize:15,
-      createTime: null,
-     },
+      queryParams: {
+        pageNum: 1,
+        pageSize: 15,
+        createTime: null,
+      },
 
-     form:{},
-     rules:{
-      msg: [
-        {required: true, message: "参加的活动不能为空", trigger: "blur"}
-      ],
-    },
+      form: {},
+      rules: {
+        msg: [
+          {required: true, message: this.$t('activity.userActivity.validation.msg'), trigger: "blur"}
+        ],
+      },
 
     }
   },
@@ -163,12 +167,12 @@ data(){
     })
   },
 
-  methods:{
+  methods: {
 
     /** 查询用户活动信息列表 */
-    getList(){
+    getList() {
       this.loading = true;
-      listActivityInfo(this.addDateRange(this.queryParams, this.dateRange)).then(res=>{
+      listActivityInfo(this.addDateRange(this.queryParams, this.dateRange)).then(res => {
         this.userActivityList = res.rows
         this.total = res.total
         this.loading = false
@@ -183,9 +187,9 @@ data(){
     },
 
     /** 搜索按钮操作 */
-    handleQuery(){
-      this.queryParams.pageNum =1,
-      this.getList();
+    handleQuery() {
+      this.queryParams.pageNum = 1,
+        this.getList();
     },
 
     /** 重置按钮操作 */
@@ -195,7 +199,7 @@ data(){
       this.handleQuery();
     },
 
-   /** 表单重置 */
+    /** 表单重置 */
     reset() {
       this.form = {
         id: null,
@@ -208,13 +212,13 @@ data(){
     },
 
     /** 新增按钮操作 */
-    handleAdd(){
+    handleAdd() {
       this.open = true
       this.title = "add data"
     },
 
     /** 提交按钮 */
-    submitForm(){
+    submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
@@ -235,9 +239,9 @@ data(){
     },
 
     /** 修改按钮操作 */
-    handleUpdate(row){
+    handleUpdate(row) {
       console.log(row)
-      userActivityById(row.id).then(res=>{
+      userActivityById(row.id).then(res => {
         this.form = res.data
         this.title = "updateForm";
         this.open = true
@@ -245,9 +249,9 @@ data(){
     },
 
     /** 删除按钮操作 */
-    handleDelete(row){
+    handleDelete(row) {
       const id = row.id || this.ids;
-      this.$confirm('是否确认删除"?', "警告", {
+      this.$confirm(this.$t('global.deleteConfirm') + row.name + '"?', this.$t('global.deleteConfirmTitle'), {
         confirmButtonText: this.$t('global.confirmButton'),
         cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
@@ -260,16 +264,16 @@ data(){
     },
 
     /** 导出按钮操作 */
-    handleExport(){
+    handleExport() {
       const queryParams = this.queryParams;
       this.$confirm(this.$t('global.confirmExport'), this.$t('global.confirmExportTitle'), {
         confirmButtonText: this.$t('global.confirmButton'),
-cancelButtonText: this.$t('global.cancelButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportUserActivity(queryParams);
       }).then(response => {
-        this.downloadExcel(response, '活动信息')
+        this.downloadExcel(response, this.$t('activity.userActivity.exportTile'))
       }).catch(() => {
       })
     }

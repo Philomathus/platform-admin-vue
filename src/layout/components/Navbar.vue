@@ -12,7 +12,7 @@
 <!--        <SwitchWithdraw  id = "notification-switch-withdraw" class="right-menu-item"/>-->
 <!--      </span>-->
 
-      <DropDownSwitch v-if="showDropDownNotification" id = dropDownSwitch class="right-menu-item" />
+<!--      <DropDownSwitch v-if="showDropDownNotification" id = dropDownSwitch class="right-menu-item" />-->
 
       <template v-if="device!=='mobile'">
         <search id="header-search" class="right-menu-item" />

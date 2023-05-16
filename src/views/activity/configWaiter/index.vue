@@ -192,9 +192,9 @@ export default {
       // 1=qq,2=微信
       formatterType(row) {
         if (row.type == 1) {
-          return this.$t('activity.qq')
+          return 'qq'
         } else if (row.type == 2) {
-          return this.$t('activity.wechat')
+          return '微信'
         } else {
           return ''
         }

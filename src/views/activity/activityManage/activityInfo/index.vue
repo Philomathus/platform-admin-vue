@@ -4,7 +4,7 @@
       <el-form-item prop="title">
         <el-input
           v-model="queryParams.title"
-          :placeholder="$t('global.releaseTime')"
+          :placeholder="$t('activity.activityManage.activityInfo.tableDialog.titlePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"/>
@@ -25,7 +25,7 @@
       </el-form-item>
       <el-form-item prop="status">
         <el-select v-model="queryParams.status"
-                   :placeholder="$t('global.selectStatus')"
+                   :placeholder="$t('global.selectStatusPlaceholder')"
                    clearable size="small">
           <el-option
             v-for="dict in statusOptions"
@@ -93,7 +93,7 @@
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column :label="$t('activity.activityManage.activityInfo.tableDialog.title')" align="center" prop="title"
                        min-width="180"/>
-      <el-table-column :label="$t('global.icon')" align="center" prop="icon"
+      <el-table-column :label="$t('activity.activityManage.activityInfo.tableDialog.icon')" align="center" prop="icon"
                        min-width="160">
         <template slot-scope="scope">
           <el-image

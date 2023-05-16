@@ -74,15 +74,13 @@
 
     <el-table stripe v-loading="loading" :data="wheelDiceConfigList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column :label="$t('activity.activityManage.wheelDiceConfig.statusPlaceholder')" align="center"
-                       prop="id"/>
-      <el-table-column :label="$t('activity.activityManage.wheelDiceConfig.depositTotalMin')" align="center"
+      <el-table-column :label="$t('activity.activityManage.wheelDiceConfig.tableDialog.depositTotalMin')" align="center"
                        prop="depositTotalMin"/>
-      <el-table-column :label="$t('activity.activityManage.wheelDiceConfig.depositTotalMax')" align="center"
+      <el-table-column :label="$t('activity.activityManage.wheelDiceConfig.tableDialog.depositTotalMax')" align="center"
                        prop="depositTotalMax"/>
-      <el-table-column :label="$t('activity.activityManage.wheelDiceConfig.lotteryTimes')" align="center"
+      <el-table-column :label="$t('activity.activityManage.wheelDiceConfig.tableDialog.lotteryTimes')" align="center"
                        prop="lotteryTimes"/>
-      <el-table-column :label="$t('activity.activityManage.wheelDiceConfig.status')" align="center" prop="status">
+      <el-table-column :label="$t('activity.activityManage.wheelDiceConfig.tableDialog.status')" align="center" prop="status">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -337,7 +335,7 @@ export default {
       }).then(function () {
         return exportWheelDiceConfig(queryParams);
       }).then(response => {
-        this.downloadExcel(response, this.$t('global.exportResponse'));
+        this.downloadExcel(response, this.$t('activity.activityManage.wheelDiceConfig.statusPlaceholder'));
       }).catch(() => {
       })
     }

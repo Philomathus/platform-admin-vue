@@ -40,7 +40,7 @@ export default {
     name: '名称',
     nickname: '昵称',
     status: '状态',
-    ctime: '发布时间',
+    ctTime: '发布时间',
     ctTimePlaceholder: '选择发布时间',
     sortPlaceholder: '请输入排序',
     statusPlaceholder: '请选择状态',
@@ -116,7 +116,6 @@ export default {
     closeAllTags: '',
     closeOthersTags: ''
   },
-
   tagsView: {
     closeOthersTags: '关闭其他',
     closeAllTags: '关闭所有',
@@ -125,7 +124,6 @@ export default {
     closeOthers: '关闭所有',
     closeAll: '关闭其他'
   },
-
   activity: {
     startDatePlaceholder: '开始时间',
     endDatePlaceholder: '结束时间',
@@ -321,6 +319,7 @@ export default {
       wheelDiceConfig: {
         addTitle: "添加【抽奖配置】",
         editTitle: "修改【抽奖配置】",
+        exportResponse: "请填写功能名称",
         tableDialog: {
           id: '主键id',
           idPlaceholder: '',
@@ -331,7 +330,6 @@ export default {
           lotteryTimes: '抽奖次数',
           lotteryTimesPlaceholder: '请输入抽奖次数',
           status: '状态',
-          statusPlaceholder: '请选择状态'
         },
         validation: {
           depositTotalMin: '名称不能为空',
@@ -555,7 +553,7 @@ export default {
       lotteryDiceConfig: {
         addTitle: '添加抽奖次数设置',
         editTitle: '修改抽奖次数设置',
-        tableDialog:{
+        tableDialog: {
           depositTotalMin: '当日存款总额最小值',
           depositTotalMinPlaceholder: '请输入当日存款总额最小值',
           depositTotalMax: '当日存款总额最大值',
@@ -570,8 +568,21 @@ export default {
           depositTotalMin: '当日存款总额最小值不能为空',
           depositTotalMax: '当日存款总额最大值不能为空',
           lotteryTimes: '抽奖次数不能为空',
-        }
-      }
+        },
+      },
+      lotteryHistoryDice: {
+        addTitle: '添加抽奖结果',
+        editTitle: '修改抽奖结果',
+        exportTitle: '抽奖结果',
+        tableDialog: {
+          coverImg: '图片',
+          award: '奖励',
+          awardPlaceholder: '奖励'
+        },
+        validation: {
+          pUserId: '会员ID不能为空'
+        },
+      },
     },
     messageGameNotice: {
       addTitle: '添加游戏公告',
@@ -663,7 +674,7 @@ export default {
       },
       recommonPic: {
         editTitle: '修改推广图',
-        tableDialog:{
+        tableDialog: {
           envTitle: '参数名称',
           envCode: '参数编码',
           envValue: '图片',
@@ -672,8 +683,53 @@ export default {
         },
       },
     },
+    userActivity: {
+      exportTitle: '活动信息',
+      tableDialog: {
+        id: '用户id',
+        idPlaceholder: '请输入用户ID',
+        msg: '标题',
+        msgPlaceholder: '请输入留言',
+        updateBy: '操作人员',
+        updateTime: '修改时间',
+        activityType: '活动类型',
+        activityTypePlaceholder: '活动类型',
+      },
+      validation: {
+        msg: '参加的活动不能为空'
+      }
+    }
   },
-
+  config: {
+    configUsdtRecharge: {
+      addTitle: '添加USDT充值',
+      editTitle: '编辑USDT充值',
+      exportTitle: 'USDT充电',
+      tableDialog: {
+        channelName: '渠道名称',
+        channelNamePlaceholder: '请输入渠道名称',
+        chainName: '链名称',
+        chainNamePlaceholder: '请输入链名称',
+        rechargeAddress: '充值地址',
+        rechargeAddressPlaceholder: '请输入充值地址',
+        discountBill: '优惠比例',
+        discountBillPlaceholder: '请输入优惠比例',
+        exchangeRate: 'usdt汇率',
+        exchangeRatePlaceholder: '请输入usdt汇率',
+        remark: '备注信息',
+        remarkPlaceholder: '请输入备注信息',
+      },
+      validation: {
+        channelName: '渠道名称不能为空',
+        chainName: '链名称不能为空',
+        rechargeAddress: '充值地址不能为空',
+        discountBill: '优惠比例不能为空',
+        exchangeRate: 'usdt汇率不能为空',
+        icon: '钱包二维码不能为空',
+      }
+    },
+    configEnvironment: {}
+  },
   members: {
     configVip: {
       home: '',
@@ -1679,8 +1735,8 @@ export default {
         updateTimePlaceholder: '请选择日期选择',
         idPlaceholder: '主播ID',
         nickNamePlaceholder: '主播昵称',
-        searchButton: '@:common.searchButton',
-        resetButton: '@:common.resetButton'
+        searchButton: '@:global.searchButton',
+        resetButton: '@:global.resetButton'
       },
       actions: {
         exportButton: '@:common.exportButton'

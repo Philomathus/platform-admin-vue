@@ -13,7 +13,7 @@
 
 <script>
 import E from 'wangeditor'
-import { getToken } from '@/utils/auth'
+import {getToken} from '@/utils/auth'
 
 export default {
   name: 'wangEditor',
@@ -38,7 +38,7 @@ export default {
     }
   },
   watch: {
-    value: function(value) {
+    value: function (value) {
       if (value !== this.editor.txt.html()) {
         this.editor.txt.html(this.value)
       }
@@ -57,10 +57,10 @@ export default {
       this.editor.config.uploadImgMaxSize = 10 * 1024 * 1024 // 10M
       this.editor.config.pasteFilterStyle = false
       this.editor.config.uploadImgHooks = {
-        timeout: function(xhr, editor) {
+        timeout: function (xhr, editor) {
           this.$message.error('上传超时！')
         },
-        customInsert: function(insertImg, result, editor) {
+        customInsert: function (insertImg, result, editor) {
           insertImg(localStorage.getItem('vHostUrl') + result.data)
         }
       }

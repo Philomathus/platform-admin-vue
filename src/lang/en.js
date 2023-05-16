@@ -7,8 +7,8 @@ export default {
     close: 'Close',
     searchButton: 'Search',
     resetButton: 'Reset',
-    addButton: 'Add',
-    editButton: 'Edit',
+    addButton: 'Add New',
+    editButton: 'Modify',
     deleteButton: 'Delete',
     exportButton: 'Export',
     submitButton: 'Submit',
@@ -43,9 +43,9 @@ export default {
     dateTimePickerRangeSeparator: 'To',
     namePlaceholder:'Please Enter Name',
     selectDatePlaceholder: 'Date Range',
-    datePickerStartDatePlaceholder: 'Start Date',
-    datePickerEndDatePlaceholder: 'End Date',
-    operationColumn: 'Operation',
+    datePickerStartDatePlaceholder: 'Begin Time',
+    datePickerEndDatePlaceholder: 'End Time',
+    operationColumn: 'Operate',
     editSuccessMsg: 'Edit Successful',
     addSuccessMsg: 'Add Successful',
     deleteSuccessMsg: 'Delete Successful',
@@ -56,6 +56,7 @@ export default {
     statusConfirmQuestion: '?',
     statusEditSuccess: 'Status Updated',
     selectStatus: 'Please Select Status',
+    selectStatusPlaceholder: 'Choose Status',
     releaseTime: 'Release Time',
     confirmExport: 'Are you sure you want to export into excel file?, there might be a short delay depending on the volume of data, please wait patiently...',
     confirmExportTitle: 'Confirm',
@@ -180,13 +181,14 @@ export default {
         editActivityTitle: 'Edit Activity Information',
         exportResponse: 'Activity Information',
         tableDialog: {
-          title: 'Activity Title',
-          titlePlaceholder: 'Please enter Activity Title',
+          title: 'Activities Title',
+          titlePlaceholder: 'Type in Activity Title',
           typeId: 'Activity Type',
           typeIdPlaceholder: 'Please enter Activity Type',
-          sortPlaceholder: 'Please enter sort.',
-          jumpType: 'URL type',
-          activityDetails: 'Activity Details',
+          sort: 'Index',
+          sortPlaceholder: 'Please enter Index',
+          jumpType: 'Jump type',
+          activityDetails: 'Activities Details',
           jumpLink: 'URL',
           jumpLinkPlaceholder: 'Please Enter Icon URL',
           releaseTime: 'Release Time',
@@ -194,6 +196,7 @@ export default {
           urlPlaceholder: 'Please enter Icon URL.',
           iconUrl: 'Icon URL',
           status: 'Status',
+          icon: 'Activities Icon',
         },
         validation: {
           title: 'Title cannot be empty',
@@ -276,6 +279,7 @@ export default {
       wheelDiceConfig: {
         addTitle: "Add Lottery Allocation",
         editTitle: "Edit Lottery Allocation",
+        exportResponse: "Lottery Allocation",
         tableDialog: {
           idPlaceholder: '',
           depositTotalMin: 'Daily Minimum Deposit',
@@ -284,6 +288,7 @@ export default {
           depositTotalMaxPlaceholder: 'Please Enter Daily Maximum Deposit',
           lotteryTimes: 'Number of Lotteries',
           lotteryTimesPlaceholder: 'Please enter the Number of Lotteries',
+          status: 'status',
         },
         validation: {
           depositTotalMin: 'Daily Minimum Deposit must not be empty',
@@ -520,6 +525,19 @@ export default {
           lotteryTimes: 'Number of Lotteries must not be empty',
         },
       },
+      lotteryHistoryDice: {
+        addTitle: 'Add Lottery Result',
+        editTitle: 'Edit Lottery Result',
+        exportTitle: 'Lottery Result',
+        tableDialog: {
+          coverImg: 'Display Photo',
+          award: 'Reward',
+          awardPlaceholder: 'Please enter Reward'
+        },
+        validation: {
+          pUserId: 'Member Id must not be empty'
+        },
+      },
     },
     messageGameNotice: {
       addTitle: 'Add Game Announcement',
@@ -620,6 +638,52 @@ export default {
         },
       },
     },
+    userActivity: {
+      exportTitle: 'Activity Information',
+      tableDialog: {
+        id: 'User Id',
+        idPlaceholder: 'Please enter UserId',
+        msg: 'Message',
+        msgPlaceholder: 'Please enter a message.',
+        updateBy: 'Updated By',
+        updateTime: 'Update Time',
+        activityType: 'Activity Type',
+        activityTypePlaceholder: 'Please enter Activity Type',
+      },
+      validation: {
+        msg: 'Participating activities must be empty'
+      },
+    },
+  },
+  config: {
+    configUsdtRecharge: {
+      addTitle: 'Add USDT Recharge',
+      editTitle: 'Edit USDT Recharge',
+      exportTitle: 'USDT Recharge',
+      tableDialog: {
+        channelName: 'Channel Name',
+        channelNamePlaceholder: 'Please enter Channel Name',
+        chainName: 'Chain Name',
+        chainNamePlaceholder: 'Please enter Chain Name',
+        rechargeAddress: 'Recharge Address',
+        rechargeAddressPlaceholder: 'Please enter Recharge Address',
+        discountBill: 'Preferentail Ratio',
+        discountBillPlaceholder: 'Please enter Preferentail Ratio',
+        exchangeRate: 'USDT Recharge Rate',
+        exchangeRatePlaceholder: 'Please enter USDT Recharge Rate',
+        remark: 'Remarks',
+        remarkPlaceholder: 'Please enter Remarks',
+      },
+      validation: {
+        channelName: 'Channel Name must not be empty',
+        chainName: 'Chain name must not be empty',
+        rechargeAddress: 'Recharge Address must not be empty',
+        discountBill: 'Preferential Ratio must not be empty',
+        exchangeRate: 'USDT Exchange Rate must not be empty',
+        icon: '钱包二维码不能为空',
+      }
+    },
+    configEnvironment: {}
   },
 
   members: {

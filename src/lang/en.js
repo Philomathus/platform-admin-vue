@@ -1708,6 +1708,17 @@ export default {
       tfis: 'This file was imported successfully',
       tfif: 'This file import failed',
       na: 'Network Anomaly',
+      cu: 'Click to upload',
+
+    },
+    memberVideo: {
+      cu: 'Click to Upload',
+      omf: 'Only MP4 format files can be uploaded, and no more than 300MB',
+      svu: 'Select video to upload',
+      tcl: 'The current limit is 3 files, this time the selection is {length} A total of six documents were selected {fileList} documents',
+      doc: 'Documents {name}?',
+      puc: 'Please upload the correct video format',
+      suv: 'The size of the uploaded video cannot exceed 300MB',
 
     }
   },

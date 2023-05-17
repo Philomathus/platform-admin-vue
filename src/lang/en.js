@@ -43,8 +43,8 @@ export default {
     dateTimePickerRangeSeparator: 'To',
     namePlaceholder:'Please Enter Name',
     selectDatePlaceholder: 'Date Range',
-    datePickerStartDatePlaceholder: 'Begin Time',
-    datePickerEndDatePlaceholder: 'End Time',
+    datePickerStartDatePlaceholder: 'Start Date',
+    datePickerEndDatePlaceholder: 'End Date',
     operationColumn: 'Operate',
     editSuccessMsg: 'Edit Successful',
     addSuccessMsg: 'Add Successful',
@@ -1760,7 +1760,36 @@ export default {
       tfis: 'This file was imported successfully',
       tfif: 'This file import failed',
       na: 'Network Anomaly',
+      cu: 'Click to upload',
 
+    },
+    memberVideo: {
+      cu: 'Click to Upload',
+      omf: 'Only MP4 format files can be uploaded, and no more than 300MB',
+      svu: 'Select video to upload',
+      tcl: 'The current limit is 3 files, this time the selection is {length} A total of six documents were selected {fileList} documents',
+      doc: 'Documents {name}?',
+      puc: 'Please upload the correct video format',
+      suv: 'The size of the uploaded video cannot exceed 300MB',
+
+    },
+    shaBaSportDataMin: {
+      pem: 'Please enter your member ID',
+      pegb: 'Please enter the game bureau number',
+      psbs: 'Please select a betting status',
+      mid: 'Member ID',
+      pid: 'Proxy ID',
+      ton: 'Transaction Order Number',
+      bs: 'Bet Status',
+      pn: 'Platform Name',
+      sub: 'Subplatform',
+      vb: 'Valid Bets',
+      tb: 'Total Bets',
+      prof: 'Profit',
+      pyb: 'Place your bets at',
+      pbt: 'Place bet type',
+      non: 'Note order number',
+      menu: 'Member IDs can only be entered as numbers and underscores'
     }
   },
 
@@ -4171,5 +4200,47 @@ export default {
     },
 
 
+  },
+
+  report:{
+    agentCount: {
+      ds: 'Date Selection',
+      cc: 'Channel Code',
+      afr: 'A friendly reminder (before the daily promotion data query, please carry out a basic data pre-generation operation)',
+      npc: 'New Promotion Code',
+      dpc: 'Delete Promotion Code',
+      bdp: 'Base data pre-generation',
+      st: 'Statistic Time',
+      sd: 'Same day/total (registrants)',
+      ce: 'Company entry (First charge) ',
+      od: 'Online deposit (First charge) ',
+      me: 'Manual Entry (First charge) ',
+      tad: 'Total amount of deposit (First charge) ',
+      psa: 'Person/Stroke/Amount (total on the day of disbursement)',
+      psad: 'Person/Stroke/Amount (total on the day of deposit)',
+      nug: 'Number of gifts/amount',
+      nol: 'Number of live rooms/active Android/active Apple',
+      pc: 'Promotion Code',
+      pepc: 'Please enter the promotion code',
+      snow: 'Submit Now',
+      pcce: 'Promotional code cannot be empty',
+      as: 'Add Success',
+      pcpn: 'Promotion code can only be pure numbers',
+      dels: 'Deleted Successfullly',
+      cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+      psr: 'Promotion of statistical reports'
+    },
+    comprehensiveStatistics: {
+      psd: 'Please select date',
+      amt: 'Amount',
+      type: 'Type',
+      time: 'Time',
+      err: 'Error: The report is being generated, please wait...',
+      rbg: 'Reports are being generated',
+      cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+      ids: 'Integrated Data Statement',
+
+    }
   }
+
 }

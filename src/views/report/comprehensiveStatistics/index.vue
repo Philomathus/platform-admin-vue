@@ -2,24 +2,24 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="68px" v-show="showSearch">
 
-      <el-form-item label="日期选择" prop="reporttime">
+      <el-form-item :label=" $t('global.selectDate') " prop="reporttime">
         <el-date-picker v-model="queryParams.reporttime" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
-                        :style="{width: '100%'}" placeholder="请选择日期选择" clearable :picker-options="pickerOptions"
+                        :style="{width: '100%'}" :placeholder=" $t('report.comprehensiveStatistics.psd') " clearable :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
 
-      <el-form-item label="名称" prop="classTwoname">
+      <el-form-item :label=" $t('global.name') " prop="classTwoname">
         <el-input
           v-model="queryParams.classTwoname"
-          placeholder="请输入用户名称"
+          :placeholder=" $t('global.userNamePlaceholder') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -33,7 +33,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:report-plam-com:export']"
-        >导出
+        >{{ $t('global.exportButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -45,10 +45,10 @@
         style="width: 100%;"
         :stripe="true"
       >
-        <el-table-column label="名称" align="center" prop="classTwoname" :show-overflow-tooltip="true"/>
-        <el-table-column label="金额" align="center" prop="tvalue" :show-overflow-tooltip="true"/>
-        <el-table-column label="类型" align="center" prop="type"/>
-        <el-table-column label="时间" align="center" prop="reporttime" width="180"/>
+        <el-table-column :label=" $t('global.name') " align="center" prop="classTwoname" :show-overflow-tooltip="true"/>
+        <el-table-column :label=" $t('report.comprehensiveStatistics.amt') " align="center" prop="tvalue" :show-overflow-tooltip="true"/>
+        <el-table-column :label=" $t('report.comprehensiveStatistics.type') " align="center" prop="type"/>
+        <el-table-column :label=" $t('report.comprehensiveStatistics.time') " align="center" prop="reporttime" width="180"/>
       </el-table>
     </div>
     <!--    <pagination v-show="total>0" :total="total" :page.sync="pageNum" :limit.sync="pageSize"/>-->
@@ -108,10 +108,10 @@ export default {
         that.listLoading = false
         that.$rjLoading.hide()
       }).catch((err) => {
-        if (err == 'Error: 报表正在生成，请稍后...') {
+        if (err == this.$t('report.comprehensiveStatistics.err') ) {
           if (!that.listLoading) {
             that.listLoading = true
-            that.$rjLoading.show('报表正在生成', that)
+            that.$rjLoading.show( this.$t('report.comprehensiveStatistics.rbg') , that)
           }
           if (!this.isDestroyed) {
             setTimeout(() => {
@@ -139,14 +139,14 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm( this.$t('report.comprehensiveStatistics.cpe') , this.$t('global.dialogTitle') , {
+        confirmButtonText: this.$t('global.confirmButton') ,
+        cancelButtonText: this.$t('global.cancelButton') ,
         type: 'warning'
       }).then(function() {
         return exportReportPlamCom(queryParams)
       }).then(response => {
-        this.downloadExcel(response, '综合数据报表')
+        this.downloadExcel(response, this.$t('report.comprehensiveStatistics.ids') )
       }).catch(() => {
       })
     }

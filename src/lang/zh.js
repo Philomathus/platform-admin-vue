@@ -1805,8 +1805,48 @@ export default {
       tfis: '此文件导入成功',
       tfif: '此文件导入失败',
       na: '网络异常',
+      cu: '点击上传',
 
+    },
+    memberVideo: {
+      cu: '点击上传',
+      omf: '只能上传MP4格式文件，且不超过300MB',
+      svu: '选择视频上传',
+      tcl: '当前限制选择 3 个文件，本次选择了 {length} 个文件，共选择了 {fileList} 个文件',
+      doc: '确定移除 {name}?',
+      puc: '请上传正确的视频格式',
+      suv: '上传视频大小不能超过300MB',
+
+    },
+    shaBaSportDataMin: {
+      pem: '请输入会员ID',
+      pegb: '请输入游戏局号',
+      psbs: '请选择投注状态',
+      mid: '会员ID',
+      pid: '代理ID',
+      ton: '交易订单号',
+      bs: '下注状态',
+      pn: '平台名称',
+      sub: '子平台',
+      vb: '有效下注',
+      tb: '总下注',
+      prof: '盈利',
+      pyb: '下注时间',
+      pbt: '下注类型',
+      non: '注单号',
+      menu: '会员ID只能输入数字及下划线'
     }
+  },
+
+  common: {
+    titleDialog: '',
+    titlePrompt: '',
+    removeButton: '',
+    searchButton: '',
+    resetButton: '',
+    confirmButton: '',
+    cancelButton: '',
+    operationColumn: ''
   },
 
   liveWeb: {
@@ -4208,7 +4248,47 @@ export default {
     wheelSkinReceived: {},
 
 
-  }
+  },
 
+  report:{
+    agentCount: {
+      ds: '日期选择',
+      cc: '渠道编码',
+      afr: '友情提示(每日推广数据查询前，请进行一次基础数据的预生成操作)',
+      npc: '新增推广码',
+      dpc: '删除推广码',
+      bdp: '基础数据预生成',
+      st: '统计时间',
+      sd: '当日/总(注册人数)',
+      ce: '公司入款（首充）',
+      od: '线上入款（首充）',
+      me: '手工入款（首充）',
+      tad: '入款总（首充）',
+      psa: '人/笔/金额（出款日总）',
+      psad: '人/笔/金额（入款日总）',
+      nug: '送礼次数/金额',
+      nol: '直播间次数/活跃安卓/活跃苹果',
+      pc: '推广码',
+      pepc: '请输入推广码',
+      snow: '立即提交',
+      pcce: '推广码不能为空',
+      as: '新增成功',
+      pcpn: '推广码只能为纯数字',
+      dels: '删除成功',
+      cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+      psr: '推广统计报表'
+    },
+    comprehensiveStatistics: {
+      psd: '请选择日期选择',
+      amt: '金额',
+      type: '类型',
+      time: '时间',
+      err: 'Error: 报表正在生成，请稍后...',
+      rbg: '报表正在生成',
+      cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+      ids: '综合数据报表',
+
+    }
+  }
 
 }

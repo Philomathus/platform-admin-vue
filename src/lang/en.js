@@ -684,7 +684,59 @@ export default {
         icon: '钱包二维码不能为空',
       }
     },
-    configEnvironment: {}
+    configEnvironment: {
+      addTitle: 'Add Environment Config',
+      editTitle: 'Edit Environment Config',
+      confirmUpdate: 'Confirm Update',
+      tableDialog:{
+        envTitle: 'Environment Title',
+        envTitlePlaceholder: 'Please enter Environment Title',
+        envCode: 'Environment Code',
+        envCodePlaceholder: 'Please enter Environment Code',
+        envValue: 'Environment Value',
+        envValuePlaceholder: 'Please enter Environment Value',
+        index: 'Index',
+        indexPlaceholder: 'Please enter Index',
+        // status: '',
+        // statusPlaceholder: '请选择状态',
+        envGroup: 'Environment Group',
+        envGroupPlaceholder: 'Please enter Environment Group',
+        envDes: 'Remarks',
+        envDesPlaceholder: 'Please enter Remarks',
+        envType: 'Environment Type',
+        envTypePlaceholder: 'Please enter Environment Type',
+      },
+      validation:{
+        envGroup: '参数组不能为空',
+        envSort: '排序不能为空',
+        envStatus: '状态 1启用 0禁用不能为空',
+        envTitleAndEncoding: '参数标题和参数编码不能同时为空',
+      }
+    },
+    domain: {
+      addTitle: 'Add Domain Name Configuration',
+      editTitle: 'Modify Domain Name Configuration',
+      dynamicCoding: 'Dynamic Name Grouping',
+      testContent: '1、Test Content Test Content',
+      tableDialog:{
+        dgroup: 'Domain Name Group',
+        dgroupPlaceholder: 'Please enter Domain Name Group',
+        domain: 'Domain Name',
+        domainPlaceholder: 'Please enter Domain Name',
+        dcode: 'Dynamic Coding',
+        dcodePlaceholder: 'Please enter Dynamic Coding',
+        remark: 'Remarks',
+        remarkPlaceholder: 'Please enter Remarks',
+        index: 'Index',
+        indexPlaceholder: 'Please enter Index',
+      },
+      validation: {
+        domain: 'Domain Name must not be empty',
+        dgroup: 'Domain Name Group must not be empty',
+        sort: 'Index must not be empty',
+        url: 'Please enter the correct URL',
+      },
+    },
   },
 
   members: {

@@ -43,16 +43,16 @@
     />
 
     <!-- 添加或修改推广设置对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="700px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item :label="$t('activity.recommend.configRecommon.tableDialog.level')" prop="level">
+        <el-form-item :label="$t('activity.recommend.configRecommon.tableDialog.level')" prop="level" label-width="220px">
           <el-input v-model="form.level" :placeholder="$t('activity.recommend.configRecommon.tableDialog.levelPlaceholder')"/>
         </el-form-item>
-        <el-form-item :label="$t('global.name')" prop="name">
+        <el-form-item :label="$t('global.name')" prop="name" label-width="220px">
           <el-input v-model="form.name" :placeholder="$t('global.namePlaceholder')"/>
         </el-form-item>
-        <el-form-item :label="$t('activity.recommend.configRecommon.tableDialog.bill')" prop="bill">
+        <el-form-item :label="$t('activity.recommend.configRecommon.tableDialog.bill')" prop="bill" label-width="220px">
           <el-input v-model="form.bill" :placeholder="$t('activity.recommend.configRecommon.tableDialog.billPlaceholder')"/>
         </el-form-item>
       </el-form>

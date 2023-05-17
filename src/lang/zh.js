@@ -725,7 +725,59 @@ export default {
         icon: '钱包二维码不能为空',
       }
     },
-    configEnvironment: {}
+    configEnvironment: {
+      addTitle: '添加环境参数',
+      editTitle: '修改环境参数',
+      confirmUpdate: '确认修改',
+      tableDialog: {
+        envTitle: '参数名称',
+        envTitlePlaceholder: '请选择参数名称',
+        envCode: '参数编码',
+        envCodePlaceholder: '请选择参数编码',
+        envValue: '参数值',
+        envValuePlaceholder: '请输入参数值',
+        index: '序列号',
+        indexPlaceholder: '请输入序列号',
+        // status: '',
+        // statusPlaceholder: '请选择状态',
+        envGroup: '所属参数组',
+        envGroupPlaceholder: '请选择状态',
+        envDes: '备注',
+        envDesPlaceholder: '请参数说明',
+        envType: '类型',
+        envTypePlaceholder: '请参数说明'
+      },
+      validation: {
+        envGroup: '参数组不能为空',
+        envSort: '排序不能为空',
+        envStatus: '状态 1启用 0禁用不能为空',
+        envTitleAndEncoding: '参数标题和参数编码不能同时为空',
+      }
+    },
+    domain: {
+      addTitle: '添加域名配置',
+      editTitle: '修改域名配置',
+      dynamicCoding: '域名分组',
+      testContent: '1、测试内容测试内容测试内容',
+      tableDialog: {
+        dgroup: '域名分组',
+        dgroupPlaceholder: '请选择域名分组',
+        domain: '域名',
+        domainPlaceholder: '请输入域名',
+        dcode: '动态编码',
+        dcodePlaceholder: '请输入动态编码',
+        remark: '备注',
+        remarkPlaceholder: '备注',
+        index: '排序',
+        indexPlaceholder: '排序',
+      },
+      validation: {
+        domain: '域名不能为空',
+        dgroup: '域名分组不能为空',
+        sort: '排序不能为空',
+        url: '请输入正确的URL',
+      }
+    }
   },
 
   members: {

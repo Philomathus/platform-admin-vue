@@ -30,8 +30,8 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -44,7 +44,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['config:tradeType:add']"
-        >新增
+        >{{ $t('global.addButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -56,7 +56,7 @@
           :disabled="single"
           @click="handleUpdateSelect"
           v-hasPermi="['config:tradeType:edit']"
-        >修改
+        >{{ $t('global.editButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -68,7 +68,7 @@
           :disabled="multiple"
           @click="handleDeleteSelect"
           v-hasPermi="['config:tradeType:remove']"
-        >删除
+        >{{ $t('global.deleteButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -79,7 +79,7 @@
       <el-table-column label="交易类型" align="center" prop="type"/>
       <el-table-column label="交易名称" align="center" prop="name"/>
       <el-table-column label="交易说明" align="center" prop="des"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -87,7 +87,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['config:tradeType:edit']"
-          >修改
+          >{{ $t('global.editButton') }}
           </el-button>
           <el-button
             size="mini"
@@ -95,7 +95,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['config:tradeType:remove']"
-          >删除
+          >{{ $t('global.deleteButton') }}
           </el-button>
         </template>
       </el-table-column>
@@ -123,8 +123,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('global.submitButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>

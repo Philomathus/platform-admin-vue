@@ -4257,6 +4257,26 @@ export default {
       trb: 'Error: The report is being generated, please wait...',
       gbs: 'Game Betting Statement',
 
+    },
+    gameBetJump: {
+      gbs: 'Game Betting Statement',
+      sbn: 'Sub-Platform Name',
+      pensp: 'Please enter the name of the sub-platform',
+      pn: 'Platform Name',
+      pepn: 'Please enter the platform name',
+      pnum: 'Platform Number',
+      nd: 'Name - Details',
+      sbnum: 'Sub-platform number',
+      nob: 'Number of bets',
+      br: 'Betting Ratio',
+      tba: 'Total Bet Amount',
+      eba: 'Effective Bet Amount',
+      pp: 'Platform Pumping',
+      mp: 'Membership Profit',
+      prop: 'Proportion',
+      date: 'Date',
+      tdir: 'The date is required',
+
     }
   }
 

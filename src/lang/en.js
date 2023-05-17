@@ -4277,6 +4277,19 @@ export default {
       date: 'Date',
       tdir: 'The date is required',
 
+    },
+    incomeDay: {
+      tsa: 'Total Success Amount',
+      psad: 'Please select a date to choose',
+      ar: 'Amount Received',
+      oo: 'Offline or Online',
+      cp: 'Collection Platforms',
+      cc: 'Collection Channel',
+      pm: 'Payee Merchants',
+      time: 'Time',
+      cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+      prs: 'Platform recharge statement',
+
     }
   }
 

@@ -128,7 +128,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitaddPromotionCode">立即提交</el-button>
+        <el-button type="primary" @click="submitaddPromotionCode">{{ $t('report.agentCount.snow') }}</el-button>
       </div>
     </el-dialog>
 
@@ -136,19 +136,19 @@
     <el-dialog
       v-dialogDrag
       :close-on-click-modal="false"
-      title="删除推广码"
+      :title=" $t('report.agentCount.dpc') "
       :visible.sync="delPromotionCode"
       width="500px"
       append-to-body
     >
       <el-form ref="formdelPromotionCode" :model="formdelPromotionCode" :rules="rules" label-width="70px">
-        <el-form-item label="推广码" prop="code">
-          <el-input placeholder="请输入推广码" v-model="formdelPromotionCode.code"
+        <el-form-item :label=" $t('report.agentCount.pc') " prop="code">
+          <el-input :placeholder=" $t('report.agentCount.pepc') " v-model="formdelPromotionCode.code"
           />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitdelPromotionCode">立即提交</el-button>
+        <el-button type="primary" @click="submitdelPromotionCode">{{ $t('report.agentCount.snow') }}</el-button>
       </div>
     </el-dialog>
 
@@ -223,7 +223,7 @@ export default {
       },
       queryRule: {
         agentcode: [
-          {required: true, message: '推广码不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('report.agentCount.pcce') , trigger: 'blur'}
         ]
       },
       // 表单参数
@@ -231,7 +231,7 @@ export default {
       // 表单校验
       rules: {
         code: [
-          {required: true, message: '推广码不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('report.agentCount.pcce') , trigger: 'blur'}
         ]
       }
     }
@@ -362,13 +362,13 @@ export default {
             if (response.code == 0) {
               this.$message.error(response.msg)
             } else {
-              this.msgSuccess('新增成功')
+              this.msgSuccess( this.$t('report.agentCount.as') )
               this.addPromotionCode = false
               this.getList()
             }
           })
         } else {
-          this.$message.error('推广码只能为纯数字')
+          this.$message.error( this.$t('report.agentCount.pcpn') )
         }
       })
     },
@@ -380,13 +380,13 @@ export default {
             if (response.code == 0) {
               this.$message.error(response.msg)
             } else {
-              this.msgSuccess('删除成功')
+              this.msgSuccess( this.$t('report.agentCount.dels') )
               this.delPromotionCode = false
               this.getList()
             }
           })
         } else {
-          this.$message.error('推广码只能为纯数字')
+          this.$message.error( this.$t('report.agentCount.pcpn') )
         }
       })
     },
@@ -401,14 +401,14 @@ export default {
     },
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm( this.$t('report.agentCount.cpe') ,  this.$t('global.dialogTitle') , {
+        confirmButtonText: this.$t('global.confirmButton') ,
+        cancelButtonText: this.$t('global.cancelButton') ,
         type: 'warning'
       }).then(function () {
         return exportReportAgentCount(queryParams)
       }).then(response => {
-        this.downloadExcel(response, '推广统计报表')
+        this.downloadExcel(response, this.$t('report.agentCount.psr') )
       }).catch(() => {
       })
     }

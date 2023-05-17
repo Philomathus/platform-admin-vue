@@ -4171,6 +4171,12 @@ export default {
       pc: 'Promotion Code',
       pepc: 'Please enter the promotion code',
       snow: 'Submit Now',
+      pcce: 'Promotional code cannot be empty',
+      as: 'Add Success',
+      pcpn: 'Promotion code can only be pure numbers',
+      dels: 'Deleted Successfullly',
+      cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+      psr: 'Promotion of statistical reports',
 
     }
   }

@@ -4176,7 +4176,17 @@ export default {
       pcpn: 'Promotion code can only be pure numbers',
       dels: 'Deleted Successfullly',
       cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
-      psr: 'Promotion of statistical reports',
+      psr: 'Promotion of statistical reports'
+    },
+    comprehensiveStatistics: {
+      psd: 'Please select date',
+      amt: 'Amount',
+      type: 'Type',
+      time: 'Time',
+      err: 'Error: The report is being generated, please wait...',
+      rbg: 'Reports are being generated',
+      cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+      ids: 'Integrated Data Statement',
 
     }
   }

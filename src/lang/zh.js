@@ -4224,7 +4224,17 @@ export default {
       pcpn: '推广码只能为纯数字',
       dels: '删除成功',
       cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
-      psr: '推广统计报表',
+      psr: '推广统计报表'
+    },
+    comprehensiveStatistics: {
+      psd: '请选择日期选择',
+      amt: '金额',
+      type: '类型',
+      time: '时间',
+      err: 'Error: 报表正在生成，请稍后...',
+      rbg: '报表正在生成',
+      cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+      ids: '综合数据报表',
 
     }
   }

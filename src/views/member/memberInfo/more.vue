@@ -150,7 +150,7 @@
             <el-input v-model="form.betMoney" type="number" :placeholder=" $t('members.memberInfo.more.alsoCode') "
                       @blur="codeMoney(form.betMoney,form.score)"/>
           </el-form-item>
-          <el-form-item :label=" $t('members.memberInfo.more.cMulti') " prop="beatNum">
+          <el-form-item :label=" $t('members.memberInfo.more.cMult') " prop="beatNum">
             <el-input v-model="form.beatNum" type="number"
                       :placeholder=" $t('members.memberInfo.more.peAC') "/>
           </el-form-item>

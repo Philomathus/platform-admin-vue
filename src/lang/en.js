@@ -4187,6 +4187,23 @@ export default {
       rbg: 'Reports are being generated',
       cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
       ids: 'Integrated Data Statement',
+    },
+    gameBet: {
+      tba: 'Total betting amount ',
+      tnb: 'Total number of bets. ',
+      mp: 'Membership Profit. ',
+      pn: 'Platform Name',
+      pepn: 'Please enter the platform name',
+      pnum: 'Platform Number',
+      nd: 'Name - Details',
+      nob: 'Number of bets',
+      br: 'Betting ratio',
+      eba: 'Effective betting amount',
+      prop: 'Proportion',
+      date: 'Date',
+      tdr: 'The date is required',
+      trb: 'Error: The report is being generated, please wait...',
+      gbs: 'Game Betting Statement',
 
     }
   }

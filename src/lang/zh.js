@@ -1782,9 +1782,19 @@ export default {
       pyb: '下注时间',
       pbt: '下注类型',
       non: '注单号',
-      menu: '会员ID只能输入数字及下划线',
-
+      menu: '会员ID只能输入数字及下划线'
     }
+  },
+
+  common: {
+    titleDialog: '',
+    titlePrompt: '',
+    removeButton: '',
+    searchButton: '',
+    resetButton: '',
+    confirmButton: '',
+    cancelButton: '',
+    operationColumn: ''
   },
 
   liveWeb: {
@@ -4186,7 +4196,31 @@ export default {
     wheelSkinReceived: {},
 
 
-  }
+  },
 
+  report:{
+    agentCount: {
+      ds: '日期选择',
+      cc: '渠道编码',
+      afr: '友情提示(每日推广数据查询前，请进行一次基础数据的预生成操作)',
+      npc: '新增推广码',
+      dpc: '删除推广码',
+      bdp: '基础数据预生成',
+      st: '统计时间',
+      sd: '当日/总(注册人数)',
+      ce: '公司入款（首充）',
+      od: '线上入款（首充）',
+      me: '手工入款（首充）',
+      tad: '入款总（首充）',
+      psa: '人/笔/金额（出款日总）',
+      psad: '人/笔/金额（入款日总）',
+      nug: '送礼次数/金额',
+      nol: '直播间次数/活跃安卓/活跃苹果',
+      pc: '推广码',
+      pepc: '请输入推广码',
+      snow: '立即提交',
+
+    }
+  }
 
 }

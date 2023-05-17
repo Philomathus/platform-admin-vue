@@ -43,8 +43,8 @@ export default {
     dateTimePickerRangeSeparator: 'To',
     namePlaceholder:'Please Enter Name',
     selectDatePlaceholder: 'Date Range',
-    datePickerStartDatePlaceholder: 'Begin Time',
-    datePickerEndDatePlaceholder: 'End Time',
+    datePickerStartDatePlaceholder: 'Start Date',
+    datePickerEndDatePlaceholder: 'End Date',
     operationColumn: 'Operate',
     editSuccessMsg: 'Edit Successful',
     addSuccessMsg: 'Add Successful',
@@ -1737,8 +1737,7 @@ export default {
       pyb: 'Place your bets at',
       pbt: 'Place bet type',
       non: 'Note order number',
-      menu: 'Member IDs can only be entered as numbers and underscores',
-
+      menu: 'Member IDs can only be entered as numbers and underscores'
     }
   },
 
@@ -4149,5 +4148,31 @@ export default {
     },
 
 
+  },
+
+  report:{
+    agentCount: {
+      ds: 'Date Selection',
+      cc: 'Channel Code',
+      afr: 'A friendly reminder (before the daily promotion data query, please carry out a basic data pre-generation operation)',
+      npc: 'New Promotion Code',
+      dpc: 'Delete Promotion Code',
+      bdp: 'Base data pre-generation',
+      st: 'Statistic Time',
+      sd: 'Same day/total (registrants)',
+      ce: 'Company entry (First charge) ',
+      od: 'Online deposit (First charge) ',
+      me: 'Manual Entry (First charge) ',
+      tad: 'Total amount of deposit (First charge) ',
+      psa: 'Person/Stroke/Amount (total on the day of disbursement)',
+      psad: 'Person/Stroke/Amount (total on the day of deposit)',
+      nug: 'Number of gifts/amount',
+      nol: 'Number of live rooms/active Android/active Apple',
+      pc: 'Promotion Code',
+      pepc: 'Please enter the promotion code',
+      snow: 'Submit Now',
+
+    }
   }
+
 }

@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item :label="域名分组" prop="dgroup">
-        <el-select v-model="queryParams.dgroup" :placeholder="请选择域名分组" clearable size="small">
+      <el-form-item :label="$t('config.domain.tableDialog.dgroup')" prop="dgroup">
+        <el-select v-model="queryParams.dgroup" :placeholder="$t('config.domain.tableDialog.dgroupPlaceholder')" clearable size="small">
           <el-option
             v-for="dict in dgroupOptions"
             :key="dict.dictValue"
@@ -11,19 +11,19 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item :label="域名" prop="domain">
+      <el-form-item :label="$t('config.domain.tableDialog.domain')" prop="domain">
         <el-input
           v-model="queryParams.domain"
-          :placeholder="请输入域名"
+          :placeholder="$t('config.domain.tableDialog.domainPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item :label="动态编码" prop="dcode">
+      <el-form-item :label="$t('config.domain.tableDialog.dcode')" prop="dcode">
         <el-input
           v-model="queryParams.dcode"
-          :placeholder="请输入动态编码"
+          :placeholder="$t('config.domain.tableDialog.dcodePlaceholer')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -144,7 +144,7 @@
           <el-input v-model="form.remark" type="textarea" :placeholder="$t('config.domain.tableDialog.remarkPlaceholder')"/>
         </el-form-item>
         <el-form-item :label="$t('config.domain.tableDialog.index')" prop="sort">
-          <el-input type="number" v-model="form.sort" :placeholder="$t('config.domain.tableDialog.index')"/>
+          <el-input type="number" v-model="form.sort" :placeholder="$t('config.domain.tableDialog.indexPlaceholder')"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

@@ -1,36 +1,39 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="渠道名称" prop="channelName">
+      <el-form-item :label="$t('config.configUsdtRecharge.tableDialog.channelName')" prop="channelName">
         <el-input
           v-model="queryParams.channelName"
-          placeholder="请输入渠道名称"
+          :placeholder="$t('config.configUsdtRecharge.tableDialog.channelNamePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="链名称" prop="chainName">
+      <el-form-item :label="$t('config.configUsdtRecharge.tableDialog.chainName')" prop="chainName">
         <el-input
           v-model="queryParams.chainName"
-          placeholder="请输入链名称"
+          :placeholder="$t('config.configUsdtRecharge.tableDialog.chainNamePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="充值地址" prop="rechargeAddress">
+      <el-form-item :label="$t('config.configUsdtRecharge.tableDialog.rechargeAddress')" prop="rechargeAddress">
         <el-input
           v-model="queryParams.rechargeAddress"
-          placeholder="请输入充值地址"
+          :placeholder="$t('config.configUsdtRecharge.tableDialog.rechargeAddressPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{
+            $t('global.searchButton')
+          }}
+        </el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -43,7 +46,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:configUsdtRecharge:add']"
-        >新增</el-button>
+        >{{ $t('global.addButton') }}
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -54,7 +58,8 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:configUsdtRecharge:edit']"
-        >修改</el-button>
+        >{{ $t('global.editButton') }}
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -65,7 +70,8 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:configUsdtRecharge:remove']"
-        >删除</el-button>
+        >{{ $t('global.deleteButton') }}
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -75,15 +81,16 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:configUsdtRecharge:export']"
-        >导出</el-button>
+        >{{ $t('global.exportButton') }}
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="configUsdtRechargeList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <!--      <el-table-column label="排序" align="center" width="200" prop="indexs" />
-            <el-table-column label="钱包二维码" align="center" width="200" prop="icon">
+      <el-table-column type="selection" width="55" align="center"/>
+      <!--      <el-table-column :label="排序" align="center" width="200" prop="indexs" />
+            <el-table-column :label="钱包二维码" align="center" width="200" prop="icon">
               <template slot-scope="scope">
                 <el-image
                   style="height: 50px;"
@@ -93,9 +100,11 @@
                 </el-image>
               </template>
             </el-table-column>-->
-      <el-table-column label="渠道名称" align="center" width="300" prop="channelName" />
-      <el-table-column label="链名称" align="center" width="300" prop="chainName" />
-      <el-table-column label="状态" align="center" width="100" prop="status">
+      <el-table-column :label="$t('config.configUsdtRecharge.tableDialog.channelName')" align="center" width="300"
+                       prop="channelName"/>
+      <el-table-column :label="$t('config.configUsdtRecharge.tableDialog.chainName')" align="center" width="300"
+                       prop="chainName"/>
+      <el-table-column :label="$t('global.status')" align="center" width="100" prop="status">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -105,10 +114,14 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="充值地址" align="center" min-width="400" prop="rechargeAddress" />
-      <el-table-column label="优惠比例" align="center" width="100" prop="discountBill" />
-      <el-table-column label="usdt汇率" align="center" width="100" prop="exchangeRate" />
-      <el-table-column label="操作" align="center" width="300" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('config.configUsdtRecharge.tableDialog.rechargeAddress')" align="center"
+                       min-width="400" prop="rechargeAddress"/>
+      <el-table-column :label="$t('config.configUsdtRecharge.tableDialog.discountBill')" align="center" width="100"
+                       prop="discountBill"/>
+      <el-table-column :label="$t('config.configUsdtRecharge.tableDialog.exchangeRate')" align="center" width="100"
+                       prop="exchangeRate"/>
+      <el-table-column :label="$t('global.operationColumn')" align="center" width="300"
+                       class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -116,14 +129,16 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:configUsdtRecharge:edit']"
-          >修改</el-button>
+          >{{ $t('global.editButton') }}
+          </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:configUsdtRecharge:remove']"
-          >删除</el-button>
+          >{{ $t('global.deleteButton') }}
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -137,43 +152,56 @@
     />
 
     <!-- 添加或修改【请填写功能名称】对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="90px">
-        <el-form-item label="渠道名称" prop="channelName">
-          <el-input v-model="form.channelName" placeholder="请输入渠道名称" />
+        <el-form-item :label="$t('config.configUsdtRecharge.tableDialog.channelName')" prop="channelName">
+          <el-input v-model="form.channelName" :placeholder="$t('config.configUsdtRecharge.tableDialog.channelNamePlaceholder')"/>
         </el-form-item>
-        <el-form-item label="链名称" prop="chainName">
-          <el-input v-model="form.chainName" placeholder="请输入链名称" />
+        <el-form-item :label="$t('config.configUsdtRecharge.tableDialog.chainName')" prop="chainName">
+          <el-input v-model="form.chainName"
+                    :placeholder="$t('config.configUsdtRecharge.tableDialog.chainNamePlaceholder')"/>
         </el-form-item>
-        <el-form-item label="充值地址" prop="rechargeAddress">
-          <el-input v-model="form.rechargeAddress" placeholder="请输入充值地址" />
+        <el-form-item :label="$t('config.configUsdtRecharge.tableDialog.rechargeAddress')" prop="rechargeAddress">
+          <el-input v-model="form.rechargeAddress"
+                    :placeholder="$t('config.configUsdtRecharge.tableDialog.rechargeAddressPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="优惠比例" prop="discountBill">
-          <el-input v-model="form.discountBill" placeholder="请输入优惠比例" />
+        <el-form-item :label="$t('config.configUsdtRecharge.tableDialog.discountBill')" prop="discountBill">
+          <el-input v-model="form.discountBill"
+                    :placeholder="$t('config.configUsdtRecharge.tableDialog.discountBillPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="usdt汇率" prop="exchangeRate">
-          <el-input v-model="form.exchangeRate" placeholder="请输入usdt汇率" />
+        <el-form-item :label="$t('config.configUsdtRecharge.tableDialog.exchangeRate')" prop="exchangeRate">
+          <el-input v-model="form.exchangeRate"
+                    :placeholder="$t('config.configUsdtRecharge.tableDialog.exchangeRatePlaceholder')"/>
         </el-form-item>
-<!--        <el-form-item label="排序" prop="indexs">
-          <el-input v-model="form.indexs" placeholder="请输入排序" />
-        </el-form-item>
-        <el-form-item label="钱包二维码">
-          <imageUpload v-model="form.icon" path="ConfigUsdtRecharge"/>
-        </el-form-item>-->
-        <el-form-item label="备注信息" prop="remark">
-          <el-input v-model="form.remark" placeholder="请输入备注信息" />
+        <!--        <el-form-item :label="排序" prop="indexs">
+                  <el-input v-model="form.indexs" :placeholder="请输入排序" />
+                </el-form-item>
+                <el-form-item :label="钱包二维码">
+                  <imageUpload v-model="form.icon" path="ConfigUsdtRecharge"/>
+                </el-form-item>-->
+        <el-form-item :label="$t('config.configUsdtRecharge.tableDialog.remark')" prop="remark">
+          <el-input v-model="form.remark" :placeholder="$t('config.configUsdtRecharge.tableDialog.remarkPlaceholder')"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('global.submitButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { listConfigUsdtRecharge, getConfigUsdtRecharge, delConfigUsdtRecharge, addConfigUsdtRecharge, updateConfigUsdtRecharge, exportConfigUsdtRecharge, changeUsdtRechargeStatus } from "@/api/platform-web/config/configUsdtRecharge"
+import {
+  listConfigUsdtRecharge,
+  getConfigUsdtRecharge,
+  delConfigUsdtRecharge,
+  addConfigUsdtRecharge,
+  updateConfigUsdtRecharge,
+  exportConfigUsdtRecharge,
+  changeUsdtRechargeStatus
+} from "@/api/platform-web/config/configUsdtRecharge"
 import ImageUpload from '@/components/ImageUpload'
 
 export default {
@@ -214,22 +242,22 @@ export default {
       // 表单校验
       rules: {
         channelName: [
-          {required: true, message: '渠道名称不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('config.configUsdtRecharge.validation.channelName'), trigger: 'blur'}
         ],
         chainName: [
-          {required: true, message: '链名称不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('config.configUsdtRecharge.validation.chainName'), trigger: 'blur'}
         ],
         rechargeAddress: [
-          {required: true, message: '充值地址不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('config.configUsdtRecharge.validation.rechargeAddress'), trigger: 'blur'}
         ],
         discountBill: [
-          {required: true, message: '优惠比例不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('config.configUsdtRecharge.validation.discountBill'), trigger: 'blur'}
         ],
         exchangeRate: [
-          {required: true, message: 'usdt汇率不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('config.configUsdtRecharge.validation.exchangeRate'), trigger: 'blur'}
         ],
         icon: [
-          {required: true, message: '钱包二维码不能为空', trigger: 'blur'}
+          {required: true, message: this.$t('config.configUsdtRecharge.validation.icon'), trigger: 'blur'}
         ]
       }
     };
@@ -249,15 +277,22 @@ export default {
     },
     //支付类型状态修改
     handleStatusChange(row) {
-      let text = row.status === '1' ? '启用' : '停用'
-      this.$confirm('确认要"' + text + '""' + row.channelName + '"吗?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(function () {
+      let text = row.status === '1'
+        ? this.$t('global.statusEnable')
+        : this.$t('global.statusDisable')
+      this.$confirm(this.$t('global.statusEditSuccess')
+        + text
+        + '""'
+        + this.title
+        + this.$t('global.statusConfirmQuestion'),
+        this.$t('global.statusConfirmTitle'), {
+          confirmButtonText: this.$t('global.confirmButton'),
+          cancelButtonText: this.$t('global.cancelButton'),
+          type: 'warning'
+        }).then(function () {
         return changeUsdtRechargeStatus(row.id, row.status)
       }).then(() => {
-        this.msgSuccess(text + '成功')
+        this.msgSuccess(text + this.$t('global.statusEditSuccess'))
       }).catch(function () {
         row.status = row.status === '0' ? '1' : '0'
       })
@@ -302,14 +337,15 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【请填写功能名称】";
+      this.title = this.$t('config.configUsdtRecharge.addTitle');
+
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -318,7 +354,7 @@ export default {
       getConfigUsdtRecharge(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = this.$t('config.configUsdtRecharge.editTitle');
       });
     },
     /** 提交按钮 */
@@ -327,13 +363,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateConfigUsdtRecharge(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess(this.$t('global.editSuccessMsg'));
               this.open = false;
               this.getList();
             });
           } else {
             addConfigUsdtRecharge(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess(this.$t('global.addSuccessMsg'));
               this.open = false;
               this.getList();
             });
@@ -344,29 +380,29 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('global.deleteConfirm') + row.name + '"?', this.$t('global.deleteConfirmTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
-      }).then(function() {
+      }).then(function () {
         return delConfigUsdtRecharge(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess(this.$t('global.deleteSuccessMsg'));
       }).catch(() => {
-	  })
+      })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(function() {
+      this.$confirm(this.$t('global.confirmExport'), this.$t('global.confirmExportTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
+        type: 'warning'
+      }).then(function () {
         return exportConfigUsdtRecharge(queryParams);
       }).then(response => {
-        this.downloadExcel(response, '【请填写功能名称】');
+        this.downloadExcel(response, this.$t('config.configUsdtRecharge.exportTitle'));
       }).catch(() => {
       })
     }

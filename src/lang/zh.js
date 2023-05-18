@@ -777,6 +777,23 @@ export default {
         sort: '排序不能为空',
         url: '请输入正确的URL',
       }
+    },
+    tradeType: {
+      addTitle: '添加资金交易类型',
+      editTitle: '修改资金交易类型',
+      tableDialog: {
+        type: '交易类型',
+        typePlaceholder: '请输入交易类型',
+        name: '交易名称',
+        namePlaceholder: '交易类型',
+        des: '交易说明',
+        desPlaceholder: '请输入交易说明',
+      },
+      validation: {
+        type: '交易类型不能为空',
+        name: '交易名称不能为空',
+        des: '交易说明不能为空',
+      }
     }
   },
 

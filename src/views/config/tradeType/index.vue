@@ -1,29 +1,29 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="交易类型" prop="type">
+      <el-form-item :label="$t('config.tradeType.tableDialog.type')" prop="type">
         <el-input
           v-model="queryParams.type"
-          placeholder="请输入交易类型"
+          :placeholder="$t('config.tradeType.tableDialog.typePlaceholder')"
           clearable
           size="small"
           type="number"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="交易名称" prop="name">
+      <el-form-item :label="$t('config.tradeType.tableDialog.name')" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入交易名称"
+          :placeholder="$t('config.tradeType.tableDialog.namePlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="交易说明" prop="des">
+      <el-form-item :label="$t('config.tradeType.tableDialog.des')" prop="des">
         <el-input
           v-model="queryParams.des"
-          placeholder="请输入交易说明"
+          :placeholder="$t('config.tradeType.tableDialog.desPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -76,10 +76,10 @@
 
     <el-table stripe v-loading="loading" :data="tradeTypeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="交易类型" align="center" prop="type"/>
-      <el-table-column label="交易名称" align="center" prop="name"/>
-      <el-table-column label="交易说明" align="center" prop="des"/>
-      <el-table-column label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('config.tradeType.tableDialog.type')" align="center" prop="type"/>
+      <el-table-column :label="$t('config.tradeType.tableDialog.name')" align="center" prop="name"/>
+      <el-table-column :label="$t('config.tradeType.tableDialog.des')" align="center" prop="des"/>
+      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -112,14 +112,14 @@
     <!-- 添加或修改资金交易类型对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title"  :dialogType="dialogType" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="交易类型" prop="type">
-          <el-input v-model="form.type" placeholder="请输入交易类型" type="number"/>
+        <el-form-item :label="$t('config.tradeType.tableDialog.type')" prop="type">
+          <el-input v-model="form.type" :placeholder="$t('config.tradeType.tableDialog.typePlaceholder')" type="number"/>
         </el-form-item>
-        <el-form-item label="交易名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入交易名称"/>
+        <el-form-item :label="$t('config.tradeType.tableDialog.name')" prop="name">
+          <el-input v-model="form.name" :placeholder="$t('config.tradeType.tableDialog.namePlaceholder')"/>
         </el-form-item>
-        <el-form-item label="交易说明" prop="des">
-          <el-input v-model="form.des" placeholder="请输入交易说明"/>
+        <el-form-item :label="$t('config.tradeType.tableDialog.des')" prop="des">
+          <el-input v-model="form.des" :placeholder="$t('config.tradeType.tableDialog.desPlaceholder')"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -172,13 +172,13 @@ export default {
       // 表单校验
       rules: {
         type: [
-          { required: true, message: '交易类型不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('config.tradeType.validation.type'), trigger: 'blur' }
         ],
         name: [
-          { required: true, message: '交易名称不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('config.tradeType.validation.name'), trigger: 'blur' }
         ],
         des: [
-          { required: true, message: '交易说明不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('config.tradeType.validation.des'), trigger: 'blur' }
         ]
       }
     }
@@ -230,7 +230,7 @@ export default {
     handleAdd() {
       this.reset()
       this.open = true
-      this.title = '添加资金交易类型'
+      this.title = this.$t('config.tradeType.addTitle')
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -239,7 +239,7 @@ export default {
       getTradeType(type).then(response => {
         this.form = response.data
         this.open = true
-        this.title = '修改资金交易类型'
+        this.title = this.$t('config.tradeType.editTitle')
         this.dialogType='1'
       })
     },
@@ -250,7 +250,7 @@ export default {
       getTradeType(type).then(response => {
         this.form = response.data
         this.open = true
-        this.title = '修改资金交易类型'
+        this.title = this.$t('config.tradeType.editTitle')
         this.dialogType='1'
       })
     },
@@ -260,13 +260,13 @@ export default {
         if (valid) {
           if (this.dialogType == '1') {
             updateTradeType(this.form).then(response => {
-              this.msgSuccess('修改成功')
+              this.msgSuccess(this.$t('global.editSuccessMsg'));
               this.open = false
               this.getList()
             })
           } else {
             addTradeType(this.form).then(response => {
-              this.msgSuccess('新增成功')
+              this.msgSuccess(this.$t('global.addSuccessMsg'));
               this.open = false
               this.getList()
             })
@@ -277,34 +277,33 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const types = row.type || this.ids
-      this.$confirm('是否确认删除资金交易类型编号为"' + types + '"的数据项?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('global.deleteConfirm') + row.title + '"?', this.$t('global.deleteConfirmTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function() {
         return delTradeType(types)
       }).then(() => {
         this.getList()
-        this.msgSuccess('删除成功')
+        this.msgSuccess(this.$t('global.deleteSuccessMsg'));
       }).catch(() => {
       })
     },
     /** 删除按钮操作 */
     handleDeleteSelect() {
       const types =this.ids
-      this.$confirm('是否确认删除资金交易类型编号为"' + types + '"的数据项?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('global.deleteConfirm') + types + '"?', this.$t('global.deleteConfirmTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function() {
         return delTradeType(types)
       }).then(() => {
         this.getList()
-        this.msgSuccess('删除成功')
+        this.msgSuccess(this.$t('global.deleteSuccessMsg'));
       }).catch(() => {
       })
     },
-
   }
 }
 </script>

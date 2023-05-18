@@ -4298,6 +4298,21 @@ export default {
       note: 'Number of times to enter the live room',
     },
     memberChannel: {
+      ic: 'Invitation Code',
+      at: 'All Types',
+      lr: 'Login Remarks',
+      qt: 'Quantity',
+      nar: 'NetEase Abnormal Remarks',
+      norm: 'Normal',
+      ut: 'User Type',
+      moi: 'Members (old interface)',
+      sr: 'Start Refreshing',
+      cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+      nas: 'NetEase Anomaly Statistics',
+      fail: 'Failure',
+      tbc: 'To be confirmed',
+      stopr: ' Stop Refreshing',
+      rsas: 'Refresh starts after seconds',
 
     }
   }

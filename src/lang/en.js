@@ -4314,6 +4314,13 @@ export default {
       stopr: ' Stop Refreshing',
       rsas: 'Refresh starts after seconds',
 
+    },
+    memberWithdrawLog: {
+      opt: 'Operators',
+      rev: 'Reviewer',
+      rtwa: 'Review total cash withdrawal amount',
+      noa: 'Number of Audits',
+
     }
   }
 

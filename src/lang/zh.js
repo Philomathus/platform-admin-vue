@@ -4363,6 +4363,13 @@ export default {
       stopr: '停止刷新',
       rsas: '秒后开始刷新',
 
+    },
+    memberWithdrawLog: {
+      opt: '操作人',
+      rev: '审核人',
+      rtwa: '审核总提现金额',
+      noa: '审核次数',
+
     }
   }
 

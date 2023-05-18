@@ -4289,6 +4289,15 @@ export default {
       time: 'Time',
       cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
       prs: 'Platform recharge statement',
+    },
+    memberAgent: {
+      mid: 'Member ID',
+      vl: 'VIP Level',
+      cod: 'Coding',
+      bal: 'Balancing',
+      note: 'Number of times to enter the live room',
+    },
+    memberChannel: {
 
     }
   }

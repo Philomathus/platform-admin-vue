@@ -4338,6 +4338,15 @@ export default {
       time: '时间',
       cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
       prs: '平台充值报表',
+    },
+    memberAgent: {
+      mid: '会员ID',
+      vl: 'VIP等级',
+      cod: '打码',
+      bal: '余额',
+      note: '进入直播间次数',
+    },
+    memberChannel: {
 
     }
   }

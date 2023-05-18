@@ -7,7 +7,7 @@ export default {
     close: 'Close',
     searchButton: 'Search',
     resetButton: 'Reset',
-    addButton: 'Add New',
+    addButton: 'Add new',
     editButton: 'Modify',
     deleteButton: 'Delete',
     exportButton: 'Export',
@@ -1757,8 +1757,8 @@ export default {
     anchorAward: {
       queryForm: {
         updateTimePlaceholder: 'Please select a date range',
-        idPlaceholder: 'Anchor ID',
-        nickNamePlaceholder: 'Anchor nickname',
+        idPlaceholder: 'Livestream girl\'s ID',
+        nickNamePlaceholder: 'Livestream girl\'s nickname',
         searchButton: '@:global.searchButton',
         resetButton: '@:global.resetButton'
       },
@@ -1766,8 +1766,8 @@ export default {
         exportButton: '@:global.exportButton'
       },
       table: {
-        anchor: 'Anchor ID',
-        nickName: 'Anchor nickname',
+        anchor: 'Livestream girl\'s ID',
+        nickName: 'Livestream girl\'s nickname',
         cost: 'Bet',
         prize: 'Prize',
         prizeSixThousand: 'Prize six thousand',
@@ -1784,12 +1784,12 @@ export default {
       queryForm: {
         fromPlatformPlaceholder: 'Member ID',
         userNicknamePlaceholder: 'Member nickname',
-        poscatIdPlaceholder: 'Anchor ID',
+        poscatIdPlaceholder: 'Livestream girl\'s ID',
         searchButton: '@:global.searchButton',
         resetButton: '@:global.resetButton'
       },
       actions: {
-        viewBlackListButton: 'blocked IPs'
+        viewBlackListButton: 'Check the banned IPs'
       },
       refresh: {
         title: 'Record refresh',
@@ -1801,25 +1801,25 @@ export default {
       },
       table: {
         fromPlatform: 'Platform member ID',
-        userNickName: 'User nickname',
+        userNickName: 'Member nickname',
         type: 'Message type',
-        type0: 'General message',
+        type0: 'Message message',
         type1: 'Pop-up message',
         msg: 'Message content',
-        poscatId: 'Anchor ID',
-        poscatNickName: 'Anchor nickname',
-        noSpeaking: 'Is blocked',
+        poscatId: 'Girl\'s ID',
+        poscatNickName: 'Livestream girl\'s nickname',
+        noSpeaking: 'Blocked or not',
         noSpeakingTrue: 'Blocked',
         noSpeakingFalse: 'Normal',
-        forbid: 'Is banned',
-        forbidTrue: 'Banned',
+        forbid: 'Muted or not',
+        forbidTrue: 'Muted',
         forbidFalse: 'Normal',
-        userIp: 'User IP',
+        userIp: 'Send message IP',
         createTimes: 'Send time',
         operation: '@:global.operationColumn',
-        muteButton: 'Block',
-        unmuteButton: 'Unblock',
-        forbidButton: 'Ban'
+        muteButton: 'Mute',
+        unmuteButton: 'Unmute',
+        forbidButton: 'Stop'
       },
       confirmUpdateDialog: {
         title: 'Warning',
@@ -1836,14 +1836,14 @@ export default {
         titleUpdate: 'Blocking users',
         fromPlatformLabel: 'Platform member ID',
         fromPlatformPlaceholder: 'Please enter the platform member ID',
-        userNickNameLabel: 'User\'s nickname',
-        userNickNamePlaceholder: 'Please enter the user\'s nickname',
+        userNickNameLabel: 'Member\'s nickname',
+        userNickNamePlaceholder: 'Please enter the member\'s nickname',
         msgLabel: 'Message content',
         userIpLabel: 'Blocking IP',
         confirmButton: 'Confirm',
         cancelButton: 'Cancel',
         validation: {
-          postcatId: 'Anchor ID cannot be empty'
+          postcatId: 'Livestream girl\'s ID cannot be empty'
         },
         messageBox: {
           suspendSuccess: 'Blocked successfully'
@@ -1889,32 +1889,32 @@ export default {
     family: {
       queryForm: {
         namePlaceholder: 'Name',
-        userIdPlaceholder: 'Leader ID',
+        userIdPlaceholder: 'Family host ID',
         idPlaceholder: 'Family ID',
-        statusPlaceholder: 'Status',
+        statusPlaceholder: 'All status',
         status0: 'Not audited',
-        status1: 'Audited',
-        status2: 'Rejected',
+        status1: 'Pass the audit',
+        status2: 'Pass the audit',
         status3: 'Closed',
         status4: 'Dismissed',
         searchButton: '@:global.searchButton',
         resetButton: '@:global.resetButton'
       },
       actions: {
-        add: 'Add family'
+        add: 'Add new family'
       },
       table: {
         name: 'Family name',
         notice: 'Announcement',
         manifesto: 'Family declaration',
-        nickName: 'Clan referral number',
-        userId: 'Leader ID',
-        userCount: 'Number of members',
+        nickName: 'Family recommended ID',
+        userId: 'Family host ID',
+        userCount: 'Family member amount',
         createTimes: 'Create time',
         status: 'Status',
         status0: 'Not audited',
-        status1: 'Audited',
-        status2: 'Rejected',
+        status1: 'Pass the audit',
+        status2: 'Pass the audit',
         status3: 'Closed',
         status4: 'Dismissed',
         contribution: 'Contribution of family members',
@@ -1922,10 +1922,10 @@ export default {
         memo: 'Remarks',
         operation: '@:global.operationColumn',
         updateFamilyButton: 'Modify',
-        removeButton: 'Remove',
+        removeButton: 'Dismiss',
         updateFlag0Button: 'No pass',
         updateFlag1Button: 'Pass',
-        updateFlag2Button: 'Block',
+        updateFlag2Button: 'Stop',
         updateFlag3Button: 'Unblock'
       },
       addUpdateDialog: {
@@ -1933,10 +1933,10 @@ export default {
         titleUpdate: 'Update family',
         nameLabel: 'Family name',
         namePlaceholder: 'Please enter the family name',
-        userIdLabel: 'Leader ID',
-        userIdPlaceholder: 'Please enter the family leader ID',
-        nickNameLabel: 'Leader nickname',
-        nickNamePlaceholder: 'Please enter the nickname of the leader',
+        userIdLabel: 'Family host ID',
+        userIdPlaceholder: 'Please enter the family host ID',
+        nickNameLabel: 'Family host nickname',
+        nickNamePlaceholder: 'Please enter the nickname of the family host',
         logoLabel: 'Family logo',
         manifestoLabel: 'Family declaration',
         manifestoPlaceholder: 'Please enter a family declaration',
@@ -1949,8 +1949,8 @@ export default {
         validation: {
           logo: 'Please upload the family logo',
           name: 'Please enter the family name',
-          userId: 'Please enter the leader ID',
-          nickName: 'Please enter the nickname of the leader',
+          userId: 'Please enter the family host ID',
+          nickName: 'Please enter the nickname of the family host',
           manifesto: 'Please enter a family declaration',
           notice: 'Please enter an announcement',
           memo: 'Please enter a memo'
@@ -2018,14 +2018,14 @@ export default {
       },
       table: {
         specifications: 'Specification',
-        month: 'Months of guardianship',
+        month: 'How many months to protect',
         price: 'Price',
-        type: 'Guardian type',
+        type: 'Protect type',
         type1: 'Guardian of silver',
         typeOthers: 'Guardian of the stars',
-        propId: 'Gift id',
-        discountPrice: 'Discounted price',
-        giveday: 'Number of complimentary days',
+        propId: 'Present ID',
+        discountPrice: 'Discount price',
+        giveday: 'Giving days',
         operation: '@:global.operationColumn',
         removeButton: 'Remove'
       },
@@ -2034,18 +2034,18 @@ export default {
         titleUpdate: 'Update',
         specificationsLabel: 'Specification',
         specificationsPlaceholder: 'Please select specifications',
-        monthLabel: 'Months of guardianship',
-        monthPlaceholder: 'Please enter the number of months of guardianship',
+        monthLabel: 'How many months to protect',
+        monthPlaceholder: 'Please enter how many months to protect',
         priceLabel: 'Price',
         pricePlaceholder: 'Please enter the price',
-        typeLabel: 'Guardian type',
+        typeLabel: 'Protect type',
         typePlaceholder: 'Please select',
-        propIdLabel: 'Associated gifts',
+        propIdLabel: 'Associated present',
         propIdPlaceholder: 'Please select',
-        discountPriceLabel: 'Discounted price',
-        discountPricePlaceholder: 'Please enter the discounted price',
-        givedayLabel: '赠送天数',
-        givedayPlaceholder: 'Please enter the number of days of gift',
+        discountPriceLabel: 'Discount price',
+        discountPricePlaceholder: 'Please enter the discount price',
+        givedayLabel: 'Giving days',
+        givedayPlaceholder: 'Please enter the giving days',
         confirmButton: '@:global.confirmButton',
         cancelButton: '@:global.cancelButton'
       },
@@ -2080,13 +2080,15 @@ export default {
         remove: '@:global.removeButton'
       },
       table: {
+        id: 'Number',
         name: 'Plugin name',
+        status: 'Status',
         status0: 'Disabled',
         status1: 'Enabled',
         conUrl: 'Address',
         iconUrl: 'Icon',
         operation: '@:global.operationColumn',
-        removeButton: 'Remove'
+        removeButton: '@:global.deleteButton'
       },
       validations: {
         name: 'Name cannot be empty',
@@ -2149,9 +2151,9 @@ export default {
         resetButton: '@:global.resetButton'
       },
       table: {
-        memberAccount: 'User Id',
-        nickName: 'User nickname',
-        shuttedUntil: 'Cutoff time',
+        memberAccount: 'Member Id',
+        nickName: 'Member nickname',
+        shuttedUntil: 'Deadline',
         shuttedUntilNegative1: 'Permanent',
         shuttedUntil0: 'Not closed'
       },
@@ -2162,22 +2164,22 @@ export default {
     },
     liveBlack: {
       queryForm: {
-        hostIdLabel: 'Anchor ID',
-        hostIdPlaceholder: 'Please enter the anchor ID',
+        hostIdLabel: 'Livestream girl\'s ID',
+        hostIdPlaceholder: 'Please enter the livestream girl\'s ID',
         blackUserIdLabel: 'Member ID',
-        blackUserIdPlaceholder: 'Please enter the user ID to be set',
+        blackUserIdPlaceholder: 'Please enter the member ID you want to settle',
         searchButton: '@:global.searchButton',
         resetButton: '@:global.resetButton'
       },
       table: {
         blackUserId: 'Member ID',
         nickName: 'Member nickname',
-        hostId: 'Anchor ID',
-        hostName: 'Anchor nickname',
-        remark: 'Blocking remarks',
-        createTime: 'Closing time',
+        hostId: 'Livestream girl\'s ID',
+        hostName: 'Livestream girl\'s nickname',
+        remark: 'Ban remarks',
+        createTime: 'Ban time',
         operation: '@:global.operationColumn',
-        removeButton: 'Remove blacklist ban'
+        removeButton: 'Remove blacklist mute'
       },
       messageBox: {
         memberIdFormatError: 'Member IDs can only be entered as numbers and underscores',
@@ -2192,12 +2194,12 @@ export default {
     },
     liveComplaint: {
       queryForm: {
-        selectDateLabel: 'Creation time',
+        selectDateLabel: 'Create time',
         selectDateStartPlaceholder: 'Starting date',
         selectDateEndPlaceholder: 'End date',
-        userIdPlaceholder: 'Please enter your member ID',
-        anchorPlaceholder: 'Please enter the anchor ID',
-        statusPlaceholder: 'Please select the processing status',
+        userIdPlaceholder: 'Please enter the member ID',
+        anchorPlaceholder: 'Please enter the livestream girl\'s ID',
+        statusPlaceholder: 'Please select the handle status',
         searchButton: '@:global.searchButton',
         resetButton: '@:global.resetButton'
       },
@@ -2206,11 +2208,11 @@ export default {
       },
       table: {
         content: 'Complaint content',
-        mobile: 'Member phone',
+        mobile: 'Member phone number',
         roomName: 'Room name',
         userId: 'Member ID',
-        anchor: 'Anchor',
-        createTime: 'Creation time',
+        anchor: 'Livestream girl',
+        createTime: 'Create time',
         approver: 'Approver',
         remark: 'Approval remarks',
         processingTime: 'Approval time',
@@ -2223,13 +2225,13 @@ export default {
         rejectButton: 'Reject'
       },
       addDialog: {
-        title: 'Add anchor complaint record',
+        title: 'Add livestream girl complaint record',
         remarkLabel: 'Complaint content',
         remarkPlaceholder: 'Please enter content',
         userIdLabel: 'Member ID',
         userIdPlaceholder: 'Please enter your member ID',
-        anchorLabel: 'Anchor',
-        anchorPlaceholder: 'Please enter anchor',
+        anchorLabel: 'Livestream girl',
+        anchorPlaceholder: 'Please enter livestream girl',
         approverLabel: 'Approver',
         approverPlaceholder: 'Please enter the approver',
         processingTimeLabel: 'Approval time',
@@ -2262,23 +2264,23 @@ export default {
     liveHostPre: {
       queryForm: {
         dateDayPlaceholder: 'Select date',
-        livePlaceholder: 'Appointment time (multiple options available)',
-        liveLabel: '{num} points',
+        livePlaceholder: 'Reservation time (multiple options available)',
+        liveLabel: '{num} am',
         familyIdPlaceholder: 'Please enter the family ID',
-        hostId: 'Please enter the anchor ID',
-        hostName: 'Please enter a live nickname',
-        statusPlaceholder: 'All states',
+        hostId: 'Please enter the girl\'s ID',
+        hostName: 'Please enter the livestream nickname',
+        statusPlaceholder: 'All status',
         searchButton: '@:global.searchButton'
       },
       actions: {
         export: '@:global.exportButton'
       },
       table: {
-        id: 'Date + Anchor ID',
+        id: 'Date + Girl\'s ID',
         familyId: 'Family ID',
-        hostId: 'Anchor ID',
-        hostName: 'Anchor nickname',
-        live: '{num} points',
+        hostId: 'Livestream girl\'s ID',
+        hostName: 'Livestream nickname',
+        live: '{num} am',
         remark: 'Remarks',
         createTime: 'Creation time',
         operation: '@:global.operationColumn',
@@ -2286,13 +2288,13 @@ export default {
         rejectButton: 'Reject'
       },
       addDialog: {
-        title: 'Add anchor start time reservation',
+        title: 'Add livestream girl start time reservation',
         familyIdLabel: 'Family ID',
         familyIdPlaceholder: 'Please enter the family ID',
-        hostIdLabel: 'Anchor ID',
-        hostIdPlaceholder: 'Please enter the anchor ID',
-        hostNameLabel: 'Anchor nickname',
-        hostNamePlaceholder: 'Please enter an anchor nickname',
+        hostIdLabel: 'Livestream girl ID',
+        hostIdPlaceholder: 'Please enter the livestream girl ID',
+        hostNameLabel: 'Livestream girl\'s nickname',
+        hostNamePlaceholder: 'Please enter an livestream girl\'s nickname',
         statusLabel: '0=Pending 1=Reviewed 2=Rejected',
         statusPlaceholder: 'Please select dictionary generation',
         liveLabel: 'Live broadcast time',
@@ -2330,32 +2332,32 @@ export default {
     liveHostWageNote: {
       queryForm: {
         dateDayPlaceholder: 'Select date',
-        settlementRateLabel: 'Retail settlement rate',
-        settlementRatePlaceholder: 'Please enter the retail settlement rate',
+        settlementRateLabel: 'Retail livestream girl count money ratio',
+        settlementRatePlaceholder: 'Please enter the retail livestream girl count money ratio',
         familyIdPlaceholder: 'Family ID',
         familyNamePlaceholder: 'Family name',
-        familyNickNamePlaceholder: 'Leader nickname',
+        familyNickNamePlaceholder: 'Family host nickname',
         searchButton: '@:global.searchButton',
         resetButton: '@:global.resetButton'
       },
       actions: {
         export: '@:global.exportButton',
-        familyShow: 'All anchors'
+        familyShow: 'All livestream girls'
       },
       table: {
         familyId: 'Family ID',
-        familyName: 'Family name',
+        familyName: 'Family host name',
         familyId0Name: 'Retailer',
-        familyUserId: 'Leader ID',
-        familyNickName: 'Leader nickname',
-        livetime: 'Length of live broadcast',
-        livetimejiesuan: 'Hourly billing',
-        liwu: 'Gift amount',
-        liwujiesuan: 'Gift settlement',
-        lotteryCost: 'Lottery betting',
-        costQianliu: 'Lottery settlement',
-        times: 'Number of starts',
-        totalsettle: 'Total settlement'
+        familyUserId: 'Family host ID',
+        familyNickName: 'Family host nickname',
+        livetime: 'Minutes online',
+        livetimejiesuan: 'Settle account from duration',
+        liwu: 'Present price',
+        liwujiesuan: 'Settle money from present',
+        lotteryCost: 'Lottery bet',
+        costQianliu: 'Settle money from lottery',
+        times: 'Number of livestreams',
+        totalsettle: 'Total amount'
       },
       confirmExportDialog: {
         title: '@:global.dialogTitle',
@@ -2366,11 +2368,11 @@ export default {
     },
     liveHostWageNotedays: {
       queryForm: {
-        selectDateLabel: 'Date selection',
-        selectDateStartPlaceholder: 'Start date',
-        selectDateEndPlaceholder: 'End date',
-        hostIdPlaceholder: 'Anchor ID',
-        nickNamePlaceholder: 'Anchor nickname',
+        selectDateLabel: 'Select date',
+        selectDateStartPlaceholder: 'From',
+        selectDateEndPlaceholder: 'To',
+        hostIdPlaceholder: 'Livestream girl\'s ID',
+        nickNamePlaceholder: 'Livestream girl\'s nickname',
         familyNamePlaceholder: 'Family name',
         searchButton: '@:global.searchButton',
         resetButton: '@:global.resetButton'
@@ -2379,15 +2381,15 @@ export default {
         export: '@:global.exportButton'
       },
       table: {
-        hostId: 'Anchor ID',
-        nickName: 'Anchor nickname',
-        familyName: 'Family name',
-        livetime: 'On-air duration',
-        livetimejiesuan: 'Hourly billing',
-        ticket: 'Gift settlement',
-        costQianliu: 'Lottery settlement',
-        times: 'Number of starts',
-        totalsettle: 'Total revenue'
+        hostId: 'Livestream girl\'s ID',
+        nickName: 'Livestream girl\'s nickname',
+        familyName: 'Family host name',
+        livetime: 'Duration online time',
+        livetimejiesuan: 'Settle money from duration',
+        ticket: 'Settle money from present',
+        costQianliu: 'Settle money from lottery',
+        times: 'How many times a livestream started',
+        totalsettle: 'All income'
       },
       confirmExportDialog: {
         title: '@:global.dialogTitle',
@@ -2401,8 +2403,8 @@ export default {
         dateDayPlaceholder: 'Select date',
         settlementRateLabel: 'Retail settlement rate',
         settlementRatePlaceholder: 'Please enter the retail settlement rate',
-        hostIdPlaceholder: 'Anchor ID',
-        nickNamePlaceholder: 'Nickname of anchor',
+        hostIdPlaceholder: 'Livestream girl\'s ID',
+        nickNamePlaceholder: 'Livestream girl\'s nickname',
         familyIdPlaceholder: 'Family ID',
         searchButton: '@:global.searchButton',
         resetButton: '@:global.resetButton'
@@ -2414,16 +2416,16 @@ export default {
         totalsettleTotalPlaceholder: 'Total settlement statistics'
       },
       table: {
-        hostId: 'Anchor ID',
-        nickName: 'Nickname of anchor',
+        hostId: 'Livestream girl\'s ID',
+        nickName: 'Livestream girl\'s nickname',
         familyId: 'Family ID',
         familyIdPopover: 'Family ID: ',
-        familyUserIdPopover: 'Family leader ID：',
-        familyNickName: 'Family leader nickname：',
+        familyUserIdPopover: 'Family host ID：',
+        familyNickName: 'Family host nickname：',
         familyName: 'Family name',
         startTime: 'Start of live broadcast',
         endTime: 'End of live broadcast',
-        livetime: 'Duration of live broadcast',
+        livetime: 'Minutes online',
         lwrenwu: 'Gift mission',
         screnwu: 'Hourly tasks',
         coin: 'Hourly rate',
@@ -2434,22 +2436,22 @@ export default {
         lotteryCost: 'Lottery Bet',
         lotteryBili: 'Lottery commission',
         costQianliu: 'Lottery settlement',
-        times: 'Number of starts',
-        totalsettle: 'Total settlement'
+        times: 'Number of livestreams',
+        totalsettle: 'Total amount'
       },
       confirmExportDialog: {
         title: '@:global.dialogTitle',
-        message: 'Do you confirm to export all the anchor hours data items?',
+        message: 'Do you confirm to export all the livestream girl\'s hours data items?',
         confirmButton: '@:global.confirmButton',
         cancelButton: '@:global.cancelButton'
       }
     },
     liveMount: {
       queryForm: {
-        gvipLabel: 'VIP level',
+        gvipLabel: 'VIP levels',
         gvipPlaceholder: 'VIP level',
-        nameLabel: 'Mount name',
-        namePlaceholder: 'Please enter the mount name',
+        nameLabel: 'Vehicle name',
+        namePlaceholder: 'Please enter the vehicle name',
         searchButton: '@:global.searchButton',
         resetButton: '@:global.resetButton'
       },
@@ -2459,13 +2461,13 @@ export default {
         remove: '@:global.deleteButton'
       },
       table: {
-        id: 'Mount ID',
+        id: 'Vehicle ID',
         gvip: 'VIP level',
-        name: 'Mount name',
+        name: 'Vehicle name',
         status: 'Status',
         status0: 'Disabled',
         status1: 'Enabled',
-        iconUrl: 'Icons',
+        iconUrl: 'Icon',
         price: 'Price',
         disPrice: 'Discount price',
         vday: 'Valid days',
@@ -2475,12 +2477,12 @@ export default {
         removeButton: '@:global.deleteButton'
       },
       addEditDialog: {
-        titleAdd: 'Add a gift',
-        titleEdit: 'Modify gift',
+        titleAdd: 'Add a present',
+        titleEdit: 'Modify present',
         gvipLabel: 'VIP level',
         gvipPlaceholder: 'Please enter to receive free VIP (-1 can only buy)',
-        nameLabel: 'Mount name',
-        namePlaceholder: 'Please enter the mount name',
+        nameLabel: 'Vehicle name',
+        namePlaceholder: 'Please enter the vehicle name',
         statusLabel: 'Status',
         status0: 'Disabled',
         status1: 'Enabled',
@@ -2497,7 +2499,7 @@ export default {
         cancelButton: '@:global.cancelButton',
         validations: {
           id: 'ID cannot be empty',
-          name: 'Mount name cannot be empty',
+          name: 'Vehicle name cannot be empty',
           status: 'Status cannot be empty',
           iconUrl: 'PC icon cannot be empty',
           gvip: 'The VIP level cannot be empty',
@@ -2510,7 +2512,7 @@ export default {
       },
       confirmRemoveDialog: {
         title: '@:global.dialogTitle',
-        message: 'Is it confirmed that the data item with the gift column number "{ids}" is deleted?',
+        message: 'Is it confirmed that the data item with the present number "{ids}" is deleted?',
         confirmButton: '@:global.confirmButton',
         cancelButton: '@:global.cancelButton'
       },
@@ -2538,8 +2540,8 @@ export default {
         removeButton: '@:global.deleteButton'
       },
       addEditDialog: {
-        titleAdd: 'Add anchor interactive messages',
-        titleEdit: 'Modify anchor interaction messages',
+        titleAdd: 'Add livestream girl\'s interactive messages',
+        titleEdit: 'Modify livestream girl\'s interaction messages',
         msgLabel: 'Interactive news',
         msgPlaceholder: 'Please enter interactive message',
         confirmButton: '@:global.confirmButton',
@@ -2561,7 +2563,7 @@ export default {
     liveProp: {
       queryForm: {
         nameLabel: 'Props name',
-        namePlaceholder: 'Please enter the name of the prop',
+        namePlaceholder: 'Please enter the prop name',
         typeLabel: 'Type',
         typePlaceholder: 'Please select type',
         searchButton: '@:global.searchButton',
@@ -2573,18 +2575,18 @@ export default {
         remove: '@:global.deleteButton'
       },
       table: {
-        name: 'Name',
-        icon: 'Icons',
-        diamonds: 'Consumption of diamonds',
-        ticket: 'RMB/Diamond',
-        isMuch: 'Whether to send',
+        name: 'Prop\'s name',
+        icon: 'Prop\'s icons',
+        diamonds: 'How much diamonds expend',
+        ticket: 'CNY/Diamond',
+        isMuch: 'Continuous send or not',
         isMuch1: 'Yes',
         isMuchOthers: 'No',
         type: 'Type',
         type0: 'Gift',
         type1: 'Reward',
         type2: 'Guard',
-        isAnimated: 'Show animation',
+        isAnimated: 'Cartoon showed',
         isAnimated0: 'General gifts',
         isAnimated1: 'GIF gift',
         isAnimatedOthers: 'Large-scale animation gifts',
@@ -2596,8 +2598,8 @@ export default {
         removeButton: '@:global.deleteButton'
       },
       addEditDialog: {
-        titleAdd: 'Add a gift column',
-        titleEdit: 'Modify Gift Column',
+        titleAdd: 'Add a present',
+        titleEdit: 'Modify present',
         nameLabel: 'Name',
         namePlaceholder: 'Please enter the name of the prop',
         diamondsLabel: 'Consumption of diamonds',
@@ -2608,7 +2610,7 @@ export default {
         isMuchLabel: 'Continuous',
         isAnimatedLabel: 'Show animation',
         animatedUrlLabel: 'SVGA animation',
-        isSpecialLabel: 'Is a special gift',
+        isSpecialLabel: 'Is a special present',
         isSpecial0: 'Normal',
         isSpecial1: 'Special',
         typeLabel: 'Type',
@@ -2620,7 +2622,7 @@ export default {
       },
       confirmRemoveDialog: {
         title: '@:global.dialogTitle',
-        message: 'Is it confirmed that the data item with the gift column number "{ids}" is deleted?',
+        message: 'Is it confirmed that the data item with the present number "{ids}" is deleted?',
         confirmButton: '@:global.confirmButton',
         cancelButton: '@:global.cancelButton'
       },
@@ -2639,15 +2641,15 @@ export default {
     },
     liveUser: {
       queryForm: {
-        userIdsLabel: 'Anchor ID',
-        userIdsPlaceholder: 'Anchor ID, bulk separated by comma',
-        selectDateLabel: 'Registration date',
-        selectDateStartPlaceholder: 'Start date',
-        selectDateEndPlaceholder: 'End date',
-        selectDateRangeSeparator: 'To',
-        nickNamePlaceholder: 'Anchor nickname',
-        phonePlaceholder: 'Cell phone number',
-        isBanPlaceholder: 'Whether to ban the broadcast',
+        userIdsLabel: 'Live stream girl\'s ID',
+        userIdsPlaceholder: 'Live stream girls\' IDs, separated by comma',
+        selectDateLabel: 'Sign up date',
+        selectDateStartPlaceholder: 'From',
+        selectDateEndPlaceholder: 'To',
+        selectDateRangeSeparator: '-',
+        nickNamePlaceholder: 'Livestream girl\s nickname',
+        phonePlaceholder: 'Phone number',
+        isBanPlaceholder: 'Banned or not',
         isAuthenticationPlaceholder: 'All Status',
         mobilePlaceholder: 'Family ID',
         searchButton: '@:global.searchButton',
@@ -2656,44 +2658,44 @@ export default {
       actions: {
         add: '@:global.addButton',
         export: '@:global.exportButton',
-        liveRoomAssistant: '直播间小助手',
-        batchJoin: 'Batch join family',
-        batchKickOut: 'Batch kick out of family'
+        liveRoomAssistant: 'Live stream assistant',
+        batchJoin: 'Add in family in batch',
+        batchKickOut: 'Kick out from family in batch'
       },
       table: {
-        id: 'Anchor ID',
-        nickName: 'Nickname of anchor',
-        weixinAccount: 'Anchor card',
-        familyName: 'Family',
-        familyId0: 'Not in the family',
+        id: 'Live stream girl\'s ID',
+        nickName: 'Girl\'s nickname',
+        weixinAccount: 'Girl\'s name card',
+        familyName: 'Belong to which family',
+        familyId0: 'Not added in family yet',
         familyIdPopover: 'Family ID: ',
         familyUserIdPopover: 'Family ID：',
-        familyNickNamePopover: 'Family leader nickname：',
+        familyNickNamePopover: 'Family host nickname：',
         familyChieftain: 'Is the family long',
         familyChieftain1: 'Yes',
         familyChieftainOthers: 'No',
         isAuthentication: 'Status',
         isAuthenticationPlaceholder: 'Please select the status',
-        isAuthentication0: 'Not certified',
+        isAuthentication0: 'Not verified',
         isAuthentication1: 'Pending review',
-        isAuthentication2: 'Certified',
-        isAuthentication3: 'Audit failed',
+        isAuthentication2: 'Verified',
+        isAuthentication3: 'Review failed',
         ticket: 'Stamp',
-        coin: 'Hourly rate',
-        weixinPrice: 'Hourly rate assignment',
-        weiboMoney: 'Gift mission',
-        xpoint: 'Lottery draw',
-        ypoint: 'Gift draw',
-        isBan: 'broadcast Status',
+        coin: 'Hourly salary',
+        weixinPrice: 'Hourly salary mission',
+        weiboMoney: 'Present mission',
+        xpoint: 'Lottery commission',
+        ypoint: 'Present commission',
+        isBan: 'Ban or not',
         isBan0: 'Normal',
-        isBan1: 'ban on broadcasting',
-        mobile: 'Phone Number',
+        isBan1: 'Banned',
+        mobile: 'Phone number',
         loginIp: 'Login IP',
-        banRemark: 'Reason for ban',
+        banRemark: 'Banned reason',
         operation: '@:global.operationColumn',
         kickOutButton: '踢出家族',
         auditButton: 'Audit',
-        starBroadcastButton: 'Start broadcasting',
+        starBroadcastButton: 'Begin',
         endBroadcastButton: 'Offcasting',
         moreButton: 'More'
       },
@@ -2709,7 +2711,7 @@ export default {
         kickOutFamilyBulkError: 'Failed to kick-out of the family',
         changeAuthTypeSuccess: 'Status modified successfully',
         changeAuthTypeError1: 'Status modification failure',
-        changeAuthTypeError2: 'Network Anomaly',
+        changeAuthTypeError2: 'Network anomaly',
         joinFamilyBulkError: 'Failed to join the family'
       },
       addDialog: {
@@ -2722,7 +2724,7 @@ export default {
         cancelButton: '@:global.cancelButton'
       },
       liveRoomAssistantDialog: {
-        title: 'Live Room Assistant',
+        title: 'Live room assistant',
         infoLabel: 'Little helper news',
         infoPlaceholder: 'Please enter to send a small assistant message',
         confirmButton: '@:global.confirmButton'
@@ -2760,7 +2762,7 @@ export default {
       },
       confirmBanPrompt: {
         title: '@:global.promptTitle',
-        message: 'Anchor ban remarks',
+        message: 'Livestream girl\'s ban remarks',
         confirmButton: '@:global.confirmButton',
         cancelButton: '@:global.cancelButton'
       },
@@ -2778,7 +2780,7 @@ export default {
       },
       confirmKickOutDialog: {
         title: '@:global.dialogTitle',
-        message: 'OK to kick out the anchor nickname: [{nickName}]?',
+        message: 'OK to kick out the livestream girl\'s nickname: [{nickName}]?',
         confirmButton: '@:global.confirmButton',
         cancelButton: '@:global.cancelButton'
       },
@@ -2807,8 +2809,8 @@ export default {
           resetButton: '@:global.resetButton'
         },
         table: {
-          postcatId: 'Anchor ID',
-          poscatNickname: 'Anchor nickname',
+          postcatId: 'Livestream girl\'s ID',
+          poscatNickname: 'Livestream girl\'s nickname',
           fromPlatform: 'Sender',
           userNickName: 'Sender\'s nickname',
           type: 'Message type',
@@ -2820,20 +2822,20 @@ export default {
         cancelButton: '@:global.cancelButton'
       },
       tab3: {
-        title: 'Gift receiving journal',
+        title: 'Present receiving journal',
         queryForm: {
           selectDateLabel: '@:global.selectDateLabel',
           selectDateStartPlaceholder: '@:global.dateTimePickerStartTimePlaceholder',
           selectDateEndPlaceholder: '@:global.dateTimePickerEndTimePlaceholder',
           selectDateRangeSeparator: '@:global.dateTimePickerRangeSeparator',
-          giftNameLabel: 'Gift name',
-          giftNamePlaceholder: 'Please enter the name of the gift',
+          giftNameLabel: 'Present name',
+          giftNamePlaceholder: 'Please enter the name of the present',
           searchButton: '@:global.searchButton',
           resetButton: '@:global.resetButton'
         },
         table: {
-          propId: 'Gift ID',
-          propName: 'Gift name',
+          propId: 'Present ID',
+          propName: 'Present name',
           perUserId: 'Member platform ID',
           totalDiamonds: 'Diamond',
           createDate: 'Create time',
@@ -2845,9 +2847,9 @@ export default {
         title: 'Withdrawal ratio',
         coinLabel: 'Hourly rate',
         weixinPriceLabel: 'On-air hours task',
-        weiboMoneyLabel: 'Gift receiving mission',
+        weiboMoneyLabel: 'Present receiving mission',
         xpointLabel: 'Lottery draw',
-        ypointLabel: 'Gift draw',
+        ypointLabel: 'Present draw',
         qqIdLabel: 'Daily opening task time (start)',
         qqIdPlaceholder: 'Any point in time',
         qqTokenLabel: 'Daily opening task time (end)',
@@ -2861,7 +2863,7 @@ export default {
           qqId: 'Daily opening task time (start)',
           qqToken: 'Daily opening task time (end)',
           xpoint: 'Lottery draw cannot be empty',
-          ypoint: 'Gift draw cannot be empty'
+          ypoint: 'Present draw cannot be empty'
         }
       },
       tab6: {
@@ -2953,14 +2955,14 @@ export default {
         selectDateEndPlaceholder: '@:global.datePickerEndDatePlaceholder',
         userIdLabel: 'Member ID',
         userIdPlaceholder: 'Please enter your member ID',
-        mountIdPlaceholder: 'Please select the mount name',
+        mountIdPlaceholder: 'Please select the vehicle name',
         isUsePlaceholder: 'Please select the status',
         searchButton: '@:global.searchButton'
       },
       table: {
         userId: 'Member ID',
         effectiveTime: 'Expiration time',
-        mountName: 'Mount name',
+        mountName: 'Vehicle name',
         isUse: 'Status',
         isUse0: 'Disabled',
         isUse1: 'Enabled'
@@ -2968,17 +2970,17 @@ export default {
     },
     liveUserWithdrawNewlog: {
       statistics: {
-        countNumberButton: 'Number of transactions',
+        countNumberButton: 'Transaction number',
         countWithdrawMoneyButton: 'Total amount',
       },
       queryForm: {
         searchTimeStartPlaceholder: '@:global.datePickerStartDatePlaceholder',
         searchTimeEndPlaceholder: '@:global.datePickerEndDatePlaceholder',
-        userIdPlaceholder: 'Anchor ID',
-        nickNamePlaceholder: 'Anchor nickname',
+        userIdPlaceholder: 'Livestream girl\'s ID',
+        nickNamePlaceholder: 'Nickname',
         orderNo: 'Order number',
-        bankAccount: 'Withdrawal bank account number',
-        wstatusPlaceholder: 'All states',
+        bankAccount: 'Withdrawal bank account',
+        wstatusPlaceholder: 'All status',
         wstatus0: 'Application in progress',
         wstatus1: 'Submit an application',
         wstatus2: 'Audit does not pass',
@@ -2988,25 +2990,25 @@ export default {
         typePlaceholder: 'Withdrawal type',
         type1: 'Family',
         type2: 'Personal',
-        SearchCardBlackPlaceholder: 'Bank attribution blacklist',
+        SearchCardBlackPlaceholder: 'Blacklist of bank addresses',
         searchButton: '@:global.searchButton',
         resetButton: '@:global.resetButton'
       },
       actions: {
         export: '@:global.exportButton',
-        fixIds: 'Consolidation of orders'
+        fixIds: 'Combine orders'
       },
       table: {
-        clone: 'Reproduction',
+        clone: 'Copy',
         cloneButton: 'Reproduction',
-        userId: 'Anchor ID',
+        userId: 'Livestream girl\'s ID',
         familyId: 'Family ID',
-        nickName: 'Anchor nickname',
-        withdrawMoney: 'Cash withdrawal amount',
-        bankUserName: 'Withdraw real name',
-        bankAccount: 'Withdrawal bank account',
-        bankName: 'Bank',
-        cardBlack: 'Bank attribution',
+        nickName: 'Livestream nickname',
+        withdrawMoney: 'Withdrawal amount',
+        bankUserName: 'Withdrawal real name',
+        bankAccount: 'Withdrawal bank account number',
+        bankName: 'Bank name',
+        cardBlack: 'Bank address',
         wstatus: 'Status',
         createTime: 'Create time',
         updateTime: 'Last modified time',
@@ -3026,12 +3028,12 @@ export default {
         withdrawMoneyButton: 'Modify withdrawal amount'
       },
       addEditHostsWithdrawalManagementDialog: {
-        addTitle: 'Add anchor withdrawal management',
-        editTitle: 'Modify anchor cash withdrawal management',
-        userIdLabel: 'Anchor ID',
-        userIdPlaceholder: 'Please enter the anchor ID',
-        nickNameLabel: 'Anchor nickname',
-        nickNamePlaceholder: 'Please enter the anchor nickname',
+        addTitle: 'Add livestream girl\'s withdrawal management',
+        editTitle: 'Modify livestream girl\'s cash withdrawal management',
+        userIdLabel: 'Livestream girl\'s ID',
+        userIdPlaceholder: 'Please enter the livestream girl\'s ID',
+        nickNameLabel: 'Livestream girl\'s nickname',
+        nickNamePlaceholder: 'Please enter the livestream girl\'s nickname',
         orderNoLabel: 'Order number',
         orderNoPlaceholder: 'Please enter the order number',
         orderExpressionLabel: 'Order expressions',
@@ -3056,15 +3058,15 @@ export default {
         remarkLabel: 'Audit remarks',
         remarkPlaceholder: 'Please enter a note for review',
         livetimeLabel: 'Broadcast hours',
-        livetimePlaceholder: 'Please enter the length of the anchor',
-        liveticketLabel: 'Anchor gifts',
-        liveticketPlaceholder: 'Please enter anchor gift',
-        livepaijiangLabel: 'Anchor prize distribution',
-        livepaijiangPlaceholder: 'Please enter the anchor payout',
+        livetimePlaceholder: 'Please enter the hours of the livestream girl',
+        liveticketLabel: 'Livestream girl\'s gifts',
+        liveticketPlaceholder: 'Please enter livestream girl\'s gift',
+        livepaijiangLabel: 'Livestream girl\'s prize distribution',
+        livepaijiangPlaceholder: 'Please enter the livestream girl\'s payout',
         confirmButton: '@:global.confirmButton',
         cancelButton: '@:global.cancelButton',
         validations: {
-          userId: 'Anchor ID cannot be empty',
+          userId: 'Livestream girl\'s ID cannot be empty',
           orderNo: 'Order number cannot be empty',
           orderExpression: 'The order expression cannot be empty',
           withdrawMoney: 'Cash withdrawal amount cannot be empty',
@@ -3128,9 +3130,9 @@ export default {
     },
     liveVideo: {
       queryForm: {
-        typeLabel: 'Live streaming type:',
-        idPlaceholder: 'Anchor ID',
-        hostNamePlaceholder: 'Host nickname / live title',
+        typeLabel: 'Live stream type:',
+        idPlaceholder: 'Livestream girl\'s ID',
+        hostNamePlaceholder: 'Girl\'s nickname / livestream title',
         paiIdPlaceholder: 'Live streaming line',
         searchButton: '@:global.searchButton',
         resetButton: '@:global.resetButton'
@@ -3140,26 +3142,26 @@ export default {
         synchronizeOrder: 'Synchronized master station sorting'
       },
       table: {
-        id: 'Anchor ID',
-        hostName: 'Anchor nickname',
-        title: 'Live room title',
-        cateId: 'Live streaming type',
-        cateId2: 'Sexy anchor',
-        cateId3: 'The big show live',
-        cateId4: 'Paid Live Streaming',
-        cateIdOthers: 'Live lottery',
-        voteNumber: 'Votes',
+        id: 'Livestream girl\'s ID',
+        hostName: 'Girl\'s nickname',
+        title: 'Livestream room title',
+        cateId: 'Livestream type',
+        cateId2: 'Sexy',
+        cateId3: 'Make love',
+        cateId4: 'Paid',
+        cateIdOthers: 'Lottery',
+        voteNumber: 'Popularity',
         watchNumber: 'Number of people online',
-        lineName: 'Line name',
-        lineStatus: 'Live broadcast nature',
-        liveStatus: 'Live status',
+        lineName: 'Path name',
+        lineStatus: 'Livestream character',
+        liveStatus: 'Livestream status',
         liveStatusEmpty: 'Testing in progress...',
-        openPay: 'No charge',
+        openPay: 'Prohibit to charge',
         isLivePay: 'Charges',
         isLivePayTrue: 'Yes',
         isLivePayFalse: 'No',
         beginTime: 'Start time',
-        lotteryName: 'Color type',
+        lotteryName: 'Lottery type',
         operation: '@:global.operationColumn',
         closeButton: 'Turn-off broadcasting',
         setSortButton: 'Fixed positioning',
@@ -3173,10 +3175,10 @@ export default {
       addToLivePayDialog: {
         addTitle: 'Add live stream',
         toLivePayTitle: 'Paid setup',
-        idLabel: 'Anchor ID',
-        idPlaceholder: 'Anchor ID',
-        hostNameLabel: 'Anchor nickname',
-        hostNamePlaceholder: 'Anchor nickname',
+        idLabel: 'Livestream girl\'s ID',
+        idPlaceholder: 'Livestream girl\'s ID',
+        hostNameLabel: 'Livestream girl\'s nickname',
+        hostNamePlaceholder: 'Livestream girl\'s nickname',
         titleLabel: 'Live room title',
         titlePlaceholder: 'Live room title',
         liveFeeLabel: 'Viewing fee',
@@ -3223,7 +3225,7 @@ export default {
         inputErrorMessage: 'Fixed bit data format is incorrect, please enter an integer value greater than 0 and less than 100'
       },
       synchronizeOrderDialog: {
-        message: 'Do you confirm the synchronization of the main station anchor sort?',
+        message: 'Do you confirm the synchronization of the main station livestream girl\'s sort?',
         confirmButton: '@:global.confirmButton',
         cancelButton: '@:global.cancelButton'
       },
@@ -3236,8 +3238,8 @@ export default {
     },
     liveVideoChat: {
       queryForm: {
-        poscatIdLabel: 'Anchor ID',
-        poscatIdPlaceholder: 'Please enter the anchor ID',
+        poscatIdLabel: 'Livestream girl\'s ID',
+        poscatIdPlaceholder: 'Please enter the livestream girl\'s ID',
         groupLabel: 'The chat group the message is in',
         groupPlaceholder: 'Please enter the chat group the message is in',
         userIdLabel: 'Sender ID',
@@ -3245,8 +3247,8 @@ export default {
         typeLabel: 'Message type (0 Normal message, 1 Pop-up message)',
         typePlaceholder: 'Please select the message type (0 Normal message, 1 Pop-up message)',
         typeValuePlaceholder: 'Please select dictionary generation',
-        poscatNickNameLabel: 'Anchor nickname',
-        poscatNickNamePlaceholder: 'Please enter the anchor nickname',
+        poscatNickNameLabel: 'Livestream girl\'s nickname',
+        poscatNickNamePlaceholder: 'Please enter the livestream girl\'s nickname',
         userNickNameLabel: 'Sender\'s nickname',
         userNickNamePlaceholder: 'Please enter the sender\'s nickname',
         fromPlatformLabel: 'Platform member ID',
@@ -3262,12 +3264,12 @@ export default {
       },
       table: {
         id: 'Platform member ID',
-        poscatId: 'Anchor ID',
+        poscatId: 'Livestream girl\'s ID',
         group: 'The chat group the message is in',
         userId: 'Sender ID',
         msg: 'Message content',
         type: 'Message Type',
-        poscatNickName: 'Anchor nickname',
+        poscatNickName: 'Livestream girl\'s nickname',
         userNickName: 'Sender\'s nickname',
         fromPlatform: 'Platform member ID',
         operation: '@:global.operationColumn',
@@ -3277,8 +3279,8 @@ export default {
       addEditDialog: {
         addTitle: 'Add member statement',
         editTitle: 'Suspension of members',
-        poscatIdLabel: 'Anchor ID',
-        poscatIdPlaceholder: 'Please enter the anchor ID',
+        poscatIdLabel: 'Livestream girl\'s ID',
+        poscatIdPlaceholder: 'Please enter the livestream girl\'s ID',
         groupLabel: 'The chat group the message is in',
         groupPlaceholder: 'Please enter the chat group the message is in',
         userIdLabel: 'Sender ID',
@@ -3288,8 +3290,8 @@ export default {
         typeLabel: 'Message type (0 Normal message, 1 Pop-up message)',
         typePlaceholder: 'Please select the message type (0 Normal message, 1 Pop-up message)',
         typeValuePlaceholder: 'Please select dictionary generation',
-        poscatNickNameLabel: 'Nickname of anchor',
-        poscatNickNamePlaceholder: 'Please enter the nickname of the anchor',
+        poscatNickNameLabel: 'Livestream girl\'s nickname',
+        poscatNickNamePlaceholder: 'Please enter the livestream girl\'s nickname',
         userNickNameLabel: 'Sender\'s nickname',
         userNickNamePlaceholder: 'Please enter the sender\'s nickname',
         fromPlatformLabel: 'Platform member ID',
@@ -3297,7 +3299,7 @@ export default {
         confirmButton: '@:global.confirmButton',
         cancelButton: '@:global.cancelButton',
         validations: {
-          poscatId: 'Anchor ID cannot be empty'
+          poscatId: 'Livestream girl\'s ID cannot be empty'
         }
       },
       confirmDeleteDialog: {
@@ -3320,8 +3322,8 @@ export default {
     },
     liveVideoClassified: {
       queryForm: {
-        titleLabel: 'Category name',
-        titlePlaceholder: 'Please enter the category name',
+        titleLabel: 'Class name',
+        titlePlaceholder: 'Please enter the class name',
         searchButton: '@:global.searchButton',
         resetButton: '@:global.resetButton'
       },
@@ -3331,13 +3333,13 @@ export default {
         delete: '@:global.deleteButton',
       },
       table: {
-        title: 'Category name',
+        title: 'Class name',
         isEffect: 'Status',
         isEffect0: 'Disabled',
         isEffect1: 'Enabled',
-        sort: 'Sorting (reverse order on customer service side)',
-        classfy: 'Classification code',
-        isHostShow: 'Host side display',
+        sort: 'Sorting',
+        classfy: 'Class code',
+        isHostShow: 'Livestream girl\'s side will show',
         isHostShow0: 'Disabled',
         isHostShow1: 'Enabled',
         operation: '@:global.operationColumn',
@@ -3345,30 +3347,30 @@ export default {
         deleteButton: '@:global.deleteButton'
       },
       addEditDialog: {
-        addTitle: 'Add category',
-        editTitle: 'Modify category',
+        addTitle: 'Add class',
+        editTitle: 'Modify class',
         titleLabel: 'Category name',
-        titlePlaceholder: 'Please enter the category name',
+        titlePlaceholder: 'Please enter the class name',
         isEffectLabel: 'Status',
         isHostShowLabel: 'Host side display',
         sortLabel: 'Sort by',
         sortPlaceholder: 'Please enter sort',
-        classfyLabel: 'Classification code',
-        classfyPlaceholder: 'Please enter the category ID',
-        imgLabel: 'Category icon',
+        classfyLabel: 'Class code',
+        classfyPlaceholder: 'Please enter the class ID',
+        imgLabel: 'Class icon',
         confirmButton: '@:global.confirmButton',
         cancelButton: '@:global.cancelButton',
         validations: {
-          title: 'Category name cannot be empty',
+          title: 'Class name cannot be empty',
           isEffect: 'Is Valid (1 - valid, 0 - invalid) cannot be empty)',
           sort: 'The row from largest to smallest cannot be empty',
-          img: 'Category icon cannot be empty',
+          img: 'Class icon cannot be empty',
           isHostShow: 'Whether the anchor side of the display can not be empty'
         }
       },
       confirmDeleteDialog: {
         title: '@:global.dialogTitle',
-        message: 'Is it confirmed that the data item with the category number "{ids}" is deleted?',
+        message: 'Is it confirmed that the data item with the class number "{ids}" is deleted?',
         confirmButton: '@:global.confirmButton',
         cancelButton: '@:global.cancelButton'
       },
@@ -3400,10 +3402,10 @@ export default {
     },
     officerManage: {
       queryForm: {
-        hostIdLabel: 'Anchor ID',
-        hostIdPlaceholder: 'Please enter the anchor ID',
-        puserIdLabel: 'User ID',
-        puserIdPlaceholder: 'Please enter your user ID',
+        hostIdLabel: 'Livestream girl\'s ID',
+        hostIdPlaceholder: 'Please enter the livestream girl\'s ID',
+        puserIdLabel: 'Member ID',
+        puserIdPlaceholder: 'Please enter your member ID',
         searchButton: '@:global.searchButton',
         resetButton: '@:global.resetButton'
       },
@@ -3413,18 +3415,18 @@ export default {
         export: '@:global.exportButton'
       },
       table: {
-        hostId: 'Anchor ID',
-        hostName: 'Anchor nickname',
-        puserId: 'User ID',
-        puserName: 'User nickname',
+        hostId: 'Livestream girl\'s ID',
+        hostName: 'Livestream girl\'s nickname',
+        puserId: 'Member ID',
+        puserName: 'Member nickname',
         ctime: 'Create time',
         operation: '@:global.operationColumn',
         deleteButton: '@:global.deleteButton'
       },
       addDialog: {
         title: 'Add house management',
-        hostIdLabel: 'Anchor ID',
-        hostIdPlaceholder: 'Please enter the anchor ID',
+        hostIdLabel: 'Livestream girl\'s ID',
+        hostIdPlaceholder: 'Please enter the livestream girl\'s ID',
         puserIdLabel: 'User ID',
         puserIdPlaceholder: 'Please enter your user ID',
         confirmButton: '@:global.confirmButton',
@@ -3451,7 +3453,7 @@ export default {
       queryForm: {
         fromPlatformPlaceholder: 'Member ID',
         userNickNamePlaceholder: 'Member nickname',
-        poscatIdPlaceholder: 'Anchor ID',
+        poscatIdPlaceholder: 'Livestream girl\'s ID',
         searchButton: '@:global.searchButton',
         resetButton: '@:global.resetButton'
       },
@@ -3464,12 +3466,12 @@ export default {
         stopButton: 'Stop refreshing'
       },
       table: {
-        poscatId: 'Anchor ID',
-        poscatNickName: 'Anchor nickname',
+        poscatId: 'Livestream girl\'s ID',
+        poscatNickName: 'Livestream girl\'s nickname',
         fromPlatform: 'Platform member ID',
-        userNickName: 'User nickname',
+        userNickName: 'Member nickname',
         msg: 'Message content',
-        createTimes: 'Sending time'
+        createTimes: 'Sent time'
       },
       messageBox: {
         queryError: 'Member IDs can only be entered as numbers and underscores'
@@ -3477,15 +3479,15 @@ export default {
     },
     report: {
       queryForm: {
-        typeLabel: 'Anchor ranking',
-        typePlaceholder: 'Please select the list type',
+        typeLabel: 'Livestream girls ranking list',
+        typePlaceholder: 'Ranking list',
         type0: 'Day list',
         type1: 'Weekly list',
         type2: 'Monthly list',
         reptimeLabel: 'Update date',
         reptimePlaceholder: 'Select update date',
-        nicknameLabel: 'Nickname of anchor',
-        nicknamePlaceholder: 'Please enter the anchor nickname',
+        nicknameLabel: 'Livestream girl\'s nickname',
+        nicknamePlaceholder: 'Please enter the livestream girl\'s nickname',
         searchButton: '@:global.searchButton',
         resetButton: '@:global.resetButton'
       },
@@ -3493,12 +3495,12 @@ export default {
         export: '@:global.exportButton'
       },
       table: {
-        anchorid: 'Anchor ID',
-        nickname: 'Anchor nickname',
-        dayTicket: 'Daily hotness',
-        sort: 'Hotness ranking',
+        anchorid: 'Livestream girl\'s ID',
+        nickname: 'Livestream girl\'s nickname',
+        dayTicket: 'Daily popular',
+        sort: 'Popularity ranking',
         dayTicketUpdiff: 'Difference from last time',
-        repdate: 'Day list',
+        repdate: 'Daily ranking',
         num: 'List',
         reptime: 'Update date'
       }

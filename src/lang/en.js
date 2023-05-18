@@ -43,8 +43,8 @@ export default {
     dateTimePickerRangeSeparator: 'To',
     namePlaceholder:'Please Enter Name',
     selectDatePlaceholder: 'Date Range',
-    datePickerStartDatePlaceholder: 'Start Date',
-    datePickerEndDatePlaceholder: 'End Date',
+    datePickerStartDatePlaceholder: 'Begin Time',
+    datePickerEndDatePlaceholder: 'End Time',
     operationColumn: 'Operate',
     editSuccessMsg: 'Edit Successful',
     addSuccessMsg: 'Add Successful',
@@ -684,59 +684,7 @@ export default {
         icon: '钱包二维码不能为空',
       }
     },
-    configEnvironment: {
-      addTitle: 'Add Environment Config',
-      editTitle: 'Edit Environment Config',
-      confirmUpdate: 'Confirm Update',
-      tableDialog:{
-        envTitle: 'Environment Title',
-        envTitlePlaceholder: 'Please enter Environment Title',
-        envCode: 'Environment Code',
-        envCodePlaceholder: 'Please enter Environment Code',
-        envValue: 'Environment Value',
-        envValuePlaceholder: 'Please enter Environment Value',
-        index: 'Index',
-        indexPlaceholder: 'Please enter Index',
-        // status: '',
-        // statusPlaceholder: '请选择状态',
-        envGroup: 'Environment Group',
-        envGroupPlaceholder: 'Please enter Environment Group',
-        envDes: 'Remarks',
-        envDesPlaceholder: 'Please enter Remarks',
-        envType: 'Environment Type',
-        envTypePlaceholder: 'Please enter Environment Type',
-      },
-      validation:{
-        envGroup: '参数组不能为空',
-        envSort: '排序不能为空',
-        envStatus: '状态 1启用 0禁用不能为空',
-        envTitleAndEncoding: '参数标题和参数编码不能同时为空',
-      }
-    },
-    domain: {
-      addTitle: 'Add Domain Name Configuration',
-      editTitle: 'Modify Domain Name Configuration',
-      dynamicCoding: 'Dynamic Name Grouping',
-      testContent: '1、Test Content Test Content',
-      tableDialog:{
-        dgroup: 'Domain Name Group',
-        dgroupPlaceholder: 'Please enter Domain Name Group',
-        domain: 'Domain Name',
-        domainPlaceholder: 'Please enter Domain Name',
-        dcode: 'Dynamic Coding',
-        dcodePlaceholder: 'Please enter Dynamic Coding',
-        remark: 'Remarks',
-        remarkPlaceholder: 'Please enter Remarks',
-        index: 'Index',
-        indexPlaceholder: 'Please enter Index',
-      },
-      validation: {
-        domain: 'Domain Name must not be empty',
-        dgroup: 'Domain Name Group must not be empty',
-        sort: 'Index must not be empty',
-        url: 'Please enter the correct URL',
-      },
-    },
+    configEnvironment: {}
   },
 
   members: {
@@ -1789,7 +1737,8 @@ export default {
       pyb: 'Place your bets at',
       pbt: 'Place bet type',
       non: 'Note order number',
-      menu: 'Member IDs can only be entered as numbers and underscores'
+      menu: 'Member IDs can only be entered as numbers and underscores',
+
     }
   },
 
@@ -2444,7 +2393,7 @@ export default {
       },
       confirmExportDialog: {
         title: '@:global.dialogTitle',
-        message: 'Do you confirm to export all the anchor hours data items?',
+        message: 'Do you confirm to export all the livestream girl\'s hours data items?',
         confirmButton: '@:global.confirmButton',
         cancelButton: '@:global.cancelButton'
       }
@@ -2758,7 +2707,7 @@ export default {
         closeLiveSuccess: 'Off-air success',
         closeLiveError: 'Off-air failure',
         kickOutSuccess: 'Kick-out Success',
-        kickOutError: 'Failed to kick-out the anchor',
+        kickOutError: 'Failed to kick-out the livestream girl\'s',
         kickOutFamilyBulkError: 'Failed to kick-out of the family',
         changeAuthTypeSuccess: 'Status modified successfully',
         changeAuthTypeError1: 'Status modification failure',
@@ -2789,7 +2738,7 @@ export default {
         confirmButton: '@:global.confirmButton'
       },
       editDialog: {
-        title: 'Modify anchor information',
+        title: 'Modify livestream girl\'s information',
         authenticationNameLabel: 'Real name',
         contactLabel: 'Cell phone number',
         identifyNumberLabel: 'ID number',
@@ -3159,7 +3108,7 @@ export default {
       },
       confirmDeleteDialog: {
         title: '@:global.dialogTitle',
-        message: 'Do you want to confirm the deletion of the data item with the anchor withdrawal management number "{ids}"?',
+        message: 'Do you want to confirm the deletion of the data item with the livestream girl\'s withdrawal management number "{ids}"?',
         confirmButton: '@:global.confirmButton',
         cancelButton: '@:global.cancelButton'
       },
@@ -3264,7 +3213,7 @@ export default {
       },
       confirmChangeOpenPayDialog: {
         title: '@:global.dialogTitle',
-        message: 'Does {openPay} use anchor fee access?',
+        message: 'Does {openPay} use livestream girl\'s fee access?',
         confirmButton: '@:global.confirmButton',
         cancelButton: '@:global.cancelButton'
       },
@@ -3416,7 +3365,7 @@ export default {
           isEffect: 'Is Valid (1 - valid, 0 - invalid) cannot be empty)',
           sort: 'The row from largest to smallest cannot be empty',
           img: 'Class icon cannot be empty',
-          isHostShow: 'Whether the anchor side of the display can not be empty'
+          isHostShow: 'Whether the livestream girl\'s side of the display can not be empty'
         }
       },
       confirmDeleteDialog: {
@@ -4202,121 +4151,5 @@ export default {
     },
 
 
-  },
-
-  report:{
-    agentCount: {
-      ds: 'Date Selection',
-      cc: 'Channel Code',
-      afr: 'A friendly reminder (before the daily promotion data query, please carry out a basic data pre-generation operation)',
-      npc: 'New Promotion Code',
-      dpc: 'Delete Promotion Code',
-      bdp: 'Base data pre-generation',
-      st: 'Statistic Time',
-      sd: 'Same day/total (registrants)',
-      ce: 'Company entry (First charge) ',
-      od: 'Online deposit (First charge) ',
-      me: 'Manual Entry (First charge) ',
-      tad: 'Total amount of deposit (First charge) ',
-      psa: 'Person/Stroke/Amount (total on the day of disbursement)',
-      psad: 'Person/Stroke/Amount (total on the day of deposit)',
-      nug: 'Number of gifts/amount',
-      nol: 'Number of live rooms/active Android/active Apple',
-      pc: 'Promotion Code',
-      pepc: 'Please enter the promotion code',
-      snow: 'Submit Now',
-      pcce: 'Promotional code cannot be empty',
-      as: 'Add Success',
-      pcpn: 'Promotion code can only be pure numbers',
-      dels: 'Deleted Successfullly',
-      cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
-      psr: 'Promotion of statistical reports'
-    },
-    comprehensiveStatistics: {
-      psd: 'Please select date',
-      amt: 'Amount',
-      type: 'Type',
-      time: 'Time',
-      err: 'Error: The report is being generated, please wait...',
-      rbg: 'Reports are being generated',
-      cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
-      ids: 'Integrated Data Statement',
-    },
-    gameBet: {
-      tba: 'Total betting amount ',
-      tnb: 'Total number of bets. ',
-      mp: 'Membership Profit. ',
-      pn: 'Platform Name',
-      pepn: 'Please enter the platform name',
-      pnum: 'Platform Number',
-      nd: 'Name - Details',
-      nob: 'Number of bets',
-      br: 'Betting ratio',
-      eba: 'Effective betting amount',
-      prop: 'Proportion',
-      date: 'Date',
-      tdr: 'The date is required',
-      trb: 'Error: The report is being generated, please wait...',
-      gbs: 'Game Betting Statement',
-
-    },
-    gameBetJump: {
-      gbs: 'Game Betting Statement',
-      sbn: 'Sub-Platform Name',
-      pensp: 'Please enter the name of the sub-platform',
-      pn: 'Platform Name',
-      pepn: 'Please enter the platform name',
-      pnum: 'Platform Number',
-      nd: 'Name - Details',
-      sbnum: 'Sub-platform number',
-      nob: 'Number of bets',
-      br: 'Betting Ratio',
-      tba: 'Total Bet Amount',
-      eba: 'Effective Bet Amount',
-      pp: 'Platform Pumping',
-      mp: 'Membership Profit',
-      prop: 'Proportion',
-      date: 'Date',
-      tdir: 'The date is required',
-
-    },
-    incomeDay: {
-      tsa: 'Total Success Amount',
-      psad: 'Please select a date to choose',
-      ar: 'Amount Received',
-      oo: 'Offline or Online',
-      cp: 'Collection Platforms',
-      cc: 'Collection Channel',
-      pm: 'Payee Merchants',
-      time: 'Time',
-      cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
-      prs: 'Platform recharge statement',
-    },
-    memberAgent: {
-      mid: 'Member ID',
-      vl: 'VIP Level',
-      cod: 'Coding',
-      bal: 'Balancing',
-      note: 'Number of times to enter the live room',
-    },
-    memberChannel: {
-      ic: 'Invitation Code',
-      at: 'All Types',
-      lr: 'Login Remarks',
-      qt: 'Quantity',
-      nar: 'NetEase Abnormal Remarks',
-      norm: 'Normal',
-      ut: 'User Type',
-      moi: 'Members (old interface)',
-      sr: 'Start Refreshing',
-      cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
-      nas: 'NetEase Anomaly Statistics',
-      fail: 'Failure',
-      tbc: 'To be confirmed',
-      stopr: ' Stop Refreshing',
-      rsas: 'Refresh starts after seconds',
-
-    }
   }
-
 }

@@ -171,7 +171,7 @@
           size="mini"
           @click="openExport"
           v-hasPermi="['member:memberInfo:export']"
-        >{{ $t('global.export') }}
+        >{{ $t('global.exportButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">

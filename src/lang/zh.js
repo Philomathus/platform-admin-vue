@@ -725,7 +725,59 @@ export default {
         icon: '钱包二维码不能为空',
       }
     },
-    configEnvironment: {}
+    configEnvironment: {
+      addTitle: '添加环境参数',
+      editTitle: '修改环境参数',
+      confirmUpdate: '确认修改',
+      tableDialog: {
+        envTitle: '参数名称',
+        envTitlePlaceholder: '请选择参数名称',
+        envCode: '参数编码',
+        envCodePlaceholder: '请选择参数编码',
+        envValue: '参数值',
+        envValuePlaceholder: '请输入参数值',
+        index: '序列号',
+        indexPlaceholder: '请输入序列号',
+        // status: '',
+        // statusPlaceholder: '请选择状态',
+        envGroup: '所属参数组',
+        envGroupPlaceholder: '请选择状态',
+        envDes: '备注',
+        envDesPlaceholder: '请参数说明',
+        envType: '类型',
+        envTypePlaceholder: '请参数说明'
+      },
+      validation: {
+        envGroup: '参数组不能为空',
+        envSort: '排序不能为空',
+        envStatus: '状态 1启用 0禁用不能为空',
+        envTitleAndEncoding: '参数标题和参数编码不能同时为空',
+      }
+    },
+    domain: {
+      addTitle: '添加域名配置',
+      editTitle: '修改域名配置',
+      dynamicCoding: '域名分组',
+      testContent: '1、测试内容测试内容测试内容',
+      tableDialog: {
+        dgroup: '域名分组',
+        dgroupPlaceholder: '请选择域名分组',
+        domain: '域名',
+        domainPlaceholder: '请输入域名',
+        dcode: '动态编码',
+        dcodePlaceholder: '请输入动态编码',
+        remark: '备注',
+        remarkPlaceholder: '备注',
+        index: '排序',
+        indexPlaceholder: '排序',
+      },
+      validation: {
+        domain: '域名不能为空',
+        dgroup: '域名分组不能为空',
+        sort: '排序不能为空',
+        url: '请输入正确的URL',
+      }
+    }
   },
 
   members: {
@@ -1782,9 +1834,19 @@ export default {
       pyb: '下注时间',
       pbt: '下注类型',
       non: '注单号',
-      menu: '会员ID只能输入数字及下划线',
-
+      menu: '会员ID只能输入数字及下划线'
     }
+  },
+
+  common: {
+    titleDialog: '',
+    titlePrompt: '',
+    removeButton: '',
+    searchButton: '',
+    resetButton: '',
+    confirmButton: '',
+    cancelButton: '',
+    operationColumn: ''
   },
 
   liveWeb: {
@@ -4186,7 +4248,122 @@ export default {
     wheelSkinReceived: {},
 
 
-  }
+  },
 
+  report:{
+    agentCount: {
+      ds: '日期选择',
+      cc: '渠道编码',
+      afr: '友情提示(每日推广数据查询前，请进行一次基础数据的预生成操作)',
+      npc: '新增推广码',
+      dpc: '删除推广码',
+      bdp: '基础数据预生成',
+      st: '统计时间',
+      sd: '当日/总(注册人数)',
+      ce: '公司入款（首充）',
+      od: '线上入款（首充）',
+      me: '手工入款（首充）',
+      tad: '入款总（首充）',
+      psa: '人/笔/金额（出款日总）',
+      psad: '人/笔/金额（入款日总）',
+      nug: '送礼次数/金额',
+      nol: '直播间次数/活跃安卓/活跃苹果',
+      pc: '推广码',
+      pepc: '请输入推广码',
+      snow: '立即提交',
+      pcce: '推广码不能为空',
+      as: '新增成功',
+      pcpn: '推广码只能为纯数字',
+      dels: '删除成功',
+      cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+      psr: '推广统计报表'
+    },
+    comprehensiveStatistics: {
+      psd: '请选择日期选择',
+      amt: '金额',
+      type: '类型',
+      time: '时间',
+      err: 'Error: 报表正在生成，请稍后...',
+      rbg: '报表正在生成',
+      cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+      ids: '综合数据报表',
+
+    },
+    gameBet: {
+      tba: '总投注金额: ',
+      tnb: '总投注人数: ',
+      mp: '会员盈利: ',
+      pn: '平台名称',
+      pepn: '请输入平台名称',
+      pnum: '平台编号',
+      nd: '名称-详情',
+      nob: '投注人数',
+      br: '投注比数',
+      eba: '有效投注金额',
+      prop: '比例',
+      date: '日期',
+      tdr: '日期是必需的',
+      trb: 'Error: 报表正在生成，请稍后...',
+      gbs: '游戏投注报表',
+
+    },
+    gameBetJump: {
+      gbs: '日期选择',
+      sbn: '子平台名',
+      pensp: '请输入子平台名称',
+      pn: '平台名称',
+      pepn: '请输入平台名称',
+      pnum: '平台编号',
+      nd: '名称-详情',
+      sbnum: '子平台编号',
+      nob: '投注人数',
+      br: '投注比数',
+      tba: '总投注金额',
+      eba: '有效投注金额',
+      pp: '平台抽水',
+      mp: '会员盈利',
+      prop: '比例',
+      date: '日期',
+      tdir: '日期是必需的',
+
+    },
+    incomeDay: {
+      tsa: '总成功金额:',
+      psad: '请选择日期选择',
+      ar: '收款金额',
+      oo: '线下或者线上',
+      cp: '收款平台',
+      cc: '收款通道',
+      pm: '收款商户',
+      time: '时间',
+      cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+      prs: '平台充值报表',
+    },
+    memberAgent: {
+      mid: '会员ID',
+      vl: 'VIP等级',
+      cod: '打码',
+      bal: '余额',
+      note: '进入直播间次数',
+    },
+    memberChannel: {
+      ic: '邀请码',
+      at: '全部类型',
+      lr: '登录备注',
+      qt: '数量',
+      nar: '网易异常备注',
+      norm: '正常',
+      ut: '用户类型',
+      moi: '会员(老接口)',
+      sr: '开始刷新',
+      cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+      nas: '网易异常统计',
+      fail: '失败',
+      tbc: '待确认',
+      stopr: '停止刷新',
+      rsas: '秒后开始刷新',
+
+    }
+  }
 
 }

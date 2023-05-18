@@ -1,36 +1,36 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="copy1">总投注金额: {{ this.data.countBetMoney || 0 }}</el-button>
-    <el-button type="success" @click="copy2">总投注人数: {{ this.data.countBetPeople || 0 }}</el-button>
-    <el-button type="success">会员盈利: {{ this.data.memberProfit || 0 }}</el-button>
+    <el-button type="primary" @click="copy1">{{ $t('report.gameBet.tba') }} {{ this.countBetMoney || 0 }}</el-button>
+    <el-button type="success" @click="copy2">{{ $t('report.gameBet.tnb') }} {{ this.countBetPeople || 0 }}</el-button>
+    <el-button type="success">{{ $t('report.gameBet.mp') }} {{ this.memberProfit || 0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" label-width="68px"
              v-show="showSearch"
     >
-      <el-form-item label="日期选择" prop="selectDate">
+      <el-form-item :label=" $t('global.selectDate') " prop="selectDate">
         <el-date-picker type="daterange"
                         v-model="queryParams.dateRange"
                         format="yyyy-MM-dd"
                         value-format="yyyy-MM-dd"
                         :style="{ width: '95%' }"
-                        start-placeholder="开始时间"
-                        end-placeholder="开始时间"
-                        range-separator="至"
+                        :start-placeholder=" $t('global.datePickerStartDatePlaceholder') "
+                        :end-placeholder=" $t('global.datePickerEndDatePlaceholder') "
+                        :range-separator=" $t('global.selectDateRangeSeparator') "
                         clearable
                         :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item label="平台名称" prop="gameplame">
+      <el-form-item :label=" $t('report.gameBet.pn') " prop="gameplame">
         <el-input
           v-model="queryParams.gameplame"
-          placeholder="请输入平台名称"
+          :placeholder=" $t('report.gameBet.pepn') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -43,7 +43,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:reportPlamGames:export']"
-        >导出
+        >{{ $t('global.exportButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -56,25 +56,25 @@
                 style="width: 100%;"
                 :stripe="true"
       >
-        <el-table-column label="平台编号" align="center" prop="gameagent" :show-overflow-tooltip="true"/>
-        <el-table-column label="名称-详情" align="center" prop="gameplame">
+        <el-table-column :label=" $t('report.gameBet.pnum') " align="center" prop="gameagent" :show-overflow-tooltip="true"/>
+        <el-table-column :label=" $t('report.gameBet.nd') " align="center" prop="gameplame">
           <template slot-scope="scope">
             <a style="color: #00afff" @click="jump(scope.row.begindate,scope.row.gameplame)">{{
                 scope.row.gameplame
               }}</a>
           </template>
         </el-table-column>
-        <el-table-column label="投注人数" align="center" prop="gamepepole"/>
-        <el-table-column label="投注比数" align="center" prop="gametouzhu"/>
-        <el-table-column label="总投注金额" align="center" prop="gamecell"/>
-        <el-table-column label="有效投注金额" align="center" prop="gamebet"/>
-        <el-table-column label="会员盈利" align="center" prop="gameprofit"/>
-        <el-table-column label="比例" align="center" prop="bili"/>
-        <el-table-column label="日期" align="center" prop="begindate"/>
+        <el-table-column :label=" $t('report.gameBet.nob') " align="center" prop="gamepepole"/>
+        <el-table-column :label=" $t('report.gameBet.br') " align="center" prop="gametouzhu"/>
+        <el-table-column :label=" $t('report.gameBet.tba') " align="center" prop="gamecell"/>
+        <el-table-column :label=" $t('report.gameBet.eba') " align="center" prop="gamebet"/>
+        <el-table-column :label=" $t('report.gameBet.mp') " align="center" prop="gameprofit"/>
+        <el-table-column :label=" $t('report.gameBet.prop') " align="center" prop="bili"/>
+        <el-table-column :label=" $t('report.gameBet.date') " align="center" prop="begindate"/>
       </el-table>
       <pagination
-        v-show="total>0"
-        :total="total"
+        v-show="this.total || 0"
+        :total="this.total"
         :page-sizes="[20,50,100,200]"
         :page.sync="queryParams.pageNum"
         :limit.sync="queryParams.pageSize"
@@ -147,7 +147,7 @@ export default {
         this.queryParams.endDate = this.queryParams.dateRange[1];
         this.backupDateTimeRange = this.queryParams.dateRange;
       } else {
-        this.msgError("日期是必需的");
+        this.msgError( this.$t('report.gameBet.tdr') );
         this.queryParams.dateRange = this.backupDateTimeRange;
       }
 
@@ -158,10 +158,10 @@ export default {
         this.$rjLoading.hide()
         this.count()
       }).catch((err) => {
-        if (err == 'Error: 报表正在生成，请稍后...') {
+        if (err == this.$t('report.gameBet.trb') ) {
           if (!this.listLoading) {
             this.listLoading = true
-            this.$rjLoading.show('报表正在生成', that)
+            this.$rjLoading.show( this.$t('report.gameBet.rbg') , that)
           }
           if (!this.isDestroyed) {
             setTimeout(() => {
@@ -229,14 +229,14 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm( this.$t('report.gameBet.cpe') , this.$t('global.dialogTitle') , {
+        confirmButtonText: this.$t('global.confirmButton') ,
+        cancelButtonText: this.$t('global.cancelButton') ,
         type: 'warning'
       }).then(function () {
         return exportReportPlamGames(queryParams)
       }).then(response => {
-        this.downloadExcel(response, '游戏投注报表')
+        this.downloadExcel(response, this.$t('report.gameBet.gbs') )
       }).catch(() => {
       })
     }

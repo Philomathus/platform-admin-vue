@@ -1,15 +1,15 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="copy1">总成功金额: {{ this.data.countSuccessMoney || 0 }}</el-button>
+    <el-button type="primary" @click="copy1">{{ $t('report.incomeDay.tsa') }} {{ this.data.countSuccessMoney || 0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="日期选择" prop="paydate">
+      <el-form-item :label=" $t('global.selectDate') " prop="paydate">
         <el-date-picker v-model="queryParams.paydate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
-                        :style="{width: '100%'}" placeholder="请选择日期选择" clearable :picker-options="pickerOptions"
+                        :style="{width: '100%'}" :placeholder=" $t('report.incomeDay.psad') " clearable :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -22,18 +22,18 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:reportIncomeDay:export']"
-        >导出
+        >{{ $t('global.exportButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
     <el-table v-loading="loading" :data="report" :stripe="true">
-      <el-table-column label="收款金额" align="center" prop="money"/>
-      <el-table-column label="线下或者线上" align="center" prop="type"/>
-      <el-table-column label="收款平台" align="center" prop="payplam"/>
-      <el-table-column label="收款通道" align="center" prop="paychancl"/>
-      <el-table-column label="收款商户" align="center" prop="paycard"/>
-      <el-table-column label="时间" align="center" prop="paydate">
+      <el-table-column :label=" $t('report.incomeDay.ar') " align="center" prop="money"/>
+      <el-table-column :label=" $t('report.incomeDay.oo') " align="center" prop="type"/>
+      <el-table-column :label=" $t('report.incomeDay.cp') " align="center" prop="payplam"/>
+      <el-table-column :label=" $t('report.incomeDay.cc') " align="center" prop="paychancl"/>
+      <el-table-column :label=" $t('report.incomeDay.pm') " align="center" prop="paycard"/>
+      <el-table-column :label=" $t('report.incomeDay.time') " align="center" prop="paydate">
       </el-table-column>
     </el-table>
     <!--    <pagination-->
@@ -130,14 +130,14 @@ export default {
     },
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm( this.$t('report.incomeDay.cpe') , this.$t('global.dialogTitle') , {
+        confirmButtonText: this.$t('global.confirmButton') ,
+        cancelButtonText: this.$t('global.cancelButton') ,
         type: 'warning'
       }).then(function() {
         return exportReportIncomeDay(queryParams)
       }).then(response => {
-        this.downloadExcel(response, '平台充值报表')
+        this.downloadExcel(response, this.$t('report.incomeDay.prs') )
       }).catch(() => {
       })
     }

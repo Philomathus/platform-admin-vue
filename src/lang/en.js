@@ -737,24 +737,6 @@ export default {
         url: 'Please enter the correct URL',
       },
     },
-    tradeType: {
-      addTitle: 'Add Fund Transaction Type',
-      editTitle: 'Modify Fund Transaction Type',
-      tableDialog: {
-        type: 'Transaction Type',
-        typePlaceholder: 'Please enter Transaction Type',
-        name: 'Transaction Name',
-        namePlaceholder: 'Please enter Transaction Name',
-        des: 'Transaction Description',
-        desPlaceholder: 'Please enter ransaction Description',
-      },
-      validation: {
-        type: 'Transaction Type must not be empty',
-        name: 'Transaction Name must not be empty',
-        des: 'ransaction Description must not be empty',
-      }
-    }
-
   },
 
   members: {

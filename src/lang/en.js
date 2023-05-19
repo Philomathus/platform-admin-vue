@@ -4153,7 +4153,7 @@ export default {
 
   },
 
-  report:{
+  report: {
     agentCount: {
       ds: 'Date Selection',
       cc: 'Channel Code',
@@ -4336,6 +4336,31 @@ export default {
       rf: 'Report Form',
 
     }
+  },
+
+  pay: {
+    bankCardAddress: {
+      prov: 'Province',
+      pep: 'Please enter a province',
+      aom: 'Add or modify bank card blacklist attribution',
+      sn: 'System Number',
+      city: 'City',
+      eon: 'Enabled or not',
+      cb: 'Created by',
+      psap: 'Please select a province',
+      psac: 'Please select a city',
+      aoma: 'Add or modify the blacklisted address of the banks hometown',
+      cba: 'Change the blacklisted address of the banks hometown',
+      conf: 'Confirm to "{text}" is it?',
+      succ: 'Success',
+      ms: 'Modified Successfully',
+      dcd: 'Does it confirm the deletion of the number "{ids}" the data item?',
+      ds: 'Deleted Successfully',
+      cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, pelase be patient...',
+      baba: 'Bank Attribution Blacklist Address',
+
+    },
+
   }
 
 }

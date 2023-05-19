@@ -4250,7 +4250,7 @@ export default {
 
   },
 
-  report:{
+  report: {
     agentCount: {
       ds: '日期选择',
       cc: '渠道编码',
@@ -4434,6 +4434,31 @@ export default {
       rf: '报表',
 
     }
+  },
+
+  pay: {
+    bankCardAddress:{
+      prov: '省份',
+      pep: '请输入省份',
+      aom: '新增或修改银行卡黑名单归属地',
+      sn: '系统编号',
+      city: '城市',
+      eon: '是否启用',
+      cb: '创建人',
+      psap: '请选择省份',
+      psac: '请选择城市',
+      aoma: '添加或修改银行归属地黑名单地址',
+      cba: '修改银行归属地黑名单地址',
+      conf: '确认要 "{text}" 吗?',
+      succ: '成功',
+      ms: '修改成功',
+      dcd: '是否确认删除编号为 "{ids}" 的数据项?',
+      ds: '删除成功',
+      cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+      baba: '银行归属地黑名单地址',
+
+    },
+
   }
 
 }

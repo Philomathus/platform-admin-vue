@@ -74,10 +74,10 @@ export default {
       //tab的选中
       activeName: '1',
       //tab的集合   游戏投注报表 充值综合统计 平台推广统计
-      tabList: [{dictLabel: "平台综合统计", dictValue: "1"}, {dictLabel: "游戏投注报表", dictValue: "2"}, {
-        dictLabel: "充值综合统计",
+      tabList: [{dictLabel: this.$t('report.index.pis'), dictValue: "1"}, {dictLabel: this.$t('report.index.gbs'), dictValue: "2"}, {
+        dictLabel: this.$t('report.index.ccs'),
         dictValue: "3"
-      }, {dictLabel: "平台充值报表", dictValue: "4"}, {dictLabel: "平台推广统计", dictValue: "5"},],
+      }, {dictLabel: this.$t('report.index.prs'), dictValue: "4"}, {dictLabel: this.$t('report.index.pps'), dictValue: "5"},],
       // 遮罩层
       loading: true,
       // 选中数组
@@ -92,7 +92,7 @@ export default {
       total: 0,
       // 【请填写功能名称】表格数据
       configEnvironmentList: [],
-      types: [{label: '启用', value: 1}, {label: '禁用', value: 0}],
+      types: [{label: this.$t('report.index.enable'), value: 1}, {label: this.$t('report.index.disable'), value: 0}],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -112,13 +112,13 @@ export default {
       // 表单校验
       rules: {
         envGroup: [
-          {required: true, message: "参数组不能为空", trigger: "blur"}
+          {required: true, message: this.$t('report.index.tpg'), trigger: "blur"}
         ],
         envSort: [
-          {required: true, message: "排序不能为空", trigger: "blur"}
+          {required: true, message: this.$t('report.index.sce'), trigger: "blur"}
         ],
         envStatus: [
-          {required: true, message: "状态 1启用 0禁用不能为空", trigger: "blur"}
+          {required: true, message: this.$t('report.index.statce'), trigger: "blur"}
         ]
       }
     };
@@ -193,7 +193,7 @@ export default {
     /** 搜索按钮操作 */
     handleQuery() {
       if (this.envTitle === '' && this.envCode === '') {
-        this.$notify.warning('参数标题和参数编码不能同时为空')
+        this.$notify.warning( this.$t('report.index.ptap') )
         return
       }
       // this.queryParams.pageNum = 1;
@@ -204,13 +204,13 @@ export default {
             this.activeName = res.data + ''
             this.getList();
           } else {
-            this.$notify.warning('没有对应的功能')
+            this.$notify.warning( this.$t('report.index.ncf') )
           }
           // this.activeName = tab.index
           // this.getList();
         }
       }).catch(() => {
-        this.$notify.error('网络异常')
+        this.$notify.error( this.$t('report.index.na') )
       });
     },
     /** 重置按钮操作 */
@@ -226,7 +226,7 @@ export default {
     },
     handleConfirm() {
       updateConfigEnvironmentList(this.configEnvironmentList).then(response => {
-        this.msgSuccess("修改成功");
+        this.msgSuccess( this.$t('report.index.ms') );
         this.open = false;
         this.getList();
       });
@@ -235,7 +235,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【请填写功能名称】";
+      this.title = this.$t('report.index.apf') ;
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -244,7 +244,7 @@ export default {
       getConfigEnvironment(envCode).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = this.$t('report.index.mpf') ;
       });
     },
     /** 提交按钮 */
@@ -253,13 +253,13 @@ export default {
         if (valid) {
           if (this.form.envCode != null) {
             updateConfigEnvironment(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess( this.$t('report.index.ms') );
               this.open = false;
               this.getList();
             });
           } else {
             addConfigEnvironment(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess( this.$t('report.index.as') );
               this.open = false;
               this.getList();
             });
@@ -270,28 +270,28 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const envCodes = row.envCode || this.ids;
-      this.$confirm('是否确认删除【请填写功能名称】编号为"' + envCodes + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm( this.$t('report.index.wcd', {ecode: envCodes}) , this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function () {
         return delConfigEnvironment(envCodes);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess( this.$t('global.deleteSuccessMsg'));
       })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有【请填写功能名称】数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm( this.$t('report.index.dyc'), this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function () {
         return exportConfigEnvironment(queryParams);
       }).then(response => {
-        this.downloadExcel(response, '报表')
+        this.downloadExcel(response, this.$t('report.index.rf'))
       }).catch(() => {
       })
     }

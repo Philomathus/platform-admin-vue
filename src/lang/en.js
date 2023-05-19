@@ -4312,6 +4312,28 @@ export default {
       aw: 'Anchor Withdrawal',
       cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
       pfs: 'Platform Funding Statement',
+    },
+    index: {
+      pis: 'Platform Integrated Statistics',
+      gbs: 'Game Betting Statement',
+      ccs: 'Charging comprehensive statistics',
+      prs: 'Platform recharge statement',
+      pps: 'Platform Promotion Statistics',
+      enable: 'Enable',
+      disable: 'Disable',
+      tpg: 'The parameter group cannot be empty',
+      sce: 'Sorting cannot be empty',
+      statce: 'Status 1 enabled 0 disabled cannot be empty',
+      ptap: 'Parameter title and parameter code cannot be empty at the same time',
+      ncf: 'No corresponding function',
+      na: 'Network Anomaly',
+      ms: 'Modified successfully',
+      apf: 'Add [Please fill in the function name]',
+      mpf: 'Modify [Please fill in the function name]',
+      as: 'Add Success',
+      wcd: 'Whether to confirm the deletion of [please fill in the function name] number "{ecode}" the data item?',
+      dyc: 'Do you confirm to export all [Please fill in the function name] data items?',
+      rf: 'Report Form',
 
     }
   }

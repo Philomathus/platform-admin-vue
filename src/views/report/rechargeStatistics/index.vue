@@ -1,12 +1,12 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="copy1">入款总额: {{ this.data.paymentAmount || 0 }}</el-button>
-    <el-button type="success" @click="copy2">出款总额: {{ this.data.outMoney || 0 }}</el-button>
-    <el-button type="primary" @click="copy3">金额合计: {{ this.data.countMoney || 0 }}</el-button>
-    <el-button type="success" @click="copy4">主播工资: {{ this.data.totalAccountGifts || 0 }}</el-button>
+    <el-button type="primary" @click="copy1">{{ $t('report.rechargeStatistics.tai') }} {{ this.data.paymentAmount || 0 }}</el-button>
+    <el-button type="success" @click="copy2">{{ $t('report.rechargeStatistics.td') }} {{ this.data.outMoney || 0 }}</el-button>
+    <el-button type="primary" @click="copy3">{{ $t('report.rechargeStatistics.ta') }} {{ this.data.countMoney || 0 }}</el-button>
+    <el-button type="success" @click="copy4">{{ $t('report.rechargeStatistics.as') }} {{ this.data.totalAccountGifts || 0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" v-show="showSearch"
              label-width="68px">
-      <el-form-item label="日期选择" prop="reptime">
+      <el-form-item :label=" $t('report.rechargeStatistics.ds') " prop="reptime">
         <el-date-picker
           v-model="dateRange"
           size="small"
@@ -14,13 +14,13 @@
           value-format="yyyy-MM-dd"
           type="daterange"
           range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :start-placeholder=" $t('global.datePickerStartDatePlaceholder') "
+          :end-placeholder=" $t('global.datePickerEndDatePlaceholder') "
           :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
       </el-form-item>
     </el-form>
     <el-row :gutter="10" class="mb8">
@@ -32,15 +32,15 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['web:report-moneyinfo:export']"
-        >导出
+        >{{ $t('global.exportButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
     <div ref="container" style="position: relative">
       <el-table v-loading="loading" :stripe="true" :data="report" @selection-change="handleSelectionChange">
-        <el-table-column  label="报表时间" align="center" prop="reptime" min-width="120" fixed="left"/>
-        <el-table-column  label="入款总人数" min-width="90" align="center" prop="totalRukuanrenshu">
+        <el-table-column  :label=" $t('report.rechargeStatistics.rt') " align="center" prop="reptime" min-width="120" fixed="left"/>
+        <el-table-column  :label=" $t('report.rechargeStatistics.tne') " min-width="90" align="center" prop="totalRukuanrenshu">
           <template v-slot="{row}">
             <span style="color: #5FB878">{{ row.totalRukuanrenshu}}</span>
           </template>
@@ -50,72 +50,72 @@
           <span style="color: #FF5722">{{ row.totalChukuanrenshu}}</span>
         </template>
         </el-table-column>
-        <el-table-column label="公司入款人数" min-width="100" align="center" prop="gsRukuanrenshu">
+        <el-table-column :label=" $t('report.rechargeStatistics.tnc') " min-width="100" align="center" prop="gsRukuanrenshu">
         <template v-slot="{row}">
           <span style="color: #5FB878">{{ row.gsRukuanrenshu}}</span>
         </template>
         </el-table-column>
-        <el-table-column label="公司入款金额" min-width="100" align="center" prop="gsRukuanjine">
+        <el-table-column :label=" $t('report.rechargeStatistics.cda') " min-width="100" align="center" prop="gsRukuanjine">
         <template v-slot="{row}">
           <span style="color: #5FB878">{{ row.gsRukuanjine}}</span>
         </template>
         </el-table-column>
-        <el-table-column label="线上入款人数" min-width="100" align="center" prop="xsRukunanrenshu">
+        <el-table-column :label=" $t('report.rechargeStatistics.nod') " min-width="100" align="center" prop="xsRukunanrenshu">
         <template v-slot="{row}">
           <span style="color: #5FB878">{{ row.xsRukunanrenshu}}</span>
         </template>
         </el-table-column>
-        <el-table-column label="线上入款金额" min-width="100" align="center" prop="xsRukunanjine">
+        <el-table-column :label=" $t('report.rechargeStatistics.oda') " min-width="100" align="center" prop="xsRukunanjine">
         <template v-slot="{row}">
           <span style="color: #5FB878">{{ row.xsRukunanjine}}</span>
         </template>
         </el-table-column>
-        <el-table-column label="人工入款人数" min-width="100" align="center" prop="rgRukunanrenshu">
+        <el-table-column :label=" $t('report.rechargeStatistics.nme') " min-width="100" align="center" prop="rgRukunanrenshu">
         <template v-slot="{row}">
           <span style="color: #5FB878">{{ row.rgRukunanrenshu}}</span>
         </template>
         </el-table-column>
-        <el-table-column label="人工入款金额" min-width="100" align="center" prop="rgRukunanjine">
+        <el-table-column :label=" $t('report.rechargeStatistics.mda') " min-width="100" align="center" prop="rgRukunanjine">
         <template v-slot="{row}">
           <span style="color: #5FB878">{{ row.rgRukunanjine}}</span>
         </template>
         </el-table-column>
-        <el-table-column label="代充人数" min-width="100" align="center" prop="totalAccount">
+        <el-table-column :label=" $t('report.rechargeStatistics.noc') " min-width="100" align="center" prop="totalAccount">
         <template v-slot="{row}">
           <span style="color: #5FB878">{{ row.totalAccount}}</span>
         </template>
         </el-table-column>
-        <el-table-column label="代充金额" min-width="100" align="center" prop="totalLast">
+        <el-table-column :label=" $t('report.rechargeStatistics.ca') " min-width="100" align="center" prop="totalLast">
         <template v-slot="{row}">
           <span style="color: #5FB878">{{ row.totalLast}}</span>
         </template>
         </el-table-column>
-        <el-table-column label="主播工资" min-width="100" align="center" prop="totalGiveprop">
+        <el-table-column :label=" $t('report.rechargeStatistics.as') " min-width="100" align="center" prop="totalGiveprop">
           <template v-slot="{row}">
             <span style="color: #FF5722">{{ row.totalGiveprop}}</span>
           </template>
         </el-table-column>
-        <el-table-column label="优惠人数" min-width="100" align="center" prop="palmYouhuirenshu">
+        <el-table-column :label=" $t('report.rechargeStatistics.noo') " min-width="100" align="center" prop="palmYouhuirenshu">
         <template v-slot="{row}">
           <span style="color: #FF5722">{{ row.palmYouhuirenshu}}</span>
         </template>
         </el-table-column>
-        <el-table-column label="平台优惠" min-width="100" align="center" prop="palmYouhuijine">
+        <el-table-column :label=" $t('report.rechargeStatistics.po') " min-width="100" align="center" prop="palmYouhuijine">
         <template v-slot="{row}">
           <span style="color: #FF5722">{{ row.palmYouhuijine}}</span>
         </template>
         </el-table-column>
-        <el-table-column label="入款总金额" min-width="130" align="center" prop="totalRukuanjine" fixed="right">
+        <el-table-column :label=" $t('report.rechargeStatistics.tad') " min-width="130" align="center" prop="totalRukuanjine" fixed="right">
         <template v-slot="{row}">
           <span style="color: #5FB878">{{ row.totalRukuanjine}}</span>
         </template>
         </el-table-column>
-        <el-table-column label="会员出款总金额" min-width="130" align="center" prop="totalChukuanjine" fixed="right">
+        <el-table-column :label=" $t('report.rechargeStatistics.tamp') " min-width="130" align="center" prop="totalChukuanjine" fixed="right">
         <template v-slot="{row}">
           <span style="color: #FF5722">{{ row.totalChukuanjine}}</span>
         </template>
         </el-table-column>
-        <el-table-column label="主播提现" min-width="130" align="center" prop="totalActiveprop" fixed="right">
+        <el-table-column :label=" $t('report.rechargeStatistics.aw') " min-width="130" align="center" prop="totalActiveprop" fixed="right">
           <template v-slot="{row}">
             <span style="color: #FF5722">{{ row.totalActiveprop}}</span>
           </template>
@@ -272,14 +272,14 @@ export default {
     },
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm( this.$t('report.rechargeStatistics.cpe') , this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportReportMonwyInfo(queryParams)
       }).then(response => {
-        this.downloadExcel(response, '平台资金报表')
+        this.downloadExcel(response, this.$t('report.rechargeStatistics.pfs') )
       }).catch(() => {
       })
     }

@@ -4288,6 +4288,31 @@ export default {
       cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
       gbs: 'Game Betting Statement',
 
+    },
+    rechargeStatistics: {
+      tai: 'Total amount of income',
+      td: 'Total disbursements',
+      ta: 'Total amount',
+      as: 'Anchor salary',
+      ds: 'Date Selection',
+      rt: 'Reporting Time',
+      tne: 'Total number of entrants',
+      tnc: 'Total number of contributors',
+      cda: 'Company Deposit Amount',
+      nod: 'Number of Deposits',
+      oda: 'Online deposit amount',
+      nme: 'Number of manual entries',
+      mda: 'Manual deposit amount',
+      noc: 'Number of Charges',
+      ca: 'Charging amount',
+      noo: 'Number of offers',
+      po: 'Platform Offers',
+      tad: 'Total amount of deposit',
+      tamp: 'Total amount of members payment',
+      aw: 'Anchor Withdrawal',
+      cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+      pfs: 'Platform Funding Statement',
+
     }
   }
 

@@ -4272,6 +4272,22 @@ export default {
       rtwa: 'Review total cash withdrawal amount',
       noa: 'Number of Audits',
 
+    },
+    plamGamesMonth: {
+      tb: 'Total Bet',
+      tp: 'Total Payout',
+      tpro: 'Total Profit',
+      ms: 'Month Selection',
+      sm: 'Select Month',
+      pn: 'Platform Name',
+      pepn: 'Please enter the platform name',
+      bet: 'Betting',
+      pc: 'Pie Color',
+      pro: 'Profit',
+      stam: 'Statement Month',
+      cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+      gbs: 'Game Betting Statement',
+
     }
   }
 

@@ -53,7 +53,7 @@
       <el-table-column label="会员ID" align="center" prop="memberId"/>
       <el-table-column label="会员IP" align="center" prop="ip"/>
       <el-table-column label="会员VIP" align="center" prop="vip"/>
-      <el-table-column label="会员卡" align="center" prop="card"/>
+      <el-table-column label="银行卡" align="center" prop="card"/>
       <el-table-column label="创建日期" align="center" prop="createTime"/>
     </el-table>
 

@@ -2,22 +2,25 @@
   <div class="app-container">
 <!--    search data -->
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="50px">
-      <el-form-item label="回调时间" prop="createTime" label-width="100px">
+      <el-form-item :label=" $t('global.selectDate') " prop="createTime" label-width="100px">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
-                        end-placeholder="结束时间" range-separator="至" :default-time="['00:00:00', '23:59:59']" clearable :picker-options="pickerOptions"
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}"
+                        :start-placeholder=" $t('global.datePickerStartDatePlaceholder') "
+                        :end-placeholder=" $t('global.datePickerEndDatePlaceholder') "
+                        :range-separator=" $t('global.selectDateRangeSeparator') "
+                        :default-time="['00:00:00', '23:59:59']" clearable :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item label="会员ID" prop="memberId" label-width="60px">
+      <el-form-item :label="$t('global.memberId') " prop="memberId" label-width="90px">
         <el-input
           v-model="queryParams.memberId"
-          placeholder="请输入会员ID"
+          :placeholder="$t('global.memberIdPlaceholder')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"/>
       </el-form-item>
 
-      <el-form-item label="会员卡" prop="card"  label-width="60px">
+      <el-form-item :label="$t('global.bankCard')" prop="card"  label-width="100px">
         <el-input
           v-model="queryParams.card"
           placeholder="请输入会员ID"
@@ -42,7 +45,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['pay:rechargeLog:export']"
-        >导出
+        >{{ $t('global.exportButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -50,11 +53,11 @@
 
 <!--  show data table -->
     <el-table stripe :stripe="true" v-loading="loading" :data="rechargeLogList">
-      <el-table-column label="会员ID" align="center" prop="memberId"/>
-      <el-table-column label="会员IP" align="center" prop="ip"/>
-      <el-table-column label="会员VIP" align="center" prop="vip"/>
-      <el-table-column label="银行卡" align="center" prop="card"/>
-      <el-table-column label="创建日期" align="center" prop="createTime"/>
+      <el-table-column :label="$t('global.memberId')" align="center" prop="memberId"/>
+      <el-table-column :label="$t('global.memberIp')" align="center" prop="ip"/>
+      <el-table-column :label="$t('global.memberVip')" align="center" prop="vip"/>
+      <el-table-column :label="$t('global.bankCard')" align="center" prop="card"/>
+      <el-table-column :label="$t('global.createTime')" align="center" prop="createTime"/>
     </el-table>
 
     <pagination
@@ -126,8 +129,8 @@ export default {
     handleExport(){
       const queryParams = this.queryParams
       this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportRechargeLog(queryParams)

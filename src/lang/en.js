@@ -63,6 +63,10 @@ export default {
     exportResponse: 'Activity Information',
     memberId :'Member ID',
     memberIdPlaceholder: 'Please enter Member ID',
+    bankCard :'Bank Card',
+    createTime:'created Time',
+    memberIp :'Member Ip',
+    memberVip :'Member VIP'
   },
 
   navbar: {
@@ -4361,6 +4365,6 @@ export default {
 
     },
 
-  }
+  },
 
 }

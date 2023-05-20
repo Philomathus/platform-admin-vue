@@ -63,6 +63,10 @@ export default {
     confirmExport: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
     confirmExportTitle: '警告',
     exportResponse: 'Activity Information',
+    bankCard :'银行卡',
+    createTime:'创建日期',
+    memberIp :'会员IP',
+    memberVip :'会员VIP'
   },
 
   navbar: {

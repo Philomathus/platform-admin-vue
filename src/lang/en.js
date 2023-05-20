@@ -4360,7 +4360,24 @@ export default {
       baba: 'Bank Attribution Blacklist Address',
 
     },
+    bankList: {
+      bn: 'Bank Name',
+      peny: 'Please enter bank name',
+      bc: 'Bank Code',
+      peb: 'Please enter bank code',
+      pk: 'Primary Key',
+      sbof: 'Sorting from smallest to largest',
+      pei: 'Please enter ID',
+      sb: 'Sort by',
+      pes: 'Please enter sort',
+      bowa: 'Bank official website address',
+      pebowa: 'Please enter the banks official website address',
+      sc: 'Start Color',
+      ec: 'End Color',
+      ice: 'ID cannot be empty',
+      bnc: 'Bank name cannot be empty',
 
+    }
   }
 
 }

@@ -1,27 +1,27 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="银行名称" prop="bankName">
+      <el-form-item :label=" $t('pay.bankList.bn') " prop="bankName">
         <el-input
           v-model="queryParams.bankName"
-          placeholder="请输入银行名称"
+          :placeholder=" $t('pay.bankList.peny') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="银行编码" prop="bankCode">
+      <el-form-item :label=" $t('pay.bankList.bc') " prop="bankCode">
         <el-input
           v-model="queryParams.bankCode"
-          placeholder="请输入银行编码1212"
+          :placeholder=" $t('pay.bankList.peb') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -34,7 +34,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:bankList:add']"
-        >新增
+        >{{ $t('global.newButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -46,7 +46,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:bankList:edit']"
-        >修改
+        >{{ $t('global.editButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -58,7 +58,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:bankList:remove']"
-        >删除
+        >{{ $t('global.deleteButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -69,7 +69,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:bankList:export']"
-        >导出
+        >{{ $t('global.exportButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -77,10 +77,10 @@
 
     <el-table stripe v-loading="loading" :data="bankListList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="主键" align="center" prop="id"/>
-      <el-table-column label="银行名称" align="center" prop="bankName"/>
-      <el-table-column label="银行编码" align="center" prop="bankCode"/>
-      <el-table-column label="图标" align="center" prop="bankIcon">
+      <el-table-column :label=" $t('pay.bankList.pk') " align="center" prop="id"/>
+      <el-table-column :label=" $t('pay.bankList.bn') " align="center" prop="bankName"/>
+      <el-table-column :label=" $t('pay.bankList.bc') " align="center" prop="bankCode"/>
+      <el-table-column :label=" $t('global.icon') " align="center" prop="bankIcon">
         <template slot-scope="scope">
           <el-image
             style="height: 50px"
@@ -89,7 +89,7 @@
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="状态" align="center" prop="status">
+      <el-table-column :label=" $t('global.status') " align="center" prop="status">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -99,22 +99,22 @@
           </el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="排序 从小到大顺序" align="center" prop="sort"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label=" $t('pay.bankList.sbof') " align="center" prop="sort"/>
+      <el-table-column :label=" $t('global.operationColumn') " align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['admin:bankList:edit']">修改
+            v-hasPermi="['admin:bankList:edit']">{{ $t('global.editButton') }}
           </el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['admin:bankList:remove']">删除
+            v-hasPermi="['admin:bankList:remove']">{{ $t('global.deleteButton') }}
           </el-button>
         </template>
       </el-table-column>
@@ -134,45 +134,45 @@
         <div class="el-row">
           <div class="el-col-lg-13">
             <el-form-item label="ID" prop="id">
-              <el-input v-model="form.id" placeholder="请输入ID" />
+              <el-input v-model="form.id" :placeholder=" $t('pay.bankList.pei') " />
             </el-form-item>
-            <el-form-item label="银行名称" prop="bankName">
-              <el-input v-model="form.bankName" placeholder="请输入银行名称"/>
+            <el-form-item :label=" $t('pay.bankList.bn') " prop="bankName">
+              <el-input v-model="form.bankName" :placeholder=" $t('pay.bankList.peny') "/>
             </el-form-item>
-            <el-form-item label="银行编码" prop="bankCode">
-              <el-input v-model="form.bankCode" placeholder="请输入银行英文编码"/>
+            <el-form-item :label=" $t('pay.bankList.bc') " prop="bankCode">
+              <el-input v-model="form.bankCode" :placeholder=" $t('pay.bankList.peb') "/>
             </el-form-item>
           </div>
           <div class="el-col-lg-11">
-            <el-form-item label="图标" prop="bankIcon">
+            <el-form-item :label=" $t('global.icon') " prop="bankIcon">
               <imageUpload v-model="form.bankIcon" path="bankList"/>
             </el-form-item>
           </div>
         </div>
 
-        <el-form-item label="排序" prop="sort">
-          <el-input v-model="form.sort" placeholder="请输入排序"/>
+        <el-form-item :label=" $t('pay.bankList.sb') " prop="sort">
+          <el-input v-model="form.sort" :placeholder=" $t('pay.bankList.pes') "/>
         </el-form-item>
-        <el-form-item label="银行官网地址" prop="url">
-          <el-input v-model="form.url" placeholder="请输入银行官网地址"/>
+        <el-form-item :label=" $t('pay.bankList.bowa') " prop="url">
+          <el-input v-model="form.url" :placeholder=" $t('pay.bankList.pebowa') "/>
         </el-form-item>
 
         <div class="el-row">
           <div class="el-col-lg-6">
-            <el-form-item label="开始颜色" prop="colorStart">
+            <el-form-item :label=" $t('pay.bankList.sc') " prop="colorStart">
               <el-color-picker v-model="form.colorStart" size="medium" :predefine="predefineColors"/>
             </el-form-item>
           </div>
           <div class="el-col-lg-6">
-            <el-form-item label="结束颜色" prop="colorEnd">
+            <el-form-item :label=" $t('pay.bankList.ec') " prop="colorEnd">
               <el-color-picker v-model="form.colorEnd" size="medium" :predefine="predefineColors"/>
             </el-form-item>
           </div>
         </div>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="addsubmitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="addsubmitForm">{{ $t('global.confirmButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
 
@@ -184,36 +184,36 @@
         <div class="el-row">
           <div class="el-col-lg-13">
             <el-form-item label="ID" prop="id">
-              <el-input v-model="form.id" placeholder="请输入ID" readonly disabled/>
+              <el-input v-model="form.id" :placeholder=" $t('pay.bankList.pei') " readonly disabled/>
             </el-form-item>
-            <el-form-item label="银行名称" prop="bankName">
-              <el-input v-model="form.bankName" placeholder="请输入银行名称"/>
+            <el-form-item :label=" $t('pay.bankList.bn') " prop="bankName">
+              <el-input v-model="form.bankName" :placeholder=" $t('pay.bankList.peny') "/>
             </el-form-item>
-            <el-form-item label="银行编码" prop="bankCode">
-              <el-input v-model="form.bankCode" placeholder="请输入银行英文编码"/>
+            <el-form-item :label=" $t('pay.bankList.bc') " prop="bankCode">
+              <el-input v-model="form.bankCode" :placeholder=" $t('pay.bankList.peb') "/>
             </el-form-item>
           </div>
           <div class="el-col-lg-11">
-            <el-form-item label="图标" prop="bankIcon">
+            <el-form-item :label=" $t('global.icon') " prop="bankIcon">
               <imageUpload v-model="form.bankIcon" path="bankList"/>
             </el-form-item>
           </div>
         </div>
 
-        <el-form-item label="排序" prop="sort">
-          <el-input v-model="form.sort" placeholder="请输入排序"/>
+        <el-form-item :label=" $t('pay.bankList.sb') " prop="sort">
+          <el-input v-model="form.sort" :placeholder=" $t('pay.bankList.pes') "/>
         </el-form-item>
-        <el-form-item label="银行官网地址" prop="url">
-          <el-input v-model="form.url" placeholder="请输入银行官网地址"/>
+        <el-form-item :label=" $t('pay.bankList.bowa') " prop="url">
+          <el-input v-model="form.url" :placeholder=" $t('pay.bankList.pebowa') "/>
         </el-form-item>
         <div class="el-row">
           <div class="el-col-lg-6">
-            <el-form-item label="开始颜色" prop="colorStart">
+            <el-form-item :label=" $t('pay.bankList.sc') " prop="colorStart">
               <el-color-picker v-model="form.colorStart" size="medium" :predefine="predefineColors"/>
             </el-form-item>
           </div>
           <div class="el-col-lg-3">
-            <el-form-item label="结束颜色" prop="colorEnd">
+            <el-form-item :label=" $t('pay.bankList.ec') " prop="colorEnd">
               <el-color-picker v-model="form.colorEnd" size="medium" :predefine="predefineColors"/>
             </el-form-item>
           </div>
@@ -221,8 +221,8 @@
 
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('global.confirmButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -288,7 +288,7 @@ export default {
       // 表单校验
       rules: {
         id: [
-          {required: true, message: "ID不能为空", trigger: "blur"}
+          {required: true, message: this.$t('pay.bankList.ice'), trigger: "blur"}
         ],
         bankName: [
           {required: true, message: "银行名称不能为空", trigger: "blur"}

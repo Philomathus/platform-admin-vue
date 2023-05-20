@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="域名分组" prop="dgroup">
-        <el-select v-model="queryParams.dgroup" placeholder="请选择域名分组" clearable size="small">
+      <el-form-item :label="域名分组" prop="dgroup">
+        <el-select v-model="queryParams.dgroup" :placeholder="请选择域名分组" clearable size="small">
           <el-option
             v-for="dict in dgroupOptions"
             :key="dict.dictValue"
@@ -11,27 +11,27 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="域名" prop="domain">
+      <el-form-item :label="域名" prop="domain">
         <el-input
           v-model="queryParams.domain"
-          placeholder="请输入域名"
+          :placeholder="请输入域名"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="动态编码" prop="dcode">
+      <el-form-item :label="动态编码" prop="dcode">
         <el-input
           v-model="queryParams.dcode"
-          placeholder="请输入动态编码"
+          :placeholder="请输入动态编码"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -44,7 +44,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['config:domain:add']"
-        >新增
+        >{{ $t('global.addButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -56,7 +56,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['config:domain:edit']"
-        >修改
+        >{{ $t('global.editButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -68,7 +68,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['config:domain:remove']"
-        >删除
+        >{{ $t('global.deleteButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -76,22 +76,22 @@
 
     <el-table v-loading="loading" :data="domainList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="域名分组" align="center" prop="dgroup" :formatter="dgroupFormat"/>
-      <el-table-column label="域名" align="center" prop="domain"/>
-      <el-table-column align="center" prop="dcode" :formatter="dcodeFormat">
+      <el-table-column :label="$t('config.domain.tableDialog.dgroup')" align="center" prop="dgroup" :formatter="dgroupFormat"/>
+      <el-table-column :label="$t('config.domain.tableDialog.domain')" align="center" prop="domain"/>
+      <el-table-column align="center" prop="dcode" :formatter="dcodeFormat" min-width="100px">
         <template slot="header">
-          <span>动态编码</span>
+          <span>{{ $t('config.domain.dynamicCoding') }}</span>
           <el-tooltip popper-class="tooltip" placement="top">
             <i class="el-icon-question"></i>
             <div slot="content" class="tooltip-content">
-              <div>1、测试内容测试内容测试内容，</div>
+              <div>{{ $t('config.domain.testContent') }}</div>
             </div>
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark"/>
-      <el-table-column label="排序" align="center" prop="sort"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('config.domain.tableDialog.remark')" align="center" prop="remark"/>
+      <el-table-column :label="$t('config.domain.tableDialog.index')" align="center" prop="sort"/>
+      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -99,7 +99,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['config:domain:edit']"
-          >修改
+          >{{ $t('global.editButton') }}
           </el-button>
           <el-button
             size="mini"
@@ -107,7 +107,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['config:domain:remove']"
-          >删除
+          >{{ $t('global.deleteButton') }}
           </el-button>
         </template>
       </el-table-column>
@@ -124,8 +124,8 @@
     <!-- 添加或修改域名配置对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="域名分组" prop="dgroup">
-          <el-select v-model="form.dgroup" placeholder="请选择域名分组">
+        <el-form-item :label="$t('config.domain.tableDialog.dgroup')" prop="dgroup">
+          <el-select v-model="form.dgroup" :placeholder="$t('config.domain.tableDialog.dgroupPlaceholder')">
             <el-option
               v-for="dict in dgroupOptions"
               :key="dict.dictValue"
@@ -134,22 +134,22 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="域名" prop="domain">
-          <el-input v-model="form.domain" placeholder="请输入域名"/>
+        <el-form-item :label="$t('config.domain.tableDialog.domain')" prop="domain">
+          <el-input v-model="form.domain" :placeholder="$t('config.domain.tableDialog.domainPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="动态编码" prop="dcode">
-          <el-input v-model="form.dcode" placeholder="请输入动态编码"/>
+        <el-form-item :label="$t('config.domain.tableDialog.dcode')" prop="dcode">
+          <el-input v-model="form.dcode" :placeholder="$t('config.domain.tableDialog.dcodePlaceholder')"/>
         </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容"/>
+        <el-form-item :label="$t('config.domain.tableDialog.remark')" prop="remark">
+          <el-input v-model="form.remark" type="textarea" :placeholder="$t('config.domain.tableDialog.remarkPlaceholder')"/>
         </el-form-item>
-        <el-form-item label="排序" prop="sort">
-          <el-input type="number" v-model="form.sort" placeholder="请输入排序"/>
+        <el-form-item :label="$t('config.domain.tableDialog.index')" prop="sort">
+          <el-input type="number" v-model="form.sort" :placeholder="$t('config.domain.tableDialog.index')"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('global.submitButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -204,14 +204,14 @@ export default {
       // 表单校验
       rules: {
         domain: [
-          { required: true, message: '域名不能为空', trigger: 'blur' },
+          { required: true, message: this.$t('config.domain.validation.domain'), trigger: 'blur' },
           { required: true, validator: validUrl, trigger: 'blur' }
         ],
         dgroup: [
-          { required: true, message: '域名分组不能为空', trigger: 'change' }
+          { required: true, message: this.$t('config.domain.validation.dgroup'), trigger: 'change' }
         ],
         sort: [
-          { required: true, message: '排序不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('config.domain.validation.sort'), trigger: 'blur' }
         ]
       }
     }
@@ -283,7 +283,7 @@ export default {
     handleAdd() {
       this.reset()
       this.open = true
-      this.title = '添加域名配置'
+      this.title = this.$t('config.domain.addTitle');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -293,7 +293,7 @@ export default {
         this.form = response.data
         this.form.domain = this.form.domain.substring(8, this.form.domain.length)
         this.open = true
-        this.title = '修改域名配置'
+        this.title = this.$t('config.domain.editTitle');
       })
     },
     /** 提交按钮 */
@@ -303,13 +303,13 @@ export default {
           this.form.domain = this.form.domain.trim()
           if (this.form.id != null) {
             updateDomain(this.form).then(response => {
-              this.msgSuccess('修改成功')
+              this.msgSuccess(this.$t('global.editSuccessMsg'));
               this.open = false
               this.getList()
             })
           } else {
             addDomain(this.form).then(response => {
-              this.msgSuccess('新增成功')
+              this.msgSuccess(this.$t('global.addSuccessMsg'));
               this.open = false
               this.getList()
             })
@@ -320,15 +320,15 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids
-      this.$confirm('是否确认删除域名配置编号为"' + ids + '"的数据项?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('global.deleteConfirm') + row.title + '"?', this.$t('global.deleteConfirmTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function() {
         return delDomain(ids)
       }).then(() => {
         this.getList()
-        this.msgSuccess('删除成功')
+        this.msgSuccess(this.$t('global.deleteSuccessMsg'));
       })
     }
   }

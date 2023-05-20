@@ -15,13 +15,13 @@
             :on-change="handleChange"
             :on-exceed="handleExceed"
             :file-list="fileList">
-            <el-button size="small" type="primary">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传MP4格式文件，且不超过300MB</div>
+            <el-button size="small" type="primary">{{ $t('members.memberVideo.cu') }}</el-button>
+            <div slot="tip" class="el-upload__tip">{{ $t('members.memberVideo.omf') }}</div>
           </el-upload>
         </el-card>
       </el-col>
       <el-col :span="40" class="card-box">
-        <div slot="header"><span>选择视频上传</span></div>
+        <div slot="header"><span>{{ $t('members.memberVideo.svu') }}</span></div>
         <el-card>
           <el-upload
             class="avatar-uploader"
@@ -87,10 +87,10 @@ export default {
       console.log(file);
     },
     handleExceed(files, fileList) {
-      this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+      this.$message.warning( this.$t('members.memberVideo.tcl', {length: files.length, fileList: files.length + fileList.length}) );
     },
     beforeRemove(file, fileList) {
-      return this.$confirm(`确定移除 ${file.name}？`);
+      return this.$confirm( this.$t('members.memberVideo.doc', {name: file.name}) );
     },
     handleChange(file, fileList) {
       this.fileList = fileList.slice(-3);
@@ -109,11 +109,11 @@ export default {
 
       if (['video/mp4', 'video/ogg', 'video/flv', 'video/avi', 'video/wmv', 'video/rmvb', 'video/mov'].indexOf(file
         .type) === -1) {
-        this.$message.error('请上传正确的视频格式')
+        this.$message.error( this.$t('members.memberVideo.puc') )
         return false
       }
       if (!fileSize) {
-        this.$message.error('上传视频大小不能超过300MB!');
+        this.$message.error( this.$t('members.memberVideo.suv') );
       }
       return isMP4 && isLt2M;
     }

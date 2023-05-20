@@ -4,23 +4,23 @@
 
       <el-form-item prop="searchTime">
         <el-date-picker type="datetimerange" v-model="queryParams.searchTime" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
-                        end-placeholder="结束时间" range-separator="至" :default-time="['00:00:00', '23:59:59']" clearable
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" :start-placeholder=" $t('global.dateTimePickerStartTimePlaceholder') "
+                        :end-placeholder=" $t('global.dateTimePickerEndTimePlaceholder') " :range-separator=" $t('global.selectDateRangeSeparator') " :default-time="['00:00:00', '23:59:59']" clearable
                         :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="opName" style="width: 120px;">
         <el-input
           v-model="queryParams.opName"
-          placeholder="操作人"
+          :placeholder=" $t('report.memberWithdrawLog.opt') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -30,10 +30,10 @@
 
     <el-table stripe v-loading="loading" :data="memberWithdrawLogList">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="审核人" align="center" prop="opName" />
-      <el-table-column label="审核总提现金额" align="center" prop="money" />
-      <el-table-column label="状态" align="center" prop="statusName" />
-      <el-table-column label="审核次数" align="center" prop="times"  />
+      <el-table-column :label=" $t('report.memberWithdrawLog.rev') " align="center" prop="opName" />
+      <el-table-column :label=" $t('report.memberWithdrawLog.rtwa') " align="center" prop="money" />
+      <el-table-column :label=" $t('global.status') " align="center" prop="statusName" />
+      <el-table-column :label=" $t('report.memberWithdrawLog.noa') " align="center" prop="times"  />
     </el-table>
 
     <pagination

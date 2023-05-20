@@ -1,31 +1,31 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="copy1">总投注: {{ this.countData.countBetMoney || 0 }}</el-button>
-    <el-button type="primary" @click="copy2">总派彩: {{ this.countData.countPaiCai || 0 }}</el-button>
-    <el-button type="primary" @click="copy3">总盈利: {{ this.countData.countGameProfit || 0 }}</el-button>
+    <el-button type="primary" @click="copy1">{{ $t('report.plamGamesMonth.tb') }} {{ this.countData.countBetMoney || 0 }}</el-button>
+    <el-button type="primary" @click="copy2">{{ $t('report.plamGamesMonth.tp') }} {{ this.countData.countPaiCai || 0 }}</el-button>
+    <el-button type="primary" @click="copy3">{{ $t('report.plamGamesMonth.tpro') }} {{ this.countData.countGameProfit || 0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" label-width="68px"
              v-show="showSearch"
     >
-      <el-form-item label="月份选择" prop="begindate">
+      <el-form-item :label=" $t('report.plamGamesMonth.ms') " prop="begindate">
         <el-date-picker
           v-model="queryParams.begindate"
           type="month"
           format="yyyy-MM-dd" value-format="yyyy-MM-dd"
-          placeholder="选择月">
+          :placeholder=" $t('report.plamGamesMonth.sm') ">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="平台名称" prop="gameplame">
+      <el-form-item :label=" $t('report.plamGamesMonth.pn') " prop="gameplame">
         <el-input
           v-model="queryParams.gameplame"
-          placeholder="请输入平台名称"
+          :placeholder=" $t('report.plamGamesMonth.pepn') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -42,11 +42,11 @@
                 style="width: 100%;"
                 :stripe="true"
       >
-        <el-table-column label="平台名称" align="center" prop="gameplame"/>
-        <el-table-column label="投注" align="center" prop="gamecell"/>
-        <el-table-column label="派彩" align="center" prop="paicai"/>
-        <el-table-column label="盈利" align="center" prop="gameprofit"/>
-        <el-table-column label="报表月份" align="center" prop="date"/>
+        <el-table-column :label=" $t('report.plamGamesMonth.pn') " align="center" prop="gameplame"/>
+        <el-table-column :label=" $t('report.plamGamesMonth.bet') " align="center" prop="gamecell"/>
+        <el-table-column :label=" $t('report.plamGamesMonth.pc') " align="center" prop="paicai"/>
+        <el-table-column :label=" $t('report.plamGamesMonth.pro') " align="center" prop="gameprofit"/>
+        <el-table-column :label=" $t('report.plamGamesMonth.stam') " align="center" prop="date"/>
 
       </el-table>
     </div>
@@ -135,14 +135,14 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm( this.$t('report.planGamesMonth.cpe') , this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function() {
         return exportReportPlamGames(queryParams)
       }).then(response => {
-        this.downloadExcel(response, '游戏投注报表')
+        this.downloadExcel(response, this.$t('report.planGamesMonth.gbs'))
       }).catch(() => {
       })
     }

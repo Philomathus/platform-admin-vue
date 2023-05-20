@@ -4,7 +4,7 @@
 
       <el-col :span="5" class="card-box">
         <el-card>
-          <div slot="header"><span class="fs15">批量手机号更新密码</span></div>
+          <div slot="header"><span class="fs15">{{ $t('members.memberSmallFeatures.bcp') }}</span></div>
           <el-form :model="phoneFrom" ref="phoneFrom" :rules="phoneRules">
             <el-form-item prop="phones">
               <el-input
@@ -12,7 +12,7 @@
                 :rows="45"
                 clearable
                 v-model="phoneFrom.phones"
-                placeholder="手机号统一以竖行排列,不允许有任何字符"
+                :placeholder=" $t('members.memberSmallFeatures.tcpn') "
               />
             </el-form-item>
             <el-form-item prop="password" class="col-100pr">
@@ -21,7 +21,7 @@
                 type="text"
                 clearable
                 v-model="phoneFrom.password"
-                placeholder="请输入更新的密码"
+                :placeholder=" $t('members.memberSmallFeatures.peup') "
               ></el-input>
             </el-form-item>
             <el-form-item prop="googleAuthCode" class="col-100pr">
@@ -31,16 +31,16 @@
                 type="number"
                 class="no-number"
                 v-model="phoneFrom.googleAuthCode"
-                placeholder="请输入谷歌验证码21"
+                :placeholder=" $t('members.memberSmallFeatures.pega') "
               />
-              <el-button type="primary" plain style="width: 23%;" @click="handleUpdate">更新</el-button>
+              <el-button type="primary" plain style="width: 23%;" @click="handleUpdate">{{ $t('members.memberSmallFeatures.upd') }}</el-button>
             </el-form-item>
           </el-form>
         </el-card>
       </el-col>
       <el-col :span="5" class="card-box">
         <el-card>
-          <div slot="header"><span class="fs15">批量会员ID查询手机号</span></div>
+          <div slot="header"><span class="fs15">{{ $t('members.memberSmallFeatures.bmqc') }}</span></div>
           <el-form :model="phoneByIdFrom" ref="phoneByIdFrom" :rules="phoneByIdRules">
             <el-form-item prop="userIds" class="col-100pr">
               <el-input
@@ -48,7 +48,7 @@
                 :rows="23"
                 clearable
                 v-model="phoneByIdFrom.userIds"
-                placeholder="会员ID统一以竖行排列,不允许有任何字符"
+                :placeholder=" $t('members.memberSmallFeatures.muv') "
               />
             </el-form-item>
             <el-form-item prop="googleAuthCode">
@@ -58,10 +58,10 @@
                 type="number"
                 class="no-number"
                 v-model="phoneByIdFrom.googleAuthCode"
-                placeholder="请输入谷歌验证码"
+                :placeholder=" $t('members.memberSmallFeatures.pegac') "
               />
-              <el-button type="primary" plain style="width: 25%;margin-left: 1px" @click="handleQuery">查询</el-button>
-              <el-button type="info" size="mini" plain style="width: 18%;padding:11px" @click="handleClear">清除</el-button>
+              <el-button type="primary" plain style="width: 25%;margin-left: 1px" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+              <el-button type="info" size="mini" plain style="width: 18%;padding:11px" @click="handleClear">{{ $t('members.memberSmallFeatures.clear') }}</el-button>
             </el-form-item>
             <el-form-item prop="phonesByIds" class="col-100pr">
                 <el-input
@@ -77,7 +77,7 @@
       </el-col>
       <el-col :span="4.5" class="card-box">
         <el-card>
-          <div slot="header"><span class="fs15">批量会员ID派送彩金</span></div>
+          <div slot="header"><span class="fs15">{{ $t('members.memberSmallFeatures.bmib') }}</span></div>
           <el-form :model="memberIdsFrom" ref="memberIdsFrom" :rules="memberIdsRules">
             <el-upload
               class="upload-demo"
@@ -92,9 +92,9 @@
               :on-success="uploadSuccess"
               :auto-upload="false"
               :before-upload="beforeAvatarUpload">
-              <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-              <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">批量导入</el-button>
-              <div slot="tip" class="el-upload__tip">只能上传excel文件</div>
+              <el-button slot="trigger" size="small" type="primary">{{ $t('members.memberSmallFeatures.sf') }}</el-button>
+              <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">{{ $t('members.memberSmallFeatures.bi') }}</el-button>
+              <div slot="tip" class="el-upload__tip">{{ $t('members.memberSmallFeatures.oef') }}</div>
             </el-upload>
             <el-form-item prop="memberIds" class="col-100pr">
               <el-input
@@ -102,7 +102,7 @@
                 :rows="40"
                 clearable
                 v-model="memberIdsFrom.memberIds"
-                placeholder="会员ID统一以竖行排列,不允许有任何字符"
+                :placeholder=" $t('members.memberSmallFeatures.muv') "
               />
             </el-form-item>
             <el-form-item prop="money" class="col-100pr">
@@ -111,7 +111,7 @@
                 type="number"
                 clearable
                 v-model="memberIdsFrom.money"
-                placeholder="请输入派送金额"
+                :placeholder=" $t('members.memberSmallFeatures.peda') "
               ></el-input>
             </el-form-item>
             <el-form-item prop="googleAuthCode" style="width: 110%">
@@ -121,9 +121,9 @@
                 type="number"
                 class="no-number"
                 v-model="memberIdsFrom.googleAuthCode"
-                placeholder="请输入谷歌验证码"
+                :placeholder=" $t('members.memberSmallFeatures.pegac') "
               />
-              <el-button type="primary" plain style="width: 23%;" @click="handleCommit">提交</el-button>
+              <el-button type="primary" plain style="width: 23%;" @click="handleCommit">{{ $t('global.submitButton') }}</el-button>
             </el-form-item>
           </el-form>
         </el-card>
@@ -169,32 +169,32 @@ export default {
       },
       phoneByIdRules: {
         userIds: [
-          {required: true, message: "批量会员ID不能为空", trigger: "blur"}
+          {required: true, message: this.$t('members.memberSmallFeatures.bmcb') , trigger: "blur"}
         ],
         googleAuthCode: [
-          {required: true, message: "谷歌验证码不能为空", trigger: "blur"}
+          {required: true, message: this.$t('members.memberSmallFeatures.gccb') , trigger: "blur"}
         ]
       },
       phoneRules: {
         phones: [
-          {required: true, message: "批量手机号不能为空", trigger: "blur"}
+          {required: true, message: this.$t('members.memberSmallFeatures.bpnc') , trigger: "blur"}
         ],
         password: [
-          {required: true, message: "密码不能为空", trigger: "blur"}
+          {required: true, message: this.$t('members.memberSmallFeatures.pcbe') , trigger: "blur"}
         ],
         googleAuthCode: [
-          {required: true, message: "谷歌验证码不能为空", trigger: "blur"}
+          {required: true, message: this.$t('members.memberSmallFeatures.gccb') , trigger: "blur"}
         ]
       },
       memberIdsRules: {
         memberIds: [
-          {required: true, message: "批量会员ID不能为空", trigger: "blur"}
+          {required: true, message: this.$t('members.memberSmallFeatures.bmcb') , trigger: "blur"}
         ],
         money: [
-          {required: true, message: "派送金额不能为空", trigger: "blur"}
+          {required: true, message: this.$t('members.memberSmallFeatures.dacb') , trigger: "blur"}
         ],
         googleAuthCode: [
-          {required: true, message: "谷歌验证码不能为空", trigger: "blur"}
+          {required: true, message: this.$t('members.memberSmallFeatures.gccb') , trigger: "blur"}
         ]
       },
     };
@@ -204,13 +204,13 @@ export default {
   methods: {
     uploadSuccess(response, file, fileList) {
       if (response.status) {
-        alert("文件导入成功");
+        alert( this.$t('members.memberSmallFeatures.fis') );
       } else {
-        alert("文件导入失败");
+        alert( this.$t('members.memberSmallFeatures.fif') );
       }
     },
     uploadFalse(response, file, fileList) {
-      alert("文件上传失败！");
+      alert( this.$t('members.memberSmallFeatures.fuf') );
     },
     // 上传前对文件的大小的判断
     beforeAvatarUpload(file) {
@@ -220,10 +220,10 @@ export default {
       const extension4 = file.name.split(".")[1] === "docx";
       const isLt2M = file.size / 1024 / 1024 < 10;
       if (!extension && !extension2 && !extension3 && !extension4) {
-        alert("上传模板只能是 xls、xlsx、doc、docx 格式!");
+        alert( this.$t('members.memberSmallFeatures.ut') );
       }
       if (!isLt2M) {
-        console.log("上传模板大小不能超过 10MB!");
+        console.log( this.$t('members.memberSmallFeatures.tsut') );
       }
       return extension || extension2 || extension3 || (extension4 && isLt2M);
     },
@@ -233,7 +233,7 @@ export default {
         this.$refs.upload.submit();
       }
       if (this.businessType == null) {
-        this.businessType = "businessType不能为空";
+        this.businessType = this.$t('members.memberSmallFeatures.bce') ;
       }
     },
     handleRemove(file, fileList) {
@@ -241,9 +241,9 @@ export default {
     },
     handlePreview(file) {
       if (file.response.status) {
-        alert("此文件导入成功");
+        alert( this.$t('members.memberSmallFeatures.tfis') );
       } else {
-        alert("此文件导入失败");
+        alert( this.$t('members.memberSmallFeatures.tfif') );
       }
     },
     querySearch(queryString, cb) {
@@ -274,7 +274,7 @@ export default {
               this.msgSuccess((res.msg))
             }
           }).catch(() => {
-            this.$notify.error('网络异常')
+            this.$notify.error( this.$t('members.memberSmallFeatures.na') )
           })
         }
       })
@@ -299,7 +299,7 @@ export default {
               this.msgSuccess((res.msg))
             }
           }).catch(() => {
-            this.$notify.error('网络异常')
+            this.$notify.error( this.$t('members.memberSmallFeatures.na') )
           })
         }
       })
@@ -324,7 +324,7 @@ export default {
               this.msgSuccess((res.msg))
             }
           }).catch(() => {
-            this.$notify.error('网络异常')
+            this.$notify.error( this.$t('members.memberSmallFeatures.na') )
           })
         }
       })

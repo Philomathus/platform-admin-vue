@@ -1,18 +1,18 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="省份" prop="province">
+      <el-form-item :label=" $t('pay.bankCardAddress.prov') " prop="province">
         <el-input
           v-model="queryParams.province"
-          placeholder="请输入省份"
+          :placeholder=" $t('pay.bankCardAddress.pep') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"/>
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -25,7 +25,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:bankCardAddress:add']">
-          新增或修改银行卡黑名单归属地
+          {{ $t('pay.bankCardAddress.aom') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -33,10 +33,10 @@
 
     <el-table stripe v-loading="loading" :data="bankCardAddressList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="系统编号" align="center" prop="id"/>
-      <el-table-column label="省份" align="center" prop="province"/>
-      <el-table-column label="城市" align="center" prop="city"/>
-      <el-table-column label="是否启用" align="center" prop="status">
+      <el-table-column :label=" $t('pay.bankCardAddress.sn') " align="center" prop="id"/>
+      <el-table-column :label=" $t('pay.bankCardAddress.prov') " align="center" prop="province"/>
+      <el-table-column :label=" $t('pay.bankCardAddress.city') " align="center" prop="city"/>
+      <el-table-column :label=" $t('pay.bankCardAddress.eon') " align="center" prop="status">
       <template slot-scope="scope">
         <el-switch
           v-model="scope.row.status"
@@ -46,7 +46,7 @@
         </el-switch>
       </template>
       </el-table-column>
-      <el-table-column label="创建人" align="center" prop="createName"/>
+      <el-table-column :label=" $t('pay.bankCardAddress.cb') " align="center" prop="createName"/>
     </el-table>
 
     <pagination
@@ -62,7 +62,7 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="150px">
         <el-select size="small" class="col-w150"
                    v-model="selectProv"
-                   placeholder="请选择省份"
+                   :placeholder=" $t('pay.bankCardAddress.psap') "
                    v-on:change="getProv($event)">
           <el-option
             v-for="item in provs"
@@ -73,7 +73,7 @@
         <el-select size="small" class="col-w200 ml5"
                    v-if="selectProv!=''"
                    v-model="selectCity"
-                   placeholder="请选择城市"
+                   :placeholder=" $t('pay.bankCardAddress.psac') "
                    v-on:change="getCity($event)" clearable multiple collapse-tags>
           <el-option
             v-for="item in citys"
@@ -83,8 +83,8 @@
         </el-select>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('global.searchButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -226,7 +226,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加或修改银行归属地黑名单地址";
+      this.title = this.$t('pay.bankCardAddress.aoma');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -235,19 +235,19 @@ export default {
       getBankCardAddress(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改银行归属地黑名单地址";
+        this.title = this.$t('pay.bankCardAddress.cba');
       });
     },
     handleStatusChange(row) {
-      let text = row.status === '1' ? '启用' : '停用'
-      this.$confirm('确认要"' + text + '""'  + '"吗?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      let text = row.status === '1' ? this.$t('global.statusEnable') : this.$t('global.statusDisable')
+      this.$confirm( this.$t('pay.bankCardAddress.conf', {text: text}) , this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function () {
         return changeBankAddressStatus(row.id, row.status)
       }).then(() => {
-        this.msgSuccess(text + '成功')
+        this.msgSuccess(text + this.$t('pay.bankCardAddress.succ'))
       }).catch(function () {
         row.status = row.status === '0' ? '1' : '0'
       })
@@ -259,7 +259,7 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateBankCardAddress(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess( this.$t('pay.bankCardAddress.ms') );
               this.open = false;
               this.getList();
             });
@@ -271,7 +271,7 @@ export default {
             this.form.city = citys;
             this.form.province = this.selectProv;
             addBankCardAddress(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess( this.$t('pay.bankCardAddress.ms') );
               this.open = false;
               this.getList();
             });
@@ -282,29 +282,29 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm( this.$t('pay.bankCardAddress.dcd', {ids: ids}), this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function () {
         return delBankCardAddress(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess( this.$t('pay.bankCardAddress.ds') );
       }).catch(() => {
       })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
+      this.$confirm( this.$t('pay.bankCardAddress.cpe') , this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function () {
         return exportBankCardAddress(queryParams);
       }).then(response => {
-        this.downloadExcel(response, '银行归属地黑名单地址');
+        this.downloadExcel(response, this.$t('pay.bankCardAddress.baba') );
       }).catch(() => {
       })
     },

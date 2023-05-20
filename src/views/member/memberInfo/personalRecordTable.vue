@@ -66,7 +66,7 @@
     </table>
 
     <el-button type="primary" plain @click="open=false" style="float: right;margin-top: -20px">
-      {{ $t('globe.close') }}
+      {{ $t('global.close') }}
     </el-button>
 
 

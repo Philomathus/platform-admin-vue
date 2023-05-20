@@ -1,24 +1,24 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 10px" v-show="showSearch" label-width="70px">
-      <el-form-item label="日期范围" prop="regTime">
-        <el-date-picker type="datetimerange" v-model="dateRange" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}" start-placeholder="开始时间"
-                        end-placeholder="开始时间"
-                        range-separator="至" clearable :default-time="['00:00:00', '23:59:59']" :picker-options="pickerOptions"
+      <el-form-item :label=" $t('global.selectDatePlaceholder') " prop="regTime">
+        <el-date-picker :type=" $t('global.selectDatePlaceholder') " v-model="dateRange" format="yyyy-MM-dd HH:mm:ss"
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}" :start-placeholder=" $t('global.dateTimePickerStartTimePlaceholder') "
+                        :end-placeholder=" $t('global.dateTimePickerEndTimePlaceholder') "
+                        :range-separator=" $t('global.selectDateRangeSeparator') " clearable :default-time="['00:00:00', '23:59:59']" :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="inviterCode" style="width: 110px;">
         <el-input
           v-model="queryParams.inviterCode"
-          placeholder="邀请码"
+          :placeholder=" $t('report.memberChannel.ic') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item prop="channelcode" style="width: 110px;">
-        <el-select v-model="queryParams.channelcode" placeholder="全部类型" clearable size="small">
+        <el-select v-model="queryParams.channelcode" :placeholder=" $t('report.memberChannel.at') " clearable size="small">
           <el-option
             v-for="dict in statusOptions"
             :key="dict.dictValue"
@@ -41,15 +41,15 @@
       <el-form-item prop="email" style="width: 160px;">
         <el-input
           v-model="queryParams.email"
-          placeholder="登录备注"
+          :placeholder=" $t('report.memberChannel.lr') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
 
     </el-form>
@@ -64,25 +64,25 @@
           :disabled="disabled"
           @click="handleExport"
           v-hasPermi="['report-member:memberChannel:export']"
-        >导出
+        >{{ $t('global.exportButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table :stripe="true" v-loading="loading" :data="memberPayJourList" :highlight-current-row="true">
-      <el-table-column label="数量" :show-overflow-tooltip="true" align="center" prop="number" min-width="50"/>
-      <el-table-column label="网易异常备注" :show-overflow-tooltip="true" align="center" prop="email" min-width="120">
+      <el-table-column :label=" $t('report.memberChannel.qt') " :show-overflow-tooltip="true" align="center" prop="number" min-width="50"/>
+      <el-table-column :label=" $t('report.memberChannel.nar') " :show-overflow-tooltip="true" align="center" prop="email" min-width="120">
         <template slot-scope="scope">
-          <span v-if="scope.row.email == null || scope.row.email =='' " :style="{'color': '#5FB878'}">正常</span>
+          <span v-if="scope.row.email == null || scope.row.email =='' " :style="{'color': '#5FB878'}">{{ $t('report.memberChannel.norm') }}</span>
           <span v-else :style="{'color': '#746560'}">{{scope.row.email }}</span>
         </template>
       </el-table-column>
 <!--      <el-table-column label="状态" min-width="120" align="center" prop="status" :formatter="statusFormat" ></el-table-column>-->
-      <el-table-column label="邀请码" align="center" prop="inviterCode" min-width="80"/>
-      <el-table-column label="用户类型" align="center" prop="channelcode" min-width="80px">
+      <el-table-column :label=" $t('report.memberChannel.ic') " align="center" prop="inviterCode" min-width="80"/>
+      <el-table-column :label=" $t('report.memberChannel.ut') " align="center" prop="channelcode" min-width="80px">
         <template slot-scope="scope">
-          <span v-if="scope.row.channelcode == null" :style="{'color': '#5f91b8'}">会员(老接口)</span>
+          <span v-if="scope.row.channelcode == null" :style="{'color': '#5f91b8'}">{{ $t('report.memberChannel.moi') }}</span>
           <span v-else :style="{color: (channelcode = statusOptions[parseInt(scope.row.channelcode)]).color}">{{ channelcode.dictLabel }}</span>
         </template>
       </el-table-column>
@@ -115,7 +115,7 @@ export default {
       refreshSec: '5',
       refreshType: 'primary',
       refreshIcon: 'el-icon-refresh',
-      refreshLabel: '开始刷新',
+      refreshLabel: this.$t('report.memberChannel.sr'),
       refreshDesc: '',
       pickerOptions: {shortcuts: pickerDateTimeShortcuts},
       dateRange: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],
@@ -246,14 +246,14 @@ export default {
     handleExport() {
       this.disabled = true
       const queryParams = this.queryParams
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+      this.$confirm( this.$t('report.memberChannel.cpe') , this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function() {
         return exportReportMonwyInfo(queryParams)
       }).then(response => {
-        this.downloadExcel(response, '网易异常统计')
+        this.downloadExcel(response, this.$t('report.memberChannel.nas') )
         loading.close()
         this.disabled = false
       }).catch(() => {
@@ -264,10 +264,10 @@ export default {
       getMemberPayJour(row.id).then(response => {
         this.form = response.data
         if (this.form.status == 0) {
-          this.form.statusStr = '失败'
+          this.form.statusStr = this.$t('report.memberChannel.fail')
           this.open = true
         } else if (this.form.status == -1) {
-          this.form.statusStr = '待确认'
+          this.form.statusStr = this.$t('report.memberChannel.tbc')
           this.open = true
         }else {
           this.getList()
@@ -278,7 +278,7 @@ export default {
       if (this.refreshType === 'primary') {
         this.refreshType = 'danger'
         this.refreshIcon = 'el-icon-circle-close'
-        this.refreshLabel = '停止刷新'
+        this.refreshLabel = this.$t('report.memberChannel.stopr')
         this.refreshDesc = ''
 
         this.stopRefresh()
@@ -287,7 +287,7 @@ export default {
       } else {
         this.refreshType = 'primary'
         this.refreshIcon = 'el-icon-refresh'
-        this.refreshLabel = '开始刷新'
+        this.refreshLabel = this.$t('report.memberChannel.sr')
         this.refreshDesc = ''
 
         this.stopRefresh()
@@ -301,7 +301,7 @@ export default {
           thet.getList()
           secs = thet.refreshSec
         }
-        thet.refreshDesc = secs + '秒后开始刷新'
+        thet.refreshDesc = secs + this.$t('report.memberChannel.rsas')
         secs--
       }, 1000)
     },

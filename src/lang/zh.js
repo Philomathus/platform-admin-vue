@@ -1,13 +1,6 @@
-import {addLiveUserWithdrawNewlog} from "@/api/platform-web/live-web/liveUserWithdrawNewlog";
-import {
-  addLiveVideoClassified,
-  updateLiveVideoClassified
-} from "@/api/live-web/liveVideoClassified/liveVideoClassified";
-
 export default {
 
   global: {
-    export: '导出',
     cancelButton: '取消',
     confirmButton: '确定',
     refresh: '刷新',
@@ -70,6 +63,10 @@ export default {
     confirmExport: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
     confirmExportTitle: '警告',
     exportResponse: 'Activity Information',
+    bankCard :'银行卡',
+    createTime:'创建日期',
+    memberIp :'会员IP',
+    memberVip :'会员VIP'
   },
 
   navbar: {
@@ -117,6 +114,7 @@ export default {
     closeAllTags: '',
     closeOthersTags: ''
   },
+
   tagsView: {
     closeOthersTags: '关闭其他',
     closeAllTags: '关闭所有',
@@ -125,6 +123,7 @@ export default {
     closeOthers: '关闭所有',
     closeAll: '关闭其他'
   },
+
   activity: {
     startDatePlaceholder: '开始时间',
     endDatePlaceholder: '结束时间',
@@ -701,6 +700,7 @@ export default {
       }
     }
   },
+
   config: {
     configUsdtRecharge: {
       addTitle: '添加USDT充值',
@@ -729,8 +729,61 @@ export default {
         icon: '钱包二维码不能为空',
       }
     },
-    configEnvironment: {}
+    configEnvironment: {
+      addTitle: '添加环境参数',
+      editTitle: '修改环境参数',
+      confirmUpdate: '确认修改',
+      tableDialog: {
+        envTitle: '参数名称',
+        envTitlePlaceholder: '请选择参数名称',
+        envCode: '参数编码',
+        envCodePlaceholder: '请选择参数编码',
+        envValue: '参数值',
+        envValuePlaceholder: '请输入参数值',
+        index: '序列号',
+        indexPlaceholder: '请输入序列号',
+        // status: '',
+        // statusPlaceholder: '请选择状态',
+        envGroup: '所属参数组',
+        envGroupPlaceholder: '请选择状态',
+        envDes: '备注',
+        envDesPlaceholder: '请参数说明',
+        envType: '类型',
+        envTypePlaceholder: '请参数说明'
+      },
+      validation: {
+        envGroup: '参数组不能为空',
+        envSort: '排序不能为空',
+        envStatus: '状态 1启用 0禁用不能为空',
+        envTitleAndEncoding: '参数标题和参数编码不能同时为空',
+      }
+    },
+    domain: {
+      addTitle: '添加域名配置',
+      editTitle: '修改域名配置',
+      dynamicCoding: '域名分组',
+      testContent: '1、测试内容测试内容测试内容',
+      tableDialog: {
+        dgroup: '域名分组',
+        dgroupPlaceholder: '请选择域名分组',
+        domain: '域名',
+        domainPlaceholder: '请输入域名',
+        dcode: '动态编码',
+        dcodePlaceholder: '请输入动态编码',
+        remark: '备注',
+        remarkPlaceholder: '备注',
+        index: '排序',
+        indexPlaceholder: '排序',
+      },
+      validation: {
+        domain: '域名不能为空',
+        dgroup: '域名分组不能为空',
+        sort: '排序不能为空',
+        url: '请输入正确的URL',
+      }
+    }
   },
+
   members: {
     configVip: {
       home: '',
@@ -1693,7 +1746,111 @@ export default {
       menu: '会员ID/账号只能输入数字及下划线',
       cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
       oml: '在线会员列表'
+    },
+    memberQuest: {
+      mid: '会员ID',
+      pemid: '请输入会员ID',
+      task: '任务标题',
+      pet: '请输入任务标题',
+      cts: '当前任务状态',
+      nct: '当前任务数量',
+      ntt: '目标任务数量',
+      ap: '补分',
+      ti: '任务ID',
+      pcc: '0=进行中1=已经完成2 领奖完成',
+      peti: '请输入任务iD',
+      psdg: '请选择字典生成',
+      petct: '请输入当前任务数量',
+      ip: '进行中',
+      abc: '待领奖',
+      award: '已领奖',
+      penpa: '请输入需要增加的积分',
+      tip: '增加的积分为正整数',
+      pepi: '请输入正整数',
+      uap: '最多补分10w',
+      ci: '取消输入',
+      menu: '会员ID只能输入数字及下划线',
+      afn: '添加【请填写功能名称】',
+      mfn: '修改【请填写功能名称】',
+      ms: '修改成功',
+      as: '新增成功',
+      wcd: '是否确认删除【请填写功能名称】编号为 "{id}" 的数据项',
+      ds: '删除成功',
+      cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+      pffe: '【请填写功能名称】',
+
+    },
+    memberSmallFeatures: {
+      bcp: '批量手机号更新密码',
+      tcpn: '手机号统一以竖行排列,不允许有任何字符',
+      peup: '请输入更新的密码',
+      pega: '请输入谷歌验证码21',
+      upd: '更新',
+      bmqc: '批量会员ID查询手机号',
+      muv: '会员ID统一以竖行排列,不允许有任何字符',
+      pegac: '请输入谷歌验证码',
+      clear: '清除',
+      bmib: '批量会员ID派送彩金',
+      sf: '选取文件',
+      bi: '批量导入',
+      oef: '只能上传excel文件',
+      peda: '请输入派送金额',
+      bmcb: '批量会员ID不能为空',
+      gccb: '谷歌验证码不能为空',
+      bpnc: '批量手机号不能为空',
+      pcbe: '密码不能为空',
+      dacb: '派送金额不能为空',
+      fis: '文件导入成功',
+      fif: '文件导入失败',
+      fuf: '文件上传失败！',
+      ut: '上传模板只能是 xls、xlsx、doc、docx 格式!',
+      tsut: '上传模板大小不能超过 10MB!',
+      bce: 'businessType不能为空',
+      tfis: '此文件导入成功',
+      tfif: '此文件导入失败',
+      na: '网络异常',
+      cu: '点击上传',
+
+    },
+    memberVideo: {
+      cu: '点击上传',
+      omf: '只能上传MP4格式文件，且不超过300MB',
+      svu: '选择视频上传',
+      tcl: '当前限制选择 3 个文件，本次选择了 {length} 个文件，共选择了 {fileList} 个文件',
+      doc: '确定移除 {name}?',
+      puc: '请上传正确的视频格式',
+      suv: '上传视频大小不能超过300MB',
+
+    },
+    shaBaSportDataMin: {
+      pem: '请输入会员ID',
+      pegb: '请输入游戏局号',
+      psbs: '请选择投注状态',
+      mid: '会员ID',
+      pid: '代理ID',
+      ton: '交易订单号',
+      bs: '下注状态',
+      pn: '平台名称',
+      sub: '子平台',
+      vb: '有效下注',
+      tb: '总下注',
+      prof: '盈利',
+      pyb: '下注时间',
+      pbt: '下注类型',
+      non: '注单号',
+      menu: '会员ID只能输入数字及下划线'
     }
+  },
+
+  common: {
+    titleDialog: '',
+    titlePrompt: '',
+    removeButton: '',
+    searchButton: '',
+    resetButton: '',
+    confirmButton: '',
+    cancelButton: '',
+    operationColumn: ''
   },
 
   liveWeb: {
@@ -4095,7 +4252,217 @@ export default {
     wheelSkinReceived: {},
 
 
-  }
+  },
 
+  report: {
+    agentCount: {
+      ds: '日期选择',
+      cc: '渠道编码',
+      afr: '友情提示(每日推广数据查询前，请进行一次基础数据的预生成操作)',
+      npc: '新增推广码',
+      dpc: '删除推广码',
+      bdp: '基础数据预生成',
+      st: '统计时间',
+      sd: '当日/总(注册人数)',
+      ce: '公司入款（首充）',
+      od: '线上入款（首充）',
+      me: '手工入款（首充）',
+      tad: '入款总（首充）',
+      psa: '人/笔/金额（出款日总）',
+      psad: '人/笔/金额（入款日总）',
+      nug: '送礼次数/金额',
+      nol: '直播间次数/活跃安卓/活跃苹果',
+      pc: '推广码',
+      pepc: '请输入推广码',
+      snow: '立即提交',
+      pcce: '推广码不能为空',
+      as: '新增成功',
+      pcpn: '推广码只能为纯数字',
+      dels: '删除成功',
+      cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+      psr: '推广统计报表'
+    },
+    comprehensiveStatistics: {
+      psd: '请选择日期选择',
+      amt: '金额',
+      type: '类型',
+      time: '时间',
+      err: 'Error: 报表正在生成，请稍后...',
+      rbg: '报表正在生成',
+      cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+      ids: '综合数据报表',
+
+    },
+    gameBet: {
+      tba: '总投注金额: ',
+      tnb: '总投注人数: ',
+      mp: '会员盈利: ',
+      pn: '平台名称',
+      pepn: '请输入平台名称',
+      pnum: '平台编号',
+      nd: '名称-详情',
+      nob: '投注人数',
+      br: '投注比数',
+      eba: '有效投注金额',
+      prop: '比例',
+      date: '日期',
+      tdr: '日期是必需的',
+      trb: 'Error: 报表正在生成，请稍后...',
+      gbs: '游戏投注报表',
+
+    },
+    gameBetJump: {
+      gbs: '日期选择',
+      sbn: '子平台名',
+      pensp: '请输入子平台名称',
+      pn: '平台名称',
+      pepn: '请输入平台名称',
+      pnum: '平台编号',
+      nd: '名称-详情',
+      sbnum: '子平台编号',
+      nob: '投注人数',
+      br: '投注比数',
+      tba: '总投注金额',
+      eba: '有效投注金额',
+      pp: '平台抽水',
+      mp: '会员盈利',
+      prop: '比例',
+      date: '日期',
+      tdir: '日期是必需的',
+
+    },
+    incomeDay: {
+      tsa: '总成功金额:',
+      psad: '请选择日期选择',
+      ar: '收款金额',
+      oo: '线下或者线上',
+      cp: '收款平台',
+      cc: '收款通道',
+      pm: '收款商户',
+      time: '时间',
+      cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+      prs: '平台充值报表',
+    },
+    memberAgent: {
+      mid: '会员ID',
+      vl: 'VIP等级',
+      cod: '打码',
+      bal: '余额',
+      note: '进入直播间次数',
+    },
+    memberChannel: {
+      ic: '邀请码',
+      at: '全部类型',
+      lr: '登录备注',
+      qt: '数量',
+      nar: '网易异常备注',
+      norm: '正常',
+      ut: '用户类型',
+      moi: '会员(老接口)',
+      sr: '开始刷新',
+      cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+      nas: '网易异常统计',
+      fail: '失败',
+      tbc: '待确认',
+      stopr: '停止刷新',
+      rsas: '秒后开始刷新',
+
+    },
+    memberWithdrawLog: {
+      opt: '操作人',
+      rev: '审核人',
+      rtwa: '审核总提现金额',
+      noa: '审核次数',
+
+    },
+    plamGamesMonth: {
+      tb: '总投注:',
+      tp: '总派彩:',
+      tpro: '总盈利:',
+      ms: '月份选择',
+      sm: '选择月',
+      pn: '平台名称',
+      pepn: '请输入平台名称',
+      bet: '投注',
+      pc: '派彩',
+      pro: '盈利',
+      stam: '报表月份',
+      cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+      gbs: '游戏投注报表',
+
+    },
+    rechargeStatistics: {
+      tai: '入款总额:',
+      td: '出款总额:',
+      ta: '金额合计:',
+      as: '主播工资:',
+      ds: '日期选择',
+      rt: '报表时间',
+      tne: '入款总人数',
+      tnc: '出款总人数',
+      cda: '公司入款金额',
+      nod: '线上入款人数',
+      oda: '线上入款金额',
+      nme: '人工入款人数',
+      mda: '人工入款金额',
+      noc: '代充人数',
+      ca: '代充金额',
+      noo: '优惠人数',
+      po: '平台优惠',
+      tad: '入款总金额',
+      tamp: '会员出款总金额',
+      aw: '主播提现',
+      cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+      pfs: '平台资金报表',
+    },
+    index: {
+      pis: '平台综合统计',
+      gbs: '游戏投注报表',
+      ccs: '充值综合统计',
+      prs: '平台充值报表',
+      pps: '平台推广统计',
+      enable: '启用',
+      disable: '禁用',
+      tpg: '参数组不能为空',
+      sce: '排序不能为空',
+      statce: '状态 1启用 0禁用不能为空',
+      ptap: '参数标题和参数编码不能同时为空',
+      ncf: '没有对应的功能',
+      na: '网络异常',
+      ms: '修改成功',
+      apf: '添加【请填写功能名称】',
+      mpf: '修改【请填写功能名称】',
+      as: '新增成功',
+      wcd: '是否确认删除【请填写功能名称】编号为"{ecode}"的数据项?',
+      dyc: '是否确认导出所有【请填写功能名称】数据项?',
+      rf: '报表',
+
+    }
+  },
+
+  pay: {
+    bankCardAddress:{
+      prov: '省份',
+      pep: '请输入省份',
+      aom: '新增或修改银行卡黑名单归属地',
+      sn: '系统编号',
+      city: '城市',
+      eon: '是否启用',
+      cb: '创建人',
+      psap: '请选择省份',
+      psac: '请选择城市',
+      aoma: '添加或修改银行归属地黑名单地址',
+      cba: '修改银行归属地黑名单地址',
+      conf: '确认要 "{text}" 吗?',
+      succ: '成功',
+      ms: '修改成功',
+      dcd: '是否确认删除编号为 "{ids}" 的数据项?',
+      ds: '删除成功',
+      cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+      baba: '银行归属地黑名单地址',
+
+    },
+
+  }
 
 }

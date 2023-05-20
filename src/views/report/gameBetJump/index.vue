@@ -1,39 +1,39 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" label-width="68px" v-show="showSearch">
-      <el-form-item label="日期选择" prop="begindate">
+      <el-form-item :label=" $t('report.gameBetJump.gbs') " prop="begindate">
         <el-date-picker type="daterange"
                         v-model="queryParams.dateRange"
                         format="yyyy-MM-dd"
                         value-format="yyyy-MM-dd"
                         :style="{ width: '95%' }"
-                        start-placeholder="开始时间"
-                        end-placeholder="开始时间"
-                        range-separator="至"
+                        :start-placeholder=" $t('global.dateTimePickerStartTimePlaceholder') "
+                        :end-placeholder=" $t('global.dateTimePickerEndTimePlaceholder') "
+                        :range-separator=" $t('global.selectDateRangeSeparator') "
                         clearable
                         :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item label="子平台名" prop="agentchildname">
+      <el-form-item :label=" $t('report.gameBetJump.sbn') " prop="agentchildname">
         <el-input
           v-model="queryParams.agentchildname"
-          placeholder="请输入子平台名称"
+          :placeholder=" $t('report.gameBetJump.pensp') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="平台名称" prop="gameplame">
+      <el-form-item :label=" $t('report.gameBetJump.pn') " prop="gameplame">
         <el-input
           v-model="queryParams.gameplame"
-          placeholder="请输入平台名称"
+          :placeholder=" $t('report.gameBetJump.pepn') "
           clearable
           size="small"
           @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -45,18 +45,18 @@
               style="width: 100%;"
               :stripe="true"
     >
-      <el-table-column label="平台编号" align="center" prop="gameagent" :show-overflow-tooltip="true"/>
-      <el-table-column label="名称-详情" align="center" prop="gameplame"/>
-      <el-table-column label="子平台编号" align="center" prop="agentchild"/>
-      <el-table-column label="子平台名称" align="center" prop="agentchildname"/>
-      <el-table-column label="投注人数" align="center" prop="gamepepole"/>
-      <el-table-column label="投注比数" align="center" prop="gametouzhu"/>
-      <el-table-column label="总投注金额" align="center" prop="gamecell"/>
-      <el-table-column label="有效投注金额" align="center" prop="gamebet"/>
-      <el-table-column label="平台抽水" align="center" prop="gamerevenve"/>
-      <el-table-column label="会员盈利" align="center" prop="gameprofit"/>
-      <el-table-column label="比例" align="center" prop="bili"/>
-      <el-table-column label="日期" align="center" prop="begindate"/>
+      <el-table-column :label=" $t('report.gameBetJump.pnum') " align="center" prop="gameagent" :show-overflow-tooltip="true"/>
+      <el-table-column :label=" $t('report.gameBetJump.nd') " align="center" prop="gameplame"/>
+      <el-table-column :label=" $t('report.gameBetJump.sbnum') " align="center" prop="agentchild"/>
+      <el-table-column :label=" $t('report.gameBetJump.sbn') " align="center" prop="agentchildname"/>
+      <el-table-column :label=" $t('report.gameBetJump.nob') " align="center" prop="gamepepole"/>
+      <el-table-column :label=" $t('report.gameBetJump.br') " align="center" prop="gametouzhu"/>
+      <el-table-column :label=" $t('report.gameBetJump.tba') " align="center" prop="gamecell"/>
+      <el-table-column :label=" $t('report.gameBetJump.eba') " align="center" prop="gamebet"/>
+      <el-table-column :label=" $t('report.gameBetJump.pp') " align="center" prop="gamerevenve"/>
+      <el-table-column :label=" $t('report.gameBetJump.mp') " align="center" prop="gameprofit"/>
+      <el-table-column :label=" $t('report.gameBetJump.prop') " align="center" prop="bili"/>
+      <el-table-column :label=" $t('report.gameBetJump.date')" align="center" prop="begindate"/>
     </el-table>
     <pagination
       v-show="total>0"
@@ -131,7 +131,7 @@ export default {
         this.queryParams.endDate   = this.queryParams.dateRange[1];
         this.backupDateTimeRange   = this.queryParams.dateRange;
       } else {
-        this.msgError("日期是必需的");
+        this.msgError( this.$t('report.gameBetJump.tdir') );
         this.queryParams.dateRange = this.backupDateTimeRange;
         }
       list(this.queryParams).then(response => {

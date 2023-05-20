@@ -8,11 +8,11 @@
               style="width: 100%;"
               :stripe="true"
     >
-      <el-table-column label="会员id" align="center" prop="id" :show-overflow-tooltip="true"/>
-      <el-table-column label="vip等级" align="center" prop="vip"/>
-      <el-table-column label="打码" align="center" prop="codeAccount"/>
-      <el-table-column label="余额" align="center" prop="totalAccount"/>
-      <el-table-column label="进入直播间次数" align="center" prop="times"/>
+      <el-table-column :label=" $t('report.memberAgent.mid') " align="center" prop="id" :show-overflow-tooltip="true"/>
+      <el-table-column :label=" $t('report.memberAgent.vl') " align="center" prop="vip"/>
+      <el-table-column :label=" $t('report.memberAgent.cod') " align="center" prop="codeAccount"/>
+      <el-table-column :label=" $t('report.memberAgent.bal') " align="center" prop="totalAccount"/>
+      <el-table-column :label=" $t('report.memberAgent.note') " align="center" prop="times"/>
 
     </el-table>
     <pagination

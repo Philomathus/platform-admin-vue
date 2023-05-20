@@ -1,46 +1,47 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="会员ID" prop="memberId">
+      <el-form-item :label=" $t('members.memberQuest.mid') " prop="memberId">
         <el-input
           v-model.trim="queryParams.memberId"
-          placeholder="请输入会员ID"
+          :placeholder=" $t('members.memberQuest.pemid') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="任务标题" prop="title">
+      <el-form-item :label=" $t('members.memberQuest.task') " prop="title">
         <el-input
           v-model="queryParams.title"
-          placeholder="请输入任务标题"
+          :placeholder=" $t('members.memberQuest.pet') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
     <el-table stripe v-loading="loading" :data="memberQuestList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="会员ID" align="center" prop="memberId" />
-      <el-table-column label="任务标题" align="center" prop="title" />
-      <el-table-column label="当前任务状态" align="center" prop="status" :formatter="formatterType" />
-      <el-table-column label="当前任务数量" align="center" prop="curnum" >
+      <el-table-column :label=" $t('members.memberQuest.mid') " align="center" prop="memberId" />
+      <el-table-column :label=" $t('members.memberQuest.task') " align="center" prop="title" />
+      <el-table-column :label=" $t('members.memberQuest.cts') " align="center" prop="status" :formatter="formatterType" />
+      <el-table-column :label=" $t('members.memberQuest.nct') " align="center" prop="curnum" >
       <template v-slot="{row}">
         <span >{{ row.curnum }}</span>
       </template>
       </el-table-column>
-      <el-table-column label="目标任务数量" align="center" prop="target" />
+      <el-table-column :label=" $t('members.memberQuest.ntt') " align="center" prop="target" />
 
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width ">
+      <el-table-column :label=" $t('global.operationColumn') " align="center" class-name="small-padding fixed-width ">
         <template slot-scope="scope">
 <!--          <el-input  v-model="scope.row.score" placeholder="请输入需要增加的积分" style="width:180px" v-if="scope.row.status === 0" class="no-number" type="number" />-->
-          <el-button type="primary" icon="el-icon-plus" v-if="scope.row.status === 0" @click="addMemberScore(scope.row.id,scope.row.curnum,scope.row.target)">补分</el-button>
+          <el-button type="primary" icon="el-icon-plus" v-if="scope.row.status === 0" @click="addMemberScore(scope.row.id,scope.row.curnum,scope.row.target)">
+            {{ $t('members.memberQuest.ap') }}</el-button>
         </template>
       </el-table-column>
 
@@ -58,24 +59,24 @@
     <!-- 添加或修改【请填写功能名称】对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="会员ID" prop="memberId">
-          <el-input v-model="form.memberId" placeholder="请输入会员ID" />
+        <el-form-item :label=" $t('members.memberQuest.mid') " prop="memberId">
+          <el-input v-model="form.memberId" :placeholder=" $t('members.memberQuest.pemid') " />
         </el-form-item>
-        <el-form-item label="任务id" prop="questId">
-          <el-input v-model="form.questId" placeholder="请输入任务id" />
+        <el-form-item :label=" $t('members.memberQuest.ti') " prop="questId">
+          <el-input v-model="form.questId" :placeholder=" $t('members.memberQuest.peti') " />
         </el-form-item>
-        <el-form-item label="0=进行中1=已经完成2 领奖完成">
+        <el-form-item :label=" $t('members.memberQuest.pcc') ">
           <el-radio-group v-model="form.status">
-            <el-radio label="1">请选择字典生成</el-radio>
+            <el-radio label="1">{{ $t('members.memberQuest.psdg') }}</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="当前任务数量" prop="curnum">
-          <el-input v-model="form.curnum" placeholder="请输入当前任务数量" />
+        <el-form-item :label=" $t('members.memberQuest.nct') " prop="curnum">
+          <el-input v-model="form.curnum" :placeholder=" $t('members.memberQuest.petct') " />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('global.confirmButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -92,11 +93,11 @@ export default {
     return {
       formatterType(row) {
         if (row.status == 0) {
-          return '进行中'
+          return this.$t('members.memberQuest.ip')
         } else if (row.status == 1) {
-          return '待领奖'
+          return this.$t('members.memberQuest.abc')
         } else if (row.status == 2) {
-          return '已领奖'
+          return this.$t('members.memberQuest.award')
         }else {
           return ''
         }
@@ -149,18 +150,18 @@ export default {
     //增加会员任务积分
     addMemberScore(id,curnums,target) {
 
-      this.$prompt('请输入需要增加的积分', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$prompt( this.$t('members.memberQuest.penpa') , this.$t('global.promptTitle') , {
+        confirmButtonText: this.$t('global.confirmButton') ,
+        cancelButtonText: this.$t('global.cancelButton') ,
         inputPattern: /^[0-9]{1,10}$/,
-        inputErrorMessage: '增加的积分为正整数'
+        inputErrorMessage: this.$t('members.memberQuest.tip')
       }).then(({ value }) => {
         if(!(/(^[1-9]\d*$)/.test(value))){
-          this.$notify.warning('请输入正整数')
+          this.$notify.warning( this.$t('members.memberQuest.pepi') )
           return;
         }
         if(value>100000){
-          this.$notify.warning('最多补分10w')
+          this.$notify.warning( this.$t('members.memberQuest.uap') )
           return;
         }
         this.loading = true;
@@ -181,7 +182,7 @@ export default {
       }).catch(() => {
         this.$message({
           type: 'info',
-          message: '取消输入'
+          message: this.$t('members.memberQuest.ci')
         });
       });
     },
@@ -207,7 +208,7 @@ export default {
         const reg = '^[0-9a-zA-Z_]{1,}$'
         let flag = this.queryParams.memberId.match(reg)
         if(!flag){
-          this.msgError("会员ID只能输入数字及下划线")
+          this.msgError( this.$t('members.memberQuest.menu') )
           return
         }
       }
@@ -229,7 +230,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加【请填写功能名称】";
+      this.title = this.$t('members.memberQuest.afn') ;
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -238,7 +239,7 @@ export default {
       getMemberQuest(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改【请填写功能名称】";
+        this.title = this.$t('members.memberQuest.mfn') ;
       });
     },
     /** 提交按钮 */
@@ -247,13 +248,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateMemberQuest(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess( this.$t('members.memberQuest.ms') );
               this.open = false;
               this.getList();
             });
           } else {
             addMemberQuest(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess( this.$t('members.memberQuest.as') );
               this.open = false;
               this.getList();
             });
@@ -264,29 +265,29 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除【请填写功能名称】编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm( this.$t('members.memberQuest.wcd', {id:ids} ) , this.$t('global.dialogTitle') , {
+        confirmButtonText: this.$t('global.confirmButton') ,
+        cancelButtonText: this.$t('global.cancelButton') ,
         type: "warning"
       }).then(function() {
         return delMemberQuest(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess( this.$t('members.memberQuest.ds') );
       }).catch(() => {
 	  })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
+      this.$confirm( this.$t('members.memberQuest.cpe') , this.$t('global.dialogTitle') , {
+        confirmButtonText: this.$t('global.confirmButton') ,
+        cancelButtonText: this.$t('global.cancelButton') ,
         type: "warning"
       }).then(function() {
         return exportMemberQuest(queryParams);
       }).then(response => {
-        this.downloadExcel(response, '【请填写功能名称】');
+        this.downloadExcel(response, this.$t('members.memberQuest.pffe') );
       }).catch(() => {
       })
     }

@@ -4381,6 +4381,7 @@ export default {
       ice: 'ID cannot be empty',
       bnc: 'Bank name cannot be empty',
 
+    }
   }
 
 }

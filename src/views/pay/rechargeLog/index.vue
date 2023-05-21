@@ -95,7 +95,7 @@ export default {
       queryParams:{
         selectDate: [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())],//回调日期
         pageSize:10,
-        pageNum :0,
+        pageNum :1,
         card:null,
       }
     }

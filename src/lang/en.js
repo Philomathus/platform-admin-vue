@@ -63,6 +63,10 @@ export default {
     exportResponse: 'Activity Information',
     memberId :'Member ID',
     memberIdPlaceholder: 'Please enter Member ID',
+    bankCard :'Bank Card',
+    createTime:'created Time',
+    memberIp :'Member Ip',
+    memberVip :'Member VIP'
   },
 
   navbar: {
@@ -4202,7 +4206,7 @@ export default {
 
   },
 
-  report:{
+  report: {
     agentCount: {
       ds: 'Date Selection',
       cc: 'Channel Code',
@@ -4240,7 +4244,111 @@ export default {
       cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
       ids: 'Integrated Data Statement',
 
+    },
+    plamGamesMonth: {
+      tb: 'Total Bet',
+      tp: 'Total Payout',
+      tpro: 'Total Profit',
+      ms: 'Month Selection',
+      sm: 'Select Month',
+      pn: 'Platform Name',
+      pepn: 'Please enter the platform name',
+      bet: 'Betting',
+      pc: 'Pie Color',
+      pro: 'Profit',
+      stam: 'Statement Month',
+      cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+      gbs: 'Game Betting Statement',
+
+    },
+    rechargeStatistics: {
+      tai: 'Total amount of income',
+      td: 'Total disbursements',
+      ta: 'Total amount',
+      as: 'Anchor salary',
+      ds: 'Date Selection',
+      rt: 'Reporting Time',
+      tne: 'Total number of entrants',
+      tnc: 'Total number of contributors',
+      cda: 'Company Deposit Amount',
+      nod: 'Number of Deposits',
+      oda: 'Online deposit amount',
+      nme: 'Number of manual entries',
+      mda: 'Manual deposit amount',
+      noc: 'Number of Charges',
+      ca: 'Charging amount',
+      noo: 'Number of offers',
+      po: 'Platform Offers',
+      tad: 'Total amount of deposit',
+      tamp: 'Total amount of members payment',
+      aw: 'Anchor Withdrawal',
+      cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+      pfs: 'Platform Funding Statement',
+    },
+    index: {
+      pis: 'Platform Integrated Statistics',
+      gbs: 'Game Betting Statement',
+      ccs: 'Charging comprehensive statistics',
+      prs: 'Platform recharge statement',
+      pps: 'Platform Promotion Statistics',
+      enable: 'Enable',
+      disable: 'Disable',
+      tpg: 'The parameter group cannot be empty',
+      sce: 'Sorting cannot be empty',
+      statce: 'Status 1 enabled 0 disabled cannot be empty',
+      ptap: 'Parameter title and parameter code cannot be empty at the same time',
+      ncf: 'No corresponding function',
+      na: 'Network Anomaly',
+      ms: 'Modified successfully',
+      apf: 'Add [Please fill in the function name]',
+      mpf: 'Modify [Please fill in the function name]',
+      as: 'Add Success',
+      wcd: 'Whether to confirm the deletion of [please fill in the function name] number "{ecode}" the data item?',
+      dyc: 'Do you confirm to export all [Please fill in the function name] data items?',
+      rf: 'Report Form',
+
     }
+  },
+
+  pay: {
+    bankCardAddress: {
+      prov: 'Province',
+      pep: 'Please enter a province',
+      aom: 'Add or modify bank card blacklist attribution',
+      sn: 'System Number',
+      city: 'City',
+      eon: 'Enabled or not',
+      cb: 'Created by',
+      psap: 'Please select a province',
+      psac: 'Please select a city',
+      aoma: 'Add or modify the blacklisted address of the banks hometown',
+      cba: 'Change the blacklisted address of the banks hometown',
+      conf: 'Confirm to "{text}" is it?',
+      succ: 'Success',
+      ms: 'Modified Successfully',
+      dcd: 'Does it confirm the deletion of the number "{ids}" the data item?',
+      ds: 'Deleted Successfully',
+      cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, pelase be patient...',
+      baba: 'Bank Attribution Blacklist Address',
+
+    },
+    bankList: {
+      bn: 'Bank Name',
+      peny: 'Please enter bank name',
+      bc: 'Bank Code',
+      peb: 'Please enter bank code',
+      pk: 'Primary Key',
+      sbof: 'Sorting from smallest to largest',
+      pei: 'Please enter ID',
+      sb: 'Sort by',
+      pes: 'Please enter sort',
+      bowa: 'Bank official website address',
+      pebowa: 'Please enter the banks official website address',
+      sc: 'Start Color',
+      ec: 'End Color',
+      ice: 'ID cannot be empty',
+      bnc: 'Bank name cannot be empty',
+
   }
 
 }

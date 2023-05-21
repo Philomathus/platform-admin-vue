@@ -63,6 +63,10 @@ export default {
     confirmExport: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
     confirmExportTitle: '警告',
     exportResponse: 'Activity Information',
+    bankCard :'银行卡',
+    createTime:'创建日期',
+    memberIp :'会员IP',
+    memberVip :'会员VIP'
   },
 
   navbar: {
@@ -4267,7 +4271,7 @@ export default {
 
   },
 
-  report:{
+  report: {
     agentCount: {
       ds: '日期选择',
       cc: '渠道编码',
@@ -4386,6 +4390,111 @@ export default {
       rev: '审核人',
       rtwa: '审核总提现金额',
       noa: '审核次数',
+
+    },
+    plamGamesMonth: {
+      tb: '总投注:',
+      tp: '总派彩:',
+      tpro: '总盈利:',
+      ms: '月份选择',
+      sm: '选择月',
+      pn: '平台名称',
+      pepn: '请输入平台名称',
+      bet: '投注',
+      pc: '派彩',
+      pro: '盈利',
+      stam: '报表月份',
+      cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+      gbs: '游戏投注报表',
+
+    },
+    rechargeStatistics: {
+      tai: '入款总额:',
+      td: '出款总额:',
+      ta: '金额合计:',
+      as: '主播工资:',
+      ds: '日期选择',
+      rt: '报表时间',
+      tne: '入款总人数',
+      tnc: '出款总人数',
+      cda: '公司入款金额',
+      nod: '线上入款人数',
+      oda: '线上入款金额',
+      nme: '人工入款人数',
+      mda: '人工入款金额',
+      noc: '代充人数',
+      ca: '代充金额',
+      noo: '优惠人数',
+      po: '平台优惠',
+      tad: '入款总金额',
+      tamp: '会员出款总金额',
+      aw: '主播提现',
+      cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+      pfs: '平台资金报表',
+    },
+    index: {
+      pis: '平台综合统计',
+      gbs: '游戏投注报表',
+      ccs: '充值综合统计',
+      prs: '平台充值报表',
+      pps: '平台推广统计',
+      enable: '启用',
+      disable: '禁用',
+      tpg: '参数组不能为空',
+      sce: '排序不能为空',
+      statce: '状态 1启用 0禁用不能为空',
+      ptap: '参数标题和参数编码不能同时为空',
+      ncf: '没有对应的功能',
+      na: '网络异常',
+      ms: '修改成功',
+      apf: '添加【请填写功能名称】',
+      mpf: '修改【请填写功能名称】',
+      as: '新增成功',
+      wcd: '是否确认删除【请填写功能名称】编号为"{ecode}"的数据项?',
+      dyc: '是否确认导出所有【请填写功能名称】数据项?',
+      rf: '报表',
+
+    }
+  },
+
+  pay: {
+    bankCardAddress:{
+      prov: '省份',
+      pep: '请输入省份',
+      aom: '新增或修改银行卡黑名单归属地',
+      sn: '系统编号',
+      city: '城市',
+      eon: '是否启用',
+      cb: '创建人',
+      psap: '请选择省份',
+      psac: '请选择城市',
+      aoma: '添加或修改银行归属地黑名单地址',
+      cba: '修改银行归属地黑名单地址',
+      conf: '确认要 "{text}" 吗?',
+      succ: '成功',
+      ms: '修改成功',
+      dcd: '是否确认删除编号为 "{ids}" 的数据项?',
+      ds: '删除成功',
+      cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+      baba: '银行归属地黑名单地址',
+
+    },
+    bankList: {
+      bn: '银行名称',
+      peny: '请输入银行名称',
+      bc: '银行代码',
+      peb: '请输入银行编码',
+      pk: '主键',
+      sbof: '排序 从小到大顺序',
+      pei: '请输入ID',
+      sb: '排序',
+      pes: '请输入排序',
+      bowa: '银行官网地址',
+      pebowa: '请输入银行官网地址',
+      sc: '开始颜色',
+      ec: '结束颜色',
+      ice: 'ID不能为空',
+      bnc: '银行名称不能为空',
 
     }
   }

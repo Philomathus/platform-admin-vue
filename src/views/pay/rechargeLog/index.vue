@@ -23,7 +23,7 @@
       <el-form-item :label="$t('global.bankCard')" prop="card"  label-width="100px">
         <el-input
           v-model="queryParams.card"
-          placeholder="请输入会员ID"
+          placeholder="请输入银行卡号"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"/>

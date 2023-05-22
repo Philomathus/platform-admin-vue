@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div v-loading="totalLoading">
-    <el-button type="primary" @click="copy1">通道总数 {{ this.total || 0 }}</el-button>
+    <el-button type="primary" @click="copy1">通道总数 {{ this.totalData.totalcount || 0 }}</el-button>
     <el-button type="success" @click="copy2">总成功金额 {{ this.totalData.subMoney || 0 }}</el-button>
     <el-button type="success" @click="copy2">手续费总额 {{ this.totalData.handlingfeeTotal || 0 }}</el-button>
     <el-button type="success" @click="copy2">结算总金额 {{ (this.totalData.subMoney - this.totalData.handlingfeeTotal || 0 ).toFixed(2)}}</el-button>
@@ -176,7 +176,7 @@ export default {
   methods: {
     //复制
     copy1() {
-      this.copyCommand(this.totalData.total)
+      this.copyCommand(this.totalData.totalcount)
     },
     copy2() {
       this.copyCommand(this.totalData.totalMoney)
@@ -227,7 +227,6 @@ export default {
       this.totalsettleTotal = 0
       this.queryParams.pageNum = 1
       this.getList()
-      this.listCounts()
     },
     listCounts() {
       listCounts(this.queryParams).then((res) => {

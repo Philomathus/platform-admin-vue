@@ -378,8 +378,8 @@ export default {
       if (flag == 1) {
         data.status = 1
         this.$confirm(this.$t('liveWeb.family.confirmUpdateFlag1Dialog.message', {name: row.name}), this.$t('liveWeb.family.confirmUpdateFlag1Dialog.title'), {
-          confirmButtonText: this.$t('liveWeb.family.confirmUpdateFlag1Dialog.confirmButton'),
-          cancelButtonText: this.$t('liveWeb.family.confirmUpdateFlag1Dialog.cancelButton'),
+          confirmButtonText: this.$t('global.confirmButton'),
+          cancelButtonText: this.$t('global.cancelButton'),
           type: 'warning'
         }).then(function () {
           return updateLiveFamily(data)
@@ -390,8 +390,8 @@ export default {
       } else if (flag == 0) {
         data.status = 2
         this.$confirm(this.$t('liveWeb.family.confirmUpdateFlag0Dialog.message', {name: row.name}), this.$t('liveWeb.family.confirmUpdateFlag0Dialog.title'), {
-          confirmButtonText: this.$t('liveWeb.family.confirmUpdateFlag0Dialog.confirmButton'),
-          cancelButtonText: this.$t('liveWeb.family.confirmUpdateFlag0Dialog.cancelButton'),
+          confirmButtonText: this.$t('global.confirmButton'),
+          cancelButtonText: this.$t('global.cancelButton'),
           type: 'warning'
         }).then(function () {
           return updateLiveFamily(data)
@@ -402,8 +402,8 @@ export default {
       } else if (flag == 2) {
         data.status = 8
         this.$prompt(this.$t('liveWeb.family.confirmUpdateFlag2Prompt.message'), this.$t('liveWeb.family.confirmUpdateFlag2Prompt.title'), {
-          confirmButtonText: this.$t('liveWeb.family.confirmUpdateFlag2Prompt.confirmButton'),
-          cancelButtonText: this.$t('liveWeb.family.confirmUpdateFlag2Prompt.cancelButton'),
+          confirmButtonText: this.$t('global.confirmButton'),
+          cancelButtonText: this.$t('global.cancelButton'),
           inputPattern: /\S/,
           inputErrorMessage: this.$t('liveWeb.family.confirmUpdateFlag2Prompt.inputErrorMessage'),
           type: 'warning'
@@ -422,8 +422,8 @@ export default {
       } else if (flag == 3) {
         data.status = 9
         this.$prompt(this.$t('liveWeb.family.confirmUpdateFlag3Prompt.message'), this.$t('liveWeb.family.confirmUpdateFlag3Prompt.title'), {
-          confirmButtonText: this.$t('liveWeb.family.confirmUpdateFlag3Prompt.confirmButton'),
-          cancelButtonText: this.$t('liveWeb.family.confirmUpdateFlag3Prompt.cancelButton'),
+          confirmButtonText: this.$t('global.confirmButton'),
+          cancelButtonText: this.$t('global.cancelButton'),
           inputPattern: /\S/,
           inputErrorMessage: this.$t('liveWeb.family.confirmUpdateFlag3Prompt.inputErrorMessage'),
           type: 'warning'

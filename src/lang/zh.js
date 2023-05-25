@@ -1428,6 +1428,7 @@ export default {
         hid: '主播ID',
         nAnc: '主播昵称',
         gType: '守护类型',
+        startTime: '时间开始',
         exTime: '到期时间',
         det: '确 定',
         mVIP: '修改vip等级和昵称',

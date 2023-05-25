@@ -1331,6 +1331,7 @@ export default {
         hid: 'Host ID',
         nAnc: 'Nickname of Anchor',
         gType: 'Guardian Type',
+        startTime: 'Start Time',
         exTime: 'Expiration Time',
         det: 'Determine',
         mVIP: 'Modify VIP Level and Nickname',

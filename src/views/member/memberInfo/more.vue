@@ -356,7 +356,8 @@
           height="460px"
           v-loading="loading">
           <el-table-column :label=" $t('members.memberInfo.more.hid') "  align="center" prop="anchorId"     min-width="120px"/>
-          <el-table-column :label=" $t('members.memberInfo.more.gType') " align="center" prop="type"         min-width="120px"/>
+          <el-table-column :label=" $t('members.memberInfo.more.gType') " align="center" prop="type"  :formatter="guardianTypeFormat"       min-width="120px"/>
+          <el-table-column :label=" $t('members.memberInfo.more.startTime') " align="center" prop="startTime" min-width="120px"/>
           <el-table-column :label=" $t('members.memberInfo.more.exTime') " align="center" prop="guardEndTime" min-width="120px"/>
         </el-table>
       </el-row>
@@ -522,6 +523,7 @@ export default {
       mobileForm: {},
       registerDomain: null,
       LoginDomain: null,
+      guardianType: [],
       //弹出框标题
       title: '加分',
       //页面编码
@@ -643,6 +645,10 @@ export default {
   created() {
     this.getDicts('member_msg').then(response => {
       this.msgList = response.data
+    })
+
+    this.getDicts('guardian_type').then(response => {
+      this.guardianType = response.data
     })
   },
   methods: {
@@ -1162,7 +1168,13 @@ export default {
         this.guard = res.rows;
         this.loading = false;
       })
-    }
+    },
+
+    guardianTypeFormat(row, column) {
+      return this.selectDictLabel(this.guardianType, row.type)
+    },
+    
+
   }
 }
 </script>

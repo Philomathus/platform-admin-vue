@@ -12,7 +12,7 @@
             >
             </el-option>
           </el-select>
-        </el-form-item>asds
+        </el-form-item>
         <el-form-item :label="$t('config.configEnvironment.tableDialog.envCode')" prop="envCode">
           <el-select v-model="titleCode.envCode" @change="changeType" filterable :placeholder="$t('config.configEnvironment.tableDialog.envCodePlaceholder')">
             <el-option

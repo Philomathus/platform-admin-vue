@@ -50,7 +50,7 @@
           <span style="color: #FF5722">{{ row.totalChukuanrenshu}}</span>
         </template>
         </el-table-column>
-        <el-table-column :label=" $t('report.rechargeStatistics.tnc') " min-width="100" align="center" prop="gsRukuanrenshu">
+        <el-table-column :label=" $t('report.rechargeStatistics.tnc') " min-width="120" align="center" prop="gsRukuanrenshu">
         <template v-slot="{row}">
           <span style="color: #5FB878">{{ row.gsRukuanrenshu}}</span>
         </template>

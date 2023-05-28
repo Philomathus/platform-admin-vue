@@ -51,7 +51,7 @@
       <el-table-column :label=" $t('report.gameBetJump.sbn') " align="center" prop="agentchildname"/>
       <el-table-column :label=" $t('report.gameBetJump.nob') " align="center" prop="gamepepole">
         <template v-slot="{row}">
-          <a style="color: #00afff" @click="handleClickBetCount(row.gamepepole)">{{row.gamepepole}}</a>
+          <a style="color: #00afff" @click="handleClickBetCount(row)">{{row.gamepepole}}</a>
         </template>
       </el-table-column>
       <el-table-column :label=" $t('report.gameBetJump.br') " align="center" prop="gametouzhu"/>
@@ -104,7 +104,15 @@ export default {
         agentchildname: null,
         gameplame: null
       },
-      backupDateTimeRange: null
+      backupDateTimeRange: null,
+      params: {
+        begindate: null,
+        endDate: null,
+        gamepepole: null,
+        platformId: null,
+        gameagent: null,
+        agentchild: null
+      }
     }
   },
   created() {
@@ -153,8 +161,14 @@ export default {
       this.pageNum = 1
       this.getList()
     },
-    handleClickBetCount(gamepepole) {
-      this.$refs.tableShow.setParam(gamepepole);
+    handleClickBetCount(row) {
+      this.params.begindate  = this.queryParams.dateRange[0];
+      this.params.endDate    = this.queryParams.dateRange[1];
+      this.params.gamepepole = row.gamepepole;
+      this.params.gameagent  = row.gameagent;
+      this.params.agentchild = row.agentchild
+
+      this.$refs.tableShow.setParam(this.params);
     },
   }
 }

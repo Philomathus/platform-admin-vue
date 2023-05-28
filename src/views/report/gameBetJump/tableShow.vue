@@ -27,17 +27,12 @@ export default {
     return {
       tableData: [],
       open: false,
-      queryParam: {
-        total: 0,
-        pageNum: 1,
-        pageSize: 10,
-        gamepepole: null,
-      }
+      queryParam: {}
     }
   },
   methods: {
-    setParam(gamepepole){
-      this.queryParam.gamepepole = gamepepole;
+    setParam(params){
+      this.queryParam = params;
       this.list()
     },
     list(){

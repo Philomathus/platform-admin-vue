@@ -49,7 +49,11 @@
       <el-table-column :label=" $t('report.gameBetJump.nd') " align="center" prop="gameplame"/>
       <el-table-column :label=" $t('report.gameBetJump.sbnum') " align="center" prop="agentchild"/>
       <el-table-column :label=" $t('report.gameBetJump.sbn') " align="center" prop="agentchildname"/>
-      <el-table-column :label=" $t('report.gameBetJump.nob') " align="center" prop="gamepepole"/>
+      <el-table-column :label=" $t('report.gameBetJump.nob') " align="center" prop="gamepepole">
+        <template v-slot="{row}">
+          <a style="color: #00afff" @click="handleClickBetCount(row.gamepepole)">{{row.gamepepole}}</a>
+        </template>
+      </el-table-column>
       <el-table-column :label=" $t('report.gameBetJump.br') " align="center" prop="gametouzhu"/>
       <el-table-column :label=" $t('report.gameBetJump.tba') " align="center" prop="gamecell"/>
       <el-table-column :label=" $t('report.gameBetJump.eba') " align="center" prop="gamebet"/>
@@ -58,6 +62,7 @@
       <el-table-column :label=" $t('report.gameBetJump.prop') " align="center" prop="bili"/>
       <el-table-column :label=" $t('report.gameBetJump.date')" align="center" prop="begindate"/>
     </el-table>
+    <TableShow ref="tableShow"></TableShow>
     <pagination
       v-show="total>0"
       :total="total"
@@ -71,11 +76,14 @@
 </template>
 
 <script>
-import { list } from '@/api/platform-web/report/gameBetJump'
+import {list} from '@/api/platform-web/report/gameBetJump'
 import { pickerDateShortcuts } from '@/utils/dateUtils'
+import TableShow from '@/views/report/gameBetJump/tableShow.vue';
+
 
 export default {
   name: 'GameBetJump',
+  components: {TableShow},
   data() {
     return {
       // 遮罩层
@@ -144,8 +152,10 @@ export default {
     handleQuery() {
       this.pageNum = 1
       this.getList()
-    }
-
+    },
+    handleClickBetCount(gamepepole) {
+      this.$refs.tableShow.setParam(gamepepole);
+    },
   }
 }
 </script>

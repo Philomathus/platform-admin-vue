@@ -15,7 +15,6 @@
                         :start-placeholder=" $t('global.datePickerStartDatePlaceholder') "
                         :end-placeholder=" $t('global.datePickerEndDatePlaceholder') "
                         :range-separator=" $t('global.selectDateRangeSeparator') "
-                        clearable
                         :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
@@ -93,7 +92,8 @@ import {
   exportReportPlamGames,
   listGameBet,
 } from '@/api/platform-web/report/gameBet'
-import {pickerDateShortcuts} from '@/utils/dateUtils'
+import {getYesterDateEnd, getYesterDateStart, pickerDateShortcuts} from '@/utils/dateUtils'
+
 
 export default {
   name: 'GameBet',
@@ -111,19 +111,20 @@ export default {
       // 显示搜索条件
       showSearch: true,
       isDestroyed: false,
-      countBetMoney: null,
-      countBetPeople: null,
-      memberProfit: null,
       // 表格数据
       list: [],
-      data: {},
+      data: {
+        countBetMoney: null,
+        countBetPeople: null,
+        memberProfit: null,
+      },
       dataList: [],
       // 查询参数
       queryParams: {
         rows: [],
         pageNum: 1,
         pageSize: 20,
-        dateRange: [this.parseTime(new Date(), '{y}-{m}-{d}'), this.parseTime(new Date(), '{y}-{m}-{d}')],
+        dateRange: [getYesterDateStart(), getYesterDateEnd()],
         gameplame: null
       },
       backupDateTimeRange: null
@@ -208,13 +209,16 @@ export default {
     count() {
       this.loading = true
       count(this.queryParams).then(response => {
-        this.data = response.data
+        console.log( response )
+        if( response.data ) {
+          this.data = response.data
+        }
         this.loading = false
       })
     },
     /** 搜索按钮操作 */
     handleQuery() {
-
+      console.log( this.data )
       this.queryParams.pageNum = 1
       this.getList()
       //this.count();
@@ -223,7 +227,7 @@ export default {
     /** 重置按钮操作 */
     resetQuery() {
       this.resetForm('queryForm')
-      this.queryParams.dateRange = [this.parseTime(this.getTodayStartTime()), this.parseTime(this.getTodayEndTime())];
+      this.queryParams.dateRange = [getYesterDateStart(), getYesterDateEnd()];
       this.handleQuery()
     },
     /** 导出按钮操作 */
@@ -239,7 +243,7 @@ export default {
         this.downloadExcel(response, this.$t('report.gameBet.gbs') )
       }).catch(() => {
       })
-    }
+    },
   }
 }
 </script>

@@ -10,3 +10,11 @@ export function list(query) {
   })
 }
 
+export function listByGamePepole(query) {
+  return request({
+    url: url.platformWeb + '/admin/reportPlamGameschilds/listData',
+    method: 'get',
+    params: query
+  })
+}
+

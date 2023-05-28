@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :visible.sync="open" title="DETAILS" append-to-body>
+  <el-dialog :visible.sync="open" title="投注详情" append-to-body>
     <el-table :data="tableData" style="width: 100%">
       <el-table-column property="gameplamid" label="有效下注" header-align="center" align="center"/>
       <el-table-column property="gameagent" label="盈利" header-align="center" align="center"/>

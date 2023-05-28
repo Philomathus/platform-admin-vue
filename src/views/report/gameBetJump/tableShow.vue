@@ -1,14 +1,14 @@
 <template>
   <el-dialog :visible.sync="open" title="DETAILS" append-to-body>
     <el-table :data="tableData" style="width: 100%">
-      <el-table-column property="gameplamid" label="gameplamid" header-align="center" align="center"/>
-      <el-table-column property="gameagent" label="gameagent" header-align="center" align="center"/>
-      <el-table-column property="agentchild" label="agentchild" header-align="center" align="center"/>
+      <el-table-column property="gameplamid" label="游戏编号id" header-align="center" align="center"/>
+      <el-table-column property="gameagent" label="平台编号" header-align="center" align="center"/>
+      <el-table-column property="agentchild" label="子平台编号" header-align="center" align="center"/>
     </el-table>
     <pagination
       v-show="queryParam.total > 0"
       :total="queryParam.total"
-      :page-sizes="[20,50,100,200]"
+      :page-sizes="[10,20,50,100]"
       :page.sync="queryParam.pageNum"
       :limit.sync="queryParam.pageSize"
       layout="prev, pager, next"

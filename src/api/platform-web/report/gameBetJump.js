@@ -12,7 +12,7 @@ export function list(query) {
 
 export function listByGamePepole(query) {
   return request({
-    url: url.platformWeb + '/admin/reportPlamGameschilds/listData',
+    url: url.platformWeb + '/admin/reportPlamGameschilds/plamGameListData',
     method: 'get',
     params: query
   })

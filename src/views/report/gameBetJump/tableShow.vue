@@ -17,9 +17,9 @@
       </el-row>
 
       <el-table :data="tableData" style="width: 100%;">
-        <el-table-column property="gameplamid" label="有效下注" header-align="center" align="center"/>
-        <el-table-column property="gameagent" label="盈利" header-align="center" align="center"/>
-        <el-table-column property="agentchild" label="会员ID" header-align="center" align="center"/>
+        <el-table-column property="agentchild" label="会员ID"   header-align="center" align="center"/>
+        <el-table-column property="gamecell"   label="有效下注"  header-align="center" align="center"/>
+        <el-table-column property="gameprofit" label="盈利"     header-align="center" align="center"/>
       </el-table>
       <pagination
         v-show="total>0"
@@ -38,6 +38,7 @@
 
 <script>
 import {exportReportChildPlamGames, listByGamePepole} from "@/api/platform-web/report/gameBetJump";
+import ExcelPrompt from '@/layout/components/prompt/excelPrompt.vue';
 
 export default {
   name: "TableShow",
@@ -69,14 +70,15 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      const queryParams = this.queryParams
+      const queryParams = this.queryParams;
       this.$confirm( '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告" , {
         confirmButtonText: this.$t('global.confirmButton') ,
         cancelButtonText: this.$t('global.cancelButton') ,
         type: 'warning'
       }).then(function () {
-        return exportReportChildPlamGames(this.queryParams)
+        return exportReportChildPlamGames(queryParams)
       }).then(response => {
+        console.log(response)
         this.downloadExcel(response,'出款银行列表')
       }).catch(() => {
       })

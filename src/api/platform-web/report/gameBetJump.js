@@ -18,3 +18,13 @@ export function listByGamePepole(query) {
   })
 }
 
+export function exportReportChildPlamGames(query) {
+  return request({
+    url: url.platformWeb + '/admin/reportPlamGameschilds/export',
+    method: 'get',
+    params: query,
+    responseType: 'arraybuffer',
+    timeout: 60000
+  })
+}
+

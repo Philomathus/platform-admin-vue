@@ -38,7 +38,6 @@
 
 <script>
 import {exportReportChildPlamGames, listByGamePepole} from "@/api/platform-web/report/gameBetJump";
-import ExcelPrompt from '@/layout/components/prompt/excelPrompt.vue';
 
 export default {
   name: "TableShow",
@@ -78,7 +77,6 @@ export default {
       }).then(function () {
         return exportReportChildPlamGames(queryParams)
       }).then(response => {
-        console.log(response)
         this.downloadExcel(response,'出款银行列表')
       }).catch(() => {
       })

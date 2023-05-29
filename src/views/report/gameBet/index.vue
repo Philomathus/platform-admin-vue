@@ -209,7 +209,6 @@ export default {
     count() {
       this.loading = true
       count(this.queryParams).then(response => {
-        console.log( response )
         if( response.data ) {
           this.data = response.data
         }
@@ -218,7 +217,6 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      console.log( this.data )
       this.queryParams.pageNum = 1
       this.getList()
       //this.count();

@@ -98,20 +98,23 @@ export default {
       pickerOptions: { shortcuts: pickerDateShortcuts },
       // 查询参数
       queryParams: {
-        dateRange: [],
-        pageNum: 1,
-        pageSize: 10,
         agentchildname: null,
-        gameplame: null
+        gameplame: null,
+        dateRange: [],
+        pageSize: 10,
+        pageNum: 1
       },
       backupDateTimeRange: null,
       params: {
-        begindate: null,
-        endDate: null,
         gamepepole: null,
         platformId: null,
+        agentchild: null,
+        begindate: null,
         gameagent: null,
-        agentchild: null
+        gameUuid: null,
+        endDate: null,
+        pageSize: 10,
+        pageNum: 1
       }
     }
   },
@@ -164,9 +167,10 @@ export default {
     handleClickBetCount(row) {
       this.params.begindate  = this.queryParams.dateRange[0];
       this.params.endDate    = this.queryParams.dateRange[1];
+      this.params.agentchild = row.agentchild
       this.params.gamepepole = row.gamepepole;
       this.params.gameagent  = row.gameagent;
-      this.params.agentchild = row.agentchild
+      this.params.gameUuid   = row.gameUuid;
 
       this.$refs.tableShow.setParam(this.params);
     },

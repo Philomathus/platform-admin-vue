@@ -43,27 +43,26 @@ export default {
   name: "TableShow",
   data(){
     return {
+      showPages: false,
+      showSearch: true,
+      queryParams: {},
       tableData: [],
       open: false,
       total:0,
-      showSearch: true,
-      queryParams: {
-        pageNum:1,
-        pageSize:10,
-      }
     }
   },
   methods: {
     setParam(params){
-      this.queryParam = params;
+      this.queryParams = params;
       this.list()
     },
+
     list(){
-      listByGamePepole(this.queryParam).then((res) =>{
-        this.total = res.total
+      listByGamePepole(this.queryParams).then((res) =>{
         this.tableData = res.rows;
+        this.total = res.total
+        this.open = true;
       })
-      this.open = true;
     },
     close(){
       this.open = false;

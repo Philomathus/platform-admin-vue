@@ -621,7 +621,6 @@ import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
 import {getConfigEnvironment} from "@/api/platform-web/config/configEnvironment";
 import ExcelPrompt from '@/layout/components/prompt/excelPrompt.vue';
 import PersonalRecordTable from "@/views/member/memberInfo/personalRecordTable";
-import {changeActivityInfoStatus} from "@/api/activity/activityInfo";
 
 
 export default {

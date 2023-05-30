@@ -12,27 +12,36 @@
     >
       <!--顶部按钮-->
       <div class="page-tab" style="margin-bottom: 20px">
-        <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(3, $t('members.memberInfo.more.exCred') )">
-          <span>{{ $t('members.memberInfo.more.exCred') }}</span></button>
+        <button type="button" class="el-button el-button--primary el-button--mini is-plain"
+                @click="change(3, $t('members.memberInfo.more.exCred') )">
+          <span>{{ $t('members.memberInfo.more.exCred') }}</span>
+        </button>
         <button type="button" class="el-button el-button--primary el-button--mini is-plain"
                 @click="change(1, $t('members.memberInfo.more.threeWay') )">
-          <span>{{ $t('members.memberInfo.more.threeWay') }}</span></button>
-        <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(5, $t('members.memberInfo.more.bCard') )">
-          <span>{{ $t('members.memberInfo.more.bCard') }}</span></button>
+          <span>{{ $t('members.memberInfo.more.threeWay') }}</span>
+        </button>
+        <button type="button" class="el-button el-button--primary el-button--mini is-plain"
+                @click="change(5, $t('members.memberInfo.more.bCard') )">
+          <span>{{ $t('members.memberInfo.more.bCard') }}</span>
+        </button>
         <button type="button" class="el-button el-button--primary el-button--mini is-plain"
                 @click="change(10, $t('members.memberInfo.more.sms') )">
-          <span>{{ $t('members.memberInfo.more.sms') }}</span></button>
+          <span>{{ $t('members.memberInfo.more.sms') }}</span>
+        </button>
         <button type="button" class="el-button el-button--primary el-button--mini is-plain"
                 @click="change(11, $t('members.memberInfo.more.rCp') )">
-          <span>{{ $t('members.memberInfo.more.rCp') }}</span></button>
+          <span>{{ $t('members.memberInfo.more.rCp') }}</span>
+        </button>
         <button type="button" class="el-button el-button--primary el-button--mini is-plain"
                 @click="change(13, $t('members.memberInfo.more.rIc') )">
-          <span>{{ $t('members.memberInfo.more.rIc') }}</span></button>
+          <span>{{ $t('members.memberInfo.more.rIc') }}</span>
+        </button>
 
         <!--Follow Members tab added by rajesh index:16 represent follow members-->
         <button type="button" class="el-button el-button--primary el-button--mini is-plain"
                 @click="change(16, $t('members.memberInfo.more.fAnc') )">
-          <span>{{ $t('members.memberInfo.more.fAnc') }}</span></button>
+          <span>{{ $t('members.memberInfo.more.fAnc') }}</span>
+        </button>
         <!--End follow members tab here  -->
 
         <button type="button" class="el-button el-button--primary el-button--mini is-plain"
@@ -347,7 +356,8 @@
           height="460px"
           v-loading="loading">
           <el-table-column :label=" $t('members.memberInfo.more.hid') "  align="center" prop="anchorId"     min-width="120px"/>
-          <el-table-column :label=" $t('members.memberInfo.more.gType') " align="center" prop="type"         min-width="120px"/>
+          <el-table-column :label=" $t('members.memberInfo.more.gType') " align="center" prop="type"  :formatter="guardianTypeFormat"       min-width="120px"/>
+          <el-table-column :label=" $t('members.memberInfo.more.startTime') " align="center" prop="startTime" min-width="120px"/>
           <el-table-column :label=" $t('members.memberInfo.more.exTime') " align="center" prop="guardEndTime" min-width="120px"/>
         </el-table>
       </el-row>
@@ -513,6 +523,7 @@ export default {
       mobileForm: {},
       registerDomain: null,
       LoginDomain: null,
+      guardianType: [],
       //弹出框标题
       title: '加分',
       //页面编码
@@ -634,6 +645,10 @@ export default {
   created() {
     this.getDicts('member_msg').then(response => {
       this.msgList = response.data
+    })
+
+    this.getDicts('guardian_type').then(response => {
+      this.guardianType = response.data
     })
   },
   methods: {
@@ -1153,7 +1168,13 @@ export default {
         this.guard = res.rows;
         this.loading = false;
       })
-    }
+    },
+
+    guardianTypeFormat(row, column) {
+      return this.selectDictLabel(this.guardianType, row.type)
+    },
+    
+
   }
 }
 </script>

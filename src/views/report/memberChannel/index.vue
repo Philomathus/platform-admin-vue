@@ -2,10 +2,14 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 10px" v-show="showSearch" label-width="70px">
       <el-form-item :label=" $t('global.selectDatePlaceholder') " prop="regTime">
-        <el-date-picker :type=" $t('global.selectDatePlaceholder') " v-model="dateRange" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}" :start-placeholder=" $t('global.dateTimePickerStartTimePlaceholder') "
+        <el-date-picker type="datetimerange"
+                        v-model="dateRange" format="yyyy-MM-dd HH:mm:ss"
+                        value-format="yyyy-MM-dd HH:mm:ss"
+                        :style="{width: '90%'}"
+                        :start-placeholder=" $t('global.dateTimePickerStartTimePlaceholder') "
                         :end-placeholder=" $t('global.dateTimePickerEndTimePlaceholder') "
-                        :range-separator=" $t('global.selectDateRangeSeparator') " clearable :default-time="['00:00:00', '23:59:59']" :picker-options="pickerOptions"
+                        :range-separator=" $t('global.selectDateRangeSeparator') "
+                        clearable :default-time="['00:00:00', '23:59:59']" :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="inviterCode" style="width: 110px;">

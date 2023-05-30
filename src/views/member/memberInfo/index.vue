@@ -122,6 +122,13 @@
           <el-option value="2" label="android"></el-option>
         </el-select>
       </el-form-item>
+      <el-form-item prop="levelIntegral" style="width: 110px;" id="channelCode">
+        <el-select v-model="queryParams.levelIntegral" :placeholder=" $t('members.memberInfo.index.levelIntegral') " clearable
+                   style="width: 110px">
+          <el-option value="1" :label=" $t('global.yes') "></el-option>
+          <el-option value="0" :label="$t('global.no')"></el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item prop="vipMin" style="width: 110px;" class="vipMin"><!--JAKEEE-->
         <el-input
           v-model="queryParams.vipMin"
@@ -726,6 +733,7 @@ export default {
         vipMax: '',
         downLoadDate: [],
         loginDev: null,
+        levelIntegral: null
         // orderByColumn: 'reg_time',
         // isAsc: 'desc'
       },

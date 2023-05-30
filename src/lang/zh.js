@@ -66,7 +66,9 @@ export default {
     bankCard :'银行卡',
     createTime:'创建日期',
     memberIp :'会员IP',
-    memberVip :'会员VIP'
+    memberVip :'会员VIP',
+    yes: '是',
+    no: '否'
   },
 
   navbar: {
@@ -1384,6 +1386,7 @@ export default {
         sDepo: '保险箱余额提出成功',
         fDepo: '保险箱余额提出失败',
         cInp: '取消输入',
+        levelIntegral: '是否充值'
       },
       more: {
         exCred: '加分',

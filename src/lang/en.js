@@ -66,7 +66,9 @@ export default {
     bankCard :'Bank Card',
     createTime:'created Time',
     memberIp :'Member Ip',
-    memberVip :'Member VIP'
+    memberVip :'Member VIP',
+    yes: 'Yes',
+    no: 'No'
   },
 
   navbar: {
@@ -1321,6 +1323,7 @@ export default {
         sDepo: 'Safe deposit box balance raised successfully',
         fDepo: 'Failed to raise the balance of the safe deposit box',
         cInp: 'Cancel Input',
+        levelIntegral: 'Recharge'
       },
       more: {
         rdSucc: 'data is restored successfully。',

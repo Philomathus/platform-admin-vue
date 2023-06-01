@@ -291,25 +291,25 @@ export default {
           {required: true, message: this.$t('pay.bankList.ice'), trigger: "blur"}
         ],
         bankName: [
-          {required: true, message: "银行名称不能为空", trigger: "blur"}
+          {required: true, message: this.$t('pay.bankList.bnc'), trigger: "blur"}
         ],
         bankCode: [
-          {required: true, message: "银行英文编码不能为空", trigger: "blur"}
+          {required: true, message: this.$t('pay.bankList.becc'), trigger: "blur"}
         ],
         bankIcon: [
-          {required: true, message: "银行图标不能为空", trigger: "blur"}
+          {required: true, message: this.$t('pay.bankList.bice'), trigger: "blur"}
         ],
         sort: [
-          {required: true, message: "排序不能为空", trigger: "blur"}
+          {required: true, message: this.$t('pay.bankList.sice'), trigger: "blur"}
         ],
         url: [
-          {required: true, message: "银行官网地址不能为空", trigger: "blur"}
+          {required: true, message: this.$t('pay.bankList.beac'), trigger: "blur"}
         ],
         colorStart: [
-          {required: true, message: "开始颜色不能为空", trigger: "blur"}
+          {required: true, message: this.$t('pay.bankList.scce'), trigger: "blur"}
         ],
         colorEnd: [
-          {required: true, message: "结束颜色不能为空", trigger: "blur"}
+          {required: true, message: this.$t('pay.bankList.ecce'), trigger: "blur"}
         ]
       }
     };
@@ -348,15 +348,15 @@ export default {
       this.resetForm("form");
     },
     handleStatusChange(row) {
-      let text = row.status === '1' ? '启用' : '停用'
-      this.$confirm('确认要"' + text + '""' + row.bankName + '"吗?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      let text = row.status === '1' ? this.$t( 'global.statusEnable' ) : this.$t( 'global.statusDisable' )
+      this.$confirm( this.$t( 'pay.bankList.confirm', { text:text, bankName:row.bankName} ), this.$t( 'global.dialogTitle' ) , {
+        confirmButtonText: this.$t( 'global.confirmButton' ) ,
+        cancelButtonText: this.$t( 'global.cancelButton' ) ,
         type: 'warning'
       }).then(function () {
         return changeConfigBankStatus(row.id, row.status)
       }).then(() => {
-        this.msgSuccess(text + '成功')
+        this.msgSuccess(text + this.$t( 'global.successPrompt' ) )
       }).catch(function () {
         row.status = row.status === '0' ? '1' : '0'
       })
@@ -381,7 +381,7 @@ export default {
     handleAdd() {
       this.reset();
       this.opene = true;
-      this.title = "添加出款银行列表";
+      this.title = this.$t('pay.bankList.alob');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -390,7 +390,7 @@ export default {
       getBankList(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改银行列表";
+        this.title = this.$t('pay.bankList.mbl');
       });
     },
     /** 新增提交按钮 */

@@ -31,6 +31,7 @@ export default {
     exportMessage: '返现结果导出',
     dialogTitle: '警告',
     promptTitle: '提示',
+    successPrompt: '成功',
     name: '名称',
     nickname: '昵称',
     status: '状态',
@@ -4499,6 +4500,15 @@ export default {
       ec: '结束颜色',
       ice: 'ID不能为空',
       bnc: '银行名称不能为空',
+      becc: '银行英文编码不能为空',
+      bice: '银行图标不能为空',
+      sice: '排序不能为空',
+      beac: '银行官网地址不能为空',
+      scce: '开始颜色不能为空',
+      ecce: '结束颜色不能为空',
+      confirm: '确认要"{text}""{bankName}"吗?',
+      alob: '添加出款银行列表',
+      mbl: '修改银行列表',
 
     }
   }

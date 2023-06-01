@@ -29,6 +29,7 @@ export default {
     exportMessage: 'Cashback Results Export',
     dialogTitle: 'Warning',
     promptTitle: 'Tips',
+    successPrompt: 'Success',
     name: 'Name',
     nickname: 'Nickname',
     status: 'Status',
@@ -4352,6 +4353,15 @@ export default {
       ec: 'End Color',
       ice: 'ID cannot be empty',
       bnc: 'Bank name cannot be empty',
+      becc: 'Bank English code cannot be empty',
+      bice: 'Bank icon cannot be empty',
+      sice: 'Sorting cannot be empty',
+      bwac: 'Bank website cannot be empty',
+      scce: 'Sorting color cannot be empty',
+      ecce: 'End color cannot be empty',
+      confirm: 'Confirm to "{text}""{bankName}" is it?',
+      alob: 'Add a list of outgoing banks',
+      mbl: 'Modify bank list',
 
     }
   }

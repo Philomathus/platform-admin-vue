@@ -4509,6 +4509,10 @@ export default {
       confirm: '确认要"{text}""{bankName}"吗?',
       alob: '添加出款银行列表',
       mbl: '修改银行列表',
+      ms: '修改成功',
+      wcd: '是否确认删除 {bankName}?',
+      cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+      obl: '出款银行列表',
 
     }
   }

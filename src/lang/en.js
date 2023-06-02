@@ -4362,6 +4362,10 @@ export default {
       confirm: 'Confirm to "{text}""{bankName}" is it?',
       alob: 'Add a list of outgoing banks',
       mbl: 'Modify bank list',
+      ms: 'Modified Successfully',
+      wcd: 'Whether to confirm the deletion {bankName}?',
+      cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+      obl: 'Outgoing Bank list',
 
     }
   }

@@ -398,7 +398,7 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           addBankList(this.form).then(response => {
-            this.msgSuccess("新增成功");
+            this.msgSuccess( this.$t('global.addSuccessMsg') );
             this.opene = false;
             this.getList();
           });
@@ -410,7 +410,7 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           updateBankList(this.form).then(response => {
-            this.msgSuccess("修改成功");
+            this.msgSuccess( this.$t('pay.bankList.mos') );
             this.open = false;
             this.getList();
           });
@@ -420,29 +420,29 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除' + row.bankName  + '?', '警告', {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm( this.$t('pay.bankList.wcd', {bankName: row.bankName} ) , this.$t('global.dialogTitle') , {
+        confirmButtonText: this.$t('global.confirmButton') ,
+        cancelButtonText: this.$t('global.cancelButton') ,
         type: "warning"
       }).then(function () {
         return delBankList(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess( this.$t('global.deleteSuccessMsg') );
       }).catch(() => {
       })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
+      this.$confirm( this.$t('pay.bankList.cpe') , this.$t('global.dialogTitle') , {
+        confirmButtonText: this.$t('global.confirmButton') ,
+        cancelButtonText: this.$t('global.cancelButton') ,
         type: "warning"
       }).then(function () {
         return exportBankList(queryParams);
       }).then(response => {
-        this.downloadExcel(response, '出款银行列表');
+        this.downloadExcel(response, this.$t('pay.bankList.obl') );
       }).catch(() => {
       })
     }

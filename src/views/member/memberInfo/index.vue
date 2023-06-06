@@ -236,7 +236,6 @@
           <el-select v-model="row.status" :placeholder=" $t('global.status') " size="small"
                      @change="changeType(row)"
           >
-            <!--<el-option v-for="(item,index) in typeList" :key="index" :label="item.label" :value="item.value"/>-->
             <el-option
               v-for="(dict,i) in typeList"
               :key="'B'+ i"

@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="copy1">{{ $t('report.gameBet.tba') }} {{ this.data.countBetMoney || 0 }}</el-button>
-    <el-button type="success" @click="copy2">{{ $t('report.gameBet.tnb') }} {{ this.data.countBetPeople || 0 }}</el-button>
-    <el-button type="success">{{ $t('report.gameBet.mp') }} {{ this.data.memberProfit || 0 }}</el-button>
+    <el-button type="primary" @click="copy1">{{ $t('report.gameBet.tba') }}: {{ this.data.countBetMoney || 0 }}</el-button>
+    <el-button type="success" @click="copy2">{{ $t('report.gameBet.tnb') }}: {{ this.data.countBetPeople || 0 }}</el-button>
+    <el-button type="success">{{ $t('report.gameBet.mp') }}: {{ this.data.memberProfit || 0 }}</el-button>
     <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" label-width="68px"
              v-show="showSearch"
     >

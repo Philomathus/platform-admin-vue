@@ -4251,6 +4251,24 @@ export default {
       ids: 'Integrated Data Statement',
 
     },
+    gameBet: {
+      tba: 'Total bet amount',
+      tnb: 'Total number of bets',
+      mp: 'Membership profit',
+      pn: 'Platform name',
+      pepn: 'Please enter the platform name',
+      pnum: 'Platform number',
+      nd: 'Name - details',
+      nob: 'Number of bets',
+      br: 'Betting ratio',
+      eba: 'Effective bet amount',
+      prop: 'Proportion',
+      date: 'Date',
+      tdr: 'The date is required',
+      trb: 'Error: The report is being generated, please wait...',
+      gbs: 'Game betting statement',
+
+    },
     plamGamesMonth: {
       tb: 'Total Bet',
       tp: 'Total Payout',

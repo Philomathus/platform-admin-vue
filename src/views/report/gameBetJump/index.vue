@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" label-width="68px" v-show="showSearch">
-      <el-form-item :label=" $t('report.gameBetJump.gbs') " prop="begindate">
+      <el-form-item :label=" $t('report.gameBetJump.gbs') " prop="begindate" label-width="100">
         <el-date-picker type="daterange"
                         v-model="queryParams.dateRange"
                         format="yyyy-MM-dd"
@@ -14,7 +14,7 @@
                         :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item :label=" $t('report.gameBetJump.sbn') " prop="agentchildname">
+      <el-form-item :label=" $t('report.gameBetJump.sbn') " prop="agentchildname" label-width="100">
         <el-input
           v-model="queryParams.agentchildname"
           :placeholder=" $t('report.gameBetJump.pensp') "
@@ -23,7 +23,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item :label=" $t('report.gameBetJump.pn') " prop="gameplame">
+      <el-form-item :label=" $t('report.gameBetJump.pn') " prop="gameplame" label-width="100">
         <el-input
           v-model="queryParams.gameplame"
           :placeholder=" $t('report.gameBetJump.pepn') "

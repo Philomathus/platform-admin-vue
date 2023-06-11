@@ -4269,6 +4269,26 @@ export default {
       gbs: 'Game betting statement',
 
     },
+    gameBetJump: {
+      gbs: 'Select date',
+      sbn: 'Sub-platform name',
+      pensp: 'Please enter the name of the sub-platform',
+      pn: 'Platform name',
+      pepn: 'Please enter the platform name',
+      pnum: 'Platform number',
+      nd: 'Name - details',
+      sbnum: 'Sub-platform number',
+      nob: 'Number of bets',
+      br: 'Betting ratio',
+      tba: 'Total Bet Amount',
+      eba: 'Bet Amount',
+      pp: 'Platform pumping',
+      mp: 'Membership profit',
+      prop: 'Proportion',
+      date: 'Date',
+      tdir: 'The date is required',
+
+    },
     plamGamesMonth: {
       tb: 'Total Bet',
       tp: 'Total Payout',

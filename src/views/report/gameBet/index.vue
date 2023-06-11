@@ -6,7 +6,7 @@
     <el-form :model="queryParams" ref="queryForm" style="margin-top: 10px" :inline="true" label-width="68px"
              v-show="showSearch"
     >
-      <el-form-item :label=" $t('global.selectDate') " prop="selectDate">
+      <el-form-item :label=" $t('global.selectDate') " prop="selectDate" label-width="100">
         <el-date-picker type="daterange"
                         v-model="queryParams.dateRange"
                         format="yyyy-MM-dd"
@@ -18,7 +18,7 @@
                         :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item :label=" $t('report.gameBet.pn') " prop="gameplame">
+      <el-form-item :label=" $t('report.gameBet.pn') " prop="gameplame" label-width="100">
         <el-input
           v-model="queryParams.gameplame"
           :placeholder=" $t('report.gameBet.pepn') "

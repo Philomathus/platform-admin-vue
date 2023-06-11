@@ -4261,7 +4261,7 @@ export default {
       nd: 'Name - details',
       nob: 'Number of bets',
       br: 'Betting ratio',
-      eba: 'Effective bet amount',
+      eba: 'Bet amount',
       prop: 'Proportion',
       date: 'Date',
       tdr: 'The date is required',

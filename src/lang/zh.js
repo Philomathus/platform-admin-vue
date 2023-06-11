@@ -1115,7 +1115,7 @@ export default {
           exp: '导出',
 
         },
-        // pName: '平台名称',
+        pName: '平台名称',
         sel: '全选/全不选',
         date: {
           datRange: '日期范围',
@@ -1135,6 +1135,7 @@ export default {
         tBets: '总下注',
         profit: '盈利',
         setTime: '结算时间',
+        startTime: '开始时间',
         gLog: '游戏对局日志',
         nData: '注单数据详情',
         proName: '项目名称',

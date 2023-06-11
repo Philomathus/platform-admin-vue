@@ -96,6 +96,7 @@
       <el-table-column :label=" $t('members.memberGameData.index.vBets') " align="center" prop="cell_score" width="120"/>
       <el-table-column :label=" $t('members.memberGameData.index.tBets') " align="center" prop="all_bet" width="120"/>
       <el-table-column :label=" $t('members.memberGameData.index.profit') " align="center" prop="profit"/>
+      <el-table-column :label=" $t('members.memberGameData.index.startTime') " align="center" width="160px" prop="game_start_time"/>
       <el-table-column :label=" $t('members.memberGameData.index.setTime') " align="center" width="160px" prop="game_end_time"/>
     </el-table>
 

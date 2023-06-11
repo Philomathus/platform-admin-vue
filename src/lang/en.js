@@ -1072,6 +1072,7 @@ export default {
         tBets: 'Total Bets',
         profit: 'Profit',
         setTime: 'Settlement Time',
+        startTime: 'Start Time',
         gLog: 'Game Match Log',
         nData: 'Note Data Details',
         proName: 'Project Name',

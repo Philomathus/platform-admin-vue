@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog :visible.sync="open" title="投注详情" style="margin-bottom: 150px" append-to-body>
+    <el-dialog :visible.sync="open" :title=" $t('report.gameBetJump.tableShow.bd') " style="margin-bottom: 150px" append-to-body>
 
       <el-row :gutter="10" class="mb8">
         <el-col :span="1.5">
@@ -17,9 +17,9 @@
       </el-row>
 
       <el-table :data="tableData" style="width: 100%;">
-        <el-table-column property="agentchild" label="会员ID"   header-align="center" align="center"/>
-        <el-table-column property="gamecell"   label="有效下注"  header-align="center" align="center"/>
-        <el-table-column property="gameprofit" label="盈利"     header-align="center" align="center"/>
+        <el-table-column property="agentchild" :label=" $t('report.gameBetJump.tableShow.mi') "   header-align="center" align="center"/>
+        <el-table-column property="gamecell"   :label=" $t('report.gameBetJump.tableShow.vb') "  header-align="center" align="center"/>
+        <el-table-column property="gameprofit" :label=" $t('report.gameBetJump.tableShow.prof') "     header-align="center" align="center"/>
       </el-table>
       <pagination
         v-show="total>0"
@@ -29,7 +29,7 @@
         @pagination="list"
       />
       <div slot="footer" class="dialog-footer">
-        <el-button @click="close">取 消</el-button>
+        <el-button @click="close">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -70,7 +70,7 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm( '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告" , {
+      this.$confirm( this.$t('global.confirmExport'), this.$t('global.dialogTitle') , {
         confirmButtonText: this.$t('global.confirmButton') ,
         cancelButtonText: this.$t('global.cancelButton') ,
         type: 'warning'

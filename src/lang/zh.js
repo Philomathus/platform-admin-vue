@@ -4332,6 +4332,7 @@ export default {
       tdr: '日期是必需的',
       trb: 'Error: 报表正在生成，请稍后...',
       gbs: '游戏投注报表',
+      cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
 
     },
     gameBetJump: {
@@ -4352,6 +4353,12 @@ export default {
       prop: '比例',
       date: '日期',
       tdir: '日期是必需的',
+      tableShow: {
+        bd: '投注详情',
+        mi: '会员ID',
+        vb: '有效下注',
+        prof: '盈利',
+      }
 
     },
     incomeDay: {

@@ -4267,6 +4267,7 @@ export default {
       tdr: 'The date is required',
       trb: 'Error: The report is being generated, please wait...',
       gbs: 'Game betting statement',
+      cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
 
     },
     gameBetJump: {
@@ -4287,6 +4288,12 @@ export default {
       prop: 'Proportion',
       date: 'Date',
       tdir: 'The date is required',
+      tableShow: {
+          bd: 'Betting details',
+          mi: 'Member ID',
+          vb: 'Valid bets',
+          prof: 'Profit',
+      }
 
     },
     plamGamesMonth: {

@@ -548,7 +548,7 @@ export default {
         cancelButtonText: this.$t('liveWeb.liveVideo.confirmSetSortPrompt.cancelButton'),
         inputType: 'number',
         inputPlaceholder: this.$t('liveWeb.liveVideo.confirmSetSortPrompt.inputPlaceholder'),
-        inputPattern: /^[1-9][0-9]?$/,
+        inputPattern: /^\+?[1-9]{1}[0-9]{0,2}\d{0,0}$/,
         inputErrorMessage: this.$t('liveWeb.liveVideo.confirmSetSortPrompt.inputErrorMessage')
       }).then(({value}) => {
         updateVideoSort({

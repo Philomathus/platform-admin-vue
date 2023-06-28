@@ -129,25 +129,25 @@
           <el-option value="0" :label="$t('global.no')"></el-option>
         </el-select>
       </el-form-item>
-<!--      <el-form-item prop="vipMin" style="width: 110px;" class="vipMin">&lt;!&ndash;JAKEEE&ndash;&gt;-->
-<!--        <el-input-->
-<!--          v-model="queryParams.vipMin"-->
-<!--          placeholder="min-vip"-->
-<!--          clearable-->
-<!--          size="small"-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
-<!--      <el-form-item>-</el-form-item>-->
-<!--      <el-form-item prop="vipMax" style="width: 110px;" class="vipMax">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.vipMax"-->
-<!--          placeholder="max-vip"-->
-<!--          clearable-->
-<!--          size="small"-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
+      <el-form-item prop="vipMin" style="width: 110px;" class="vipMin"><!--JAKEEE-->
+        <el-input
+          v-model="queryParams.vipMin"
+          placeholder="min-vip"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item>-</el-form-item>
+      <el-form-item prop="vipMax" style="width: 110px;" class="vipMax">
+        <el-input
+          v-model="queryParams.vipMax"
+          placeholder="max-vip"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item prop="integral" style="width: 110px;" class="integral">
         <el-input
           v-model="queryParams.integral"

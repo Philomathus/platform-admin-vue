@@ -1388,7 +1388,8 @@ export default {
         sDepo: '保险箱余额提出成功',
         fDepo: '保险箱余额提出失败',
         cInp: '取消输入',
-        levelIntegral: '是否充值'
+        levelIntegral: '是否充值',
+        integral: '打码/充值比'
       },
       more: {
         exCred: '加分',
@@ -4521,6 +4522,31 @@ export default {
       wcd: '是否确认删除 {bankName}?',
       cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
       obl: '出款银行列表',
+
+    },
+    chatWelcomeConfig: {
+      can: '代充人账号-昵称',
+      psc: '请选择代充人账号-昵称',
+      ca: '代充人账号',
+      noc: '代充人昵称',
+      content: '内容',
+      cb: '创建人',
+      ct: '创建时间',
+      opt: '操作人',
+      ot: '操作时间',
+      sb: '排序',
+      optn: '操作',
+      pean: '请输入代充人账号',
+      pec: '请输入内容',
+      pes: '请输入排序',
+      tcac: '代充人账号不能为空',
+      ccbe: '内容不能为空',
+      ctn: '确认要"{text}""{nickname}"吗?',
+      acwm: '添加代充人欢迎语配置',
+      mcwm: '修改代充人欢迎语配置',
+      wtcd: '是否确认删除代充人欢迎语配置编号为"{id}"的数据项?',
+      cped: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
+      gcwm: '代充人欢迎语配置',
 
     }
   }

@@ -10,11 +10,11 @@
 <!--          @keyup.enter.native="handleQuery"-->
 <!--        />-->
 <!--      </el-form-item>-->
-      <el-form-item label="代充人账号-昵称" prop="agentId" label-width="118px">
+      <el-form-item :label=" $t('pay.chatWelcomeConfig.can') " prop="agentId" label-width="118px">
         <el-select
           filterable
           v-model="queryParams.agentId"
-          placeholder="请选择代充人账号-昵称"
+          :placeholder=" $t('pay.chatWelcomeConfig.psc') "
           clearable
           size="small"
           style="width: 240px"
@@ -28,7 +28,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
 <!--        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>-->
       </el-form-item>
     </el-form>
@@ -42,7 +42,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:chatWelcomeConfig:add']"
-        >新增</el-button>
+        >{{ $t('global.newButton') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -53,7 +53,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['admin:chatWelcomeConfig:edit']"
-        >修改</el-button>
+        >{{ $t('global.editButton') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -64,7 +64,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['admin:chatWelcomeConfig:remove']"
-        >删除</el-button>
+        >{{ $t('global.deleteButton') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -74,18 +74,18 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:chatWelcomeConfig:export']"
-        >导出</el-button>
+        >{{ $t('global.exportButton') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="chatWelcomeConfigList">
 <!--      <el-table-column label="排序" align="center" prop="id" />-->
-      <el-table-column label="代充人账号" align="center" prop="account" />
-      <el-table-column label="代充人昵称" align="center" prop="nickName" />
-      <el-table-column label="内容" align="center" min-width="400" prop="content" />
+      <el-table-column :label=" $t('pay.chatWelcomeConfig.ca') " align="center" prop="account" />
+      <el-table-column :label=" $t('pay.chatWelcomeConfig.noc') " align="center" prop="nickName" />
+      <el-table-column :label=" $t('pay.chatWelcomeConfig.content') " align="center" min-width="400" prop="content" />
 <!--      <el-table-column label="代充人id" align="center" prop="agentId" />-->
-      <el-table-column label="状态" align="center" prop="status">
+      <el-table-column :label=" $t('global.status') " align="center" prop="status">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -95,20 +95,20 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="创建人" align="center" prop="createBy" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      <el-table-column :label=" $t('pay.chatWelcomeConfig.cb') " align="center" prop="createBy" />
+      <el-table-column :label=" $t('pay.chatWelcomeConfig.ct') " align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作人" align="center" prop="operator" />
-      <el-table-column label="操作时间" align="center" prop="operatorTime" width="180">
+      <el-table-column :label=" $t('pay.chatWelcomeConfig.opt') " align="center" prop="operator" />
+      <el-table-column :label=" $t('pay.chatWelcomeConfig.ot') " align="center" prop="operatorTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.operatorTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="排序" align="center" prop="sort" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label=" $t('pay.chatWelcomeConfig.sb') " align="center" prop="sort" />
+      <el-table-column :label=" $t('pay.chatWelcomeConfig.optn') " align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -116,14 +116,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:chatWelcomeConfig:edit']"
-          >修改</el-button>
+          >{{ $t('global.editButton') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:chatWelcomeConfig:remove']"
-          >删除</el-button>
+          >{{ $t('global.deleteButton') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -139,38 +139,38 @@
     <!-- 添加代充人欢迎语配置对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="600px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-        <el-form-item label="代充人账号" prop="account">
-          <el-input v-model="form.account" placeholder="请输入代充人账号" />
+        <el-form-item :label=" $t('pay.chatWelcomeConfig.ca') " prop="account">
+          <el-input v-model="form.account" :placeholder=" $t('pay.chatWelcomeConfig.pean') " />
         </el-form-item>
-        <el-form-item label="内容" prop="content">
-          <el-input v-model="form.content" type="textarea" placeholder="请输入内容" />
+        <el-form-item :label=" $t('pay.chatWelcomeConfig.content') " prop="content">
+          <el-input v-model="form.content" type="textarea" :placeholder=" $t('pay.chatWelcomeConfig.pec') " />
         </el-form-item>
-        <el-form-item label="排序" prop="sort">
-          <el-input v-model="form.sort" type="number" class="no-number" placeholder="请输入排序" />
+        <el-form-item :label=" $t('pay.chatWelcomeConfig.sb') " prop="sort">
+          <el-input v-model="form.sort" type="number" class="no-number" :placeholder=" $t('pay.chatWelcomeConfig.pes') " />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('global.confirmButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('global.cancelButton') }} </el-button>
       </div>
     </el-dialog>
 
     <!-- 修改代充人欢迎语配置对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="opene" width="700px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-        <el-form-item label="代充人账号" prop="account">
-          <el-input v-model="form.account" readonly placeholder="请输入代充人账号" />
+        <el-form-item :label=" $t('pay.chatWelcomeConfig.ca') " prop="account">
+          <el-input v-model="form.account" readonly :placeholder=" $t('pay.chatWelcomeConfig.pean') " />
         </el-form-item>
-        <el-form-item label="内容" prop="content">
-          <el-input v-model="form.content" type="textarea" placeholder="请输入内容" />
+        <el-form-item :label=" $t('pay.chatWelcomeConfig.content') " prop="content">
+          <el-input v-model="form.content" type="textarea" :placeholder=" $t('pay.chatWelcomeConfig.pec') " />
         </el-form-item>
-        <el-form-item label="排序" prop="sort">
-          <el-input v-model="form.sort" type="number" class="no-number" placeholder="请输入排序" />
+        <el-form-item :label=" $t('pay.chatWelcomeConfig.sb') " prop="sort">
+          <el-input v-model="form.sort" type="number" class="no-number" :placeholder=" $t('pay.chatWelcomeConfig.pes') " />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('global.confirmButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -221,10 +221,10 @@ export default {
       // 表单校验
       rules: {
         account: [
-          {required: true, message: "代充人账号不能为空", trigger: "change"}
+          {required: true, message: this.$t('pay.chatWelcomeConfig.tcac'), trigger: "change"}
         ],
         content: [
-          {required: true, message: "内容不能为空", trigger: "change"}
+          {required: true, message: this.$t('pay.chatWelcomeConfig.ccbe'), trigger: "change"}
         ]
       }
     };
@@ -239,15 +239,15 @@ export default {
   methods: {
     //状态修改
     handleStatusChange(row) {
-      let text = row.status === '1' ? '启用' : '停用'
-      this.$confirm('确认要"' + text + '""' + row.nickName + '"吗?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      let text = row.status === '1' ? this.$t('global.statusEnable') : this.$t('global.statusDisable')
+      this.$confirm( this.$t('pay.chatWelcomeConfig.ctn', { text: text, nickname: row.nickname } ), this.$t('global.dialogtitle') , {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function () {
         return changeStatus(row.id, row.status)
       }).then(() => {
-        this.msgSuccess(text + '成功')
+        this.msgSuccess(text + this.$t('global.successPrompt') )
       }).catch(function () {
         row.status = row.status === '0' ? '1' : '0'
       })
@@ -301,7 +301,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加代充人欢迎语配置";
+      this.title = this.$t('pay.chatWelcomeConfig.acwm');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -310,7 +310,7 @@ export default {
       getChatWelcomeConfig(id).then(response => {
         this.form = response.data;
         this.opene = true;
-        this.title = "修改代充人欢迎语配置";
+        this.title = this.$t('pay.chatWelcomeConfig.mcwm');
       });
     },
     /** 提交按钮 */
@@ -320,7 +320,7 @@ export default {
           if (this.form.id != null) {
             updateChatWelcomeConfig(this.form).then(response => {
               if (response.code !== 0) {
-              this.msgSuccess("修改成功");
+              this.msgSuccess( this.$t('pay.chatWelcomeConfig.mcwm') );
               this.opene = false;
               this.getList();
             } else {
@@ -330,7 +330,7 @@ export default {
           } else {
             addChatWelcomeConfig(this.form).then(response => {
               if (response.code !== 0) {
-                 this.msgSuccess("新增成功");
+                 this.msgSuccess( this.$t('global.addSuccessMsg') );
                  this.open = false;
                  this.getList();
               } else {
@@ -344,29 +344,29 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除代充人欢迎语配置编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm( this.$t('pay.chatWelcomeConfig.wtcd', { id: ids }) , this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function() {
         return delChatWelcomeConfig(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess( this.$t('global.deleteSuccessMsg') );
       }).catch(() => {
 	  })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
+      this.$confirm( this.$t('pay.chatWelcomeConfig.cped') , this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function() {
         return exportChatWelcomeConfig(queryParams);
       }).then(response => {
-        this.downloadExcel(response, '代充人欢迎语配置');
+        this.downloadExcel(response, this.$t('pay.chatWelcomeConfig.gcwm') );
       }).catch(() => {
       })
     }

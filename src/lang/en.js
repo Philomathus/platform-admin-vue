@@ -1325,7 +1325,8 @@ export default {
         sDepo: 'Safe deposit box balance raised successfully',
         fDepo: 'Failed to raise the balance of the safe deposit box',
         cInp: 'Cancel Input',
-        levelIntegral: 'Recharge'
+        levelIntegral: 'Recharge',
+        integral: 'Integral'
       },
       more: {
         rdSucc: 'data is restored successfully。',
@@ -4412,6 +4413,31 @@ export default {
       wcd: 'Whether to confirm the deletion {bankName}?',
       cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
       obl: 'Outgoing Bank list',
+
+    },
+    chatWelcomeConfig: {
+      can: 'Chargers Account-nickname',
+      psc: 'Please select the charger account-nickname',
+      ca: 'Chargers Account',
+      noc: 'Nickname of charger',
+      content: 'Content',
+      cb: 'Created by',
+      ct: 'Creation time',
+      opt: 'Operators',
+      ot: 'Operation Time',
+      sb: 'Sort by',
+      optn: 'Operation',
+      pean: 'Please enter the account number of the charger',
+      pec: 'Please enter content',
+      pes: 'Please enter sort',
+      tcac: 'The charger account cannot be empty',
+      ccbe: 'Content cannot be empty',
+      ctn: 'Confirm to "{text}""{nickname}" is it?',
+      acwm: 'Add charger welcome message configuration',
+      mcwm: 'Modify charger welcome message configuration',
+      wtcd: 'Whether to confirm the deletion of the charger welcome message configuration number "{id}" the data item?',
+      cped: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+      gcwm: 'Generation charger welcome message configuration',
 
     }
   }

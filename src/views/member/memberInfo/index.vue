@@ -151,7 +151,7 @@
       <el-form-item prop="integral" style="width: 110px;" class="integral">
         <el-input
           v-model="queryParams.integral"
-          placeholder="Integral"
+          placeholder="$t('members.memberInfo.index.integral')"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"

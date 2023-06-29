@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item :label=" $t('members.memberQuest.mid') " prop="memberId">
+      <el-form-item :label=" $t('members.memberQuest.mid') " prop="memberId" label-width="80">
         <el-input
           v-model.trim="queryParams.memberId"
           :placeholder=" $t('members.memberQuest.pemid') "
@@ -10,7 +10,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item :label=" $t('members.memberQuest.task') " prop="title">
+      <el-form-item :label=" $t('members.memberQuest.task') " prop="title" label-width="80">
         <el-input
           v-model="queryParams.title"
           :placeholder=" $t('members.memberQuest.pet') "

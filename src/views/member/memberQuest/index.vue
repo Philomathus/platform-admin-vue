@@ -93,11 +93,11 @@ export default {
     return {
       formatterType(row) {
         if (row.status == 0) {
-          return this.$t('members.memberQuest.ip')
+          return '进行中'
         } else if (row.status == 1) {
-          return this.$t('members.memberQuest.abc')
+          return '待领奖'
         } else if (row.status == 2) {
-          return this.$t('members.memberQuest.award')
+          return '已领奖'
         }else {
           return ''
         }

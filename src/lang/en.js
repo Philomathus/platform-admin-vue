@@ -1325,7 +1325,8 @@ export default {
         sDepo: 'Safe deposit box balance raised successfully',
         fDepo: 'Failed to raise the balance of the safe deposit box',
         cInp: 'Cancel Input',
-        levelIntegral: 'Recharge'
+        levelIntegral: 'Recharge',
+        integral: 'Integral'
       },
       more: {
         rdSucc: 'data is restored successfully。',

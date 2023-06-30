@@ -295,13 +295,13 @@ export default {
       // 表单校验
       rules: {
         name: [
-          { required: true, message: '银行名称不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('pay.configBank.bnce'), trigger: 'blur' }
         ],
         bankAccount: [
-          { required: true, message: '银行账号地址不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('pay.configBank.baace'), trigger: 'blur' }
         ],
         googleAuthCode: [
-          { required: true, message: '谷歌验证码不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('pay.configBank.gcce'), trigger: 'blur' }
         ]
       }
     }
@@ -328,13 +328,13 @@ export default {
     },
 
     handleStatusChange(row) {
-      let text = row.status === '1' ? '启用' : '停用'
-      this.$confirm('确认要"' + text + '""' + row.name + '"吗?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      let text = row.status === '1' ? this.$t('global.statusEnable') : this.$t('global.statusDisable')
+      this.$confirm( this.$t('pay.configBank.ct', { text:text, name:row.name } ), this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function() {
-        return changeConfigBankStatus(row.id, row.status)
+        return changeConfigBankStatus( row.id, row.status )
       }).then(function() {
         const data = {
           id: row.id,
@@ -342,7 +342,7 @@ export default {
         }
         return changeConfigBankText(data)
       }).then(() => {
-        this.msgSuccess(text + '成功')
+        this.msgSuccess(text + this.$t('global.successPrompt'))
         this.getList()
       }).catch(function() {
         row.status = row.status === '0' ? '1' : '0'
@@ -397,7 +397,7 @@ export default {
     handleAdd() {
       this.reset()
       this.open = true
-      this.title = '添加公司入款银行列表'
+      this.title = this.$t('pay.configBank.aab')
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -406,7 +406,7 @@ export default {
       getConfigBank(id).then(response => {
         this.form = response.data
         this.open = true
-        this.title = '修改公司入款银行列表'
+        this.title = this.$t('pay.configBank.mlb')
       })
     },
     handleUpdateText(row) {
@@ -415,12 +415,12 @@ export default {
       getConfigBank(id).then(response => {
         this.form = response.data
         this.openText = true
-        this.title = '文本编辑'
+        this.title = this.$t('pay.configBank.te')
       })
     },
     submitFormText() {
       changeConfigBankText(this.form).then(response => {
-        this.msgSuccess('修改成功')
+        this.msgSuccess( this.$t('global.editSuccessMsg') )
         this.openText = false
         this.getList()
       })
@@ -431,13 +431,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateConfigBank(this.form).then(response => {
-              this.msgSuccess('修改成功')
+              this.msgSuccess( this.$t('global.editSuccessMsg') )
               this.open = false
               this.getList()
             })
           } else {
             addConfigBank(this.form).then(response => {
-              this.msgSuccess('新增成功')
+              this.msgSuccess( this.$t('global.addSuccessMsg') )
               this.open = false
               this.getList()
             })
@@ -448,28 +448,28 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids
-      this.$confirm('是否确认删除' + row.name  + '?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm( this.$t('pay.configBank.idc', { name:row.name }), this.$t('global.dialogTitle') , {
+        confirmButtonText: this.$t('global.confirmButton') ,
+        cancelButtonText: this.$t('global.cancelButton') ,
         type: 'warning'
       }).then(function() {
         return delConfigBank(ids)
       }).then(() => {
         this.getList()
-        this.msgSuccess('删除成功')
+        this.msgSuccess( this.$t('global.deleteSuccessMsg') )
       })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+      this.$confirm( this.$t('pay.configBank.cpe'), this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton') ,
+        cancelButtonText: this.$t('global.cancelButton') ,
         type: 'warning'
       }).then(function() {
         return exportConfigBank(queryParams)
       }).then(response => {
-        this.downloadExcel(response, '公司入款银行')
+        this.downloadExcel(response, this.$t('pay.configBank.cdb'))
       }).catch(() => {
       })
     }

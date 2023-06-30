@@ -4478,6 +4478,16 @@ export default {
       det: 'Determine',
       t2: 'Text 2',
       pet2: 'Please enter text 2',
+      bnce: 'Bank name cannot be empty',
+      baace: 'Bank account address cannot be empty',
+      gcce: 'Google captcha cannot be empty',
+      ct: 'Confirm to "{text}" "{name}" is it?',
+      aab: 'Add a list of banks to which the company is credited',
+      mlb: 'Modify the list of banks to which the company is credited',
+      te: 'Text Editor',
+      idc: 'Is the deletion confirmed {name}?',
+      cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+      cdb: 'Company DepositBank',
 
     }
   }

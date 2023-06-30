@@ -4489,7 +4489,28 @@ export default {
       cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
       cdb: 'Company DepositBank',
 
-    }
+    },
+    logMoney:{
+      bts: 'Behavior Type Statistics',
+      sq: 'Statistical queries',
+      tob: 'Type of behavior',
+      ct: 'Creation time',
+      mid: 'Member ID',
+      psdn: 'Please select the deposit note',
+      an: 'Account Number',
+      remarks: 'Remarks',
+      onr: 'Order Number Remarks',
+      rev: 'Revenue',
+      exp: 'Expenses',
+      bbc: 'Balance before changes',
+      bal: 'Balance',
+      psal: 'Please select atleast one behavior type',
+      pemid: 'Please enter your member ID',
+      midco: 'Member IDs can only be entered as numbers and underscores',
+      cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+      mf: 'Member Funds'
+    },
+
   }
 
 }

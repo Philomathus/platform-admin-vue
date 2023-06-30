@@ -1,37 +1,37 @@
 <template>
   <div class="app-container">
     <div v-loading="totalLoading">
-      <el-button type="primary" @click="copy1">行为类型统计 {{ this.totalData.totalIncome || 0 }}</el-button>
-      <el-button type="primary" icon="el-icon-search" size="mini" @click="listCount()" style="margin-left: 20px">统计查询
+      <el-button type="primary" @click="copy1">{{ $t('pay.logMoney.bts') }} {{ this.totalData.totalIncome || 0 }}</el-button>
+      <el-button type="primary" icon="el-icon-search" size="mini" @click="listCount()" style="margin-left: 20px">{{ $t('pay.logMoney.sq') }}
       </el-button>
     </div>
     <!--    <el-button type="primary" @click="copy1">总收入 {{ this.totalData.totalIncome || 0 }}</el-button>-->
     <!--    <el-button type="success" @click="copy2">总支出 {{ this.totalData.totalPay || 0 }}</el-button>-->
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="88px"
              style="margin-top: 10px">
-      <el-form-item label="行为类型" prop="type" class="checkbox-type">
+      <el-form-item :label=" $t('pay.logMoney.tob') " prop="type" class="checkbox-type">
         <el-checkbox-group v-model="queryParams.types" size="medium">
           <el-checkbox v-for="item in typeOptions" :key="item.type" :label="item.type">{{ item.des }}</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
-      <el-form-item label="创建时间" prop="selectDate" label-width="100px">
+      <el-form-item :label=" $t('pay.logMoney.ct') " prop="selectDate" label-width="100px">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
-                        end-placeholder="结束时间" :default-time="['00:00:00', '23:59:59']" range-separator="至" clearable
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" :start-placeholder=" $t('global.dateTimePickerStartTimePlaceholder') "
+                        :end-placeholder=" $t('global.dateTimePickerEndTimePlaceholder') " :default-time="['00:00:00', '23:59:59']" :range-separator=" $t('global.selectDateRangeSeparator') " clearable
                         :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="searchValue">
         <el-input
           v-model.trim="queryParams.searchValue"
-          placeholder="会员ID"
+          :placeholder=" $t('pay.logMoney.mid') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item prop="mark">
-        <el-select v-model="queryParams.mark" placeholder="请选择入款备注" clearable size="small">
+        <el-select v-model="queryParams.mark" :placeholder=" $t('pay.logMoney.psdn') " clearable size="small">
           <el-option
             v-for="dict in markOptions"
             :key="dict.dictValue"
@@ -41,8 +41,8 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -55,19 +55,19 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['pay:logMoney:export']"
-        >导出
+        >{{ $t('global.exportButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table :stripe="true" stripe v-loading="loading" :data="logMoneyList">
-      <el-table-column label="会员ID" align="center" prop="userId" min-width="120"/>
-      <el-table-column label="账号" align="center" prop="userName" min-width="120"/>
-      <el-table-column label="行为类型" align="center" prop="des" min-width="120"/>
-      <el-table-column label="备注" align="center" prop="mark" min-width="260" :show-overflow-tooltip="true"/>
-      <el-table-column label="订单号备注" align="center" prop="markorder" min-width="320" :show-overflow-tooltip="true"/>
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      <el-table-column :label=" $t('pay.logMoney.mid') " align="center" prop="userId" min-width="120"/>
+      <el-table-column :label=" $t('pay.logMoney.an') " align="center" prop="userName" min-width="120"/>
+      <el-table-column :label=" $t('pay.logMoney.tob') " align="center" prop="des" min-width="120"/>
+      <el-table-column :label=" $t('pay.logMoney.remarks') " align="center" prop="mark" min-width="260" :show-overflow-tooltip="true"/>
+      <el-table-column :label=" $t('pay.logMoney.onr') " align="center" prop="markorder" min-width="320" :show-overflow-tooltip="true"/>
+      <el-table-column :label=" $t('pay.logMoney.ct') " align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <a style="color: #00afff"
              @click="jump(scope.row.userId,parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}'))">{{
@@ -75,10 +75,10 @@
             }}</a>
         </template>
       </el-table-column>
-      <el-table-column label="收入" align="center" prop="income" min-width="90"/>
-      <el-table-column label="支出" align="center" prop="pay" min-width="90"/>
-      <el-table-column label="变化前余额" align="center" prop="totalBefore" min-width="90"/>
-      <el-table-column label="余额" align="center" prop="total" min-width="90"/>
+      <el-table-column :label=" $t('pay.logMoney.rev') " align="center" prop="income" min-width="90"/>
+      <el-table-column :label=" $t('pay.logMoney.exp') " align="center" prop="pay" min-width="90"/>
+      <el-table-column :label=" $t('pay.logMoney.bbc') " align="center" prop="totalBefore" min-width="90"/>
+      <el-table-column :label=" $t('pay.logMoney.bal') " align="center" prop="total" min-width="90"/>
     </el-table>
 
     <pagination
@@ -158,9 +158,9 @@ export default {
   methods: {
     listCount() {
       if (this.queryParams.type === null || this.queryParams.type === '' || this.queryParams.types.length === 0) {
-        this.$message.error("请至少选择一个行为类型")
+        this.$message.error( this.$t('pay.logMoney.psal') )
       } else if (this.queryParams.searchValue === null || this.queryParams.searchValue === '' || this.queryParams.searchValue === undefined) {
-        this.$message.error("请输入会员ID")
+        this.$message.error( this.$t('pay.logMoney.pemid') )
       } else {
         this.totalLoading = true
         listCount(this.queryParams).then((res) => {
@@ -206,7 +206,7 @@ export default {
         const reg = '^[0-9a-zA-Z_]{1,}$'
         let flag = this.queryParams.searchValue.match(reg)
         if(!flag){
-          this.msgError("会员ID只能输入数字及下划线")
+          this.msgError( this.$t('pay.logMoney.midco') )
           return
         }
       }
@@ -222,14 +222,14 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+      this.$confirm( this.$t('pay.logMoney.cpe') , this.$t('global.dialogTitle') , {
+        confirmButtonText: this.$t('global.confirmButton') ,
+        cancelButtonText: this.$t('global.cancelButton') ,
         type: 'warning'
       }).then(function () {
         return exportLogMoney(queryParams)
       }).then(response => {
-        this.downloadExcel(response, '会员资金')
+        this.downloadExcel(response, this.$t('pay.logMoney.mf') )
       }).catch(() => {
       })
     }

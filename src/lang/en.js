@@ -4510,7 +4510,25 @@ export default {
       cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
       mf: 'Member Funds'
     },
+    memberBankRecharge:{
+      tr: 'Trading Ratio',
+      tsa: 'Total Success Amount',
+      ut: 'Update time',
+      payee: 'Payee',
+      ra: 'Recharge Amount',
+      bn: 'Bank Name',
+      ban: 'Bank Account Number',
+      not: 'Number of times',
+      sr: 'Start refreshing',
+      taac: 'The actual arrical amount cannot be empty',
+      cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+      ors: 'Offline recharge statement',
+      failure: 'Failure',
+      tbc: 'To be confirmed',
+      stor: 'Stop refreshing',
+      rsas: 'Refresh starts after seconds',
 
+    }
   }
 
 }

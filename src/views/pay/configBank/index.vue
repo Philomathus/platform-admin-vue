@@ -1,27 +1,27 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="银行编码" prop="code">
+      <el-form-item :label=" $t('pay.configBank.bc') " prop="code">
         <el-input
           v-model="queryParams.code"
-          placeholder="请输入银行编码"
+          :placeholder=" $t('pay.configBank.pebc') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="银行名称" prop="name">
+      <el-form-item :label=" $t('pay.configBank.bn') " prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入银行名称"
+          :placeholder=" $t('pay.configBank.pebn') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -34,7 +34,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['pay:configBank:add']"
-        >新增
+        >{{ $t('global.newButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -46,7 +46,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['pay:configBank:edit']"
-        >修改
+        >{{ $t('global.editButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -58,7 +58,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['pay:configBank:remove']"
-        >删除
+        >{{ $t('global.deleteButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -69,7 +69,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['pay:configBank:export']"
-        >导出
+        >{{ $t('global.exportButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -77,7 +77,7 @@
 
     <el-table :stripe="true" v-loading="loading" :data="configBankList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="银行名称" align="center" prop="name"/>
+      <el-table-column :label=" $t('pay.configBank.bn') " align="center" prop="name"/>
 <!--      <el-table-column label="图标" align="center" prop="icon">-->
 <!--        <template slot-scope="scope">-->
 <!--          <el-image-->
@@ -88,10 +88,10 @@
 <!--          </el-image>-->
 <!--        </template>-->
 <!--      </el-table-column>-->
-      <el-table-column label="银行官网地址" :show-overflow-tooltip="true" align="center" prop="url"/>
-      <el-table-column label="排序" align="center" prop="indexs"/>
-      <el-table-column label="银行账号" :show-overflow-tooltip="true" align="center" prop="bankAccount"/>
-      <el-table-column label="状态" align="center" prop="status">
+      <el-table-column :label=" $t('pay.configBank.bowa') " :show-overflow-tooltip="true" align="center" prop="url"/>
+      <el-table-column :label=" $t('pay.configBank.sb') " align="center" prop="indexs"/>
+      <el-table-column :label=" $t('pay.configBank.ban') " :show-overflow-tooltip="true" align="center" prop="bankAccount"/>
+      <el-table-column :label=" $t('global.status') " align="center" prop="status">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -101,12 +101,12 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="开户人" align="center" prop="accountName"/>
-      <el-table-column label="最小开放层级" align="center" prop="openLevel"/>
-      <el-table-column label="最大开放层级" align="center" prop="openLevelMax"/>
-      <el-table-column label="最小充值金额" align="center" prop="rechargeLimitMin"/>
-      <el-table-column label="最大充值金额" align="center" prop="rechargeLimitMax"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label=" $t('pay.configBank.ah') " align="center" prop="accountName"/>
+      <el-table-column :label=" $t('pay.configBank.mol') " align="center" prop="openLevel"/>
+      <el-table-column :label=" $t('pay.configBank.maxl') " align="center" prop="openLevelMax"/>
+      <el-table-column :label=" $t('pay.configBank.mta') " align="center" prop="rechargeLimitMin"/>
+      <el-table-column :label=" $t('pay.configBank.maxt') " align="center" prop="rechargeLimitMax"/>
+      <el-table-column :label=" $t('global.oprationColumn') " align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -114,7 +114,7 @@
             icon="el-icon-edit"
             @click="handleUpdateText(scope.row)"
             v-hasPermi="['pay:configBank:edit']"
-          >文本
+          >{{ $t('pay.configBank.txt') }}
           </el-button>
           <el-button
             size="mini"
@@ -122,7 +122,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['pay:configBank:edit']"
-          >修改
+          >{{ $t('global.editButton') }}
           </el-button>
           <el-button
             size="mini"
@@ -130,7 +130,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['pay:configBank:remove']"
-          >删除
+          >{{ $t('global.deleteButton') }}
           </el-button>
         </template>
       </el-table-column>
@@ -150,10 +150,10 @@
 
         <div class="el-row">
           <div class="el-col-lg-12">
-            <el-form-item label="银行名称" prop="name">
+            <el-form-item :label=" $t('pay.configBank.bn') " prop="name">
               <el-select filterable
                          v-model="form.name"
-                         placeholder="请选择银行名称"
+                         :placeholder=" $t('pay.configBank.psbn') "
                          clearable
                          size="small"
                          style="width: 240px">
@@ -165,73 +165,73 @@
             </el-form-item>
           </div>
           <div class="el-col-lg-12">
-            <el-form-item label="银行账号" prop="bankAccount">
-              <el-input v-model="form.bankAccount" placeholder="请输入银行账号"/>
+            <el-form-item :label=" $t('pay.configBank.ban') " prop="bankAccount">
+              <el-input v-model="form.bankAccount" :placeholder=" $t('pay.configBank.peba') "/>
             </el-form-item>
           </div>
         </div>
 
         <div class="el-row">
           <div class="el-col-lg-12">
-            <el-form-item label="排序号" prop="indexs">
-              <el-input v-model="form.indexs" placeholder="请输入排序号"/>
+            <el-form-item :label=" $t('pay.configBank.sn') " prop="indexs">
+              <el-input v-model="form.indexs" :placeholder=" $t('pay.configBank.pesn') "/>
             </el-form-item>
           </div>
           <div class="el-col-lg-12">
-            <el-form-item label="备注信息" prop="remark">
-              <el-input v-model="form.remark" placeholder="请输入备注信息"/>
+            <el-form-item :label=" $t('pay.configBank.ri') " prop="remark">
+              <el-input v-model="form.remark" :placeholder=" $t('pay.configBank.peni') "/>
             </el-form-item>
           </div>
         </div>
 
-        <el-form-item label="开户人" prop="accountName">
-          <el-input v-model="form.accountName" placeholder="请输入开户人"/>
+        <el-form-item :label=" $t('pay.configBank.ah') " prop="accountName">
+          <el-input v-model="form.accountName" :placeholder=" $t('pay.configBank.peah') "/>
         </el-form-item>
-        <el-form-item label="开户地址" prop="bankAddress">
-          <el-input v-model="form.bankAddress" placeholder="请输入开户地址"/>
+        <el-form-item :label=" $t('pay.configBank.aoa') " prop="bankAddress">
+          <el-input v-model="form.bankAddress" :placeholder=" $t('pay.configBank.peaa') "/>
         </el-form-item>
-        <el-form-item label="优惠比例" prop="discountBill">
-          <el-input v-model="form.discountBill" placeholder="请输入优惠比例"/>
+        <el-form-item :label=" $t('pay.configBank.pr') " prop="discountBill">
+          <el-input v-model="form.discountBill" :placeholder=" $t('pay.configBank.pedp') "/>
         </el-form-item>
-        <el-form-item label="开放层级" prop="openLevel">
+        <el-form-item :label=" $t('pay.configBank.ol') " prop="openLevel">
           <el-col :span="11">
-            <el-input type="number" class="no-number" v-model="form.openLevel" placeholder="请输入最小开放层级"/>
+            <el-input type="number" class="no-number" v-model="form.openLevel" :placeholder=" $t('pay.configBank.pemol') "/>
           </el-col>
           <el-col :span="2" style="text-align: center;">-</el-col>
           <el-col :span="11">
-            <el-input type="number" class="no-number" v-model="form.openLevelMax" placeholder="请输入最大开放层级"/>
+            <el-input type="number" class="no-number" v-model="form.openLevelMax" :placeholder=" $t('pay.configBank.pemxol') "/>
           </el-col>
         </el-form-item>
-        <el-form-item label="金额限制" prop="openLevel">
+        <el-form-item :label=" $t('pay.configBank.al') " prop="openLevel">
           <el-col :span="11">
-            <el-input type="number" class="no-number" v-model="form.rechargeLimitMin" placeholder="请输入最小充值金额"/>
+            <el-input type="number" class="no-number" v-model="form.rechargeLimitMin" :placeholder=" $t('pay.configBank.pemra') "/>
           </el-col>
           <el-col :span="2" style="text-align: center;">-</el-col>
           <el-col :span="11">
-            <el-input type="number" class="no-number" v-model="form.rechargeLimitMax" placeholder="请输入最大充值金额"/>
+            <el-input type="number" class="no-number" v-model="form.rechargeLimitMax" :placeholder=" $t('pay.configBank.pemxra') "/>
           </el-col>
         </el-form-item>
-        <el-form-item label="省份限制" prop="url">
-          <el-input v-model="form.url" placeholder="使用逗号(,)分割,为空则不限制"/>
+        <el-form-item :label=" $t('pay.configBank.pres') " prop="url">
+          <el-input v-model="form.url" :placeholder=" $t('pay.configBank.ucts') "/>
         </el-form-item>
-        <el-form-item label="谷歌验证码" prop="googleAuthCode">
-          <el-input v-model="form.googleAuthCode" placeholder="请输入谷歌验证码" type="number" class="no-number"/>
+        <el-form-item :label=" $t('pay.configBank.gc') " prop="googleAuthCode">
+          <el-input v-model="form.googleAuthCode" :placeholder=" $t('pay.configBank.pegac') " type="number" class="no-number"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('global.submitButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
 
     <el-dialog :title="title" :visible.sync="openText" width="600px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="文本2" prop="text2">
-          <el-input v-model="form.text2" placeholder="请输入文本2" type="textarea" :rows="4"/>
+        <el-form-item :label=" $t('pay.configBank.t2') " prop="text2">
+          <el-input v-model="form.text2" :placeholder=" $t('pay.configBank.pet2') " type="textarea" :rows="4"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitFormText">确 定</el-button>
+        <el-button type="primary" @click="submitFormText">{{ $t('global.submitButton') }}</el-button>
       </div>
     </el-dialog>
 

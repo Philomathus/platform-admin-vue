@@ -1388,7 +1388,8 @@ export default {
         sDepo: '保险箱余额提出成功',
         fDepo: '保险箱余额提出失败',
         cInp: '取消输入',
-        levelIntegral: '是否充值'
+        levelIntegral: '是否充值',
+        integral: '打码/充值比'
       },
       more: {
         exCred: '加分',

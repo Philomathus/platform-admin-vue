@@ -148,6 +148,15 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item prop="integral" style="width: 110px;" class="integral">
+        <el-input
+          v-model="queryParams.integral"
+          :placeholder="$t('members.memberInfo.index.integral')"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item class="submit-btn">
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{
             $t('global.searchButton')
@@ -730,6 +739,7 @@ export default {
         channelcode: '',
         vipMin: '',
         vipMax: '',
+        integral: '',
         downLoadDate: [],
         loginDev: null,
         levelIntegral: null

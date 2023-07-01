@@ -2734,6 +2734,8 @@ export default {
         familyChieftain: 'Is the family long',
         familyChieftain1: 'Yes',
         familyChieftainOthers: 'No',
+        virtualAnchor: 'Yes',
+        virtualAnchor2: 'No',
         isAuthentication: 'Status',
         isAuthenticationPlaceholder: 'Please select the status',
         isAuthentication0: 'Not certified',

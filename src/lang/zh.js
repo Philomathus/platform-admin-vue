@@ -2802,6 +2802,8 @@ export default {
         familyNickNamePopover: '家族长昵称：',
         familyChieftain: '是否家族长',
         familyChieftain1: '是',
+        virtualAnchor: '是',
+        virtualAnchor2: '不是',
         familyChieftainOthers: '否',
         isAuthentication: '状态',
         isAuthenticationPlaceholder: '请选择状态',

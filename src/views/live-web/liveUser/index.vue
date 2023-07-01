@@ -177,7 +177,8 @@
 
       <el-table-column :label="$t('liveWeb.liveUser.table.ticket')" min-width="120" align="center" prop="ticket"/>
       <el-table-column :label="$t('liveWeb.liveUser.table.coin')" min-width="120" align="center" prop="coin"/>
-      <el-table-column :label="$t('liveWeb.liveUser.table.status')" min-width="120" align="center" prop="virtualAnchor"/>
+      <el-table-column :label="$t('liveWeb.liveUser.table.status')" min-width="120" align="center" prop="virtualAnchor"
+                       :formatter="fmVirtualAnchor"/>
       <el-table-column :label="$t('liveWeb.liveUser.table.weixinPrice')" min-width="170" align="center" prop="weixinPrice"/>
       <el-table-column :label="$t('liveWeb.liveUser.table.weiboMoney')" min-width="120" align="center" prop="weiboMoney"/>
       <el-table-column :label="$t('liveWeb.liveUser.table.xpoint')" min-width="120" align="center" prop="xpoint"/>
@@ -874,6 +875,10 @@ export default {
 
     fmFamilyChieftain(row) {
       return row.familyChieftain === 1 ? this.$t('liveWeb.liveUser.table.familyChieftain1') : this.$t('liveWeb.liveUser.table.familyChieftainOthers')
+    },
+
+    fmVirtualAnchor(row) {
+      return row.virtualAnchor === 1 ? this.$t('liveWeb.liveUser.table.virtualAnchor') : this.$t('liveWeb.liveUser.table.virtualAnchor2')
     }
 
   }

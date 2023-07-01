@@ -177,6 +177,7 @@
 
       <el-table-column :label="$t('liveWeb.liveUser.table.ticket')" min-width="120" align="center" prop="ticket"/>
       <el-table-column :label="$t('liveWeb.liveUser.table.coin')" min-width="120" align="center" prop="coin"/>
+      <el-table-column :label="$t('liveWeb.liveUser.table.status')" min-width="120" align="center" prop="virtualAnchor"/>
       <el-table-column :label="$t('liveWeb.liveUser.table.weixinPrice')" min-width="170" align="center" prop="weixinPrice"/>
       <el-table-column :label="$t('liveWeb.liveUser.table.weiboMoney')" min-width="120" align="center" prop="weiboMoney"/>
       <el-table-column :label="$t('liveWeb.liveUser.table.xpoint')" min-width="120" align="center" prop="xpoint"/>

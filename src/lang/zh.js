@@ -2811,6 +2811,7 @@ export default {
         isAuthentication3: '审核不通过',
         ticket: '印票',
         coin: '时薪',
+        status: '是',
         weixinPrice: '时薪任务',
         weiboMoney: '礼物任务',
         xpoint: '彩票抽成',

@@ -2741,6 +2741,7 @@ export default {
         isAuthentication2: 'Certified',
         isAuthentication3: 'Audit failed',
         ticket: 'Stamp',
+        status: 'Status',
         coin: 'Hourly rate',
         weixinPrice: 'Hourly rate assignment',
         weiboMoney: 'Gift mission',

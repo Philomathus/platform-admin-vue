@@ -3,21 +3,21 @@
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch">
       <el-form-item prop="opTime">
         <el-date-picker type="datetimerange" v-model="dateRange" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}" start-placeholder="开始时间"
-                        end-placeholder="开始时间"
-                        range-separator="至" clearable :default-time="['00:00:00', '23:59:59']" :picker-options="pickerOptions"
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '90%'}" :start-placeholder=" $t( 'global.dateTimePickerStartTimePlaceholder' ) "
+                        :end-placeholder=" $t( 'global.dateTimePickerEndTimePlaceholder' ) "
+                        :range-separator=" $t( 'global.selectDateRangeSeparator' ) " clearable :default-time="['00:00:00', '23:59:59']" :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="searchValue">
         <el-input
           v-model.trim="queryParams.searchValue"
-          placeholder="会员ID/账号"
+          :placeholder=" $t('pay.memberDepositLog.midan') "
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item prop="moneydes">
-        <el-select v-model="queryParams.moneydes" placeholder="请选择入款类型" clearable>
+        <el-select v-model="queryParams.moneydes" :placeholder=" $t('pay.memberDepositLog.pstd') " clearable>
           <el-option
             v-for="item in moneydesOptions"
             :key="item.value"
@@ -47,7 +47,7 @@
       <el-form-item prop="remark">
         <el-input
           v-model="queryParams.remark"
-          placeholder="请输入加分备注"
+          :placeholder=" $t('pay.memberDepositLog.peac') "
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -55,7 +55,7 @@
       <el-form-item prop="remarkPay">
         <el-input
           v-model="queryParams.remarkPay"
-          placeholder="请输入支付备注"
+          :placeholder=" $t('pay.memberDepositLog.pepn') "
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -63,7 +63,7 @@
       <el-form-item prop="orderRemark">
         <el-input
           v-model="queryParams.orderRemark"
-          placeholder="请输入订单备注"
+          :placeholder=" $t('pay.memberDepositLog.peon') "
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -80,7 +80,7 @@
       <el-form-item prop="opName">
         <el-input
           v-model="queryParams.opName"
-          placeholder="请输入操作人"
+          :placeholder=" $t('pay.memberDepositLog.peto') "
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -95,7 +95,7 @@
 <!--        />-->
 <!--      </el-form-item>-->
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
 <!--        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>-->
       </el-form-item>
     </el-form>
@@ -141,7 +141,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['pay:memberDepositLog:export']"
-        >导出</el-button>
+        >{{ $t('global.exportButton') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -149,17 +149,17 @@
     <el-table stripe v-loading="loading" :data="memberDepositLogList" @selection-change="handleSelectionChange">
 <!--      <el-table-column type="selection" width="55" align="center" />-->
 <!--      <el-table-column label="系统编号" align="center" prop="id" />-->
-      <el-table-column label="会员编号" align="center" prop="memberId" />
-      <el-table-column label="会员账号" align="center" prop="userName" />
-      <el-table-column label="入款类型" align="center" prop="moneydes" :formatter="moneydesFormat"/>
-      <el-table-column label="加分金额" align="center" prop="money" />
-      <el-table-column label="加分备注" align="center" prop="remark" />
-      <el-table-column label="支付备注" align="center" prop="remarkPay" />
-      <el-table-column label="订单备注" align="center" prop="orderRemark" />
-      <el-table-column label="打码倍数" align="center" prop="beatNum" />
-      <el-table-column label="提交IP" align="center" prop="ip" />
-      <el-table-column label="操作人" align="center" prop="opName" />
-      <el-table-column label="创建时间" align="center" prop="opTime" width="180">
+      <el-table-column :label=" $t('pay.memberDepositLog.mn') " align="center" prop="memberId" />
+      <el-table-column :label=" $t('pay.memberDepositLog.ma') " align="center" prop="userName" />
+      <el-table-column :label=" $t('pay.memberDepositLog.dt') " align="center" prop="moneydes" :formatter="moneydesFormat"/>
+      <el-table-column :label=" $t('pay.memberDepositLog.aep') " align="center" prop="money" />
+      <el-table-column :label=" $t('pay.memberDepositLog.ecr') " align="center" prop="remark" />
+      <el-table-column :label=" $t('pay.memberDepositLog.pr') " align="center" prop="remarkPay" />
+      <el-table-column :label=" $t('pay.memberDepositLog.or') " align="center" prop="orderRemark" />
+      <el-table-column :label=" $t('pay.memberDepositLog.cm') " align="center" prop="beatNum" />
+      <el-table-column :label=" $t('pay.memberDepositLog.sip') " align="center" prop="ip" />
+      <el-table-column :label=" $t('pay.memberDepositLog.opt') " align="center" prop="opName" />
+      <el-table-column :label=" $t('pay.memberDepositLog.ct') " align="center" prop="opTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.opTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
@@ -195,48 +195,48 @@
     <!-- 添加或修改人工加分日志对话框 -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="会员编号" prop="memberId">
-          <el-input v-model="form.memberId" placeholder="请输入会员编号" />
+        <el-form-item :label=" $t('pay.memberDepositLog.mn') " prop="memberId">
+          <el-input v-model="form.memberId" :placeholder=" $t('pay.memberDepositLog.pemn') " />
         </el-form-item>
-        <el-form-item label="会员账号" prop="userName">
-          <el-input v-model="form.userName" placeholder="请输入会员账号" />
+        <el-form-item :label=" $t('pay.memberDepositLog.ma') " prop="userName">
+          <el-input v-model="form.userName" :placeholder=" $t('pay.memberDepositLog.pema') " />
         </el-form-item>
-        <el-form-item label="加分金额" prop="money">
-          <el-input v-model="form.money" placeholder="请输入加分金额" />
+        <el-form-item :label=" $t('pay.memberDepositLog.aep') " prop="money">
+          <el-input v-model="form.money" :placeholder=" $t('pay.memberDepositLog.pea') " />
         </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" placeholder="请输入备注" />
+        <el-form-item :label=" $t('pay.memberDepositLog.rem') " prop="remark">
+          <el-input v-model="form.remark" :placeholder=" $t('pay.memberDepositLog.pen') " />
         </el-form-item>
-        <el-form-item label="支付备注" prop="remarkPay">
-          <el-input v-model="form.remarkPay" placeholder="请输入支付备注" />
+        <el-form-item :label=" $t('pay.memberDepositLog.pr') " prop="remarkPay">
+          <el-input v-model="form.remarkPay" :placeholder=" $t('pay.memberDepositLog.pepn') " />
         </el-form-item>
-        <el-form-item label="订单备注" prop="orderRemark">
-          <el-input v-model="form.orderRemark" placeholder="请输入订单备注" />
+        <el-form-item :label=" $t('pay.memberDepositLog.or') " prop="orderRemark">
+          <el-input v-model="form.orderRemark" :placeholder=" $t('pay.memberDepositLog.peon') " />
         </el-form-item>
-        <el-form-item label="打码倍数" prop="beatNum">
-          <el-input v-model="form.beatNum" placeholder="请输入打码倍数" />
+        <el-form-item :label=" $t('pay.memberDepositLog.cm') " prop="beatNum">
+          <el-input v-model="form.beatNum" :placeholder=" $t('pay.memberDepositLog.pecm') " />
         </el-form-item>
-        <el-form-item label="创建时间" prop="opTime">
+        <el-form-item :label=" $t('pay.memberDepositLog.ct') " prop="opTime">
           <el-date-picker clearable size="small"
             v-model="form.opTime"
             type="date"
             value-format="yyyy-MM-dd"
-            placeholder="选择创建时间">
+            :placeholder=" $t('pay.memberDepositLog.sct') ">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="操作人" prop="opName">
-          <el-input v-model="form.opName" placeholder="请输入操作人" />
+        <el-form-item :label=" $t('pay.memberDepositLog.opt') " prop="opName">
+          <el-input v-model="form.opName" :placeholder=" $t('pay.memberDepositLog.peto') " />
         </el-form-item>
-        <el-form-item label="提交IP" prop="ip">
-          <el-input v-model="form.ip" placeholder="请输入提交IP" />
+        <el-form-item :label=" $t('pay.memberDepositLog.sip') " prop="ip">
+          <el-input v-model="form.ip" :placeholder=" $t('pay.memberDepositLog.pesip') " />
         </el-form-item>
-        <el-form-item label="备注字典(1 人工入款)" prop="moneydes">
-          <el-input v-model="form.moneydes" placeholder="请输入备注字典(1 人工入款 2线上入款 3线下入款)" />
+        <el-form-item :label=" $t('pay.memberDepositLog.rd') " prop="moneydes">
+          <el-input v-model="form.moneydes" :placeholder=" $t('pay.memberDepositLog.pecd') " />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('global.submitButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -256,7 +256,7 @@ export default {
       //入款类型
       moneydesOptions: [{
         value: '1',
-        label: '人工入款'
+        label: this.$t('pay.memberDepositLog.md')
       }],
       // 遮罩层
       loading: true,
@@ -342,7 +342,7 @@ export default {
         const reg = '^[0-9a-zA-Z_]{1,}$'
         let flag = this.queryParams.searchValue.match(reg)
         if(!flag){
-          this.msgError("会员ID/账号只能输入数字及下划线")
+          this.msgError( this.$t('pay.memberDepositLog.maco') )
           return
         }
       }
@@ -364,7 +364,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加人工加分日志";
+      this.title = this.$t('pay.memberDepositLog.amec') ;
     },
     /** 修改按钮操作 */
     handleUpdate(row) {

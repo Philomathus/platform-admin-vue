@@ -50,11 +50,7 @@
     <div ref="container" style="position: relative">
 
 
-      <el-table v-loading="loading"
-                :data="dataList"
-                style="width: 100%;"
-                :stripe="true"
-      >
+      <el-table v-loading="loading" :data="dataList" style="width: 100%;" :stripe="true">
         <el-table-column :label=" $t('report.gameBet.pnum') " align="center" prop="gameagent" :show-overflow-tooltip="true"/>
         <el-table-column :label=" $t('report.gameBet.nd') " align="center" prop="gameplame">
           <template slot-scope="scope">

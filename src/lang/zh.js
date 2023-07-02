@@ -3042,7 +3042,8 @@ export default {
       },
       tab9: {
         title: '重置提现密码',
-        passwordLabel: '重置提现密码',
+        passTitle: '密码',
+        passwordLabel: '密码',
         passwordPlaceholder: '请输入新提现密码',
         googleAuthCodeLabel: 'google验证码',
         googleAuthCodePlaceholder: '请输入google验证码',

@@ -22,6 +22,8 @@
         <span>{{$t('liveWeb.liveUserMore.tab8.title')}}</span></button>
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(9, $t('liveWeb.liveUserMore.tab9.title'))">
         <span>{{$t('liveWeb.liveUserMore.tab9.title')}}</span></button>
+      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(10, $t('liveWeb.liveUserMore.tab9.passTitle'))">
+        <span>{{$t('liveWeb.liveUserMore.tab9.passTitle')}}</span></button>
     </div>
     <!--聊天室记录-->
     <el-row v-if="index===1">
@@ -284,6 +286,26 @@
       </el-form>
     </el-row>
 
+    <!--密码-->
+    <!--TODO: CHANGE AND ADD FIELDS -->
+    <el-row v-if="index===10">
+      <el-form ref="paypasswordForm" :model="paypasswordForm" :rules="paypasswordRules" label-width="110px">
+        <el-form-item :label="$t('liveWeb.liveUserMore.tab9.passwordLabel')" prop="password">
+          <el-input v-model="form.payPassword" :placeholder="$t('liveWeb.liveUserMore.tab9.passwordPlaceholder')"/>
+        </el-form-item>
+        <el-form-item :label="$t('liveWeb.liveUserMore.tab9.googleAuthCodeLabel')" prop="googleAuthCode">
+          <el-input v-model="form.googleAuthCode" :placeholder="$t('liveWeb.liveUserMore.tab9.googleAuthCodePlaceholder')"/>
+        </el-form-item>
+        <el-form-item class="edit-close-btn">
+          <el-button type="primary"
+                     @click="handlePaypassword()"
+                     v-has-permi="['admin:liveUser:reset']">{{$t('liveWeb.liveUserMore.tab9.confirmButton')}}
+          </el-button>
+          <el-button @click="visible = false">{{$t('liveWeb.liveUserMore.tab9.cancelButton')}}</el-button>
+        </el-form-item>
+      </el-form>
+    </el-row>
+
 <!--    <div slot="footer" class="dialog-footer" v-if="index!==5">
       <el-button type="primary" @click="handleImportTable">确 定</el-button>
       <el-button @click="visible = false">取 消</el-button>
@@ -337,6 +359,7 @@
                 visible: false,
               mobileForm: {},
               paypasswordForm: {},
+              password:{},
               // 重置提现密码表单校验
               paypasswordRules: {
                 payPassword: [

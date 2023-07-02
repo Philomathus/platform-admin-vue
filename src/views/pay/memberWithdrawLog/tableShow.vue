@@ -30,7 +30,14 @@
         <div class="font">{{ data.会员积分 }}</div>
         <div class="font">{{ data.登录时间 }}</div>
         <div class="font">{{ data.会员VIP }}</div>
-        <div class="font">{{ data.会员注单 }}</div>
+        <div style="display: flex;justify-content: flex-start;">
+          <div class="mount" style="width: 60%">
+            <el-input :placeholder="data.会员注单" type="textarea" id="text-area" class="font" style="height: 40px" v-model.trim="queryParams.codeTotal" ></el-input>
+          </div>
+          <div class="mount" style="width: 40%">
+            <el-button type="primary" plain @click="updateCodeTotal( data.会员编号, queryParams.codeTotal )" style="height: 40px">查询</el-button>
+          </div>
+        </div>
         <div class="font" @click="showAddress" style="background-color: #cccc77">{{ address }}</div>
       </div>
     </div>
@@ -86,7 +93,7 @@ member
 <script>
 import {checkTwoLogin} from "@/utils/permission";
 import {
-  getMemberInfo, updateEmail, getMemberLoginAddress, getHistoryRecharge
+  getMemberInfo, updateEmail, getMemberLoginAddress, getHistoryRecharge, updateMemberInfo
 } from '@/api/platform-web/member/memberInfo'
 
 export default {
@@ -108,6 +115,10 @@ export default {
       data: {},
       playData: [],
       email: '',
+      queryParams: {
+        id: "",
+        codeTotal:""
+      }
     }
   },
   /*组件方法*/
@@ -124,7 +135,15 @@ export default {
         return value.length * 0.5
       }
     },
+    updateCodeTotal( memberCode, codeTotal ) {
+      this.queryParams.id = memberCode;
+      this.queryParams.codeTotal  = codeTotal;
+      if ( updateMemberInfo( this.queryParams ) === 1 ){
+        console.log("sdfadfdasfdsa")
+        this.$notify.success("修改成功");
+      }
 
+    },
     updateEmail(email, id) {
       if (this.validateTextLength(this.email) > 50) {
         this.$message.error("最多输入50个汉字")
@@ -223,7 +242,7 @@ div {
 }
 
 .renew-btn2{
-  height: 55px;
+  height: 40px;
 }
 
 .title {

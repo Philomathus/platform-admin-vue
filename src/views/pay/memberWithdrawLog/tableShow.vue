@@ -138,12 +138,10 @@ export default {
     updateCodeTotal( memberCode, codeTotal ) {
       this.queryParams.id = memberCode;
       this.queryParams.codeTotal  = codeTotal;
-      if ( updateMemberInfo( this.queryParams ) === 1 ){
-        console.log("sdfadfdasfdsa")
-        this.$notify.success("修改成功");
-      }
+      updateMemberInfo( this.queryParams )
 
     },
+
     updateEmail(email, id) {
       if (this.validateTextLength(this.email) > 50) {
         this.$message.error("最多输入50个汉字")

@@ -118,7 +118,6 @@ export default {
   /*组件值*/
   data() {
     return {
-      loading: false,
       showUpdateForm: false,
       inputValue: '',
       open: false,

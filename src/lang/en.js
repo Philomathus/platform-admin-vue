@@ -4559,10 +4559,21 @@ export default {
       sct: 'Select creation time',
       pesip: 'Please enter the submission IP',
       rd: 'Remarks dictionary (1 manual entry)',
-      pecd: 'Please enter the comment dictionary (1 manual deposit, 2 online deposit, 3 offline deposit)',
+      pecd: 'Please enter the comment dictionary ' +
+        '(1 manual deposit, 2 online deposit, 3 offline deposit)',
       md: 'Manual Deposit',
-      maco: 'Member ID/Account Number can only be entered as a number and underscore',
+      maco: 'Member ID/Account Number can ' +
+        'only be entered as a number and underscore',
       amec: 'Add manual extra credit log',
+      rom: 'Revision of manual mark-up log',
+      ms: 'Modified Successfully',
+      as: 'Add Success',
+      dic: 'Does it confirm the deletion of data items ' +
+        'with manual add log number "{ids}"?',
+      cpe: 'Confirm processing Excel and download, there ' +
+        'will be a delay when there is a large amount of data, ' +
+        'please be patient...',
+      mecl: 'Manual Extra Credit Log',
 
     }
   }

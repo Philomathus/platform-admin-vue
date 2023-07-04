@@ -373,7 +373,7 @@ export default {
       getMemberDepositLog(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改人工加分日志";
+        this.title = this.$t('pay.memberDepositLog.rom');
       });
     },
     /** 提交按钮 */
@@ -382,13 +382,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateMemberDepositLog(this.form).then(response => {
-              this.msgSuccess("修改成功");
+              this.msgSuccess( this.$t('pay.memberDepositLog.ms') );
               this.open = false;
               this.getList();
             });
           } else {
             addMemberDepositLog(this.form).then(response => {
-              this.msgSuccess("新增成功");
+              this.msgSuccess( this.$t('global.addSuccessMsg') );
               this.open = false;
               this.getList();
             });
@@ -399,34 +399,34 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$confirm('是否确认删除人工加分日志编号为"' + ids + '"的数据项?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm( this.$t('pay.memberDepositLog.dic', { ids:ids }) , this.$t('global.dialogTitle') , {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function() {
         return delMemberDepositLog(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess("删除成功");
+        this.msgSuccess( this.$t('global.deleteSuccessMsg') );
       }).catch(() => {
 	  })
     },
     moneydesFormat(row, column) {
       if (row.moneydes === "1") {
-        return '人工入款'
+        return this.$t('pay.memberDepositLog.md')
       }
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', "警告", {
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
+      this.$confirm( this.$t('pay.memberDepositLog.cpe') , this.$t('global.dialogTitle') , {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: "warning"
       }).then(function() {
         return exportMemberDepositLog(queryParams);
       }).then(response => {
-        this.downloadExcel(response, '人工加分日志');
+        this.downloadExcel(response, this.$t('pay.memberDepositLog.mecl') );
       }).catch(() => {
       })
     }

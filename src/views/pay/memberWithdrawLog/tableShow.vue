@@ -1,6 +1,6 @@
 <template>
 <!-- fund popup page -->
-  <el-dialog :close-on-click-modal="false" title="资金明细" :visible.sync="open" width="800px" append-to-body>
+  <el-dialog :close-on-click-modal="false" title="资金明细" :visible.sync="open" width="800px" append-to-body >
     <div class="memberInfo">
       <div class="title">会员基本信息</div>
       <div class="mount" style="width: 12%">
@@ -30,7 +30,24 @@
         <div class="font">{{ data.会员积分 }}</div>
         <div class="font">{{ data.登录时间 }}</div>
         <div class="font">{{ data.会员VIP }}</div>
-        <div class="font">{{ data.会员注单 }}</div>
+        <div style="display: flex;justify-content: flex-start;">
+          <div class="mount" style="width: 60%">
+            <div class="font">{{ data.会员注单 }}</div>
+          </div>
+          <div class="mount" style="width: 40%">
+            <el-button type="primary" plain @click="showForm( data.会员编号 )" style="height: 40px" >查询</el-button>
+            <el-dialog
+              v-dialogDrag
+              append-to-body
+              :visible.sync="showUpdateForm"
+              width="250px"
+            >
+              <el-input placeholder="Enter new code total" v-model="inputValue"></el-input>
+              <el-button @click="showUpdateForm = false">Cancel</el-button>
+              <el-button type="primary" @click="updateCodeTotal">Confirm</el-button>
+            </el-dialog>
+          </div>
+        </div>
         <div class="font" @click="showAddress" style="background-color: #cccc77">{{ address }}</div>
       </div>
     </div>
@@ -86,7 +103,7 @@ member
 <script>
 import {checkTwoLogin} from "@/utils/permission";
 import {
-  getMemberInfo, updateEmail, getMemberLoginAddress, getHistoryRecharge
+  getMemberInfo, updateEmail, getMemberLoginAddress, getHistoryRecharge, updateMemberInfo
 } from '@/api/platform-web/member/memberInfo'
 
 export default {
@@ -101,6 +118,8 @@ export default {
   /*组件值*/
   data() {
     return {
+      showUpdateForm: false,
+      inputValue: '',
       open: false,
       address: '******',
       historyRecharge: "",
@@ -108,6 +127,10 @@ export default {
       data: {},
       playData: [],
       email: '',
+      queryParams: {
+        id: "",
+        codeTotal:""
+      }
     }
   },
   /*组件方法*/
@@ -123,6 +146,16 @@ export default {
       } else {
         return value.length * 0.5
       }
+    },
+    showForm( memberCode ) {
+      this.queryParams.id = memberCode;
+      this.showUpdateForm = true;
+
+    },
+    updateCodeTotal (){
+      this.queryParams.codeTotal = this.inputValue;
+      updateMemberInfo( this.queryParams );
+      this.showUpdateForm = false;
     },
 
     updateEmail(email, id) {
@@ -223,7 +256,7 @@ div {
 }
 
 .renew-btn2{
-  height: 55px;
+  height: 40px;
 }
 
 .title {

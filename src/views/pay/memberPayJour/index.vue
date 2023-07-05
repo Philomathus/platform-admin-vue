@@ -1,21 +1,21 @@
 <template>
   <div class="app-container">
     <div v-loading="totalLoading">
-    <el-button type="primary" @click="copy1">交易笔数 {{ this.totalData.total || 0 }}</el-button>
-    <el-button type="success" @click="copy2">总成功金额 {{ this.totalData.totalMoney || 0 }}</el-button>
-    <el-button type="warning" @click="copy3">补单金额 {{ this.totalData.replenishmentTotalMoney || 0 }}</el-button>
-    <el-button type="info" id="copy4" @click="copy4">成功率 {{ numberUtil.toPercent(this.totalData.failRate || 0 ) }}</el-button>
-    <el-button  type="primary" icon="el-icon-search" size="mini" @click="listCount()" style="margin-left: 20px">统计查询</el-button>
+    <el-button type="primary" @click="copy1">{{ $t('pay.memberPayJour.not') }} {{ this.totalData.total || 0 }}</el-button>
+    <el-button type="success" @click="copy2">{{ $t('pay.memberPayJour.tsa') }} {{ this.totalData.totalMoney || 0 }}</el-button>
+    <el-button type="warning" @click="copy3">{{ $t('pay.memberPayJour.roa') }} {{ this.totalData.replenishmentTotalMoney || 0 }}</el-button>
+    <el-button type="info" id="copy4" @click="copy4">{{ $t('pay.memberPayJour.sr') }} {{ numberUtil.toPercent(this.totalData.failRate || 0 ) }}</el-button>
+    <el-button  type="primary" icon="el-icon-search" size="mini" @click="listCount()" style="margin-left: 20px">{{ $t('pay.memberPayJour.sq') }}</el-button>
     </div>
     <el-form :model="queryParams" ref="queryForm" class="mt10" :inline="true"  v-show="showSearch" label-width="100px">
-      <el-form-item label="回调时间" prop="selectDate" label-width="100px">
+      <el-form-item :label=" $t('pay.memberPayJour.ct') " prop="selectDate" label-width="100px">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
-                        end-placeholder="结束时间" range-separator="至" :default-time="['00:00:00', '23:59:59']" clearable :picker-options="pickerOptions"
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" :start-placeholder=" $t('global.dateTimePickerStartTimePlaceholder') "
+                        :end-placeholder=" $t('global.dateTimePickerEndTimePlaceholder') " :range-separator=" $t('global.dateTimePickerRangeSeparator') " :default-time="['00:00:00', '23:59:59']" clearable :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="status" class="col-w100">
-        <el-select v-model="queryParams.status" placeholder="全部状态" clearable size="small">
+        <el-select v-model="queryParams.status" :placeholder=" $t('pay.memberPayJour.as') " clearable size="small">
           <el-option
             v-for="dict in statusOptions"
             :key="dict.dictValue"
@@ -28,7 +28,7 @@
         <el-select
           filterable
           v-model="queryParams.platformId"
-          placeholder="支付平台"
+          :placeholder=" $t('pay.memberPayJour.pp') "
           clearable
           size="small"
         >
@@ -43,7 +43,7 @@
       <el-form-item prop="channelName">
         <el-input
           v-model="queryParams.channelName"
-          placeholder="支付通道"
+          :placeholder=" $t('pay.memberPayJour.pc') "
           clearable
           size="small"
           style="width: 160px"
@@ -53,7 +53,7 @@
       <el-form-item prop="searchValue">
         <el-input
           v-model.trim="queryParams.searchValue"
-          placeholder="会员ID/会员账号"
+          :placeholder=" $t('pay.memberPayJour.miman') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -62,7 +62,7 @@
       <el-form-item prop="searchOrderNo">
         <el-input
           v-model="queryParams.searchOrderNo"
-          placeholder="上游订单号/订单号"
+          :placeholder=" $t('pay.memberPayJour.uon') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -98,8 +98,8 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
 
     </el-form>
@@ -114,17 +114,17 @@
           :disabled="disabled"
           @click="openExport"
           v-hasPermi="['pay:memberPayJour:export']"
-        >导出
+        >{{ $t('global.exportButton') }}
         </el-button>
       </el-col>
       <el-col :span="10" style="margin-left: 10px">
-        <span style="font-size: 16px;margin-right: 10px">记录刷新</span>
-        <el-select v-model="refreshSec" placeholder="时间间隔" style="width: 110px">
-          <el-option value="5" label="5秒"></el-option>
-          <el-option value="10" label="10秒"></el-option>
-          <el-option value="15" label="15秒"></el-option>
-          <el-option value="20" label="20秒"></el-option>
-          <el-option value="30" label="30秒"></el-option>
+        <span style="font-size: 16px;margin-right: 10px">{{ $t('pay.memberPayJour.rr') }}</span>
+        <el-select v-model="refreshSec" :placeholder=" $t('pay.memberPayJour.ti') " style="width: 110px">
+          <el-option value="5"  :label=" $t('pay.memberPayJour.fs') "></el-option>
+          <el-option value="10" :label=" $t('pay.memberPayJour.ts') "></el-option>
+          <el-option value="15" :label=" $t('pay.memberPayJour.fts') "></el-option>
+          <el-option value="20" :label=" $t('pay.memberPayJour.tws') "></el-option>
+          <el-option value="30" :label=" $t('pay.memberPayJour.ths') "></el-option>
         </el-select>
         <div style="width: 120px;display: inline-block;text-align: center">
           <span>{{ refreshDesc }}</span>
@@ -136,15 +136,15 @@
     </el-row>
 
     <el-table :stripe="true" v-loading="loading" :data="memberPayJourList" :highlight-current-row="true" :default-sort = "{prop: 'updateTime', order: 'descending'}">
-      <el-table-column label="会员ID" min-width="120" align="center" prop="memberId"/>
-      <el-table-column label="会员账号" min-width="120" align="center" prop="userName"/>
-      <el-table-column label="订单号" min-width="190" align="center" prop="orderNo"/>
-      <el-table-column label="支付平台" min-width="120" align="center" prop="platformName"/>
-      <el-table-column label="支付通道" min-width="150" align="center" prop="channelName" :show-overflow-tooltip="true"/>
-      <el-table-column label="费率" min-width="80" align="center" prop="payRateStr"/>
-      <el-table-column label="请求金额" min-width="80" align="center" prop="money"/>
-      <el-table-column label="实际金额" min-width="80" align="center" prop="subMoney"/>
-      <el-table-column label="订单状态" min-width="80" align="center" prop="status">
+      <el-table-column :label=" $t('pay.memberPayJour.mid') " min-width="120" align="center" prop="memberId"/>
+      <el-table-column :label=" $t('pay.memberPayJour.ma') " min-width="120" align="center" prop="userName"/>
+      <el-table-column :label=" $t('pay.memberPayJour.on') " min-width="190" align="center" prop="orderNo"/>
+      <el-table-column :label=" $t('pay.memberPayJour.pp') " min-width="120" align="center" prop="platformName"/>
+      <el-table-column :label=" $t('pay.memberPayJour.pc') " min-width="150" align="center" prop="channelName" :show-overflow-tooltip="true"/>
+      <el-table-column :label=" $t('pay.memberPayJour.rates') " min-width="80" align="center" prop="payRateStr"/>
+      <el-table-column :label=" $t('pay.memberPayJour.ar') " min-width="80" align="center" prop="money"/>
+      <el-table-column :label=" $t('pay.memberPayJour.aa') " min-width="80" align="center" prop="subMoney"/>
+      <el-table-column :label=" $t('pay.memberPayJour.os') " min-width="80" align="center" prop="status">
         <template slot-scope="scope">
           <span v-if="!scope.row.isPatchOrder" :style="{color: (status = statusOptions[parseInt(scope.row.status) + 1]).color}">
             {{ status.dictLabel }}
@@ -154,11 +154,11 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="订单时间" min-width="160" align="center" prop="payTime" sortable/>
-      <el-table-column label="更新时间" min-width="160" align="center" prop="updateTime" sortable/>
-      <el-table-column label="上游订单号" min-width="220" align="center" prop="tradeSn" :show-overflow-tooltip="true"/>
-      <el-table-column label="备注" min-width="180" align="center" prop="remark" :show-overflow-tooltip="true"/>
-      <el-table-column label="操作" min-width="120" align="center" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column :label=" $t('pay.memberPayJour.ot') " min-width="160" align="center" prop="payTime" sortable/>
+      <el-table-column :label=" $t('pay.memberPayJour.ut') " min-width="160" align="center" prop="updateTime" sortable/>
+      <el-table-column :label=" $t('pay.memberPayJour.upon') " min-width="220" align="center" prop="tradeSn" :show-overflow-tooltip="true"/>
+      <el-table-column :label=" $t('pay.memberPayJour.rem') " min-width="180" align="center" prop="remark" :show-overflow-tooltip="true"/>
+      <el-table-column :label=" $t('pay.memberPayJour.opt') " min-width="120" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             type="danger"
@@ -168,7 +168,7 @@
             @click="handlePatchOrder(scope.row)"
             v-show="scope.row.status == 0 || scope.row.status == -1"
             v-hasPermi="['pay:payPlatformNew:patchOrder']"
-          >人工补单
+          >{{ $t('pay.memberPayJour.mor') }}
           </el-button>
         </template>
       </el-table-column>
@@ -183,42 +183,42 @@
       @pagination="getList"
     />
 
-    <el-dialog v-dialogDrag :close-on-click-modal="false" title="人工补单" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title=" $t('pay.memberPayJour.mor') " :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-        <el-form-item label="会员ID" prop="member_id">
+        <el-form-item :label=" $t('pay.memberPayJour.mid') " prop="member_id">
           <el-input v-model="form.memberId" readonly/>
         </el-form-item>
-        <el-form-item label="会员账号" prop="user_name">
+        <el-form-item :label=" $t('pay.memberPayJour.ma') " prop="user_name">
           <el-input v-model="form.userName" readonly/>
         </el-form-item>
-        <el-form-item label="订单编号" prop="order_no">
+        <el-form-item :label=" $t('pay.memberPayJour.on') " prop="order_no">
           <el-input v-model="form.orderNo" readonly/>
         </el-form-item>
-        <el-form-item label="支付平台" prop="platform_name">
+        <el-form-item :label=" $t('pay.memberPayJour.pp') " prop="platform_name">
           <el-input v-model="form.platformName" readonly/>
         </el-form-item>
-        <el-form-item label="支付渠道" prop="channel_name">
+        <el-form-item :label=" $t('pay.memberPayJour.pc') " prop="channel_name">
           <el-input v-model="form.channelName" readonly/>
         </el-form-item>
-        <el-form-item label="订单时间" prop="pay_time">
+        <el-form-item :label=" $t('pay.memberPayJour.ot') " prop="pay_time">
           <el-input v-model="form.payTime" readonly/>
         </el-form-item>
-        <el-form-item label="支付状态" prop="status">
+        <el-form-item :label=" $t('pay.memberPayJour.ps') " prop="status">
           <el-input v-model="form.statusStr" readonly/>
         </el-form-item>
-        <el-form-item label="请求金额" prop="money">
+        <el-form-item :label=" $t('pay.memberPayJour.ar') " prop="money">
           <el-input v-model="form.money" readonly/>
         </el-form-item>
-        <el-form-item label="实际到账金额" prop="subMoney">
-          <el-input v-model="form.subMoney" type="number" placeholder="请输入实际到账金额"/>
+        <el-form-item :label=" $t('pay.memberPayJour.aaa') " prop="subMoney">
+          <el-input v-model="form.subMoney" type="number" :placeholder=" $t('pay.memberPayJour.peta') "/>
         </el-form-item>
-        <el-form-item label="谷歌验证码" prop="googleAuthCode">
-          <el-input v-model="form.googleAuthCode" type="number" placeholder="请输入google验证码"/>
+        <el-form-item :label=" $t('pay.memberPayJour.gc') " prop="googleAuthCode">
+          <el-input v-model="form.googleAuthCode" type="number" :placeholder=" $t('pay.memberPayJour.pegvc') "/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('global.submitButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
     <ExcelPrompt ref="excelPrompt" @downLoadExcel="handleExport"></ExcelPrompt>
@@ -244,7 +244,7 @@ export default {
       refreshSec: '5',
       refreshType: 'primary',
       refreshIcon: 'el-icon-refresh',
-      refreshLabel: '开始刷新',
+      refreshLabel: this.$t('pay.memberPayJour.sref') ,
       refreshDesc: '',
       pickerOptions: { shortcuts: pickerDateTimeShortcuts },
       //统计总的数据
@@ -293,10 +293,10 @@ export default {
       // 表单校验
       rules: {
         subMoney: [
-          { required: true, message: '实际到账金额不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('pay.memberPayJour.tac'), trigger: 'blur' }
         ],
         googleAuthCode: [
-          { required: true, message: 'google验证码不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('pay.memberPayJour.gce'), trigger: 'blur' }
         ]
       }
     }
@@ -314,7 +314,7 @@ export default {
   activated() {
     this.refreshType = 'primary'
     this.refreshIcon = 'el-icon-refresh'
-    this.refreshLabel = '开始刷新'
+    this.refreshLabel = this.$t('pay.memberPayJour.sref')
     this.refreshDesc = ''
 
     this.stopRefresh()
@@ -379,7 +379,7 @@ export default {
         const reg = '^[0-9a-zA-Z_]{1,}$'
         let flag = this.queryParams.searchValue.match(reg)
         if(!flag){
-          this.msgError("会员ID/会员账号只能输入数字及下划线")
+          this.msgError( this.$t('pay.memberPayJour.onu') )
           return
         }
       }
@@ -419,14 +419,14 @@ export default {
       const queryParams = this.queryParams
       queryParams.downLoadDate = date
       queryParams.selectDate = []
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+      this.$confirm( this.$t('pay.memberPayJour.cpe') , this.$t(''), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function() {
         return exportMemberPayJour(queryParams)
       }).then(response => {
-        this.downloadExcel(response, '线上充值')
+        this.downloadExcel(response, this.$t('pay.memberPayJour.otu') )
         loading.close()
         this.disabled = false
       }).catch(() => {
@@ -437,10 +437,10 @@ export default {
       getMemberPayJour(row.id).then(response => {
         this.form = response.data
         if (this.form.status == 0) {
-          this.form.statusStr = '失败'
+          this.form.statusStr = this.$t('pay.memberPayJour.fail')
           this.open = true
         } else if (this.form.status == -1) {
-          this.form.statusStr = '待确认'
+          this.form.statusStr = this.$t('pay.memberPayJour.tbc')
           this.open = true
         }else {
           this.getList()
@@ -451,7 +451,7 @@ export default {
       if (this.refreshType === 'primary') {
         this.refreshType = 'danger'
         this.refreshIcon = 'el-icon-circle-close'
-        this.refreshLabel = '停止刷新'
+        this.refreshLabel = this.$t('pay.memberPayJour.stor')
         this.refreshDesc = ''
 
         this.stopRefresh()
@@ -460,7 +460,7 @@ export default {
       } else {
         this.refreshType = 'primary'
         this.refreshIcon = 'el-icon-refresh'
-        this.refreshLabel = '开始刷新'
+        this.refreshLabel = this.$t('pay.memberPayJour.stor')
         this.refreshDesc = ''
 
         this.stopRefresh()
@@ -474,7 +474,7 @@ export default {
           thet.getList()
           secs = thet.refreshSec
         }
-        thet.refreshDesc = secs + '秒后开始刷新'
+        thet.refreshDesc = secs + this.$t('pay.memberPayJour.rsas')
         secs--
       }, 1000)
     },

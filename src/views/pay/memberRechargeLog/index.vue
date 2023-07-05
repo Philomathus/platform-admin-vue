@@ -1,27 +1,26 @@
 <template>
   <div class="app-container">
     <div v-loading="totalLoading">
-    <el-button type="success" @click="copy1">交易笔数 {{ this.totalData.total || 0}}</el-button>
-    <el-button type="warning" @click="copy2">总成功金额 {{ this.totalData.successMoney || 0 }}</el-button>
-    <el-button type="info" id="copy3" @click="copy3">成功率 {{
-        numberUtil.toPercent(this.totalData.successRate || 0)
-      }}
+    <el-button type="success" @click="copy1">{{ $t('pay.memberRechargeLog.not') }} {{ this.totalData.total || 0}}</el-button>
+    <el-button type="warning" @click="copy2">{{ $t('pay.memberRechargeLog.tsa') }} {{ this.totalData.successMoney || 0 }}</el-button>
+    <el-button type="info" id="copy3" @click="copy3">{{ $t('pay.memberRechargeLog.sr') }}
+      {{numberUtil.toPercent(this.totalData.successRate || 0) }}
     </el-button>
-    <el-button type="primary" icon="el-icon-search" size="mini" @click="listCount()" style="margin-left: 20px;padding: 10px">统计查询</el-button>
+    <el-button type="primary" icon="el-icon-search" size="mini" @click="listCount()" style="margin-left: 20px;padding: 10px">{{ $t('pay.memberRechargeLog.sq') }}</el-button>
     </div>
     <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 10px" v-show="showSearch"
              label-width="100px">
       <el-form-item  prop="selectDate" label-width="70px">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '360px'}" start-placeholder="开始时间"
-                        end-placeholder="结束时间" range-separator="至" :default-time="['00:00:00', '23:59:59']" clearable
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '360px'}" :start-placeholder=" $t('global.dateTimePickerStartTimePlaceholder') "
+                        :end-placeholder=" $t('global.dateTimePickerEndTimePlaceholder') " :range-separator=" $t('global.dateTimePickerRangeSeparator') " :default-time="['00:00:00', '23:59:59']" clearable
                         :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="status">
         <el-select
           v-model="queryParams.status"
-          placeholder="全部状态"
+          :placeholder=" $t('pay.memberRechargeLog.as') "
           clearable
           size="small"
           style="width: 130px"
@@ -37,7 +36,7 @@
       <el-form-item prop="orderNo" style="width: 160px;">
         <el-input
           v-model="queryParams.orderNo"
-          placeholder="订单号"
+          :placeholder=" $t('pay.memberRechargeLog.on') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -46,7 +45,7 @@
       <el-form-item prop="userName" style="width: 140px;">
         <el-input
           v-model.trim="queryParams.searchValue"
-          placeholder="会员ID/会员账号"
+          :placeholder=" $t('pay.memberRechargeLog.mima') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -64,7 +63,7 @@
       <el-form-item prop="rechargeMoney">
         <el-input
           v-model="queryParams.priceMin"
-          placeholder="充值￥"
+          :placeholder=" $t('pay.memberRechargeLog.ry') "
           clearable
           autocomplete="on"
           min="0"
@@ -77,7 +76,7 @@
         -
         <el-input
           v-model="queryParams.priceMax"
-          placeholder="区间￥"
+          :placeholder=" $t('pay.memberRechargeLog.zy') "
           clearable
           autocomplete="on"
           min="0"
@@ -92,7 +91,7 @@
         <el-select
           v-model="queryParams.bankNameUser"
           filterable
-          placeholder="银行-收款人"
+          :placeholder=" $t('pay.memberRechargeLog.bp') "
           clearable
           size="small"
           style="width: 160px"
@@ -109,7 +108,7 @@
       <el-form-item prop="rechargeUserName" style="width: 120px;">
         <el-input
           v-model="queryParams.rechargeUserName"
-          placeholder="充值人"
+          :placeholder=" $t('pay.memberRechargeLog.rec') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -118,14 +117,14 @@
       <el-form-item prop="opName" style="width: 120px;">
         <el-input
           v-model="queryParams.opName"
-          placeholder="操作人"
+          :placeholder=" $t('pay.memberRechargeLog.opt') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
       </el-form-item>
 
     </el-form>
@@ -138,17 +137,17 @@
           size="mini"
           @click="openExport"
           v-hasPermi="['pay:memberRechargeLog:export']"
-        >导出
+        >{{ $t('global.exportButton') }}
         </el-button>
       </el-col>
       <el-col :span="10" style="margin-left: 10px">
-        <span style="font-size: 16px;margin-right: 10px">记录刷新</span>
-        <el-select v-model="refreshSec" placeholder="时间间隔" style="width: 110px">
-          <el-option value="5" label="5秒"></el-option>
-          <el-option value="10" label="10秒"></el-option>
-          <el-option value="15" label="15秒"></el-option>
-          <el-option value="20" label="20秒"></el-option>
-          <el-option value="30" label="30秒"></el-option>
+        <span style="font-size: 16px;margin-right: 10px">{{ $t('pay.memberRechargeLog.rr') }}</span>
+        <el-select v-model="refreshSec" :placeholder=" $t('pay.memberRechargeLog.ti') " style="width: 110px">
+          <el-option value="5" :label=" $t('pay.memberRechargeLog.fs') "></el-option>
+          <el-option value="10" :label=" $t('pay.memberRechargeLog.ts') "></el-option>
+          <el-option value="15" :label=" $t('pay.memberRechargeLog.fts') "></el-option>
+          <el-option value="20" :label=" $t('pay.memberRechargeLog.tws') "></el-option>
+          <el-option value="30" :label=" $t('pay.memberRechargeLog.ths') "></el-option>
         </el-select>
         <div style="width: 120px;display: inline-block;text-align: center">
           <span>{{ refreshDesc }}</span>
@@ -163,39 +162,39 @@
 
     <el-table v-loading="loading" :data="memberRechargeLogList" :highlight-current-row="true"
               :row-class-name="tableRowClassNameWithdraw">
-      <el-table-column label="复制" align="center">
+      <el-table-column :label=" $t('pay.memberRechargeLog.rep') " align="center">
         <template slot-scope="scope">
           <el-button
             type="primary" size="mini"
             @click="handleCopy(scope.row)"
-          >复制
+          >{{ $t('pay.memberRechargeLog.rep') }}
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="会员ID" :show-overflow-tooltip="true" align="center" prop="memberId" min-width="120"/>
-      <el-table-column label="会员账号" align="center" prop="userName" min-width="90" show-overflow-tooltip/>
-      <el-table-column label="绑卡姓名" align="center" prop="memberCardRealName" min-width="90" show-overflow-tooltip/>
+      <el-table-column :label=" $t('pay.memberRechargeLog.mid') " :show-overflow-tooltip="true" align="center" prop="memberId" min-width="120"/>
+      <el-table-column :label=" $t('pay.memberRechargeLog.mac') " align="center" prop="userName" min-width="90" show-overflow-tooltip/>
+      <el-table-column :label=" $t('pay.memberRechargeLog.cn') " align="center" prop="memberCardRealName" min-width="90" show-overflow-tooltip/>
 <!--      <el-table-column label="入款姓名" min-width="120" align="center" prop="rechargeUserName"/>-->
-      <el-table-column label="充值人姓名" :show-overflow-tooltip="true" align="center" prop="rechargeUserName"
+      <el-table-column :label=" $t('pay.memberRechargeLog.rn') " :show-overflow-tooltip="true" align="center" prop="rechargeUserName"
                        min-width="90"/>
-      <el-table-column label="充值金额" align="center" prop="rechargeMoney" min-width="90"/>
-      <el-table-column label="收款人" :show-overflow-tooltip="true" align="center" prop="bankUserName" min-width="90"/>
-      <el-table-column label="银行名称" :show-overflow-tooltip="true" align="center" prop="bankName" min-width="120"/>
-      <el-table-column label="订单号" :show-overflow-tooltip="true" align="center" prop="orderNo" min-width="220"/>
-      <el-table-column label="状态" align="center" prop="status" min-width="120">
+      <el-table-column :label=" $t('pay.memberRechargeLog.ra') " align="center" prop="rechargeMoney" min-width="90"/>
+      <el-table-column :label=" $t('pay.memberRechargeLog.pay') " :show-overflow-tooltip="true" align="center" prop="bankUserName" min-width="90"/>
+      <el-table-column :label=" $t('pay.memberRechargeLog.bn') " :show-overflow-tooltip="true" align="center" prop="bankName" min-width="120"/>
+      <el-table-column :label=" $t('pay.memberRechargeLog.on') " :show-overflow-tooltip="true" align="center" prop="orderNo" min-width="220"/>
+      <el-table-column :label=" $t('global.status') " align="center" prop="status" min-width="120">
         <template slot-scope="scope">
           <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">{{
               status.dictLabel
             }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="是否首次" align="center" prop="first" :formatter="firstStatusFormat" min-width="75"/>
-      <el-table-column label="操作人" align="center" prop="opName" min-width="120"/>
-      <el-table-column label="用户下单时间" align="center" prop="createTime" width="160"/>
-      <el-table-column label="最后修改时间" align="center" prop="updateTime" width="160"/>
-      <el-table-column label="提交IP" min-width="120" align="center" prop="ip"/>
-      <el-table-column label="备注" :show-overflow-tooltip="true" align="center" prop="remark" width="160"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right" width="240">
+      <el-table-column :label=" $t('pay.memberRechargeLog.ift') " align="center" prop="first" :formatter="firstStatusFormat" min-width="75"/>
+      <el-table-column :label=" $t('pay.memberRechargeLog.opt') " align="center" prop="opName" min-width="120"/>
+      <el-table-column :label=" $t('pay.memberRechargeLog.uot') " align="center" prop="createTime" width="160"/>
+      <el-table-column :label=" $t('pay.memberRechargeLog.lmt') " align="center" prop="updateTime" width="160"/>
+      <el-table-column :label=" $t('pay.memberRechargeLog.sip') " min-width="120" align="center" prop="ip"/>
+      <el-table-column :label=" $t('pay.memberRechargeLog.rem') " :show-overflow-tooltip="true" align="center" prop="remark" width="160"/>
+      <el-table-column :label=" $t('pay.memberRechargeLog.opt') " align="center" class-name="small-padding fixed-width" fixed="right" width="240">
         <template slot-scope="scope">
           <el-button
             size="small"
@@ -205,7 +204,7 @@
             v-show="scope.row.status === 0"
             @click="handleFirstAudit(scope.row)"
             v-hasPermi="['pay:memberRechargeLog:firstAudit']"
-          >初审
+          >{{ $t('pay.memberRechargeLog.pr') }}
           </el-button>
           <el-button
             size="small"
@@ -215,7 +214,7 @@
             v-show="scope.row.status === 1"
             @click="handleFinalAudit(scope.row)"
             v-hasPermi="['pay:memberRechargeLog:finalAudit']"
-          >终审通过
+          >{{ $t('pay.memberRechargeLog.fa') }}
           </el-button>
           <el-button
             size="small"
@@ -225,7 +224,7 @@
             v-show="scope.row.status === 0 || scope.row.status === 1"
             @click="handleRefusedAudit(scope.row)"
             v-hasPermi="['pay:memberRechargeLog:refusedAudit']"
-          >审核不通过
+          >{{ $t('pay.memberRechargeLog.adp') }}
           </el-button>
           <el-button
             size="small"
@@ -235,7 +234,7 @@
             v-show="scope.row.status === 2 || scope.row.status === 4"
             @click="handleRecoverAudit(scope.row)"
             v-hasPermi="['pay:memberRechargeLog:recoverAudit']"
-          >恢复
+          >{{ $t('pay.memberRechargeLog.reco') }}
           </el-button>
         </template>
       </el-table-column>
@@ -251,12 +250,12 @@
     />
 
     <!-- 添加或修改公司入款信息对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" title="审核不通过原因" :visible.sync="open" width="260px"
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title=" $t('pay.memberRechargeLog.rpa') " :visible.sync="open" width="260px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules">
         <el-select
           v-model="form.refusedAuditReason"
-          placeholder="请选择不通过原因"
+          :placeholder=" $t('pay.memberRechargeLog.psr') "
           clearable
           size="small"
         >
@@ -268,7 +267,7 @@
           />
           <el-input
             v-model="form.refusedAuditReason"
-            placeholder="请输入手写备注"
+            :placeholder=" $t('pay.memberRechargeLog.phn') "
             clearable
             size="small"
           />
@@ -276,8 +275,8 @@
 
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitRefusedAudit">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitRefusedAudit">{{ $t('global.confirmButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
     <ExcelPrompt ref="excelPrompt" @downLoadExcel="handleExport"></ExcelPrompt>
@@ -308,7 +307,7 @@
         refreshSec: '5',
         refreshType: 'primary',
         refreshIcon: 'el-icon-refresh',
-        refreshLabel: '开始刷新',
+        refreshLabel: this.$t('pay.memberRechargeLog.sref'),
         refreshDesc: '',
         pickerOptions: {shortcuts: pickerDateTimeShortcuts},
         totalData: {},
@@ -361,7 +360,7 @@
         // 表单校验
         rules: {
           refusedAuditReason: [
-            {required: true, message: '审核不通过原因不能为空', trigger: 'blur'}
+            {required: true, message: this.$t('pay.memberRechargeLog.adn'), trigger: 'blur'}
           ]
         }
       }
@@ -383,7 +382,7 @@
     activated() {
       this.refreshType = 'primary'
       this.refreshIcon = 'el-icon-refresh'
-      this.refreshLabel = '开始刷新'
+      this.refreshLabel = this.$t('pay.memberRechargeLog.sref')
       this.refreshDesc = ''
 
     this.stopRefresh()
@@ -466,7 +465,7 @@
         const reg = '^[0-9a-zA-Z_]{1,}$'
         let flag = this.queryParams.searchValue.match(reg)
         if(!flag){
-          this.msgError("会员ID/会员账号只能输入数字及下划线")
+          this.msgError( this.$t('pay.memberRechargeLog.onu') )
           return
         }
       }
@@ -475,14 +474,14 @@
       var max=this.queryParams.priceMax
       if ((min!="" || min!=null) && (max!="" || max!=null)){
         if (parseInt(min)>parseInt(max)){
-            this.$message.warning("请输入正确的充值金额区间值")
+            this.$message.warning( this.$t('pay.memberRechargeLog.pec') )
           }else {
             this.getList()
           }
       }else if ((min=="" || min==null) && (max=="" || max==null)){
         this.getList()
       }else {
-        this.$message.warning("请输入正确的充值金额区间值")
+        this.$message.warning( this.$t('pay.memberRechargeLog.pec') )
       }
 
       // this.listCount()
@@ -516,7 +515,7 @@
       oInput.select(); // 选择对象;
       document.execCommand("Copy"); // 执行浏览器复制命令
       this.$message({
-        message: '复制成功',
+        message: this.$t('pay.memberRechargeLog.rs'),
         type: 'success'
       });
       oInput.remove()
@@ -534,7 +533,7 @@
       getMemberRechargeLog(id).then(response => {
         this.form = response.data
         this.open = true
-        this.title = '修改公司入款信息'
+        this.title = this.$t('pay.memberRechargeLog.mcdi')
       })
     },
     openExport() {
@@ -545,14 +544,14 @@
       const queryParams = this.queryParams
       queryParams.selectDate = []
       queryParams.downLoadDate = date
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+      this.$confirm( this.$t('pay.memberRechargeLog.cpe'), this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportMemberRechargeLog(queryParams)
       }).then(response => {
-        this.downloadExcel(response, '公司入款')
+        this.downloadExcel(response, this.$t('pay.memberRechargeLog.cd'))
       }).catch(() => {
       })
     },
@@ -616,7 +615,7 @@
       if (this.refreshType === 'primary') {
         this.refreshType = 'danger'
         this.refreshIcon = 'el-icon-circle-close'
-        this.refreshLabel = '停止刷新'
+        this.refreshLabel = this.$t('pay.memberRechargeLog.stor')
         this.refreshDesc = ''
         this.stopRefresh()
         this.refreshQuery()
@@ -624,7 +623,7 @@
       } else {
         this.refreshType = 'primary'
         this.refreshIcon = 'el-icon-refresh'
-        this.refreshLabel = '开始刷新'
+        this.refreshLabel = this.$t('pay.memberRechargeLog.sref')
         this.refreshDesc = ''
 
         this.stopRefresh()
@@ -638,7 +637,7 @@
           thet.refreshQuery()
           secs = thet.refreshSec
         }
-        thet.refreshDesc = secs + '秒后开始刷新'
+        thet.refreshDesc = secs + this.$t('pay.memberRechargeLog.rsas')
         secs--
       }, 1000)
     },

@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <div v-loading="totalLoading">
-    <el-button type="primary" @click="copy1">通道总数 {{ this.totalData.totalcount || 0 }}</el-button>
-    <el-button type="success" @click="copy2">总成功金额 {{ this.totalData.subMoney || 0 }}</el-button>
-    <el-button type="success" @click="copy2">手续费总额 {{ this.totalData.handlingfeeTotal || 0 }}</el-button>
-    <el-button type="success" @click="copy2">结算总金额 {{ (this.totalData.subMoney - this.totalData.handlingfeeTotal || 0 ).toFixed(2)}}</el-button>
+    <el-button type="primary" @click="copy1">{{ $t('pay.memberPayList.tnoc') }} {{ this.totalData.totalcount || 0 }}</el-button>
+    <el-button type="success" @click="copy2">{{ $t('pay.memberPayList.tsa') }} {{ this.totalData.subMoney || 0 }}</el-button>
+    <el-button type="success" @click="copy2">{{ $t('pay.memberPayList.thf') }} {{ this.totalData.handlingfeeTotal || 0 }}</el-button>
+    <el-button type="success" @click="copy2">{{ $t('pay.memberPayList.tset') }} {{ (this.totalData.subMoney - this.totalData.handlingfeeTotal || 0 ).toFixed(2)}}</el-button>
     <!--    <el-button type="info" id="copy4" @click="copy4">成功率 {{ numberUtil.toPercent(this.totalData.failRate) }}</el-button>-->
     <el-button type="primary" icon="el-icon-search" size="mini" @click="listCounts()" style="margin-left: 20px">
       {{ $t('members.memberInfo.index.button.statQ') }}
@@ -12,13 +12,13 @@
     </div>
 
     <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 10px" v-show="showSearch" label-width="100px">
-      <el-form-item label="更新时间" prop="updateTime" label-width="70px">
+      <el-form-item :label=" $t('pay.memberPayList.ut') " prop="updateTime" label-width="70px">
         <el-date-picker clearable size="small"
                         v-model="queryParams.updateTime"
                         type="date"
                         format="yyyy-MM-dd"
                         value-format="yyyy-MM-dd"
-                        placeholder="选择日期"
+                        :placeholder=" $t('global.selectDate') "
                         style="width: 140px"
                         :picker-options="pickerOptions">
         </el-date-picker>
@@ -27,7 +27,7 @@
         <el-select
           filterable
           v-model="queryParams.platformId"
-          placeholder="支付平台"
+          :placeholder=" $t('pay.memberPayList.pp') "
           clearable
           size="small"
         >
@@ -42,7 +42,7 @@
       <el-form-item prop="channelName">
         <el-input
           v-model="queryParams.channelName"
-          placeholder="支付通道"
+          :placeholder=" $t('pay.memberPayList.pc') "
           clearable
           size="small"
           style="width: 160px"
@@ -50,8 +50,8 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -65,21 +65,21 @@
           :disabled="disabled"
           @click="handleExport"
           v-hasPermi="['pay:memberPayList:export']"
-        >导出
+        >{{ $t('global.exportButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table :stripe="true" v-loading="loading" :data="memberPayJourList" :highlight-current-row="true">
-      <el-table-column label="支付平台" min-width="120" align="center" prop="platformName"/>
-      <el-table-column label="支付通道" min-width="150" align="center" prop="channelName" :show-overflow-tooltip="true"/>
-      <el-table-column label="请求金额" min-width="80" align="center" prop="money"/>
-      <el-table-column label="实际金额" min-width="80" align="center" prop="subMoney"/>
-      <el-table-column label="费率" min-width="80" align="center" prop="channelPayRate"/>
-      <el-table-column label="手续费" min-width="80" align="center" prop="handlingfee"/>
-      <el-table-column label="结算金额" min-width="80" align="center" prop="remaining"/>
-      <el-table-column label="更新时间" min-width="160" align="center" prop="updateTime"/>
+      <el-table-column :label=" $t('pay.memberPayList.pp') " min-width="120" align="center" prop="platformName"/>
+      <el-table-column :label=" $t('pay.memberPayList.pc') " min-width="150" align="center" prop="channelName" :show-overflow-tooltip="true"/>
+      <el-table-column :label=" $t('pay.memberPayList.ar') " min-width="80" align="center" prop="money"/>
+      <el-table-column :label=" $t('pay.memberPayList.aa') " min-width="80" align="center" prop="subMoney"/>
+      <el-table-column :label=" $t('pay.memberPayList.rate') " min-width="80" align="center" prop="channelPayRate"/>
+      <el-table-column :label=" $t('pay.memberPayList.hf') " min-width="80" align="center" prop="handlingfee"/>
+      <el-table-column :label=" $t('pay.memberPayList.sa') " min-width="80" align="center" prop="remaining"/>
+      <el-table-column :label=" $t('pay.memberPayList.ut') " min-width="160" align="center" prop="updateTime"/>
     </el-table>
 
     <pagination
@@ -111,7 +111,7 @@ export default {
       refreshSec: '5',
       refreshType: 'primary',
       refreshIcon: 'el-icon-refresh',
-      refreshLabel: '开始刷新',
+      refreshLabel: this.$t('pay.memberPayList.sr') ,
       refreshDesc: '',
       pickerOptions: {shortcuts: toyesDayshortcuts},
       //统计总的数据
@@ -150,7 +150,7 @@ export default {
       // 表单校验
       rules: {
         subMoney: [
-          { required: true, message: '实际到账金额不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('pay.memberPayList.tac'), trigger: 'blur' }
         ],
       }
     }
@@ -168,7 +168,7 @@ export default {
   activated() {
     this.refreshType = 'primary'
     this.refreshIcon = 'el-icon-refresh'
-    this.refreshLabel = '开始刷新'
+    this.refreshLabel = this.$t('pay.memberPayList.sr')
     this.refreshDesc = ''
 
     this.stopRefresh()
@@ -260,14 +260,14 @@ export default {
     handleExport() {
       this.disabled = true
       const queryParams = this.queryParams
-      this.$confirm('确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...', '警告', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
+      this.$confirm( this.$t('pay.memberPayList.cpe'), this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function() {
         return exportMemberPayJour(queryParams)
       }).then(response => {
-        this.downloadExcel(response, '线上通道报表')
+        this.downloadExcel(response, this.$t('pay.memberPayList.ocr'))
         loading.close()
         this.disabled = false
       }).catch(() => {
@@ -278,10 +278,10 @@ export default {
       getMemberPayJour(row.id).then(response => {
         this.form = response.data
         if (this.form.status == 0) {
-          this.form.statusStr = '失败'
+          this.form.statusStr = this.$t('pay.memberPayList.fail')
           this.open = true
         } else if (this.form.status == -1) {
-          this.form.statusStr = '待确认'
+          this.form.statusStr = this.$t('pay.memberPayList.tbc')
           this.open = true
         }else {
           this.getList()
@@ -292,7 +292,7 @@ export default {
       if (this.refreshType === 'primary') {
         this.refreshType = 'danger'
         this.refreshIcon = 'el-icon-circle-close'
-        this.refreshLabel = '停止刷新'
+        this.refreshLabel = this.$t('pay.memberPayList.stor')
         this.refreshDesc = ''
 
         this.stopRefresh()
@@ -301,7 +301,7 @@ export default {
       } else {
         this.refreshType = 'primary'
         this.refreshIcon = 'el-icon-refresh'
-        this.refreshLabel = '开始刷新'
+        this.refreshLabel = this.$t('pay.memberPayList.sr')
         this.refreshDesc = ''
 
         this.stopRefresh()
@@ -315,7 +315,7 @@ export default {
           thet.getList()
           secs = thet.refreshSec
         }
-        thet.refreshDesc = secs + '秒后开始刷新'
+        thet.refreshDesc = secs + this.$t('pay.memberPayList.rsas')
         secs--
       }, 1000)
     },

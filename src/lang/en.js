@@ -4627,6 +4627,29 @@ export default {
       star: 'Start Refreshing',
       rsas: 'Refresh starts after seconds',
 
+    },
+    memberPayList:{
+      tnoc: 'Total Number of Channels',
+      tsa: 'Total Success Amount',
+      thf: 'Total Handling Fee',
+      tset: 'Total Settlement Amount',
+      ut: 'Update Time',
+      pp: 'Payment Platforms',
+      pc: 'Payment Channels',
+      ar: 'Amount Requested',
+      aa: 'Actual Amount',
+      rate: 'Rates',
+      hf: 'Handling Fee',
+      sa: 'Settlement Amount',
+      sr: 'Start Refreshing',
+      tac: 'The actual arrival amount cannot be empty',
+      cpe: 'Confirm processing Excel and download, there will be a delay when there is a large amount of data, please be patient...',
+      ocr: 'Online Channel Reports',
+      fail: 'Failure',
+      tbc: 'To be confirmed',
+      stor: 'Stop Refreshing',
+      rsas: 'Refresh starts after seconds',
+
     }
   }
 

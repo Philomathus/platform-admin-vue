@@ -289,16 +289,16 @@
     <!--密码-->
     <!--TODO: CHANGE AND ADD FIELDS -->
     <el-row v-if="index===10">
-      <el-form ref="paypasswordForm" :model="paypasswordForm" :rules="paypasswordRules" label-width="110px">
+      <el-form ref="passwordForm" :model="password" :rules="passwordRules" label-width="110px">
         <el-form-item :label="$t('liveWeb.liveUserMore.tab9.passwordLabel')" prop="password">
-          <el-input v-model="form.payPassword" :placeholder="$t('liveWeb.liveUserMore.tab9.passwordPlaceholder')"/>
+          <el-input v-model="form.password" :placeholder="$t('liveWeb.liveUserMore.tab9.passwordPlaceholder')"/>
         </el-form-item>
         <el-form-item :label="$t('liveWeb.liveUserMore.tab9.googleAuthCodeLabel')" prop="googleAuthCode">
           <el-input v-model="form.googleAuthCode" :placeholder="$t('liveWeb.liveUserMore.tab9.googleAuthCodePlaceholder')"/>
         </el-form-item>
         <el-form-item class="edit-close-btn">
           <el-button type="primary"
-                     @click="handlePaypassword()"
+                     @click="handleLivePassword()"
                      v-has-permi="['admin:liveUser:reset']">{{$t('liveWeb.liveUserMore.tab9.confirmButton')}}
           </el-button>
           <el-button @click="visible = false">{{$t('liveWeb.liveUserMore.tab9.cancelButton')}}</el-button>
@@ -329,7 +329,7 @@
       updateLiveUserBank,
       delLiveUserBank,
       resetPaypassword,
-      liveFullMobile
+      liveFullMobile, resetLivePassword
     } from "@/api/live-web/liveUser";
     import {checkTwoLogin} from "@/utils/permission";
 
@@ -367,6 +367,15 @@
                   {max: 30, message: this.$t('liveWeb.liveUserMore.tab9.validations.payPasswordMax')}
                 ],
               },
+
+              passwordRules: {
+                payPassword: [
+                  {required: true, message: this.$t('liveWeb.liveUserMore.tab9.validations.payPassword'), trigger: 'blur'},
+                  {max: 6, message: this.$t('liveWeb.liveUserMore.tab9.validations.payPasswordMax')},
+                  {min: 6, message: this.$t('liveWeb.liveUserMore.tab9.validations.payPasswordMax')}
+                ],
+              },
+
               //手机号校验规则
               mobileRules: {
                 mobile: [
@@ -630,6 +639,30 @@
               this.$notify.error(error)
             }).finally(() => {
               this.loading = false
+            })
+          },
+
+          handleLivePassword() {
+            this.$refs['passwordForm'].validate(valid => {
+              if (valid) {
+                this.loading = true
+                resetLivePassword({
+                  password: this.form.password,
+                  googleAuthCode: this.form.googleAuthCode,
+                  id: this.userId
+                }).then((res) => {
+                  if (res.code === 0) {
+                    this.resetForm('passwordForm')
+                    this.visible = false
+                    this.$notify.success(res.msg)
+                    this.$emit('refMemeberData')
+                  }
+                }).catch((error) => {
+                  this.$notify.error(error)
+                }).finally(() => {
+                  this.loading = false
+                })
+              }
             })
           },
 

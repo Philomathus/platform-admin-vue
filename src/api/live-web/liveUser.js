@@ -71,6 +71,8 @@ export function resetPaypassword(query) {
   })
 }
 
+
+
 // 收礼物日志列表
 export function receiveProplist(query) {
   return request({
@@ -240,6 +242,14 @@ export function changeAuth(query) {
   return request({
     url: url.platformWeb + '/admin/liveUser/change_auth',
     method: 'put',
+    params: query
+  })
+}
+
+export function resetLivePassword(query) {
+  return request({
+    url: url.platformWeb + '/admin/liveUser/resetPass',
+    method: 'post',
     params: query
   })
 }

@@ -92,6 +92,7 @@
 
     <el-table :stripe="true" v-loading="loading" :data="payPlatformNewList" class="el-table--border">
 <!--      <el-table-column type="selection" width="55" align="center"/>-->
+      <el-table-column label="平台ID" prop="id" align="center" width="100"/>
       <el-table-column label="平台名称" prop="name" align="center" width="200"/>
       <el-table-column label="平台编码" prop="code" align="center" width="200"/>
       <el-table-column label="平台下单接口地址" :show-overflow-tooltip="true"  width="600" prop="platPayUrl"/>

@@ -42,9 +42,9 @@
               :visible.sync="showUpdateForm"
               width="250px"
             >
-              <el-input placeholder="Enter new code total" v-model="inputValue"></el-input>
-              <el-button @click="showUpdateForm = false">Cancel</el-button>
-              <el-button type="primary" @click="updateCodeTotal">Confirm</el-button>
+              <el-input placeholder="请输入会员打码" v-model="inputValue"></el-input>
+              <el-button @click="showUpdateForm = false">{{ $t('global.cancelButton') }}</el-button>
+              <el-button type="primary" @click="updateCodeTotal">{{ $t('global.confirmButton') }}</el-button>
             </el-dialog>
           </div>
         </div>

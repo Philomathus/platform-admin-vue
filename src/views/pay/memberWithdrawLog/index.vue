@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div v-loading="totalLoading">
-      <el-button type="success" @click="copy1">成功出款笔数 {{ this.totalData.total || 0 }}</el-button>
+      <el-button type="success" @click="copy1">{{ $t('pay.memberWithdrawLog.nosd') }} {{ this.totalData.total || 0 }}</el-button>
       <el-button type="warning" @click="copy2">总出款金额 {{ this.totalData.successTotal || 0 }}</el-button>
       <el-button type="info" @click="copy3">成功率 {{ numberUtil.toPercent(this.totalData.successRate) }}</el-button>
       <el-button type="primary" icon="el-icon-search" size="mini" @click="getCountTotal()" style="margin-left: 20px">

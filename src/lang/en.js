@@ -4702,6 +4702,10 @@ export default {
       stor: 'Stop Refreshing',
       rsas: 'Refresh starts after seconds',
 
+    },
+    memberWithdrawLog:{
+      nosd: 'Number of successful disbursements',
+      tad: 'Total amount disbursed'
     }
   }
 

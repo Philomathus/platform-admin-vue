@@ -4805,6 +4805,10 @@ export default {
       stor: '停止刷新',
       rsas: '秒后开始刷新',
 
+    },
+    memberWithdrawLog:{
+      nosd: '成功出款笔数',
+
     }
   }
 

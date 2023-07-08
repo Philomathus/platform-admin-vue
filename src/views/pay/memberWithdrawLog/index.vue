@@ -2,10 +2,10 @@
   <div class="app-container">
     <div v-loading="totalLoading">
       <el-button type="success" @click="copy1">{{ $t('pay.memberWithdrawLog.nosd') }} {{ this.totalData.total || 0 }}</el-button>
-      <el-button type="warning" @click="copy2">总出款金额 {{ this.totalData.successTotal || 0 }}</el-button>
-      <el-button type="info" @click="copy3">成功率 {{ numberUtil.toPercent(this.totalData.successRate) }}</el-button>
+      <el-button type="warning" @click="copy2">{{ $t('pay.memberWithdrawLog.nosd') }}  {{ this.totalData.successTotal || 0 }}</el-button>
+      <el-button type="info" @click="copy3">{{ $t('pay.memberWithdrawLog.sr') }} {{ numberUtil.toPercent(this.totalData.successRate) }}</el-button>
       <el-button type="primary" icon="el-icon-search" size="mini" @click="getCountTotal()" style="margin-left: 20px">
-        统计查询
+        {{ $t('pay.memberWithdrawLog.sq') }}
       </el-button>
     </div>
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="100px"
@@ -13,14 +13,14 @@
     >
       <el-form-item prop="searchTime">
         <el-date-picker type="datetimerange" v-model="queryParams.searchTime" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" start-placeholder="开始时间"
-                        end-placeholder="结束时间" range-separator="至" :default-time="['00:00:00', '23:59:59']" clearable
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" :start-placeholder=" $t('global.dateTimePickerStartTimePlaceHolder') "
+                        :end-placeholder=" $t('global.dateTimePickerEndTimePlaceHolder') " :range-separator=" $t('global.selectDateRangeSeparator') " :default-time="['00:00:00', '23:59:59']" clearable
                         :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
       <el-form-item prop="status" style="width: 130px">
-        <el-select v-model="queryParams.status" placeholder="全部状态" clearable size="small">
-          <el-option value="-1" label="首次提现会员"/>
+        <el-select v-model="queryParams.status" :placeholder=" $t('pay.memberWithdrawLog.as') " clearable size="small">
+          <el-option value="-1" :label=" $t('pay.memberWithdrawLog.ftwm') "/>
           <el-option
             v-for="dict in statusOptions"
             :key="dict.dictValue"
@@ -32,13 +32,13 @@
       <el-form-item prop="searchValue">
         <el-input
           v-model.trim="queryParams.searchValue"
-          placeholder="会员ID/会员账号/收款人/订单号"
+          :placeholder=" $t('pay.memberWithdrawLog.mmro') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="提现金额" prop="withdrawMoney" label-width="70px">
+      <el-form-item :label=" $t('pay.memberWithdrawLog.cwa') " prop="withdrawMoney" label-width="70px">
         <el-input
           v-model="queryParams.priceMin"
           placeholder="￥"
@@ -68,7 +68,7 @@
       <el-form-item prop="opName" style="width: 120px;">
         <el-input
           v-model="queryParams.opName"
-          placeholder="操作人"
+          :placeholder=" $t('pay.memberWithdrawLog.opt') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -77,7 +77,7 @@
       <el-form-item prop="remark" style="width: 100px;">
         <el-input
           v-model="queryParams.remark"
-          placeholder="备注"
+          :placeholder=" $t('pay.memberWithdrawLog.rem') "
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -85,7 +85,7 @@
       </el-form-item>
       <el-form-item prop="SearchCardBlack" style="width: 155px;">
         <template>
-          <el-select v-model="queryParams.SearchCardBlack" placeholder="银行归属地黑名单" size="small" clearable>
+          <el-select v-model="queryParams.SearchCardBlack" :placeholder=" $t('pay.memberWithdrawLog.bab') " size="small" clearable>
             <el-option
               v-for="item in CardBlackOptions"
               :key="item.value"
@@ -97,8 +97,8 @@
         </template>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
     <el-row :gutter="10" class="mb8">
@@ -111,7 +111,7 @@
           :disabled="disabled"
           @click="openExport"
           v-hasPermi="['pay:memberWithdrawLog:export']"
-        >导出
+        >{{ $t('global.exportButton') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -123,7 +123,7 @@
           :disabled="disabled"
           @click="handleShunWeiExport"
           v-hasPermi="['pay:memberWithdrawLog:export']"
-        >顺为代付格式导出
+        >{{ $t('pay.memberWithdrawLog.sgpe') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -134,7 +134,7 @@
           size="mini"
           @click="handleBatchRefused"
           v-hasPermi="['pay:memberWithdrawLog:refused']"
-        >批量拒绝
+        >{{ $t('pay.memberWithdrawLog.br') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -145,7 +145,7 @@
           size="mini"
           @click="handleBatchLock"
           v-has-permi="['pay:memberWithdrawLog:lock']"
-        >批量锁定
+        >{{ $t('pay.memberWithdrawLog.bl') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -156,7 +156,7 @@
           size="mini"
           @click="handleBatchPayAgent"
           v-has-permi="['pay:payAgentPlatform:order']"
-        >批量代付
+        >{{ $t('pay.memberWithdrawLog.bpb') }}
         </el-button>
       </el-col>
 
@@ -167,7 +167,7 @@
           icon="el-icon-document-copy"
           size="mini"
           @click="handleBatchCopy"
-        >批量复制
+        >{{ $t('pay.memberWithdrawLog.bc') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -177,17 +177,17 @@
           icon="el-icon-document-copy"
           size="mini"
           @click="handleBatchOrderNoCopy"
-        >订单号复制
+        >{{ $t('pay.memberWithdrawLog.onc') }}
         </el-button>
       </el-col>
       <el-col :span="10" style="margin-left: 10px">
-        <span style="font-size: 16px;margin-right: 10px">记录刷新</span>
-        <el-select v-model="refreshSec" placeholder="时间间隔" style="width: 110px">
-          <el-option value="5" label="5秒"></el-option>
-          <el-option value="10" label="10秒"></el-option>
-          <el-option value="15" label="15秒"></el-option>
-          <el-option value="20" label="20秒"></el-option>
-          <el-option value="30" label="30秒"></el-option>
+        <span style="font-size: 16px;margin-right: 10px">{{ $t('pay.memberWithdrawLog.rr') }}</span>
+        <el-select v-model="refreshSec" :placeholder=" $t('pay.memberWithdrawLog.ti') " style="width: 110px">
+          <el-option value="5" :label=" $t('pay.memberWithdrawLog.fs') "></el-option>
+          <el-option value="10" :label=" $t('pay.memberWithdrawLog.ts') "></el-option>
+          <el-option value="15" :label=" $t('pay.memberWithdrawLog.fts') "></el-option>
+          <el-option value="20" :label=" $t('pay.memberWithdrawLog.tws') "></el-option>
+          <el-option value="30" :label=" $t('pay.memberWithdrawLog.ths') "></el-option>
         </el-select>
         <div style="width: 120px;display: inline-block;text-align: center">
           <span>{{ refreshDesc }}</span>
@@ -203,12 +203,12 @@
               :row-class-name="tableRowClassNameWithdraw"
     >
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="复制" align="center" width="100px">
+      <el-table-column :label=" $t('pay.memberWithdrawLog.rep') " align="center" width="100px">
         <template slot-scope="scope">
           <el-button
             type="primary" size="mini"
             @click="handleCopy(scope.row)"
-          >复制
+          >{{ $t('pay.memberWithdrawLog.rep') }}
           </el-button>
           <el-button
             type="text" size="mini"
@@ -217,7 +217,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="会员ID" min-width="150" align="center" prop="memberId">
+      <el-table-column :label=" $t('pay.memberWithdrawLog.mid') " min-width="150" align="center" prop="memberId">
         <template v-slot="{row}">
           <a style="color: #ffa200" @click="funds(row.memberId)"
              v-if="row.memberStatus === 7">{{ row.memberId }}</a>
@@ -230,38 +230,38 @@
              v-if="row.memberStatus === 6">{{ row.memberId }}</a>
         </template>
         <template slot="header">
-          <span>会员ID</span>
+          <span>{{ $t('pay.memberWithdrawLog.mid') }}</span>
           <el-tooltip popper-class="tooltip" placement="top">
             <i class="el-icon-question"></i>
             <div slot="content" class="tooltip-content">
-              <div>字体蓝色:(正常会员)</div>
-              <div>字体粉色:(测试号,超管号,稀有号)</div>
-              <div>字体红色:(套利号)</div>
-              <div>字体绿色:(投诉号)</div>
-              <div>字体橙色:(审查号)</div>
+              <div>{{ $t('pay.memberWithdrawLog.fbnm') }}</div>
+              <div>{{ $t('pay.memberWithdrawLog.fptn') }}</div>
+              <div>{{ $t('pay.memberWithdrawLog.fran') }}</div>
+              <div>{{ $t('pay.memberWithdrawLog.fgcn') }}</div>
+              <div>{{ $t('pay.memberWithdrawLog.forn') }}</div>
             </div>
           </el-tooltip>
         </template>
       </el-table-column>
       <!--      <el-table-column label="会员账号" min-width="120" align="center" prop="account"/>-->
-      <el-table-column label="入款姓名" min-width="120" align="center" prop="rechargeUserName">
+      <el-table-column :label=" $t('pay.memberWithdrawLog.dn') " min-width="120" align="center" prop="rechargeUserName">
       <template slot="header">
-        <span>入款姓名</span>
+        <span>{{ $t('pay.memberWithdrawLog.dn') }}</span>
         <el-tooltip popper-class="tooltip" placement="top">
           <i class="el-icon-question"></i>
           <div slot="content" class="tooltip-content">
-            <div>入款姓名不包含提现姓名则整行颜色变粉色</div>
+            <div>{{ $t('pay.memberWithdrawLog.ind') }}</div>
           </div>
         </el-tooltip>
       </template>
       </el-table-column>
-      <el-table-column label="今日入款成功数" min-width="130" align="center" prop="bankCharge">
+      <el-table-column :label=" $t('pay.memberWithdrawLog.nsd') " min-width="130" align="center" prop="bankCharge">
         <template slot="header">
-          <span>今日入款成功数</span>
+          <span>{{ $t('pay.memberWithdrawLog.nsd') }}</span>
           <el-tooltip popper-class="tooltip" placement="top">
             <i class="el-icon-question"></i>
             <div slot="content" class="tooltip-content">
-              <div>今日入款成功数大于10次则整行颜色变粉色</div>
+              <div>{{ $t('pay.memberWithdrawLog.tcw') }}</div>
             </div>
           </el-tooltip>
         </template>
@@ -272,47 +272,47 @@
           <span v-else>{{ row.rechargeWithdrawRate }}</span>
         </template>
         <template slot="header">
-          <span>出入款比</span>
+          <span>{{ $t('pay.memberWithdrawLog.ior') }}</span>
           <el-tooltip popper-class="tooltip" placement="top">
             <i class="el-icon-question"></i>
             <div slot="content" class="tooltip-content">
-              <div>字体红色:出入款比大于10</div>
+              <div>{{ $t('pay.memberWithdrawLog.frio') }}</div>
             </div>
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column label="投注打码比" min-width="100" align="center" prop="rechargeCodeRatio">
+      <el-table-column :label=" $t('pay.memberWithdrawLog.bcr') " min-width="100" align="center" prop="rechargeCodeRatio">
         <template slot="header">
-          <span>投注打码比</span>
+          <span> {{ $t('pay.memberWithdrawLog.bcr') }} </span>
           <el-tooltip popper-class="tooltip" placement="top">
             <i class="el-icon-question"></i>
             <div slot="content" class="tooltip-content">
-              <div>投注打码比小于等于风控打码倍数则整行颜色变粉色</div>
+              <div>{{ $t('pay.memberWithdrawLog.ibcr') }}</div>
             </div>
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column label="提现金额" min-width="100" align="center" prop="withdrawMoney">
+      <el-table-column :label=" $t('pay.memberWithdrawLog.cwa') " min-width="100" align="center" prop="withdrawMoney">
         <template v-slot="{row}">
           <a style="color: #00afff" @click="copyColumn(row.withdrawMoney)">{{ row.withdrawMoney }}</a>
         </template>
       </el-table-column>
-      <el-table-column label="收款人" min-width="100" align="center" prop="bankUserName">
+      <el-table-column :label=" $t('pay.memberWithdrawLog.payee') " min-width="100" align="center" prop="bankUserName">
         <template v-slot="{row}">
           <a style="color: #00afff" @click="copyColumn(row.bankUserName)">{{ row.bankUserName }}</a>
         </template>
       </el-table-column>
-      <el-table-column label="银行账号" min-width="180" align="center" prop="bankAccount">
+      <el-table-column :label=" $t('pay.memberWithdrawLog.ban') " min-width="180" align="center" prop="bankAccount">
         <template v-slot="{row}">
           <a style="color: #00afff" @click="copyColumn(row.bankAccount)">{{ row.bankAccount }}</a>
         </template>
       </el-table-column>
-      <el-table-column label="银行" min-width="120" align="center" prop="bankName">
+      <el-table-column :label=" $t('pay.memberWithdrawLog.bank') " min-width="120" align="center" prop="bankName">
         <template v-slot="{row}">
           <a style="color: #00afff" @click="copyColumn(row.bankName)">{{ row.bankName }}</a>
         </template>
       </el-table-column>
-      <el-table-column label="状态" min-width="120" align="center" prop="status">
+      <el-table-column :label=" $t('global.status') " min-width="120" align="center" prop="status">
         <template slot-scope="scope">
           <span
             :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}"
@@ -325,35 +325,35 @@
           <span v-if="row.cardBlack == 0">{{ row.realBankAddress }}</span>
         </template>
         <template slot="header">
-          <span>银行归属地</span>
+          <span>{{ $t('pay.memberWithdrawLog.ba') }}</span>
           <el-tooltip popper-class="tooltip" placement="top">
             <i class="el-icon-question"></i>
             <div slot="content" class="tooltip-content">
-              <div>字体红色:银行归属地在黑名单中</div>
+              <div>{{ $t('pay.memberWithdrawLog.tfr') }}</div>
             </div>
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column label="是否首次" min-width="90" align="center" prop="first" :formatter="firstFormat"/>
-      <el-table-column label="操作人" min-width="120" align="center" prop="opName"/>
-      <el-table-column label="审核备注" min-width="200" align="center" prop="remark">
+      <el-table-column :label=" $t('pay.memberWithdrawLog.ift') " min-width="90" align="center" prop="first" :formatter="firstFormat"/>
+      <el-table-column :label=" $t('pay.memberWithdrawLog.opt') " min-width="120" align="center" prop="opName"/>
+      <el-table-column :label=" $t('pay.memberWithdrawLog.ar') " min-width="200" align="center" prop="remark">
         <template v-slot="{row}">
           <a style="color: #00afff" @click="updateRemark(row.id, row.remark)">{{ row.remark }}</a>
         </template>
         <template slot="header">
-          <span>审核备注</span>
+          <span>{{ $t('pay.memberWithdrawLog.ar') }}</span>
           <el-tooltip popper-class="tooltip" placement="top">
             <i class="el-icon-question"></i>
             <div slot="content" class="tooltip-content">
-              <div>点击备注可修改</div>
+              <div>{{ $t('pay.memberWithdrawLog.cnm') }}</div>
             </div>
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column label="下单时间" min-width="150" align="center" prop="createTime"/>
-      <el-table-column label="最后修改时间" min-width="150" align="center" prop="updateTime"/>
-      <el-table-column label="订单号" min-width="200" align="center" prop="orderNo"/>
-      <el-table-column label="操作" min-width="285" align="center" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column :label=" $t('pay.memberWithdrawLog.ot') " min-width="150" align="center" prop="createTime"/>
+      <el-table-column :label=" $t('pay.memberWithdrawLog.lmt') " min-width="150" align="center" prop="updateTime"/>
+      <el-table-column :label=" $t('pay.memberWithdrawLog.on') " min-width="200" align="center" prop="orderNo"/>
+      <el-table-column :label=" $t('pay.memberWithdrawLog.optn') " min-width="285" align="center" class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="small"
@@ -363,7 +363,7 @@
             icon="el-icon-refresh-right"
             @click="handleBack(scope.row)"
             v-has-permi="['pay:memberWithdrawLog:back']"
-          >回退
+          >{{ $t('pay.memberWithdrawLog.rb') }}
           </el-button>
           <el-button
             size="small"
@@ -373,7 +373,7 @@
             icon="el-icon-refresh-right"
             @click="handleFailBack(scope.row)"
             v-has-permi="['pay:memberWithdrawLog:back']"
-          >回退
+          >{{ $t('pay.memberWithdrawLog.rb') }}
           </el-button>
           <el-button
             size="small"
@@ -383,7 +383,7 @@
             icon="el-icon-search"
             @click="handleQueryStatus(scope.row)"
             v-has-permi="['pay:memberWithdrawLog:queryStatus']"
-          >查询状态
+          >{{ $t('pay.memberWithdrawLog.qs') }}
           </el-button>
           <el-button
             size="small"
@@ -392,7 +392,7 @@
             icon="el-icon-lock"
             @click="handleLock(scope.row)"
             v-has-permi="['pay:memberWithdrawLog:lock']"
-          >锁定
+          >{{ $t('pay.memberWithdrawLog.locking') }}
           </el-button>
           <el-button
             size="small"
@@ -402,7 +402,7 @@
             icon="el-icon-unlock"
             @click="handleUnlock(scope.row)"
             v-has-permi="['pay:memberWithdrawLog:unlock']"
-          >解锁
+          >{{ $t('pay.memberWithdrawLog.unlock') }}
           </el-button>
           <el-button
             size="small"
@@ -412,7 +412,7 @@
             icon="el-icon-circle-check"
             @click="handleWithdraw(scope.row)"
             v-has-permi="['pay:memberWithdrawLog:artificial']"
-          >出款
+          >{{ $t('pay.memberWithdrawLog.pot') }}
           </el-button>
           <el-button
             size="small"
@@ -422,7 +422,7 @@
             icon="el-icon-circle-close"
             @click="handleRefused(scope.row)"
             v-has-permi="['pay:memberWithdrawLog:refused']"
-          >拒绝
+          >{{ $t('pay.memberWithdrawLog.rej') }}
           </el-button>
           <el-button
             size="small"
@@ -432,7 +432,7 @@
             icon="el-icon-s-custom"
             @click="handleArtificialWithdraw2(scope.row)"
             v-has-permi="['pay:memberWithdrawLog:artificial']"
-          >人工出款
+          >{{ $t('pay.memberWithdrawLog.mp') }}
           </el-button>
         </template>
       </el-table-column>
@@ -448,46 +448,46 @@
     />
 
     <!-- 添加或修改会员提现信息对话框 -->
-    <el-dialog title="资金明细" :visible.sync="fundsOpen" width="450px" style="max-height:600px;overflow-y: scroll;"
+    <el-dialog :title=" $t('pay.memberWithdrawLog.fd') " :visible.sync="fundsOpen" width="450px" style="max-height:600px;overflow-y: scroll;"
                append-to-body
     >
       <el-table :stripe="true" v-loading="loading" :data="fundsData" :row-class-name="tableRowClassName">
-        <el-table-column label="项目名称" align="center" width="140" prop="class_twoname"/>
-        <el-table-column label="项目值" align="center" prop="t_value"/>
+        <el-table-column :label=" $t('pay.memberWithdrawLog.pn') " align="center" width="140" prop="class_twoname"/>
+        <el-table-column :label=" $t('pay.memberWithdrawLog.pv') " align="center" prop="t_value"/>
       </el-table>
     </el-dialog>
 
     <!-- 添加或修改会员提现信息对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" title="出款明细" :visible.sync="open" width="500px"
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title=" $t('pay.memberWithdrawLog.pd') " :visible.sync="open" width="500px"
                append-to-body
     >
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-        <el-form-item label="会员ID" prop="memberId">
+        <el-form-item :label=" $t('pay.memberWithdrawLog.mid') " prop="memberId">
           <el-input v-model="form.memberId" readonly/>
         </el-form-item>
-        <el-form-item label="会员账号" prop="account">
+        <el-form-item :label=" $t('pay.memberWithdrawLog.ma') " prop="account">
           <el-input v-model="form.account" readonly/>
         </el-form-item>
-        <el-form-item label="真实姓名" prop="bankUserName">
+        <el-form-item :label=" $t('pay.memberWithdrawLog.rn') " prop="bankUserName">
           <el-input v-model="form.bankUserName" readonly/>
         </el-form-item>
-        <el-form-item label="银行名称" prop="bankName">
+        <el-form-item :label=" $t('pay.memberWithdrawLog.bn') " prop="bankName">
           <el-input v-model="form.bankName" readonly/>
         </el-form-item>
-        <el-form-item label="银行账号" prop="bankAccount">
+        <el-form-item :label=" $t('pay.memberWithdrawLog.ban') " prop="bankAccount">
           <el-input v-model="form.bankAccount" readonly/>
         </el-form-item>
-        <el-form-item label="申请出款" prop="withdrawMoney">
+        <el-form-item :label=" $t('pay.memberWithdrawLog.ad') " prop="withdrawMoney">
           <el-input v-model="form.withdrawMoney" readonly/>
         </el-form-item>
-        <el-form-item label="提现订单号" prop="orderNo">
+        <el-form-item :label=" $t('pay.memberWithdrawLog.won') " prop="orderNo">
           <el-input v-model="form.orderNo" readonly/>
         </el-form-item>
-        <el-form-item label="Google验证码" prop="googleAuthCode">
-          <el-input v-model="form.googleAuthCode" placeholder="代付需输入Google验证码"/>
+        <el-form-item :label=" $t('pay.memberWithdrawLog.gc') " prop="googleAuthCode">
+          <el-input v-model="form.googleAuthCode" :placeholder=" $t('pay.memberWithdrawLog.gvc') "/>
         </el-form-item>
-        <el-form-item label="代付平台" prop="payAgentPlatId">
-          <el-select v-model="form.payAgentPlatId" placeholder="代付需选择代付平台" clearable size="small">
+        <el-form-item :label=" $t('pay.memberWithdrawLog.gpp') " prop="payAgentPlatId">
+          <el-select v-model="form.payAgentPlatId" :placeholder=" $t('pay.memberWithdrawLog.pob') " clearable size="small">
             <el-option v-for="plat in payAgentPlatformOptions" :key="plat.id" :label="plat.name" :value="plat.id"/>
           </el-select>
         </el-form-item>
@@ -500,7 +500,7 @@
           @click="handlePayAgent"
           :disabled="payDisabled"
           v-has-permi="['pay:payAgentPlatform:order']"
-        >代 付
+        >{{ $t('pay.memberWithdrawLog.pay') }}
         </el-button>
         <!--        <el-button-->
         <!--          plain-->
@@ -516,7 +516,7 @@
           size="small"
           @click="handleArtificialWithdraw"
           v-has-permi="['pay:memberWithdrawLog:artificial']"
-        >出 款
+        >{{ $t('pay.memberWithdrawLog.paym') }}
         </el-button>
         <el-button
           type="warning"
@@ -525,7 +525,7 @@
           @click="handleAbnormalWithdrawal"
           v-show="form.status !== 7 && form.status !== 8"
           v-has-permi="['pay:memberWithdrawLog:abnormalWithdrawal']"
-        >出款异常
+        >{{ $t('pay.memberWithdrawLog.de') }}
         </el-button>
         <el-button
           type="danger"
@@ -533,14 +533,14 @@
           size="small"
           @click="handleDialogRefused"
           v-has-permi="['pay:memberWithdrawLog:refused']"
-        >拒 绝
+        >{{ $t('pay.memberWithdrawLog.reject') }}
         </el-button>
         <el-button
           type="info"
           plain
           size="small"
           @click="cancel"
-        >取 消
+        >{{ $t('global.cancelButton') }}
         </el-button>
       </div>
     </el-dialog>

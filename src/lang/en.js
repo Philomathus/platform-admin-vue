@@ -90,8 +90,8 @@ export default {
   },
 
   logout: {
-    confirm: 'Are you sure to log out and exit the system?',
-    prompt: 'Confirm'
+    prompt: 'Confirm',
+    confirm: 'Are you sure to log out and exit the system?'
   },
 
   excel: {
@@ -4704,8 +4704,86 @@ export default {
 
     },
     memberWithdrawLog:{
+      as: 'All States',
       nosd: 'Number of successful disbursements',
-      tad: 'Total amount disbursed'
+      tad: 'Total amount disbursed',
+      sr: 'Success Rate',
+      sq: 'Statistical Queries',
+      ftwm: 'First time withdrawal member',
+      mmro: 'Member ID / Member Account Number / ' +
+        'Recipient / Order Number',
+      cwa: 'Cash Withdrawal Amount',
+      opt: 'Operator',
+      rem: 'Remarks',
+      bab: 'Bank attribution blacklist',
+      sgpe: 'Shun for the generation of payment format export',
+      br: 'Bulk Rejection',
+      bl: 'Batch Lock',
+      bpb: 'Bulk payment on behalf of',
+      bc: 'Bulk Copy',
+      onc: 'Order Numberr Copy',
+      rr: 'Record Refresh',
+      ti: 'Time Interval',
+      fs: '5 Seconds',
+      ts: '10 Seconds',
+      fts: '15 Seconds',
+      tws: '20 Seconds',
+      ths: '30 Seconds',
+      rep: 'Reporoduction',
+      mid: 'Member ID',
+      fbnm: 'Font Blue:(Normal Member)',
+      fptn: 'Font Pink:(Test Number, Super Tube Number, Rare Number)',
+      fran: 'Font Red:(Arbitrage Number)',
+      fgcn: 'Font Green:(Complaint No.)',
+      forn: 'Font Orange:(Review Number)',
+      dn: 'Deposit Name',
+      ind: 'If the name of the deposit does not include the name of the ' +
+        'withdrawal, the whole line becomes pink',
+      nsd: 'Number of successful deposits today',
+      tcw: 'The color of the whole line will change to pink ' +
+        'if the number of successful entries is more than 10 times today',
+      ior: 'Incoming/Outgoing Ratio',
+      frio: 'Font Red:In/Out Ratio greater than 10',
+      bcr: 'Betting and coding ratio',
+      ibcr: 'If the betting code ratio is less than or equal to the wind' +
+        'control code multiplier, the color of the whole line turns pink',
+      payee: 'Payee',
+      ban: 'Bank Account Number',
+      bank: 'Banks',
+      ba: 'Bank Attribution',
+      tfr: 'The font is red: The bank belongs to the place in the bank list',
+      ift: 'Is it the first time',
+      ar: 'Audit Remarks',
+      cnm: 'Click on the note to modify',
+      ot: 'Order Time',
+      lmt: 'Last modified time',
+      on: 'Order Number',
+      optn: 'Operation',
+      rb: 'Rollback',
+      qs: 'Query Status',
+      locking: 'Locking',
+      unlock: 'Unlock',
+      pot: 'Payout',
+      rej: 'Rejection',
+      mp: 'Manual Payout',
+      fd: 'Funding Details',
+      pn: 'Project Name',
+      pv: 'Project Value',
+      pd: 'Payment Details',
+      ma: 'Member Account',
+      rn: 'Real Name',
+      bn: 'Bank Name',
+      ad: 'Application for Disbursement',
+      won: 'Withdrawal order number',
+      gc: 'Google Captcha',
+      gvc: 'Google verification code is required for payment by proxy',
+      gpp: 'Generation Payment Platform',
+      pob: 'Payments on behalf of the need to choose a payment platform',
+      pay: 'Pay',
+      paym: 'Payments',
+      de: 'Disbursement exceptions',
+      reject: 'Reject',
+
     }
   }
 

@@ -104,7 +104,7 @@ member
 import {checkTwoLogin} from "@/utils/permission";
 import {
   getMemberInfo, updateEmail, getMemberLoginAddress, getHistoryRecharge, updateMemberInfo
-} from '@/api/platform-web/member/memberInfo'
+} from '@/api/platform-web/member/memberInfo';
 
 export default {
   name: "TableShow",
@@ -156,6 +156,10 @@ export default {
       this.queryParams.codeTotal = this.inputValue;
       updateMemberInfo( this.queryParams );
       this.showUpdateForm = false;
+      this.$message({
+        message: '更新成功',
+        type: "success"
+      });
     },
 
     updateEmail(email, id) {

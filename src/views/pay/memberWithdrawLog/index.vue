@@ -180,7 +180,7 @@
         >{{ $t('pay.memberWithdrawLog.onc') }}
         </el-button>
       </el-col>
-      <el-col :span="10" style="margin-left: 10px">
+      <el-col :span="10" style="margin-left: 10px;font-size: 10px">
         <span style="font-size: 16px;margin-right: 10px">{{ $t('pay.memberWithdrawLog.rr') }}</span>
         <el-select v-model="refreshSec" :placeholder=" $t('pay.memberWithdrawLog.ti') " style="width: 110px">
           <el-option value="5" :label=" $t('pay.memberWithdrawLog.fs') "></el-option>

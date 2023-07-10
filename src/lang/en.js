@@ -2974,7 +2974,7 @@ export default {
       tab9: {
         title: 'Reset withdrawal password',
         passwordLabel: 'New withdrawal password',
-        passwordPlaceholder: 'Please enter your new withdrawal password',
+        passwordPlaceholder: 'Please enter your new login password',
         googleAuthCodeLabel: 'google verification code',
         googleAuthCodePlaceholder: 'Please enter google verification code',
         confirmButton: '@:global.confirmButton',

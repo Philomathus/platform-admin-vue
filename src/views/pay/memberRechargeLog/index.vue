@@ -637,7 +637,7 @@
           thet.refreshQuery()
           secs = thet.refreshSec
         }
-        thet.refreshDesc = secs + this.$t('pay.memberRechargeLog.rsas')
+        thet.refreshDesc = secs + 'sec/秒后开始刷新'
         secs--
       }, 1000)
     },

@@ -35,15 +35,11 @@
             <div class="font">{{ data.会员注单 }}</div>
           </div>
           <div class="mount" style="width: 40%">
-            <el-button type="primary" plain @click="showForm( data.会员编号 )" style="height: 40px" >查询</el-button>
-            <el-dialog
-              v-dialogDrag
-              append-to-body
-              :visible.sync="showUpdateForm"
-              width="250px"
-            >
+            <el-button type="primary" plain @click="showForm( data.会员编号 )" style="height: 40px" >{{ $t('global.edit') }}</el-button>
+<!-- update code form -->
+            <el-dialog v-dialogDrag append-to-body :visible.sync="showUpdateForm" width="250px">
               <el-input placeholder="请输入会员打码" v-model="inputValue"></el-input>
-              <el-button @click="showUpdateForm = false">{{ $t('global.cancelButton') }}</el-button>
+              <el-button @click="showUpdateForm = false" style="margin-left: 60px;margin-top: 10px">{{ $t('global.cancelButton') }}</el-button>
               <el-button type="primary" @click="updateCodeTotal">{{ $t('global.confirmButton') }}</el-button>
             </el-dialog>
           </div>

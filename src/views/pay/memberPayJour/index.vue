@@ -126,7 +126,7 @@
           <el-option value="20" :label=" $t('pay.memberPayJour.tws') "></el-option>
           <el-option value="30" :label=" $t('pay.memberPayJour.ths') "></el-option>
         </el-select>
-        <div style="width: 120px;display: inline-block;text-align: center">
+        <div style="width: 120px;display: inline-block;text-align: center;font-size: 10px">
           <span>{{ refreshDesc }}</span>
         </div>
         <el-button :type="refreshType" :icon="refreshIcon" size="mini" @click="refreshData">{{ refreshLabel }}</el-button>
@@ -474,7 +474,7 @@ export default {
           thet.getList()
           secs = thet.refreshSec
         }
-        thet.refreshDesc = secs + this.$t('pay.memberPayJour.rsas')
+        thet.refreshDesc = secs + 'sec/秒后开始刷新'
         secs--
       }, 1000)
     },

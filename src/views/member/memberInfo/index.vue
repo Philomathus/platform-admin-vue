@@ -1225,6 +1225,7 @@ export default {
       this.copyData = id
       this.copy(this.copyData)
     },
+
     copy(data) {
       let value = document.createElement('textarea')
       value.value = data
@@ -1237,7 +1238,6 @@ export default {
       })
       value.remove()
     },
-
 
     boxDish(row) {
       console.info(row.id)
@@ -1279,6 +1279,11 @@ export default {
       }).catch(function () {
         row.birthDay = row.birthDay === '0' ? '1' : '0'
       })
+    },
+
+    show() {
+      console.log("Enter")
+      this.getList()
     }
 
   },

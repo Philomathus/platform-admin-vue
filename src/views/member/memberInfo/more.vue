@@ -112,8 +112,6 @@
           </el-table-column>
         </el-table>
       </el-row>
-
-
       <!--资金明细-->
       <!--      <el-row v-if="index===2">
               <el-table
@@ -129,8 +127,6 @@
               </el-table>
             </el-row>-->
       <!--加分-->
-
-
       <el-row v-if="index===3">
         <el-form ref="form" :model="form" :rules="rules" label-width="110px">
           <el-form-item :label=" $t('members.memberInfo.more.amtEx') " prop="score">
@@ -168,8 +164,6 @@
           </el-form-item>
         </el-form>
       </el-row>
-
-
       <!--重置密码-->
       <el-row v-if="index===4">
         <el-form ref="form" :model="form" :rules="rules" label-width="110px">
@@ -181,7 +175,6 @@
           </el-form-item>
         </el-form>
       </el-row>
-
       <!--发送短信-->
       <el-row v-if="index===10">
         <el-form label-width="110px">
@@ -204,8 +197,6 @@
           </el-form-item>
         </el-form>
       </el-row>
-
-
       <!--重置手机号 update phone number-->
       <el-row v-if="index===11">
         <el-form ref="mobileForm" label-width="110px" :model="mobileForm" :rules="mobileRules">
@@ -226,7 +217,6 @@
           <!--          </el-form-item>-->
         </el-form>
       </el-row>
-
       <!--重置邀请码 reset invitation code-->
       <el-row v-if="index===13">
         <el-form ref="formInviterCode" :model="form" :rules="inviterCodeRules" label-width="110px">
@@ -238,8 +228,6 @@
           </el-form-item>
         </el-form>
       </el-row>
-
-
       <!--域名展示-->
       <el-row v-if="index===15">
         <el-form label-width="110px">
@@ -251,8 +239,6 @@
           </el-form-item>
         </el-form>
       </el-row>
-
-
       <!--银行卡-->
       <el-row v-if="index===5">
         <el-table
@@ -332,8 +318,6 @@
           :limit.sync="queryParams.pageSize"
           @pagination="getList"/>
       </el-row>
-
-
       <!--   关注主播- Follow the anchor created by Rajesh-->
       <el-row v-if="index===16">
         <el-table
@@ -348,7 +332,6 @@
         </el-table>
       </el-row>
       <!--  END 关注主播- Follow the anchor function created by Rajesh -->
-
       <el-row v-if="index===17">
         <el-table
           @click="clickRow"
@@ -361,7 +344,6 @@
           <el-table-column :label=" $t('members.memberInfo.more.exTime') " align="center" prop="guardEndTime" min-width="120px"/>
         </el-table>
       </el-row>
-
       <!-- footer slots adding to all models -->
       <div slot="footer" class="dialog-footer">
         <el-button
@@ -404,7 +386,6 @@
         <el-button @click="visible = false">{{ $t('global.cancelButton') }}</el-button>
       </div>
       <!--  end footer slots for all dialog models-->
-
     </el-dialog>
     <!-- 修改vip等级 -->
     <el-dialog
@@ -1173,7 +1154,7 @@ export default {
     guardianTypeFormat(row, column) {
       return this.selectDictLabel(this.guardianType, row.type)
     },
-    
+
 
   }
 }

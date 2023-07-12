@@ -28,7 +28,7 @@
       </div>
       <div class="mount" style="width: 28%">
         <div class="font">{{ data.会员积分 }}</div>
-        <div class="font">{{ data.登录时间 }}</div>
+        <div class="font">{{ data.登录时间  }}</div>
         <div class="font">{{ data.会员VIP }}</div>
         <div style="display: flex;justify-content: flex-start;">
           <div class="mount" style="width: 60%">
@@ -95,7 +95,6 @@
     </div>
   </el-dialog>
 </template>
-member
 <script>
 import {checkTwoLogin} from "@/utils/permission";
 import {
@@ -152,10 +151,12 @@ export default {
       this.queryParams.codeTotal = this.inputValue;
       updateMemberInfo( this.queryParams );
       this.showUpdateForm = false;
+      this.data.会员注单 = this.queryParams.codeTotal + ".00";
       this.$message({
         message: '更新成功',
         type: "success"
       });
+      this.$parent.$parent.handleQuery();
     },
 
     updateEmail(email, id) {

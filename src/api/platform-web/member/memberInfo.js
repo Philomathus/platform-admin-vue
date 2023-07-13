@@ -174,6 +174,14 @@ export function updateMemberInfo(data) {
   })
 }
 
+export function updateCode(data) {
+  return request({
+    url: url.platformWeb + '/member/memberInfo/updateCode',
+    method: 'put',
+    data: data
+  })
+}
+
 // 导出会员信息
 export function exportMemberInfo(query) {
   return request({

@@ -35,7 +35,13 @@
             <div class="font">{{ data.会员注单 }}</div>
           </div>
           <div class="mount" style="width: 40%">
-            <el-button type="primary" plain @click="showForm( data.会员编号 )" style="height: 40px" >{{ $t('global.edit') }}</el-button>
+            <el-button type="primary"
+                       v-hasPermi="['member:memberInfo:edit']"
+                       plain
+                       @click="showForm( data.会员编号 )"
+                       style="height: 40px" >
+              {{ $t('global.edit') }}
+            </el-button>
 <!-- update code form -->
             <el-dialog v-dialogDrag append-to-body :visible.sync="showUpdateForm" width="250px">
               <el-input placeholder="请输入会员打码" v-model="inputValue"></el-input>
@@ -98,7 +104,7 @@
 <script>
 import {checkTwoLogin} from "@/utils/permission";
 import {
-  getMemberInfo, updateEmail, getMemberLoginAddress, getHistoryRecharge, updateMemberInfo
+  getMemberInfo, updateEmail, getMemberLoginAddress, getHistoryRecharge, updateMemberInfo, updateCode
 } from '@/api/platform-web/member/memberInfo';
 
 export default {
@@ -146,17 +152,6 @@ export default {
       this.queryParams.id = memberCode;
       this.showUpdateForm = true;
 
-    },
-    updateCodeTotal (){
-      this.queryParams.codeTotal = this.inputValue;
-      updateMemberInfo( this.queryParams );
-      this.showUpdateForm = false;
-      this.data.会员注单 = this.queryParams.codeTotal + ".00";
-      this.$message({
-        message: '更新成功',
-        type: "success"
-      });
-      this.$parent.$parent.handleQuery();
     },
 
     updateEmail(email, id) {
@@ -214,7 +209,20 @@ export default {
       this.email = this.data.会员备注;
       this.totalRechargeOriginal = this.data.充值总的金额;
       this.totalRecharge = this.data.充值总的金额;
+    },
+
+    updateCodeTotal (){
+      this.queryParams.codeTotal = this.inputValue;
+      updateCode( this.queryParams );
+      this.showUpdateForm = false;
+      this.data.会员注单 = this.queryParams.codeTotal + ".00";
+      this.$message({
+        message: '更新成功',
+        type: "success"
+      });
+      this.$parent.$parent.handleQuery();
     }
+
   },
   /*组件的初始化方法*/
   created() {

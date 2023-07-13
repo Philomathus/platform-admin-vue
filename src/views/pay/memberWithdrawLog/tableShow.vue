@@ -36,7 +36,7 @@
           </div>
           <div class="mount" style="width: 40%">
             <el-button type="primary"
-                       v-hasPermi="['member:memberInfo:edit']"
+                       v-hasPermi="['member:memberInfo:editCode']"
                        plain
                        @click="showForm( data.会员编号 )"
                        style="height: 40px" >

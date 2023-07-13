@@ -289,9 +289,9 @@
     <!--密码-->
     <!--TODO: CHANGE AND ADD FIELDS -->
     <el-row v-if="index===10">
-      <el-form ref="passwordForm" :model="password" :rules="passwordRules" label-width="110px">
+      <el-form ref="passwordForm" :model="userPass" :rules="passwordRules" label-width="110px">
         <el-form-item :label="$t('liveWeb.liveUserMore.tab9.passwordLabel')" prop="password">
-          <el-input v-model="form.password" :placeholder="$t('liveWeb.liveUserMore.tab9.passwordPlaceholder')"/>
+          <el-input v-model="form.userPass" :placeholder="$t('liveWeb.liveUserMore.tab9.passwordPlaceholder')"/>
         </el-form-item>
         <el-form-item :label="$t('liveWeb.liveUserMore.tab9.googleAuthCodeLabel')" prop="googleAuthCode">
           <el-input v-model="form.googleAuthCode" :placeholder="$t('liveWeb.liveUserMore.tab9.googleAuthCodePlaceholder')"/>
@@ -359,7 +359,7 @@
                 visible: false,
               mobileForm: {},
               paypasswordForm: {},
-              password:{},
+              userPass:{},
               // 重置提现密码表单校验
               paypasswordRules: {
                 payPassword: [
@@ -369,7 +369,7 @@
               },
 
               passwordRules: {
-                payPassword: [
+                userPass: [
                   {required: true, message: this.$t('liveWeb.liveUserMore.tab9.validations.payPassword'), trigger: 'blur'},
                   {max: 6, message: this.$t('liveWeb.liveUserMore.tab9.validations.payPasswordMax')},
                   {min: 6, message: this.$t('liveWeb.liveUserMore.tab9.validations.payPasswordMax')}
@@ -647,7 +647,7 @@
               if (valid) {
                 this.loading = true
                 resetLivePassword({
-                  password: this.form.password,
+                  userPass: this.form.userPass,
                   googleAuthCode: this.form.googleAuthCode,
                   id: this.userId
                 }).then((res) => {

@@ -139,6 +139,9 @@
         <el-form-item label="API接口" prop="apiUrl">
           <el-input v-model="form.apiUrl" placeholder="请输入API接口"/>
         </el-form-item>
+        <el-form-item label="查询注单" prop="recordUrl">
+          <el-input v-model="form.recordUrl" placeholder="请输入查询注单"/>
+        </el-form-item>
 
         <div class="el-row">
           <div class="el-col-lg-12">

@@ -4807,7 +4807,7 @@ export default {
 
     },
     memberWithdrawLog:{
-      nosd: '成功出款笔数',
+      nosd: '出款成功金额',
       tad: '总出款金额',
       sr: '成功率',
       sq: '统计查询',

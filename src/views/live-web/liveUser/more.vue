@@ -22,8 +22,13 @@
         <span>{{$t('liveWeb.liveUserMore.tab8.title')}}</span></button>
       <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(9, $t('liveWeb.liveUserMore.tab9.title'))">
         <span>{{$t('liveWeb.liveUserMore.tab9.title')}}</span></button>
-      <button type="button" class="el-button el-button--primary el-button--mini is-plain" @click="change(10, $t('liveWeb.liveUserMore.tab9.passTitle'))">
-        <span>{{$t('liveWeb.liveUserMore.tab9.passTitle')}}</span></button>
+      <button
+        type="button" class="el-button el-button--primary el-button--mini is-plain"
+        v-has-permi="['admin:liveUser:resetPass']"
+        @click="change(10, $t('liveWeb.liveUserMore.tab9.passTitle'))">
+        <span>{{$t('liveWeb.liveUserMore.tab9.passTitle')}}
+        </span>
+      </button>
     </div>
     <!--聊天室记录-->
     <el-row v-if="index===1">
@@ -299,7 +304,7 @@
         <el-form-item class="edit-close-btn">
           <el-button type="primary"
                      @click="handleLivePassword()"
-                     v-has-permi="['admin:liveUser:reset']">{{$t('liveWeb.liveUserMore.tab9.confirmButton')}}
+                     v-has-permi="['admin:liveUser:resetPass']">{{$t('liveWeb.liveUserMore.tab9.confirmButton')}}
           </el-button>
           <el-button @click="visible = false">{{$t('liveWeb.liveUserMore.tab9.cancelButton')}}</el-button>
         </el-form-item>

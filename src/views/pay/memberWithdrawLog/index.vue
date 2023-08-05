@@ -2,7 +2,7 @@
   <div class="app-container">
     <div v-loading="totalLoading">
       <el-button type="success" @click="copy1">{{ $t('pay.memberWithdrawLog.nosd') }} {{ this.totalData.total || 0 }}</el-button>
-      <el-button type="warning" @click="copy2">{{ $t('pay.memberWithdrawLog.nosd') }}  {{ this.totalData.successTotal || 0 }}</el-button>
+      <el-button type="warning" @click="copy2">{{ $t('pay.memberWithdrawLog.successTotal') }}  {{ this.totalData.successTotal || 0 }}</el-button>
       <el-button type="info" @click="copy3">{{ $t('pay.memberWithdrawLog.sr') }} {{ numberUtil.toPercent(this.totalData.successRate) }}</el-button>
       <el-button type="primary" icon="el-icon-search" size="mini" @click="getCountTotal()" style="margin-left: 20px">
         {{ $t('pay.memberWithdrawLog.sq') }}

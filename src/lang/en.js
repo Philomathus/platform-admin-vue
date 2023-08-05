@@ -4705,7 +4705,8 @@ export default {
     },
     memberWithdrawLog:{
       as: 'All States',
-      nosd: 'Number of successful disbursements',
+      nosd: 'Successful disbursements',
+      successTotal: 'Successful withdrawal',
       tad: 'Total amount disbursed',
       sr: 'Success Rate',
       sq: 'Statistical Queries',

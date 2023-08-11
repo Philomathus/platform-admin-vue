@@ -1,8 +1,8 @@
 export default {
 
-  global: {
+  global:{
     cancelButton: '取消',
-    confirmButton: '确定',
+    confirmButton: '确认',
     refresh: '刷新',
     close: '关闭',
     searchButton: '搜索',

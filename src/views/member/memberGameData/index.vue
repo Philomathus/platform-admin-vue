@@ -391,7 +391,7 @@ export default {
     handleExport() {
       const queryParams = this.queryParams
       this.$confirm( this.$t('members.memberGameData.index.script.conEx') , '警告', {
-        confirmButtonText: this.$t('members.memberGameData.index.script.warn') ,
+        confirmButtonText: this.$t('global.confirmButton') ,
         cancelButtonText: this.$t('members.memberGameData.index.script.canc') ,
         type: 'warning'
       }).then(function () {

@@ -167,7 +167,7 @@
         <el-form-item label="smsSdkAppid" prop="smsSdkAppid" v-if="form.provider == 0">
           <el-input v-model="form.smsSdkAppid" placeholder="请输入smsSdkAppid"/>
         </el-form-item>
-        <el-form-item label="请求域名" prop="endpoint" v-if="form.provider == 3 || form.provider == 4">
+        <el-form-item label="请求域名" prop="endpoint" v-if="form.provider == 3">
           <el-input v-model="form.endpoint" placeholder="请输入请求域名"/>
         </el-form-item>
       </el-form>

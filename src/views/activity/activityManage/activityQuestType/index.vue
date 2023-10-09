@@ -74,6 +74,7 @@
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column :label="$t('activity.activityManage.activityQuestType.game')" align="center" prop="name"/>
       <el-table-column :label="$t('activity.activityManage.activityQuestType.gameId')" align="center" prop="gameId"/>
+      <el-table-column label="排序" align="center" prop="sort"/>
       <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -111,9 +112,9 @@
         <el-form-item :label="$t('activity.activityManage.activityQuestType.game')" prop="name">
           <el-input v-model="form.name" :placeholder="$t('activity.activityManage.activityQuestType.gamePlaceholder')"/>
         </el-form-item>
-        <!--        <el-form-item :label="所属游戏id" prop="gameId">-->
-        <!--          <el-input v-model="form.gameId" :placeholder="请输入所属游戏id" />-->
-        <!--        </el-form-item>-->
+                <el-form-item label="排序" prop="sort">
+                  <el-input v-model="form.sort" placeholder="请输入排序" />
+                </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">{{ $t('global.submitButton') }}</el-button>
@@ -161,7 +162,8 @@ export default {
         pageNum: 1,
         pageSize: 10,
         name: null,
-        gameId: null
+        gameId: null,
+        sort:null
       },
       // 表单参数
       form: {},
@@ -198,7 +200,8 @@ export default {
         name: null,
         createBy: null,
         createTime: null,
-        gameId: null
+        gameId: null,
+        sort:null
       };
       this.resetForm("form");
     },

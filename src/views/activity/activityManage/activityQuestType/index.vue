@@ -10,15 +10,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item :label="$t('activity.activityManage.activityQuestType.gameId')" prop="gameId">
-        <el-input
-          v-model="queryParams.gameId"
-          :placeholder="$t('activity.activityManage.activityQuestType.gameIdPlaceholder')"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+      
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{
             $t('global.searchButton')
@@ -73,7 +65,6 @@
     <el-table v-loading="loading" :data="activityQuestTypeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column :label="$t('activity.activityManage.activityQuestType.game')" align="center" prop="name"/>
-      <el-table-column :label="$t('activity.activityManage.activityQuestType.gameId')" align="center" prop="gameId"/>
       <el-table-column label="排序" align="center" prop="sort"/>
       <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">

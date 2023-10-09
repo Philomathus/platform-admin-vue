@@ -23,40 +23,40 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.kindId')" prop="kindId">
-        <el-select
-          filterable
-          v-model="queryParams.kindId"
-          :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.kindIdPlaceholder')"
-          clearable
-          size="small"
-          style="width: 240px"
-        >
-          <el-option
-            v-for="dict in kindIdOptions"
-            :key="dict.id"
-            :label="dict.kindId"
-            :value="dict.kindId"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.platformId')" prop="platformId">
-        <el-select
-          filterable
-          v-model="queryParams.platformId"
-          :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.platformIdPlaceholder')"
-          clearable
-          size="small"
-          style="width: 240px"
-        >
-          <el-option
-            v-for="dict in platformIdOptions"
-            :key="dict.id"
-            :label="dict.name"
-            :value="dict.id"
-          />
-        </el-select>
-      </el-form-item>
+<!--      <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.kindId')" prop="kindId">-->
+<!--        <el-select-->
+<!--          filterable-->
+<!--          v-model="queryParams.kindId"-->
+<!--          :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.kindIdPlaceholder')"-->
+<!--          clearable-->
+<!--          size="small"-->
+<!--          style="width: 240px"-->
+<!--        >-->
+<!--          <el-option-->
+<!--            v-for="dict in kindIdOptions"-->
+<!--            :key="dict.id"-->
+<!--            :label="dict.kindId"-->
+<!--            :value="dict.kindId"-->
+<!--          />-->
+<!--        </el-select>-->
+<!--      </el-form-item>-->
+<!--      <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.platformId')" prop="platformId">-->
+<!--        <el-select-->
+<!--          filterable-->
+<!--          v-model="queryParams.platformId"-->
+<!--          :placeholder="$t('activity.activityManage.activityQuestInfo.tableDialog.platformIdPlaceholder')"-->
+<!--          clearable-->
+<!--          size="small"-->
+<!--          style="width: 240px"-->
+<!--        >-->
+<!--          <el-option-->
+<!--            v-for="dict in platformIdOptions"-->
+<!--            :key="dict.id"-->
+<!--            :label="dict.name"-->
+<!--            :value="dict.id"-->
+<!--          />-->
+<!--        </el-select>-->
+<!--      </el-form-item>-->
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{
             $t('global.searchButton')

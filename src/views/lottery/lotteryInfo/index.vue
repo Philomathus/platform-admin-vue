@@ -105,7 +105,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column :label="$t('lottery.lotteryInfo.tableColumns.killRate')" align="center" prop="killRate"/>
+<!--      <el-table-column :label="$t('lottery.lotteryInfo.tableColumns.killRate')" align="center" prop="killRate"/>-->
       <el-table-column :label="$t('lottery.lotteryInfo.tableColumns.cycle')" align="center" prop="cycle"/>
       <el-table-column :label="$t('lottery.lotteryInfo.tableColumns.minCost')" align="center" prop="minCost"/>
 

@@ -4,20 +4,21 @@
       <el-form-item prop="name">
         <el-select
           filterable
-          v-model="queryParams.name"
+          v-model="queryParams.lotteryId"
           :placeholder="$t('lottery.lotteryHistory.form.namePlaceholder')"
           clearable
           size="small"
           style="width: 240px">
           <el-option
             v-for="dict in lotteryInfoNameOptions"
-            :key="dict.name"
+            :key="dict.id"
             :label="dict.name"
-            :value="dict.name"/>
+            :value="dict.id"/>
         </el-select>
       </el-form-item>
       <el-form-item prop="status">
-        <el-select v-model="queryParams.status" :placeholder="$t('lottery.lotteryHistory.form.statusPlaceholder')" clearable size="small">
+        <el-select v-model="queryParams.status" :placeholder="$t('lottery.lotteryHistory.form.statusPlaceholder')"
+                   clearable size="small">
           <el-option
             v-for="dict in statusOptions"
             :key="dict.dictValue"
@@ -47,15 +48,17 @@
         </el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('global.searchButton')}}</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('global.resetButton')}}</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">
+          {{ $t('global.searchButton') }}
+        </el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
         <el-button
           type="primary"
           plain
           icon="el-icon-plus"
           size="mini"
           @click="addIssue"
-          v-hasPermi="['admin:lotteryHistory:add']">{{$t('lottery.lotteryHistory.form.addIssueButton')}}
+          v-hasPermi="['admin:lotteryHistory:add']">{{ $t('lottery.lotteryHistory.form.addIssueButton') }}
         </el-button>
       </el-form-item>
     </el-form>
@@ -64,8 +67,10 @@
       <!--      <el-table-column label="ID" align="center" prop="id"/>-->
       <el-table-column :label="$t('lottery.lotteryHistory.tableColumns.name')" align="center" prop="name"/>
       <el-table-column :label="$t('lottery.lotteryHistory.tableColumns.issue')" align="center" prop="issue"/>
-      <el-table-column :label="$t('lottery.lotteryHistory.tableColumns.code')" align="center" min-width="150px" prop="code"/>
-      <el-table-column :label="$t('lottery.lotteryHistory.tableColumns.ktime')" min-width="90px" align="center" prop="ktime">
+      <el-table-column :label="$t('lottery.lotteryHistory.tableColumns.code')" align="center" min-width="150px"
+                       prop="code"/>
+      <el-table-column :label="$t('lottery.lotteryHistory.tableColumns.ktime')" min-width="90px" align="center"
+                       prop="ktime">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.ktime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
@@ -80,7 +85,8 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('global.operationColumn')" align="center" min-width="100px" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('global.operationColumn')" align="center" min-width="100px"
+                       class-name="small-padding fixed-width">
         <template slot-scope="scope" v-if="scope.row.status >= 2">
           <el-button
             size="small"
@@ -88,7 +94,8 @@
             icon="el-icon-refresh-right"
             plain
             @click="handleAward(scope.row)"
-          >{{$t('lottery.lotteryHistory.tableColumns.repaymentButton')}}</el-button>
+          >{{ $t('lottery.lotteryHistory.tableColumns.repaymentButton') }}
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -101,13 +108,18 @@
       @pagination="getList"
     />
     <!-- 添加补奖配置对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="opene" width="450px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="opene" width="450px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-        <el-form-item :label="$t('lottery.lotteryHistory.dialogForm.gameStartTimeLabel')" prop="gameStartTime" class="is-required" style="width: 350px">
-          <el-input v-model="form.startIssue" :placeholder="$t('lottery.lotteryHistory.dialogForm.startIssuePlaceholder')" prop="startIssue" />
+        <el-form-item :label="$t('lottery.lotteryHistory.dialogForm.gameStartTimeLabel')" prop="gameStartTime"
+                      class="is-required" style="width: 350px">
+          <el-input v-model="form.startIssue"
+                    :placeholder="$t('lottery.lotteryHistory.dialogForm.startIssuePlaceholder')" prop="startIssue"/>
         </el-form-item>
-        <el-form-item :label="$t('lottery.lotteryHistory.dialogForm.gameEndTimeLabel')" prop="gameEndTime" class="is-required" style="width: 350px">
-          <el-input v-model="form.endIssue" :placeholder="$t('lottery.lotteryHistory.dialogForm.endIssuePlaceholder')" prop="endIssue"/>
+        <el-form-item :label="$t('lottery.lotteryHistory.dialogForm.gameEndTimeLabel')" prop="gameEndTime"
+                      class="is-required" style="width: 350px">
+          <el-input v-model="form.endIssue" :placeholder="$t('lottery.lotteryHistory.dialogForm.endIssuePlaceholder')"
+                    prop="endIssue"/>
         </el-form-item>
         <el-form-item :label="$t('lottery.lotteryHistory.dialogForm.nameLabel')" prop="name" class="is-required">
           <el-select
@@ -128,15 +140,20 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">{{$t('global.confirmButton')}}</el-button>
-        <el-button @click="cancel">{{$t('global.cancelButton')}}</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t('global.confirmButton') }}</el-button>
+        <el-button @click="cancel">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import {listLotteryHistory, lotteryInfoName, changeStatus,addLotteryHistoryIssue} from "@/api/platform-web/lottery/lotteryHistory";
+import {
+  listLotteryHistory,
+  lotteryInfoName,
+  changeStatus,
+  addLotteryHistoryIssue
+} from "@/api/platform-web/lottery/lotteryHistory";
 import {pickerDateShortcuts} from "@/utils/dateUtils";
 
 export default {
@@ -201,13 +218,13 @@ export default {
           {required: true, message: this.$t('lottery.lotteryHistory.rulesMessage.ktime'), trigger: "blur"}
         ],
         name: [
-          { required: true, message: this.$t('lottery.lotteryHistory.rulesMessage.name'),trigger: "blur" }
+          {required: true, message: this.$t('lottery.lotteryHistory.rulesMessage.name'), trigger: "blur"}
         ],
         startIssue: [
-          { required: true, message: this.$t('lottery.lotteryHistory.rulesMessage.startIssue'),trigger: "blur" }
+          {required: true, message: this.$t('lottery.lotteryHistory.rulesMessage.startIssue'), trigger: "blur"}
         ],
         endIssue: [
-          { required: true, message: this.$t('lottery.lotteryHistory.rulesMessage.endIssue'),trigger: "blur" }
+          {required: true, message: this.$t('lottery.lotteryHistory.rulesMessage.endIssue'), trigger: "blur"}
         ]
       }
     };

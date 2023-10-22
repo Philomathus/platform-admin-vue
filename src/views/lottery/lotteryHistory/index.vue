@@ -403,7 +403,7 @@ export default {
     addIssue2() {
       this.resetNew6hecai();
       this.openAm6 = true;
-      this.title = this.$t('lottery.lotteryHistory.issueTitle');
+      this.title = "香港六合彩";
     },
 
     submitAdd(){

@@ -39,8 +39,18 @@ export function addLotteryHistoryIssue(data) {
 // 新增人工补单管理
 export function addNew6hecaiIssue(data) {
   return request({
-    url: 'https://baidu.ac/platform-web/lottery-hk6he/new6hecaiIssue',
+    url: url.platformWeb + '/lottery-hk6he/new6hecaiIssue',
     method: 'post',
     data: data
+  })
+}
+
+//重新派奖
+export function handle6heAward(id) {
+  console.log(id)
+  return request({
+    url: url.platformWeb + '/lottery-hk6he/new6hecaiAward',
+    method: 'post',
+    data: {id}
   })
 }

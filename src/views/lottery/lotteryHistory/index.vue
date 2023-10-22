@@ -95,7 +95,7 @@
       </el-table-column>
       <el-table-column :label="$t('global.operationColumn')" align="center" min-width="100px"
                        class-name="small-padding fixed-width">
-        <template slot-scope="scope" v-if="scope.row.status >= 2">
+        <template slot-scope="scope" v-if="scope.row.status >= 2 && scope.row.lotteryId < 2002">
           <el-button
             size="small"
             type="primary"
@@ -103,6 +103,16 @@
             plain
             @click="handleAward(scope.row)"
           >{{ $t('lottery.lotteryHistory.tableColumns.repaymentButton') }}
+          </el-button>
+        </template>
+        <template slot-scope="scope" v-if="scope.row.status === 1 && scope.row.lotteryId >= 2002">
+          <el-button
+            size="small"
+            type="primary"
+            icon="el-icon-plus"
+            plain
+            @click="handle6heAward(scope.row)"
+          >派奖
           </el-button>
         </template>
       </el-table-column>
@@ -180,11 +190,15 @@
             size="small"
             style="width: 250px"
           >
+            <el-col>
+
+            </el-col>
             <el-option
               v-for="dict in lotteryInfoNameOptions"
-              :key="dict.name"
+              :key="dict.id"
               :label="dict.name"
               :value="dict.id"
+              :disabled="dict.id < 2002"
             />
           </el-select>
         </el-form-item>
@@ -205,7 +219,7 @@ import {
   listLotteryHistory,
   lotteryInfoName,
   changeStatus,
-  addLotteryHistoryIssue, addNew6hecaiIssue
+  addLotteryHistoryIssue, addNew6hecaiIssue, handle6heAward
 } from "@/api/platform-web/lottery/lotteryHistory";
 import {pickerDateShortcuts} from "@/utils/dateUtils";
 
@@ -341,6 +355,15 @@ export default {
         }
       });
     },
+
+
+    handle6heAward(row){
+      handle6heAward(row.id).then(res=>{
+        this.msgSuccess(this.$t('lottery.lotteryHistory.rePayoutSuccessMessage'))
+        this.getList()
+      })
+    },
+
     // 表单重置
     reset() {
       this.form = {

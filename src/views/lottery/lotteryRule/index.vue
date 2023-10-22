@@ -103,7 +103,7 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"/>
 
-    <!-- 添加或修改开奖规则说明对话框 Add or modify lottery rules description dialog-->
+    <!-- 添加或修改开奖规则说明对话框 Add or modify lottery rules description dialog -->
     <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="550px"
                append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
@@ -116,10 +116,10 @@
             size="small"
             style="width: 410px">
             <el-option
-              v-for="dict in kindOptions"
-              :key="dict.dictValue"
-              :label="dict.dictLabel"
-              :value="dict.dictValue"/>
+              v-for="kind in kindOptions"
+              :key="kind.dictValue"
+              :label="kind.dictLabel"
+              :value="kind.dictValue"/>
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('lottery.lotteryRule.dialogForm.nameLabel')" prop="name">

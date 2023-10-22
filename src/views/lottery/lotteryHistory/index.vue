@@ -164,7 +164,7 @@
           <el-date-picker clearable size="small"
                           v-model="form2.ktime"
                           type="date"
-                          format="yyyy-MM-dd 21:30:00"
+                          format="yyyy-MM-dd"
                           value-format="yyyy-MM-dd 21:30:00"
                           :placeholder=" $t('global.selectDate') "
                           style="width: 140px"
@@ -181,7 +181,7 @@
             style="width: 250px"
           >
             <el-option
-              v-for="dict in lotteryInfoNameOptions2"
+              v-for="dict in lotteryInfoNameOptions"
               :key="dict.name"
               :label="dict.name"
               value="2002"
@@ -217,7 +217,6 @@ export default {
       pickerOptions: {shortcuts: pickerDateShortcuts},
       //全部彩种
       lotteryInfoNameOptions: [],
-      lotteryInfoNameOptions2: [],
       // 日期范围
       dateRange: [],
       // 遮罩层
@@ -271,7 +270,7 @@ export default {
       form2:{
         lotteryId: null,
         issue: null,
-        ktime: this.parseTime(new Date(), '{y}-{m}-{d} {h}:{i}:{s}'),
+        ktime: this.parseTime(new Date(), '{y}-{m}-{d}'),
       },
       // 表单校验
       rules: {
@@ -295,7 +294,6 @@ export default {
     //全部彩种
     lotteryInfoName().then(response => {
       this.lotteryInfoNameOptions = response.data
-      this.lotteryInfoNameOptions2 = response.data
     })
     this.getDicts('lottery_history_status').then(response => {
       this.statusOptions = response.data
@@ -364,6 +362,8 @@ export default {
     resetNew6hecai(){
       this.form2 ={
         issue: null,
+        lotteryId: null,
+        ktime: null,
       }
       this.resetForm("formaNew6hecai");
     },

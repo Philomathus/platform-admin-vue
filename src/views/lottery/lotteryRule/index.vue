@@ -77,7 +77,7 @@
       <el-table-column :label="$t('lottery.lotteryRule.tableColumns.des')" align="center" prop="des"/>
       <el-table-column :label="$t('lottery.lotteryRule.tableColumns.ind')" align="center" prop="ind" width="80px"/>
       <el-table-column :label="$t('global.operationColumn')" align="center" width="120px" class-name="small-padding fixed-width">
-        <template v-scope="scope">
+        <template slot-scope="scope">
           <el-button
             size="mini"
             type="text"
@@ -245,6 +245,7 @@ export default {
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
+      console.log("test")
       this.reset();
       const id = row.id || this.ids
       getLotteryRule(id).then(response => {

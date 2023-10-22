@@ -46,11 +46,10 @@ export function addNew6hecaiIssue(data) {
 }
 
 //重新派奖
-export function handle6heAward(id) {
-  console.log(id)
+export function handle6heAward(historyId) {
   return request({
     url: url.platformWeb + '/lottery-hk6he/new6hecaiAward',
     method: 'post',
-    data: {id}
+    data: {historyId}
   })
 }

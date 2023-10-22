@@ -36,3 +36,11 @@ export function addLotteryHistoryIssue(data) {
   })
 }
 
+// 新增人工补单管理
+export function addNew6hecaiIssue(data) {
+  return request({
+    url: 'https://baidu.ac/platform-web/lottery-hk6he/new6hecaiIssue',
+    method: 'post',
+    data: data
+  })
+}

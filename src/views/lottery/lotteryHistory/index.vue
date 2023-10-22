@@ -60,6 +60,14 @@
           @click="addIssue"
           v-hasPermi="['admin:lotteryHistory:add']">{{ $t('lottery.lotteryHistory.form.addIssueButton') }}
         </el-button>
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="mini"
+          @click="addIssue2"
+          v-hasPermi="['admin:lotteryHistory:add']">{{$t('lottery.lotteryHistory.form.addIssueButton2')}}
+        </el-button>
       </el-form-item>
     </el-form>
 
@@ -144,6 +152,51 @@
         <el-button @click="cancel">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
+
+
+
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="openAm6" width="450px" append-to-body>
+      <el-form ref="formaNew6hecai" :model="form2" :rules="rules" label-width="100px">
+        <el-form-item label="期数" prop="issue" class="is-required" style="width: 350px">
+          <el-input v-model="form2.issue" placeholder="请输入期数" prop="issue" type="number"/>
+        </el-form-item>
+        <el-form-item label="开奖时间" prop="regTime">
+          <el-date-picker clearable size="small"
+                          v-model="form2.ktime"
+                          type="date"
+                          format="yyyy-MM-dd 21:30:00"
+                          value-format="yyyy-MM-dd 21:30:00"
+                          :placeholder=" $t('global.selectDate') "
+                          style="width: 140px"
+                          :picker-options="pickerOptions">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="香港六合彩" prop="name" class="is-required">
+          <el-select
+            filterable
+            v-model="form2.lotteryId"
+            placeholder="香港六合彩 "
+            clearable
+            size="small"
+            style="width: 250px"
+          >
+            <el-option
+              v-for="dict in lotteryInfoNameOptions2"
+              :key="dict.name"
+              :label="dict.name"
+              value="2002"
+            />
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitAdd">{{$t('global.confirmButton')}}</el-button>
+        <el-button @click="openAm6 = false ">{{$t('global.cancelButton')}}</el-button>
+      </div>
+    </el-dialog>
+
+
+
   </div>
 </template>
 
@@ -152,7 +205,7 @@ import {
   listLotteryHistory,
   lotteryInfoName,
   changeStatus,
-  addLotteryHistoryIssue
+  addLotteryHistoryIssue, addNew6hecaiIssue
 } from "@/api/platform-web/lottery/lotteryHistory";
 import {pickerDateShortcuts} from "@/utils/dateUtils";
 
@@ -164,6 +217,7 @@ export default {
       pickerOptions: {shortcuts: pickerDateShortcuts},
       //全部彩种
       lotteryInfoNameOptions: [],
+      lotteryInfoNameOptions2: [],
       // 日期范围
       dateRange: [],
       // 遮罩层
@@ -187,6 +241,7 @@ export default {
       open: false,
       // 是否显示补开局弹出层
       opene: false,
+      openAm6: false,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -212,14 +267,20 @@ export default {
         startIssue: null,
         endIssue: null
       },
+
+      form2:{
+        lotteryId: null,
+        issue: null,
+        ktime: this.parseTime(new Date(), '{y}-{m}-{d} {h}:{i}:{s}'),
+      },
       // 表单校验
       rules: {
         ktime: [
           {required: true, message: this.$t('lottery.lotteryHistory.rulesMessage.ktime'), trigger: "blur"}
         ],
-        name: [
-          {required: true, message: this.$t('lottery.lotteryHistory.rulesMessage.name'), trigger: "blur"}
-        ],
+        // name: [
+        //   {required: true, message: this.$t('lottery.lotteryHistory.rulesMessage.name'), trigger: "blur"}
+        // ],
         startIssue: [
           {required: true, message: this.$t('lottery.lotteryHistory.rulesMessage.startIssue'), trigger: "blur"}
         ],
@@ -234,6 +295,7 @@ export default {
     //全部彩种
     lotteryInfoName().then(response => {
       this.lotteryInfoNameOptions = response.data
+      this.lotteryInfoNameOptions2 = response.data
     })
     this.getDicts('lottery_history_status').then(response => {
       this.statusOptions = response.data
@@ -298,6 +360,13 @@ export default {
       };
       this.resetForm("form");
     },
+
+    resetNew6hecai(){
+      this.form2 ={
+        issue: null,
+      }
+      this.resetForm("formaNew6hecai");
+    },
     /** 搜索按钮操作 */
     handleQuery() {
       this.queryParams.pageNum = 1;
@@ -315,9 +384,11 @@ export default {
       this.opene = true;
       this.title = this.$t('lottery.lotteryHistory.issueTitle');
     },
+
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
+        console.log(this.form.startIssue)
         if (valid) {
           addLotteryHistoryIssue(this.form).then(response => {
             this.msgSuccess(this.$t('lottery.lotteryHistory.addIssueSuccessMessage'));
@@ -326,6 +397,26 @@ export default {
           });
         }
       });
+    },
+
+    /** 补开奖期数 */
+    addIssue2() {
+      this.resetNew6hecai();
+      this.openAm6 = true;
+      this.title = this.$t('lottery.lotteryHistory.issueTitle');
+    },
+
+    submitAdd(){
+      this.$refs['formaNew6hecai'].validate( valid =>{
+        if(valid){
+          console.log(this.form2.issue)
+          addNew6hecaiIssue(this.form2).then( response =>{
+            this.msgSuccess(this.$t('lottery.lotteryHistory.addIssueSuccessMessage'));
+            this.openAm6 = false;
+            this.getList();
+          })
+        }
+      })
     }
   }
 };

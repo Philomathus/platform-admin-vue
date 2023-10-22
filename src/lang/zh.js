@@ -3864,7 +3864,8 @@ export default {
         namePlaceholder: '请选择彩种',
         statusPlaceholder: '全部状态',
         issuePlaceholder: '请输入期数',
-        addIssueButton: '补期'
+        addIssueButton: '补期',
+        addIssueButton2: '补期2'
       },
       tableColumns: {
         name: '彩票名称',

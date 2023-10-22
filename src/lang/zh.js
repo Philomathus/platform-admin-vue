@@ -3865,7 +3865,7 @@ export default {
         statusPlaceholder: '全部状态',
         issuePlaceholder: '请输入期数',
         addIssueButton: '补期',
-        addIssueButton2: '补期2'
+        addIssueButton2: '六合彩新期'
       },
       tableColumns: {
         name: '彩票名称',

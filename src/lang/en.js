@@ -3795,7 +3795,7 @@ export default {
         statusPlaceholder: 'All states',
         issuePlaceholder: 'Please enter the number of issues',
         addIssueButton: 'Make up period',
-        addIssueButton2: 'Make up period2'
+        addIssueButton2: 'MarkIssue'
       },
       tableColumns:{
         name: 'Lottery Name',

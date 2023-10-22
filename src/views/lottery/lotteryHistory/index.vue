@@ -66,7 +66,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="addIssue2"
-          v-hasPermi="['admin:lotteryHistory:add']">六合彩新期
+          v-hasPermi="['admin:lotteryHistory:add']">{{$t('lottery.lotteryHistory.form.addIssueButton2')}}
         </el-button>
       </el-form-item>
     </el-form>

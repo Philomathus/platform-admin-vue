@@ -184,7 +184,7 @@
               v-for="dict in lotteryInfoNameOptions"
               :key="dict.name"
               :label="dict.name"
-              value="2002"
+              :value="dict.id"
             />
           </el-select>
         </el-form-item>

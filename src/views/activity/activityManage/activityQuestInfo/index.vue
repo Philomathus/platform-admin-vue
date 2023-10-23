@@ -23,6 +23,23 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+      <el-form-item label="游戏类型" prop="gameTypeId">
+        <el-select
+          filterable
+          v-model="queryParams.typeId"
+          placeholder="请选择游戏类型"
+          clearable
+          style="width: 240px"
+          @keyup.enter="handleQuery"
+        >
+          <el-option
+            v-for="dict in activityQuestTypeOptions"
+            :key="dict.id"
+            :label="dict.name"
+            :value="dict.id"
+          />
+        </el-select>
+      </el-form-item>
 <!--      <el-form-item :label="$t('activity.activityManage.activityQuestInfo.tableDialog.kindId')" prop="kindId">-->
 <!--        <el-select-->
 <!--          filterable-->
@@ -579,8 +596,8 @@ export default {
         gameId: null,
         kindId: null,
         platformId: null,
-        orderByColumn: 'ctime',
-        isAsc: 'desc'
+        orderByColumn: 'indexs',
+        isAsc: 'asc'
       },
       // 表单参数
       form: {},

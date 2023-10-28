@@ -66,7 +66,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="addIssue2"
-          v-hasPermi="['admin:lotteryHistory:add']">{{$t('lottery.lotteryHistory.form.addIssueButton2')}}
+          v-hasPermi="['admin:lotteryHistory:add']">{{ $t('lottery.lotteryHistory.form.addIssueButton2') }}
         </el-button>
       </el-form-item>
     </el-form>
@@ -164,28 +164,14 @@
     </el-dialog>
 
 
-
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="openAm6" width="450px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="openAm6" width="450px"
+               append-to-body>
       <el-form ref="formaNew6hecai" :model="form2" :rules="rules" label-width="100px">
-        <el-form-item label="期数" prop="issue" class="is-required" style="width: 350px">
-          <el-input v-model="form2.issue" placeholder="请输入期数" prop="issue" type="number"/>
-        </el-form-item>
-        <el-form-item label="开奖时间" prop="regTime">
-          <el-date-picker clearable size="small"
-                          v-model="form2.ktime"
-                          type="date"
-                          format="yyyy-MM-dd"
-                          value-format="yyyy-MM-dd 21:30:00"
-                          :placeholder=" $t('global.selectDate') "
-                          style="width: 140px"
-                          :picker-options="pickerOptions">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="香港六合彩" prop="name" class="is-required">
+        <el-form-item label="六合彩" prop="name" class="is-required">
           <el-select
             filterable
             v-model="form2.lotteryId"
-            placeholder="香港六合彩 "
+            placeholder="六合彩"
             clearable
             size="small"
             style="width: 250px"
@@ -202,15 +188,26 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item label="期数" prop="issue" class="is-required" style="width: 350px">
+          <el-input v-model="form2.issue" placeholder="请输入期数" prop="issue" type="number"/>
+        </el-form-item>
+        <el-form-item label="开奖时间" prop="regTime">
+          <el-date-picker clearable size="small"
+                          v-model="form2.ktime"
+                          type="date"
+                          format="yyyy-MM-dd"
+                          value-format="yyyy-MM-dd 21:30:00"
+                          :placeholder=" $t('global.selectDate') "
+                          style="width: 140px"
+                          :picker-options="pickerOptions">
+          </el-date-picker>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitAdd">{{$t('global.confirmButton')}}</el-button>
-        <el-button @click="openAm6 = false ">{{$t('global.cancelButton')}}</el-button>
+        <el-button type="primary" @click="submitAdd">{{ $t('global.confirmButton') }}</el-button>
+        <el-button @click="openAm6 = false ">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
-
-
-
   </div>
 </template>
 
@@ -281,7 +278,7 @@ export default {
         endIssue: null
       },
 
-      form2:{
+      form2: {
         lotteryId: null,
         issue: null,
         ktime: this.parseTime(new Date(), '{y}-{m}-{d}'),
@@ -357,8 +354,8 @@ export default {
     },
 
 
-    handle6heAward(row){
-      handle6heAward(row.id).then(res=>{
+    handle6heAward(row) {
+      handle6heAward(row.id).then(res => {
         this.msgSuccess(this.$t('lottery.lotteryHistory.rePayoutSuccessMessage'))
         this.getList()
       })
@@ -382,8 +379,8 @@ export default {
       this.resetForm("form");
     },
 
-    resetNew6hecai(){
-      this.form2 ={
+    resetNew6hecai() {
+      this.form2 = {
         issue: null,
         lotteryId: null,
         ktime: null,
@@ -426,14 +423,14 @@ export default {
     addIssue2() {
       this.resetNew6hecai();
       this.openAm6 = true;
-      this.title = "香港六合彩";
+      this.title = "新增六合彩新期";
     },
 
-    submitAdd(){
-      this.$refs['formaNew6hecai'].validate( valid =>{
-        if(valid){
+    submitAdd() {
+      this.$refs['formaNew6hecai'].validate(valid => {
+        if (valid) {
           console.log(this.form2.issue)
-          addNew6hecaiIssue(this.form2).then( response =>{
+          addNew6hecaiIssue(this.form2).then(response => {
             this.msgSuccess(this.$t('lottery.lotteryHistory.addIssueSuccessMessage'));
             this.openAm6 = false;
             this.getList();

@@ -196,7 +196,7 @@
                           v-model="form2.ktime"
                           type="date"
                           format="yyyy-MM-dd"
-                          value-format="yyyy-MM-dd 21:30:00"
+                          :value-format="form2.lotteryId === 2005 ? 'yyyy-MM-dd 21:30:00' : 'yyyy-MM-dd 21:30:00'"
                           :placeholder=" $t('global.selectDate') "
                           style="width: 140px"
                           :picker-options="pickerOptions">

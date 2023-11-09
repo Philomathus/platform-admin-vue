@@ -39,9 +39,9 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="lotteryName">
+      <el-form-item prop="lotteryId">
         <el-select
-          v-model="queryParams.lotteryName"
+          v-model="queryParams.lotteryId"
           :placeholder="$t('lottery.lotteryBet.form.lotteryNamePlaceholder')"
           clearable
           size="small"
@@ -49,9 +49,9 @@
         >
           <el-option
             v-for="dict in lotteryNameOptions"
-            :key="dict.name"
+            :key="dict.id"
             :label="dict.name"
-            :value="dict.name"
+            :value="dict.id"
           />
         </el-select>
       </el-form-item>
@@ -199,7 +199,7 @@ export default {
         puserId: null,
         issue: null,
         status: null,
-        lotteryName: null,
+        lotteryId: null,
         cost: null,
         betTime: null,
         abnormal: false,

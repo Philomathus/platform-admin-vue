@@ -273,7 +273,7 @@ export default {
       // 查询参数
       queryParams: {
         pageNum: 1,
-        pageSize: 50,
+        pageSize: 10000,
         envValue: null,
         envDes: null,
         envGroup: null,

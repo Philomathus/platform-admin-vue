@@ -299,8 +299,6 @@ export default {
     }
   },
   created() {
-    //获取提示列表
-    this.getTitleCodeList();
     //获取对应页面的列表
     this.getDicts('config_environment_group').then(response => {
       this.tabList = response.data.sort((v1, v2) => {
@@ -350,16 +348,9 @@ export default {
         this.configEnvironmentList = response.rows.sort(function (a, b) {
           return a.envSort - b.envSort
         })
+        this.titleCodeList = this.configEnvironmentList
         this.total = response.total
         this.loading = false
-      })
-    },
-    getTitleCodeList() {
-      listConfigEnvironment({}).then(response => {
-        this.configEnvironmentList = response.rows.sort(function (a, b) {
-          return a.envSort - b.envSort
-        })
-        this.titleCodeList = this.configEnvironmentList
       })
     },
     // 取消按钮

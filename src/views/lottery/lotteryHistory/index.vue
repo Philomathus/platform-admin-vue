@@ -95,6 +95,16 @@
       </el-table-column>
       <el-table-column :label="$t('global.operationColumn')" align="center" min-width="100px"
                        class-name="small-padding fixed-width">
+        <template slot-scope="scope" v-if="scope.row.status === 0 && scope.row.lotteryId >= 2002">
+          <el-button
+            size="small"
+            type="primary"
+            icon="el-icon-delete"
+            plain
+            @click="handle6heAwardDelete(scope.row)"
+          >删除
+          </el-button>
+        </template>
         <template slot-scope="scope" v-if="scope.row.status >= 2 && scope.row.lotteryId < 2002">
           <el-button
             size="small"
@@ -112,16 +122,6 @@
             icon="el-icon-plus"
             plain
             @click="handle6heAward(scope.row)"
-          >派奖
-          </el-button>
-        </template>
-        <template slot-scope="scope" v-if="scope.row.status === 0 && scope.row.lotteryId >= 2002">
-          <el-button
-            size="small"
-            type="primary"
-            icon="el-icon-delete"
-            plain
-            @click="handle6heAwardDelete(scope.row)"
           >派奖
           </el-button>
         </template>

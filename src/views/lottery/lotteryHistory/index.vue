@@ -372,7 +372,7 @@ export default {
 
     handle6heAwardDelete(row) {
       handle6heAwardDelete(row.id).then(res => {
-        this.msgSuccess(this.$t('lottery.lotteryHistory.rePayoutSuccessMessage'))
+        this.msgSuccess('删除成功')
         this.getList()
       })
     },

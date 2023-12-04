@@ -57,7 +57,7 @@ export function handle6heAward(historyId) {
 export function handle6heAwardDelete(id) {
   return request({
     url: url.platformWeb + '/lottery-hk6he/delete/' + id,
-    method: 'delete'
+    method: 'post'
   })
 }
 

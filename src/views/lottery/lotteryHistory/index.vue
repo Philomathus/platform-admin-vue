@@ -115,6 +115,16 @@
           >派奖
           </el-button>
         </template>
+        <template slot-scope="scope" v-if="scope.row.status === 0 && scope.row.lotteryId >= 2002">
+          <el-button
+            size="small"
+            type="primary"
+            icon="el-icon-delete"
+            plain
+            @click="handle6heAwardDelete(scope.row)"
+          >派奖
+          </el-button>
+        </template>
       </el-table-column>
     </el-table>
 
@@ -216,7 +226,7 @@ import {
   listLotteryHistory,
   lotteryInfoName,
   changeStatus,
-  addLotteryHistoryIssue, addNew6hecaiIssue, handle6heAward
+  addLotteryHistoryIssue, addNew6hecaiIssue, handle6heAward, handle6heAwardDelete
 } from "@/api/platform-web/lottery/lotteryHistory";
 import {pickerDateShortcuts} from "@/utils/dateUtils";
 
@@ -356,6 +366,13 @@ export default {
 
     handle6heAward(row) {
       handle6heAward(row.id).then(res => {
+        this.msgSuccess(this.$t('lottery.lotteryHistory.rePayoutSuccessMessage'))
+        this.getList()
+      })
+    },
+
+    handle6heAwardDelete(row){
+      handle6heAwardDelete(row.id).then(res => {
         this.msgSuccess(this.$t('lottery.lotteryHistory.rePayoutSuccessMessage'))
         this.getList()
       })

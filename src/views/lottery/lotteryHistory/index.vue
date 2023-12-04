@@ -95,34 +95,33 @@
       </el-table-column>
       <el-table-column :label="$t('global.operationColumn')" align="center" min-width="100px"
                        class-name="small-padding fixed-width">
-        <template slot-scope="scope" v-if="scope.row.status === 0 && scope.row.lotteryId >= 2002">
-          <el-button
-            size="small"
-            type="primary"
-            icon="el-icon-delete"
-            plain
-            @click="handle6heAwardDelete(scope.row)"
-          >删除
-          </el-button>
-        </template>
-        <template slot-scope="scope" v-if="scope.row.status >= 2 && scope.row.lotteryId < 2002">
+        <template slot-scope="scope">
           <el-button
             size="small"
             type="primary"
             icon="el-icon-refresh-right"
             plain
+            v-if="scope.row.status >= 2 && scope.row.lotteryId < 2002"
             @click="handleAward(scope.row)"
           >{{ $t('lottery.lotteryHistory.tableColumns.repaymentButton') }}
           </el-button>
-        </template>
-        <template slot-scope="scope" v-if="scope.row.status === 1 && scope.row.lotteryId >= 2002">
           <el-button
             size="small"
             type="primary"
             icon="el-icon-plus"
             plain
+            v-if="scope.row.status === 1 && scope.row.lotteryId >= 2002"
             @click="handle6heAward(scope.row)"
           >派奖
+          </el-button>
+          <el-button
+            size="small"
+            type="primary"
+            icon="el-icon-delete"
+            plain
+            v-if="scope.row.status === 0 && scope.row.lotteryId >= 2002"
+            @click="handle6heAwardDelete(scope.row)"
+          >删除
           </el-button>
         </template>
       </el-table-column>
@@ -371,7 +370,7 @@ export default {
       })
     },
 
-    handle6heAwardDelete(row){
+    handle6heAwardDelete(row) {
       handle6heAwardDelete(row.id).then(res => {
         this.msgSuccess(this.$t('lottery.lotteryHistory.rePayoutSuccessMessage'))
         this.getList()

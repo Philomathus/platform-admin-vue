@@ -86,6 +86,9 @@
       <el-table-column :label="$t('lottery.lotteryHistory.tableColumns.totalBet')" align="center" prop="totalBet"/>
       <el-table-column :label="$t('lottery.lotteryHistory.tableColumns.killRate')" align="center" prop="killRate"/>
       <el-table-column :label="$t('lottery.lotteryHistory.tableColumns.totalPrize')" align="center" prop="totalPrize"/>
+      <el-table-column label="usdt人数" align="center" prop="usdtRenshu"/>
+      <el-table-column label="usdt金额" align="center" prop="usetJine"/>
+
       <el-table-column :label="$t('global.status')" align="center" prop="status">
         <template slot-scope="scope">
           <span :style="{color: (status = statusOptions[parseInt(scope.row.status)]).color}">

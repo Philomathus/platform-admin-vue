@@ -105,6 +105,17 @@
           <span style="color: #FF5722">{{ row.palmYouhuijine}}</span>
         </template>
         </el-table-column>
+        <el-table-column label=" usdt人数 " min-width="130" align="center" prop="usdtRenshu">
+          <template v-slot="{row}">
+            <span style="color: #FF5722">{{ row.usdtRenshu}}</span>
+          </template>
+        </el-table-column>
+
+        <el-table-column label=" usdt金额 " min-width="130" align="center" prop="usdtJine">
+          <template v-slot="{row}">
+            <span style="color: #FF5722">{{ row.usdtJine}}</span>
+          </template>
+        </el-table-column>
         <el-table-column :label=" $t('report.rechargeStatistics.tad') " min-width="130" align="center" prop="totalRukuanjine" fixed="right">
         <template v-slot="{row}">
           <span style="color: #5FB878">{{ row.totalRukuanjine}}</span>
@@ -115,6 +126,7 @@
           <span style="color: #FF5722">{{ row.totalChukuanjine}}</span>
         </template>
         </el-table-column>
+
         <el-table-column :label=" $t('report.rechargeStatistics.aw') " min-width="130" align="center" prop="totalActiveprop" fixed="right">
           <template v-slot="{row}">
             <span style="color: #FF5722">{{ row.totalActiveprop}}</span>

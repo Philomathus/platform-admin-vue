@@ -68,14 +68,14 @@
             <el-button type="primary" plain @click="getHistoryRecharge()" style="height: 40px">查询</el-button>
           </div>
         </div>
-        <div class="font">线下充值金额: {{ data.线下充值金额 }}</div>
-        <div class="font">USDT充值金额: {{ data.USDT充值金额 }}</div>
+        <div class="font">线下充值金额: {{ parseFloat(dataInfo.线下充值金额).toFixed(2) }}</div>
+        <div class="font">USDT充值金额: {{ parseFloat(dataInfo.USDT充值金额).toFixed(2) }}</div>
         <div class="font">代充金额: {{ data.人工代充金额 }}</div>
         <div class="font">手工上分金额: {{ data.手动增加金额 }}</div>
         <div class="font">平台赠送金额: {{ data.平台赠送金额 }}</div>
-        <div class="font">充值总金额: {{ totalRecharge || 0.00 }}</div>
+        <div class="font">充值总金额: {{ parseFloat(totalRecharge || 0.00).toFixed(2) }}</div>
         <div class="font">提现次数: {{ data.会员提现次数 }}</div>
-        <div class="font">提现金额: {{ data.会员提现金额 }}</div>
+        <div class="font">提现金额: {{ parseFloat(dataInfo.会员提现金额).toFixed(2) }}</div>
       </div>
     </div>
     <div class="lotteryInfo">

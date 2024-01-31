@@ -383,7 +383,7 @@ export default {
         return null;
       }
       let format;
-      switch (lotteryId) {
+      switch (Number(lotteryId)) {
         case 2003:
           format = 'yyyy-MM-dd 22:30:00';
           break;

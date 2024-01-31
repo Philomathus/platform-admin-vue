@@ -391,6 +391,7 @@ export default {
           format = 'yyyy-MM-dd 21:30:00';
           break;
       }
+      console.log(lotteryId, format)
       return format;
     },
 

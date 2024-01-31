@@ -379,6 +379,9 @@ export default {
     },
 
     lottery6heFormat(lotteryId) {
+      if (!lotteryId) {
+        return null;
+      }
       let format;
       switch (lotteryId) {
         case 2003:

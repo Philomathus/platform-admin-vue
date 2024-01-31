@@ -206,7 +206,7 @@
                           v-model="form2.ktime"
                           type="date"
                           format="yyyy-MM-dd"
-                          :value-format="form2.lotteryId == 2005 ? 'yyyy-MM-dd 20:30:00' : 'yyyy-MM-dd 21:30:00'"
+                          :value-format="lottery6heFormat(form2.lotteryId)"
                           :placeholder=" $t('global.selectDate') "
                           style="width: 140px"
                           :picker-options="pickerOptions">
@@ -325,7 +325,6 @@ export default {
     getList() {
       this.loading = true;
       listLotteryHistory(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-        console.log( response.rows)
         this.lotteryHistoryList = response.rows;
         this.total = response.total;
         this.loading = false;
@@ -377,6 +376,22 @@ export default {
         this.msgSuccess('删除成功')
         this.getList()
       })
+    },
+
+    lottery6heFormat(lotteryId) {
+      let format;
+      switch (lotteryId) {
+        case 2003:
+          format = 'yyyy-MM-dd 22:30:00';
+          break;
+        case 2005:
+          format = 'yyyy-MM-dd 20:30:00';
+          break;
+        default:
+          format = 'yyyy-MM-dd 21:30:00';
+          break;
+      }
+      return format;
     },
 
     // 表单重置

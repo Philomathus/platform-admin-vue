@@ -385,7 +385,7 @@ export default {
       let format;
       switch (Number(lotteryId)) {
         case 2003:
-          format = 'yyyy-MM-dd 21:30:00';
+          format = 'yyyy-MM-dd 22:30:00';
           break;
         case 2005:
           format = 'yyyy-MM-dd 20:30:00';

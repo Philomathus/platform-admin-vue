@@ -369,7 +369,7 @@
       <el-table-column :label=" $t('pay.memberWithdrawLog.ot') " min-width="150" align="center" prop="createTime"/>
       <el-table-column :label=" $t('pay.memberWithdrawLog.lmt') " min-width="150" align="center" prop="updateTime"/>
       <el-table-column :label=" $t('pay.memberWithdrawLog.on') " min-width="200" align="center" prop="orderNo"/>
-      <el-table-column label="明细" min-width="90" align="center" prop="bankAddress"/>
+      <el-table-column label="明细" min-width="150" align="center" prop="bankAddress"/>
       <el-table-column :label=" $t('pay.memberWithdrawLog.optn') " min-width="285" align="center"
                        class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">

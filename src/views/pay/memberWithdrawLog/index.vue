@@ -1,9 +1,16 @@
 <template>
   <div class="app-container">
     <div v-loading="totalLoading">
-      <el-button type="success" @click="copy1">{{ $t('pay.memberWithdrawLog.nosd') }} {{ this.totalData.total || 0 }}</el-button>
-      <el-button type="warning" @click="copy2">{{ $t('pay.memberWithdrawLog.successTotal') }}  {{ this.totalData.successTotal || 0 }}</el-button>
-      <el-button type="info" @click="copy3">{{ $t('pay.memberWithdrawLog.sr') }} {{ numberUtil.toPercent(this.totalData.successRate) }}</el-button>
+      <el-button type="success" @click="copy1">{{ $t('pay.memberWithdrawLog.nosd') }} {{
+          this.totalData.total || 0
+        }}
+      </el-button>
+      <el-button type="warning" @click="copy2">{{ $t('pay.memberWithdrawLog.successTotal') }}
+        {{ this.totalData.successTotal || 0 }}
+      </el-button>
+      <el-button type="info" @click="copy3">{{ $t('pay.memberWithdrawLog.sr') }}
+        {{ numberUtil.toPercent(this.totalData.successRate) }}
+      </el-button>
       <el-button type="primary" icon="el-icon-search" size="mini" @click="getCountTotal()" style="margin-left: 20px">
         {{ $t('pay.memberWithdrawLog.sq') }}
       </el-button>
@@ -13,8 +20,11 @@
     >
       <el-form-item prop="searchTime">
         <el-date-picker type="datetimerange" v-model="queryParams.searchTime" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" :start-placeholder=" $t('global.dateTimePickerStartTimePlaceHolder') "
-                        :end-placeholder=" $t('global.dateTimePickerEndTimePlaceHolder') " :range-separator=" $t('global.selectDateRangeSeparator') " :default-time="['00:00:00', '23:59:59']" clearable
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}"
+                        :start-placeholder=" $t('global.dateTimePickerStartTimePlaceHolder') "
+                        :end-placeholder=" $t('global.dateTimePickerEndTimePlaceHolder') "
+                        :range-separator=" $t('global.selectDateRangeSeparator') "
+                        :default-time="['00:00:00', '23:59:59']" clearable
                         :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
@@ -85,7 +95,8 @@
       </el-form-item>
       <el-form-item prop="SearchCardBlack" style="width: 155px;">
         <template>
-          <el-select v-model="queryParams.SearchCardBlack" :placeholder=" $t('pay.memberWithdrawLog.bab') " size="small" clearable>
+          <el-select v-model="queryParams.SearchCardBlack" :placeholder=" $t('pay.memberWithdrawLog.bab') " size="small"
+                     clearable>
             <el-option
               v-for="item in CardBlackOptions"
               :key="item.value"
@@ -97,7 +108,10 @@
         </template>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{
+            $t('global.searchButton')
+          }}
+        </el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
@@ -245,15 +259,15 @@
       </el-table-column>
       <!--      <el-table-column label="会员账号" min-width="120" align="center" prop="account"/>-->
       <el-table-column :label=" $t('pay.memberWithdrawLog.dn') " min-width="120" align="center" prop="rechargeUserName">
-      <template slot="header">
-        <span>{{ $t('pay.memberWithdrawLog.dn') }}</span>
-        <el-tooltip popper-class="tooltip" placement="top">
-          <i class="el-icon-question"></i>
-          <div slot="content" class="tooltip-content">
-            <div>{{ $t('pay.memberWithdrawLog.ind') }}</div>
-          </div>
-        </el-tooltip>
-      </template>
+        <template slot="header">
+          <span>{{ $t('pay.memberWithdrawLog.dn') }}</span>
+          <el-tooltip popper-class="tooltip" placement="top">
+            <i class="el-icon-question"></i>
+            <div slot="content" class="tooltip-content">
+              <div>{{ $t('pay.memberWithdrawLog.ind') }}</div>
+            </div>
+          </el-tooltip>
+        </template>
       </el-table-column>
       <el-table-column :label=" $t('pay.memberWithdrawLog.nsd') " min-width="130" align="center" prop="bankCharge">
         <template slot="header">
@@ -281,7 +295,8 @@
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column :label=" $t('pay.memberWithdrawLog.bcr') " min-width="100" align="center" prop="rechargeCodeRatio">
+      <el-table-column :label=" $t('pay.memberWithdrawLog.bcr') " min-width="100" align="center"
+                       prop="rechargeCodeRatio">
         <template slot="header">
           <span> {{ $t('pay.memberWithdrawLog.bcr') }} </span>
           <el-tooltip popper-class="tooltip" placement="top">
@@ -334,7 +349,8 @@
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column :label=" $t('pay.memberWithdrawLog.ift') " min-width="90" align="center" prop="first" :formatter="firstFormat"/>
+      <el-table-column :label=" $t('pay.memberWithdrawLog.ift') " min-width="90" align="center" prop="first"
+                       :formatter="firstFormat"/>
       <el-table-column :label=" $t('pay.memberWithdrawLog.opt') " min-width="120" align="center" prop="opName"/>
       <el-table-column :label=" $t('pay.memberWithdrawLog.ar') " min-width="200" align="center" prop="remark">
         <template v-slot="{row}">
@@ -353,7 +369,9 @@
       <el-table-column :label=" $t('pay.memberWithdrawLog.ot') " min-width="150" align="center" prop="createTime"/>
       <el-table-column :label=" $t('pay.memberWithdrawLog.lmt') " min-width="150" align="center" prop="updateTime"/>
       <el-table-column :label=" $t('pay.memberWithdrawLog.on') " min-width="200" align="center" prop="orderNo"/>
-      <el-table-column :label=" $t('pay.memberWithdrawLog.optn') " min-width="285" align="center" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column label="明细" min-width="90" align="center" prop="bankAddress"/>
+      <el-table-column :label=" $t('pay.memberWithdrawLog.optn') " min-width="285" align="center"
+                       class-name="small-padding fixed-width" fixed="right">
         <template slot-scope="scope">
           <el-button
             size="small"
@@ -448,7 +466,8 @@
     />
 
     <!-- 添加或修改会员提现信息对话框 -->
-    <el-dialog :title=" $t('pay.memberWithdrawLog.fd') " :visible.sync="fundsOpen" width="450px" style="max-height:600px;overflow-y: scroll;"
+    <el-dialog :title=" $t('pay.memberWithdrawLog.fd') " :visible.sync="fundsOpen" width="450px"
+               style="max-height:600px;overflow-y: scroll;"
                append-to-body
     >
       <el-table :stripe="true" v-loading="loading" :data="fundsData" :row-class-name="tableRowClassName">
@@ -458,7 +477,8 @@
     </el-dialog>
 
     <!-- 添加或修改会员提现信息对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title=" $t('pay.memberWithdrawLog.pd') " :visible.sync="open" width="500px"
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title=" $t('pay.memberWithdrawLog.pd') " :visible.sync="open"
+               width="500px"
                append-to-body
     >
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
@@ -487,7 +507,8 @@
           <el-input v-model="form.googleAuthCode" :placeholder=" $t('pay.memberWithdrawLog.gvc') "/>
         </el-form-item>
         <el-form-item :label=" $t('pay.memberWithdrawLog.gpp') " prop="payAgentPlatId">
-          <el-select v-model="form.payAgentPlatId" :placeholder=" $t('pay.memberWithdrawLog.pob') " clearable size="small">
+          <el-select v-model="form.payAgentPlatId" :placeholder=" $t('pay.memberWithdrawLog.pob') " clearable
+                     size="small">
             <el-option v-for="plat in payAgentPlatformOptions" :key="plat.id" :label="plat.name" :value="plat.id"/>
           </el-select>
         </el-form-item>
@@ -544,7 +565,8 @@
         </el-button>
       </div>
     </el-dialog>
-    <el-dialog v-dialogDrag :close-on-click-modal="false" title="批量代付" :visible.sync="batchPayAgentOpen" width="500px"
+    <el-dialog v-dialogDrag :close-on-click-modal="false" title="批量代付" :visible.sync="batchPayAgentOpen"
+               width="500px"
                append-to-body
     >
       <el-form ref="batchForm" :model="batchPayAgentForm" :rules="rules" label-width="120px">
@@ -733,12 +755,12 @@ export default {
   },
   methods: {
     tableRowClassNameWithdraw({row}) {
-      if (row.first != null && (row.first == 1 || row.first == 2 )){
+      if (row.first != null && (row.first == 1 || row.first == 2)) {
         return 'register-row'
       } else if (row.bankCharge !== null && row.bankCharge > 10) {
         return 'warning-row'
       } else if (row.rechargeCodeRatio !== null && row.multipleCode != null && (parseFloat(row.rechargeCodeRatio) < parseFloat(row.multipleCode)
-      || row.rechargeCodeRatio === row.multipleCode)) {
+        || row.rechargeCodeRatio === row.multipleCode)) {
         return 'warning-row'
       } else if (row.rechargeUserNameStatus == 1) {
         return 'warning-row'
@@ -887,7 +909,7 @@ export default {
     },
     /** 修改备注弹框 */
     updateRemark(id, remark) {
-      if(remark === '点击备注'){
+      if (remark === '点击备注') {
         this.$prompt('请输入备注', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消'

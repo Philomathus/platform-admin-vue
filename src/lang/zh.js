@@ -4883,6 +4883,13 @@ export default {
       paym: '出 款',
       de: '出款异常',
       reject: '拒 绝',
+      bp: '批量代付',
+      gcap: 'Google验证码',
+      gac: '代付需输入Google验证码',
+      pp: '代付平台',
+      sref: '开始刷新',
+      gcce: 'google验证码不能为空',
+      psap: '请选择代付平台',
 
     }
   }

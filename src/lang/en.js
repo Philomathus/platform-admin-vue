@@ -4785,6 +4785,13 @@ export default {
       paym: 'Payments',
       de: 'Disbursement exceptions',
       reject: 'Reject',
+      bp: 'Bulk Payment',
+      gcap: 'Google Captcha',
+      gac: 'Google Authentication Code Required for Payment on behalf',
+      pp: 'Payment Platform',
+      sref: 'Start Refreshing',
+      gcce: 'Google Captcha cannot be empty',
+      psap: 'Please select a payment platform',
 
     }
   }

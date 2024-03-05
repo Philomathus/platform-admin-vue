@@ -22,9 +22,11 @@
 
     <el-table v-loading="loading" :data="logCommissionList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column :label="$t('global.memberId')" align="center" prop="memberId"/>
+      <el-table-column label="Member ID" align="center" prop="memberId"/>
       <el-table-column :label="$t('activity.recommend.logCommission.tableDialog.commission')" align="center" prop="commission"/>
-      <el-table-column :label="$t('global.ctTime')" align="center" prop="createTime">
+      <el-table-column label="Income" align="center" prop="income"/>
+      <el-table-column label="Order" align="center" prop="markOrder"/>
+      <el-table-column label="Release Time" align="center" prop="createTime">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>

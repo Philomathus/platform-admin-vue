@@ -3806,6 +3806,7 @@ export default {
         killRate: 'Kill Rate',
         totalPrize: 'hand out a prize',
         repaymentButton: 'Repayments',
+        updateTime: 'Create Time',
       },
       dialogForm:{
         gameStartTimeLabel: 'Number of starting periods',

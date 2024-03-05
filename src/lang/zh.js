@@ -3876,6 +3876,7 @@ export default {
         killRate: '杀率',
         totalPrize: '派奖',
         repaymentButton: '重新派奖',
+        updateTime: '创建时间'
       },
       dialogForm: {
         gameStartTimeLabel: '开始期数',

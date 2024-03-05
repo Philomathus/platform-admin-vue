@@ -94,6 +94,7 @@
           </span>
         </template>
       </el-table-column>
+      <el-table-column :label="$t('lottery.lotteryHistory.tableColumns.updateTime')" align="center" prop="updateTime"/>
       <el-table-column :label="$t('global.operationColumn')" align="center" min-width="100px"
                        class-name="small-padding fixed-width">
         <template slot-scope="scope">

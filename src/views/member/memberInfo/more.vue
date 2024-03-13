@@ -523,7 +523,12 @@ export default {
       moneydesOptions: [{
         value: '1',
         label: '人工入款'
-      }],
+      },
+        {
+          value: '2',
+          label: '优惠活动'
+        }
+      ],
       //加分提交的数据
       form: {
         beatNum: null,

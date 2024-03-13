@@ -558,7 +558,7 @@ export default {
         tableName: undefined,
         tableComment: undefined
       },
-      //手机号校验规则
+      //手机号校验规则phone number
       mobileRules: {
         oldMobile: [
           {required: true, message: this.$t('members.memberInfo.more.old') , trigger: 'blur'},

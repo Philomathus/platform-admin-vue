@@ -11,23 +11,32 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['admin:configVip:add']"
-        >{{$t('global.addButton')}}</el-button>
+        >{{ $t('global.addButton') }}
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table stripe v-loading="loading" :data="configVipList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
+      <el-table-column type="selection" width="55" align="center"/>
 
-      <el-table-column :label="$t('members.configVip.table.vipLvl')" align="center" prop="levelFlag" />
-      <el-table-column :label="$t('members.configVip.table.demandCodingValue')" align="center" prop="levelMoney" min-width="190"/>
-      <el-table-column :label="$t('members.configVip.table.advancementJackpot')" align="center" prop="jjcj" min-width="190" />
-      <el-table-column :label="$t('members.configVip.table.weeklySalary')" align="center" prop="zfl" width="120"/>
-      <el-table-column :label="$t('members.configVip.table.monthlySalary')" align="center" prop="yfl"  width="120"/>
-      <el-table-column :label="$t('members.configVip.table.creationTime')" align="center" prop="createTime" min-width="160"/>
-      <el-table-column :label="$t('members.configVip.table.lastUpdateBy')" align="center" prop="opName"  width="130"/>
-      <el-table-column :label="$t('members.configVip.table.lastUpdateAt')" align="center" prop="updateTime" min-width="170"/>
-      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width" fixed="right" min-width="120">
+      <el-table-column :label="$t('members.configVip.table.vipLvl')" align="center" prop="levelFlag" min-width="90"/>
+      <el-table-column :label="$t('members.configVip.table.demandCodingValue')" align="center" prop="levelMoney"
+                       min-width="120"/>
+      <el-table-column :label="$t('members.configVip.table.advancementJackpot')" align="center" prop="jjcj"
+                       min-width="90"/>
+      <el-table-column :label="$t('members.configVip.table.weeklySalary')" align="center" prop="zfl" min-width="90"/>
+      <el-table-column :label="$t('members.configVip.table.monthlySalary')" align="center" prop="yfl" min-width="90"/>
+      <el-table-column label="周需要充值" align="center" prop="weekCharge" min-width="90"/>
+      <el-table-column label="月需要充值" align="center" prop="monthCharge" min-width="90"/>
+      <el-table-column label="俸禄打码倍数" align="center" prop="bcodeMultiple" min-width="90"/>
+      <el-table-column :label="$t('members.configVip.table.creationTime')" align="center" prop="createTime"
+                       min-width="120"/>
+      <el-table-column :label="$t('members.configVip.table.lastUpdateBy')" align="center" prop="opName" width="120"/>
+      <el-table-column :label="$t('members.configVip.table.lastUpdateAt')" align="center" prop="updateTime"
+                       min-width="120"/>
+      <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width"
+                       fixed="right" min-width="120">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -35,7 +44,8 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['admin:configVip:edit']"
-          >{{ $t('global.edit') }}</el-button>
+          >{{ $t('global.edit') }}
+          </el-button>
           <el-button
             style="color: #FF5722"
             size="mini"
@@ -43,7 +53,8 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['admin:configVip:remove']"
-          >{{ $t('global.delete') }}</el-button>
+          >{{ $t('global.delete') }}
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -58,7 +69,8 @@
     />
 
     <!-- 添加或修改【请填写功能名称】对话框 -->
-    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog v-dialogDrag :close-on-click-modal="false" :title="title" :visible.sync="open" width="500px"
+               append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="160px" append-to-body>
         <el-form-item :label=" $t( 'members.configVip.table.vipLvl' ) " prop="levelFlag">
           <el-input v-model="form.levelFlag" :placeholder="$t( 'members.configVip.dialog.vipLvlreq' )" type="number"/>
@@ -67,13 +79,23 @@
           <el-input v-model="form.levelMoney" :placeholder="$t( 'members.configVip.dialog.demCodereq' )" type="number"/>
         </el-form-item>
         <el-form-item :label="$t('members.configVip.table.advancementJackpot')" prop="jjcj">
-          <el-input v-model="form.jjcj" :placeholder="$t( 'members.configVip.dialog.advJackpotreq' )"type="number" />
+          <el-input v-model="form.jjcj" :placeholder="$t( 'members.configVip.dialog.advJackpotreq' )" type="number"/>
         </el-form-item>
         <el-form-item :label="$t('members.configVip.table.weeklySalary')" prop="zfl">
-          <el-input v-model="form.zfl" :placeholder="$t( 'members.configVip.dialog.weeklySalreq' )"type="number" />
+          <el-input v-model="form.zfl" :placeholder="$t( 'members.configVip.dialog.weeklySalreq' )" type="number"/>
         </el-form-item>
         <el-form-item :label="$t('members.configVip.table.monthlySalary')" prop="yfl">
           <el-input v-model="form.yfl" :placeholder="$t( 'members.configVip.dialog.monthlySalreq' )" type="number"/>
+        </el-form-item>
+
+        <el-form-item label="周需要充值" prop="weekCharge">
+          <el-input v-model="form.weekCharge" placeholder="领取要求:一周内充值金额,为0或为空不生效" type="number"/>
+        </el-form-item>
+        <el-form-item label="月需要充值" prop="monthCharge">
+          <el-input v-model="form.monthCharge" placeholder="领取要求:一月内充值金额,为0或为空不生效" type="number"/>
+        </el-form-item>
+        <el-form-item label="俸禄打码倍数" prop="bcodeMultiple">
+          <el-input v-model="form.bcodeMultiple" placeholder="为0或为空不生效" type="number"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -85,12 +107,18 @@
 </template>
 
 <script>
-import { listConfigVip, getConfigVip, delConfigVip, addConfigVip, updateConfigVip, exportConfigVip } from "@/api/platform-web/member/configVip";
+import {
+  listConfigVip,
+  getConfigVip,
+  delConfigVip,
+  addConfigVip,
+  updateConfigVip,
+  exportConfigVip
+} from "@/api/platform-web/member/configVip";
 
 export default {
   name: "ConfigVip",
-  components: {
-  },
+  components: {},
   data() {
     return {
       // 遮罩层
@@ -122,6 +150,9 @@ export default {
         yfl: null,
         tdjs: null,
         zskf: null,
+        weekCharge: null,
+        monthCharge: null,
+        bcodeMultiple: null,
         opName: null,
         levelMoney: null,
         orderByColumn: 'level_flag',
@@ -178,6 +209,9 @@ export default {
         yfl: null,
         tdjs: null,
         zskf: null,
+        weekCharge: null,
+        monthCharge: null,
+        bcodeMultiple: null,
         createTime: null,
         opName: null,
         updateTime: null,
@@ -198,7 +232,7 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.id)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
@@ -240,28 +274,28 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids;
-      const vip=row.levelFlag;
+      const vip = row.levelFlag;
       this.$confirm(this.$t('members.configVip.queries.delQuery') + vip
         + this.$t('members.configVip.queries.delQuery2'), this.$t('members.configVip.queries.warning'), {
         confirmButtonText: this.$t('members.configVip.queries.sure'),
         cancelButtonText: this.$t('members.configVip.queries.cancel'),
         type: "warning"
-      }).then(function() {
+      }).then(function () {
         return delConfigVip(ids);
       }).then(() => {
         this.getList();
-        this.msgSuccess( this.$t('members.configVip.queries.delSuccess') );
+        this.msgSuccess(this.$t('members.configVip.queries.delSuccess'));
       }).catch(() => {
       })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm( this.$t('members.configVip.queries.confExcel'), this.$t('members.configVip.queries.warning'), {
+      this.$confirm(this.$t('members.configVip.queries.confExcel'), this.$t('members.configVip.queries.warning'), {
         confirmButtonText: this.$t('members.configVip.queries.confirm'),
         cancelButtonText: this.$t('members.configVip.queries.cancel'),
         type: "warning"
-      }).then(function() {
+      }).then(function () {
         return exportConfigVip(queryParams);
       }).then(response => {
         this.downloadExcel(response, this.$t('members.configVip.queries.function'));

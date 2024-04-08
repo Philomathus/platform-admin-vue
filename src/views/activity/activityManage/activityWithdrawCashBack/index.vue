@@ -107,10 +107,10 @@ export default {
       },
       QUERY_TABLE_COLUMNS:  {
         BANK_CODE:          { PROP: 'bankCode',         WIDTH: '90px', LABEL: '银行代码' },
-        WITHDRAW_TOTAL_MIN: { PROP: 'withdrawTotalMin', WIDTH: '90px', LABEL: '最低提款额' },
+        WITHDRAW_TOTAL_MIN: { PROP: 'withdrawTotalMin', WIDTH: '90px', LABEL: '最小提款额' },
         WITHDRAW_TOTAL_MAX: { PROP: 'withdrawTotalMax', WIDTH: '90px', LABEL: '最大提款额' },
-        RATE:               { PROP: 'rate',             WIDTH: '90px', LABEL: 'Ra费率te' },
-        STATUS:             { PROP: 'status',           WIDTH: '90px', LABEL: '现状' },
+        RATE:               { PROP: 'rate',             WIDTH: '90px', LABEL: '返现比例' },
+        STATUS:             { PROP: 'status',           WIDTH: '90px', LABEL: '状态' },
       },
       loading: true,
       bankCodes: [],
@@ -156,7 +156,7 @@ export default {
       this.fetchBankCodeList();
       getActivityWithdrawCashBack(row.bankCode).then(response => {
         this.form = response.data;
-        this.title = 'UPDATE';
+        this.title = '编辑';
         this.open = true;
       });
     },
@@ -195,7 +195,7 @@ export default {
       this.getList();
     },
     submitForm() {
-      if (this.title === 'UPDATE') {
+      if (this.title === '编辑') {
         updateActivityWithdrawCashBack(this.form).then(response => {
           this.msgSuccess(this.$t('global.editSuccessMsg'));
           this.open = false;
@@ -212,7 +212,7 @@ export default {
     handleAdd() {
       this.reset();
       this.fetchBankCodeList();
-      this.title = 'ADD';
+      this.title = '新增';
       this.open = true;
     },
     cancel() {

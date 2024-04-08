@@ -571,6 +571,7 @@ export default {
       editTitle: 'Modify Site Information',
       submitFormSuccess: 'Sent Successfully',
       sendMemberMsgButton: 'Send Member Message',
+      sendMultipleMemberMsgButton: 'Send Multiple Member Messages',
       tableDialog: {
         title: 'Title',
         titlePlaceholder: 'Please enter Title',

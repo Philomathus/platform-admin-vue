@@ -62,3 +62,11 @@ export function addUserMessage(data) {
     data: data
   })
 }
+
+export function addMultipleUserMessage(data) {
+  return request({
+    url: url.platformWeb + '/admin/messageOnSite/addMultipleUserMessage',
+    method: 'post',
+    data: data
+  })
+}

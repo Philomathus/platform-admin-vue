@@ -87,6 +87,17 @@
         >{{ $t('activity.messageOnSite.sendMemberMsgButton') }}
         </el-button>
       </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="mini"
+          @click="handleMultipleAddUserMessage"
+          v-hasPermi="['admin:messageOnSite:add']"
+        >{{ $t('activity.messageOnSite.sendMultipleMemberMsgButton') }}
+        </el-button>
+      </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -99,7 +110,7 @@
           <span>{{ parseTime(scope.row.pubdatetime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="会员id" align="center" prop="toUserId"/>
+      <el-table-column :label="$t('global.memberId')" align="center" prop="toUserId"/>
       <el-table-column :label="$t('global.operationColumn')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -177,7 +188,8 @@ import {
   addMessageOnSite,
   updateMessageOnSite,
   exportMessageOnSite,
-  addUserMessage
+  addUserMessage,
+  addMultipleUserMessage
 } from '@/api/activity/messageOnSite'
 import {pickerDateShortcuts} from "@/utils/dateUtils";
 
@@ -197,6 +209,8 @@ export default {
       single: true,
       // 非多个禁用
       multiple: true,
+
+      multipleAdd: false,
       // 显示搜索条件
       showSearch: true,
       // 总条数
@@ -305,6 +319,12 @@ export default {
       this.openUserMessage = true
       this.title = this.$t('activity.messageOnSite.addUserTitle')
     },
+    handleMultipleAddUserMessage() {
+      this.reset()
+      this.multipleAdd = true
+      this.openUserMessage = true
+      this.title = this.$t('activity.messageOnSite.addUserTitle')
+    },
     closeUserMessage(){
       this.openUserMessage = false
     },
@@ -342,11 +362,21 @@ export default {
     submitFormUserMessage() {
       this.$refs['form'].validate(valid => {
         if (valid) {
-          addUserMessage(this.form).then(response => {
+          if (this.multipleAdd){
+            console.log( 'enterrerere')
+            addMultipleUserMessage(this.form).then(response => {
               this.msgSuccess(this.$t('activity.messageOnSite.submitFormSuccess'))
               this.openUserMessage = false
               this.getList()
             })
+          }
+          else {
+            addUserMessage(this.form).then(response => {
+              this.msgSuccess(this.$t('activity.messageOnSite.submitFormSuccess'))
+              this.openUserMessage = false
+              this.getList()
+            })
+          }
         }
       })
     },

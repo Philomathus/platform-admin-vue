@@ -48,8 +48,7 @@
     />
     <el-dialog :visible.sync="open" :title="title" width="500px" append-to-body>
       <el-form ref="form" :model="form" label-width="100px">
-        <el-form-item v-for="item in Object.values(QUERY_TABLE_COLUMNS)"
-                      v-show="item.PROP !== QUERY_TABLE_COLUMNS.STATUS.PROP" :label="item.LABEL" :prop="item.PROP">
+        <el-form-item v-for="item in Object.values(QUERY_TABLE_COLUMNS)" :label="item.LABEL" :prop="item.PROP">
           <el-select v-if="item.PROP === QUERY_TABLE_COLUMNS.BANK_CODE.PROP" v-model="form.bankCode">
             <el-option
               v-for="bank in bankCodeList"

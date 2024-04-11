@@ -56,12 +56,13 @@
               :label="bank.code"
               :value="bank.code"/>
           </el-select>
-          <el-input v-else v-model="form[item.PROP]" type="number"/>
+          <el-input v-else v-model="form[item.PROP]" type="number"
+                    v-show="item.PROP !== QUERY_TABLE_COLUMNS.STATUS.PROP"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">Submit</el-button>
-        <el-button @click="cancel">Cancel</el-button>
+        <el-button type="primary" @click="submitForm">提交</el-button>
+        <el-button @click="cancel">取消</el-button>
       </div>
     </el-dialog>
   </div>
@@ -132,7 +133,8 @@ export default {
         BANK_CODE: {PROP: 'bankCode', WIDTH: '90px', LABEL: '银行代码'},
         WITHDRAW_TOTAL_MIN: {PROP: 'withdrawTotalMin', WIDTH: '90px', LABEL: '最小提款额'},
         WITHDRAW_TOTAL_MAX: {PROP: 'withdrawTotalMax', WIDTH: '90px', LABEL: '最大提款额'},
-        RATE: {PROP: 'rate', WIDTH: '90px', LABEL: '返现比例'},
+        RATE: {PROP: 'rate', WIDTH: '90px', LABEL: '彩金比例'},
+        BCODE_RATE: {PROP: 'bcodeRate', WIDTH: '90px', LABEL: '打码比例'},
         STATUS: {PROP: 'status', WIDTH: '90px', LABEL: '状态'},
       },
       loading: true,

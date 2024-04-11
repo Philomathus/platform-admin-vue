@@ -20,15 +20,15 @@
                        align="center">
         <template v-slot:default="scope">
           <el-switch v-if="column.PROP === QUERY_TABLE_COLUMNS.STATUS.PROP"
-            v-model="scope.row[column.PROP]"
-            :active-value="1"
-            :inactive-value="0"
-            @change="handleStatusChange(scope.row)">
+                     v-model="scope.row[column.PROP]"
+                     :active-value="1"
+                     :inactive-value="0"
+                     @change="handleStatusChange(scope.row)">
           </el-switch>
           <span v-else>{{ scope.row[column.PROP] }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="运行" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button v-for="button in Object.values(BUTTONS_ACTION)"
                      @click="() => button.HANDLER(scope.row)"
@@ -46,9 +46,9 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
-    <el-dialog :visible.sync="open" :title="title"  width="500px" append-to-body>
-      <el-form ref="form" :model="form"  label-width="100px">
-        <el-form-item v-for=" item in Object.values(QUERY_TABLE_COLUMNS)" :label="item.LABEL" :prop="item.PROP">
+    <el-dialog :visible.sync="open" :title="title" width="500px" append-to-body>
+      <el-form ref="form" :model="form" label-width="100px">
+        <el-form-item v-for="item in Object.values(QUERY_TABLE_COLUMNS)" :label="item.LABEL" :prop="item.PROP">
           <el-select v-if="item.PROP === QUERY_TABLE_COLUMNS.BANK_CODE.PROP" v-model="form.bankCode">
             <el-option
               v-for="bank in bankCodeList"
@@ -56,8 +56,7 @@
               :label="bank.code"
               :value="bank.code"/>
           </el-select>
-          <el-switch v-else-if="item.PROP === QUERY_TABLE_COLUMNS.STATUS.PROP" v-model="form.status" :active-value="1" :inactive-value="0"/>
-          <el-input  v-else v-model="form[item.PROP]"/>
+          <el-input v-else v-model="form[item.PROP]" type="number"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -98,19 +97,43 @@ export default {
   data() {
     return {
       BUTTONS_GUTTER: {
-        ADD:    { TYPE: TEXT.BTN_TYPE_PRIMARY, ICON: TEXT.BTN_ICON_PLUS,   SIZE: TEXT.BTN_SIZE_SMALL, LABEL: TEXT.BTN_LABEL_ADD,    HANDLER: this.handleAdd },
-        DELETE: { TYPE: TEXT.BTN_TYPE_WARNING, ICON: TEXT.BTN_ICON_DELETE, SIZE: TEXT.BTN_SIZE_SMALL, LABEL: TEXT.BTN_LABEL_DELETE, HANDLER: this.handleDelete },
+        ADD: {
+          TYPE: TEXT.BTN_TYPE_PRIMARY,
+          ICON: TEXT.BTN_ICON_PLUS,
+          SIZE: TEXT.BTN_SIZE_SMALL,
+          LABEL: TEXT.BTN_LABEL_ADD,
+          HANDLER: this.handleAdd
+        },
+        DELETE: {
+          TYPE: TEXT.BTN_TYPE_WARNING,
+          ICON: TEXT.BTN_ICON_DELETE,
+          SIZE: TEXT.BTN_SIZE_SMALL,
+          LABEL: TEXT.BTN_LABEL_DELETE,
+          HANDLER: this.handleDelete
+        },
       },
       BUTTONS_ACTION: {
-        EDIT:   { TYPE: TEXT.BTN_TYPE_TEXT, ICON: TEXT.BTN_ICON_EDIT,   SIZE: TEXT.BTN_SIZE_SMALL, LABEL: TEXT.BTN_LABEL_EDIT,   HANDLER: this.handleUpdate },
-        DELETE: { TYPE: TEXT.BTN_TYPE_TEXT, ICON: TEXT.BTN_ICON_DELETE, SIZE: TEXT.BTN_SIZE_SMALL, LABEL: TEXT.BTN_LABEL_DELETE, HANDLER: this.handleDelete },
+        EDIT: {
+          TYPE: TEXT.BTN_TYPE_TEXT,
+          ICON: TEXT.BTN_ICON_EDIT,
+          SIZE: TEXT.BTN_SIZE_SMALL,
+          LABEL: TEXT.BTN_LABEL_EDIT,
+          HANDLER: this.handleUpdate
+        },
+        DELETE: {
+          TYPE: TEXT.BTN_TYPE_TEXT,
+          ICON: TEXT.BTN_ICON_DELETE,
+          SIZE: TEXT.BTN_SIZE_SMALL,
+          LABEL: TEXT.BTN_LABEL_DELETE,
+          HANDLER: this.handleDelete
+        },
       },
-      QUERY_TABLE_COLUMNS:  {
-        BANK_CODE:          { PROP: 'bankCode',         WIDTH: '90px', LABEL: '银行代码' },
-        WITHDRAW_TOTAL_MIN: { PROP: 'withdrawTotalMin', WIDTH: '90px', LABEL: '最小提款额' },
-        WITHDRAW_TOTAL_MAX: { PROP: 'withdrawTotalMax', WIDTH: '90px', LABEL: '最大提款额' },
-        RATE:               { PROP: 'rate',             WIDTH: '90px', LABEL: '返现比例' },
-        STATUS:             { PROP: 'status',           WIDTH: '90px', LABEL: '状态' },
+      QUERY_TABLE_COLUMNS: {
+        BANK_CODE: {PROP: 'bankCode', WIDTH: '90px', LABEL: '银行代码'},
+        WITHDRAW_TOTAL_MIN: {PROP: 'withdrawTotalMin', WIDTH: '90px', LABEL: '最小提款额'},
+        WITHDRAW_TOTAL_MAX: {PROP: 'withdrawTotalMax', WIDTH: '90px', LABEL: '最大提款额'},
+        RATE: {PROP: 'rate', WIDTH: '90px', LABEL: '返现比例'},
+        STATUS: {PROP: 'status', WIDTH: '90px', LABEL: '状态'},
       },
       loading: true,
       bankCodes: [],
@@ -141,7 +164,7 @@ export default {
     async fetchBankCodeList() {
       try {
         const res = await getConfigBankList();
-        const existingBanks = this.withdrawCashBackList.map( data => data.bankCode)
+        const existingBanks = this.withdrawCashBackList.map(data => data.bankCode)
         console.log(res.data)
         this.bankCodeList = res.data.filter(data => !existingBanks.includes(data.code));
       } catch (error) {
@@ -174,7 +197,7 @@ export default {
       }).catch(() => {
       })
     },
-    initialize(){
+    initialize() {
       this.getList();
     },
     async getList() {

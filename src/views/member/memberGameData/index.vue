@@ -269,8 +269,6 @@ export default {
         this.totalLoading = false
       })
     },
-
-
     // 0:未洗码1已经洗码
     formatterStatus(row) {
       if (row.status == 0) {
@@ -325,9 +323,19 @@ export default {
       this.loading = true
       listMemberGameData(this.queryParams).then(response => {
         this.memberGameDataList = response.rows
+        this.memberGameDataList.profit = this.formatNumber( this.memberGameDataList.profit );
+        this.memberGameDataList.all_bet = this.formatNumber( this.memberGameDataList.all_bet );
+        this.memberGameDataList.cell_score = this.formatNumber( this.memberGameDataList.cell_score );
         this.total = response.total
         this.loading = false
       })
+    },
+
+    formatNumber(num){
+      if (num !== undefined && num !== null) {
+        return num.toFixed(2);
+      }
+      return '0.00';
     },
     /** 查询平台列表 8*/
     getPlatformList() {

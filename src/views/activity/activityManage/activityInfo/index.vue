@@ -23,6 +23,15 @@
 
         </el-date-picker>
       </el-form-item>
+      <el-form-item prop="typeId">
+        <el-select v-model="queryParams.typeId" placeholder="请输入活动类型" clearable size="small">
+          <el-option
+            v-for="type in activityTypeOptions"
+            :key="type.id"
+            :label="type.name"
+            :value="type.id"/>
+        </el-select>
+      </el-form-item>
       <el-form-item prop="status">
         <el-select v-model="queryParams.status"
                    :placeholder="$t('global.selectStatusPlaceholder')"
@@ -293,6 +302,7 @@ export default {
         pageSize: 10,
         title: null,
         ctime: null,
+        type: null,
         status: null,
         orderByColumn: '',
         isAsc: ''

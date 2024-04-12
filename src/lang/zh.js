@@ -612,6 +612,7 @@ export default {
       editTitle: '修改站内信息',
       submitFormSuccess: '发送成功',
       sendMemberMsgButton: '发送会员消息',
+      sendMultipleMemberMsgButton: '发送多个成员信息',
       tableDialog: {
         title: '信息标题',
         titlePlaceholder: '请输入信息标题',

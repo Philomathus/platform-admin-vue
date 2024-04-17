@@ -9,9 +9,9 @@ export function listActivityWithdrawCashBack(query) {
   })
 }
 
-export function getActivityWithdrawCashBack(bankCode) {
+export function getActivityWithdrawCashBack(id) {
   return request({
-    url: url.platformWeb + '/admin/activityWithdrawCashBack/' + bankCode,
+    url: url.platformWeb + '/admin/activityWithdrawCashBack/' + id,
     method: 'get'
   })
 }
@@ -40,12 +40,12 @@ export function deleteActivityWithdrawCashBack(bankCodes) {
 }
 
 
-export function changeStatus(bankCode, status) {
+export function changeStatus(id, status) {
   return request({
     url: url.platformWeb + '/admin/activityWithdrawCashBack/changeStatus',
     method: 'put',
     data: {
-      bankCode: bankCode,
+      id: id,
       status: status
     }
   })

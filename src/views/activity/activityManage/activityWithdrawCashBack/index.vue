@@ -48,15 +48,26 @@
     />
     <el-dialog :visible.sync="open" :title="title" width="500px" append-to-body>
       <el-form ref="form" :model="form" label-width="100px">
-        <el-form-item v-for="item in Object.values(QUERY_TABLE_COLUMNS)" :label="item.LABEL" :prop="item.PROP">
-          <el-select v-if="item.PROP === QUERY_TABLE_COLUMNS.BANK_CODE.PROP" v-model="form.bankCode">
+        <el-form-item label="银行代码" prop="bankCode">
+          <el-select v-model="form.bankCode">
             <el-option
-              v-for="bank in bankCodeList"
+              v-for="bank in this.bankCodeList"
               :key="bank.code"
               :label="bank.code"
               :value="bank.code"/>
           </el-select>
-          <el-input v-else v-model="form[item.PROP]" type="number" />
+        </el-form-item>
+        <el-form-item label="最小提款额" prop="withdrawTotalMin">
+          <el-input v-model="form.withdrawTotalMin" type="number"/>
+        </el-form-item>
+        <el-form-item label="最大提款额" prop="withdrawTotalMax">
+          <el-input v-model="form.withdrawTotalMax" type="number"/>
+        </el-form-item>
+        <el-form-item label="彩金比例" prop="rate">
+          <el-input v-model="form.rate" type="number"/>
+        </el-form-item>
+        <el-form-item label="打码比例" prop="bcodeRate">
+          <el-input v-model="form.bcodeRate" type="number"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -147,7 +158,7 @@ export default {
       open: false,
       queryParams: {
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 20,
         withdrawTotalMin: null,
         withdrawTotalMax: null,
         status: null
@@ -173,12 +184,16 @@ export default {
       }
     },
     handleStatusChange(row) {
-      changeStatus(row.bankCode, row.status)
+      changeStatus(row.id, row.status).then(() => {
+        this.getList();
+        this.msgSuccess(this.$t('global.editSuccessMsg'));
+      }).catch((error) => {
+        this.handleError(error);
+      })
     },
     handleUpdate(row) {
       this.reset();
-      this.fetchBankCodeList();
-      getActivityWithdrawCashBack(row.bankCode).then(response => {
+      getActivityWithdrawCashBack(row.id).then(response => {
         this.form = response.data;
         this.title = '编辑';
         this.open = true;
@@ -200,6 +215,7 @@ export default {
     },
     initialize() {
       this.getList();
+      this.fetchBankCodeList();
     },
     async getList() {
       try {
@@ -219,7 +235,7 @@ export default {
       this.getList();
     },
     submitForm() {
-      if (this.title === '编辑') {
+      if (this.form.id) {
         updateActivityWithdrawCashBack(this.form).then(response => {
           this.msgSuccess(this.$t('global.editSuccessMsg'));
           this.open = false;
@@ -235,7 +251,6 @@ export default {
     },
     handleAdd() {
       this.reset();
-      this.fetchBankCodeList();
       this.title = '新增';
       this.open = true;
     },
@@ -248,7 +263,10 @@ export default {
         withdrawTotalMin: null,
         withdrawTotalMax: null,
         rate: null,
-        status: 0
+        bankCode: null,
+        bcodeRate: null,
+        status: null,
+        id: null,
       };
       this.resetForm("form");
     },

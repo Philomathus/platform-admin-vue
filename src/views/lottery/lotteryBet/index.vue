@@ -1,11 +1,18 @@
 <template>
   <div class="app-container">
     <div v-loading="totalLoading">
-    <el-button type="primary" @click="copy1">{{$t('lottery.lotteryBet.totalCostButton')}} {{ this.totalData.totalCost||0 }}</el-button>
-    <el-button type="success" @click="copy2">{{$t('lottery.lotteryBet.totalPrizeButton')}} {{this.totalData.totalPrize||0 }}</el-button>
-    <el-button  type="primary" icon="el-icon-search" size="mini" @click="getCountTotal()" style="margin-left: 20px">{{$t('lottery.lotteryBet.totalCountButton')}}</el-button>
+      <el-button type="primary" @click="copy1">{{ $t('lottery.lotteryBet.totalCostButton') }}
+        {{ this.totalData.totalCost || 0 }}
+      </el-button>
+      <el-button type="success" @click="copy2">{{ $t('lottery.lotteryBet.totalPrizeButton') }}
+        {{ this.totalData.totalPrize || 0 }}
+      </el-button>
+      <el-button type="primary" icon="el-icon-search" size="mini" @click="getCountTotal()" style="margin-left: 20px">
+        {{ $t('lottery.lotteryBet.totalCountButton') }}
+      </el-button>
     </div>
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px" style="margin-top: 20px">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px"
+             style="margin-top: 20px">
 
       <el-form-item :label="$t('global.selectDate') " prop="betTime">
         <el-date-picker type="datetimerange"
@@ -83,8 +90,10 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('global.searchButton')}}</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('global.resetButton')}}</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">
+          {{ $t('global.searchButton') }}
+        </el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -97,7 +106,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['admin:lotteryBet:list']"
-        >{{$t('global.exportButton')}}
+        >{{ $t('global.exportButton') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -110,6 +119,7 @@
       <el-table-column :label="$t('lottery.lotteryBet.tableColumns.code')" align="center" prop="code"/>
       <el-table-column :label="$t('lottery.lotteryBet.tableColumns.chip')" align="center" prop="chip"/>
       <el-table-column :label="$t('lottery.lotteryBet.tableColumns.cost')" align="center" prop="cost"/>
+      <el-table-column label="下注类型" align="center" prop="methodStr"/>
       <el-table-column :label="$t('lottery.lotteryBet.tableColumns.betSelect')" align="center" prop="betSelect"/>
       <el-table-column :label="$t('lottery.lotteryBet.tableColumns.status')" align="center" prop="status">
         <template slot-scope="scope">
@@ -123,7 +133,8 @@
       <!--      <el-table-column label="下注索引" align="center" prop="betIds" />-->
       <!--      <el-table-column label="下注彩种id" align="center" prop="lotteryId" />-->
       <!--      <el-table-column label="主播ID" align="center" prop="anchor" />-->
-      <el-table-column :label="$t('lottery.lotteryBet.tableColumns.betTime')" align="center" min-width="120px" prop="betTime" width="180">
+      <el-table-column :label="$t('lottery.lotteryBet.tableColumns.betTime')" align="center" min-width="120px"
+                       prop="betTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.betTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
@@ -156,9 +167,9 @@
 </template>
 
 <script>
-import { listLotteryBet0, getCount, exportLotteryBet0,repaireLotteryBet0 } from '@/api/platform-web/lottery/lotteryBet'
+import {listLotteryBet0, getCount, exportLotteryBet0, repaireLotteryBet0} from '@/api/platform-web/lottery/lotteryBet'
 import {listLotteryInfo} from "@/api/platform-web/lottery/lotteryInfo";
-import { pickerDateTimeShortcuts } from '@/utils/dateUtils'
+import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
 
 export default {
   name: 'LotteryBet0',
@@ -172,7 +183,7 @@ export default {
         totalCost: 0,
         totalPrize: 0,
       },
-      pickerOptions: { shortcuts: pickerDateTimeShortcuts },
+      pickerOptions: {shortcuts: pickerDateTimeShortcuts},
       // 遮罩层
       loading: true,
       // 选中数组
@@ -213,13 +224,12 @@ export default {
       // 表单校验
       rules: {
         betTime: [
-          { required: true, message: '下注时间不能为空', trigger: 'blur' }
+          {required: true, message: '下注时间不能为空', trigger: 'blur'}
         ]
       }
     }
   },
   created() {
-    this.getList()
     this.getDicts('lottery_bat_status').then(response => {
       this.statusOptions = response.data
     })
@@ -228,6 +238,7 @@ export default {
       console.info(response)
       this.lotteryNameOptions = response.rows
     })
+    this.getList()
   },
   methods: {
     /** 查询用户投资行为列表 */
@@ -285,26 +296,28 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      if(this.queryParams.puserId){
+      if (this.queryParams.puserId) {
         const reg = '^[0-9a-zA-Z_]{1,}$'
         let flag = this.queryParams.puserId.match(reg)
-        if(!flag){
+        if (!flag) {
           this.msgError(this.$t('lottery.lotteryBet.responseMessages.memberIdFormatError'))
           return
         }
       }
       this.queryParams.pageNum = 1
-      var min=this.queryParams.priceMin
-      var max=this.queryParams.priceMax
-      if ((min!=="" || min!=null) && (max!=="" || max!=null)){
-        if (parseInt(min)>parseInt(max)){
+      var min = this.queryParams.priceMin
+      var max = this.queryParams.priceMax
+      if ((min !== "" || min != null) && (max !== "" || max != null)) {
+        if (parseInt(min) > parseInt(max)) {
           this.$message.warning(this.$t('lottery.lotteryBet.responseMessages.priceLimitWarning'))
-        }else {
+        } else {
           this.getList()
+          return;
         }
-      }else if ((min==="" || min==null) && (max==="" || max==null)){
+      } else if ((min === "" || min == null) && (max === "" || max == null)) {
         this.getList()
-      }else {
+        return;
+      } else {
         this.$message.warning(this.$t('lottery.lotteryBet.responseMessages.priceLimitWarning'))
       }
       if (this.queryParams.abnormal && !this.queryParams.puserId) {

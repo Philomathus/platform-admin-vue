@@ -404,7 +404,8 @@ export default {
       }).then(function () {
         return exportMessageOnSite(queryParams)
       }).then(response => {
-        (response.msg)
+        this.downloadExcel(response, this.$t('report.index.rf'))
+      }).catch(() => {
       })
     }
   }

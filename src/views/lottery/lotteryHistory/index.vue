@@ -117,8 +117,17 @@
           >派奖
           </el-button>
           <el-button
-            size="small"
-            type="primary"
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            plain
+            v-if="scope.row.status === 0 && scope.row.lotteryId >= 2002"
+            @click="handle6heAwardUpdate(scope.row)"
+          >{{ $t('global.editButton') }}
+          </el-button>
+          <el-button
+            size="mini"
+            type="text"
             icon="el-icon-delete"
             plain
             v-if="scope.row.status === 0 && scope.row.lotteryId >= 2002"
@@ -185,7 +194,7 @@
             placeholder="六合彩"
             clearable
             size="small"
-            style="width: 250px"
+            style="width: 250px" :disabled="form2.id !== ''"
           >
             <el-col>
 
@@ -200,7 +209,8 @@
           </el-select>
         </el-form-item>
         <el-form-item label="期数" prop="issue" class="is-required" style="width: 350px">
-          <el-input v-model="form2.issue" placeholder="请输入期数" prop="issue" type="number"/>
+          <el-input v-model="form2.issue" placeholder="请输入期数" prop="issue" type="number"
+                    :disabled="form2.id !== ''"/>
         </el-form-item>
         <el-form-item label="开奖时间" prop="regTime">
           <el-date-picker clearable size="small"
@@ -216,7 +226,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitAdd">{{ $t('global.confirmButton') }}</el-button>
-        <el-button @click="openAm6 = false ">{{ $t('global.cancelButton') }}</el-button>
+        <el-button @click="openAm6 = false">{{ $t('global.cancelButton') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -227,9 +237,10 @@ import {
   listLotteryHistory,
   lotteryInfoName,
   changeStatus,
-  addLotteryHistoryIssue, addNew6hecaiIssue, handle6heAward, handle6heAwardDelete
+  addLotteryHistoryIssue, addNew6hecaiIssue, handle6heAward, handle6heAwardDelete, get6hecaiLottery, handle6hecaiEdit
 } from "@/api/platform-web/lottery/lotteryHistory";
 import {pickerDateShortcuts} from "@/utils/dateUtils";
+import {getLotteryInfo} from "@/api/platform-web/lottery/lotteryInfo";
 
 export default {
   name: "LotteryHistory",
@@ -379,6 +390,14 @@ export default {
       })
     },
 
+    handle6heAwardUpdate(row) {
+      this.resetNew6hecai();
+      get6hecaiLottery(row.id).then(response => {
+        this.form2 = response.data;
+        this.openAm6 = true;
+      });
+    },
+
     lottery6heFormat(lotteryId) {
       if (!lotteryId) {
         return null;
@@ -467,12 +486,19 @@ export default {
     submitAdd() {
       this.$refs['formaNew6hecai'].validate(valid => {
         if (valid) {
-          console.log(this.form2.issue)
-          addNew6hecaiIssue(this.form2).then(response => {
-            this.msgSuccess(this.$t('lottery.lotteryHistory.addIssueSuccessMessage'));
-            this.openAm6 = false;
-            this.getList();
-          })
+          if (this.form2.id) {
+            handle6hecaiEdit(this.form2.id, this.form2.ktime).then(res => {
+              this.msgSuccess('修改成功')
+              this.openAm6 = false;
+              this.getList()
+            })
+          } else {
+            addNew6hecaiIssue(this.form2).then(response => {
+              this.msgSuccess(this.$t('lottery.lotteryHistory.addIssueSuccessMessage'));
+              this.openAm6 = false;
+              this.getList();
+            })
+          }
         }
       })
     }

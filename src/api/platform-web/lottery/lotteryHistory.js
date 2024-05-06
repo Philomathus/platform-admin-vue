@@ -61,3 +61,22 @@ export function handle6heAwardDelete(id) {
   })
 }
 
+export function handle6hecaiEdit(id, ktime) {
+  return request({
+    url: url.platformWeb + '/lottery-hk6he/new6hecaiEdit',
+    method: 'post',
+    data: {
+      id,
+      ktime
+    }
+  })
+}
+
+// 查询彩票名称详细
+export function get6hecaiLottery(id) {
+  return request({
+    url: url.platformWeb + '/lottery-hk6he/' + id,
+    method: 'get'
+  })
+}
+

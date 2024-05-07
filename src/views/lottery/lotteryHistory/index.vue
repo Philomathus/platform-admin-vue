@@ -194,7 +194,7 @@
             placeholder="六合彩"
             clearable
             size="small"
-            style="width: 250px" :disabled="form2.id !== ''"
+            style="width: 250px" :disabled="form2.id !== undefined"
           >
             <el-col>
 
@@ -210,7 +210,7 @@
         </el-form-item>
         <el-form-item label="期数" prop="issue" class="is-required" style="width: 350px">
           <el-input v-model="form2.issue" placeholder="请输入期数" prop="issue" type="number"
-                    :disabled="form2.id !== ''"/>
+                    :disabled="form2.id !== undefined"/>
         </el-form-item>
         <el-form-item label="开奖时间" prop="regTime">
           <el-date-picker clearable size="small"

@@ -143,6 +143,14 @@ export function updateLiveUser(data) {
   })
 }
 
+export function updateOpenPay(data) {
+  return request({
+    url: url.platformWeb + '/admin/liveUser/openPay',
+    method: 'put',
+    data: data
+  })
+}
+
 // 删除用户信息
 export function delLiveUser(id) {
   return request({

@@ -258,7 +258,7 @@ import {
   updateVideoSort,
   exportLiveVideo, resetSynchronizeOrder
 } from '@/api/live-web/liveVideo/liveVideo'
-import { updateLiveUser } from '@/api/live-web/liveUser'
+import {updateLiveUser, updateOpenPay} from '@/api/live-web/liveUser'
 import request from '@/utils/request'
 import {url} from '@/utils/url'
 
@@ -470,7 +470,7 @@ export default {
         cancelButtonText: this.$t('liveWeb.liveVideo.confirmChangeOpenPayDialog.cancelButton'),
         type: 'warning'
       }).then(function () {
-        return updateLiveUser({
+        return updateOpenPay({
           id: row.id,
           openPay: row.openPay
         })

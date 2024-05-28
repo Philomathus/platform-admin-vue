@@ -23,6 +23,15 @@
           :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
+      <el-form-item :label="$t('activity.messageOnSite.tableDialog.userId')" prop="toUserId">
+        <el-input
+          v-model="queryParams.toUserId"
+          :placeholder="$t('activity.messageOnSite.tableDialog.userIdPlaceholder')"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
@@ -232,6 +241,7 @@ export default {
         receiver: null,
         action: null,
         pubdatetime: null,
+        toUserId: null,
         orderByColumn: 'pubdatetime',
         isAsc: 'desc'
       },

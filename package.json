@@ -6,11 +6,11 @@
   "license": "MIT",
   "scripts": {
     "serve:local": "npx vue-cli-service serve --mode local",
-    "serve:dev": "npx vue-cli-service serve --mode dev",
-    "serve:prod": "npx vue-cli-service serve --mode prod",
+    "serve:dev": "export NODE_OPTIONS=--openssl-legacy-provider && npx vue-cli-service serve --mode dev",
+    "serve:prod": "export NODE_OPTIONS=--openssl-legacy-provider && npx vue-cli-service serve --mode prod",
     "build:local": "npx vue-cli-service build --mode local",
-    "build:dev": "npx vue-cli-service build --mode dev",
-    "build:prod": "npx vue-cli-service build --mode prod",
+    "build:dev": "export NODE_OPTIONS=--openssl-legacy-provider && npx vue-cli-service build --mode dev",
+    "build:prod": "export NODE_OPTIONS=--openssl-legacy-provider && npx vue-cli-service build --mode prod",
     "preview": "node build/index.js --preview --mode prod",
     "lint": "eslint --ext .js,.vue src"
   },

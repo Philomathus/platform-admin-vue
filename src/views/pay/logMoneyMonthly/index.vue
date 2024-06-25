@@ -1,25 +1,29 @@
 <template>
   <div class="app-container">
     <div v-loading="totalLoading">
-      <el-button type="primary" @click="copy1">{{ $t('pay.logMoney.bts') }} {{ this.totalData.totalIncome || 0 }}</el-button>
-      <el-button type="primary" icon="el-icon-search" size="mini" @click="listMonthlyCount()" style="margin-left: 20px">{{ $t('pay.logMoney.sq') }}
+      <el-button type="primary" @click="copy1">{{ $t('pay.logMoney.bts') }} {{
+          this.totalData.totalIncome || 0
+        }}
+      </el-button>
+      <el-button type="primary" icon="el-icon-search" size="mini" @click="listMonthlyCount()" style="margin-left: 20px">
+        {{ $t('pay.logMoney.sq') }}
       </el-button>
     </div>
     <!--    <el-button type="primary" @click="copy1">总收入 {{ this.totalData.totalIncome || 0 }}</el-button>-->
     <!--    <el-button type="success" @click="copy2">总支出 {{ this.totalData.totalPay || 0 }}</el-button>-->
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="88px"
              style="margin-top: 10px">
-      <el-form-item :label=" $t('pay.logMoney.tob') " prop="type" class="checkbox-type">
+      <el-form-item :label="$t('pay.logMoney.tob') " prop="type" class="checkbox-type">
         <el-checkbox-group v-model="queryParams.types" size="medium">
           <el-checkbox v-for="item in typeOptions" :key="item.type" :label="item.type">{{ item.des }}</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
-      <el-form-item :label=" $t('pay.logMoney.mc') " prop="selectDate" >
-          <el-date-picker
-            v-model="queryParams.selectMonth"
-            type="month"
-            placeholder="Pick a month"
-          />
+      <el-form-item :label="$t('pay.logMoney.mc') " prop="selectDate">
+        <el-date-picker
+          v-model="queryParams.selectMonth"
+          type="month"
+          placeholder="Pick a month"
+        />
       </el-form-item>
       <el-form-item prop="searchValue">
         <el-input
@@ -31,7 +35,10 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{
+            $t('global.searchButton')
+          }}
+        </el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
@@ -55,8 +62,10 @@
       <el-table-column :label=" $t('pay.logMoney.mid') " align="center" prop="userId" min-width="120"/>
       <el-table-column :label=" $t('pay.logMoney.an') " align="center" prop="userName" min-width="120"/>
       <el-table-column :label=" $t('pay.logMoney.tob') " align="center" prop="des" min-width="120"/>
-      <el-table-column :label=" $t('pay.logMoney.remarks') " align="center" prop="mark" min-width="260" :show-overflow-tooltip="true"/>
-      <el-table-column :label=" $t('pay.logMoney.onr') " align="center" prop="markorder" min-width="320" :show-overflow-tooltip="true"/>
+      <el-table-column :label=" $t('pay.logMoney.remarks') " align="center" prop="mark" min-width="260"
+                       :show-overflow-tooltip="true"/>
+      <el-table-column :label=" $t('pay.logMoney.onr') " align="center" prop="markorder" min-width="320"
+                       :show-overflow-tooltip="true"/>
       <el-table-column :label=" $t('pay.logMoney.ct') " align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <a style="color: #00afff"
@@ -85,8 +94,7 @@
 import {
   listMonthlyLogMoney,
   exportMonthlyLogMoney,
-  listMonthlyCount,
-  totalMonthlyCount
+  listMonthlyCount
 } from '@/api/platform-web/pay/logMoneyMonthly'
 import {allTradeType} from '@/api/platform-web/config/tradeType'
 import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
@@ -127,7 +135,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 20,
-        orderByColumn: 'a.create_time',
+        orderByColumn: 'create_time',
         isAsc: 'desc',
         userId: null,
         userName: null,
@@ -153,9 +161,9 @@ export default {
   methods: {
     listMonthlyCount() {
       if (this.queryParams.type === null || this.queryParams.type === '' || this.queryParams.types.length === 0) {
-        this.$message.error( this.$t('pay.logMoney.psal') )
+        this.$message.error(this.$t('pay.logMoney.psal'))
       } else if (this.queryParams.searchValue === null || this.queryParams.searchValue === '' || this.queryParams.searchValue === undefined) {
-        this.$message.error( this.$t('pay.logMoney.pemid') )
+        this.$message.error(this.$t('pay.logMoney.pemid'))
       } else {
         this.totalLoading = true
         listMonthlyCount(this.queryParams).then((res) => {
@@ -181,8 +189,8 @@ export default {
       if (!this.queryParams.selectMonth) {
         this.queryParams.selectMonth = new Date();
       }
-      this.queryParams.tableLast = this.queryParams.selectMonth.getFullYear() + "" + (this.queryParams.selectMonth.getMonth() + 1).toString().padStart( 2, '0' );
-      console.log( this.queryParams )
+      this.queryParams.tableLast = this.queryParams.selectMonth.getFullYear() + "" + (this.queryParams.selectMonth.getMonth() + 1).toString().padStart(2, '0');
+      console.log(this.queryParams)
       listMonthlyLogMoney(this.queryParams).then(response => {
         this.logMoneyList = response.rows
         this.total = response.total
@@ -197,11 +205,11 @@ export default {
     },
 
     handleQuery() {
-      if(this.queryParams.searchValue){
+      if (this.queryParams.searchValue) {
         const reg = '^[0-9a-zA-Z_]{1,}$'
         let flag = this.queryParams.searchValue.match(reg)
-        if(!flag){
-          this.msgError( this.$t('pay.logMoney.midco') )
+        if (!flag) {
+          this.msgError(this.$t('pay.logMoney.midco'))
           return
         }
       }
@@ -217,14 +225,14 @@ export default {
 
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm( this.$t('pay.logMoney.cpe') , this.$t('global.dialogTitle') , {
-        confirmButtonText: this.$t('global.confirmButton') ,
-        cancelButtonText: this.$t('global.cancelButton') ,
+      this.$confirm(this.$t('pay.logMoney.cpe'), this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportMonthlyLogMoney(queryParams)
       }).then(response => {
-        this.downloadExcel(response, this.$t('pay.logMoney.mf') )
+        this.downloadExcel(response, this.$t('pay.logMoney.mf'))
       }).catch(() => {
       })
     }

@@ -4625,6 +4625,7 @@ export default {
       midco: '会员ID只能输入数字及下划线',
       cpe: '确认处理Excel并下载，数据量大的时候会延迟，请耐心等待...',
       mf: '会员资金',
+      mc: '日期',
     },
     memberBankRecharge:{
       tr: '交易比数',

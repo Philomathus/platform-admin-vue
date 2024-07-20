@@ -1,70 +1,85 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-          <el-form-item :label="$t('liveWeb.liveUser.queryForm.userIdsLabel')" prop="userIds" label-width="70">
-            <el-input
-              v-model="queryParams.userIds"
-              :placeholder="$t('liveWeb.liveUser.queryForm.userIdsPlaceholder')"
-              clearable
-              size="small"
-              type="text"
-              class="no-number"
-              id="user-ids"
-              oninput="this.value=this.value.replace(/[^\d,]/g,'')"
-              @keyup.enter.native="handleQuery" />
-          </el-form-item>
+      <el-form-item :label="$t('liveWeb.liveUser.queryForm.userIdsLabel')" prop="userIds" label-width="70">
+        <el-input
+          v-model="queryParams.userIds"
+          :placeholder="$t('liveWeb.liveUser.queryForm.userIdsPlaceholder')"
+          clearable
+          size="small"
+          type="text"
+          class="no-number"
+          id="user-ids"
+          oninput="this.value=this.value.replace(/[^\d,]/g,'')"
+          @keyup.enter.native="handleQuery"/>
+      </el-form-item>
 
-          <el-form-item :label="$t('global.selectDate')" prop="selectDate" label-width="200">
-            <el-date-picker type="daterange" v-model="selectDate" format="yyyy-MM-dd"
-                            value-format="yyyy-MM-dd" :style="{width: '240px'}" :start-placeholder="$t('liveWeb.liveUser.queryForm.selectDateStartPlaceholder')"
-                            :end-placeholder="$t('liveWeb.liveUser.queryForm.selectDateEndPlaceholder')"
-                            :range-separator="$t('liveWeb.liveUser.queryForm.selectDateRangeSeparator')" clearable :picker-options="pickerOptions">
-            </el-date-picker>
-          </el-form-item>
-          <el-form-item prop="nickName">
-            <el-input
-              v-model="queryParams.nickName"
-              :placeholder="$t('liveWeb.liveUser.queryForm.nickNamePlaceholder')"
-              clearable
-              size="small"
-              @keyup.enter.native="handleQuery"/>
-          </el-form-item>
-          <el-form-item prop="mobile" class="phone">
-            <el-input
-              v-model="queryParams.mobile"
-              :placeholder="$t('liveWeb.liveUser.queryForm.phonePlaceholder')"
-              clearable
-              size="small"
-              @keyup.enter.native="handleQuery"/>
-          </el-form-item>
-          <el-form-item prop="isBan" class="is-ban">
-            <el-select v-model="queryParams.isBan" :placeholder="$t('liveWeb.liveUser.queryForm.isBanPlaceholder')" class="col-w240" clearable>
-              <el-option :label="$t('liveWeb.liveUser.table.isBan0')" value="0"></el-option>
-              <el-option :label="$t('liveWeb.liveUser.table.isBan1')" value="1"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item prop="isAuthentication" class="is-authentication">
-            <el-select v-model="queryParams.isAuthentication" :placeholder="$t('liveWeb.liveUser.queryForm.isAuthenticationPlaceholder')" clearable>
-              <el-option :label="$t('liveWeb.liveUser.table.isAuthentication0')" value="0"></el-option>
-              <el-option :label="$t('liveWeb.liveUser.table.isAuthentication1')" value="1"></el-option>
-              <el-option :label="$t('liveWeb.liveUser.table.isAuthentication2')" value="2"></el-option>
-              <el-option :label="$t('liveWeb.liveUser.table.isAuthentication3')" value="3"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item prop="mobile" class="family-id">
-            <el-input
-              v-model="queryParams.familyId"
-              :placeholder="$t('liveWeb.liveUser.queryForm.mobilePlaceholder')"
-              clearable
-              size="small"
-              type="number"
-              class="no-number"
-              @keyup.enter.native="handleQuery"/>
-          </el-form-item>
-          <el-form-item class="handle-btn">
-            <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{$t('liveWeb.liveUser.queryForm.searchButton')}}</el-button>
-            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{$t('liveWeb.liveUser.queryForm.resetButton')}}</el-button>
-          </el-form-item>
+      <el-form-item :label="$t('global.selectDate')" prop="selectDate" label-width="200">
+        <el-date-picker type="daterange" v-model="selectDate" format="yyyy-MM-dd"
+                        value-format="yyyy-MM-dd" :style="{width: '240px'}"
+                        :start-placeholder="$t('liveWeb.liveUser.queryForm.selectDateStartPlaceholder')"
+                        :end-placeholder="$t('liveWeb.liveUser.queryForm.selectDateEndPlaceholder')"
+                        :range-separator="$t('liveWeb.liveUser.queryForm.selectDateRangeSeparator')" clearable
+                        :picker-options="pickerOptions">
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item prop="nickName">
+        <el-input
+          v-model="queryParams.nickName"
+          :placeholder="$t('liveWeb.liveUser.queryForm.nickNamePlaceholder')"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"/>
+      </el-form-item>
+      <el-form-item prop="mobile" class="phone">
+        <el-input
+          v-model="queryParams.mobile"
+          :placeholder="$t('liveWeb.liveUser.queryForm.phonePlaceholder')"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"/>
+      </el-form-item>
+      <el-form-item prop="isBan" class="is-ban">
+        <el-select v-model="queryParams.isBan" :placeholder="$t('liveWeb.liveUser.queryForm.isBanPlaceholder')"
+                   class="col-w240" clearable>
+          <el-option :label="$t('liveWeb.liveUser.table.isBan0')" value="0"></el-option>
+          <el-option :label="$t('liveWeb.liveUser.table.isBan1')" value="1"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item prop="isAuthentication" class="is-authentication">
+        <el-select v-model="queryParams.isAuthentication"
+                   :placeholder="$t('liveWeb.liveUser.queryForm.isAuthenticationPlaceholder')" clearable>
+          <el-option :label="$t('liveWeb.liveUser.table.isAuthentication0')" value="0"></el-option>
+          <el-option :label="$t('liveWeb.liveUser.table.isAuthentication1')" value="1"></el-option>
+          <el-option :label="$t('liveWeb.liveUser.table.isAuthentication2')" value="2"></el-option>
+          <el-option :label="$t('liveWeb.liveUser.table.isAuthentication3')" value="3"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item prop="virtualAnchor" class="is-authentication">
+        <el-select v-model="queryParams.virtualAnchor"
+                   placeholder="主播类型" clearable>
+          <el-option label="测试主播" value="1"></el-option>
+          <el-option label="正常主播" value="0"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item prop="mobile" class="family-id">
+        <el-input
+          v-model="queryParams.familyId"
+          :placeholder="$t('liveWeb.liveUser.queryForm.mobilePlaceholder')"
+          clearable
+          size="small"
+          type="number"
+          class="no-number"
+          @keyup.enter.native="handleQuery"/>
+      </el-form-item>
+      <el-form-item class="handle-btn">
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">
+          {{ $t('liveWeb.liveUser.queryForm.searchButton') }}
+        </el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">
+          {{ $t('liveWeb.liveUser.queryForm.resetButton') }}
+        </el-button>
+      </el-form-item>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
@@ -75,7 +90,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['admin:liveUser:add']">{{$t('liveWeb.liveUser.actions.add')}}
+          v-hasPermi="['admin:liveUser:add']">{{ $t('liveWeb.liveUser.actions.add') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -85,7 +100,7 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['admin:liveUser:export']">{{$t('liveWeb.liveUser.actions.export')}}
+          v-hasPermi="['admin:liveUser:export']">{{ $t('liveWeb.liveUser.actions.export') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -95,7 +110,7 @@
           icon="el-icon-download"
           size="mini"
           @click="sendRoomMsg"
-          v-hasPermi="['admin:liveUser:add']">{{$t('liveWeb.liveUser.actions.liveRoomAssistant')}}
+          v-hasPermi="['admin:liveUser:add']">{{ $t('liveWeb.liveUser.actions.liveRoomAssistant') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -106,7 +121,7 @@
           class="disabled-btn"
           :disabled="multiple"
           @click="joinFamilyBulk"
-        >{{$t('liveWeb.liveUser.actions.batchJoin')}}
+        >{{ $t('liveWeb.liveUser.actions.batchJoin') }}
         </el-button>
       </el-col>
       <el-col :span="1.5">
@@ -117,7 +132,7 @@
           class="disabled-btn"
           :disabled="multiple"
           @click="kickOutFamilyBulk"
-        >{{$t('liveWeb.liveUser.actions.batchKickOut')}}
+        >{{ $t('liveWeb.liveUser.actions.batchKickOut') }}
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -127,12 +142,15 @@
     <el-table stripe v-loading="loading" :data="liveUserList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="50" align="center"/>
       <el-table-column :label="$t('liveWeb.liveUser.table.id')" min-width="120" align="center" prop="id"/>
-      <el-table-column :label="$t('liveWeb.liveUser.table.nickName')" min-width="160" :show-overflow-tooltip="true" align="center" prop="nickName"/>
-      <el-table-column :label="$t('liveWeb.liveUser.table.weixinAccount')" min-width="100" align="center" prop="weixinAccount"
+      <el-table-column :label="$t('liveWeb.liveUser.table.nickName')" min-width="160" :show-overflow-tooltip="true"
+                       align="center" prop="nickName"/>
+      <el-table-column :label="$t('liveWeb.liveUser.table.weixinAccount')" min-width="100" align="center"
+                       prop="weixinAccount"
                        :show-overflow-tooltip="true"/>
-      <el-table-column :label="$t('liveWeb.liveUser.table.familyName')" min-width="100" align="center" prop="familyName" :show-overflow-tooltip="true">
+      <el-table-column :label="$t('liveWeb.liveUser.table.familyName')" min-width="100" align="center" prop="familyName"
+                       :show-overflow-tooltip="true">
         <template v-slot="{row}">
-          <span v-if="row.familyId === 0">{{$t('liveWeb.liveUser.table.familyId0')}}</span>
+          <span v-if="row.familyId === 0">{{ $t('liveWeb.liveUser.table.familyId0') }}</span>
           <el-popover
             v-else
             placement="top"
@@ -141,15 +159,15 @@
             trigger="click">
             <table>
               <tr>
-                <td style="text-align: right">{{$t('liveWeb.liveUser.table.familyIdPopover')}}</td>
+                <td style="text-align: right">{{ $t('liveWeb.liveUser.table.familyIdPopover') }}</td>
                 <td style="text-align: left">{{ row.familyId }}</td>
               </tr>
               <tr>
-                <td style="text-align: right">{{$t('liveWeb.liveUser.table.familyUserIdPopover')}}</td>
+                <td style="text-align: right">{{ $t('liveWeb.liveUser.table.familyUserIdPopover') }}</td>
                 <td style="text-align: left">{{ row.familyUserId }}</td>
               </tr>
               <tr>
-                <td style="text-align: right">{{$t('liveWeb.liveUser.table.familyNickNamePopover')}}</td>
+                <td style="text-align: right">{{ $t('liveWeb.liveUser.table.familyNickNamePopover') }}</td>
                 <td style="text-align: left">{{ row.familyNickName }}</td>
               </tr>
             </table>
@@ -157,7 +175,8 @@
           </el-popover>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('liveWeb.liveUser.table.familyChieftain')" min-width="150" align="center" prop="familyChieftain"
+      <el-table-column :label="$t('liveWeb.liveUser.table.familyChieftain')" min-width="150" align="center"
+                       prop="familyChieftain"
                        :formatter="fmFamilyChieftain"/>
       <!--  isAuthentication 选择选项部分从这里开始 isAuthentication select options section start from here -->
       <el-table-column :label="$t('liveWeb.liveUser.table.isAuthentication')" align="center" width="135px">
@@ -179,13 +198,17 @@
       <el-table-column :label="$t('liveWeb.liveUser.table.coin')" min-width="120" align="center" prop="coin"/>
       <el-table-column :label="$t('liveWeb.liveUser.table.status')" min-width="120" align="center" prop="virtualAnchor"
                        :formatter="fmVirtualAnchor"/>
-      <el-table-column :label="$t('liveWeb.liveUser.table.weixinPrice')" min-width="170" align="center" prop="weixinPrice"/>
-      <el-table-column :label="$t('liveWeb.liveUser.table.weiboMoney')" min-width="120" align="center" prop="weiboMoney"/>
+      <el-table-column :label="$t('liveWeb.liveUser.table.weixinPrice')" min-width="170" align="center"
+                       prop="weixinPrice"/>
+      <el-table-column :label="$t('liveWeb.liveUser.table.weiboMoney')" min-width="120" align="center"
+                       prop="weiboMoney"/>
       <el-table-column :label="$t('liveWeb.liveUser.table.xpoint')" min-width="120" align="center" prop="xpoint"/>
       <el-table-column :label="$t('liveWeb.liveUser.table.ypoint')" min-width="120" align="center" prop="ypoint"/>
       <el-table-column :label="$t('liveWeb.liveUser.table.isBan')" width="160" align="center" prop="isBan">
         <template v-slot="{row}">
-          <el-tooltip class="item" effect="dark" :content="row.isBan === 0 ? $t('liveWeb.liveUser.table.isBan0') : $t('liveWeb.liveUser.table.isBan1')" placement="top">
+          <el-tooltip class="item" effect="dark"
+                      :content="row.isBan === 0 ? $t('liveWeb.liveUser.table.isBan0') : $t('liveWeb.liveUser.table.isBan1')"
+                      placement="top">
             <el-switch
               :active-value="0"
               :inactive-value="1"
@@ -198,9 +221,12 @@
         </template>
       </el-table-column>
       <el-table-column :label="$t('liveWeb.liveUser.table.mobile')" min-width="130" align="center" prop="mobile"/>
-      <el-table-column :label="$t('liveWeb.liveUser.table.loginIp')" min-width="150" :show-overflow-tooltip="true" align="left" prop="loginIp"/>
-      <el-table-column :label="$t('liveWeb.liveUser.table.banRemark')" min-width="200" align="center" prop="banRemark" :show-overflow-tooltip="true"/>
-      <el-table-column :label="$t('liveWeb.liveUser.table.operation')" min-width="200" align="center" class-name="small-padding fixed-width" fixed="right">
+      <el-table-column :label="$t('liveWeb.liveUser.table.loginIp')" min-width="150" :show-overflow-tooltip="true"
+                       align="left" prop="loginIp"/>
+      <el-table-column :label="$t('liveWeb.liveUser.table.banRemark')" min-width="200" align="center" prop="banRemark"
+                       :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('liveWeb.liveUser.table.operation')" min-width="200" align="center"
+                       class-name="small-padding fixed-width" fixed="right">
         <template v-slot="{row}">
           <el-button
             size="small"
@@ -210,7 +236,7 @@
             @click="kickOutLive(row)"
             v-hasPermi="['admin:liveUser:edit']"
             v-show="row.familyId > 0 && row.familyChieftain !== 1">
-            {{$t('liveWeb.liveUser.table.kickOutButton')}}
+            {{ $t('liveWeb.liveUser.table.kickOutButton') }}
           </el-button>
           <el-button
             size="small"
@@ -219,7 +245,7 @@
             icon="el-icon-s-check"
             @click="handleAuth(row)"
             v-hasPermi="['admin:liveUser:edit']"
-            v-show="row.isAuthentication === 1">{{$t('liveWeb.liveUser.table.auditButton')}}
+            v-show="row.isAuthentication === 1">{{ $t('liveWeb.liveUser.table.auditButton') }}
           </el-button>
 
           <!-- click on this button live Launch content dialog-->
@@ -233,7 +259,7 @@
                            //查询之前的开播信息
                             getLiveVideo(row.id);}"
             v-hasPermi="['admin:liveUser:edit']"
-            v-show="row.roboter == 1 && row.liveIn != 1">{{$t('liveWeb.liveUser.table.starBroadcastButton')}}
+            v-show="row.roboter == 1 && row.liveIn != 1">{{ $t('liveWeb.liveUser.table.starBroadcastButton') }}
           </el-button>
           <!-- end Launch content dialog button -->
 
@@ -244,14 +270,14 @@
             icon="el-icon-s-check"
             @click="closeLive(row)"
             v-hasPermi="['admin:liveUser:edit']"
-            v-show="row.roboter == 1 && row.liveIn == 1">{{$t('liveWeb.liveUser.table.endBroadcastButton')}}
+            v-show="row.roboter == 1 && row.liveIn == 1">{{ $t('liveWeb.liveUser.table.endBroadcastButton') }}
           </el-button>
           <el-button
             size="small"
             plain
             type="success"
             icon="el-icon-menu"
-            @click="handleMore(row)">{{$t('liveWeb.liveUser.table.moreButton')}}
+            @click="handleMore(row)">{{ $t('liveWeb.liveUser.table.moreButton') }}
           </el-button>
         </template>
 
@@ -299,24 +325,29 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm(1)">{{$t('liveWeb.liveUser.addDialog.confirmButton')}}</el-button>
+        <el-button type="primary" @click="submitForm(1)">{{ $t('liveWeb.liveUser.addDialog.confirmButton') }}
+        </el-button>
         <!--add new model close button-->
-        <el-button @click="addopen = false">{{$t('liveWeb.liveUser.addDialog.cancelButton')}}</el-button>
+        <el-button @click="addopen = false">{{ $t('liveWeb.liveUser.addDialog.cancelButton') }}</el-button>
       </div>
     </el-dialog>
     <el-dialog :close-on-click-modal="false" :title="title" :visible.sync="sendMsg" width="500px" append-to-body>
       <el-form ref="form" :model="form" label-width="120px">
         <el-form-item :label="$t('liveWeb.liveUser.liveRoomAssistantDialog.infoLabel')">
-          <el-input v-model="form.info" prop="info" type="textarea" :rows="4" :placeholder="$t('liveWeb.liveUser.liveRoomAssistantDialog.infoPlaceholder')"/>
+          <el-input v-model="form.info" prop="info" type="textarea" :rows="4"
+                    :placeholder="$t('liveWeb.liveUser.liveRoomAssistantDialog.infoPlaceholder')"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="sendLiveMsg()">{{$t('liveWeb.liveUser.liveRoomAssistantDialog.confirmButton')}}</el-button>
+        <el-button type="primary" @click="sendLiveMsg()">
+          {{ $t('liveWeb.liveUser.liveRoomAssistantDialog.confirmButton') }}
+        </el-button>
       </div>
     </el-dialog>
 
     <!-- 开播内容对话框 Launch live content dialog-->
-    <el-dialog :close-on-click-modal="false" v-loading="openLoading" :title="$t('liveWeb.liveUser.liveBroadcastDialog.title')" :visible.sync="openLiveStatus"
+    <el-dialog :close-on-click-modal="false" v-loading="openLoading"
+               :title="$t('liveWeb.liveUser.liveBroadcastDialog.title')" :visible.sync="openLiveStatus"
                width="500px" append-to-body>
       <el-form ref="form" :model="openLiveForm" label-width="120px">
         <el-form-item :label="$t('liveWeb.liveUser.liveBroadcastDialog.titleLabel')" prop="title">
@@ -334,7 +365,8 @@
           <imageUpload v-model="openLiveForm.liveImage" path="liveVideo"/>
         </el-form-item>
 
-        <el-form-item style="width: 150px" :data="lotteryInfoList" :label="$t('liveWeb.liveUser.liveBroadcastDialog.lotteryLabel')">
+        <el-form-item style="width: 150px" :data="lotteryInfoList"
+                      :label="$t('liveWeb.liveUser.liveBroadcastDialog.lotteryLabel')">
           <el-select v-model="openLiveForm.lottery" placeholder="" clearable style="width: 150px">
             <el-option
               v-for="lottery in lotteryInfoList"
@@ -345,7 +377,8 @@
 
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="openLive()">{{$t('liveWeb.liveUser.liveBroadcastDialog.confirmButton')}}</el-button>
+        <el-button type="primary" @click="openLive()">{{ $t('liveWeb.liveUser.liveBroadcastDialog.confirmButton') }}
+        </el-button>
       </div>
     </el-dialog>
 
@@ -395,16 +428,19 @@
             </el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item :label="$t('liveWeb.liveUser.editDialog.vExplainLabel')" prop="vExplain" v-if="form.isAuthentication === 2">
+        <el-form-item :label="$t('liveWeb.liveUser.editDialog.vExplainLabel')" prop="vExplain"
+                      v-if="form.isAuthentication === 2">
           <el-input v-model="form.vExplain"/>
         </el-form-item>
-        <el-form-item :label="$t('liveWeb.liveUser.editDialog.investorSendInfoLabel')" prop="investorSendInfo" v-if="form.isAuthentication === 3">
+        <el-form-item :label="$t('liveWeb.liveUser.editDialog.investorSendInfoLabel')" prop="investorSendInfo"
+                      v-if="form.isAuthentication === 3">
           <el-input v-model="form.investorSendInfo"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer" v-if="form.isAuthentication > 1">
-        <el-button type="primary" @click="submitForm(0)">{{$t('liveWeb.liveUser.editDialog.confirmButton')}}</el-button>
-        <el-button @click="cancel">{{$t('liveWeb.liveUser.editDialog.cancelButton')}}</el-button>
+        <el-button type="primary" @click="submitForm(0)">{{ $t('liveWeb.liveUser.editDialog.confirmButton') }}
+        </el-button>
+        <el-button @click="cancel">{{ $t('liveWeb.liveUser.editDialog.cancelButton') }}</el-button>
       </div>
     </el-dialog>
     <more ref="more" @refMemeberData="getList()" :user-id="userId" @liveUserMore="handleQuery"></more>
@@ -452,7 +488,13 @@ export default {
       openLiveStatus: false,
       pickerOptions: {shortcuts: pickerDateShortcuts},
       // 0指未认证  1指待审核 2指认证 3指审核不通过
-      attestList: [{label: this.$t('liveWeb.liveUser.table.isAuthentication1'), value: 1}, {label: this.$t('liveWeb.liveUser.table.isAuthentication2'), value: 2}, {label: this.$t('liveWeb.liveUser.table.isAuthentication3'), value: 3}],
+      attestList: [{
+        label: this.$t('liveWeb.liveUser.table.isAuthentication1'),
+        value: 1
+      }, {
+        label: this.$t('liveWeb.liveUser.table.isAuthentication2'),
+        value: 2
+      }, {label: this.$t('liveWeb.liveUser.table.isAuthentication3'), value: 3}],
       //所选的用户id
       userId: 0,
       // 遮罩层
@@ -887,30 +929,30 @@ export default {
 
 <style>
 
-#user-ids{
+#user-ids {
   width: 300px
 }
 
-@media only screen and (min-width: 1300px) and (max-width: 1322px){
-  .phone{
+@media only screen and (min-width: 1300px) and (max-width: 1322px) {
+  .phone {
     margin-left: 66px;
   }
 }
 
-@media only screen and (min-width: 1323px) and (max-width: 1572px){
-  .is-ban{
+@media only screen and (min-width: 1323px) and (max-width: 1572px) {
+  .is-ban {
     margin-left: 66px;
   }
 }
 
-@media only screen and (min-width: 1572px) and (max-width: 1600px){
-  .is-authentication{
+@media only screen and (min-width: 1572px) and (max-width: 1600px) {
+  .is-authentication {
     margin-left: 66px;
   }
 }
 
 @media only screen and (min-width: 1600px) {
-  .family-id{
+  .family-id {
     margin-left: 66px;
   }
 }

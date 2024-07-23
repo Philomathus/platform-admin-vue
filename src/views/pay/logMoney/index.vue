@@ -1,8 +1,12 @@
 <template>
   <div class="app-container">
     <div v-loading="totalLoading">
-      <el-button type="primary" @click="copy1">{{ $t('pay.logMoney.bts') }} {{ this.totalData.totalIncome || 0 }}</el-button>
-      <el-button type="primary" icon="el-icon-search" size="mini" @click="listCount()" style="margin-left: 20px">{{ $t('pay.logMoney.sq') }}
+      <el-button type="primary" @click="copy1">{{ $t('pay.logMoney.bts') }} {{
+          this.totalData.totalIncome || 0
+        }}
+      </el-button>
+      <el-button type="primary" icon="el-icon-search" size="mini" @click="listCount()" style="margin-left: 20px">
+        {{ $t('pay.logMoney.sq') }}
       </el-button>
     </div>
     <!--    <el-button type="primary" @click="copy1">总收入 {{ this.totalData.totalIncome || 0 }}</el-button>-->
@@ -16,8 +20,11 @@
       </el-form-item>
       <el-form-item :label=" $t('pay.logMoney.ct') " prop="selectDate" label-width="100px">
         <el-date-picker type="datetimerange" v-model="queryParams.selectDate" format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}" :start-placeholder=" $t('global.dateTimePickerStartTimePlaceholder') "
-                        :end-placeholder=" $t('global.dateTimePickerEndTimePlaceholder') " :default-time="['00:00:00', '23:59:59']" :range-separator=" $t('global.selectDateRangeSeparator') " clearable
+                        value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '100%'}"
+                        :start-placeholder=" $t('global.dateTimePickerStartTimePlaceholder') "
+                        :end-placeholder=" $t('global.dateTimePickerEndTimePlaceholder') "
+                        :default-time="['00:00:00', '23:59:59']"
+                        :range-separator=" $t('global.selectDateRangeSeparator') " clearable
                         :picker-options="pickerOptions"
         ></el-date-picker>
       </el-form-item>
@@ -41,7 +48,10 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{
+            $t('global.searchButton')
+          }}
+        </el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ $t('global.resetButton') }}</el-button>
       </el-form-item>
     </el-form>
@@ -65,8 +75,10 @@
       <el-table-column :label=" $t('pay.logMoney.mid') " align="center" prop="userId" min-width="120"/>
       <el-table-column :label=" $t('pay.logMoney.an') " align="center" prop="userName" min-width="120"/>
       <el-table-column :label=" $t('pay.logMoney.tob') " align="center" prop="des" min-width="120"/>
-      <el-table-column :label=" $t('pay.logMoney.remarks') " align="center" prop="mark" min-width="260" :show-overflow-tooltip="true"/>
-      <el-table-column :label=" $t('pay.logMoney.onr') " align="center" prop="markorder" min-width="320" :show-overflow-tooltip="true"/>
+      <el-table-column :label=" $t('pay.logMoney.remarks') " align="center" prop="mark" min-width="260"
+                       :show-overflow-tooltip="true"/>
+      <el-table-column :label=" $t('pay.logMoney.onr') " align="center" prop="markorder" min-width="320"
+                       :show-overflow-tooltip="true"/>
       <el-table-column :label=" $t('pay.logMoney.ct') " align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <a style="color: #00afff"
@@ -158,9 +170,9 @@ export default {
   methods: {
     listCount() {
       if (this.queryParams.type === null || this.queryParams.type === '' || this.queryParams.types.length === 0) {
-        this.$message.error( this.$t('pay.logMoney.psal') )
+        this.$message.error(this.$t('pay.logMoney.psal'))
       } else if (this.queryParams.searchValue === null || this.queryParams.searchValue === '' || this.queryParams.searchValue === undefined) {
-        this.$message.error( this.$t('pay.logMoney.pemid') )
+        this.$message.error(this.$t('pay.logMoney.pemid'))
       } else {
         this.totalLoading = true
         listCount(this.queryParams).then((res) => {
@@ -187,6 +199,9 @@ export default {
     },
     /** 查询 会员资金信息列表 */
     getList() {
+      if (this.queryParams.types != null && this.queryParams.types.length > 0 && (this.queryParams.searchValue == null || this.queryParams.searchValue.length === 0)) {
+        this.$message.error(this.$t('pay.logMoney.pemid'))
+      }
       this.loading = true
       listLogMoney(this.queryParams).then(response => {
         this.logMoneyList = response.rows
@@ -202,11 +217,11 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      if(this.queryParams.searchValue){
+      if (this.queryParams.searchValue) {
         const reg = '^[0-9a-zA-Z_]{1,}$'
         let flag = this.queryParams.searchValue.match(reg)
-        if(!flag){
-          this.msgError( this.$t('pay.logMoney.midco') )
+        if (!flag) {
+          this.msgError(this.$t('pay.logMoney.midco'))
           return
         }
       }
@@ -222,14 +237,14 @@ export default {
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm( this.$t('pay.logMoney.cpe') , this.$t('global.dialogTitle') , {
-        confirmButtonText: this.$t('global.confirmButton') ,
-        cancelButtonText: this.$t('global.cancelButton') ,
+      this.$confirm(this.$t('pay.logMoney.cpe'), this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
       }).then(function () {
         return exportLogMoney(queryParams)
       }).then(response => {
-        this.downloadExcel(response, this.$t('pay.logMoney.mf') )
+        this.downloadExcel(response, this.$t('pay.logMoney.mf'))
       }).catch(() => {
       })
     }

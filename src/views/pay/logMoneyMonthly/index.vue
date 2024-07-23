@@ -205,6 +205,10 @@ export default {
     },
 
     handleQuery() {
+      if (this.queryParams.types != null && this.queryParams.types.length > 0 && (!this.queryParams.searchValue)) {
+        this.$message.error(this.$t('pay.logMoney.pemid'))
+        return;
+      }
       if (this.queryParams.searchValue) {
         const reg = '^[0-9a-zA-Z_]{1,}$'
         let flag = this.queryParams.searchValue.match(reg)

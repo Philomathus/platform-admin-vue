@@ -233,15 +233,11 @@
       </el-table-column>
       <el-table-column :label=" $t('pay.memberWithdrawLog.mid') " min-width="150" align="center" prop="memberId">
         <template v-slot="{row}">
-          <a style="color: #ffa200" @click="funds(row.memberId)"
-             v-if="row.memberStatus === 7">{{ row.memberId }}</a>
-          <a style="color: #00afff" @click="funds(row.memberId)"
-             v-if="row.memberStatus === 0 || row.memberStatus === 1">{{ row.memberId }}</a>
+          <a style="color: #ffa200" @click="funds(row.memberId)" v-if="row.memberStatus === 7 || row.memberStatus === 8">{{ row.memberId }}</a>
+          <a style="color: #00afff" @click="funds(row.memberId)" v-if="row.memberStatus === 0 || row.memberStatus === 1">{{ row.memberId }}</a>
           <a style="color: #ff0000" @click="funds(row.memberId)" v-if="row.memberStatus === 4">{{ row.memberId }}</a>
-          <a style="color: #ee00ff" @click="funds(row.memberId)"
-             v-if="row.memberStatus === 2 || row.memberStatus === 3 || row.memberStatus === 5">{{ row.memberId }}</a>
-          <a style="color: #5eff00" @click="funds(row.memberId)"
-             v-if="row.memberStatus === 6">{{ row.memberId }}</a>
+          <a style="color: #ee00ff" @click="funds(row.memberId)" v-if="row.memberStatus === 2 || row.memberStatus === 3 || row.memberStatus === 5">{{ row.memberId }}</a>
+          <a style="color: #5eff00" @click="funds(row.memberId)" v-if="row.memberStatus === 6">{{ row.memberId }}</a>
         </template>
         <template slot="header">
           <span>{{ $t('pay.memberWithdrawLog.mid') }}</span>

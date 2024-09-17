@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { getToken } from '@/utils/auth'
+import {getToken} from '@/utils/auth'
 
 export default {
   props: {
@@ -141,7 +141,11 @@ export default {
     },
     // 上传成功回调
     handleUploadSuccess(res, file) {
-      this.$message.success('上传成功')
+      if (res.code === 200) {
+        this.$message.success('上传成功')
+      } else {
+        this.$message.error(res.msg)
+      }
       this.$emit('input', res.data)
     },
     // 删除文件

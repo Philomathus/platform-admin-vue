@@ -4497,6 +4497,8 @@ export default {
 
     },
     logMoney:{
+      totalIncome: 'Total Income',
+      totalPay: 'Total Pay',
       bts: 'Behavior Type Statistics',
       sq: 'Statistical queries',
       tob: 'Type of behavior',

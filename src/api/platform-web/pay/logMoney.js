@@ -6,7 +6,8 @@ export function listLogMoney(query) {
   return request({
     url: url.platformWeb + '/pay/logMoney/list',
     method: 'get',
-    params: query
+    params: query,
+    timeout: 60000
   })
 }
 
@@ -15,16 +16,8 @@ export function listCount(query) {
   return request({
     url: url.platformWeb + '/pay/logMoney/listCount',
     method: 'get',
-    params: query
-  })
-}
-
-// 查询会员资金信息统计
-export function totalCount(query) {
-  return request({
-    url: url.platformWeb + '/pay/logMoney/totalCount',
-    method: 'get',
-    params: query
+    params: query,
+    timeout: 60000
   })
 }
 

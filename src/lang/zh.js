@@ -4607,6 +4607,8 @@ export default {
 
     },
     logMoney:{
+      totalIncome: '总收入',
+      totalPay: '总支出',
       bts: '行为类型统计',
       sq: '统计查询',
       tob: '行为类型',

@@ -1,10 +1,8 @@
 <template>
   <div class="app-container">
     <div v-loading="totalLoading">
-      <el-button type="primary" @click="copy1">{{ $t('pay.logMoney.bts') }} {{
-          this.totalData.totalIncome || 0
-        }}
-      </el-button>
+      <el-button type="primary" @click="copy1">{{ $t('pay.logMoney.totalIncome') }} {{this.totalData.totalIncome || 0 }}</el-button>
+      <el-button type="primary" @click="copy2">{{ $t('pay.logMoney.totalPay') }} {{this.totalData.totalPay || 0 }}</el-button>
       <el-button type="primary" icon="el-icon-search" size="mini" @click="listCount()" style="margin-left: 20px">
         {{ $t('pay.logMoney.sq') }}
       </el-button>
@@ -104,7 +102,7 @@
 </template>
 
 <script>
-import {listLogMoney, exportLogMoney, listCount, totalCount} from '@/api/platform-web/pay/logMoney'
+import {listLogMoney, exportLogMoney, listCount} from '@/api/platform-web/pay/logMoney'
 import {allTradeType} from '@/api/platform-web/config/tradeType'
 import {pickerDateTimeShortcuts} from '@/utils/dateUtils'
 
@@ -169,18 +167,12 @@ export default {
   },
   methods: {
     listCount() {
-      if (this.queryParams.type === null || this.queryParams.type === '' || this.queryParams.types.length === 0) {
-        this.$message.error(this.$t('pay.logMoney.psal'))
-      } else if (this.queryParams.searchValue === null || this.queryParams.searchValue === '' || this.queryParams.searchValue === undefined) {
-        this.$message.error(this.$t('pay.logMoney.pemid'))
-      } else {
-        this.totalLoading = true
-        listCount(this.queryParams).then((res) => {
-          this.totalData = res.data
-        }).finally(() => {
-          this.totalLoading = false
-        })
-      }
+      this.totalLoading = true
+      listCount(this.queryParams).then((res) => {
+        this.totalData = res.data
+      }).finally(() => {
+        this.totalLoading = false
+      })
     },
     // totalCount(){
     //   totalCount(this.queryParams).then((res) => {
@@ -199,13 +191,11 @@ export default {
     },
     /** 查询 会员资金信息列表 */
     getList() {
-      if (this.queryParams.types != null && this.queryParams.types.length > 0 && (this.queryParams.searchValue == null || this.queryParams.searchValue.length === 0)) {
-        this.$message.error(this.$t('pay.logMoney.pemid'))
-      }
       this.loading = true
       listLogMoney(this.queryParams).then(response => {
         this.logMoneyList = response.rows
         this.total = response.total
+      }).finally(() => {
         this.loading = false
       })
     },

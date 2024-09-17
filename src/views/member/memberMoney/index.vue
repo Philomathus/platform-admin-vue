@@ -2,56 +2,60 @@
   <div class="app-container">
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item :label=" $t('members.memberMoney.mid') " prop="memberId">
-        <el-input
-          v-model="queryParams.memberId"
-          :placeholder=" $t('members.memberMoney.pemid') "
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ $t('global.searchButton') }}</el-button>
-      </el-form-item>
-      <el-form-item>
-        <el-upload
-          multiple
-          :limit="1"
-          :on-exceed="handleExceed"
-          class="upload-demo"
-          ref="upload"
-          :action="uploadFileUrl"
-          :headers="headers"
-          name="excelFile"
-          :on-preview="handlePreview"
-          :on-remove="handleRemove"
-          :on-error="uploadFalse"
-          :on-success="uploadSuccess"
-          :auto-upload="true"
-          :before-upload="beforeAvatarUpload">
-          <el-button slot="trigger" size="small" type="primary" @click="submitUpload">{{ $t('members.memberMoney.uex') }}</el-button>
-        </el-upload>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="success" size="mini" @click="starSend">{{ $t('members.memberMoney.sdel') }}</el-button>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" size="mini" @click="handleClean">{{ $t('members.memberMoney.cd') }}</el-button>
-      </el-form-item>
-    </el-form>
+        <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+          <el-form-item :label=" $t('members.memberMoney.mid') " prop="memberId">
+            <el-input
+              v-model="queryParams.memberId"
+              :placeholder=" $t('members.memberMoney.pemid') "
+              clearable
+              size="small"
+              @keyup.enter.native="handleQuery"
+            />
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">
+              {{ $t('global.searchButton') }}
+            </el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-upload
+              multiple
+              :limit="1"
+              :on-exceed="handleExceed"
+              class="upload-demo"
+              ref="upload"
+              :action="uploadFileUrl"
+              :headers="headers"
+              name="excelFile"
+              :on-preview="handlePreview"
+              :on-remove="handleRemove"
+              :on-error="uploadFalse"
+              :on-success="uploadSuccess"
+              :auto-upload="true"
+              :before-upload="beforeAvatarUpload">
+              <el-button slot="trigger" size="small" type="primary" @click="submitUpload">
+                {{ $t('members.memberMoney.uex') }}
+              </el-button>
+            </el-upload>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="success" size="mini" @click="starSend">{{ $t('members.memberMoney.sdel') }}</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" size="mini" @click="handleClean">{{ $t('members.memberMoney.cd') }}</el-button>
+          </el-form-item>
+        </el-form>
       </el-col>
 
-    <el-col :span="1.5" style="padding-top: 5px">
-      <el-button type="success" size="mini">{{ $t('members.memberMoney.tda') }} {{totalMoney || 0}}</el-button>
-      <el-button  type="primary"
-                  icon="el-icon-search"
-                  size="mini"
-                  @click="getTotalMoney"
-                  style="margin-left: 20px">{{ $t('members.memberMoney.sda') }}
-      </el-button>
-    </el-col>
+      <el-col :span="1.5" style="padding-top: 5px">
+        <el-button type="success" size="mini">{{ $t('members.memberMoney.tda') }} {{ totalMoney || 0 }}</el-button>
+        <el-button type="primary"
+                   icon="el-icon-search"
+                   size="mini"
+                   @click="getTotalMoney"
+                   style="margin-left: 20px">{{ $t('members.memberMoney.sda') }}
+        </el-button>
+      </el-col>
     </el-row>
 
     <el-row :gutter="10" class="mb8">
@@ -98,7 +102,8 @@
       <el-table-column :label=" $t('members.memberMoney.mid') " align="center" prop="memberId" min-width="150"/>
       <el-table-column :label=" $t('members.memberMoney.da') " align="center" prop="money" min-width="150"/>
       <el-table-column :label=" $t('members.memberMoney.cm') " align="center" prop="beat" min-width="150"/>
-      <el-table-column :label=" $t('global.operationColumn') " align="center" class-name="small-padding fixed-width" fixed="right" min-width="150">
+      <el-table-column :label=" $t('global.operationColumn') " align="center" class-name="small-padding fixed-width"
+                       fixed="right" min-width="150">
 
         <template slot-scope="scope">
           <el-button
@@ -176,7 +181,7 @@ import {
   handleClean,
   uploadFileUrl, count
 } from '@/api/platform-web/member/memberMoney'
-import { getToken } from '@/utils/auth'
+import {getToken} from '@/utils/auth'
 
 
 export default {
@@ -184,7 +189,7 @@ export default {
   components: {},
   data() {
     return {
-      uploadFileUrl : uploadFileUrl(),
+      uploadFileUrl: uploadFileUrl(),
       headers: {
         Authorization: 'Bearer ' + getToken()
       },
@@ -208,7 +213,7 @@ export default {
       // 是否显示弹出层
       open: false,
       opene: false,
-      totalMoney : 0,
+      totalMoney: 0,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -220,18 +225,18 @@ export default {
       // 表单校验
       rules: {
         money: [
-          { required: true, message: this.$t('members.memberMoney.dace'), trigger: 'blur' }
+          {required: true, message: this.$t('members.memberMoney.dace'), trigger: 'blur'}
         ],
         beat: [
-          { required: true, message: this.$t('members.memberMoney.cmce'), trigger: 'blur' }
+          {required: true, message: this.$t('members.memberMoney.cmce'), trigger: 'blur'}
         ]
       },
       startPaiRules: {
         moneydes: [
-          { required: true, message: this.$t('members.memberMoney.tenc'), trigger: 'blur' }
+          {required: true, message: this.$t('members.memberMoney.tenc'), trigger: 'blur'}
         ],
         googleAuthCode: [
-          { required: true, message: this.$t('members.memberMoney.gcce'), trigger: 'blur' }
+          {required: true, message: this.$t('members.memberMoney.gcce'), trigger: 'blur'}
         ]
       }
     }
@@ -240,17 +245,21 @@ export default {
     this.getList()
   },
   methods: {
-    uploadSuccess() {
-      this.$message.success( this.$t('members.memberMoney.eus') )
+    uploadSuccess(res) {
+      if (res.code === 200) {
+        this.$message.success(this.$t('members.memberMoney.eus'))
+      } else {
+        this.$message.error(res.msg)
+      }
       this.queryParams.memberId = null
       this.queryParams.pageNum = 1
       this.getList()
     },
     uploadFalse() {
-      this.$message.error( this.$t('members.memberMoney.euf') )
+      this.$message.error(this.$t('members.memberMoney.euf'))
     },
     handleExceed() {
-      this.$message.error( this.$t('members.memberMoney.ooe') )
+      this.$message.error(this.$t('members.memberMoney.ooe'))
     },
     // 上传前对文件的大小的判断
     beforeAvatarUpload(file) {
@@ -258,11 +267,11 @@ export default {
       const extensionXls = file.name.split('.')[1] === 'xls' //added this new extensionsXsl
       const isLt2M = file.size / 1024 / 1024 < 10
       if (!extension && !extensionXls) {
-        this.$message.error( this.$t('members.memberMoney.ute') )
+        this.$message.error(this.$t('members.memberMoney.ute'))
         return
       }
       if (!isLt2M) {
-        this.$message.error( this.$t('members.memberMoney.sut') )
+        this.$message.error(this.$t('members.memberMoney.sut'))
         return
       }
     },
@@ -272,15 +281,15 @@ export default {
     },
 
     handleRemove() {
-      this.$message.success( this.$t('members.memberMoney.rs') )
+      this.$message.success(this.$t('members.memberMoney.rs'))
     },
     handlePreview(file) {
       console.info(file.response.status)
       if (file.response.status) {
 
-        this.$message.success( this.$t('members.memberMoney.tfis') )
+        this.$message.success(this.$t('members.memberMoney.tfis'))
       } else {
-        this.$message.error( this.$t('members.memberMoney.tfif') )
+        this.$message.error(this.$t('members.memberMoney.tfif'))
       }
     },
     /** 查询派送彩金暂存表列表 */
@@ -294,7 +303,7 @@ export default {
     },
     handleClean() {
       handleClean().then(response => {
-        this.$message.success( this.$t('members.memberMoney.sdc') )
+        this.$message.success(this.$t('members.memberMoney.sdc'))
         this.queryParams.memberId = null
         this.queryParams.pageNum = 1
         this.getList()
@@ -313,11 +322,11 @@ export default {
         spinner: 'el-icon-loading',
         background: 'rgba(0, 0, 0, 0.7)'
       })
-      starSend(this.form.moneydes,this.form.googleAuthCode).then(response => {
+      starSend(this.form.moneydes, this.form.googleAuthCode).then(response => {
         loading.close()
         if (response.code === 0) {
           this.getList()
-          this.$message.success( this.$t('members.memberMoney.ds') )
+          this.$message.success(this.$t('members.memberMoney.ds'))
         } else {
           this.$message.error(response.msg)
         }
@@ -380,13 +389,13 @@ export default {
         if (valid) {
           if (this.form.memberId != null) {
             updateMemberMoney(this.form).then(response => {
-              this.msgSuccess( this.$t('members.memberMoney.ms') )
+              this.msgSuccess(this.$t('members.memberMoney.ms'))
               this.open = false
               this.getList()
             })
           } else {
             addMemberMoney(this.form).then(response => {
-              this.msgSuccess( this.$t('members.memberMoney.as') )
+              this.msgSuccess(this.$t('members.memberMoney.as'))
               this.open = false
               this.getList()
             })
@@ -397,35 +406,35 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const memberIds = row.memberId || this.ids
-      this.$confirm( this.$t('members.memberMoney.wcd', {mid: memberIds}) , this.$t('global.dialogTitle') , {
-        confirmButtonText: this.$t('global.confirmButton') ,
-        cancelButtonText: this.$t('global.cancelButton') ,
+      this.$confirm(this.$t('members.memberMoney.wcd', {mid: memberIds}), this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return delMemberMoney(memberIds)
       }).then(() => {
         this.getList()
-        this.msgSuccess( this.$t('members.memberMoney.dels') )
+        this.msgSuccess(this.$t('members.memberMoney.dels'))
       }).catch(() => {
       })
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams
-      this.$confirm( this.$t('members.memberMoney.cpe') , this.$t('global.dialogTitle') , {
-        confirmButtonText: this.$t('global.confirmButton') ,
-        cancelButtonText: this.$t('global.cancelButton') ,
+      this.$confirm(this.$t('members.memberMoney.cpe'), this.$t('global.dialogTitle'), {
+        confirmButtonText: this.$t('global.confirmButton'),
+        cancelButtonText: this.$t('global.cancelButton'),
         type: 'warning'
-      }).then(function() {
+      }).then(function () {
         return exportMemberMoney(queryParams)
       }).then(response => {
-        this.downloadExcel(response, this.$t('members.memberMoney.pbtd') )
+        this.downloadExcel(response, this.$t('members.memberMoney.pbtd'))
       }).catch(() => {
       })
     },
 
-    getTotalMoney(){
-      count().then(res=>{
+    getTotalMoney() {
+      count().then(res => {
         this.totalMoney = res.data
       })
     }

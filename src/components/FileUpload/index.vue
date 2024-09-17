@@ -141,11 +141,7 @@ export default {
     },
     // 上传成功回调
     handleUploadSuccess(res, file) {
-      if (res.code === 200) {
-        this.$message.success('上传成功')
-      } else {
-        this.$message.error(res.msg)
-      }
+      this.$message.success('上传成功')
       this.$emit('input', res.data)
     },
     // 删除文件

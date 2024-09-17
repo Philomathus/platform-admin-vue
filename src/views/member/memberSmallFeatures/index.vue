@@ -75,66 +75,13 @@
           </el-form>
         </el-card>
       </el-col>
-      <el-col :span="4.5" class="card-box">
-        <el-card>
-          <div slot="header"><span class="fs15">{{ $t('members.memberSmallFeatures.bmib') }}</span></div>
-          <el-form :model="memberIdsFrom" ref="memberIdsFrom" :rules="memberIdsRules">
-            <el-upload
-              class="upload-demo"
-              ref="upload"
-              :action="uploadFileUrl"
-              :headers="headers"
-              name="excelFile"
-              :on-preview="handlePreview"
-              :on-remove="handleRemove"
-              :file-list="fileList"
-              :on-error="uploadFalse"
-              :on-success="uploadSuccess"
-              :auto-upload="false"
-              :before-upload="beforeAvatarUpload">
-              <el-button slot="trigger" size="small" type="primary">{{ $t('members.memberSmallFeatures.sf') }}</el-button>
-              <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">{{ $t('members.memberSmallFeatures.bi') }}</el-button>
-              <div slot="tip" class="el-upload__tip">{{ $t('members.memberSmallFeatures.oef') }}</div>
-            </el-upload>
-            <el-form-item prop="memberIds" class="col-100pr">
-              <el-input
-                type="textarea"
-                :rows="40"
-                clearable
-                v-model="memberIdsFrom.memberIds"
-                :placeholder=" $t('members.memberSmallFeatures.muv') "
-              />
-            </el-form-item>
-            <el-form-item prop="money" class="col-100pr">
-              <el-input
-                class="no-number"
-                type="number"
-                clearable
-                v-model="memberIdsFrom.money"
-                :placeholder=" $t('members.memberSmallFeatures.peda') "
-              ></el-input>
-            </el-form-item>
-            <el-form-item prop="googleAuthCode" style="width: 110%">
-              <el-input
-                style="width: 52%"
-                clearable
-                type="number"
-                class="no-number"
-                v-model="memberIdsFrom.googleAuthCode"
-                :placeholder=" $t('members.memberSmallFeatures.pegac') "
-              />
-              <el-button type="primary" plain style="width: 23%;" @click="handleCommit">{{ $t('global.submitButton') }}</el-button>
-            </el-form-item>
-          </el-form>
-        </el-card>
-      </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
 
-import { updatePhones, queryPhones, commitMoney } from '@/api/platform-web/member/memberSmallFeatures'
+import { updatePhones, queryPhones } from '@/api/platform-web/member/memberSmallFeatures'
 import { url } from '@/utils/url'
 import { getToken } from '@/utils/auth'
 
@@ -307,27 +254,6 @@ export default {
     /** 批量会员ID清除手机号按钮 */
     handleClear() {
       this.phonesByIds = ''
-    },
-    /** 批量会员ID派送彩金按钮 */
-    handleCommit() {
-      this.$refs['memberIdsFrom'].validate(valid => {
-        if (valid) {
-          this.loading = true;
-          const memberIds = this.memberIdsFrom.memberIds
-          const money = this.memberIdsFrom.money
-          const googleAuthCode = this.memberIdsFrom.googleAuthCode
-          commitMoney(memberIds,money,googleAuthCode).then(res => {
-            console.info(res)
-            if (res.code === 0) {
-              this.msgError((res.msg))
-            } else {
-              this.msgSuccess((res.msg))
-            }
-          }).catch(() => {
-            this.$notify.error( this.$t('members.memberSmallFeatures.na') )
-          })
-        }
-      })
     },
   },
   mounted() {

@@ -131,6 +131,7 @@
             icon="el-icon-delete"
             plain
             v-if="scope.row.status === 0 && scope.row.lotteryId >= 2002"
+            v-hasPermi="['admin:lotteryHistory:remove']"
             @click="handle6heAwardDelete(scope.row)"
           >删除
           </el-button>

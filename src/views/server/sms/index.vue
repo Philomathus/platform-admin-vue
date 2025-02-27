@@ -235,7 +235,12 @@ export default {
         {
           name: "短信宝",
           value: 5
-        }],
+        },
+        {
+          name: "灿星云",
+          value: 6
+        }
+        ],
 
       // 状态字典
       isEffectOptions: [],

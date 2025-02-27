@@ -233,7 +233,7 @@ export default {
           value: 4
         },
         {
-          name: "短信宝12",
+          name: "短信宝",
           value: 5
         },
         {

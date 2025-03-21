@@ -152,22 +152,24 @@
         <el-form-item label="appAccess" prop="appAccess">
           <el-input v-model="form.appAccess" placeholder="请输入appAccess"/>
         </el-form-item>
-        <el-form-item label="签名" prop="signature" v-if=" form.provider != 5 ">
+        <el-form-item label="签名" prop="signature" v-if=" form.provider !== 5 && form.provider !== 7 ">
           <el-input v-model="form.signature" placeholder="请输入签名"/>
         </el-form-item>
-        <el-form-item label="分类的密钥" prop="classificationKey" v-if="form.provider == 4">
+        <el-form-item label="分类的密钥" prop="classificationKey" v-if="form.provider === 4">
           <el-input v-model="form.classificationKey" placeholder="请输入分类的密钥"/>
         </el-form-item>
-        <el-form-item label="模板" prop="template" v-if=" form.provider != 5 ">
+        <el-form-item label="模板" prop="template" v-if=" form.provider !== 5 ">
           <el-input v-model="form.template" placeholder="请输入模板"/>
         </el-form-item>
-        <el-form-item label="地区" prop="region" v-if="form.provider != 3 && form.provider != 4 && form.provider != 5 && form.provider != 6">
+        <el-form-item label="地区" prop="region"
+                      v-if="form.provider <= 2 && form.provider !== 7">
           <el-input v-model="form.region" placeholder="请输入地区"/>
         </el-form-item>
-        <el-form-item label="smsSdkAppid" prop="smsSdkAppid" v-if="form.provider == 0">
+        <el-form-item label="smsSdkAppid" prop="smsSdkAppid" v-if="form.provider === 0">
           <el-input v-model="form.smsSdkAppid" placeholder="请输入smsSdkAppid"/>
         </el-form-item>
-        <el-form-item label="请求域名" prop="endpoint" v-if="form.provider == 3 || form.provider == 4 || form.provider == 5 || form.provider == 6">
+        <el-form-item label="请求域名" prop="endpoint"
+                      v-if="form.provider >= 3">
           <el-input v-model="form.endpoint" placeholder="请输入请求域名"/>
         </el-form-item>
       </el-form>
@@ -227,20 +229,20 @@ export default {
       }, {
         name: "华为云",
         value: 3
-      },
-        {
-          name: "云极",
-          value: 4
-        },
-        {
-          name: "短信宝",
-          value: 5
-        },
-        {
-          name: "灿星云",
-          value: 6
-        }
-        ],
+      }, {
+        name: "云极",
+        value: 4
+      }, {
+        name: "短信宝12",
+        value: 5
+      }, {
+        name: "灿星云",
+        value: 6
+      }, {
+        name: "网易云",
+        value: 7
+      }
+      ],
 
       // 状态字典
       isEffectOptions: [],
@@ -331,7 +333,7 @@ export default {
         identify: null,
         isEffect: 0,
         endpoint: null,
-        classificationKey:null
+        classificationKey: null
       }
       this.resetForm('form')
     },

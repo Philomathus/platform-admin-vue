@@ -379,7 +379,6 @@ export default {
     },
     /** 修改按钮操作 */
     toLivePay(row) {
-      this.reset()
       const id = row.id || this.ids
       getLiveVideo(id).then(response => {
         this.form = response.data

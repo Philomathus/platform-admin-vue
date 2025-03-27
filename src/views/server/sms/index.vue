@@ -158,7 +158,7 @@
         <el-form-item label="分类的密钥" prop="classificationKey" v-if="form.provider === 4">
           <el-input v-model="form.classificationKey" placeholder="请输入分类的密钥"/>
         </el-form-item>
-        <el-form-item label="模板" prop="template" v-if=" form.provider !== 5 ">
+        <el-form-item label="模板" prop="template">
           <el-input v-model="form.template" placeholder="请输入模板"/>
         </el-form-item>
         <el-form-item label="地区" prop="region"

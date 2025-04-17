@@ -154,14 +154,6 @@
       </el-table-column>
     </el-table>
 
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
-      @pagination="getList"
-    />
-
     <!-- 未绑定谷歌验证码弹框 -->
     <el-dialog
       v-dialogDrag
@@ -308,8 +300,6 @@ export default {
       multiple: true,
       // 显示搜索条件
       showSearch: true,
-      // 总条数
-      total: 0,
       // 用户表格数据
       userList: null,
       // 弹出层标题
@@ -334,8 +324,6 @@ export default {
       },
       // 查询参数
       queryParams: {
-        pageNum: 1,
-        pageSize: 20,
         userName: undefined,
         status: undefined
       },
@@ -410,7 +398,6 @@ export default {
             })
           })
           this.userList = response.rows
-          this.total = response.total
           this.loading = false
         }
       )
@@ -462,7 +449,6 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.page = 1
       this.getList()
     },
     /** 重置按钮操作 */

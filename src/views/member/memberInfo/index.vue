@@ -717,7 +717,7 @@ export default {
       loginIp: '',
       firstOptions: [],
       first: null,
-      //end new data
+      
 
       personalReportOpen: false,
 

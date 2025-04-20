@@ -290,10 +290,12 @@
                        min-width="160px"/>
 
       <el-table-column :label=" $t('members.memberInfo.index.valBets') " align="center" prop="codeTotal"
-                       min-width="160px"/>
+                       min-width="160px"/>deviceId
       <el-table-column :label=" $t('members.memberInfo.index.invCode') " align="center" prop="inviterCode"
                        min-width="120px"/>
-      <el-table-column :label=" $t('members.memberInfo.index.uType') " align="center" prop="channelcode"
+      <el-table-column :label=" $t('members.memberInfo.index.invCode') " align="center" prop="inviterCode"
+                       min-width="120px"/>
+      <el-table-column label="device id" align="center" prop="deviceId"
                        min-width="200px">
         <template slot-scope="scope">
           <span v-if="scope.row.channelcode == null"
@@ -742,7 +744,8 @@ export default {
         integral: '',
         downLoadDate: [],
         loginDev: null,
-        levelIntegral: null
+        levelIntegral: null,
+        deviceId:null
         // orderByColumn: 'reg_time',
         // isAsc: 'desc'
       },

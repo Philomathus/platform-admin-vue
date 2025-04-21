@@ -293,8 +293,6 @@
                        min-width="160px"/>
       <el-table-column :label=" $t('members.memberInfo.index.invCode') " align="center" prop="inviterCode"
                        min-width="120px"/>
-      <el-table-column :label=" $t('members.memberInfo.index.invCode') " align="center" prop="inviterCode"
-                       min-width="120px"/>
       <el-table-column label="device id" align="center" prop="deviceId" min-width="200px"/>
       <el-table-column :label=" $t('members.memberInfo.index.uType') " align="center" prop="channelcode"
                        min-width="200px">

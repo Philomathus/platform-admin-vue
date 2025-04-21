@@ -290,12 +290,13 @@
                        min-width="160px"/>
 
       <el-table-column :label=" $t('members.memberInfo.index.valBets') " align="center" prop="codeTotal"
-                       min-width="160px"/>deviceId
+                       min-width="160px"/>
       <el-table-column :label=" $t('members.memberInfo.index.invCode') " align="center" prop="inviterCode"
                        min-width="120px"/>
       <el-table-column :label=" $t('members.memberInfo.index.invCode') " align="center" prop="inviterCode"
                        min-width="120px"/>
-      <el-table-column label="device id" align="center" prop="deviceId"
+      <el-table-column label="device id" align="center" prop="deviceId" min-width="200px"/>
+      <el-table-column :label=" $t('members.memberInfo.index.uType') " align="center" prop="channelcode"
                        min-width="200px">
         <template slot-scope="scope">
           <span v-if="scope.row.channelcode == null"
@@ -717,7 +718,7 @@ export default {
       loginIp: '',
       firstOptions: [],
       first: null,
-      
+
 
       personalReportOpen: false,
 

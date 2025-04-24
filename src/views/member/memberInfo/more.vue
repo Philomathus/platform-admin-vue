@@ -173,7 +173,12 @@
           <el-form-item :label=" $t('members.memberInfo.more.gvc') " prop="googleAuthCode">
             <el-input v-model="form.googleAuthCode" :placeholder=" $t('members.memberInfo.more.pgvc') "/>
           </el-form-item>
+          <el-form-item :label=" $t('members.memberInfo.more.rpc') " prop="resetPasswordCode">
+            <el-input v-model="form.resetPasswordCode" :placeholder=" $t('members.memberInfo.more.prpc') " style="width: 300px; margin-right: 10px"/>
+            <el-button @click="showResetPasswordQrCode" type="primary"> {{ $t('members.memberInfo.more.gqrc') }} </el-button>
+          </el-form-item>
         </el-form>
+
       </el-row>
       <!--发送短信-->
       <el-row v-if="index===10">
@@ -350,7 +355,6 @@
           type="primary"
           @click="handlePassword"
           v-show="index === 4"
-          v-has-permi="['member:memberInfo:resetPwd']"
         >{{ $t('members.memberInfo.more.det') }}
         </el-button>
         <el-button
@@ -446,6 +450,20 @@
         </el-button>
       </div>
     </el-dialog>
+
+    <el-dialog
+      v-dialogDrag
+      :visible.sync="resetPasswordQrCodeVisible"
+      width="300px"
+      height="300px"
+      append-to-body
+    >
+      <el-image :src="resetPasswordQrCode"/>
+      <div style="text-align: center">
+        {{ $t('members.memberInfo.more.rpcv') }}
+      </div>
+    </el-dialog>
+
     <TableShow ref="tableShow"></TableShow>
   </div>
 
@@ -457,6 +475,7 @@ import {
   memberWithdrawLog,
   addScore,
   resetPassword,
+  getResetPasswordQrCode,
   cardList,
   resetSafe,
   unbindCard,
@@ -489,6 +508,8 @@ export default {
     return {
       showVip: false,
       im: false,
+      resetPasswordQrCode: null,
+      resetPasswordQrCodeVisible: false,
       showVipDisabled: false,
       showImDisabled: false,
       msg: '',
@@ -533,6 +554,7 @@ export default {
       form: {
         beatNum: null,
         googleAuthCode: null,
+        resetPasswordCode: null,
         id: null,
         mk: null,
         moneydes: null,
@@ -1045,6 +1067,7 @@ export default {
       resetPassword({
         password: this.form.password,
         googleAuthCode: this.form.googleAuthCode,
+        resetPasswordCode: this.form.resetPasswordCode,
         id: this.memberId
       }).then((res) => {
         if (res.code === 0) {
@@ -1159,6 +1182,13 @@ export default {
     guardianTypeFormat(row, column) {
       return this.selectDictLabel(this.guardianType, row.type)
     },
+    showResetPasswordQrCode() {
+      console.log( "hello" )
+      getResetPasswordQrCode( this.memberId ).then(response => {
+        this.resetPasswordQrCode = 'data:image/png;base64,' + response.data;
+        this.resetPasswordQrCodeVisible = true
+      })
+    }
 
 
   }

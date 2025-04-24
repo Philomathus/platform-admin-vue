@@ -82,6 +82,14 @@ export function resetPassword(query) {
   })
 }
 
+export function getResetPasswordQrCode(id, query) {
+  return request({
+    url: url.platformWeb + '/member/memberInfo/resetPasswordQrCode/' + id,
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询银行卡列表接口
 export function cardList(query) {
   return request({
